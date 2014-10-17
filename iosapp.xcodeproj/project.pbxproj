@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		002E807F19F0C77500693941 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 002E807E19F0C77500693941 /* UIColor+Hex.m */; };
+		00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C9A73C19EE863B000EA878 /* OSCBaseObject.m */; };
 		00D6BCE019EB673200E8754E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCDF19EB673200E8754E /* main.m */; };
 		00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCE219EB673200E8754E /* AppDelegate.m */; };
 		00D6BCE619EB673200E8754E /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCE519EB673200E8754E /* FirstViewController.m */; };
@@ -15,6 +17,13 @@
 		00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00D6BCED19EB673200E8754E /* Images.xcassets */; };
 		00D6BCF119EB673200E8754E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00D6BCEF19EB673200E8754E /* LaunchScreen.xib */; };
 		00D6BCFD19EB673200E8754E /* iosappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCFC19EB673200E8754E /* iosappTests.m */; };
+		00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BD2C19ECD46100E8754E /* BaseViewController.m */; };
+		00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BD3019ECD71B00E8754E /* TweetsViewController.m */; };
+		00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BD3419ECFD8E00E8754E /* TweetCell.m */; };
+		00EDF60919EF77A100A5C842 /* OSCTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = 00EDF60819EF77A100A5C842 /* OSCTweet.m */; };
+		00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 00EDF60E19EFF4B300A5C842 /* Utils.m */; };
+		00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954119F10DEE002F4737 /* UIView+Util.m */; };
+		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +37,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		002E807D19F0C77500693941 /* UIColor+Hex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Hex.h"; sourceTree = "<group>"; };
+		002E807E19F0C77500693941 /* UIColor+Hex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Hex.m"; sourceTree = "<group>"; };
+		00C9A73B19EE863B000EA878 /* OSCBaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBaseObject.h; sourceTree = "<group>"; };
+		00C9A73C19EE863B000EA878 /* OSCBaseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBaseObject.m; sourceTree = "<group>"; };
 		00D6BCDA19EB673200E8754E /* iosapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00D6BCDE19EB673200E8754E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00D6BCDF19EB673200E8754E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -43,6 +56,22 @@
 		00D6BCF619EB673200E8754E /* iosappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00D6BCFB19EB673200E8754E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00D6BCFC19EB673200E8754E /* iosappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iosappTests.m; sourceTree = "<group>"; };
+		00D6BD2B19ECD46100E8754E /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		00D6BD2C19ECD46100E8754E /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
+		00D6BD2F19ECD71B00E8754E /* TweetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetsViewController.h; sourceTree = "<group>"; };
+		00D6BD3019ECD71B00E8754E /* TweetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetsViewController.m; sourceTree = "<group>"; };
+		00D6BD3319ECFD8E00E8754E /* TweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetCell.h; sourceTree = "<group>"; };
+		00D6BD3419ECFD8E00E8754E /* TweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetCell.m; sourceTree = "<group>"; };
+		00EDF60719EF77A100A5C842 /* OSCTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCTweet.h; sourceTree = "<group>"; };
+		00EDF60819EF77A100A5C842 /* OSCTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCTweet.m; sourceTree = "<group>"; };
+		00EDF60A19EFAE7900A5C842 /* OSCAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OSCAPI.h; sourceTree = "<group>"; };
+		00EDF60D19EFF4B300A5C842 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		00EDF60E19EFF4B300A5C842 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
+		00FF954019F10DED002F4737 /* UIView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Util.h"; sourceTree = "<group>"; };
+		00FF954119F10DEE002F4737 /* UIView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Util.m"; sourceTree = "<group>"; };
+		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,12 +93,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00C9A73919EE8536000EA878 /* OSC API */ = {
+			isa = PBXGroup;
+			children = (
+				00C9A73A19EE855A000EA878 /* OSC models */,
+			);
+			name = "OSC API";
+			sourceTree = "<group>";
+		};
+		00C9A73A19EE855A000EA878 /* OSC models */ = {
+			isa = PBXGroup;
+			children = (
+				00C9A73B19EE863B000EA878 /* OSCBaseObject.h */,
+				00C9A73C19EE863B000EA878 /* OSCBaseObject.m */,
+				00EDF60719EF77A100A5C842 /* OSCTweet.h */,
+				00EDF60819EF77A100A5C842 /* OSCTweet.m */,
+				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
+			);
+			name = "OSC models";
+			sourceTree = "<group>";
+		};
 		00D6BCD119EB673200E8754E = {
 			isa = PBXGroup;
 			children = (
 				00D6BCDC19EB673200E8754E /* iosapp */,
 				00D6BCF919EB673200E8754E /* iosappTests */,
 				00D6BCDB19EB673200E8754E /* Products */,
+				4E7EF408DB16D07ABAD0FA2A /* Pods */,
+				1BB5019F31BE469F592E0B67 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,12 +136,12 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
+				00EDF60C19EFC13500A5C842 /* Utils */,
+				00C9A73919EE8536000EA878 /* OSC API */,
+				00D6BD3219ECD73B00E8754E /* Tweets */,
+				00EDF60B19EFB42500A5C842 /* Main ViewControllers */,
 				00D6BCE119EB673200E8754E /* AppDelegate.h */,
 				00D6BCE219EB673200E8754E /* AppDelegate.m */,
-				00D6BCE419EB673200E8754E /* FirstViewController.h */,
-				00D6BCE519EB673200E8754E /* FirstViewController.m */,
-				00D6BCE719EB673200E8754E /* SecondViewController.h */,
-				00D6BCE819EB673200E8754E /* SecondViewController.m */,
 				00D6BCEA19EB673200E8754E /* Main.storyboard */,
 				00D6BCED19EB673200E8754E /* Images.xcassets */,
 				00D6BCEF19EB673200E8754E /* LaunchScreen.xib */,
@@ -124,6 +176,60 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		00D6BD3219ECD73B00E8754E /* Tweets */ = {
+			isa = PBXGroup;
+			children = (
+				00D6BD2F19ECD71B00E8754E /* TweetsViewController.h */,
+				00D6BD3019ECD71B00E8754E /* TweetsViewController.m */,
+				00D6BD3319ECFD8E00E8754E /* TweetCell.h */,
+				00D6BD3419ECFD8E00E8754E /* TweetCell.m */,
+			);
+			name = Tweets;
+			sourceTree = "<group>";
+		};
+		00EDF60B19EFB42500A5C842 /* Main ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				00D6BD2B19ECD46100E8754E /* BaseViewController.h */,
+				00D6BD2C19ECD46100E8754E /* BaseViewController.m */,
+				00D6BCE419EB673200E8754E /* FirstViewController.h */,
+				00D6BCE519EB673200E8754E /* FirstViewController.m */,
+				00D6BCE719EB673200E8754E /* SecondViewController.h */,
+				00D6BCE819EB673200E8754E /* SecondViewController.m */,
+			);
+			name = "Main ViewControllers";
+			sourceTree = "<group>";
+		};
+		00EDF60C19EFC13500A5C842 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				00EDF60D19EFF4B300A5C842 /* Utils.h */,
+				00EDF60E19EFF4B300A5C842 /* Utils.m */,
+				002E807D19F0C77500693941 /* UIColor+Hex.h */,
+				002E807E19F0C77500693941 /* UIColor+Hex.m */,
+				00FF954019F10DED002F4737 /* UIView+Util.h */,
+				00FF954119F10DEE002F4737 /* UIView+Util.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E50FD03E01F2716AFACD8E30 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4E7EF408DB16D07ABAD0FA2A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */,
+				6959BD4140C2AB481559B021 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -131,9 +237,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00D6BD0019EB673200E8754E /* Build configuration list for PBXNativeTarget "iosapp" */;
 			buildPhases = (
+				F87169EF104A0A13C333FE09 /* Check Pods Manifest.lock */,
 				00D6BCD619EB673200E8754E /* Sources */,
 				00D6BCD719EB673200E8754E /* Frameworks */,
 				00D6BCD819EB673200E8754E /* Resources */,
+				C8C815620688FAE2D386D6B8 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -219,15 +327,56 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		C8C815620688FAE2D386D6B8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F87169EF104A0A13C333FE09 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		00D6BCD619EB673200E8754E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				00D6BCE919EB673200E8754E /* SecondViewController.m in Sources */,
+				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
+				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
+				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
+				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
+				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
 				00D6BCE619EB673200E8754E /* FirstViewController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
+				002E807F19F0C77500693941 /* UIColor+Hex.m in Sources */,
+				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
+				00EDF60919EF77A100A5C842 /* OSCTweet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,6 +496,7 @@
 		};
 		00D6BD0119EB673200E8754E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = iosapp/Info.plist;
@@ -357,6 +507,7 @@
 		};
 		00D6BD0219EB673200E8754E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6959BD4140C2AB481559B021 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = iosapp/Info.plist;
@@ -418,6 +569,7 @@
 				00D6BD0219EB673200E8754E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		00D6BD0319EB673200E8754E /* Build configuration list for PBXNativeTarget "iosappTests" */ = {
 			isa = XCConfigurationList;
@@ -426,6 +578,7 @@
 				00D6BD0519EB673200E8754E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
