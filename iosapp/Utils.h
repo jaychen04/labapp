@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "UIColor+Hex.h"
 #import "UIView+Util.h"
+#import "UIColor+Util.h"
 
 @interface Utils : NSObject
 

@@ -33,7 +33,7 @@ static NSString * const kAttach = @"attach";
         
         self.body = [[xml firstChildWithTag:kBody] stringValue];
         self.appclient = [[[xml firstChildWithTag:kAppclient] numberValue] intValue];
-        self.commentCount = (int)[[xml firstChildWithTag:kCommentCount] numberValue];
+        self.commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
         self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
         
         // 附图

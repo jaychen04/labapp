@@ -1,14 +1,16 @@
 //
-//  UIColor+Hex.m
+//  UIColor+Util.m
 //  iosapp
 //
-//  Created by chenhaoxiang on 14-10-17.
+//  Created by chenhaoxiang on 14-10-18.
 //  Copyright (c) 2014年 oschina. All rights reserved.
 //
 
-#import "UIColor+Hex.h"
+#import "UIColor+Util.h"
 
-@implementation UIColor (Hex)
+@implementation UIColor (Util)
+
+#pragma mark - Hex
 
 + (UIColor *)colorWithHex:(int)hexValue alpha:(CGFloat)alpha
 {
@@ -21,6 +23,14 @@
 + (UIColor *)colorWithHex:(int)hexValue
 {
     return [UIColor colorWithHex:hexValue alpha:1.0];
+}
+
+
+#pragma mark - theme colors
+
++ (UIColor *)themeColor
+{
+    return [UIColor colorWithRed:235.0/255 green:235.0/255 blue:243.0/255 alpha:1.0];
 }
 
 

@@ -18,6 +18,8 @@
         //self.backgroundColor = [Tools uniformColor];
         
         self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        self.backgroundColor = [UIColor themeColor];
+        
         [self initSubviews];
         [self setLayout];
         
@@ -62,10 +64,10 @@
     self.appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:self.appclientLabel];
     
-    self.contentText = [UITextView new];
-    self.contentText.scrollEnabled = NO;
-    self.contentText.editable = NO;
-    [self.contentView addSubview:self.contentText];
+    self.contentLabel = [UILabel new];
+    self.contentLabel.numberOfLines = 0;
+    self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [self.contentView addSubview:self.contentLabel];
     
     self.commentCount = [UILabel new];
     self.commentCount.font = [UIFont systemFontOfSize:14];
@@ -83,14 +85,14 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentText, _commentCount, _image);
+    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _commentCount, _image);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]-8-[_contentText]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]-15-[_contentLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil
                                                                                views:viewsDict]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_contentText]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_contentLabel]-8-|"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:viewsDict]];
