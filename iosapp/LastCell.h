@@ -8,15 +8,25 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, LastCellStatus)
+{
+    LastCellStatusNotVisible,
+    LastCellStatusMore,
+    LastCellStatusLoading,
+    LastCellStatusError,
+    LastCellStatusFinished,
+};
+
 @interface LastCell : UITableViewCell
 
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
 @property (nonatomic, strong) UILabel *statusLabel;
+@property (nonatomic, assign) LastCellStatus status;
 
 - (instancetype)initCell;
-- (void)normal;
-- (void)loading;
-- (void)finishedLoad;
-- (void)empty;
+- (void)statusMore;
+- (void)statusLoading;
+- (void)statusFinished;
+- (void)statusError;
 
 @end

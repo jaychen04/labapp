@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0004918E19F8FFE9001F3A36 /* HorizonalTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0004918D19F8FFE9001F3A36 /* HorizonalTableViewController.m */; };
+		00364FF419F543DE00871255 /* TitleBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00364FF319F543DE00871255 /* TitleBarView.m */; };
 		00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C9A73C19EE863B000EA878 /* OSCBaseObject.m */; };
 		00D6BCE019EB673200E8754E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCDF19EB673200E8754E /* main.m */; };
 		00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCE219EB673200E8754E /* AppDelegate.m */; };
@@ -24,6 +26,7 @@
 		00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954119F10DEE002F4737 /* UIView+Util.m */; };
 		00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954419F2B37E002F4737 /* UIColor+Util.m */; };
 		00FF954819F2BF8B002F4737 /* LastCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954719F2BF8B002F4737 /* LastCell.m */; };
+		00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +41,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0004918C19F8FFE9001F3A36 /* HorizonalTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HorizonalTableViewController.h; sourceTree = "<group>"; };
+		0004918D19F8FFE9001F3A36 /* HorizonalTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HorizonalTableViewController.m; sourceTree = "<group>"; };
+		00364FF219F543DE00871255 /* TitleBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleBarView.h; sourceTree = "<group>"; };
+		00364FF319F543DE00871255 /* TitleBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleBarView.m; sourceTree = "<group>"; };
 		00C9A73B19EE863B000EA878 /* OSCBaseObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBaseObject.h; sourceTree = "<group>"; };
 		00C9A73C19EE863B000EA878 /* OSCBaseObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBaseObject.m; sourceTree = "<group>"; };
 		00D6BCDA19EB673200E8754E /* iosapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +79,8 @@
 		00FF954419F2B37E002F4737 /* UIColor+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Util.m"; sourceTree = "<group>"; };
 		00FF954619F2BF8B002F4737 /* LastCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastCell.h; sourceTree = "<group>"; };
 		00FF954719F2BF8B002F4737 /* LastCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LastCell.m; sourceTree = "<group>"; };
+		00FF954C19F3E5FF002F4737 /* SwipeableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeableViewController.h; sourceTree = "<group>"; };
+		00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeableViewController.m; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +105,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		00364FF519F5F93600871255 /* SwipeableViewController */ = {
+			isa = PBXGroup;
+			children = (
+				00FF954C19F3E5FF002F4737 /* SwipeableViewController.h */,
+				00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */,
+				00364FF219F543DE00871255 /* TitleBarView.h */,
+				00364FF319F543DE00871255 /* TitleBarView.m */,
+				0004918C19F8FFE9001F3A36 /* HorizonalTableViewController.h */,
+				0004918D19F8FFE9001F3A36 /* HorizonalTableViewController.m */,
+			);
+			name = SwipeableViewController;
+			sourceTree = "<group>";
+		};
 		00C9A73919EE8536000EA878 /* OSC API */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +221,7 @@
 				00D6BCE519EB673200E8754E /* FirstViewController.m */,
 				00D6BCE719EB673200E8754E /* SecondViewController.h */,
 				00D6BCE819EB673200E8754E /* SecondViewController.m */,
+				00364FF519F5F93600871255 /* SwipeableViewController */,
 			);
 			name = "Main ViewControllers";
 			sourceTree = "<group>";
@@ -374,14 +397,17 @@
 				00D6BCE919EB673200E8754E /* SecondViewController.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
+				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,
+				0004918E19F8FFE9001F3A36 /* HorizonalTableViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
 				00D6BCE619EB673200E8754E /* FirstViewController.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
+				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				00EDF60919EF77A100A5C842 /* OSCTweet.m in Sources */,
 			);

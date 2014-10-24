@@ -15,8 +15,9 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor themeColor];
+        self.status = LastCellStatusNotVisible;
+        
         [self setLayout];
-        [self empty];
     }
     
     return self;
@@ -36,34 +37,37 @@
     [self.contentView addSubview:_indicator];
 }
 
-- (void)normal
+- (void)statusMore
 {
     [_indicator stopAnimating];
     _statusLabel.text = @"More...";
     self.userInteractionEnabled = YES;
+    self.status = LastCellStatusMore;
 }
 
-- (void)loading
+- (void)statusLoading
 {
     [_indicator startAnimating];
     _statusLabel.text = @"";
     self.userInteractionEnabled = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.status = LastCellStatusLoading;
 }
 
-- (void)finishedLoad
+- (void)statusFinished
 {
     [_indicator stopAnimating];
     _statusLabel.text = @"全部加载完毕";
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.status = LastCellStatusFinished;
 }
 
-- (void)empty
+- (void)statusError
 {
     [_indicator stopAnimating];
-    _statusLabel.text = @"";
-    self.userInteractionEnabled = NO;
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    _statusLabel.text = @"加载数据出错";
+    self.userInteractionEnabled = YES;
+    self.status = LastCellStatusError;
 }
 
 

@@ -27,9 +27,9 @@
 {
     [super viewDidAppear:animated];
     
-    self.tweets = [NSMutableArray new];
-    NSLog(@"self.tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)self.tweets));
-    NSLog(@"_tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)_tweets));
+    //self.tweets = [NSMutableArray new];
+    //NSLog(@"self.tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)self.tweets));
+    //NSLog(@"_tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)_tweets));
 #if 0
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
