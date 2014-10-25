@@ -23,9 +23,8 @@
         self.currentIndex = 0;
         self.titleButtons = [NSMutableArray new];
         
-        //CGFloat barWidth = 0;
         CGFloat buttonWidth = frame.size.width / titles.count;
-        CGFloat buttonHeight = frame.size.height - 2;
+        CGFloat buttonHeight = frame.size.height;
         
         NSUInteger i = 0;
         for (NSString *title in titles)
@@ -48,7 +47,7 @@
         self.showsHorizontalScrollIndicator = NO;
         UIButton *firstTitle = self.titleButtons[0];
         firstTitle.titleLabel.font = [UIFont systemFontOfSize:16];
-        [firstTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [firstTitle setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     }
     
     return self;
@@ -71,7 +70,7 @@
     }
 }
 
-- (void)focusTitleAtIndex:(NSUInteger)index
+- (void)focusTitleAtIndex:(NSUInteger)index ratio:(CGFloat)ratio
 {
     UIButton *preTitle = [self.titleButtons objectAtIndex:self.currentIndex];
     [preTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];

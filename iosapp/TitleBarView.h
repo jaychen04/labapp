@@ -15,6 +15,6 @@
 @property (nonatomic, copy) void (^titleButtonClicked)(NSUInteger index);
 
 - (instancetype)initWithFrame:(CGRect)frame andTitles:(NSArray*)titles;
-- (void)focusTitleAtIndex:(NSUInteger)index;
+- (void)focusTitleAtIndex:(NSUInteger)index ratio:(CGFloat)ratio;
 
 @end

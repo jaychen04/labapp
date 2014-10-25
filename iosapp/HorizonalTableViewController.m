@@ -70,21 +70,12 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    if (self.focusViewIndexChanged)
-    {
-        NSUInteger index = self.tableView.contentOffset.y / self.view.frame.size.width;
-        self.focusViewIndexChanged(index);
-    }
+    [self scrollStop:YES];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat horizonalOffset = self.tableView.contentOffset.y;
-    CGFloat screenWidth = self.tableView.frame.size.width;
-    CGFloat offsetRatio = (NSUInteger)horizonalOffset % (NSUInteger)screenWidth / screenWidth;
-    NSUInteger index = horizonalOffset / screenWidth;
-    
-    self.scrollView(offsetRatio, index);
+    [self scrollStop:NO];
 }
 
 
@@ -97,6 +88,17 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]
                           atScrollPosition:UITableViewScrollPositionNone
                                   animated:NO];
+}
+
+- (void)scrollStop:(BOOL)didScrollStop
+{
+    CGFloat horizonalOffset = self.tableView.contentOffset.y;
+    CGFloat screenWidth = self.tableView.frame.size.width;
+    CGFloat offsetRatio = (NSUInteger)horizonalOffset % (NSUInteger)screenWidth / screenWidth;
+    NSUInteger index = horizonalOffset / screenWidth;;
+    
+    self.scrollView(offsetRatio, index);
+    if (didScrollStop) {self.changeIndex(index);}
 }
 
 
