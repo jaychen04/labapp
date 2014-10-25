@@ -83,8 +83,18 @@
     
     __weak TitleBarView *weakTitleBar = self.titleBar;
     self.viewPager.focusViewIndexChanged = ^(NSUInteger index) {[weakTitleBar focusTitleAtIndex:index];};
-    self.viewPager.scrollView = ^(CGFloat offsetRatio) {
+    self.viewPager.scrollView = ^(CGFloat offsetRatio, NSUInteger index) {
+        UIButton *titleFrom = weakTitleBar.titleButtons[weakTitleBar.currentIndex];
+        float value = [Utils valueBetweenMin:15 andMax:16 percent:offsetRatio];
+        titleFrom.titleLabel.font = [UIFont systemFontOfSize:value];
+        [titleFrom setTitleColor:[UIColor colorWithRed:1-offsetRatio green:0 blue:0 alpha:1.0]
+                        forState:UIControlStateNormal];
         
+        UIButton *titleTo = weakTitleBar.titleButtons[index];
+        value = [Utils valueBetweenMin:15 andMax:16 percent:1-offsetRatio];
+        titleTo.titleLabel.font = [UIFont systemFontOfSize:value];
+        [titleTo setTitleColor:[UIColor colorWithRed:offsetRatio green:0 blue:0 alpha:1.0]
+                        forState:UIControlStateNormal];
     };
     
     __weak HorizonalTableViewController *weakViewPager = self.viewPager;

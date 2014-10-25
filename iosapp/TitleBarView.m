@@ -11,9 +11,6 @@
 
 @interface TitleBarView ()
 
-@property (nonatomic, assign) NSUInteger currentIndex;
-@property (nonatomic, strong) NSMutableArray *titleButtons;
-
 @end
 
 @implementation TitleBarView
@@ -39,26 +36,19 @@
             [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [button setTitle:title forState:UIControlStateNormal];
             
-            
-            //CGSize size = [title sizeWithFont:[UIFont systemFontOfSize:15] constrainedToSize:CGSizeMake(MAXFLOAT, buttonHeight) lineBreakMode:NSLineBreakByWordWrapping];
-            //button.frame = CGRectMake(barWidth, 0, size.width, buttonHeight);
             button.frame = CGRectMake(buttonWidth * i, 0, buttonWidth, buttonHeight);
             button.tag = i++;
             [button addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
             
             [self addSubview:button];
             [self.titleButtons addObject:button];
-            //barWidth += size.width + 20;
         }
         
         self.contentSize = CGSizeMake(buttonWidth * i, 25);
         self.showsHorizontalScrollIndicator = NO;
-        
-        
-        //CGRect rc  = [self viewWithTag:selectedIndex+kButtonTagStart].frame;
-        //lineView = [[UIView alloc]initWithFrame:CGRectMake(rc.origin.x, self.frame.size.height - 2, rc.size.width, 2)];
-        //lineView.backgroundColor = RGBCOLOR(190, 2, 1);
-        //[self addSubview:lineView];
+        UIButton *firstTitle = self.titleButtons[0];
+        firstTitle.titleLabel.font = [UIFont systemFontOfSize:16];
+        [firstTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     }
     
     return self;
@@ -71,9 +61,11 @@
     {
         UIButton *preTitle = [self.titleButtons objectAtIndex:self.currentIndex];
         [preTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        preTitle.titleLabel.font = [UIFont systemFontOfSize:15];
         self.currentIndex = button.tag;
         
         [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        button.titleLabel.font = [UIFont systemFontOfSize:16];
         
         self.titleButtonClicked(button.tag);
     }
@@ -83,10 +75,12 @@
 {
     UIButton *preTitle = [self.titleButtons objectAtIndex:self.currentIndex];
     [preTitle setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    preTitle.titleLabel.font = [UIFont systemFontOfSize:15];
     self.currentIndex = index;
     
     UIButton *currentTitle = [self.titleButtons objectAtIndex:self.currentIndex];
     [currentTitle setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    currentTitle.titleLabel.font = [UIFont systemFontOfSize:16];
 }
 
 

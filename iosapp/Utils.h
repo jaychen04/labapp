@@ -13,6 +13,9 @@
 @interface Utils : NSObject
 
 + (NSString *)getAppclient:(int)clientType;
+
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
+
++ (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent;
 
 @end

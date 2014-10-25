@@ -86,6 +86,12 @@
 }
 
 
++ (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent
+{
+    return min + (max - min) * percent;
+}
+
+
 
 
 @end

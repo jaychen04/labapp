@@ -10,6 +10,8 @@
 
 @interface TitleBarView : UIScrollView
 
+@property (nonatomic, strong) NSMutableArray *titleButtons;
+@property (nonatomic, assign) NSUInteger currentIndex;
 @property (nonatomic, copy) void (^titleButtonClicked)(NSUInteger index);
 
 - (instancetype)initWithFrame:(CGRect)frame andTitles:(NSArray*)titles;
