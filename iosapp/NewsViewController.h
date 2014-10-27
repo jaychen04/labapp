@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OSCObjsViewController.h"
 
-@interface NewsViewController : UITableViewController
+@interface NewsViewController : OSCObjsViewController
 
 @end

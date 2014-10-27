@@ -15,14 +15,16 @@
 
 #import "Utils.h"
 #import "OSCAPI.h"
+#import "LastCell.h"
 
 @interface OSCObjsViewController : UITableViewController <UIScrollViewDelegate>
 
-@property Class objClass;
-@property Class cellClass;
-@property (nonatomic, strong) NSMutableArray *objects;
-
-@property (nonatomic, copy) NSString * (^generateURL)(NSUInteger page, BOOL refresh);
+@property (nonatomic, copy) NSString * (^generateURL)(NSUInteger page);
+@property (nonatomic, copy) NSArray * (^parseXML)(ONOXMLDocument *responseDocument);
 @property (nonatomic, copy) void (^tableWillReload)();
+
+@property Class objClass;
+@property (nonatomic, strong) NSMutableArray *objects;
+@property (nonatomic, strong) LastCell *lastCell;
 
 @end

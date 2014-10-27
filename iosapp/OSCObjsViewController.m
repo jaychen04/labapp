@@ -12,14 +12,30 @@
 
 @interface OSCObjsViewController ()
 
-@property (nonatomic, strong) LastCell *lastCell;
-
 @end
 
 @implementation OSCObjsViewController
 
+
+#if 0
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self) {
+        self.objects = [NSMutableArray new];
+    }
+    
+    return self;
+}
+#endif
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+#if 1
+    self.objects = [NSMutableArray new];
+#endif
     
     self.tableView.backgroundColor = [UIColor themeColor];
     UIView *footer =[[UIView alloc] initWithFrame:CGRectZero];
@@ -32,9 +48,28 @@
     self.lastCell = [[LastCell alloc] initCell];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    if (self.objects.count > 0 || self.lastCell.status == LastCellStatusFinished) {
+        return;
+    }
+    
+    [self.refreshControl beginRefreshing];
+    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
+                            animated:YES];
+    
+    [self fetchObjectsOnPage:0 refresh:YES];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+
+
+
 
 #pragma mark - Table view data source
 
@@ -87,6 +122,7 @@
 
 
 
+
 #pragma mark - 请求数据
 
 - (void)fetchObjectsOnPage:(NSUInteger)page refresh:(BOOL)refresh
@@ -112,10 +148,10 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:self.generateURL(page, refresh)
+    [manager GET:self.generateURL(page)
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             NSArray *tweetsXML = [[responseDocument.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
+             NSArray *tweetsXML = self.parseXML(responseDocument);
              
              if (refresh) {[self.objects removeAllObjects];}
              
