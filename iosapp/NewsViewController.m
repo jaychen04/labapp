@@ -66,13 +66,13 @@ static NSString *kNewsCellID = @"NewsCell";
     };
     
     self.objClass = [OSCNews class];
-    self.label = [UILabel new];
 #endif
     
     [super viewDidLoad];
     
-    // tableView设置
     [self.tableView registerClass:[NewsCell class] forCellReuseIdentifier:kNewsCellID];
+    
+    self.label = [UILabel new];
 }
 
 - (void)viewDidAppear:(BOOL)animated

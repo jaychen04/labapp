@@ -17,7 +17,6 @@
 #import "TweetCell.h"
 #import "Utils.h"
 #import "OSCAPI.h"
-#import "LastCell.h"
 
 
 static NSString *kTweetCellID = @"TweetCell";
@@ -28,7 +27,6 @@ static NSString *kTweetCellID = @"TweetCell";
 
 @interface TweetsViewController ()
 
-@property (nonatomic, strong) NSMutableArray *tweets;
 @property (nonatomic, assign) int64_t uid;
 
 @property (nonatomic, strong) UILabel *label;
@@ -64,6 +62,22 @@ static NSString *kTweetCellID = @"TweetCell";
             default:
                 break;
         }
+        
+        __weak TweetsViewController *weakSelf = self;
+        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+            if (weakSelf.uid == -1) {[weakSelf.lastCell statusFinished];}
+            else {responseObjectsCount < 20? [weakSelf.lastCell statusFinished]: [weakSelf.lastCell statusMore];}
+        };
+        
+        self.generateURL = ^(NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
+        };
+        
+        self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
+            return [[xml.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
+        };
+        
+        self.objClass = [OSCTweet class];
     }
     
     return self;
@@ -73,49 +87,21 @@ static NSString *kTweetCellID = @"TweetCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tweets = [NSMutableArray new];
     //NSLog(@"self.tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)self.tweets));
     //NSLog(@"self.tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)_tweets));
     
-    // tableView设置
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
     
-    self.tableView.backgroundColor = [UIColor themeColor];
-    
-    UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.tableFooterView = footer;
-    
-    
-    // 刷新
-    self.refreshControl = [UIRefreshControl new];
-    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
-    
-    
-    // 用于计算高度
     self.label = [UILabel new];
-    
-    self.lastCell = [[LastCell alloc] initCell];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    if (self.tweets.count > 0 || self.lastCell.status == LastCellStatusFinished) {
-        return;
-    }
-    
-    [self.refreshControl beginRefreshing];
-    [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
-                            animated:YES];
-    
-    [self fetchTweetOnPage:0 refresh:YES];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -123,15 +109,10 @@ static NSString *kTweetCellID = @"TweetCell";
 
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.lastCell.status == LastCellStatusNotVisible) return self.tweets.count;
-    return self.tweets.count + 1;
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.tweets.count) {
+    if (indexPath.row < self.objects.count) {
         TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
-        OSCTweet *tweet = [self.tweets objectAtIndex:indexPath.row];
+        OSCTweet *tweet = [self.objects objectAtIndex:indexPath.row];
         
         [cell.portrait sd_setImageWithURL:tweet.portraitURL placeholderImage:nil options:0]; //options:SDWebImageRefreshCached
         [cell.portrait setCornerRadius:5.0];
@@ -151,8 +132,8 @@ static NSString *kTweetCellID = @"TweetCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.tweets.count) {
-        OSCTweet *tweet = [self.tweets objectAtIndex:indexPath.row];
+    if (indexPath.row < self.objects.count) {
+        OSCTweet *tweet = [self.objects objectAtIndex:indexPath.row];
         [self.label setText:tweet.body];
         self.label.numberOfLines = 0;
         self.label.lineBreakMode = NSLineBreakByWordWrapping;
@@ -165,109 +146,6 @@ static NSString *kTweetCellID = @"TweetCell";
     }
 }
 
-
-
-
-#pragma mark - 刷新
-
-- (void)refresh
-{
-    static BOOL refreshInProgress = NO;
-    
-    if (!refreshInProgress)
-    {
-        refreshInProgress = YES;
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self fetchTweetOnPage:0 refresh:YES];
-            refreshInProgress = NO;
-        });
-    }
-}
-
-
-
-
-#pragma mark - 上拉加载更多
-
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    if(scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height)))
-    {
-        [self fetchMore];
-    }
-}
-
-- (void)fetchMore
-{
-    if (self.lastCell.status == LastCellStatusFinished || self.lastCell.status == LastCellStatusLoading) {return;}
-    
-    [self.lastCell statusLoading];
-    [self fetchTweetOnPage:(self.tweets.count + 19)/20 refresh:NO];
-}
-
-
-
-
-#pragma mark - 加载动弹
-
-- (void)fetchTweetOnPage:(NSUInteger)page refresh:(BOOL)refresh
-{
-#if 0
-    if (![Tools isNetworkExist]) {
-        if (refresh) {
-            [self.refreshControl endRefreshing];
-        } else {
-            _isLoading = NO;
-            if (_isFinishedLoad) {
-                [_lastCell finishedLoad];
-            } else {
-                [_lastCell normal];
-            }
-        }
-        [Tools toastNotification:@"网络连接失败，请检查网络设置" inView:self.parentViewController.view];
-        return;
-    }
-#endif
-    
-    if (!refresh) {[self.lastCell statusLoading];}
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, self.uid, (unsigned long)page, OSCAPI_SUFFIX]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             NSArray *tweetsXML = [[responseDocument.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
-             
-             if (refresh) {[self.tweets removeAllObjects];}
-             
-             /* 这里要添加一个去重步骤 */
-             
-             for (ONOXMLElement *tweetXML in tweetsXML) {
-                 OSCTweet *tweet = [[OSCTweet alloc] initWithXML:tweetXML];
-                 [self.tweets addObject:tweet];
-             }
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 if (self.uid == -1) {[self.lastCell statusFinished];}
-                 else {tweetsXML.count < 20? [self.lastCell statusFinished]: [self.lastCell statusMore];}
-                 
-                 [self.tableView reloadData];
-                 if (refresh) {[self.refreshControl endRefreshing];}
-             });
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"网络异常，错误码：%ld", (long)error.code);
-             
-             [self.lastCell statusError];
-             [self.tableView reloadData];
-             if (refresh) {
-                 [self.refreshControl endRefreshing];
-             }
-
-         }
-     ];
-}
 
 
 

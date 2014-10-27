@@ -151,19 +151,19 @@
     [manager GET:self.generateURL(page)
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             NSArray *tweetsXML = self.parseXML(responseDocument);
+             NSArray *objectsXML = self.parseXML(responseDocument);
              
              if (refresh) {[self.objects removeAllObjects];}
              
              /* 这里要添加一个去重步骤 */
              
-             for (ONOXMLElement *objXML in tweetsXML) {
-                 id obj = [[self.objClass alloc] initWithXML:objXML];
+             for (ONOXMLElement *objectXML in objectsXML) {
+                 id obj = [[self.objClass alloc] initWithXML:objectXML];
                  [self.objects addObject:obj];
              }
              
              dispatch_async(dispatch_get_main_queue(), ^{
-                 if (self.tableWillReload) {self.tableWillReload();}
+                 if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
                  
                  [self.tableView reloadData];
                  if (refresh) {[self.refreshControl endRefreshing];}

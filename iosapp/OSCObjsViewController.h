@@ -21,7 +21,7 @@
 
 @property (nonatomic, copy) NSString * (^generateURL)(NSUInteger page);
 @property (nonatomic, copy) NSArray * (^parseXML)(ONOXMLDocument *responseDocument);
-@property (nonatomic, copy) void (^tableWillReload)();
+@property (nonatomic, copy) void (^tableWillReload)(NSUInteger responseObjectsCount);
 
 @property Class objClass;
 @property (nonatomic, strong) NSMutableArray *objects;
