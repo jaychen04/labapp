@@ -1,96 +1,59 @@
 //
-//  TweetsViewController.m
+//  NewsViewController.m
 //  iosapp
 //
-//  Created by chenhaoxiang on 14-10-14.
-//  Copyright (c) 2014年 oschina. All rights reserved.
+//  Created by ChanAetern on 10/27/14.
+//  Copyright (c) 2014 oschina. All rights reserved.
 //
 
-#import "TweetsViewController.h"
+#import "NewsViewController.h"
+#import "NewsCell.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
-#import "OSCTweet.h"
-#import "TweetCell.h"
+#import "OSCNews.h"
+#import "NewsCell.h"
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "LastCell.h"
 
 
-static NSString *kTweetCellID = @"TweetCell";
+static NSString *kNewsCellID = @"NewsCell";
 
 
 
-#pragma mark -
+@interface NewsViewController ()
 
-@interface TweetsViewController ()
-
-@property (nonatomic, strong) NSMutableArray *tweets;
-@property (nonatomic, assign) int64_t uid;
+@property (nonatomic, strong) NSMutableArray *news;
 
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) LastCell *lastCell;
 
 @end
 
-#pragma mark -
+@implementation NewsViewController
 
-
-
-@implementation TweetsViewController
-
-/*! Primary view has been loaded for this view controller
- 
- */
-
-
-- (instancetype)initWithTweetsType:(TweetsType)tweetsType
+- (void)viewDidLoad
 {
-    self = [super init];
-    if (self) {
-        switch (tweetsType) {
-            case AllTweets:
-                self.uid = 0;
-                break;
-            case HotestTweets:
-                self.uid = -1;
-                break;
-            case OwnTweets:
-                self.uid = 1244649;         /* 需要一个获得自己ID的方法 */
-                break;
-            default:
-                break;
-        }
-    }
-    
-    return self;
-}
-
-
-- (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tweets = [NSMutableArray new];
-    //NSLog(@"self.tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)self.tweets));
-    //NSLog(@"self.tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)_tweets));
+    self.news = [NSMutableArray new];
     
     // tableView设置
-    [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
+    [self.tableView registerClass:[NewsCell class] forCellReuseIdentifier:kNewsCellID];
     
     self.tableView.backgroundColor = [UIColor themeColor];
     
     UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
     
-    
     // 刷新
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
-    
     
     // 用于计算高度
     self.label = [UILabel new];
@@ -102,7 +65,7 @@ static NSString *kTweetCellID = @"TweetCell";
 {
     [super viewDidAppear:animated];
     
-    if (self.tweets.count > 0 || self.lastCell.status == LastCellStatusFinished) {
+    if (self.news.count > 0 || self.lastCell.status == LastCellStatusFinished) {
         return;
     }
     
@@ -110,38 +73,32 @@ static NSString *kTweetCellID = @"TweetCell";
     [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
                             animated:YES];
     
-    [self fetchTweetOnPage:0 refresh:YES];
+    [self fetchNewsOnPage:0 refresh:YES];
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-
-
-
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.lastCell.status == LastCellStatusNotVisible) return self.tweets.count;
-    return self.tweets.count + 1;
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.lastCell.status == LastCellStatusNotVisible) return self.news.count;
+    return self.news.count + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.tweets.count) {
-        TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
-        OSCTweet *tweet = [self.tweets objectAtIndex:indexPath.row];
+    if (indexPath.row < self.news.count) {
+        NewsCell *cell = [tableView dequeueReusableCellWithIdentifier:kNewsCellID forIndexPath:indexPath];
+        OSCNews *news = [self.news objectAtIndex:indexPath.row];
         
-        [cell.portrait sd_setImageWithURL:tweet.portraitURL placeholderImage:nil options:0]; //options:SDWebImageRefreshCached
-        [cell.portrait setCornerRadius:5.0];
-        
-        [cell.authorLabel setText:tweet.author];
-        [cell.timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
-        [cell.appclientLabel setText:[Utils getAppclient:tweet.appclient]];
-        [cell.commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
-        
-        [cell.contentLabel setText:tweet.body];
+        [cell.titleLabel setText:news.title];
+        [cell.authorLabel setText:news.author];
+        [cell.timeLabel setText:[Utils intervalSinceNow:news.pubDate]];
+        [cell.commentCount setText:[NSString stringWithFormat:@"%d", news.commentCount]];
         
         return cell;
     } else {
@@ -151,19 +108,21 @@ static NSString *kTweetCellID = @"TweetCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.tweets.count) {
-        OSCTweet *tweet = [self.tweets objectAtIndex:indexPath.row];
-        [self.label setText:tweet.body];
+    if (indexPath.row < self.news.count) {
+        OSCNews *news = [self.news objectAtIndex:indexPath.row];
+        [self.label setText:news.title];
         self.label.numberOfLines = 0;
         self.label.lineBreakMode = NSLineBreakByWordWrapping;
+        self.label.font = [UIFont boldSystemFontOfSize:14];
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
         
-        return size.height + 71;
+        return size.height + 42;
     } else {
         return 60;
     }
 }
+
 
 
 
@@ -179,7 +138,7 @@ static NSString *kTweetCellID = @"TweetCell";
         refreshInProgress = YES;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self fetchTweetOnPage:0 refresh:YES];
+            [self fetchNewsOnPage:0 refresh:YES];
             refreshInProgress = NO;
         });
     }
@@ -203,15 +162,15 @@ static NSString *kTweetCellID = @"TweetCell";
     if (self.lastCell.status == LastCellStatusFinished || self.lastCell.status == LastCellStatusLoading) {return;}
     
     [self.lastCell statusLoading];
-    [self fetchTweetOnPage:(self.tweets.count + 19)/20 refresh:NO];
+    [self fetchNewsOnPage:(self.news.count + 19)/20 refresh:NO];
 }
 
 
 
 
-#pragma mark - 加载动弹
+#pragma mark - 加载新闻
 
-- (void)fetchTweetOnPage:(NSUInteger)page refresh:(BOOL)refresh
+- (void)fetchNewsOnPage:(NSUInteger)page refresh:(BOOL)refresh
 {
 #if 0
     if (![Tools isNetworkExist]) {
@@ -234,24 +193,21 @@ static NSString *kTweetCellID = @"TweetCell";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, self.uid, (unsigned long)page, OSCAPI_SUFFIX]
+    [manager GET:[NSString stringWithFormat:@"%@%@?catalog=1&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_NEWS_LIST, (unsigned long)page, OSCAPI_SUFFIX]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             NSArray *tweetsXML = [[responseDocument.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
+             NSArray *newsXML = [[responseDocument.rootElement firstChildWithTag:@"newslist"] childrenWithTag:@"news"];
              
-             if (refresh) {[self.tweets removeAllObjects];}
+             if (refresh) {[self.news removeAllObjects];}
              
              /* 这里要添加一个去重步骤 */
              
-             for (ONOXMLElement *tweetXML in tweetsXML) {
-                 OSCTweet *tweet = [[OSCTweet alloc] initWithXML:tweetXML];
-                 [self.tweets addObject:tweet];
+             for (ONOXMLElement *singleNewsXML in newsXML) {
+                 OSCNews *news = [[OSCNews alloc] initWithXML:singleNewsXML];
+                 [self.news addObject:news];
              }
              
              dispatch_async(dispatch_get_main_queue(), ^{
-                 if (self.uid == -1) {[self.lastCell statusFinished];}
-                 else {tweetsXML.count < 20? [self.lastCell statusFinished]: [self.lastCell statusMore];}
-                 
                  [self.tableView reloadData];
                  if (refresh) {[self.refreshControl endRefreshing];}
              });
@@ -264,7 +220,7 @@ static NSString *kTweetCellID = @"TweetCell";
              if (refresh) {
                  [self.refreshControl endRefreshing];
              }
-
+             
          }
      ];
 }
