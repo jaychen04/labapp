@@ -27,6 +27,8 @@
 		00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954419F2B37E002F4737 /* UIColor+Util.m */; };
 		00FF954819F2BF8B002F4737 /* LastCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954719F2BF8B002F4737 /* LastCell.m */; };
 		00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */; };
+		381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5819FE1FCF00C1937C /* OSCNews.m */; };
+		381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5B19FE25DF00C1937C /* OSCPost.m */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +83,10 @@
 		00FF954719F2BF8B002F4737 /* LastCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LastCell.m; sourceTree = "<group>"; };
 		00FF954C19F3E5FF002F4737 /* SwipeableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeableViewController.h; sourceTree = "<group>"; };
 		00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeableViewController.m; sourceTree = "<group>"; };
+		381EAB5719FE1FCF00C1937C /* OSCNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNews.h; sourceTree = "<group>"; };
+		381EAB5819FE1FCF00C1937C /* OSCNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNews.m; sourceTree = "<group>"; };
+		381EAB5A19FE25DF00C1937C /* OSCPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPost.h; sourceTree = "<group>"; };
+		381EAB5B19FE25DF00C1937C /* OSCPost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPost.m; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,11 +135,15 @@
 		00C9A73A19EE855A000EA878 /* OSC models */ = {
 			isa = PBXGroup;
 			children = (
+				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
 				00C9A73B19EE863B000EA878 /* OSCBaseObject.h */,
 				00C9A73C19EE863B000EA878 /* OSCBaseObject.m */,
 				00EDF60719EF77A100A5C842 /* OSCTweet.h */,
 				00EDF60819EF77A100A5C842 /* OSCTweet.m */,
-				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
+				381EAB5719FE1FCF00C1937C /* OSCNews.h */,
+				381EAB5819FE1FCF00C1937C /* OSCNews.m */,
+				381EAB5A19FE25DF00C1937C /* OSCPost.h */,
+				381EAB5B19FE25DF00C1937C /* OSCPost.m */,
 			);
 			name = "OSC models";
 			sourceTree = "<group>";
@@ -394,8 +404,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
 				00D6BCE919EB673200E8754E /* SecondViewController.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
+				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
