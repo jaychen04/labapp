@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString *author;
 @property (nonatomic, assign) int64_t authorID;
 @property (nonatomic, copy) NSString *title;
-@property (nonatomic, assign) int answerCount;
+@property (nonatomic, assign) int replyCount;
 @property (nonatomic, assign) int viewCount;
 @property (nonatomic, copy) NSString *pubDate;
 

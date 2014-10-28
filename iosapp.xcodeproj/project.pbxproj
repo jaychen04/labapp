@@ -32,6 +32,8 @@
 		381EAB6319FE377700C1937C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6219FE377700C1937C /* NewsViewController.m */; };
 		381EAB6619FE379C00C1937C /* NewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6519FE379C00C1937C /* NewsCell.m */; };
 		381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */; };
+		381EAB6D19FE7CD600C1937C /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6C19FE7CD600C1937C /* PostsViewController.m */; };
+		381EAB7019FE7D6700C1937C /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6F19FE7D6700C1937C /* PostCell.m */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -96,6 +98,10 @@
 		381EAB6519FE379C00C1937C /* NewsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsCell.m; sourceTree = "<group>"; };
 		381EAB6719FE3B9800C1937C /* OSCObjsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCObjsViewController.h; sourceTree = "<group>"; };
 		381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCObjsViewController.m; sourceTree = "<group>"; };
+		381EAB6B19FE7CD600C1937C /* PostsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostsViewController.h; sourceTree = "<group>"; };
+		381EAB6C19FE7CD600C1937C /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
+		381EAB6E19FE7D6700C1937C /* PostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
+		381EAB6F19FE7D6700C1937C /* PostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +178,7 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
+				381EAB6A19FE7CA400C1937C /* Posts */,
 				00EDF60C19EFC13500A5C842 /* Utils */,
 				00C9A73919EE8536000EA878 /* OSC API */,
 				00D6BD3219ECD73B00E8754E /* Tweets */,
@@ -272,6 +279,17 @@
 				381EAB6519FE379C00C1937C /* NewsCell.m */,
 			);
 			name = News;
+			sourceTree = "<group>";
+		};
+		381EAB6A19FE7CA400C1937C /* Posts */ = {
+			isa = PBXGroup;
+			children = (
+				381EAB6B19FE7CD600C1937C /* PostsViewController.h */,
+				381EAB6C19FE7CD600C1937C /* PostsViewController.m */,
+				381EAB6E19FE7D6700C1937C /* PostCell.h */,
+				381EAB6F19FE7D6700C1937C /* PostCell.m */,
+			);
+			name = Posts;
 			sourceTree = "<group>";
 		};
 		4E7EF408DB16D07ABAD0FA2A /* Pods */ = {
@@ -439,6 +457,8 @@
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
+				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
+				381EAB6D19FE7CD600C1937C /* PostsViewController.m in Sources */,
 				00EDF60919EF77A100A5C842 /* OSCTweet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -34,6 +34,7 @@
 {
     self.portrait = [UIImageView new];
     self.portrait.contentMode = UIViewContentModeScaleAspectFit;
+    [self.portrait setCornerRadius:5.0];
     [self.contentView addSubview:self.portrait];
 
     self.authorLabel = [UILabel new];
@@ -54,6 +55,7 @@
     self.contentLabel = [UILabel new];
     self.contentLabel.numberOfLines = 0;
     self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.contentLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.contentView addSubview:self.contentLabel];
     
     self.commentCount = [UILabel new];

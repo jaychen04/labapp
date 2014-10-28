@@ -7,16 +7,10 @@
 //
 
 #import "TweetsViewController.h"
-
-#import <AFNetworking.h>
-#import <AFOnoResponseSerializer.h>
-#import <Ono.h>
-#import <SDWebImage/UIImageView+WebCache.h>
+#import "TweetCell.h"
 
 #import "OSCTweet.h"
-#import "TweetCell.h"
-#import "Utils.h"
-#import "OSCAPI.h"
+
 
 
 static NSString *kTweetCellID = @"TweetCell";
@@ -45,18 +39,18 @@ static NSString *kTweetCellID = @"TweetCell";
  */
 
 
-- (instancetype)initWithTweetsType:(TweetsType)tweetsType
+- (instancetype)initWithType:(TweetsType)type
 {
     self = [super init];
     if (self) {
-        switch (tweetsType) {
-            case AllTweets:
+        switch (type) {
+            case TweetsTypeAllTweets:
                 self.uid = 0;
                 break;
-            case HotestTweets:
+            case TweetsTypeHotestTweets:
                 self.uid = -1;
                 break;
-            case OwnTweets:
+            case TweetsTypeOwnTweets:
                 self.uid = 1244649;         /* 需要一个获得自己ID的方法 */
                 break;
             default:
@@ -91,13 +85,6 @@ static NSString *kTweetCellID = @"TweetCell";
     //NSLog(@"self.tweets的应用计数:%ld", CFGetRetainCount((__bridge CFTypeRef)_tweets));
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
-    
-    self.label = [UILabel new];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -115,13 +102,10 @@ static NSString *kTweetCellID = @"TweetCell";
         OSCTweet *tweet = [self.objects objectAtIndex:indexPath.row];
         
         [cell.portrait sd_setImageWithURL:tweet.portraitURL placeholderImage:nil options:0]; //options:SDWebImageRefreshCached
-        [cell.portrait setCornerRadius:5.0];
-        
         [cell.authorLabel setText:tweet.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
         [cell.appclientLabel setText:[Utils getAppclient:tweet.appclient]];
         [cell.commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
-        
         [cell.contentLabel setText:tweet.body];
         
         return cell;
@@ -135,8 +119,6 @@ static NSString *kTweetCellID = @"TweetCell";
     if (indexPath.row < self.objects.count) {
         OSCTweet *tweet = [self.objects objectAtIndex:indexPath.row];
         [self.label setText:tweet.body];
-        self.label.numberOfLines = 0;
-        self.label.lineBreakMode = NSLineBreakByWordWrapping;
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
         

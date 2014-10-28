@@ -11,13 +11,13 @@
 
 typedef NS_ENUM(NSUInteger, TweetsType)
 {
-    AllTweets,
-    HotestTweets,
-    OwnTweets,
+    TweetsTypeAllTweets,
+    TweetsTypeHotestTweets,
+    TweetsTypeOwnTweets,
 };
 
 @interface TweetsViewController : OSCObjsViewController
 
-- (instancetype)initWithTweetsType:(TweetsType)tweetsType;
+- (instancetype)initWithType:(TweetsType)type;
 
 @end

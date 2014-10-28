@@ -11,6 +11,7 @@
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "TweetsViewController.h"
+#import "PostsViewController.h"
 
 @interface SwipeableViewController ()  <UIScrollViewDelegate>
 
@@ -62,13 +63,25 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor themeColor];
     
+#if 0
     self.titles = @[@"最新动弹", @"热门动弹", @"我的动弹"];
     
     NSArray *controllers = @[
-                             [[TweetsViewController alloc] initWithTweetsType:AllTweets],
-                             [[TweetsViewController alloc] initWithTweetsType:HotestTweets],
-                             [[TweetsViewController alloc] initWithTweetsType:OwnTweets]
+                             [[TweetsViewController alloc] initWithType:TweetsTypeAllTweets],
+                             [[TweetsViewController alloc] initWithType:TweetsTypeHotestTweets],
+                             [[TweetsViewController alloc] initWithType:TweetsTypeOwnTweets]
                              ];
+#else
+    self.titles = @[@"问答", @"分享", @"综合", @"职位", @"站务"];
+    
+    NSArray *controllers = @[
+                             [[PostsViewController alloc] initWithType:PostsTypeQA],
+                             [[PostsViewController alloc] initWithType:PostsTypeShare],
+                             [[PostsViewController alloc] initWithType:PostsTypeSynthesis],
+                             [[PostsViewController alloc] initWithType:PostsTypeCaree],
+                             [[PostsViewController alloc] initWithType:PostsTypeSiteManager]
+                             ];
+#endif
     
     CGFloat titleBarHeight = 43;
     self.titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, titleBarHeight) andTitles:self.titles];

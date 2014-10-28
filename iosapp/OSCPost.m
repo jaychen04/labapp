@@ -13,7 +13,7 @@ static NSString * const kPortrait = @"portrait";
 static NSString * const kAuthor = @"author";
 static NSString * const kAuthorID = @"authorid";
 static NSString * const kTitle = @"title";
-static NSString * const kAnswerCount = @"answerCount";
+static NSString * const kReplyCount = @"answerCount";
 static NSString * const kViewCount = @"viewCount";
 static NSString * const kPubDate = @"pubDate";
 
@@ -28,7 +28,7 @@ static NSString * const kPubDate = @"pubDate";
         self.author = [[xml firstChildWithTag:kAuthor] stringValue];
         self.authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
         self.title = [[xml firstChildWithTag:kTitle] stringValue];
-        self.answerCount = [[[xml firstChildWithTag:kAnswerCount] numberValue] intValue];
+        self.replyCount = [[[xml firstChildWithTag:kReplyCount] numberValue] intValue];
         self.viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
         self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
     }

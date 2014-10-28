@@ -17,7 +17,6 @@
 @implementation OSCObjsViewController
 
 
-#if 0
 - (instancetype)init
 {
     self = [super init];
@@ -28,13 +27,14 @@
     
     return self;
 }
-#endif
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
 #if 1
-    self.objects = [NSMutableArray new];
+    if (!self.objects) {
+        self.objects = [NSMutableArray new];
+    }
 #endif
     
     self.tableView.backgroundColor = [UIColor themeColor];
@@ -46,6 +46,11 @@
     [self.tableView addSubview:self.refreshControl];
 
     self.lastCell = [[LastCell alloc] initCell];
+    
+    self.label = [UILabel new];
+    self.label.numberOfLines = 0;
+    self.label.lineBreakMode = NSLineBreakByWordWrapping;
+    self.label.font = [UIFont boldSystemFontOfSize:14];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -164,6 +169,7 @@
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
+                 else {objectsXML.count < 20? [self.lastCell statusFinished] : [self.lastCell statusMore];}
                  
                  [self.tableView reloadData];
                  if (refresh) {[self.refreshControl endRefreshing];}
