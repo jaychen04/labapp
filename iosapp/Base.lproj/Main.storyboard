@@ -127,11 +127,49 @@
                         <segue destination="8rJ-Kc-sve" kind="relationship" relationship="viewControllers" id="lzU-1b-eKA"/>
                         <segue destination="khQ-3c-Qpb" kind="relationship" relationship="viewControllers" id="Pu3-tG-mFL"/>
                         <segue destination="QSE-VG-k4r" kind="relationship" relationship="viewControllers" id="2y6-ei-xvE"/>
+                        <segue destination="H91-OJ-rYL" kind="relationship" relationship="viewControllers" id="ZEM-9q-Mmd"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HuB-VB-40B" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-656" y="-260"/>
+            <point key="canvasLocation" x="-790" y="-200"/>
+        </scene>
+        <!--动弹-->
+        <scene sceneID="O8T-pU-IFd">
+            <objects>
+                <navigationController id="H91-OJ-rYL" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="动弹" image="first" id="hKe-9p-l6U"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fXg-qo-SAx">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" red="0.81017238659467927" green="1" blue="0.61594704446641191" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="2Xb-Rr-bBb" kind="relationship" relationship="rootViewController" id="XaY-W2-PaI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9hN-lz-6vw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-766" y="550"/>
+        </scene>
+        <!--动弹-->
+        <scene sceneID="bGv-gC-YWi">
+            <objects>
+                <viewController id="2Xb-Rr-bBb" customClass="SwipeableViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Nr6-h3-eqg"/>
+                        <viewControllerLayoutGuide type="bottom" id="iEB-jW-B1Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oAw-C1-zd6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="动弹" id="FiG-HH-Y2n"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SeU-Uk-QRi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-527" y="1251"/>
         </scene>
         <!--滑动-->
         <scene sceneID="xia-y2-wFK">

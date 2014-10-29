@@ -7,6 +7,7 @@
 //
 
 #import "TweetCell.h"
+#import "OSCTweet.h"
 #import "Utils.h"
 
 @implementation TweetCell
@@ -76,7 +77,7 @@
     
     NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _commentCount, _image);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]-15-[_contentLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]-8-[_contentLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil
                                                                                views:viewsDict]];
@@ -101,5 +102,24 @@
                                                                              metrics:nil
                                                                                views:viewsDict]];
 }
+
+
+
+
+
+- (void)setContentWithTweet:(OSCTweet *)tweet
+{
+    [self.portrait sd_setImageWithURL:tweet.portraitURL placeholderImage:nil options:0];
+    [self.authorLabel setText:tweet.author];
+    [self.timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
+    [self.appclientLabel setText:[Utils getAppclient:tweet.appclient]];
+    [self.commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
+    [self.contentLabel setText:tweet.body];
+
+}
+
+
+
+
 
 @end

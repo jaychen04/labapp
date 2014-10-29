@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class OSCTweet;
+
 @interface TweetCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *portrait;
@@ -17,5 +19,7 @@
 @property (nonatomic, strong) UILabel *appclientLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UIImageView *image;
+
+- (void)setContentWithTweet:(OSCTweet *)tweet;
 
 @end

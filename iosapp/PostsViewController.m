@@ -14,21 +14,16 @@
 
 static NSString *kPostCellID = @"PostCell";
 
-@interface PostsViewController ()
-
-@property (nonatomic, strong) UILabel *label;
-
-@end
 
 @implementation PostsViewController
 
-- (instancetype)initWithType:(PostsType)type
+- (instancetype)initWithPostsType:(PostsType)type
 {
     self = [super init];
     
     if (self) {
         self.generateURL = ^(NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?catalog=%lu&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_POSTS_LIST, (unsigned long)type, (unsigned long)page, OSCAPI_SUFFIX];
+            return [NSString stringWithFormat:@"%@%@?catalog=%d&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_POSTS_LIST, type, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
         self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
@@ -82,9 +77,9 @@ static NSString *kPostCellID = @"PostCell";
         OSCPost *post = [self.objects objectAtIndex:indexPath.row];
         [self.label setText:post.title];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 52, MAXFLOAT)];
+        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
         
-        return size.height + 42;
+        return size.height + 39;
     } else {
         return 60;
     }

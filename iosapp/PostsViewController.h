@@ -8,7 +8,7 @@
 
 #import "OSCObjsViewController.h"
 
-typedef NS_ENUM(NSUInteger, PostsType)
+typedef NS_ENUM(int, PostsType)
 {
     PostsTypeQA = 1,
     PostsTypeShare,
@@ -19,6 +19,6 @@ typedef NS_ENUM(NSUInteger, PostsType)
 
 @interface PostsViewController : OSCObjsViewController
 
-- (instancetype)initWithType:(PostsType)type;
+- (instancetype)initWithPostsType:(PostsType)type;
 
 @end

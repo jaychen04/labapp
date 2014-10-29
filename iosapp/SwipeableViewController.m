@@ -61,25 +61,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBar.translucent = NO;
     self.view.backgroundColor = [UIColor themeColor];
     
-#if 0
+#if 1
     self.titles = @[@"最新动弹", @"热门动弹", @"我的动弹"];
     
     NSArray *controllers = @[
-                             [[TweetsViewController alloc] initWithType:TweetsTypeAllTweets],
-                             [[TweetsViewController alloc] initWithType:TweetsTypeHotestTweets],
-                             [[TweetsViewController alloc] initWithType:TweetsTypeOwnTweets]
+                             [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
+                             [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
+                             [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
                              ];
 #else
     self.titles = @[@"问答", @"分享", @"综合", @"职位", @"站务"];
     
     NSArray *controllers = @[
-                             [[PostsViewController alloc] initWithType:PostsTypeQA],
-                             [[PostsViewController alloc] initWithType:PostsTypeShare],
-                             [[PostsViewController alloc] initWithType:PostsTypeSynthesis],
-                             [[PostsViewController alloc] initWithType:PostsTypeCaree],
-                             [[PostsViewController alloc] initWithType:PostsTypeSiteManager]
+                             [[PostsViewController alloc] initWithPostsType:PostsTypeQA],
+                             [[PostsViewController alloc] initWithPostsType:PostsTypeShare],
+                             [[PostsViewController alloc] initWithPostsType:PostsTypeSynthesis],
+                             [[PostsViewController alloc] initWithPostsType:PostsTypeCaree],
+                             [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager]
                              ];
 #endif
     

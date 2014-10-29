@@ -98,7 +98,7 @@ static NSString *kNewsCellID = @"NewsCell";
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
         
-        return size.height + 42;
+        return size.height + 32;
     } else {
         return 60;
     }

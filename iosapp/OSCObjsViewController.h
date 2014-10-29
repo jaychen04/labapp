@@ -11,13 +11,14 @@
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
-#import <SDWebImage/UIImageView+WebCache.h>
 
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "LastCell.h"
 
 @interface OSCObjsViewController : UITableViewController <UIScrollViewDelegate>
+
+- (void)fetchMore;
 
 @property (nonatomic, copy) NSString * (^generateURL)(NSUInteger page);
 @property (nonatomic, copy) NSArray * (^parseXML)(ONOXMLDocument *responseDocument);
