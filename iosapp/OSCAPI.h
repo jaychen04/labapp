@@ -16,6 +16,8 @@
 #define OSCAPI_NEWS_LIST                @"news_list"
 #define OSCAPI_NEWS_DETAIL              @"news_detail"
 
+#define OSCAPI_BLOGS_LIST               @"blog_list"
+
 #define OSCAPI_POSTS_LIST               @"post_list"
 #define OSCAPI_POST_DETAIL              @"post_detail"
 #define OSCAPI_POST_PUB                 @"post_pub"
@@ -66,7 +68,6 @@
 
 #define OSCAPI_USERBLOG_DELETE          @"userblog_delete"
 #define OSCAPI_USERBLOG_LIST            @"userblog_list"
-#define OSCAPI_BLOG_LIST                @"blog_list"
 
 #define OSCAPI_REPORT                   @"report"
 
