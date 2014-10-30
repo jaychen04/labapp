@@ -26,7 +26,7 @@ static NSString *kCommentCellID = @"CommentCell";
     
     if (self) {
         self.generateURL = ^(NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST, objectID, (unsigned long)page, OSCAPI_SUFFIX];
+            return [NSString stringWithFormat:@"%@%@?catalog=%d&id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST, type, objectID, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
         self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
@@ -41,6 +41,8 @@ static NSString *kCommentCellID = @"CommentCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.tableView registerClass:[CommentCell class] forCellReuseIdentifier:kCommentCellID];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -52,10 +54,21 @@ static NSString *kCommentCellID = @"CommentCell";
 
 #pragma mark -
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0 && self.otherSectionCell) {
+        return 1;
+    } else {
+        return self.objects.count + 1;
+    }
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && self.otherSectionCell) {
-        return self.otherSectionCell(indexPath);
+        UITableViewCell *cell = self.otherSectionCell(indexPath);
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
     } else if (indexPath.row < self.objects.count) {
         CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
         OSCComment *comment = [self.objects objectAtIndex:indexPath.row];
@@ -82,7 +95,7 @@ static NSString *kCommentCellID = @"CommentCell";
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 52, MAXFLOAT)];
         
-        return size.height + 38;
+        return size.height + 64;
     } else {
         return 60;
     }

@@ -18,7 +18,6 @@
 @property (nonatomic, strong) HorizonalTableViewController *viewPager;
 @property (nonatomic, strong) TitleBarView *titleBar;
 
-@property (nonatomic, strong) NSArray *titles;
 @property (nonatomic, strong) NSArray *controllers;
 
 @end
@@ -27,32 +26,42 @@
 
 @implementation SwipeableViewController
 
-- (instancetype)initWithTitles:(NSArray *)titles andControllers:(NSArray *)controllers
+- (instancetype)initWithTitle:(NSString *)title andSubTitles:(NSArray *)subTitles andControllers:(NSArray *)controllers
 {
     self = [super init];
     if (self) {
-        self.titles = titles;
-        
-        NSString * tmpVersonType = [UIDevice currentDevice].systemVersion;
-        
-        NSArray * tmpArr = [tmpVersonType componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"."]];
-        int y = 0;
-        if([[tmpArr objectAtIndex:0] isEqualToString:@"7"])
-        {
-            self.automaticallyAdjustsScrollViewInsets = NO;
-            y = 64;
-        }
+        self.title = title;
         
         CGFloat titleBarHeight = 43;
-        self.titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, y, self.view.frame.size.width, titleBarHeight) andTitles:titles];
+        self.titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, titleBarHeight) andTitles:subTitles];
         self.titleBar.backgroundColor = [UIColor clearColor];
         [self.view addSubview:self.titleBar];
-        //self.titleBar.clickDelegate = self;
+        
         
         self.viewPager = [[HorizonalTableViewController alloc] initWithViewControllers:controllers];
-        self.viewPager.view.frame = CGRectMake(0,  titleBarHeight + y, 320, self.view.frame.size.height - titleBarHeight - y);
+        self.viewPager.view.frame = CGRectMake(0,  titleBarHeight, self.view.frame.size.width, self.view.frame.size.height - titleBarHeight);
         [self addChildViewController:self.viewPager];
         [self.view addSubview:self.viewPager.view];
+        
+        
+        __weak TitleBarView *weakTitleBar = self.titleBar;
+        self.viewPager.changeIndex = ^(NSUInteger index) {weakTitleBar.currentIndex = index;};
+        self.viewPager.scrollView = ^(CGFloat offsetRatio, NSUInteger index) {
+            UIButton *titleFrom = weakTitleBar.titleButtons[weakTitleBar.currentIndex];
+            CGFloat value = [Utils valueBetweenMin:15 andMax:16 percent:offsetRatio];
+            titleFrom.titleLabel.font = [UIFont systemFontOfSize:value];
+            [titleFrom setTitleColor:[UIColor colorWithRed:0 green:0.5*offsetRatio blue:0 alpha:1.0]
+                            forState:UIControlStateNormal];
+            
+            UIButton *titleTo = weakTitleBar.titleButtons[index];
+            value = [Utils valueBetweenMin:15 andMax:16 percent:1-offsetRatio];
+            titleTo.titleLabel.font = [UIFont systemFontOfSize:value];
+            [titleTo setTitleColor:[UIColor colorWithRed:0 green:0.5*(1-offsetRatio) blue:0 alpha:1.0]
+                          forState:UIControlStateNormal];
+        };
+        
+        __weak HorizonalTableViewController *weakViewPager = self.viewPager;
+        self.titleBar.titleButtonClicked = ^(NSUInteger index) {[weakViewPager scrollToViewAtIndex:index];};
     }
     
     return self;
@@ -61,58 +70,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.navigationBar.translucent = NO;
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor themeColor];
-    
-#if 1
-    self.titles = @[@"最新动弹", @"热门动弹", @"我的动弹"];
-    
-    NSArray *controllers = @[
-                             [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
-                             [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
-                             [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
-                             ];
-#else
-    self.titles = @[@"问答", @"分享", @"综合", @"职位", @"站务"];
-    
-    NSArray *controllers = @[
-                             [[PostsViewController alloc] initWithPostsType:PostsTypeQA],
-                             [[PostsViewController alloc] initWithPostsType:PostsTypeShare],
-                             [[PostsViewController alloc] initWithPostsType:PostsTypeSynthesis],
-                             [[PostsViewController alloc] initWithPostsType:PostsTypeCaree],
-                             [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager]
-                             ];
-#endif
-    
-    CGFloat titleBarHeight = 43;
-    self.titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, titleBarHeight) andTitles:self.titles];
-    self.titleBar.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:self.titleBar];
-    
-    
-    self.viewPager = [[HorizonalTableViewController alloc] initWithViewControllers:controllers];
-    self.viewPager.view.frame = CGRectMake(0,  titleBarHeight, self.view.frame.size.width, self.view.frame.size.height - titleBarHeight);
-    [self addChildViewController:self.viewPager];
-    [self.view addSubview:self.viewPager.view];
-    
-    __weak TitleBarView *weakTitleBar = self.titleBar;
-    self.viewPager.changeIndex = ^(NSUInteger index) {weakTitleBar.currentIndex = index;};
-    self.viewPager.scrollView = ^(CGFloat offsetRatio, NSUInteger index) {
-        UIButton *titleFrom = weakTitleBar.titleButtons[weakTitleBar.currentIndex];
-        CGFloat value = [Utils valueBetweenMin:15 andMax:16 percent:offsetRatio];
-        titleFrom.titleLabel.font = [UIFont systemFontOfSize:value];
-        [titleFrom setTitleColor:[UIColor colorWithRed:offsetRatio green:0 blue:0 alpha:1.0]
-                        forState:UIControlStateNormal];
-        
-        UIButton *titleTo = weakTitleBar.titleButtons[index];
-        value = [Utils valueBetweenMin:15 andMax:16 percent:1-offsetRatio];
-        titleTo.titleLabel.font = [UIFont systemFontOfSize:value];
-        [titleTo setTitleColor:[UIColor colorWithRed:1-offsetRatio green:0 blue:0 alpha:1.0]
-                        forState:UIControlStateNormal];
-    };
-    
-    __weak HorizonalTableViewController *weakViewPager = self.viewPager;
-    self.titleBar.titleButtonClicked = ^(NSUInteger index) {[weakViewPager scrollToViewAtIndex:index];};
 }
 
 

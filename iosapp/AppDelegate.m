@@ -7,8 +7,12 @@
 //
 
 #import "AppDelegate.h"
+#import "SwipeableViewController.h"
+#import "TweetsViewController.h"
+#import "PostsViewController.h"
+#import "UIColor+Util.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <UIApplicationDelegate,UITabBarControllerDelegate>
 
 @end
 
@@ -16,7 +20,43 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    SwipeableViewController *tweetsSVC = [[SwipeableViewController alloc] initWithTitle:@"动弹"
+                                                                           andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
+                                                                         andControllers:@[
+                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
+                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
+                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets],
+                                                                                          ]];
+    
+    SwipeableViewController *postsSVC = [[SwipeableViewController alloc] initWithTitle:@"讨论区"
+                                                                          andSubTitles:@[@"问答", @"分享", @"综合", @"职业", @"站务"]
+                                                                        andControllers:@[
+                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeQA],
+                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeShare],
+                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeSynthesis],
+                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager],
+                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeCaree]
+                                                                                         ]];
+    
+    UINavigationController *tweetsNav = [[UINavigationController alloc] initWithRootViewController:tweetsSVC];
+    UINavigationController *postsNav = [[UINavigationController alloc] initWithRootViewController:postsSVC];
+    
+    self.tabBarController = [UITabBarController new];
+    self.tabBarController.delegate = self;
+    self.tabBarController.viewControllers = @[tweetsNav, postsNav];
+    
+    [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:@"动弹"];
+    [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:@"讨论区"];
+    
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = self.tabBarController;
+    [self.window makeKeyAndVisible];
+    
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x008000]];
+    NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
+    [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];               //UIColorFromRGB(0xdadada)
+    
     return YES;
 }
 

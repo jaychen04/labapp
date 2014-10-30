@@ -47,7 +47,7 @@
         self.showsHorizontalScrollIndicator = NO;
         UIButton *firstTitle = self.titleButtons[0];
         firstTitle.titleLabel.font = [UIFont systemFontOfSize:16];
-        [firstTitle setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [firstTitle setTitleColor:[UIColor colorWithHex:0x008000] forState:UIControlStateNormal];
     }
     
     return self;

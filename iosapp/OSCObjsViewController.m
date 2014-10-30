@@ -31,12 +31,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-#if 1
-    if (!self.objects) {
-        self.objects = [NSMutableArray new];
-    }
-#endif
-    
     self.tableView.backgroundColor = [UIColor themeColor];
     UIView *footer =[[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
@@ -156,6 +150,7 @@
     [manager GET:self.generateURL(page)
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+             self.allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
              NSArray *objectsXML = self.parseXML(responseDocument);
              
              if (refresh) {[self.objects removeAllObjects];}

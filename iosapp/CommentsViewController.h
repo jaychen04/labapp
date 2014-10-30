@@ -10,7 +10,7 @@
 
 typedef NS_ENUM(int, CommentsType)
 {
-    CommentsTypeNews,
+    CommentsTypeNews = 1,
     CommentsTypePost,
     CommentsTypeTweet,
     CommentsTypeMessageCenter,

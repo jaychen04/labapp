@@ -30,6 +30,7 @@
             TweetCell *cell = [TweetCell new];
             
             [cell setContentWithTweet:tweet];
+            cell.commentCount.hidden = YES;
             
             return cell;
         };
@@ -76,7 +77,13 @@
     if (section == 0) {
         return nil;
     } else {
-        return [NSString stringWithFormat:@"%d条评论", self.tweet.commentCount];
+        NSString *title;
+        if (self.tweet.commentCount) {
+            title = [NSString stringWithFormat:@"%d 条评论", self.allCount];
+        } else {
+            title = @"没有评论";
+        }
+        return title;
     }
 }
 

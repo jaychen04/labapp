@@ -125,11 +125,6 @@ static NSString *kTweetCellID = @"TweetCell";
     if (row < self.objects.count) {
         OSCTweet *tweet = [self.objects objectAtIndex:row];
         TweetDetailsViewController *tweetDetailsViewController = [[TweetDetailsViewController alloc] initWithTweet:tweet];
-        NSLog(@"%@", self.parentViewController);
-        NSLog(@"%@", self.parentViewController.navigationController);
-        NSLog(@"%@", self.navigationController);
-        NSLog(@"%@", self.parentViewController.parentViewController);
-        NSLog(@"%@", self.parentViewController.parentViewController.navigationController);
         [self.navigationController pushViewController:tweetDetailsViewController animated:YES];
     } else {
         [self fetchMore];

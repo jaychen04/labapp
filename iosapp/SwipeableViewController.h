@@ -11,6 +11,6 @@
 
 @interface SwipeableViewController : UIViewController
 
-- (instancetype)initWithTitles:(NSArray *)titles andControllers:(NSArray *)controllers;
+- (instancetype)initWithTitle:(NSString *)title andSubTitles:(NSArray *)subTitles andControllers:(NSArray *)controllers;
 
 @end

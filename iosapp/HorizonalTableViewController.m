@@ -24,6 +24,9 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
     self = [super init];
     if (self) {
         self.controllers = controllers;
+        for (UIViewController *controller in controllers) {
+            [self addChildViewController:controller];
+        }
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.tableView.scrollsToTop = NO;
