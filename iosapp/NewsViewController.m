@@ -48,10 +48,7 @@ static NSString *kNewsCellID = @"NewsCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     [self.tableView registerClass:[NewsCell class] forCellReuseIdentifier:kNewsCellID];
-    
-    self.label = [UILabel new];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,7 +79,7 @@ static NSString *kNewsCellID = @"NewsCell";
         OSCNews *news = [self.objects objectAtIndex:indexPath.row];
         [self.label setText:news.title];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
         
         return size.height + 39;
     } else {

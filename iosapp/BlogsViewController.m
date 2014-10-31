@@ -45,7 +45,6 @@ static NSString *kBlogCellID = @"BlogCell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -78,7 +77,7 @@ static NSString *kBlogCellID = @"BlogCell";
         OSCBlog *blog = [self.objects objectAtIndex:indexPath.row];
         [self.label setText:blog.title];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
         
         return size.height + 39;
     } else {
