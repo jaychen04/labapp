@@ -14,6 +14,7 @@
 @interface Utils : NSObject
 
 + (NSString *)getAppclient:(int)clientType;
++ (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
 

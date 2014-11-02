@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class OSCNews;
+
 @interface NewsDetailsViewController : UIViewController
+
+- (instancetype)initWithNews:(OSCNews *)news;
 
 @end

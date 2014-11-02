@@ -8,9 +8,8 @@
 
 #import "NewsViewController.h"
 #import "NewsCell.h"
-
 #import "OSCNews.h"
-#import "OSCBlog.h"
+#import "NewsDetailsViewController.h"
 
 
 
@@ -84,6 +83,20 @@ static NSString *kNewsCellID = @"NewsCell";
         return size.height + 39;
     } else {
         return 60;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSInteger row = indexPath.row;
+    
+    if (row < self.objects.count) {
+        OSCNews *news = [self.objects objectAtIndex:row];
+        NewsDetailsViewController *newsDetailsViewController = [[NewsDetailsViewController alloc] initWithNews:news];
+        [self.navigationController pushViewController:newsDetailsViewController animated:YES];
+    } else {
+        [self fetchMore];
     }
 }
 

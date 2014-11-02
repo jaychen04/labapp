@@ -31,8 +31,22 @@
         default:
             return @"";
     }
-
 }
+
++ (NSString *)generateRelativeNewsString:(NSArray *)relativeNews
+{
+    if (relativeNews == nil || [relativeNews count] == 0) {
+        return @"";
+    }
+    
+    NSString *middle = @"";
+    for (NSArray *news in relativeNews) {
+        middle = [NSString stringWithFormat:@"%@<a href=%@ style='text-decoration:none'>%@</a><p/>", middle, news[0], news[1]];
+    }
+    return [NSString stringWithFormat:@"<hr/>相关文章<div style='font-size:14px'><p/>%@</div>", middle];
+}
+
+
 
 
 #pragma mark - 通用
