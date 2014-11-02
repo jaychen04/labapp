@@ -16,6 +16,6 @@
 @property (nonatomic, assign) int64_t authorID;
 @property (nonatomic, copy) NSString *content;
 @property (nonatomic, copy) NSString *pubDate;
-@property (nonatomic, strong) NSMutableArray *replies;
+@property (nonatomic, strong) NSArray *replies;
 
 @end

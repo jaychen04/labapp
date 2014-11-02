@@ -42,11 +42,9 @@ static NSString *kTweetCellID = @"TweetCell";
     if (self) {
         switch (type) {
             case TweetsTypeAllTweets:
-                self.uid = 0;
-                break;
+                self.uid = 0; break;
             case TweetsTypeHotestTweets:
-                self.uid = -1;
-                break;
+                self.uid = -1; break;
             case TweetsTypeOwnTweets:
                 self.uid = 1244649;         /* 需要一个获得自己ID的方法 */
                 break;

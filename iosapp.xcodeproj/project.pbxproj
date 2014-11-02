@@ -12,8 +12,6 @@
 		00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 00C9A73C19EE863B000EA878 /* OSCBaseObject.m */; };
 		00D6BCE019EB673200E8754E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCDF19EB673200E8754E /* main.m */; };
 		00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCE219EB673200E8754E /* AppDelegate.m */; };
-		00D6BCE619EB673200E8754E /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCE519EB673200E8754E /* FirstViewController.m */; };
-		00D6BCE919EB673200E8754E /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCE819EB673200E8754E /* SecondViewController.m */; };
 		00D6BCEC19EB673200E8754E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00D6BCEA19EB673200E8754E /* Main.storyboard */; };
 		00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00D6BCED19EB673200E8754E /* Images.xcassets */; };
 		00D6BCF119EB673200E8754E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00D6BCEF19EB673200E8754E /* LaunchScreen.xib */; };
@@ -34,6 +32,10 @@
 		381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */; };
 		381EAB6D19FE7CD600C1937C /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6C19FE7CD600C1937C /* PostsViewController.m */; };
 		381EAB7019FE7D6700C1937C /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6F19FE7D6700C1937C /* PostCell.m */; };
+		382F5EAD1A03351900A8EF11 /* NewsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAC1A03351900A8EF11 /* NewsDetailsViewController.m */; };
+		382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */; };
+		382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */; };
+		382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
 		38996A591A026D6A0025AA52 /* BlogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A581A026D6A0025AA52 /* BlogCell.m */; };
@@ -66,10 +68,6 @@
 		00D6BCDF19EB673200E8754E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		00D6BCE119EB673200E8754E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		00D6BCE219EB673200E8754E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		00D6BCE419EB673200E8754E /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		00D6BCE519EB673200E8754E /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		00D6BCE719EB673200E8754E /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		00D6BCE819EB673200E8754E /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		00D6BCEB19EB673200E8754E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		00D6BCED19EB673200E8754E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		00D6BCF019EB673200E8754E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -109,6 +107,14 @@
 		381EAB6C19FE7CD600C1937C /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
 		381EAB6E19FE7D6700C1937C /* PostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
 		381EAB6F19FE7D6700C1937C /* PostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
+		382F5EAB1A03351900A8EF11 /* NewsDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailsViewController.h; sourceTree = "<group>"; };
+		382F5EAC1A03351900A8EF11 /* NewsDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailsViewController.m; sourceTree = "<group>"; };
+		382F5EAE1A0338C900A8EF11 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetails.h; sourceTree = "<group>"; };
+		382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetails.m; sourceTree = "<group>"; };
+		382F5EB41A036EE500A8EF11 /* OSCNewsDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewsDetails.h; sourceTree = "<group>"; };
+		382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewsDetails.m; sourceTree = "<group>"; };
 		38996A501A02642C0025AA52 /* OSCBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlog.h; sourceTree = "<group>"; };
 		38996A511A02642C0025AA52 /* OSCBlog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlog.m; sourceTree = "<group>"; };
 		38996A531A0266F10025AA52 /* BlogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlogsViewController.h; sourceTree = "<group>"; };
@@ -170,12 +176,16 @@
 				00EDF60819EF77A100A5C842 /* OSCTweet.m */,
 				381EAB5719FE1FCF00C1937C /* OSCNews.h */,
 				381EAB5819FE1FCF00C1937C /* OSCNews.m */,
+				382F5EB41A036EE500A8EF11 /* OSCNewsDetails.h */,
+				382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */,
 				381EAB5A19FE25DF00C1937C /* OSCPost.h */,
 				381EAB5B19FE25DF00C1937C /* OSCPost.m */,
 				38BD7D7319FF8521003ABB80 /* OSCComment.h */,
 				38BD7D7419FF8521003ABB80 /* OSCComment.m */,
 				38996A501A02642C0025AA52 /* OSCBlog.h */,
 				38996A511A02642C0025AA52 /* OSCBlog.m */,
+				382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */,
+				382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */,
 			);
 			name = "OSC API";
 			sourceTree = "<group>";
@@ -266,11 +276,9 @@
 				381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */,
 				00D6BD2B19ECD46100E8754E /* BaseViewController.h */,
 				00D6BD2C19ECD46100E8754E /* BaseViewController.m */,
-				00D6BCE419EB673200E8754E /* FirstViewController.h */,
-				00D6BCE519EB673200E8754E /* FirstViewController.m */,
-				00D6BCE719EB673200E8754E /* SecondViewController.h */,
-				00D6BCE819EB673200E8754E /* SecondViewController.m */,
 				00364FF519F5F93600871255 /* SwipeableViewController */,
+				382F5EAE1A0338C900A8EF11 /* DetailsViewController.h */,
+				382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */,
 			);
 			name = "Main ViewControllers";
 			sourceTree = "<group>";
@@ -305,6 +313,7 @@
 				381EAB6219FE377700C1937C /* NewsViewController.m */,
 				381EAB6419FE379C00C1937C /* NewsCell.h */,
 				381EAB6519FE379C00C1937C /* NewsCell.m */,
+				382F5EAA1A0334DF00A8EF11 /* NewsDetails */,
 			);
 			name = News;
 			sourceTree = "<group>";
@@ -318,6 +327,15 @@
 				381EAB6F19FE7D6700C1937C /* PostCell.m */,
 			);
 			name = Posts;
+			sourceTree = "<group>";
+		};
+		382F5EAA1A0334DF00A8EF11 /* NewsDetails */ = {
+			isa = PBXGroup;
+			children = (
+				382F5EAB1A03351900A8EF11 /* NewsDetailsViewController.h */,
+				382F5EAC1A03351900A8EF11 /* NewsDetailsViewController.m */,
+			);
+			name = NewsDetails;
 			sourceTree = "<group>";
 		};
 		38996A561A0266F80025AA52 /* Blog */ = {
@@ -497,11 +515,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
-				00D6BCE919EB673200E8754E /* SecondViewController.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
+				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
+				382F5EAD1A03351900A8EF11 /* NewsDetailsViewController.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,
@@ -514,10 +533,11 @@
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
 				38996A591A026D6A0025AA52 /* BlogCell.m in Sources */,
-				00D6BCE619EB673200E8754E /* FirstViewController.m in Sources */,
+				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
 				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
+				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,

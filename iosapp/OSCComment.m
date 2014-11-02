@@ -33,13 +33,14 @@ static NSString * const kRContent = @"rcontent";
         self.content = [[xml firstChildWithTag:kContent] stringValue];
         self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
         
-        self.replies = [NSMutableArray new];
+        NSMutableArray *mutableReplies = [NSMutableArray new];
         NSArray *repliesXML = [[xml firstChildWithTag:kReplies] childrenWithTag:kReply];
         for (ONOXMLElement *replyXML in repliesXML) {
             NSString *rauthor = [[replyXML firstChildWithTag:kRauthor] stringValue];
             NSString *rcontent = [[replyXML firstChildWithTag:kRContent] stringValue];
-            [self.replies addObject:@[rauthor, rcontent]];
+            [mutableReplies addObject:@[rauthor, rcontent]];
         }
+        self.replies = [NSArray arrayWithArray:mutableReplies];
     }
     
     return self;
