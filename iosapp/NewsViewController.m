@@ -9,7 +9,6 @@
 #import "NewsViewController.h"
 #import "NewsCell.h"
 #import "OSCNews.h"
-#import "NewsDetailsViewController.h"
 #import "DetailsViewController.h"
 
 

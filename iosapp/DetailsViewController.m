@@ -9,6 +9,7 @@
 #import "DetailsViewController.h"
 #import "OSCAPI.h"
 #import "OSCNews.h"
+#import "OSCBlog.h"
 #import "OSCNewsDetails.h"
 #import "OSCBlogDetails.h"
 #import "OSCPostDetails.h"
@@ -73,6 +74,19 @@
             default:
                 break;
         }
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithBlog:(OSCBlog *)blog
+{
+    self = [super init];
+    if (self) {
+        self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, blog.blogID];
+        self.tag = @"blog";
+        self.detailsClass = [OSCBlogDetails class];
+        self.loadMethod = @selector(loadBlogDetails:);
     }
     
     return self;

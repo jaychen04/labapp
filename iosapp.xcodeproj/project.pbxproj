@@ -32,7 +32,6 @@
 		381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */; };
 		381EAB6D19FE7CD600C1937C /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6C19FE7CD600C1937C /* PostsViewController.m */; };
 		381EAB7019FE7D6700C1937C /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6F19FE7D6700C1937C /* PostCell.m */; };
-		382F5EAD1A03351900A8EF11 /* NewsDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAC1A03351900A8EF11 /* NewsDetailsViewController.m */; };
 		382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */; };
 		382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */; };
 		382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */; };
@@ -109,8 +108,6 @@
 		381EAB6C19FE7CD600C1937C /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
 		381EAB6E19FE7D6700C1937C /* PostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
 		381EAB6F19FE7D6700C1937C /* PostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
-		382F5EAB1A03351900A8EF11 /* NewsDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsDetailsViewController.h; sourceTree = "<group>"; };
-		382F5EAC1A03351900A8EF11 /* NewsDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsDetailsViewController.m; sourceTree = "<group>"; };
 		382F5EAE1A0338C900A8EF11 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetails.h; sourceTree = "<group>"; };
@@ -186,6 +183,8 @@
 				382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */,
 				381EAB5A19FE25DF00C1937C /* OSCPost.h */,
 				381EAB5B19FE25DF00C1937C /* OSCPost.m */,
+				38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */,
+				38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */,
 				38BD7D7319FF8521003ABB80 /* OSCComment.h */,
 				38BD7D7419FF8521003ABB80 /* OSCComment.m */,
 				38996A501A02642C0025AA52 /* OSCBlog.h */,
@@ -194,8 +193,6 @@
 				382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */,
 				38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */,
 				38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */,
-				38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */,
-				38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */,
 			);
 			name = "OSC API";
 			sourceTree = "<group>";
@@ -323,7 +320,6 @@
 				381EAB6219FE377700C1937C /* NewsViewController.m */,
 				381EAB6419FE379C00C1937C /* NewsCell.h */,
 				381EAB6519FE379C00C1937C /* NewsCell.m */,
-				382F5EAA1A0334DF00A8EF11 /* NewsDetails */,
 			);
 			name = News;
 			sourceTree = "<group>";
@@ -337,15 +333,6 @@
 				381EAB6F19FE7D6700C1937C /* PostCell.m */,
 			);
 			name = Posts;
-			sourceTree = "<group>";
-		};
-		382F5EAA1A0334DF00A8EF11 /* NewsDetails */ = {
-			isa = PBXGroup;
-			children = (
-				382F5EAB1A03351900A8EF11 /* NewsDetailsViewController.h */,
-				382F5EAC1A03351900A8EF11 /* NewsDetailsViewController.m */,
-			);
-			name = NewsDetails;
 			sourceTree = "<group>";
 		};
 		38996A561A0266F80025AA52 /* Blog */ = {
@@ -531,7 +518,6 @@
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
 				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
-				382F5EAD1A03351900A8EF11 /* NewsDetailsViewController.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,
