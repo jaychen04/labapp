@@ -10,6 +10,9 @@
 #import "OSCAPI.h"
 #import "OSCNews.h"
 #import "OSCNewsDetails.h"
+#import "OSCBlogDetails.h"
+#import "OSCPostDetails.h"
+#import "OSCSoftwareDetails.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -29,6 +32,9 @@
 @property (nonatomic, strong) OSCNews *news;
 @property (nonatomic, copy) NSString *detailsURL;
 @property (nonatomic, strong) UIWebView *detailsView;
+@property (nonatomic, copy) NSString *tag;
+@property (nonatomic, assign) SEL loadMethod;
+@property Class detailsClass;
 
 @end
 
@@ -42,20 +48,31 @@
         switch (news.type) {
             case NewsTypeStandardNews:
                 self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_NEWS_DETAIL, news.newsID];
+                self.tag = @"news";
+                self.detailsClass = [OSCNewsDetails class];
+                self.loadMethod = @selector(loadNewsDetails:);
                 break;
             case NewsTypeSoftWare:
-                self.detailsURL = [NSString stringWithFormat:@"%@%@?ident=%@", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, news.attachment];
+                self.detailsURL = [NSString stringWithFormat:@"%@%@?ident=%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_DETAIL, news.attachment];
+                self.tag = @"software";
+                self.detailsClass = [OSCSoftwareDetails class];
+                self.loadMethod = @selector(loadSoftwareDetails:);
                 break;
             case NewsTypeQA:
-                self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, news.newsID];
+                self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%@", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, news.attachment];
+                self.tag = @"post";
+                self.detailsClass = [OSCPostDetails class];
+                self.loadMethod = @selector(loadPostDetails:);
                 break;
             case NewsTypeBlog:
-                self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, news.newsID];
+                self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%@", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, news.attachment];
+                self.tag = @"blog";
+                self.detailsClass = [OSCBlogDetails class];
+                self.loadMethod = @selector(loadBlogDetails:);
                 break;
             default:
                 break;
         }
-        self.detailsView = [UIWebView new];
     }
     
     return self;
@@ -65,14 +82,19 @@
 {
     [super viewDidLoad];
     
+    self.detailsView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    self.detailsView.scrollView.bounces = NO;
+    [self.view addSubview:self.detailsView];
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager GET:self.detailsURL
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             ONOXMLElement *newsXML = [responseDocument.rootElement firstChildWithTag:@"news"];
-             OSCNewsDetails *newsDetails = [[OSCNewsDetails alloc] initWithXML:newsXML];
-             [self loadNewsDetails:newsDetails];
+             ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:self.tag];
+             
+             id details = [[self.detailsClass alloc] initWithXML:XML];
+             [self performSelector:_loadMethod withObject:details];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"网络异常，错误码：%ld", (long)error.code);
@@ -102,10 +124,58 @@
         software = [NSString stringWithFormat:@"<div id='oschina_software' style='margin-top:8px;color:#FF0000;font-size:14px;font-weight:bold'>更多关于:&nbsp;<a href='%@'>%@</a>&nbsp;的详细信息</div>", newsDetails.softwareLink, newsDetails.softwareName];
     }
     
-    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@%@</body>",HTML_STYLE, newsDetails.title, authorStr, newsDetails.body, software,[Utils generateRelativeNewsString:newsDetails.relatives], HTML_BOTTOM];
+    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@%@</body>", HTML_STYLE, newsDetails.title, authorStr, newsDetails.body, software,[Utils generateRelativeNewsString:newsDetails.relatives], HTML_BOTTOM];
     
     [self.detailsView loadHTMLString:html baseURL:nil];
 }
+
+- (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
+{
+    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a>&nbsp;发表于&nbsp;%@", blogDetails.authorID, blogDetails.author,  [Utils intervalSinceNow:blogDetails.pubDate]];
+    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@</body>",HTML_STYLE, blogDetails.title, authorStr, blogDetails.body, HTML_BOTTOM];
+    
+    [self.detailsView loadHTMLString:html baseURL:nil];
+}
+
+- (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
+{
+    NSString *titleStr = [NSString stringWithFormat:@"%@ %@", softwareDetails.extensionTitle, softwareDetails.title];
+    
+    NSString *tail = [NSString stringWithFormat:@"<div><table><tr><td style='font-weight:bold'>授权协议:&nbsp;</td><td>%@</td></tr><tr><td style='font-weight:bold'>开发语言:</td><td>%@</td></tr><tr><td style='font-weight:bold'>操作系统:</td><td>%@</td></tr><tr><td style='font-weight:bold'>收录时间:</td><td>%@</td></tr></table></div>", softwareDetails.license, softwareDetails.language, softwareDetails.os, softwareDetails.recordTime];
+    
+    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'><img src='%@' width='34' height='34'/>%@</div><hr/><div id='oschina_body'>%@</div><div>%@</div>%@%@</body>", HTML_STYLE, softwareDetails.logoURL, titleStr, softwareDetails.body, tail, [self createButtonsWithHomepageURL:softwareDetails.homepageURL andDocumentURL:softwareDetails.documentURL andDownloadURL:softwareDetails.downloadURL], HTML_BOTTOM];
+    
+    [self.detailsView loadHTMLString:html baseURL:nil];
+}
+
+- (NSString *)createButtonsWithHomepageURL:(NSString *)homepageURL andDocumentURL:(NSString *)documentURL andDownloadURL:(NSString *)downloadURL
+{
+    NSString *strHomePage = @"";
+    NSString *strDocument = @"";
+    NSString *strDownload = @"";
+    
+    if ([homepageURL isEqualToString:@""] == NO) {
+        strHomePage = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件首页' style='font-size:14px;'/></a>", homepageURL];
+    }
+    if ([documentURL isEqualToString:@""] == NO) {
+        strDocument = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件文档' style='font-size:14px;'/></a>", documentURL];
+    }
+    if ([downloadURL isEqualToString:@""] == NO) {
+        strDownload = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件下载' style='font-size:14px;'/></a>", downloadURL];
+    }
+    
+    return [NSString stringWithFormat:@"<p>%@&nbsp;&nbsp;%@&nbsp;&nbsp;%@</p>", strHomePage, strDocument, strDownload];
+}
+
+- (void)loadPostDetails:(OSCPostDetails *)postDetails
+{
+    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", postDetails.authorID, postDetails.author, postDetails.pubDate];
+    
+    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3;'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@</body>",HTML_STYLE, postDetails.title, authorStr, postDetails.body, [Utils GenerateTags:postDetails.tags], HTML_BOTTOM];
+    
+    [self.detailsView loadHTMLString:html baseURL:nil];
+}
+
 
 
 

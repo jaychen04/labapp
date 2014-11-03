@@ -15,6 +15,7 @@
 
 + (NSString *)getAppclient:(int)clientType;
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
++ (NSString *)GenerateTags:(NSArray *)tags;
 
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
 

@@ -10,7 +10,7 @@
 
 typedef NS_ENUM(int, NewsType)
 {
-    NewsTypeStandardNews = 1,
+    NewsTypeStandardNews,
     NewsTypeSoftWare,
     NewsTypeQA,
     NewsTypeBlog
@@ -23,7 +23,7 @@ typedef NS_ENUM(int, NewsType)
 @property (nonatomic, assign) int commentCount;
 @property (nonatomic, copy) NSString *author;
 @property (nonatomic, assign) int64_t authorID;
-@property (nonatomic, assign) int type;
+@property (nonatomic, assign) NewsType type;
 @property (nonatomic, copy) NSString *pubDate;
 @property (nonatomic, copy) NSString *attachment;
 @property (nonatomic, assign) int64_t authorUID2;

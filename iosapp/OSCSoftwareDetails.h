@@ -19,10 +19,10 @@
 @property (nonatomic, copy) NSString *language;
 @property (nonatomic, copy) NSString *recordTime;
 @property (nonatomic, copy) NSURL *url;
-@property (nonatomic, copy) NSURL *homepageURL;
-@property (nonatomic, copy) NSURL *documentURL;
-@property (nonatomic, copy) NSURL *downloadURL;
-@property (nonatomic, copy) NSURL *logoURL;
+@property (nonatomic, copy) NSString *homepageURL;
+@property (nonatomic, copy) NSString *documentURL;
+@property (nonatomic, copy) NSString *downloadURL;
+@property (nonatomic, copy) NSString *logoURL;
 @property (nonatomic, assign) int favoriteCount;
 @property (nonatomic, assign) int tweetCount;
 

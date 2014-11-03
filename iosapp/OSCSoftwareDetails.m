@@ -40,10 +40,10 @@ static NSString *kTweetCount = @"tweetCount";
         self.language = [[xml firstChildWithTag:kLanguage] stringValue];
         self.recordTime = [[xml firstChildWithTag:kRecordTime] stringValue];
         self.url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
-        self.homepageURL = [NSURL URLWithString:[[xml firstChildWithTag:kHomepage] stringValue]];
-        self.documentURL = [NSURL URLWithString:[[xml firstChildWithTag:kDocument] stringValue]];
-        self.downloadURL = [NSURL URLWithString:[[xml firstChildWithTag:kDownload] stringValue]];
-        self.logoURL = [NSURL URLWithString:[[xml firstChildWithTag:kLogo] stringValue]];
+        self.homepageURL = [[xml firstChildWithTag:kHomepage] stringValue];
+        self.documentURL = [[xml firstChildWithTag:kDocument] stringValue];
+        self.downloadURL = [[xml firstChildWithTag:kDownload] stringValue];
+        self.logoURL = [[xml firstChildWithTag:kLogo] stringValue];
         self.favoriteCount = [[[xml firstChildWithTag:kFavorite] numberValue] intValue];
         self.tweetCount = [[[xml firstChildWithTag:kTweetCount] numberValue] intValue];
     }

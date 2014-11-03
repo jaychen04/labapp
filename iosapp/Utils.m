@@ -46,6 +46,20 @@
     return [NSString stringWithFormat:@"<hr/>相关文章<div style='font-size:14px'><p/>%@</div>", middle];
 }
 
++ (NSString *)GenerateTags:(NSArray *)tags
+{
+    if (tags == nil || tags.count == 0) {
+        return @"";
+    } else {
+        NSString *result = @"";
+        for (NSString *tag in tags) {
+            result = [NSString stringWithFormat:@"%@<a style='background-color: #BBD6F3;border-bottom: 1px solid #3E6D8E;border-right: 1px solid #7F9FB6;color: #284A7B;font-size: 12pt;-webkit-text-size-adjust: none;line-height: 2.4;margin: 2px 2px 2px 0;padding: 2px 4px;text-decoration: none;white-space: nowrap;' href='http://www.oschina.net/question/tag/%@' >&nbsp;%@&nbsp;</a>&nbsp;&nbsp;", result, tag, tag];
+        }
+        return result;
+    }
+}
+
+
 
 
 
