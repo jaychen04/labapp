@@ -26,7 +26,7 @@ static NSString *kNewsCellID = @"NewsCell";
 @implementation NewsViewController
 
 
-- (instancetype)initWithNewsType:(NewsType)type
+- (instancetype)initWithNewsListType:(NewsListType)type
 {
     self = [super init];
     

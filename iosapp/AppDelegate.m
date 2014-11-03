@@ -25,7 +25,7 @@
     SwipeableViewController *newsSVC = [[SwipeableViewController alloc] initWithTitle:@"资讯"
                                                                          andSubTitles:@[@"最新资讯", @"最新博客", @"推荐阅读"]
                                                                        andControllers:@[
-                                                                                        [[NewsViewController alloc] initWithNewsType:NewsTypeNews],
+                                                                                        [[NewsViewController alloc] initWithNewsListType:NewsListTypeNews],
                                                                                         [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
                                                                                         [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
                                                                                         ]];

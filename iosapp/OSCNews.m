@@ -16,6 +16,8 @@ static NSString * const kAuthorID = @"authorid";
 static NSString * const kPubDate = @"pubDate";
 static NSString * const kNewsType = @"newstype";
 static NSString * const kType = @"type";
+static NSString * const kAttachment = @"attachment";
+static NSString * const kAuthorUID2 = @"authoruid2";
 
 @implementation OSCNews
 
@@ -33,6 +35,8 @@ static NSString * const kType = @"type";
         
         ONOXMLElement *newsType = [xml firstChildWithTag:kNewsType];
         self.type = [[[newsType firstChildWithTag:kType] numberValue] intValue];
+        self.attachment = [[newsType firstChildWithTag:kAttachment] stringValue];
+        self.authorUID2 = [[[newsType firstChildWithTag:kAuthorUID2] numberValue] longLongValue];
     }
     
     return self;

@@ -15,8 +15,10 @@ typedef NS_ENUM(NSUInteger, DetailsType)
     DetailsTypeSoftware,
 };
 
+@class OSCNews;
+
 @interface DetailsViewController : UIViewController
 
-- (instancetype)initWithDetailsType:(DetailsType)type andID:(int64_t)detailsID;
+- (instancetype)initWithNews:(OSCNews *)news;
 
 @end

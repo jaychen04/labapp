@@ -8,16 +8,16 @@
 
 #import "OSCObjsViewController.h"
 
-typedef NS_ENUM(int, NewsType)
+typedef NS_ENUM(int, NewsListType)
 {
-    NewsTypeAllType = 0,
-    NewsTypeNews,
-    NewsTypeSynthesis,
-    NewsTypeSoftwareRenew,
+    NewsListTypeAllType = 0,
+    NewsListTypeNews,
+    NewsListTypeSynthesis,
+    NewsListTypeSoftwareRenew,
 };
 
 @interface NewsViewController : OSCObjsViewController
 
-- (instancetype)initWithNewsType:(NewsType)type;
+- (instancetype)initWithNewsListType:(NewsListType)type;
 
 @end

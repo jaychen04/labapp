@@ -39,6 +39,8 @@
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
 		38996A591A026D6A0025AA52 /* BlogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A581A026D6A0025AA52 /* BlogCell.m */; };
+		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
+		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
 		38BD7D6E19FF7F94003ABB80 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */; };
 		38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7119FF7FD0003ABB80 /* CommentCell.m */; };
 		38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7419FF8521003ABB80 /* OSCComment.m */; };
@@ -121,6 +123,10 @@
 		38996A541A0266F10025AA52 /* BlogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlogsViewController.m; sourceTree = "<group>"; };
 		38996A571A026D6A0025AA52 /* BlogCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlogCell.h; sourceTree = "<group>"; };
 		38996A581A026D6A0025AA52 /* BlogCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlogCell.m; sourceTree = "<group>"; };
+		38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareDetails.h; sourceTree = "<group>"; };
+		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
+		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
+		38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPostDetails.m; sourceTree = "<group>"; };
 		38BD7D6C19FF7F94003ABB80 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
 		38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
 		38BD7D7019FF7FD0003ABB80 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
@@ -186,6 +192,10 @@
 				38996A511A02642C0025AA52 /* OSCBlog.m */,
 				382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */,
 				382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */,
+				38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */,
+				38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */,
+				38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */,
+				38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */,
 			);
 			name = "OSC API";
 			sourceTree = "<group>";
@@ -518,6 +528,7 @@
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
+				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
 				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
 				382F5EAD1A03351900A8EF11 /* NewsDetailsViewController.m in Sources */,
@@ -529,6 +540,7 @@
 				0004918E19F8FFE9001F3A36 /* HorizonalTableViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
+				38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */,
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
