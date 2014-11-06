@@ -440,6 +440,7 @@ static BOOL ONOXMLNodeMatchesTagInNamespace(xmlNodePtr node, NSString *tag, NSSt
 @interface ONOXMLElement ()
 @property (readwrite, nonatomic, copy) NSString *rawXMLString;
 @property (readwrite, nonatomic, copy) NSString *tag;
+@property (readwrite, nonatomic, assign) NSUInteger lineNumber;
 #ifdef __cplusplus
 @property (readwrite, nonatomic, copy) NSString *ns;
 #else
@@ -482,6 +483,14 @@ static BOOL ONOXMLNodeMatchesTagInNamespace(xmlNodePtr node, NSString *tag, NSSt
     }
 
     return _tag;
+}
+
+- (NSUInteger)lineNumber {
+    if (!_lineNumber) {
+        self.lineNumber = xmlGetLineNo(self.xmlNode);
+    }
+
+    return _lineNumber;
 }
 
 #pragma mark -
@@ -704,12 +713,17 @@ static BOOL ONOXMLNodeMatchesTagInNamespace(xmlNodePtr node, NSString *tag, NSSt
     xmlXPathContextPtr context = xmlXPathNewContext(self.xmlNode->doc);
     if (context) {
         context->node = self.xmlNode;
-        for (xmlNsPtr ns = self.xmlNode->nsDef; ns != NULL; ns = ns->next) {
-            if (ns->prefix) {
-                xmlXPathRegisterNs(context, ns->prefix, ns->href);
+
+        // Due to a bug in libxml2, namespaces may not appear in `xmlNode->ns`.
+        // As a workaround, `xmlNode->nsDef` is recursed to explicitly register namespaces.
+        for (xmlNodePtr node = self.xmlNode; node->parent != NULL; node = node->parent) {
+            for (xmlNsPtr ns = node->nsDef; ns != NULL; ns = ns->next) {
+                if (ns->prefix) {
+                    xmlXPathRegisterNs(context, ns->prefix, ns->href);
+                }
             }
         }
-
+        
         xmlXPathObjectPtr xmlXPath = xmlXPathEvalExpression((xmlChar *)[XPath cStringUsingEncoding:NSUTF8StringEncoding], context);
         enumerator = [self.document enumeratorWithXPathObject:xmlXPath];
 
