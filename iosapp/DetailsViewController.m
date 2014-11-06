@@ -10,6 +10,7 @@
 #import "OSCAPI.h"
 #import "OSCNews.h"
 #import "OSCBlog.h"
+#import "OSCPost.h"
 #import "OSCNewsDetails.h"
 #import "OSCBlogDetails.h"
 #import "OSCPostDetails.h"
@@ -88,6 +89,19 @@
         self.detailsClass = [OSCBlogDetails class];
         self.loadMethod = @selector(loadBlogDetails:);
     }
+    
+    return self;
+}
+
+- (instancetype)initWithPost:(OSCPost *)post
+{
+    self = [super init];
+    if (!self) {return nil;}
+    
+    self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, post.postID];
+    self.tag = @"post";
+    self.detailsClass = [OSCPostDetails class];
+    self.loadMethod = @selector(loadPostDetails:);
     
     return self;
 }
@@ -183,7 +197,7 @@
 
 - (void)loadPostDetails:(OSCPostDetails *)postDetails
 {
-    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", postDetails.authorID, postDetails.author, postDetails.pubDate];
+    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", postDetails.authorID, postDetails.author, [Utils intervalSinceNow:postDetails.pubDate]];
     
     NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3;'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@</body>",HTML_STYLE, postDetails.title, authorStr, postDetails.body, [Utils GenerateTags:postDetails.tags], HTML_BOTTOM];
     

@@ -24,19 +24,19 @@ static NSString * const kAuthorUID2 = @"authoruid2";
 - (instancetype)initWithXML:(ONOXMLElement *)xml
 {
     if (self = [super init]) {
-        self.newsID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        self.title = [[xml firstChildWithTag:kTitle] stringValue];
+        _newsID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:kTitle] stringValue];
         
-        self.authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        self.author = [[xml firstChildWithTag:kAuthor] stringValue];
+        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
+        _author = [[xml firstChildWithTag:kAuthor] stringValue];
         
-        self.commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
+        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
         
         ONOXMLElement *newsType = [xml firstChildWithTag:kNewsType];
-        self.type = [[[newsType firstChildWithTag:kType] numberValue] intValue];
-        self.attachment = [[newsType firstChildWithTag:kAttachment] stringValue];
-        self.authorUID2 = [[[newsType firstChildWithTag:kAuthorUID2] numberValue] longLongValue];
+        _type = [[[newsType firstChildWithTag:kType] numberValue] intValue];
+        _attachment = [[newsType firstChildWithTag:kAttachment] stringValue];
+        _authorUID2 = [[[newsType firstChildWithTag:kAuthorUID2] numberValue] longLongValue];
     }
     
     return self;

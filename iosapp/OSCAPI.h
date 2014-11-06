@@ -67,7 +67,7 @@
 #define OSCAPI_BLOGCOMMENT_DELETE       @"blogcomment_delete"
 
 #define OSCAPI_USERBLOG_DELETE          @"userblog_delete"
-#define OSCAPI_USERBLOG_LIST            @"userblog_list"
+#define OSCAPI_USERBLOGS_LIST            @"userblog_list"
 
 #define OSCAPI_REPORT                   @"report"
 

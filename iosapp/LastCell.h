@@ -19,9 +19,7 @@ typedef NS_ENUM(NSUInteger, LastCellStatus)
 
 @interface LastCell : UITableViewCell
 
-@property (nonatomic, strong) UIActivityIndicatorView *indicator;
-@property (nonatomic, strong) UILabel *statusLabel;
-@property (nonatomic, assign) LastCellStatus status;
+@property (readonly, nonatomic, assign) LastCellStatus status;
 
 - (instancetype)initCell;
 - (void)statusMore;

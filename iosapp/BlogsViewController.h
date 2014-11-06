@@ -17,5 +17,6 @@ typedef NS_ENUM(NSUInteger, BlogsType)
 @interface BlogsViewController : OSCObjsViewController
 
 - (instancetype)initWithBlogsType:(BlogsType)type;
+- (instancetype)initWithUserID:(int64_t)userID;
 
 @end

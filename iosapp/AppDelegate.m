@@ -12,6 +12,7 @@
 #import "PostsViewController.h"
 #import "NewsViewController.h"
 #import "BlogsViewController.h"
+#import "LoginViewController.h"
 #import "UIColor+Util.h"
 
 @interface AppDelegate () <UIApplicationDelegate,UITabBarControllerDelegate>
@@ -48,17 +49,21 @@
                                                                                          [[PostsViewController alloc] initWithPostsType:PostsTypeCaree]
                                                                                          ]];
     
+    LoginViewController *loginVC = [LoginViewController new];
+    
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:newsSVC];
     UINavigationController *tweetsNav = [[UINavigationController alloc] initWithRootViewController:tweetsSVC];
     UINavigationController *postsNav = [[UINavigationController alloc] initWithRootViewController:postsSVC];
+    UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginVC];
     
     self.tabBarController = [UITabBarController new];
     self.tabBarController.delegate = self;
-    self.tabBarController.viewControllers = @[newsNav, tweetsNav, postsNav];
+    self.tabBarController.viewControllers = @[newsNav, tweetsNav, postsNav, loginNav];
     
     [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:@"资讯"];
     [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:@"动弹"];
     [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:@"讨论区"];
+    [[self.tabBarController.tabBar.items objectAtIndex:3] setTitle:@"登录"];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tabBarController;

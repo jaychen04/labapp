@@ -25,23 +25,23 @@ static NSString * const kAttach = @"attach";
 - (instancetype)initWithXML:(ONOXMLElement *)xml
 {
     if (self = [super init]) {
-        self.tweetID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        self.authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
+        _tweetID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
         
-        self.portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
-        self.author = [[xml firstChildWithTag:kAuthor] stringValue];
+        _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
+        _author = [[xml firstChildWithTag:kAuthor] stringValue];
         
-        self.body = [[xml firstChildWithTag:kBody] stringValue];
-        self.appclient = [[[xml firstChildWithTag:kAppclient] numberValue] intValue];
-        self.commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _body = [[xml firstChildWithTag:kBody] stringValue];
+        _appclient = [[[xml firstChildWithTag:kAppclient] numberValue] intValue];
+        _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
+        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
         
         // 附图
-        self.smallImgURL = [NSURL URLWithString:[[xml firstChildWithTag:kImgSmall] stringValue]];
-        self.bigImgURL = [NSURL URLWithString:[[xml firstChildWithTag:kImgBig] stringValue]];
+        _smallImgURL = [NSURL URLWithString:[[xml firstChildWithTag:kImgSmall] stringValue]];
+        _bigImgURL = [NSURL URLWithString:[[xml firstChildWithTag:kImgBig] stringValue]];
         
         // 语音信息
-        self.attach = [[xml firstChildWithTag:kAttach] stringValue];
+        _attach = [[xml firstChildWithTag:kAttach] stringValue];
     }
     
     return self;

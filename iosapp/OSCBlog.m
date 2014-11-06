@@ -22,13 +22,13 @@ static NSString * const kDocumentType = @"documentType";
 {
     self = [super init];
     if (self) {
-        self.blogID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        self.author = [[xml firstChildWithTag:kAuthor] stringValue];
-        self.authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        self.title = [[xml firstChildWithTag:kTitle] stringValue];
-        self.commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
-        self.documentType = [[[xml firstChildWithTag:kDocumentType] numberValue] intValue];
+        _blogID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+        _author = [[xml firstChildWithTag:kAuthor] stringValue];
+        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:kTitle] stringValue];
+        _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
+        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _documentType = [[[xml firstChildWithTag:kDocumentType] numberValue] intValue];
     }
     
     return self;

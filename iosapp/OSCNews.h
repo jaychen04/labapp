@@ -8,7 +8,7 @@
 
 #import "OSCBaseObject.h"
 
-typedef NS_ENUM(int, NewsType)
+typedef NS_ENUM(NSUInteger, NewsType)
 {
     NewsTypeStandardNews,
     NewsTypeSoftWare,

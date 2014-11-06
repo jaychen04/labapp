@@ -35,6 +35,15 @@
 		382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */; };
 		382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */; };
 		382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */; };
+		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
+		386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039631A0A179A007C9B88 /* UserDetailsViewController.m */; };
+		386039691A0A3532007C9B88 /* portrait_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 386039671A0A3532007C9B88 /* portrait_loading.png */; };
+		3860396A1A0A3532007C9B88 /* portrait_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 386039681A0A3532007C9B88 /* portrait_loading@2x.png */; };
+		3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC1B1A08DB8E000D2894 /* BottomBar.m */; };
+		3874EC1F1A08E8B6000D2894 /* MineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC1E1A08E8B6000D2894 /* MineViewController.m */; };
+		3874EC251A08E934000D2894 /* UserInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC241A08E934000D2894 /* UserInfoCell.m */; };
+		3874EC281A08E957000D2894 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC271A08E957000D2894 /* LoginViewController.m */; };
+		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
 		38996A591A026D6A0025AA52 /* BlogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A581A026D6A0025AA52 /* BlogCell.m */; };
@@ -114,6 +123,22 @@
 		382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetails.m; sourceTree = "<group>"; };
 		382F5EB41A036EE500A8EF11 /* OSCNewsDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewsDetails.h; sourceTree = "<group>"; };
 		382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewsDetails.m; sourceTree = "<group>"; };
+		3860395F1A09C5A1007C9B88 /* OSCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCUser.h; sourceTree = "<group>"; };
+		386039601A09C5A1007C9B88 /* OSCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCUser.m; sourceTree = "<group>"; };
+		386039621A0A179A007C9B88 /* UserDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsViewController.h; sourceTree = "<group>"; };
+		386039631A0A179A007C9B88 /* UserDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsViewController.m; sourceTree = "<group>"; };
+		386039671A0A3532007C9B88 /* portrait_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = portrait_loading.png; sourceTree = "<group>"; };
+		386039681A0A3532007C9B88 /* portrait_loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "portrait_loading@2x.png"; sourceTree = "<group>"; };
+		3874EC1A1A08DB8E000D2894 /* BottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomBar.h; sourceTree = "<group>"; };
+		3874EC1B1A08DB8E000D2894 /* BottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomBar.m; sourceTree = "<group>"; };
+		3874EC1D1A08E8B6000D2894 /* MineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MineViewController.h; sourceTree = "<group>"; };
+		3874EC1E1A08E8B6000D2894 /* MineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MineViewController.m; sourceTree = "<group>"; };
+		3874EC231A08E934000D2894 /* UserInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserInfoCell.h; sourceTree = "<group>"; };
+		3874EC241A08E934000D2894 /* UserInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserInfoCell.m; sourceTree = "<group>"; };
+		3874EC261A08E957000D2894 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		3874EC271A08E957000D2894 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		387794231A0B60C700C41C78 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
+		387794241A0B60C700C41C78 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		38996A501A02642C0025AA52 /* OSCBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlog.h; sourceTree = "<group>"; };
 		38996A511A02642C0025AA52 /* OSCBlog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlog.m; sourceTree = "<group>"; };
 		38996A531A0266F10025AA52 /* BlogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlogsViewController.h; sourceTree = "<group>"; };
@@ -193,6 +218,8 @@
 				382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */,
 				38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */,
 				38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */,
+				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
+				386039601A09C5A1007C9B88 /* OSCUser.m */,
 			);
 			name = "OSC API";
 			sourceTree = "<group>";
@@ -220,6 +247,7 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
+				3874EC221A08E8EA000D2894 /* User */,
 				38996A561A0266F80025AA52 /* Blog */,
 				38BD7D6F19FF7F9A003ABB80 /* Comments */,
 				381EAB6A19FE7CA400C1937C /* Posts */,
@@ -227,7 +255,9 @@
 				00C9A73919EE8536000EA878 /* OSC API */,
 				00D6BD3219ECD73B00E8754E /* Tweets */,
 				381EAB6019FE373100C1937C /* News */,
+				3874EC211A08E8C9000D2894 /* Mine */,
 				00EDF60B19EFB42500A5C842 /* Main ViewControllers */,
+				386039661A0A34F5007C9B88 /* Resource */,
 				00D6BCE119EB673200E8754E /* AppDelegate.h */,
 				00D6BCE219EB673200E8754E /* AppDelegate.m */,
 				00D6BCEA19EB673200E8754E /* Main.storyboard */,
@@ -281,11 +311,11 @@
 			children = (
 				381EAB6719FE3B9800C1937C /* OSCObjsViewController.h */,
 				381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */,
+				382F5EAE1A0338C900A8EF11 /* DetailsViewController.h */,
+				382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */,
 				00D6BD2B19ECD46100E8754E /* BaseViewController.h */,
 				00D6BD2C19ECD46100E8754E /* BaseViewController.m */,
 				00364FF519F5F93600871255 /* SwipeableViewController */,
-				382F5EAE1A0338C900A8EF11 /* DetailsViewController.h */,
-				382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */,
 			);
 			name = "Main ViewControllers";
 			sourceTree = "<group>";
@@ -301,6 +331,10 @@
 				00FF954419F2B37E002F4737 /* UIColor+Util.m */,
 				00FF954619F2BF8B002F4737 /* LastCell.h */,
 				00FF954719F2BF8B002F4737 /* LastCell.m */,
+				3874EC1A1A08DB8E000D2894 /* BottomBar.h */,
+				3874EC1B1A08DB8E000D2894 /* BottomBar.m */,
+				387794231A0B60C700C41C78 /* Config.h */,
+				387794241A0B60C700C41C78 /* Config.m */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -333,6 +367,37 @@
 				381EAB6F19FE7D6700C1937C /* PostCell.m */,
 			);
 			name = Posts;
+			sourceTree = "<group>";
+		};
+		386039661A0A34F5007C9B88 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				386039671A0A3532007C9B88 /* portrait_loading.png */,
+				386039681A0A3532007C9B88 /* portrait_loading@2x.png */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		3874EC211A08E8C9000D2894 /* Mine */ = {
+			isa = PBXGroup;
+			children = (
+				3874EC1D1A08E8B6000D2894 /* MineViewController.h */,
+				3874EC1E1A08E8B6000D2894 /* MineViewController.m */,
+			);
+			name = Mine;
+			sourceTree = "<group>";
+		};
+		3874EC221A08E8EA000D2894 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				3874EC231A08E934000D2894 /* UserInfoCell.h */,
+				3874EC241A08E934000D2894 /* UserInfoCell.m */,
+				3874EC261A08E957000D2894 /* LoginViewController.h */,
+				3874EC271A08E957000D2894 /* LoginViewController.m */,
+				386039621A0A179A007C9B88 /* UserDetailsViewController.h */,
+				386039631A0A179A007C9B88 /* UserDetailsViewController.m */,
+			);
+			name = User;
 			sourceTree = "<group>";
 		};
 		38996A561A0266F80025AA52 /* Blog */ = {
@@ -459,7 +524,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				00D6BCEC19EB673200E8754E /* Main.storyboard in Resources */,
+				386039691A0A3532007C9B88 /* portrait_loading.png in Resources */,
 				00D6BCF119EB673200E8754E /* LaunchScreen.xib in Resources */,
+				3860396A1A0A3532007C9B88 /* portrait_loading@2x.png in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,9 +578,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
+				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
 				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
@@ -523,6 +592,7 @@
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,
 				38996A521A02642C0025AA52 /* OSCBlog.m in Sources */,
 				38BD7D6E19FF7F94003ABB80 /* CommentsViewController.m in Sources */,
+				3874EC251A08E934000D2894 /* UserInfoCell.m in Sources */,
 				0004918E19F8FFE9001F3A36 /* HorizonalTableViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
@@ -531,14 +601,18 @@
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
 				38996A591A026D6A0025AA52 /* BlogCell.m in Sources */,
+				386039611A09C5A1007C9B88 /* OSCUser.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
+				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
+				3874EC1F1A08E8B6000D2894 /* MineViewController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
 				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
+				3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */,
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
 				38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,

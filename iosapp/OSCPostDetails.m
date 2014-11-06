@@ -29,15 +29,16 @@ static NSString *kTag = @"tag";
     self = [super init];
     
     if (self) {
-        self.postID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        self.title = [[xml firstChildWithTag:kTitle] stringValue];
-        self.url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
-        self.portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
-        self.body = [[xml firstChildWithTag:kBody] stringValue];
-        self.author = [[xml firstChildWithTag:kAuthor] stringValue];
-        self.authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        self.answerCount = [[[xml firstChildWithTag:kAnswerCount] numberValue] intValue];
-        self.viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
+        _postID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:kTitle] stringValue];
+        _url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
+        _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
+        _body = [[xml firstChildWithTag:kBody] stringValue];
+        _author = [[xml firstChildWithTag:kAuthor] stringValue];
+        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
+        _answerCount = [[[xml firstChildWithTag:kAnswerCount] numberValue] intValue];
+        _viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
+        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
         
         NSMutableArray *mutableTags = [NSMutableArray new];
         NSArray *tagsXML = [xml childrenWithTag:kTags];
@@ -45,7 +46,7 @@ static NSString *kTag = @"tag";
             NSString *tag = [[tagXML firstChildWithTag:kTag] stringValue];
             [mutableTags addObject:tag];
         }
-        self.tags = [NSArray arrayWithArray:mutableTags];
+        _tags = [NSArray arrayWithArray:mutableTags];
     }
     
     return self;

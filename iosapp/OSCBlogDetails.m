@@ -27,17 +27,17 @@ static NSString *kDocumentType = @"documentType";
     self = [super init];
     
     if (self) {
-        self.blogID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        self.title = [[xml firstChildWithTag:kTitle] stringValue];
-        self.url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
-        self.body = [[xml firstChildWithTag:kBody] stringValue];
-        self.commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        self.author = [[xml firstChildWithTag:kAuthor] stringValue];
-        self.authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
-        self.favoriteCount = [[[xml firstChildWithTag:kFavorite] numberValue] intValue];
-        self.where = [[xml firstChildWithTag:kWhere] stringValue];
-        self.documentType = [[[xml firstChildWithTag:kDocumentType] numberValue] intValue];
+        _blogID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:kTitle] stringValue];
+        _url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
+        _body = [[xml firstChildWithTag:kBody] stringValue];
+        _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
+        _author = [[xml firstChildWithTag:kAuthor] stringValue];
+        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
+        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _favoriteCount = [[[xml firstChildWithTag:kFavorite] numberValue] intValue];
+        _where = [[xml firstChildWithTag:kWhere] stringValue];
+        _documentType = [[[xml firstChildWithTag:kDocumentType] numberValue] intValue];
     }
     
     return self;

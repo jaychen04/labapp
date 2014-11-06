@@ -8,8 +8,8 @@
 
 #import "PostsViewController.h"
 #import "PostCell.h"
-
 #import "OSCPost.h"
+#import "DetailsViewController.h"
 
 
 static NSString *kPostCellID = @"PostCell";
@@ -82,6 +82,21 @@ static NSString *kPostCellID = @"PostCell";
         return size.height + 39;
     } else {
         return 60;
+    }
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSInteger row = indexPath.row;
+    
+    if (row < self.objects.count) {
+        OSCPost *post = [self.objects objectAtIndex:row];
+        DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+        [self.navigationController pushViewController:detailsViewController animated:YES];
+    } else {
+        [self fetchMore];
     }
 }
 

@@ -18,5 +18,6 @@ typedef NS_ENUM(NSUInteger, TweetsType)
 @interface TweetsViewController : OSCObjsViewController
 
 - (instancetype)initWithTweetsType:(TweetsType)type;
+- (instancetype)initWithUserID:(int64_t)userID;
 
 @end

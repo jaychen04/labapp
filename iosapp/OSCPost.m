@@ -23,14 +23,14 @@ static NSString * const kPubDate = @"pubDate";
 {
     self = [super init];
     if (self) {
-        self.postID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        self.portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
-        self.author = [[xml firstChildWithTag:kAuthor] stringValue];
-        self.authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        self.title = [[xml firstChildWithTag:kTitle] stringValue];
-        self.replyCount = [[[xml firstChildWithTag:kReplyCount] numberValue] intValue];
-        self.viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
-        self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _postID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+        _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
+        _author = [[xml firstChildWithTag:kAuthor] stringValue];
+        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:kTitle] stringValue];
+        _replyCount = [[[xml firstChildWithTag:kReplyCount] numberValue] intValue];
+        _viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
+        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
     }
 
     return self;

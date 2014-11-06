@@ -9,6 +9,14 @@
 #import "LastCell.h"
 #import "UIColor+Util.h"
 
+@interface LastCell ()
+
+@property (nonatomic, strong) UIActivityIndicatorView *indicator;
+@property (nonatomic, strong) UILabel *statusLabel;
+@property (readwrite, nonatomic, assign) LastCellStatus status;
+
+@end
+
 @implementation LastCell
 
 - (instancetype)initCell {

@@ -31,17 +31,17 @@ static NSString *kRURL = @"rurl";
     self = [super init];
     
     if (self) {
-        self.newsID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        self.title = [[xml firstChildWithTag:kTitle] stringValue];
-        self.url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
-        self.body = [[xml firstChildWithTag:kBody] stringValue];
-        self.commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        self.author = [[xml firstChildWithTag:kAuthor] stringValue];
-        self.authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        self.pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
-        self.softwareLink = [NSURL URLWithString:[[xml firstChildWithTag:kSoftwareLink] stringValue]];
-        self.softwareName = [[xml firstChildWithTag:kSoftwareName] stringValue];
-        self.favoriteCount = [[[xml firstChildWithTag:kFavorite] numberValue] intValue];
+        _newsID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:kTitle] stringValue];
+        _url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
+        _body = [[xml firstChildWithTag:kBody] stringValue];
+        _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
+        _author = [[xml firstChildWithTag:kAuthor] stringValue];
+        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
+        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _softwareLink = [NSURL URLWithString:[[xml firstChildWithTag:kSoftwareLink] stringValue]];
+        _softwareName = [[xml firstChildWithTag:kSoftwareName] stringValue];
+        _favoriteCount = [[[xml firstChildWithTag:kFavorite] numberValue] intValue];
         NSMutableArray *mutableRelatives = [NSMutableArray new];
         NSArray *relativesXML = [[xml firstChildWithTag:kRelatives] childrenWithTag:kRelative];
         for (ONOXMLElement *relativeXML in relativesXML) {
@@ -49,7 +49,7 @@ static NSString *kRURL = @"rurl";
             NSString *rURL = [[relativeXML firstChildWithTag:kRURL] stringValue];
             [mutableRelatives addObject:@[rTitle, rURL]];
         }
-        self.relatives = [NSArray arrayWithArray:mutableRelatives];
+        _relatives = [NSArray arrayWithArray:mutableRelatives];
     }
     
     return self;
