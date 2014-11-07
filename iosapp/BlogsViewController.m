@@ -9,6 +9,7 @@
 #import "BlogsViewController.h"
 #import "BlogCell.h"
 #import "OSCBlog.h"
+#import "Config.h"
 #import "DetailsViewController.h"
 
 static NSString *kBlogCellID = @"BlogCell";
@@ -43,7 +44,7 @@ static NSString *kBlogCellID = @"BlogCell";
     if (!self) {return nil;}
     
     self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?authoruid=%ld&pageIndex=1&pageSize=%d&uid=%lld", OSCAPI_PREFIX, OSCAPI_USERBLOGS_LIST, userID, 20, ];
+        return [NSString stringWithFormat:@"%@%@?authoruid=%lld&pageIndex=1&pageSize=%d&uid=%lld", OSCAPI_PREFIX, OSCAPI_USERBLOGS_LIST, userID, 20, [Config getOwnID]];
     };
     [self setBlockAndClass];
     

@@ -11,6 +11,8 @@
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
 
+@class OSCUser;
+
 @interface Utils : NSObject
 
 + (NSString *)getAppclient:(int)clientType;

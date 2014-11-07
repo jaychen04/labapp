@@ -41,7 +41,6 @@
 
 #define OSCAPI_LOGIN_VALIDATE           @"login_validate"
 #define OSCAPI_MY_INFORMATION           @"my_information"
-#define OSCAPI_USER_INFO                @"user_info"
 #define OSCAPI_USER_INFORMATION         @"user_information"
 #define OSCAPI_USER_UPDATERELATION      @"user_updaterelation"
 #define OSCAPI_USERINFO_UPDATE          @"portrait_update"

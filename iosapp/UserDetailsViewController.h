@@ -13,5 +13,6 @@
 @interface UserDetailsViewController : UIViewController
 
 - (instancetype)initWithUser:(OSCUser *)user;
+- (instancetype)initWithUserID:(int64_t)userID;
 
 @end

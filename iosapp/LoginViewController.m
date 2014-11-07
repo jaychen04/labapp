@@ -11,6 +11,7 @@
 #import "OSCAPI.h"
 #import "OSCUser.h"
 #import "Utils.h"
+#import "Config.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -30,11 +31,15 @@
     [super viewDidLoad];
     
     self.title = @"登录";
+    self.view.backgroundColor = [UIColor themeColor];
     
     [self initSubviews];
     [self setLayout];
     
-    self.view.backgroundColor = [UIColor themeColor];
+    NSArray *accountAndPassword = [Config getOwnAccountAndPassword];
+    if (accountAndPassword) {return;}
+    _accountField.text = accountAndPassword[0];
+    _passwordField.text = accountAndPassword[1];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -257,7 +262,10 @@
                   NSLog(@"%@", errorMessage);
                   return;
               }
+              
               OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
+              [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
+              [Config saveOwnID:user.userID];
               UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUser:user];
               [self.navigationController pushViewController:userDetailsVC animated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

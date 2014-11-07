@@ -10,10 +10,12 @@
 
 @interface Config : NSObject
 
-+ (void)saveUserAccount:(NSString *)account andPassword:(NSString *)password;
-+ (void)saveUserID:(int64_t)userID;
++ (void)saveOwnAccount:(NSString *)account andPassword:(NSString *)password;
++ (void)saveOwnID:(int64_t)userID;
+//+ (void)saveCookie:(BOOL)isLogin;
 
-+ (NSArray *)getUserAccountAndPassword;
-+ (NSString *)getUserID;
++ (NSArray *)getOwnAccountAndPassword;
++ (int64_t)getOwnID;
+
 
 @end

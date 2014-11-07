@@ -9,6 +9,7 @@
 #import "UserDetailsViewController.h"
 #import "OSCUser.h"
 #import "Utils.h"
+#import "Config.h"
 #import "SwipeableViewController.h"
 #import "TweetsViewController.h"
 #import "BlogsViewController.h"
@@ -27,26 +28,63 @@
 
 @implementation UserDetailsViewController
 
+
+#pragma mark - init method
+
 - (instancetype)initWithUser:(OSCUser *)user
 {
     self = [super init];
     if (!self) {return nil;}
     
     self.user = user;
-    self.swipeableVC = [[SwipeableViewController alloc] initWithTitle:nil
-                                                         andSubTitles:@[@"动态", @"博客"]
-                                                       andControllers:@[
-                                                                        [[TweetsViewController alloc] initWithUserID:user.userID],
-                                                                        [[BlogsViewController alloc] initWith
-                                                                        ]];
     
     return self;
 }
+
+- (instancetype)initWithUserID:(int64_t)userID
+{
+    self = [super init];
+    if (!self) {return self;}
+    
+    __block BOOL done = NO;
+    __block OSCUser *tmpUser;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld&hisuid=%lld&pageIndex=0&pageSize=20", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userID]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+             ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
+             tmpUser = [[OSCUser alloc] initWithXML:userXML];
+             done = YES;
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"网络异常，错误码：%ld", (long)error.code);
+             done = YES;
+         }];
+    
+    while (!done) {
+        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+    }
+    self.user = tmpUser;
+    
+    return self;
+}
+
+
+
+
+#pragma mark - life cycle
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor themeColor];
+    
+    self.swipeableVC = [[SwipeableViewController alloc] initWithTitle:nil
+                                                         andSubTitles:@[@"动态", @"博客"]
+                                                       andControllers:@[
+                                                                        [[TweetsViewController alloc] initWithUserID:_user.userID],
+                                                                        [[BlogsViewController alloc] initWithUserID:_user.userID]
+                                                                        ]];
     
     [self setLayout];
     [self setContent];

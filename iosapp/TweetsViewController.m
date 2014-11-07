@@ -7,17 +7,15 @@
 //
 
 #import "TweetsViewController.h"
+#import "TweetDetailsViewController.h"
+#import "UserDetailsViewController.h"
 #import "TweetCell.h"
 #import "OSCTweet.h"
-#import "TweetDetailsViewController.h"
+#import "Config.h"
 
 
+NSString * const kTweetCellID = @"TweetCell";
 
-static NSString *kTweetCellID = @"TweetCell";
-
-
-
-#pragma mark -
 
 @interface TweetsViewController ()
 
@@ -43,7 +41,10 @@ static NSString *kTweetCellID = @"TweetCell";
             case TweetsTypeHotestTweets:
                 self.uid = -1; break;
             case TweetsTypeOwnTweets:
-                self.uid = 1244649;         /* 需要一个获得自己ID的方法 */
+                self.uid = [Config getOwnID];
+                if (self.uid == 0) {
+                    // 显示提示页面
+                }
                 break;
             default:
                 break;
@@ -105,12 +106,17 @@ static NSString *kTweetCellID = @"TweetCell";
 
 #pragma mark - Table view data source
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.objects.count) {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = indexPath.row;
+    if (row < self.objects.count) {
         TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
-        OSCTweet *tweet = [self.objects objectAtIndex:indexPath.row];
+        OSCTweet *tweet = [self.objects objectAtIndex:row];
         
         [cell setContentWithTweet:tweet];
+        cell.portrait.tag = row; cell.authorLabel.tag = row;
+        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+        [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
         
         return cell;
     } else {
@@ -144,6 +150,18 @@ static NSString *kTweetCellID = @"TweetCell";
     } else {
         [self fetchMore];
     }
+}
+
+
+
+
+#pragma mark - 跳转到用户详情页
+
+- (void)pushDetailsView:(UITapGestureRecognizer *)tapGesture
+{
+    OSCTweet *tweet = [self.objects objectAtIndex:tapGesture.view.tag];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 
 
