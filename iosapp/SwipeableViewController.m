@@ -7,16 +7,12 @@
 //
 
 #import "SwipeableViewController.h"
-#import "HorizonalTableViewController.h"
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "TweetsViewController.h"
 #import "PostsViewController.h"
 
 @interface SwipeableViewController ()  <UIScrollViewDelegate>
-
-@property (nonatomic, strong) HorizonalTableViewController *viewPager;
-@property (nonatomic, strong) TitleBarView *titleBar;
 
 @property (nonatomic, strong) NSArray *controllers;
 

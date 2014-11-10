@@ -10,7 +10,7 @@
 
 @class OSCUser;
 
-@interface UserDetailsViewController : UIViewController
+@interface UserDetailsViewController : UITableViewController
 
 - (instancetype)initWithUser:(OSCUser *)user;
 - (instancetype)initWithUserID:(int64_t)userID;
