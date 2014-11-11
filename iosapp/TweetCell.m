@@ -75,7 +75,7 @@
     [self.contentView addSubview:self.commentCount];
     
     self.thumbnail = [UIImageView new];
-    self.thumbnail.contentMode = UIViewContentModeScaleAspectFit;
+    self.thumbnail.contentMode = UIViewContentModeScaleAspectFill;
     [self.contentView addSubview:self.thumbnail];
 }
 
@@ -144,7 +144,6 @@
         [self.contentView removeConstraints:self.noThumbnailConstraints];
         [self.contentView addConstraints:self.thumbnailConstraints];
 #endif
-        [self.thumbnail sd_setImageWithURL:tweet.smallImgURL];
     } else {
 #if 0   // iOS 8
         [NSLayoutConstraint deactivateConstraints:self.thumbnailConstraints];
