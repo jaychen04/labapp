@@ -37,7 +37,9 @@ static NSString * const kAttach = @"attach";
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
         
         // 附图
-        _smallImgURL = [NSURL URLWithString:[[xml firstChildWithTag:kImgSmall] stringValue]];
+        NSString *imageURLStr = [[xml firstChildWithTag:kImgSmall] stringValue];
+        _hasAnImage = [imageURLStr isEqualToString:@""] ? NO : YES;
+        _smallImgURL = [NSURL URLWithString:imageURLStr];
         _bigImgURL = [NSURL URLWithString:[[xml firstChildWithTag:kImgBig] stringValue]];
         
         // 语音信息

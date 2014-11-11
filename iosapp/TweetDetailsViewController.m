@@ -40,7 +40,10 @@
             
             CGSize size = [weakSelf.label sizeThatFits:CGSizeMake(weakSelf.tableView.frame.size.width - 16, MAXFLOAT)];
             
-            return size.height + 65;
+            CGFloat height = size.height + 65;
+            if (tweet.hasAnImage) {height += 68;}
+            
+            return height;
         };
     }
     

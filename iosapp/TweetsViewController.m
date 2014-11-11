@@ -15,6 +15,7 @@
 
 
 NSString * const kTweetCellID = @"TweetCell";
+NSString * const kTweetWithImageCellID = @"TweetWithImageCell";
 
 
 @interface TweetsViewController ()
@@ -95,6 +96,7 @@ NSString * const kTweetCellID = @"TweetCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
+    [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetWithImageCellID];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -110,8 +112,9 @@ NSString * const kTweetCellID = @"TweetCell";
 {
     NSInteger row = indexPath.row;
     if (row < self.objects.count) {
-        TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
         OSCTweet *tweet = [self.objects objectAtIndex:row];
+        NSString *cellID = tweet.hasAnImage ? kTweetWithImageCellID : kTweetCellID;
+        TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
         
         [cell setContentWithTweet:tweet];
         cell.portrait.tag = row; cell.authorLabel.tag = row;
@@ -132,7 +135,12 @@ NSString * const kTweetCellID = @"TweetCell";
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
         
-        return size.height + 65;
+        CGFloat height = size.height + 65;
+        if (tweet.hasAnImage) {
+            height += 68;
+        }
+        
+        return height;
     } else {
         return 60;
     }

@@ -18,7 +18,7 @@
 @property (nonatomic, strong) UILabel *commentCount;
 @property (nonatomic, strong) UILabel *appclientLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
-@property (nonatomic, strong) UIImageView *image;
+@property (nonatomic, strong) UIImageView *thumbnail;
 
 - (void)setContentWithTweet:(OSCTweet *)tweet;
 

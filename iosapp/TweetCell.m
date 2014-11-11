@@ -10,6 +10,13 @@
 #import "OSCTweet.h"
 #import "Utils.h"
 
+@interface TweetCell ()
+
+@property (nonatomic, strong) NSArray *thumbnailConstraints;
+@property (nonatomic, strong) NSArray *noThumbnailConstraints;
+
+@end
+
 @implementation TweetCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -18,6 +25,9 @@
     if (self) {
         self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         self.backgroundColor = [UIColor themeColor];
+        
+        self.thumbnailConstraints = [NSArray new];
+        self.noThumbnailConstraints = [NSArray new];
         
         [self initSubviews];
         [self setLayout];
@@ -64,9 +74,9 @@
     self.commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:self.commentCount];
     
-    self.image = [UIImageView new];
-    self.image.contentMode = UIViewContentModeScaleAspectFit;
-    [self.contentView addSubview:self.image];
+    self.thumbnail = [UIImageView new];
+    self.thumbnail.contentMode = UIViewContentModeScaleAspectFit;
+    [self.contentView addSubview:self.thumbnail];
 }
 
 - (void)setLayout
@@ -75,9 +85,9 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _commentCount, _image);
+    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _commentCount, _thumbnail);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]-8-[_contentLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]-8-[_contentLabel]"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil
                                                                                views:viewsDict]];
@@ -101,6 +111,16 @@
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil
                                                                                views:viewsDict]];
+    
+    self.thumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_thumbnail]-8-|"
+                                                                     options:NSLayoutFormatAlignAllLeft
+                                                                     metrics:nil
+                                                                       views:viewsDict];
+    
+    self.noThumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-|"
+                                                                          options:NSLayoutFormatAlignAllLeft
+                                                                          metrics:nil
+                                                                            views:viewsDict];
 }
 
 
@@ -115,7 +135,25 @@
     [self.appclientLabel setText:[Utils getAppclient:tweet.appclient]];
     [self.commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
     [self.contentLabel setText:tweet.body];
-
+    
+    if (tweet.hasAnImage) {
+#if 0   // iOS 8
+        [NSLayoutConstraint deactivateConstraints:self.noThumbnailConstraints];
+        [NSLayoutConstraint activateConstraints:self.thumbnailConstraints];
+#else
+        [self.contentView removeConstraints:self.noThumbnailConstraints];
+        [self.contentView addConstraints:self.thumbnailConstraints];
+#endif
+        [self.thumbnail sd_setImageWithURL:tweet.smallImgURL];
+    } else {
+#if 0   // iOS 8
+        [NSLayoutConstraint deactivateConstraints:self.thumbnailConstraints];
+        [NSLayoutConstraint activateConstraints:self.noThumbnailConstraints];
+#else
+        [self.contentView removeConstraints:self.thumbnailConstraints];
+        [self.contentView addConstraints:self.noThumbnailConstraints];
+#endif
+    }
 }
 
 
