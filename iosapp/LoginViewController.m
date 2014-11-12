@@ -37,7 +37,7 @@
     [self setLayout];
     
     NSArray *accountAndPassword = [Config getOwnAccountAndPassword];
-    if (accountAndPassword) {return;}
+    if (!accountAndPassword) {return;}
     _accountField.text = accountAndPassword[0];
     _passwordField.text = accountAndPassword[1];
 }
@@ -267,7 +267,7 @@
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
               [Config saveOwnID:user.userID];
               UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUser:user];
-              [self.navigationController presentViewController:userDetailsVC animated:NO completion:nil];
+              [self.navigationController presentViewController:userDetailsVC animated:YES completion:nil];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"网络异常，错误码：%ld", (long)error.code);
           }

@@ -131,9 +131,10 @@ NSString * const kTweetWithImageCellID = @"TweetWithImageCell";
             }
         }
         
-        cell.portrait.tag = row; cell.authorLabel.tag = row;
+        cell.portrait.tag = row; cell.authorLabel.tag = row; cell.thumbnail.tag = row;
         [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
         [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+        [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
         
         return cell;
     } else {
@@ -206,6 +207,14 @@ NSString * const kTweetWithImageCellID = @"TweetWithImageCell";
     OSCTweet *tweet = [self.objects objectAtIndex:tapGesture.view.tag];
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
+
+
+
+- (void)loadLargeImage:(UITapGestureRecognizer *)tapGesture
+{
+    OSCTweet *tweet = [self.objects objectAtIndex:tapGesture.view.tag];
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:tweet.bigImgURL]];
 }
 
 

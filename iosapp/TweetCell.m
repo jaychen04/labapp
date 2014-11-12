@@ -76,6 +76,7 @@
     
     self.thumbnail = [UIImageView new];
     self.thumbnail.contentMode = UIViewContentModeScaleAspectFill;
+    self.thumbnail.userInteractionEnabled = YES;
     [self.contentView addSubview:self.thumbnail];
 }
 
