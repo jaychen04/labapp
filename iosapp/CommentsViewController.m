@@ -9,6 +9,7 @@
 #import "CommentsViewController.h"
 #import "CommentCell.h"
 #import "OSCComment.h"
+#import "UserDetailsViewController.h"
 
 
 static NSString *kCommentCellID = @"CommentCell";
@@ -65,18 +66,20 @@ static NSString *kCommentCellID = @"CommentCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSInteger row = indexPath.row;
     if (indexPath.section == 0 && self.otherSectionCell) {
         UITableViewCell *cell = self.otherSectionCell(indexPath);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-    } else if (indexPath.row < self.objects.count) {
+    } else if (row < self.objects.count) {
         CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
-        OSCComment *comment = [self.objects objectAtIndex:indexPath.row];
+        OSCComment *comment = [self.objects objectAtIndex:row];
         
-        [cell.portrait sd_setImageWithURL:comment.portraitURL placeholderImage:nil options:0];
-        [cell.contentLabel setText:comment.content];
-        [cell.authorLabel setText:comment.author];
-        [cell.timeLabel setText:[Utils intervalSinceNow:comment.pubDate]];
+        [cell setContentWithComment:comment];
+        
+        cell.portrait.tag = row; cell.authorLabel.tag = row;
+        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+        [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
         
         return cell;
     } else {
@@ -102,6 +105,16 @@ static NSString *kCommentCellID = @"CommentCell";
 }
 
 
+
+
+#pragma mark - 跳转到用户详情页
+
+- (void)pushDetailsView:(UITapGestureRecognizer *)tapGesture
+{
+    OSCComment *comment = [self.objects objectAtIndex:tapGesture.view.tag];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:comment.authorID];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
 
 
 

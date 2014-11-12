@@ -129,7 +129,7 @@
 
 - (void)setContentWithTweet:(OSCTweet *)tweet
 {
-    [self.portrait sd_setImageWithURL:tweet.portraitURL placeholderImage:[UIImage imageNamed:@"portrait_loading"] options:0];
+    [self.portrait loadPortrait:tweet.portraitURL];
     [self.authorLabel setText:tweet.author];
     [self.timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
     [self.appclientLabel setText:[Utils getAppclient:tweet.appclient]];

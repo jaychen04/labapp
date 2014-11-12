@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class OSCComment;
+
 @interface CommentCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *portrait;
@@ -15,5 +17,7 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UIView *repliesView;
+
+- (void)setContentWithComment:(OSCComment *)comment;
 
 @end

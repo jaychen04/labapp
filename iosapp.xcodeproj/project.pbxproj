@@ -35,6 +35,7 @@
 		382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */; };
 		382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */; };
 		382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */; };
+		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
 		386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039631A0A179A007C9B88 /* UserDetailsViewController.m */; };
 		386039691A0A3532007C9B88 /* portrait_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 386039671A0A3532007C9B88 /* portrait_loading.png */; };
@@ -123,6 +124,8 @@
 		382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetails.m; sourceTree = "<group>"; };
 		382F5EB41A036EE500A8EF11 /* OSCNewsDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewsDetails.h; sourceTree = "<group>"; };
 		382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewsDetails.m; sourceTree = "<group>"; };
+		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
+		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		3860395F1A09C5A1007C9B88 /* OSCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCUser.h; sourceTree = "<group>"; };
 		386039601A09C5A1007C9B88 /* OSCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCUser.m; sourceTree = "<group>"; };
 		386039621A0A179A007C9B88 /* UserDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDetailsViewController.h; sourceTree = "<group>"; };
@@ -329,6 +332,8 @@
 				00FF954119F10DEE002F4737 /* UIView+Util.m */,
 				00FF954319F2B37E002F4737 /* UIColor+Util.h */,
 				00FF954419F2B37E002F4737 /* UIColor+Util.m */,
+				38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */,
+				38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */,
 				00FF954619F2BF8B002F4737 /* LastCell.h */,
 				00FF954719F2BF8B002F4737 /* LastCell.m */,
 				3874EC1A1A08DB8E000D2894 /* BottomBar.h */,
@@ -584,6 +589,7 @@
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
+				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
 				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
