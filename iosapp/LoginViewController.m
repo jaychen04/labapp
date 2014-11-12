@@ -267,7 +267,7 @@
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
               [Config saveOwnID:user.userID];
               UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUser:user];
-              [self.navigationController pushViewController:userDetailsVC animated:YES];
+              [self.navigationController presentViewController:userDetailsVC animated:NO completion:nil];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"网络异常，错误码：%ld", (long)error.code);
           }
