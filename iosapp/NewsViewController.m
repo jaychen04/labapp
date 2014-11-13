@@ -31,13 +31,26 @@ static NSString *kNewsCellID = @"NewsCell";
     self = [super init];
     
     if (self) {
+        __weak NewsViewController *weakSelf = self;
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?catalog=%d&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_NEWS_LIST, type, (unsigned long)page, OSCAPI_SUFFIX];
+            if (type < 4) {
+                return [NSString stringWithFormat:@"%@%@?catalog=%d&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_NEWS_LIST, type, (unsigned long)page, OSCAPI_SUFFIX];
+            } else if (type == NewsListTypeAllTypeWeekHottest) {
+                return [NSString stringWithFormat:@"%@%@?show=week", OSCAPI_PREFIX, OSCAPI_NEWS_LIST];
+            } else {
+                return [NSString stringWithFormat:@"%@%@?show=month", OSCAPI_PREFIX, OSCAPI_NEWS_LIST];
+            }
         };
         
         self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
             return [[xml.rootElement firstChildWithTag:@"newslist"] childrenWithTag:@"news"];
         };
+        
+        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+            if (type >= 4) {[weakSelf.lastCell statusFinished];}
+            else {responseObjectsCount < 20? [weakSelf.lastCell statusFinished]: [weakSelf.lastCell statusMore];}
+        };
+        
         self.objClass = [OSCNews class];
     }
     

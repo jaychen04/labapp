@@ -14,6 +14,8 @@ typedef NS_ENUM(int, NewsListType)
     NewsListTypeNews,
     NewsListTypeSynthesis,
     NewsListTypeSoftwareRenew,
+    NewsListTypeAllTypeWeekHottest,
+    NewsListTypeAllTypeMonthHottest,
 };
 
 @interface NewsViewController : OSCObjsViewController
