@@ -2,7 +2,7 @@
 //  CommentsViewController.m
 //  iosapp
 //
-//  Created by ChanAetern on 10/28/14.
+//  Created by chenhaoxiang on 10/28/14.
 //  Copyright (c) 2014 oschina. All rights reserved.
 //
 

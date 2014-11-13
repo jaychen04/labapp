@@ -2,7 +2,7 @@
 //  OSCSoftwareDetails.h
 //  iosapp
 //
-//  Created by ChanAetern on 11/3/14.
+//  Created by chenhaoxiang on 11/3/14.
 //  Copyright (c) 2014 oschina. All rights reserved.
 //
 

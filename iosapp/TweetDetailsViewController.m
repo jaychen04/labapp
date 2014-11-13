@@ -2,7 +2,7 @@
 //  TweetDetailsViewController.m
 //  iosapp
 //
-//  Created by ChanAetern on 10/28/14.
+//  Created by chenhaoxiang on 10/28/14.
 //  Copyright (c) 2014 oschina. All rights reserved.
 //
 
@@ -10,6 +10,7 @@
 #import "OSCTweet.h"
 #import "TweetCell.h"
 #import "UserDetailsViewController.h"
+#import "ImageViewerController.h"
 
 @interface TweetDetailsViewController ()
 
@@ -40,6 +41,7 @@
             
             [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushOwnerDetailsView)]];
             [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushOwnerDetailsView)]];
+            [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(loadLargeImage:)]];
             
             return cell;
         };
@@ -112,6 +114,16 @@
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:_tweet.authorID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
+
+- (void)loadLargeImage:(UITapGestureRecognizer *)recognizer
+{
+    ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:_tweet.bigImgURL
+                                                                                 thumbnail:(UIImageView *)recognizer.view
+                                                                            andTapLocation:[recognizer locationInView:self.view]];
+    
+    [self presentViewController:imageViewerVC animated:YES completion:nil];
+}
+
 
 
 

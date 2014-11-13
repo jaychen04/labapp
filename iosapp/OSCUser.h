@@ -2,7 +2,7 @@
 //  OSCUser.h
 //  iosapp
 //
-//  Created by ChanAetern on 11/5/14.
+//  Created by chenhaoxiangs on 11/5/14.
 //  Copyright (c) 2014 oschina. All rights reserved.
 //
 

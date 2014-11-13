@@ -9,6 +9,7 @@
 #import "TweetsViewController.h"
 #import "TweetDetailsViewController.h"
 #import "UserDetailsViewController.h"
+#import "ImageViewerController.h"
 #import "TweetCell.h"
 #import "OSCTweet.h"
 #import "Config.h"
@@ -202,19 +203,23 @@ NSString * const kTweetWithImageCellID = @"TweetWithImageCell";
 
 #pragma mark - 跳转到用户详情页
 
-- (void)pushDetailsView:(UITapGestureRecognizer *)tapGesture
+- (void)pushDetailsView:(UITapGestureRecognizer *)recognizer
 {
-    OSCTweet *tweet = [self.objects objectAtIndex:tapGesture.view.tag];
+    OSCTweet *tweet = [self.objects objectAtIndex:recognizer.view.tag];
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 
 
 
-- (void)loadLargeImage:(UITapGestureRecognizer *)tapGesture
+- (void)loadLargeImage:(UITapGestureRecognizer *)recognizer
 {
-    OSCTweet *tweet = [self.objects objectAtIndex:tapGesture.view.tag];
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:tweet.bigImgURL]];
+    OSCTweet *tweet = [self.objects objectAtIndex:recognizer.view.tag];
+    ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:tweet.bigImgURL
+                                                                                 thumbnail:(UIImageView *)recognizer.view
+                                                                            andTapLocation:[recognizer locationInView:self.view]];
+    
+    [self presentViewController:imageViewerVC animated:YES completion:nil];
 }
 
 
