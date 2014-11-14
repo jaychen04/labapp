@@ -25,6 +25,7 @@
     self = [super initWithCommentsType:CommentsTypeTweet andID:tweet.tweetID];
     
     if (self) {
+        self.hidesBottomBarWhenPushed = YES;
         self.tweet = tweet;
         
         __weak TweetDetailsViewController *weakSelf = self;

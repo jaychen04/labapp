@@ -46,6 +46,7 @@
 {
     self = [super init];
     if (self) {
+        self.hidesBottomBarWhenPushed = YES;
         _news = news;
         switch (news.type) {
             case NewsTypeStandardNews:
@@ -84,6 +85,7 @@
 {
     self = [super init];
     if (self) {
+        self.hidesBottomBarWhenPushed = YES;
         self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, blog.blogID];
         self.tag = @"blog";
         self.detailsClass = [OSCBlogDetails class];
@@ -98,6 +100,7 @@
     self = [super init];
     if (!self) {return nil;}
     
+    self.hidesBottomBarWhenPushed = YES;
     self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, post.postID];
     self.tag = @"post";
     self.detailsClass = [OSCPostDetails class];
