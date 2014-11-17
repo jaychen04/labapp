@@ -11,5 +11,6 @@
 @interface UIView (Util)
 
 - (void)setCornerRadius:(CGFloat)cornerRadius;
+- (void)setBorderWidth:(CGFloat)width andColor:(CGColorRef)color;
 
 @end

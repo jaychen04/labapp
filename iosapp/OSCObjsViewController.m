@@ -10,9 +10,6 @@
 #import "OSCBaseObject.h"
 #import "LastCell.h"
 
-@interface OSCObjsViewController ()
-
-@end
 
 @implementation OSCObjsViewController
 
@@ -55,6 +52,7 @@
         return;
     }
     
+    // 自动刷新
     [self.refreshControl beginRefreshing];
     [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
                             animated:YES];

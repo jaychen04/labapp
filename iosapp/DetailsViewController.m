@@ -7,6 +7,11 @@
 //
 
 #import "DetailsViewController.h"
+
+#import <AFNetworking.h>
+#import <AFOnoResponseSerializer.h>
+#import <Ono.h>
+
 #import "OSCAPI.h"
 #import "OSCNews.h"
 #import "OSCBlog.h"
@@ -15,11 +20,7 @@
 #import "OSCBlogDetails.h"
 #import "OSCPostDetails.h"
 #import "OSCSoftwareDetails.h"
-
-#import <AFNetworking.h>
-#import <AFOnoResponseSerializer.h>
-#import <Ono.h>
-
+#import "BottomBar.h"
 #import "Utils.h"
 
 
@@ -36,7 +37,8 @@
 @property (nonatomic, strong) UIWebView *detailsView;
 @property (nonatomic, copy) NSString *tag;
 @property (nonatomic, assign) SEL loadMethod;
-@property Class detailsClass;
+@property (nonatomic, assign) Class detailsClass;
+@property (nonatomic, strong) BottomBar *bottomBar;
 
 @end
 
@@ -116,6 +118,7 @@
     self.detailsView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     self.detailsView.scrollView.bounces = NO;
     [self.view addSubview:self.detailsView];
+    [self addBottomBar];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
@@ -207,6 +210,20 @@
     [self.detailsView loadHTMLString:html baseURL:nil];
 }
 
+
+
+
+
+- (void)addBottomBar
+{
+    _bottomBar = [BottomBar new];
+    _bottomBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_bottomBar];
+    
+    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_bottomBar);
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_bottomBar]|" options:0 metrics:nil views:viewsDict]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_bottomBar]|" options:0 metrics:nil views:viewsDict]];
+}
 
 
 

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class GrowingTextView;
+
 @interface BottomBar : UIToolbar
 
 @property (nonatomic, copy) void (^sendContent)(NSString *content);
 
-@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) GrowingTextView *textView;
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, strong) UIButton *switchModeButton;
 

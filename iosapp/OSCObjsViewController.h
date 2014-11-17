@@ -16,7 +16,7 @@
 #import "OSCAPI.h"
 #import "LastCell.h"
 
-@interface OSCObjsViewController : UITableViewController <UIScrollViewDelegate>
+@interface OSCObjsViewController : UITableViewController
 
 - (void)fetchMore;
 

@@ -58,12 +58,19 @@
     
     self.tabBarController = [UITabBarController new];
     self.tabBarController.delegate = self;
+    self.tabBarController.tabBar.translucent = NO;
     self.tabBarController.viewControllers = @[newsNav, tweetsNav, postsNav, loginNav];
     
-    [[self.tabBarController.tabBar.items objectAtIndex:0] setTitle:@"资讯"];
-    [[self.tabBarController.tabBar.items objectAtIndex:1] setTitle:@"动弹"];
-    [[self.tabBarController.tabBar.items objectAtIndex:2] setTitle:@"讨论区"];
-    [[self.tabBarController.tabBar.items objectAtIndex:3] setTitle:@"登录"];
+    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UITabBar appearance] setSelectedImageTintColor:[UIColor colorWithHex:0xE1E1E1]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x007F00]} forState:UIControlStateSelected];
+    
+    NSArray *titles = @[@"资讯", @"动弹", @"讨论区", @"登录"];
+    for (NSUInteger i = 0, count = [self.tabBarController.tabBar.items count]; i < count; i++) {
+        [self.tabBarController.tabBar.items[i] setTitle:titles[i]];
+    }
+    
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = self.tabBarController;

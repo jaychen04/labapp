@@ -16,4 +16,10 @@
     self.layer.masksToBounds = YES;
 }
 
+- (void)setBorderWidth:(CGFloat)width andColor:(CGColorRef)color
+{
+    self.layer.borderWidth = width;
+    self.layer.borderColor = color;
+}
+
 @end
