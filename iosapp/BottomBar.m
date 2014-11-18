@@ -44,6 +44,8 @@
     _editView = [GrowingTextView new];
     [_editView setCornerRadius:5.0];
     [_editView setBorderWidth:1.0f andColor:[[UIColor colorWithHex:0xC8C8CD] CGColor]];
+    _editView.backgroundColor = [UIColor colorWithHex:0xF5FAFA];
+    //_editView.inputAccessoryView.backgroundColor = [UIColor colorWithHex:0xFFFAFA];
     
     [self addSubview:_editView];
     [self addSubview:modeSwitchButton];
