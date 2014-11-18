@@ -32,24 +32,32 @@
 
 - (void)setLayout
 {
-    UIView *accessoryView = [UIView new];
+    UIButton *modeSwitchButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [modeSwitchButton setImage:[UIImage imageNamed:@"button_keyboard_normal"] forState:UIControlStateNormal];
     
+    UIButton *emojiButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [emojiButton setImage:[UIImage imageNamed:@"button_emoji_normal"] forState:UIControlStateNormal];
     
-    _modeSwitchButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"button_keyboard_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                                         style:UIBarButtonItemStylePlain target:self action:nil];
+    UIButton *commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [commentButton setImage:[UIImage imageNamed:@"button_comment_normal"] forState:UIControlStateNormal];
     
     _editView = [GrowingTextView new];
-    [_editView setBorderWidth:1.0f andColor:[[UIColor darkTextColor] CGColor]];
-    _editView.text = @"123243423";
-    UIBarButtonItem *editView = [[UIBarButtonItem alloc] initWithCustomView:_editView];
+    [_editView setCornerRadius:5.0];
+    [_editView setBorderWidth:1.0f andColor:[[UIColor colorWithHex:0xC8C8CD] CGColor]];
     
-    UIBarButtonItem *emojiButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"button_emoji_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                                                    style:UIBarButtonItemStylePlain target:self action:nil];
+    [self addSubview:_editView];
+    [self addSubview:modeSwitchButton];
+    [self addSubview:emojiButton];
+    [self addSubview:commentButton];
     
-    UIBarButtonItem *sendButton = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:@"button_comment_normal"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                                                          style:UIBarButtonItemStylePlain target:self action:nil];
+    for (UIView *view in [self subviews]) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(modeSwitchButton, emojiButton, commentButton, _editView);
     
-    [self setItems:@[_modeSwitchButton, editView, emojiButton, sendButton] animated:YES];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[modeSwitchButton]-5-[_editView]-5-[emojiButton][commentButton]-5-|" options:0 metrics:nil views:viewsDict]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[modeSwitchButton]-3-|" options:0 metrics:nil views:viewsDict]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[emojiButton]-3-|" options:0 metrics:nil views:viewsDict]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[commentButton]-3-|" options:0 metrics:nil views:viewsDict]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_editView]-5-|" options:0 metrics:nil views:viewsDict]];
 }
 
 
