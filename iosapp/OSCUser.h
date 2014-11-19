@@ -13,9 +13,9 @@
 @property (readonly, nonatomic, assign) int64_t userID;
 @property (readonly, nonatomic, strong) NSString *location;
 @property (readonly, nonatomic, strong) NSString *name;
-@property (readonly, nonatomic, assign) unsigned long followersCount;
-@property (readonly, nonatomic, assign) unsigned long fansCount;
-@property (readonly, nonatomic, assign) long score;
+@property (readonly, nonatomic, assign) NSUInteger followersCount;
+@property (readonly, nonatomic, assign) NSUInteger fansCount;
+@property (readonly, nonatomic, assign) NSInteger score;
 @property (readonly, nonatomic, copy) NSURL *portraitURL;
 
 @end

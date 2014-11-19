@@ -41,7 +41,7 @@ NSString * const kPortrait = @"portrait";
     self.name = [[xml firstChildWithTag:kName] stringValue];
     self.followersCount = [[[xml firstChildWithTag:kFollowers] numberValue] unsignedLongValue];
     self.fansCount = [[[xml firstChildWithTag:kFans] numberValue] unsignedLongValue];
-    self.score = [[[xml firstChildWithTag:kScore] numberValue] longValue];
+    self.score = [[[xml firstChildWithTag:kScore] numberValue] integerValue];
     self.portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
     
     return self;

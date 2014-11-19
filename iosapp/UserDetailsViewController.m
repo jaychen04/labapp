@@ -229,7 +229,7 @@
 {
     [_portrait sd_setImageWithURL:_user.portraitURL placeholderImage:nil];
     _nameLabel.text = self.user.name;
-    _countLabel.text = [NSString stringWithFormat:@"关注 %lu | 粉丝 %lu | 积分 %ld", _user.followersCount, _user.fansCount, _user.score];
+    _countLabel.text = [NSString stringWithFormat:@"关注 %lu | 粉丝 %lu | 积分 %ld", (unsigned long)_user.followersCount, (unsigned long)_user.fansCount, (long)_user.score];
     
     //NSString *action = _user.
 }

@@ -57,6 +57,7 @@
 		38A1A1671A15F15500AFD144 /* button_keyboard_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A1A15F1A15F15500AFD144 /* button_keyboard_pressed.png */; };
 		38A1A1681A15F15500AFD144 /* button_option_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A1A1601A15F15500AFD144 /* button_option_normal.png */; };
 		38A1A1691A15F15500AFD144 /* button_option_pressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A1A1611A15F15500AFD144 /* button_option_pressed.png */; };
+		38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */; };
 		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
 		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
 		38BD7D6E19FF7F94003ABB80 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */; };
@@ -168,6 +169,8 @@
 		38A1A15F1A15F15500AFD144 /* button_keyboard_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_keyboard_pressed.png; sourceTree = "<group>"; };
 		38A1A1601A15F15500AFD144 /* button_option_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_option_normal.png; sourceTree = "<group>"; };
 		38A1A1611A15F15500AFD144 /* button_option_pressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_option_pressed.png; sourceTree = "<group>"; };
+		38AB26491A1C4D2100D761CB /* BottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomBarViewController.h; sourceTree = "<group>"; };
+		38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomBarViewController.m; sourceTree = "<group>"; };
 		38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareDetails.h; sourceTree = "<group>"; };
 		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
 		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
@@ -336,6 +339,8 @@
 			children = (
 				381EAB6719FE3B9800C1937C /* OSCObjsViewController.h */,
 				381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */,
+				38AB26491A1C4D2100D761CB /* BottomBarViewController.h */,
+				38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */,
 				382F5EAE1A0338C900A8EF11 /* DetailsViewController.h */,
 				382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */,
 				00D6BD2B19ECD46100E8754E /* BaseViewController.h */,
@@ -678,6 +683,7 @@
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
+				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
 				3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */,
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
 				38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */,

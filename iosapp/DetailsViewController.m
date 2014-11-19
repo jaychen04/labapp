@@ -20,7 +20,6 @@
 #import "OSCBlogDetails.h"
 #import "OSCPostDetails.h"
 #import "OSCSoftwareDetails.h"
-#import "BottomBar.h"
 #import "Utils.h"
 
 
@@ -38,8 +37,6 @@
 @property (nonatomic, copy) NSString *tag;
 @property (nonatomic, assign) SEL loadMethod;
 @property (nonatomic, assign) Class detailsClass;
-@property (nonatomic, strong) BottomBar *bottomBar;
-@property (nonatomic, strong) NSLayoutConstraint *bottomConstraint;
 
 @end
 
@@ -119,10 +116,7 @@
     self.detailsView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     self.detailsView.scrollView.bounces = NO;
     [self.view addSubview:self.detailsView];
-    [self addBottomBar];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self.view bringSubviewToFront:(UIView *)self.bottomBar];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
@@ -154,7 +148,7 @@
 
 
 - (void)loadNewsDetails:(OSCNewsDetails *)newsDetails
-{
+{NSLog(@"%@", [self.view subviews]);
     NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", _news.authorID, _news.author, _news.pubDate];
     
     NSString *software = @"";
@@ -216,36 +210,6 @@
 
 
 
-
-
-- (void)addBottomBar
-{
-    _bottomBar = [BottomBar new];
-    _bottomBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_bottomBar];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_bottomBar]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_bottomBar)]];
-    _bottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:_bottomBar attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
-    [self.view addConstraint:_bottomConstraint];
-}
-
-
-
-
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    _bottomConstraint.constant = keyboardBounds.size.height;
-    [self.view layoutIfNeeded];
-}
-
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-    _bottomConstraint.constant = 0;
-    [self.view layoutIfNeeded];
-}
 
 
 

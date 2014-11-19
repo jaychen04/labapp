@@ -17,6 +17,7 @@
         self.scrollEnabled = YES;
         self.scrollsToTop = NO;
         self.showsHorizontalScrollIndicator = NO;
+        self.maxNumberOfLines = 4;
     }
     
     return self;
@@ -27,6 +28,12 @@
 {
     return self.contentSize.height;
 }
+
+- (NSUInteger)numberOfLines
+{
+    return abs(self.contentSize.height/self.font.lineHeight);
+}
+
 
 
 @end
