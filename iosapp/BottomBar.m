@@ -12,9 +12,6 @@
 
 @interface BottomBar () <UITextViewDelegate>
 
-@property (nonatomic, strong) UITextView *editView;
-@property (nonatomic, strong) UIBarButtonItem *modeSwitchButton;
-
 @end
 
 @implementation BottomBar
@@ -45,7 +42,6 @@
     [_editView setCornerRadius:5.0];
     [_editView setBorderWidth:1.0f andColor:[[UIColor colorWithHex:0xC8C8CD] CGColor]];
     _editView.backgroundColor = [UIColor colorWithHex:0xF5FAFA];
-    //_editView.inputAccessoryView.backgroundColor = [UIColor colorWithHex:0xFFFAFA];
     
     [self addSubview:_editView];
     [self addSubview:modeSwitchButton];
@@ -61,6 +57,7 @@
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[commentButton]-3-|" options:0 metrics:nil views:viewsDict]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_editView]-5-|" options:0 metrics:nil views:viewsDict]];
 }
+
 
 
 

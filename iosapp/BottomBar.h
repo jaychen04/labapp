@@ -14,7 +14,7 @@
 
 @property (nonatomic, copy) void (^sendContent)(NSString *content);
 
-@property (nonatomic, strong) GrowingTextView *textView;
+@property (nonatomic, strong) GrowingTextView *editView;
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, strong) UIButton *switchModeButton;
 

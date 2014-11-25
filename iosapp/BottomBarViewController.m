@@ -23,7 +23,8 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidUpdate:) name:UITextViewTextDidChangeNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,23 +35,6 @@
 
 
 
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    _bottomConstraint.constant = keyboardBounds.size.height;
-    [self.view layoutIfNeeded];
-}
-
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-    _bottomConstraint.constant = 0;
-    [self.view layoutIfNeeded];
-}
-
-
-
 - (void)addBottomBar
 {
     _bottomBar = [BottomBar new];
@@ -58,9 +42,13 @@
     [self.view addSubview:_bottomBar];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_bottomBar]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_bottomBar)]];
-    _bottomConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
+    _bottomBarYConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
                                                         toItem:_bottomBar attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
-    [self.view addConstraint:_bottomConstraint];
+    _bottomBarHeightConstraint = [NSLayoutConstraint constraintWithItem:_bottomBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual
+                                                                 toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:[self minimumInputbarHeight]];
+    
+    [self.view addConstraint:_bottomBarYConstraint];
+    [self.view addConstraint:_bottomBarHeightConstraint];
 }
 
 
@@ -70,7 +58,7 @@
 
 - (GrowingTextView *)textView
 {
-    return self.bottomBar.textView;
+    return self.bottomBar.editView;
 }
 
 - (CGFloat)minimumInputbarHeight
@@ -80,7 +68,7 @@
 
 - (CGFloat)deltaInputbarHeight
 {
-    return self.textView.intrinsicContentSize.height - self.textView.font.lineHeight;
+    return self.bottomBar.intrinsicContentSize.height - self.textView.font.lineHeight;
 }
 
 - (CGFloat)barHeightForLines:(NSUInteger)numberOfLines
@@ -88,7 +76,6 @@
     CGFloat height = [self deltaInputbarHeight];
     
     height += roundf(self.textView.font.lineHeight * numberOfLines);
-    height += 10;
     
     return height;
 }
@@ -98,10 +85,11 @@
 {
     CGFloat height = 0.0;
     CGFloat minimumHeight = [self minimumInputbarHeight];
+    NSUInteger numberOfLines = self.textView.numberOfLines;
     
-    if (self.textView.numberOfLines == 1) {
+    if (numberOfLines == 1) {
         height = minimumHeight;
-    } else if (self.textView.numberOfLines < self.textView.maxNumberOfLines) {
+    } else if (numberOfLines < self.textView.maxNumberOfLines) {
         height = [self barHeightForLines:self.textView.numberOfLines];
     } else {
         height = [self barHeightForLines:self.textView.maxNumberOfLines];
@@ -116,6 +104,83 @@
 
 
 
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    _bottomBarYConstraint.constant = keyboardBounds.size.height;
+    [self.view layoutIfNeeded];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    _bottomBarYConstraint.constant = 0;
+    [self.view layoutIfNeeded];
+}
+
+
+- (void)didchangeTextViewText:(NSNotification *)notification
+{
+    
+}
+
+
+- (void)textDidUpdate:(NSNotification *)notification
+{
+    // Disables animation if not first responder
+    //if (![self.textView isFirstResponder]) {
+    //    animated = NO;
+    //}
+    
+    CGFloat inputbarHeight = [self appropriateInputbarHeight];
+    
+    if (inputbarHeight != self.bottomBarHeightConstraint.constant) {
+        self.bottomBarHeightConstraint.constant = inputbarHeight;
+        //self.scrollViewHC.constant = [self appropriateScrollViewHeight];
+        
+#if 0
+        if (animated) {
+            
+            //BOOL bounces = self.bounces && [self.textView isFirstResponder];
+            
+            [UIView animateWithDuration:0.5
+                                  delay:0.0
+                 usingSpringWithDamping:0.7
+                  initialSpringVelocity:0.7
+                                options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionLayoutSubviews|UIViewAnimationOptionBeginFromCurrentState
+                             animations:^{
+                                 [self.view layoutIfNeeded];
+                                 
+                                 if (animations) {
+                                     animations();
+                                 }
+                             }
+                             completion:NULL];
+            
+            [self.view slk_animateLayoutIfNeededWithBounce:bounces
+                                                   options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionLayoutSubviews|UIViewAnimationOptionBeginFromCurrentState
+                                                animations:^{
+                                                    if (self.isEditing) {
+                                                        [self.textView slk_scrollToCaretPositonAnimated:NO];
+                                                    }
+                                                }];
+        }
+        else {
+            [self.view layoutIfNeeded];
+        }
+#endif
+        
+        [self.view layoutIfNeeded];
+    }
+    
+    // Only updates the input view if the number of line changed
+    //[self reloadInputAccessoryViewIfNeeded];
+    
+    // Toggles auto-correction if requiered
+    //[self enableTypingSuggestionIfNeeded];
+}
 
 
 

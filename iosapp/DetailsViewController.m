@@ -148,7 +148,7 @@
 
 
 - (void)loadNewsDetails:(OSCNewsDetails *)newsDetails
-{NSLog(@"%@", [self.view subviews]);
+{
     NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", _news.authorID, _news.author, _news.pubDate];
     
     NSString *software = @"";

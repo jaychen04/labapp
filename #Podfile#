@@ -1,4 +1,0 @@
-source 'https://github.com/CocoaPods/Specs.git'
-
-pod 'AFOnoResponseSerializer', '~> 1.0.0'
-pod 'UIImageView+SDWebImage_M13ProgressSuite', '~> 0.1.1'
