@@ -9,6 +9,7 @@
 #import "BottomBarViewController.h"
 #import "BottomBar.h"
 #import "GrowingTextView.h"
+#import "EmojiPageVC.h"
 
 @interface BottomBarViewController ()
 
@@ -41,6 +42,15 @@
     _bottomBar.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_bottomBar];
     
+    //_emojiPanel = [[EmojiPanelView alloc] initWithPanelHeight:150];
+    //_emojiPanel.translatesAutoresizingMaskIntoConstraints = NO;
+    //[self.view addSubview:_emojiPanel];
+    
+    _emojiPanelVC = [[EmojiPageVC alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    [self addChildViewController:_emojiPanelVC];
+    [self.view addSubview:_emojiPanelVC.view];
+    
+#if 1
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_bottomBar]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_bottomBar)]];
     _bottomBarYConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
                                                         toItem:_bottomBar attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
@@ -49,8 +59,18 @@
     
     [self.view addConstraint:_bottomBarYConstraint];
     [self.view addConstraint:_bottomBarHeightConstraint];
+#endif
+    
+#if 0
+    //CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
+    //NSDictionary *metrics = @{@"panelWidth": @(screenWidth * 5)};
+    _emojiPanel = _emojiPanelVC.view;
+    [self.view addSubview:_emojiPanel];
+    NSDictionary *views = NSDictionaryOfVariableBindings(_emojiPanel);
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_emojiPanel]" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_emojiPanel(150)]|" options:0 metrics:nil views:views]];
+#endif
 }
-
 
 
 

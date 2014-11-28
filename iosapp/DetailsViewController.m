@@ -117,6 +117,7 @@
     self.detailsView.scrollView.bounces = NO;
     [self.view addSubview:self.detailsView];
     [self.view bringSubviewToFront:(UIView *)self.bottomBar];
+    //[self.view bringSubviewToFront:self.emojiPanel];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];

@@ -34,6 +34,7 @@
     
     UIButton *emojiButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [emojiButton setImage:[UIImage imageNamed:@"button_emoji_normal"] forState:UIControlStateNormal];
+    [emojiButton addTarget:self action:@selector(onClickEmojiButton) forControlEvents:UIControlEventTouchUpInside];
     
     UIButton *commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [commentButton setImage:[UIImage imageNamed:@"button_comment_normal"] forState:UIControlStateNormal];
@@ -68,6 +69,18 @@
 {
     [textView becomeFirstResponder];
 }
+
+
+
+
+#pragma mark - Button Response
+
+- (void)onClickEmojiButton
+{
+    
+}
+
+
 
 
 
