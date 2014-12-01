@@ -7,13 +7,15 @@
 //
 
 #import "AppDelegate.h"
+#import "UIColor+Util.h"
 #import "SwipeableViewController.h"
 #import "TweetsViewController.h"
 #import "PostsViewController.h"
 #import "NewsViewController.h"
 #import "BlogsViewController.h"
 #import "LoginViewController.h"
-#import "UIColor+Util.h"
+#import "DiscoverTableVC.h"
+
 
 @interface AppDelegate () <UIApplicationDelegate,UITabBarControllerDelegate>
 
@@ -39,6 +41,9 @@
                                                                                           [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
                                                                                           ]];
     
+    DiscoverTableVC *dicoverTableVC = [DiscoverTableVC new];
+    
+#if 0
     SwipeableViewController *postsSVC = [[SwipeableViewController alloc] initWithTitle:@"讨论区"
                                                                           andSubTitles:@[@"问答", @"分享", @"综合", @"职业", @"站务"]
                                                                         andControllers:@[
@@ -48,18 +53,20 @@
                                                                                          [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager],
                                                                                          [[PostsViewController alloc] initWithPostsType:PostsTypeCaree]
                                                                                          ]];
+#endif
     
     LoginViewController *loginVC = [LoginViewController new];
     
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:newsSVC];
     UINavigationController *tweetsNav = [[UINavigationController alloc] initWithRootViewController:tweetsSVC];
-    UINavigationController *postsNav = [[UINavigationController alloc] initWithRootViewController:postsSVC];
+    //UINavigationController *postsNav = [[UINavigationController alloc] initWithRootViewController:postsSVC];
+    UINavigationController *discoverNav = [[UINavigationController alloc] initWithRootViewController:dicoverTableVC];
     UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginVC];
     
     self.tabBarController = [UITabBarController new];
     self.tabBarController.delegate = self;
     self.tabBarController.tabBar.translucent = NO;
-    self.tabBarController.viewControllers = @[newsNav, tweetsNav, postsNav, loginNav];
+    self.tabBarController.viewControllers = @[newsNav, tweetsNav, /*postsNav,*/ discoverNav, loginNav];
     
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor colorWithHex:0xE1E1E1]];

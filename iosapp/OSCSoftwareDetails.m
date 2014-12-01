@@ -8,21 +8,21 @@
 
 #import "OSCSoftwareDetails.h"
 
-static NSString *kID = @"id";
-static NSString *kTitle = @"title";
-static NSString *kExtensionTitle = @"extensionTitle";
-static NSString *kLicense = @"license";
-static NSString *kBody = @"body";
-static NSString *kOS = @"os";
-static NSString *kLanguage = @"language";
-static NSString *kRecordTime = @"recordtime";
-static NSString *kURL = @"url";
-static NSString *kHomepage = @"homepage";
-static NSString *kDocument = @"document";
-static NSString *kDownload = @"download";
-static NSString *kLogo = @"logo";
-static NSString *kFavorite = @"favorite";
-static NSString *kTweetCount = @"tweetCount";
+NSString * const kID = @"id";
+NSString * const kTitle = @"title";
+NSString * const kExtensionTitle = @"extensionTitle";
+NSString * const kLicense = @"license";
+NSString * const kBody = @"body";
+NSString * const kOS = @"os";
+NSString * const kLanguage = @"language";
+NSString * const kRecordTime = @"recordtime";
+NSString * const kURL = @"url";
+NSString * const kHomepage = @"homepage";
+NSString * const kDocument = @"document";
+NSString * const kDownload = @"download";
+NSString * const kLogo = @"logo";
+NSString * const kFavorite = @"favorite";
+NSString * const kTweetCount = @"tweetCount";
 
 @implementation OSCSoftwareDetails
 

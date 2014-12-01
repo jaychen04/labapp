@@ -138,6 +138,9 @@
 		382A94AB1A26D27400AAAFEA /* 99@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94441A26D27400AAAFEA /* 99@2x.png */; };
 		382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */; };
 		382A94B11A2700D600AAAFEA /* EmojiCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94B01A2700D600AAAFEA /* EmojiCollectionVC.m */; };
+		382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */; };
+		382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A95BA1A29D2C300AAAFEA /* EventsViewController.m */; };
+		382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A95BD1A29DC4700AAAFEA /* OSCEvent.m */; };
 		382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */; };
 		382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */; };
 		382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */; };
@@ -344,6 +347,12 @@
 		382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiPageVC.m; sourceTree = "<group>"; };
 		382A94AF1A2700D600AAAFEA /* EmojiCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiCollectionVC.h; sourceTree = "<group>"; };
 		382A94B01A2700D600AAAFEA /* EmojiCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiCollectionVC.m; sourceTree = "<group>"; };
+		382A94B71A28659D00AAAFEA /* DiscoverTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverTableVC.h; sourceTree = "<group>"; };
+		382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverTableVC.m; sourceTree = "<group>"; };
+		382A95B91A29D2C300AAAFEA /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
+		382A95BA1A29D2C300AAAFEA /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
+		382A95BC1A29DC4700AAAFEA /* OSCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCEvent.h; sourceTree = "<group>"; };
+		382A95BD1A29DC4700AAAFEA /* OSCEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCEvent.m; sourceTree = "<group>"; };
 		382F5EAE1A0338C900A8EF11 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetails.h; sourceTree = "<group>"; };
@@ -463,6 +472,8 @@
 				38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */,
 				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
 				386039601A09C5A1007C9B88 /* OSCUser.m */,
+				382A95BC1A29DC4700AAAFEA /* OSCEvent.h */,
+				382A95BD1A29DC4700AAAFEA /* OSCEvent.m */,
 			);
 			name = "OSC API";
 			sourceTree = "<group>";
@@ -490,6 +501,7 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
+				382A94B21A28653200AAAFEA /* Discover */,
 				3874EC221A08E8EA000D2894 /* User */,
 				38996A561A0266F80025AA52 /* Blog */,
 				38BD7D6F19FF7F9A003ABB80 /* Comments */,
@@ -740,6 +752,25 @@
 				382A94441A26D27400AAAFEA /* 99@2x.png */,
 			);
 			path = emoji;
+			sourceTree = "<group>";
+		};
+		382A94B21A28653200AAAFEA /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				382A94B71A28659D00AAAFEA /* DiscoverTableVC.h */,
+				382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */,
+				382A94B31A28655900AAAFEA /* Circle */,
+			);
+			name = Discover;
+			sourceTree = "<group>";
+		};
+		382A94B31A28655900AAAFEA /* Circle */ = {
+			isa = PBXGroup;
+			children = (
+				382A95B91A29D2C300AAAFEA /* EventsViewController.h */,
+				382A95BA1A29D2C300AAAFEA /* EventsViewController.m */,
+			);
+			name = Circle;
 			sourceTree = "<group>";
 		};
 		386039661A0A34F5007C9B88 /* Resource */ = {
@@ -1100,8 +1131,10 @@
 				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
+				382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
+				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
@@ -1125,6 +1158,7 @@
 				38996A591A026D6A0025AA52 /* BlogCell.m in Sources */,
 				386039611A09C5A1007C9B88 /* OSCUser.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
+				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				3874EC1F1A08E8B6000D2894 /* MineViewController.m in Sources */,
