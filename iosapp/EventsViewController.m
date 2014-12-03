@@ -7,6 +7,11 @@
 //
 
 #import "EventsViewController.h"
+#import "OSCEvent.h"
+#import "EventCell.h"
+#import "Config.h"
+
+NSString * const kEventCellID = @"EventCell";
 
 @interface EventsViewController ()
 
@@ -14,13 +19,115 @@
 
 @implementation EventsViewController
 
+- (instancetype)init
+{
+    if (self = [super init]) {
+        self.hidesBottomBarWhenPushed = YES;
+        
+        self.objClass = [OSCEvent class];
+        self.generateURL = ^NSString * (NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?catalog=1&pageIndex=%lu&pageSize=20&uid=%lld", OSCAPI_PREFIX, OSCAPI_ACTIVE_LIST, (unsigned long)page, [Config getOwnID]];
+        };
+        self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
+            return [[xml.rootElement firstChildWithTag:@"activies"] childrenWithTag:@"active"];
+        };
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:kEventCellID];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+
+
+
+
+#pragma mark - Table view data source
+
+// 图片的高度计算方法参考 http://blog.cocoabit.com/blog/2013/10/31/guan-yu-uitableview-zhong-cell-zi-gua-ying-gao-du-de-wen-ti/
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger row = indexPath.row;
+    if (row < self.objects.count) {
+        OSCEvent *event = [self.objects objectAtIndex:row];
+        //NSString *cellID = tweet.hasAnImage ? kEventCellID : kTweetCellID;
+        EventCell *cell = [tableView dequeueReusableCellWithIdentifier:kEventCellID forIndexPath:indexPath];
+        
+        [cell setContentWithEvent:event];
+        
+#if 0
+        if (tweet.hasAnImage) {
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
+            
+            // 有图就加载，无图则下载并reload tableview
+            if (!image) {
+                [self downloadImageThenReload:tweet.smallImgURL];
+            } else {
+                [cell.thumbnail setImage:image];
+            }
+        }
+#endif
+        
+#if 0
+        cell.portrait.tag = row; cell.authorLabel.tag = row; cell.thumbnail.tag = row;
+        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+        [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+        [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
+#endif
+        
+        return cell;
+    } else {
+        return self.lastCell;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.row < self.objects.count) {
+        OSCEvent *event = [self.objects objectAtIndex:indexPath.row];
+        
+        [self.label setText:event.message];
+        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
+        CGFloat height = size.height + 26 + [UIFont systemFontOfSize:14].lineHeight * 2;
+        
+        [self.label setAttributedText:event.actionStr];
+        size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
+        height += size.height;
+
+#if 0
+        if (tweet.hasAnImage) {
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
+            if (!image) {image = [UIImage imageNamed:@"portrait_loading"];}
+            height += image.size.height + 5;
+        }
+#endif
+        return height;
+    } else {
+        return 60;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSInteger row = indexPath.row;
+    
+    if (row < self.objects.count) {
+        
+    } else {
+        [self fetchMore];
+    }
+}
+
 
 
 

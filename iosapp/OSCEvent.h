@@ -33,4 +33,6 @@
 @property (nonatomic, copy) NSString *objectTitle;
 @property (nonatomic, strong) NSArray *objectReply;
 
+@property (nonatomic, strong, readonly) NSMutableAttributedString *actionStr;
+
 @end

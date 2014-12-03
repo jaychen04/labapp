@@ -73,7 +73,7 @@
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x007F00]} forState:UIControlStateSelected];
     
-    NSArray *titles = @[@"资讯", @"动弹", @"讨论区", @"登录"];
+    NSArray *titles = @[@"资讯", @"动弹", @"发现", @"登录"];
     for (NSUInteger i = 0, count = [self.tabBarController.tabBar.items count]; i < count; i++) {
         [self.tabBarController.tabBar.items[i] setTitle:titles[i]];
     }

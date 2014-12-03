@@ -25,28 +25,25 @@ static NSString *kBlogCellID = @"BlogCell";
 
 - (instancetype)initWithBlogsType:(BlogsType)type
 {
-    self = [super init];
-    if (!self) {return nil;}
-    
-    
-    NSString *blogType = type == BlogTypeLatest? @"latest" : @"recommend";
-    self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?type=%@&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_BLOGS_LIST, blogType, (unsigned long)page, OSCAPI_SUFFIX];
-    };
-    [self setBlockAndClass];
+    if (self = [super init]) {
+        NSString *blogType = type == BlogTypeLatest? @"latest" : @"recommend";
+        self.generateURL = ^NSString * (NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?type=%@&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_BLOGS_LIST, blogType, (unsigned long)page, OSCAPI_SUFFIX];
+        };
+        [self setBlockAndClass];
+    }
     
     return self;
 }
 
 - (instancetype)initWithUserID:(int64_t)userID
 {
-    self = [super init];
-    if (!self) {return nil;}
-    
-    self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?authoruid=%lld&pageIndex=1&pageSize=%d&uid=%lld", OSCAPI_PREFIX, OSCAPI_USERBLOGS_LIST, userID, 20, [Config getOwnID]];
-    };
-    [self setBlockAndClass];
+    if (self = [super init]) {
+        self.generateURL = ^NSString * (NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?authoruid=%lld&pageIndex=1&pageSize=%d&uid=%lld", OSCAPI_PREFIX, OSCAPI_USERBLOGS_LIST, userID, 20, [Config getOwnID]];
+        };
+        [self setBlockAndClass];
+    }
     
     return self;
 }

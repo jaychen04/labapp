@@ -8,6 +8,7 @@
 
 #import "DiscoverTableVC.h"
 #import "UIColor+Util.h"
+#import "EventsViewController.h"
 
 @interface DiscoverTableVC ()
 
@@ -38,7 +39,8 @@
     return 3;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     switch (section) {
         case 0:
             return 1; break;
@@ -61,7 +63,8 @@
     return 40;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     UITableViewCell *cell = [UITableViewCell new];
     
     switch (indexPath.section) {
@@ -83,9 +86,23 @@
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     return 0.01f;
+}
+
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.section) {
+        case 0:
+            [self.navigationController pushViewController:[EventsViewController new] animated:YES];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 

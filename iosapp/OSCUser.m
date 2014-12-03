@@ -8,13 +8,13 @@
 
 #import "OSCUser.h"
 
-NSString * const kID = @"uid";
-NSString * const kLocation = @"location";
-NSString * const kName = @"name";
-NSString * const kFollowers = @"followers";
-NSString * const kFans = @"fans";
-NSString * const kScore = @"score";
-NSString * const kPortrait = @"portrait";
+static NSString * const kID = @"uid";
+static NSString * const kLocation = @"location";
+static NSString * const kName = @"name";
+static NSString * const kFollowers = @"followers";
+static NSString * const kFans = @"fans";
+static NSString * const kScore = @"score";
+static NSString * const kPortrait = @"portrait";
 
 @interface OSCUser ()
 
