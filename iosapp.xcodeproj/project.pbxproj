@@ -449,7 +449,7 @@
 			name = SwipeableViewController;
 			sourceTree = "<group>";
 		};
-		00C9A73919EE8536000EA878 /* OSC API */ = {
+		00C9A73919EE8536000EA878 /* OSC */ = {
 			isa = PBXGroup;
 			children = (
 				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
@@ -478,7 +478,7 @@
 				382A95BC1A29DC4700AAAFEA /* OSCEvent.h */,
 				382A95BD1A29DC4700AAAFEA /* OSCEvent.m */,
 			);
-			name = "OSC API";
+			name = OSC;
 			sourceTree = "<group>";
 		};
 		00D6BCD119EB673200E8754E = {
@@ -510,7 +510,7 @@
 				38BD7D6F19FF7F9A003ABB80 /* Comments */,
 				381EAB6A19FE7CA400C1937C /* Posts */,
 				00EDF60C19EFC13500A5C842 /* Utils */,
-				00C9A73919EE8536000EA878 /* OSC API */,
+				00C9A73919EE8536000EA878 /* OSC */,
 				00D6BD3219ECD73B00E8754E /* Tweets */,
 				381EAB6019FE373100C1937C /* News */,
 				3874EC211A08E8C9000D2894 /* Mine */,

@@ -38,7 +38,7 @@ static NSString * const kAttach = @"attach";
         
         // 附图
         NSString *imageURLStr = [[xml firstChildWithTag:kImgSmall] stringValue];
-        _hasAnImage = [imageURLStr isEqualToString:@""] ? NO : YES;
+        _hasAnImage = ![imageURLStr isEqualToString:@""];
         _smallImgURL = [NSURL URLWithString:imageURLStr];
         _bigImgURL = [NSURL URLWithString:[[xml firstChildWithTag:kImgBig] stringValue]];
         

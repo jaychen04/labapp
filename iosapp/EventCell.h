@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const kEventWitImageCellID = @"EventCellWithImage";
+static NSString * const kEventWithReferenceCellID = @"EventCellWithReference";
+static NSString * const kEventWithoutExtraInfoCellID = @"EventCellWithoutExtraInfo";
+
 @class OSCEvent;
 
 @interface EventCell : UITableViewCell
@@ -16,10 +20,13 @@
 @property (nonatomic, strong) UILabel *authorLabel;
 @property (nonatomic, strong) UILabel *actionLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
-@property (nonatomic, strong) UILabel *commentCount;
-@property (nonatomic, strong) UILabel *appclientLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
+
 @property (nonatomic, strong) UIImageView *thumbnail;
+@property (nonatomic, strong) UITextView *referenceText;
+@property (nonatomic, strong) UILabel *appclientLabel;
+@property (nonatomic, strong) UILabel *commentCount;
+@property (nonatomic, strong) UIView *extraInfoView;
 
 - (void)setContentWithEvent:(OSCEvent *)event;
 

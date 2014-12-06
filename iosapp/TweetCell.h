@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const kTweeWithoutImagetCellID = @"TweetWithoutImageCell";
+static NSString * const kTweetWithImageCellID = @"TweetWithImageCell";
+
 @class OSCTweet;
 
 @interface TweetCell : UITableViewCell

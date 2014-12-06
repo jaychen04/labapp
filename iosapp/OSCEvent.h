@@ -33,6 +33,9 @@
 @property (nonatomic, copy) NSString *objectTitle;
 @property (nonatomic, strong) NSArray *objectReply;
 
+@property (nonatomic, assign) BOOL hasAnImage;
+@property (nonatomic, assign) BOOL hasReference;
+@property (nonatomic, assign) BOOL shouleShowClientOrCommentCount;
 @property (nonatomic, strong, readonly) NSMutableAttributedString *actionStr;
 
 @end

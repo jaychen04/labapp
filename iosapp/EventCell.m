@@ -12,8 +12,9 @@
 
 @interface EventCell()
 
-@property (nonatomic, strong) NSArray *extraInfoConstraints;
-@property (nonatomic, strong) NSArray *noExtraInfoConstraints;
+@property (nonatomic, strong) NSMutableArray *clientAndCommentConstraints;
+@property (nonatomic, strong) NSMutableArray *imageConstraints;
+@property (nonatomic, strong) NSMutableArray *replyConstraints;
 
 @end
 
@@ -28,6 +29,12 @@
         
         [self initSubviews];
         [self setLayout];
+        
+        if ([reuseIdentifier isEqualToString:kEventWitImageCellID]) {
+            [self imageStyle];
+        } else if ([reuseIdentifier isEqualToString:kEventWithReferenceCellID]) {
+            [self referenceStyle];
+        }
         
         UIView *selectedBackground = [UIView new];
         selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
@@ -62,33 +69,34 @@
     _timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:_timeLabel];
     
-    _appclientLabel = [UILabel new];
-    _appclientLabel.font = [UIFont systemFontOfSize:14];
-    _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
-    [self.contentView addSubview:_appclientLabel];
-    
     _contentLabel = [UILabel new];
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _contentLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.contentView addSubview:_contentLabel];
     
+    
+// extra info
+    _extraInfoView =  [UIView new];
+    [self.contentView addSubview:_extraInfoView];
+    
+    _appclientLabel = [UILabel new];
+    _appclientLabel.font = [UIFont systemFontOfSize:14];
+    _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    [_extraInfoView addSubview:_appclientLabel];
+    
     _commentCount = [UILabel new];
     _commentCount.font = [UIFont systemFontOfSize:14];
     _commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
-    [self.contentView addSubview:_commentCount];
-    
-    _thumbnail = [UIImageView new];
-    _thumbnail.contentMode = UIViewContentModeScaleAspectFill;
-    _thumbnail.userInteractionEnabled = YES;
-    [self.contentView addSubview:_thumbnail];
+    [_extraInfoView addSubview:_commentCount];
 }
 
 - (void)setLayout
 {
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+    for (UIView *view in _extraInfoView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _actionLabel, _timeLabel, _appclientLabel, _contentLabel, _commentCount, _thumbnail);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _actionLabel, _timeLabel, _appclientLabel, _contentLabel, _commentCount, _extraInfoView);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_portrait(36)]-5-[_authorLabel]-5-[_timeLabel]-5-|"
                                                                              options:NSLayoutFormatAlignAllTop metrics:nil views:views]];
@@ -98,29 +106,19 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_authorLabel]-3-[_actionLabel]-5-[_contentLabel]"
                                                                              options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]->=0-[_actionLabel]-5-[_contentLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]->=0-[_actionLabel]->=0-[_contentLabel]"
                                                                              options:NSLayoutFormatAlignAllRight metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_appclientLabel]->=0-[_commentCount]-5-|"
-                                                                             options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_extraInfoView]-8-|"
+                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                             metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]->=5-[_appclientLabel]-5-|"
-                                                                             options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
-    _noExtraInfoConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-|" options:0 metrics:nil views:views];
-    //[self.contentView addConstraints:_noExtraInfoConstraints];
+    // constraints for extra information
     
-    NSLayoutConstraint *topConstraint   = [NSLayoutConstraint constraintWithItem:_appclientLabel attribute:NSLayoutAttributeTop     relatedBy:NSLayoutRelationEqual
-                                                                          toItem:_contentLabel   attribute:NSLayoutAttributeBottom  multiplier:1 constant:5];
-    NSLayoutConstraint *leftConstraint  = [NSLayoutConstraint constraintWithItem:_appclientLabel attribute:NSLayoutAttributeLeft    relatedBy:NSLayoutRelationEqual
-                                                                          toItem:_contentLabel   attribute:NSLayoutAttributeLeft    multiplier:1 constant:0];
-    NSLayoutConstraint *rightConstraint = [NSLayoutConstraint constraintWithItem:_commentCount   attribute:NSLayoutAttributeRight   relatedBy:NSLayoutRelationEqual
-                                                                          toItem:_timeLabel      attribute:NSLayoutAttributeRight   multiplier:1 constant:0];
-    NSLayoutConstraint *bottomConstraint = [NSLayoutConstraint constraintWithItem:_appclientLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
-                                                                           toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1 constant:5];
-    NSLayoutConstraint *alignConstraint = [NSLayoutConstraint constraintWithItem:_appclientLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
-                                                                          toItem:_commentCount   attribute:NSLayoutAttributeCenterY multiplier:1 constant:0];
-    _extraInfoConstraints = @[topConstraint, leftConstraint, rightConstraint, bottomConstraint, alignConstraint];
+    _clientAndCommentConstraints = (NSMutableArray *)[NSLayoutConstraint constraintsWithVisualFormat:@"V:|->=0-[_appclientLabel]|" options:0 metrics:nil views:views];
+    [_clientAndCommentConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_appclientLabel]->=0-[_commentCount]-5-|"
+                                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 
 - (void)setContentWithEvent:(OSCEvent *)event
@@ -130,25 +128,52 @@
     [_timeLabel setText:[Utils intervalSinceNow:event.pubDate]];
     [_appclientLabel setText:[Utils getAppclient:event.appclient]];
     [_actionLabel setAttributedText:event.actionStr];
-    if (event.commentCount) {
-        [_commentCount setText:[NSString stringWithFormat:@"评论：%d", event.commentCount]];
-    } else {
-        _commentCount.hidden = YES;
-    }
-
+    _commentCount.text = event.commentCount? [NSString stringWithFormat:@"评论：%d", event.commentCount] : @"";
     [_contentLabel setText:event.message];
     
-#if 0
-    if (event.tweetImg) {
-        [self.contentView removeConstraints:_extraInfoConstraints];
-        [self.contentView addConstraints:_noExtraInfoConstraints];
-    } else {
-        [self.contentView removeConstraints:_extraInfoConstraints];
-        [self.contentView addConstraints:_noExtraInfoConstraints];
+    
+
+    if (event.hasReference) {
+        [_referenceText setText:[NSString stringWithFormat:@"%@: %@", event.objectReply[0], event.objectReply[1]]];
     }
-#endif
+    
+    if (event.shouleShowClientOrCommentCount) {
+        if (event.hasAnImage) {
+            [_extraInfoView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_thumbnail]-5-[_appclientLabel]"
+                                                                                   options:0 metrics:nil views:NSDictionaryOfVariableBindings(_thumbnail, _appclientLabel)]];
+        } else if (event.hasReference) {
+            [_extraInfoView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_referenceText]-5-[_appclientLabel]"
+                                                                                   options:0 metrics:nil views:NSDictionaryOfVariableBindings(_referenceText, _appclientLabel)]];
+        }
+        [_extraInfoView addConstraints:_clientAndCommentConstraints];
+    }
 }
 
+- (void)imageStyle
+{
+    _thumbnail = [UIImageView new];
+    _thumbnail.contentMode = UIViewContentModeScaleAspectFill;
+    _thumbnail.userInteractionEnabled = YES;
+    _thumbnail.translatesAutoresizingMaskIntoConstraints = NO;
+    [_extraInfoView addSubview:_thumbnail];
+    
+    NSDictionary *views = NSDictionaryOfVariableBindings(_thumbnail);
+    [_extraInfoView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_thumbnail]->=0-|" options:0 metrics:nil views:views]];
+    [_extraInfoView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_thumbnail]" options:0 metrics:nil views:views]];
+}
+
+- (void)referenceStyle
+{
+    _referenceText = [UITextView new];
+    _referenceText.scrollEnabled = NO;
+    _referenceText.editable = NO;
+    _referenceText.translatesAutoresizingMaskIntoConstraints = NO;
+    [_extraInfoView addSubview:_referenceText];
+    
+    NSDictionary *views = NSDictionaryOfVariableBindings(_referenceText);
+    [_extraInfoView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_referenceText]->=0-|" options:0 metrics:nil views:views]];
+    [_extraInfoView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_referenceText]|" options:0 metrics:nil views:views]];
+}
 
 
 

@@ -25,6 +25,7 @@ static NSString * const kPubDate = @"pubDate";
 static NSString * const kObjectType = @"objecttype";
 static NSString * const kObjectTitle = @"objecttitle";
 static NSString * const kObjectID = @"objectid";
+static NSString * const kObjectReply = @"objectreply";
 static NSString * const kObjectName = @"objectname";
 static NSString * const kObjectBody = @"objectbody";
 static NSString * const kObjectCatalog = @"objectcatalog";
@@ -42,7 +43,7 @@ static NSString * const kObjectCatalog = @"objectcatalog";
 {
     if (self = [super init]) {
         _eventID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        _message = [[xml firstChildWithTag:kMessage] stringValue];
+        _message = [[[xml firstChildWithTag:kMessage] stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         _tweetImg = [NSURL URLWithString:[[xml firstChildWithTag:kTweetImg] stringValue]];
         
         _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
@@ -58,9 +59,16 @@ static NSString * const kObjectCatalog = @"objectcatalog";
         _objectType = [[[xml firstChildWithTag:kObjectType] numberValue] intValue];
         _objectCatalog = [[[xml firstChildWithTag:kObjectCatalog] numberValue] intValue];
         _objectTitle = [[xml firstChildWithTag:kObjectTitle] stringValue];
-        NSString *objectName = [[xml firstChildWithTag:kObjectName] stringValue]?: @"";
-        NSString *objectBody = [[xml firstChildWithTag:kObjectBody] stringValue]?: @"";
-        _objectReply = @[objectName, objectBody];
+        
+        ONOXMLElement *objectReply = [xml firstChildWithTag:kObjectReply];
+        NSString *objectName = [[objectReply firstChildWithTag:kObjectName] stringValue] ?: @"";
+        NSString *objectBody = [[objectReply firstChildWithTag:kObjectBody] stringValue] ?: @"";
+        _objectReply = @[objectName,
+                         [objectBody stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        
+        _hasAnImage = ![_tweetImg.absoluteString isEqualToString:@""];
+        _hasReference = ![_objectReply[1] isEqualToString:@""];
+        _shouleShowClientOrCommentCount = _appclient != 1 || _commentCount > 0;
     }
     
     return self;
