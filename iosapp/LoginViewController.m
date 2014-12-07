@@ -16,6 +16,7 @@
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
+#import <ReactiveCocoa.h>
 
 @interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
@@ -40,6 +41,15 @@
     if (!accountAndPassword) {return;}
     _accountField.text = accountAndPassword[0];
     _passwordField.text = accountAndPassword[1];
+    
+    RACSignal *valid = [RACSignal combineLatest:@[_accountField.rac_textSignal, _passwordField.rac_textSignal]
+                                         reduce:^(NSString *account, NSString *password) {
+                                             return @(account.length > 0 && password.length > 0);
+                                         }];
+    RAC(_loginButton, enabled) = valid;
+    RAC(_loginButton, alpha) = [valid map:^(NSNumber *b) {
+        return b.boolValue ? @1: @0.4;
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -123,42 +133,24 @@
     [self.view addSubview:email];
     [self.view addSubview:password];
     
-    for (UIView *view in [self.view subviews]) {
-        view.translatesAutoresizingMaskIntoConstraints = NO;
-    }
+    for (UIView *view in [self.view subviews]) { view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(loginLogo, email, password, _accountField, _passwordField, _loginButton);
+    NSDictionary *views = NSDictionaryOfVariableBindings(loginLogo, email, password, _accountField, _passwordField, _loginButton);
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-40-[loginLogo(90)]-25-[email(20)]-20-[password(20)]" options:0 metrics:nil views:viewsDict]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-40-[loginLogo(90)]-25-[email(20)]-20-[password(20)]" options:0 metrics:nil views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|->=50-[loginLogo(90)]->=50-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:viewsDict]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|->=50-[loginLogo(90)]->=50-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:loginLogo
-                                                          attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view
-                                                          attribute:NSLayoutAttributeCenterX
-                                                         multiplier:1.f constant:0.f]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:loginLogo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual
+                                                             toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0.f]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[email(20)]-[_accountField]-30-|"
-                                                                      options:NSLayoutFormatAlignAllCenterY
-                                                                      metrics:nil
-                                                                        views:viewsDict]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[email(20)]-[_accountField]-30-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[password(20)]-[_passwordField]-30-|"
-                                                                      options:NSLayoutFormatAlignAllCenterY
-                                                                      metrics:nil
-                                                                        views:viewsDict]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[password(20)]-[_passwordField]-30-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[password]->=20-[_loginButton(35)]"
-                                                                      options:NSLayoutFormatAlignAllLeft
-                                                                      metrics:nil
-                                                                        views:viewsDict]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[password]->=20-[_loginButton(35)]" options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_passwordField]-30-[_loginButton]"
-                                                                      options:NSLayoutFormatAlignAllRight
-                                                                      metrics:nil
-                                                                        views:viewsDict]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_passwordField]-30-[_loginButton]" options:NSLayoutFormatAlignAllRight metrics:nil views:views]];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -212,24 +204,6 @@
     [self resumeView];
 }
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-    UITextField *anotherTextField = textField == _accountField ? _passwordField : _accountField;
-    NSString *anotherStr = anotherTextField.text;
-    
-    NSMutableString *newStr = [textField.text mutableCopy];
-    [newStr replaceCharactersInRange:range withString:string];
-    
-    if (newStr.length && anotherStr.length) {
-        _loginButton.alpha = 1;
-        _loginButton.enabled = YES;
-    } else {
-        _loginButton.alpha = 0.4;
-        _loginButton.enabled = NO;
-    }
-    
-    return YES;
-}
 
 - (BOOL)textFieldShouldClear:(UITextField *)textField{
     _loginButton.enabled = NO;
@@ -243,7 +217,9 @@
         [_passwordField becomeFirstResponder];
     }else if (sender == _passwordField) {
         [self hidenKeyboard];
-        [self login];
+        if (_loginButton.enabled) {
+            [self login];
+        }
     }
 }
 
