@@ -62,7 +62,7 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
     cell.contentView.backgroundColor = [UIColor themeColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    UIViewController *controller = [self.controllers objectAtIndex:indexPath.row];
+    UIViewController *controller = self.controllers[indexPath.row];
     controller.view.frame = cell.contentView.bounds;
     [cell.contentView addSubview:controller.view];
     

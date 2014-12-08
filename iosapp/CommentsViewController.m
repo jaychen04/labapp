@@ -73,7 +73,7 @@ static NSString *kCommentCellID = @"CommentCell";
         return cell;
     } else if (row < self.objects.count) {
         CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
-        OSCComment *comment = [self.objects objectAtIndex:row];
+        OSCComment *comment = self.objects[row];
         
         [cell setContentWithComment:comment];
         
@@ -93,7 +93,7 @@ static NSString *kCommentCellID = @"CommentCell";
     if (indexPath.section == 0 && self.otherSectionCell) {
         return self.heightForOtherSectionCell(indexPath);
     } else if (indexPath.row < self.objects.count) {
-        OSCComment *comment = [self.objects objectAtIndex:indexPath.row];
+        OSCComment *comment = self.objects[indexPath.row];
         [self.label setText:comment.content];
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 52, MAXFLOAT)];
@@ -111,7 +111,7 @@ static NSString *kCommentCellID = @"CommentCell";
 
 - (void)pushDetailsView:(UITapGestureRecognizer *)tapGesture
 {
-    OSCComment *comment = [self.objects objectAtIndex:tapGesture.view.tag];
+    OSCComment *comment = self.objects[tapGesture.view.tag];
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:comment.authorID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }

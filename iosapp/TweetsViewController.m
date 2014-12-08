@@ -111,7 +111,7 @@
 {
     NSInteger row = indexPath.row;
     if (row < self.objects.count) {
-        OSCTweet *tweet = [self.objects objectAtIndex:row];
+        OSCTweet *tweet = self.objects[row];
         NSString *cellID = tweet.hasAnImage ? kTweetWithImageCellID : kTweeWithoutImagetCellID;
         TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
         
@@ -142,7 +142,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.objects.count) {
-        OSCTweet *tweet = [self.objects objectAtIndex:indexPath.row];
+        OSCTweet *tweet = self.objects[indexPath.row];
         [self.label setText:tweet.body];
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
@@ -166,7 +166,7 @@
     NSInteger row = indexPath.row;
     
     if (row < self.objects.count) {
-        OSCTweet *tweet = [self.objects objectAtIndex:row];
+        OSCTweet *tweet = self.objects[row];
         TweetDetailsViewController *tweetDetailsViewController = [[TweetDetailsViewController alloc] initWithTweet:tweet];
         [self.navigationController pushViewController:tweetDetailsViewController animated:YES];
     } else {
@@ -201,7 +201,7 @@
 
 - (void)pushDetailsView:(UITapGestureRecognizer *)recognizer
 {
-    OSCTweet *tweet = [self.objects objectAtIndex:recognizer.view.tag];
+    OSCTweet *tweet = self.objects[recognizer.view.tag];
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
@@ -210,7 +210,7 @@
 
 - (void)loadLargeImage:(UITapGestureRecognizer *)recognizer
 {
-    OSCTweet *tweet = [self.objects objectAtIndex:recognizer.view.tag];
+    OSCTweet *tweet = self.objects[recognizer.view.tag];
     ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:tweet.bigImgURL
                                                                                  thumbnail:(UIImageView *)recognizer.view
                                                                             andTapLocation:[recognizer locationInView:self.view]];

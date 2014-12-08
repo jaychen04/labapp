@@ -56,7 +56,7 @@ static NSString *kPostCellID = @"PostCell";
 {
     if (indexPath.row < self.objects.count) {
         PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kPostCellID forIndexPath:indexPath];
-        OSCPost *post = [self.objects objectAtIndex:indexPath.row];
+        OSCPost *post = self.objects[indexPath.row];
         
         [cell.portrait sd_setImageWithURL:post.portraitURL placeholderImage:nil options:0];        
         [cell.titleLabel setText:post.title];
@@ -74,7 +74,7 @@ static NSString *kPostCellID = @"PostCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.objects.count) {
-        OSCPost *post = [self.objects objectAtIndex:indexPath.row];
+        OSCPost *post = self.objects[indexPath.row];
         [self.label setText:post.title];
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
@@ -92,7 +92,7 @@ static NSString *kPostCellID = @"PostCell";
     NSInteger row = indexPath.row;
     
     if (row < self.objects.count) {
-        OSCPost *post = [self.objects objectAtIndex:row];
+        OSCPost *post = self.objects[row];
         DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
         [self.navigationController pushViewController:detailsViewController animated:YES];
     } else {

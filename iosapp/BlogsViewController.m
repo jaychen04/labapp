@@ -80,7 +80,7 @@ static NSString *kBlogCellID = @"BlogCell";
 {
     if (indexPath.row < self.objects.count) {
         BlogCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBlogCellID forIndexPath:indexPath];
-        OSCBlog *blog = [self.objects objectAtIndex:indexPath.row];
+        OSCBlog *blog = self.objects[indexPath.row];
         
         [cell.titleLabel setText:blog.title];
         [cell.authorLabel setText:blog.author];
@@ -97,7 +97,7 @@ static NSString *kBlogCellID = @"BlogCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.objects.count) {
-        OSCBlog *blog = [self.objects objectAtIndex:indexPath.row];
+        OSCBlog *blog = self.objects[indexPath.row];
         [self.label setText:blog.title];
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
@@ -114,7 +114,7 @@ static NSString *kBlogCellID = @"BlogCell";
     NSInteger row = indexPath.row;
     
     if (row < self.objects.count) {
-        OSCBlog *blog = [self.objects objectAtIndex:row];
+        OSCBlog *blog = self.objects[row];
         DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithBlog:blog];
         [self.navigationController pushViewController:detailsViewController animated:YES];
     } else {

@@ -100,7 +100,7 @@
         return [NSString stringWithFormat:@"%ld 个月前", (long)months];
     } else {
         NSArray *arr = [dateStr componentsSeparatedByString:@"T"];
-        return [arr objectAtIndex:0];
+        return arr[0];
     }
 }
 
