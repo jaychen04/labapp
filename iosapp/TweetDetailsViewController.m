@@ -37,6 +37,7 @@
             
             if (tweet.hasAnImage) {
                 UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
+                [cell addConstraints:cell.thumbnailConstraints];
                 [cell.thumbnail setImage:image];
             }
             

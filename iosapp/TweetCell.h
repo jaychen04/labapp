@@ -23,6 +23,9 @@ static NSString * const kTweetWithImageCellID = @"TweetWithImageCell";
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UIImageView *thumbnail;
 
+@property (nonatomic, strong) NSArray *thumbnailConstraints;
+@property (nonatomic, strong) NSArray *noThumbnailConstraints;
+
 - (void)setContentWithTweet:(OSCTweet *)tweet;
 
 @end

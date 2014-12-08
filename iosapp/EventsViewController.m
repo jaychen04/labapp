@@ -8,6 +8,10 @@
 
 #import "EventsViewController.h"
 #import "OSCEvent.h"
+#import "OSCNews.h"
+#import "OSCTweet.h"
+#import "OSCBlog.h"
+#import "OSCPost.h"
 #import "EventCell.h"
 #import "Config.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -134,10 +138,51 @@ static NSString * const EventCellID = @"EventCell";
     if (row < self.objects.count) {
         OSCEvent *event = self.objects[row];
         switch (event.catalog) {
-            case 1:
+            case 1: {
+                OSCNews *news = [OSCNews new];
+                news.type = event.objectCatalog;
+                DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithNews:news];
+                [self.navigationController pushViewController:detailsVC animated:YES];
+                break;
+            }
+            case 2: {
+                OSCPost *post = [OSCPost new];
+                post.postID = event.objectID;
+                DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithPost:post];
+                [self.navigationController pushViewController:detailsVC animated:YES];
+                break;
+            }
+            case 3: {
+                OSCTweet *tweet = [OSCTweet new];
+                tweet.tweetID = event.objectID;
+                tweet.portraitURL = event.portraitURL;
+                tweet.authorID = event.authorID;
+                tweet.author = event.author;
+                tweet.body = event.message;
+                
+                tweet.hasAnImage = event.hasAnImage;
+                tweet.smallImgURL = event.tweetImg;
+                NSArray *imageURLComponent = [event.tweetImg.absoluteString componentsSeparatedByString:@"_thumb"];
+                if (imageURLComponent.count > 1) {
+                    tweet.bigImgURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", imageURLComponent[0], imageURLComponent[1]]];
+                }
+                
+                tweet.pubDate = event.pubDate;
+                tweet.commentCount = event.commentCount;
+                tweet.appclient = event.appclient;
+                
+                TweetDetailsViewController *tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweet:tweet];
+                [self.navigationController pushViewController:tweetDetailsVC animated:YES];
                 
                 break;
-                
+            }
+            case 4: {
+                OSCBlog *blog = [OSCBlog new];
+                blog.blogID = event.objectID;
+                DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithBlog:blog];
+                [self.navigationController pushViewController:detailsVC animated:YES];
+                break;
+            }
             default:
                 break;
         }

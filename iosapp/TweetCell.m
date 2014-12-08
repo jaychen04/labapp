@@ -10,13 +10,6 @@
 #import "OSCTweet.h"
 #import "Utils.h"
 
-@interface TweetCell ()
-
-@property (nonatomic, strong) NSArray *thumbnailConstraints;
-@property (nonatomic, strong) NSArray *noThumbnailConstraints;
-
-@end
-
 @implementation TweetCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
