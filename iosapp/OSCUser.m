@@ -36,13 +36,13 @@ static NSString * const kPortrait = @"portrait";
     self = [super init];
     if (!self) {return nil;}
     
-    self.userID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-    self.location = [[xml firstChildWithTag:kLocation] stringValue];
-    self.name = [[xml firstChildWithTag:kName] stringValue];
-    self.followersCount = [[[xml firstChildWithTag:kFollowers] numberValue] unsignedLongValue];
-    self.fansCount = [[[xml firstChildWithTag:kFans] numberValue] unsignedLongValue];
-    self.score = [[[xml firstChildWithTag:kScore] numberValue] integerValue];
-    self.portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
+    _userID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+    _location = [[xml firstChildWithTag:kLocation] stringValue];
+    _name = [[xml firstChildWithTag:kName] stringValue];
+    _followersCount = [[[xml firstChildWithTag:kFollowers] numberValue] unsignedLongValue];
+    _fansCount = [[[xml firstChildWithTag:kFans] numberValue] unsignedLongValue];
+    _score = [[[xml firstChildWithTag:kScore] numberValue] integerValue];
+    _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
     
     return self;
 }

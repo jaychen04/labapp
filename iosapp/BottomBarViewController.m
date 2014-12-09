@@ -78,17 +78,17 @@
 
 - (GrowingTextView *)textView
 {
-    return self.bottomBar.editView;
+    return _bottomBar.editView;
 }
 
 - (CGFloat)minimumInputbarHeight
 {
-    return self.bottomBar.intrinsicContentSize.height;
+    return _bottomBar.intrinsicContentSize.height;
 }
 
 - (CGFloat)deltaInputbarHeight
 {
-    return self.bottomBar.intrinsicContentSize.height - self.textView.font.lineHeight;
+    return _bottomBar.intrinsicContentSize.height - self.textView.font.lineHeight;
 }
 
 - (CGFloat)barHeightForLines:(NSUInteger)numberOfLines

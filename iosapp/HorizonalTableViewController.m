@@ -23,7 +23,7 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
 {
     self = [super init];
     if (self) {
-        self.controllers = controllers;
+        _controllers = controllers;
         for (UIViewController *controller in controllers) {
             [self addChildViewController:controller];
         }
@@ -47,7 +47,7 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.controllers.count;
+    return _controllers.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -62,7 +62,7 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
     cell.contentView.backgroundColor = [UIColor themeColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    UIViewController *controller = self.controllers[indexPath.row];
+    UIViewController *controller = _controllers[indexPath.row];
     controller.view.frame = cell.contentView.bounds;
     [cell.contentView addSubview:controller.view];
     

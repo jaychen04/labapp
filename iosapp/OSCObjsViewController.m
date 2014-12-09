@@ -19,7 +19,7 @@
     self = [super init];
     
     if (self) {
-        self.objects = [NSMutableArray new];
+        _objects = [NSMutableArray new];
     }
     
     return self;
@@ -36,19 +36,19 @@
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
 
-    self.lastCell = [[LastCell alloc] initCell];
+    _lastCell = [[LastCell alloc] initCell];
     
-    self.label = [UILabel new];
-    self.label.numberOfLines = 0;
-    self.label.lineBreakMode = NSLineBreakByWordWrapping;
-    self.label.font = [UIFont boldSystemFontOfSize:14];
+    _label = [UILabel new];
+    _label.numberOfLines = 0;
+    _label.lineBreakMode = NSLineBreakByWordWrapping;
+    _label.font = [UIFont boldSystemFontOfSize:14];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    if (self.objects.count > 0 || self.lastCell.status == LastCellStatusFinished) {
+    if (_objects.count > 0 || _lastCell.status == LastCellStatusFinished) {
         return;
     }
     
@@ -72,8 +72,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (self.lastCell.status == LastCellStatusNotVisible) return self.objects.count;
-    return self.objects.count + 1;
+    if (_lastCell.status == LastCellStatusNotVisible) return _objects.count;
+    return _objects.count + 1;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -116,10 +116,10 @@
 
 - (void)fetchMore
 {
-    if (self.lastCell.status == LastCellStatusFinished || self.lastCell.status == LastCellStatusLoading) {return;}
+    if (_lastCell.status == LastCellStatusFinished || _lastCell.status == LastCellStatusLoading) {return;}
     
-    [self.lastCell statusLoading];
-    [self fetchObjectsOnPage:(self.objects.count + 19)/20 refresh:NO];
+    [_lastCell statusLoading];
+    [self fetchObjectsOnPage:(_objects.count + 19)/20 refresh:NO];
 }
 
 
@@ -147,28 +147,28 @@
     }
 #endif
     
-    if (!refresh) {[self.lastCell statusLoading];}
+    if (!refresh) {[_lastCell statusLoading];}
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager GET:self.generateURL(page)
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             self.allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
+             _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
              NSArray *objectsXML = self.parseXML(responseDocument);
              
-             if (refresh) {[self.objects removeAllObjects];}
+             if (refresh) {[_objects removeAllObjects];}
              
              /* 这里要添加一个去重步骤 */
              
              for (ONOXMLElement *objectXML in objectsXML) {
-                 id obj = [[self.objClass alloc] initWithXML:objectXML];
-                 [self.objects addObject:obj];
+                 id obj = [[_objClass alloc] initWithXML:objectXML];
+                 [_objects addObject:obj];
              }
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
-                 else {objectsXML.count < 20? [self.lastCell statusFinished] : [self.lastCell statusMore];}
+                 else {objectsXML.count < 20? [_lastCell statusFinished] : [_lastCell statusMore];}
                  
                  [self.tableView reloadData];
                  if (refresh) {[self.refreshControl endRefreshing];}
@@ -177,7 +177,7 @@
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"网络异常，错误码：%ld", (long)error.code);
              
-             [self.lastCell statusError];
+             [_lastCell statusError];
              [self.tableView reloadData];
              if (refresh) {
                  [self.refreshControl endRefreshing];

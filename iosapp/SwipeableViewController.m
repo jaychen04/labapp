@@ -29,20 +29,20 @@
         if (title) {self.title = title;}
         
         CGFloat titleBarHeight = 43;
-        self.titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, titleBarHeight) andTitles:subTitles];
-        self.titleBar.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:self.titleBar];
+        _titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, titleBarHeight) andTitles:subTitles];
+        _titleBar.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_titleBar];
         
         
-        self.viewPager = [[HorizonalTableViewController alloc] initWithViewControllers:controllers];
-        self.viewPager.view.frame = CGRectMake(0,  titleBarHeight, self.view.frame.size.width, self.view.frame.size.height - titleBarHeight);
+        _viewPager = [[HorizonalTableViewController alloc] initWithViewControllers:controllers];
+        _viewPager.view.frame = CGRectMake(0,  titleBarHeight, self.view.frame.size.width, self.view.frame.size.height - titleBarHeight);
         [self addChildViewController:self.viewPager];
-        [self.view addSubview:self.viewPager.view];
+        [self.view addSubview:_viewPager.view];
         
         
-        __weak TitleBarView *weakTitleBar = self.titleBar;
-        self.viewPager.changeIndex = ^(NSUInteger index) {weakTitleBar.currentIndex = index;};
-        self.viewPager.scrollView = ^(CGFloat offsetRatio, NSUInteger index) {
+        __weak TitleBarView *weakTitleBar = _titleBar;
+        _viewPager.changeIndex = ^(NSUInteger index) {weakTitleBar.currentIndex = index;};
+        _viewPager.scrollView = ^(CGFloat offsetRatio, NSUInteger index) {
             UIButton *titleFrom = weakTitleBar.titleButtons[weakTitleBar.currentIndex];
             CGFloat value = [Utils valueBetweenMin:15 andMax:16 percent:offsetRatio];
             titleFrom.titleLabel.font = [UIFont systemFontOfSize:value];
@@ -56,8 +56,8 @@
                           forState:UIControlStateNormal];
         };
         
-        __weak HorizonalTableViewController *weakViewPager = self.viewPager;
-        self.titleBar.titleButtonClicked = ^(NSUInteger index) {[weakViewPager scrollToViewAtIndex:index];};
+        __weak HorizonalTableViewController *weakViewPager = _viewPager;
+        _titleBar.titleButtonClicked = ^(NSUInteger index) {[weakViewPager scrollToViewAtIndex:index];};
     }
     
     return self;
@@ -77,7 +77,7 @@
 
 - (void)selectTitleAtIndex:(NSUInteger)index
 {
-    [self.viewPager scrollToViewAtIndex:index];
+    [_viewPager scrollToViewAtIndex:index];
 }
 
 
