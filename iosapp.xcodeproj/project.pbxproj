@@ -170,6 +170,11 @@
 		38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */; };
 		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
 		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
+		38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3CFF1A369B1600682D1F /* SoftwareCatalogVC.m */; };
+		38BD3D041A36A3E500682D1F /* OSCSoftwareCatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D031A36A3E500682D1F /* OSCSoftwareCatalog.m */; };
+		38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D061A36A97400682D1F /* OSCSoftware.m */; };
+		38BD3D0A1A36AA9700682D1F /* SoftwareListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D091A36AA9700682D1F /* SoftwareListVC.m */; };
+		38BD3D0D1A36D19400682D1F /* SoftwareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D0C1A36D19400682D1F /* SoftwareCell.m */; };
 		38BD7D6E19FF7F94003ABB80 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */; };
 		38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7119FF7FD0003ABB80 /* CommentCell.m */; };
 		38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7419FF8521003ABB80 /* OSCComment.m */; };
@@ -402,6 +407,16 @@
 		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
 		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
 		38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPostDetails.m; sourceTree = "<group>"; };
+		38BD3CFE1A369B1600682D1F /* SoftwareCatalogVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareCatalogVC.h; sourceTree = "<group>"; };
+		38BD3CFF1A369B1600682D1F /* SoftwareCatalogVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareCatalogVC.m; sourceTree = "<group>"; };
+		38BD3D021A36A3E500682D1F /* OSCSoftwareCatalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareCatalog.h; sourceTree = "<group>"; };
+		38BD3D031A36A3E500682D1F /* OSCSoftwareCatalog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareCatalog.m; sourceTree = "<group>"; };
+		38BD3D051A36A97400682D1F /* OSCSoftware.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftware.h; sourceTree = "<group>"; };
+		38BD3D061A36A97400682D1F /* OSCSoftware.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftware.m; sourceTree = "<group>"; };
+		38BD3D081A36AA9700682D1F /* SoftwareListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareListVC.h; sourceTree = "<group>"; };
+		38BD3D091A36AA9700682D1F /* SoftwareListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareListVC.m; sourceTree = "<group>"; };
+		38BD3D0B1A36D19400682D1F /* SoftwareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareCell.h; sourceTree = "<group>"; };
+		38BD3D0C1A36D19400682D1F /* SoftwareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareCell.m; sourceTree = "<group>"; };
 		38BD7D6C19FF7F94003ABB80 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
 		38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
 		38BD7D7019FF7FD0003ABB80 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
@@ -471,8 +486,7 @@
 				38996A511A02642C0025AA52 /* OSCBlog.m */,
 				382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */,
 				382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */,
-				38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */,
-				38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */,
+				38BD3D011A36A3B800682D1F /* Software */,
 				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
 				386039601A09C5A1007C9B88 /* OSCUser.m */,
 				382A95BC1A29DC4700AAAFEA /* OSCEvent.h */,
@@ -504,6 +518,7 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
+				38BD3CFA1A369A0500682D1F /* Software */,
 				382A94B21A28653200AAAFEA /* Discover */,
 				3874EC221A08E8EA000D2894 /* User */,
 				38996A561A0266F80025AA52 /* Blog */,
@@ -855,6 +870,32 @@
 			name = Component;
 			sourceTree = "<group>";
 		};
+		38BD3CFA1A369A0500682D1F /* Software */ = {
+			isa = PBXGroup;
+			children = (
+				38BD3CFE1A369B1600682D1F /* SoftwareCatalogVC.h */,
+				38BD3CFF1A369B1600682D1F /* SoftwareCatalogVC.m */,
+				38BD3D081A36AA9700682D1F /* SoftwareListVC.h */,
+				38BD3D091A36AA9700682D1F /* SoftwareListVC.m */,
+				38BD3D0B1A36D19400682D1F /* SoftwareCell.h */,
+				38BD3D0C1A36D19400682D1F /* SoftwareCell.m */,
+			);
+			name = Software;
+			sourceTree = "<group>";
+		};
+		38BD3D011A36A3B800682D1F /* Software */ = {
+			isa = PBXGroup;
+			children = (
+				38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */,
+				38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */,
+				38BD3D021A36A3E500682D1F /* OSCSoftwareCatalog.h */,
+				38BD3D031A36A3E500682D1F /* OSCSoftwareCatalog.m */,
+				38BD3D051A36A97400682D1F /* OSCSoftware.h */,
+				38BD3D061A36A97400682D1F /* OSCSoftware.m */,
+			);
+			name = Software;
+			sourceTree = "<group>";
+		};
 		38BD7D6B19FF7F31003ABB80 /* TweetDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -1133,6 +1174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */,
 				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
@@ -1144,6 +1186,7 @@
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
+				38BD3D0D1A36D19400682D1F /* SoftwareCell.m in Sources */,
 				382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */,
 				00D6BD2D19ECD46100E8754E /* BaseViewController.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
@@ -1153,6 +1196,7 @@
 				38996A521A02642C0025AA52 /* OSCBlog.m in Sources */,
 				38BD7D6E19FF7F94003ABB80 /* CommentsViewController.m in Sources */,
 				3874EC251A08E934000D2894 /* UserInfoCell.m in Sources */,
+				38BD3D0A1A36AA9700682D1F /* SoftwareListVC.m in Sources */,
 				0004918E19F8FFE9001F3A36 /* HorizonalTableViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
@@ -1166,6 +1210,7 @@
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
+				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				3874EC1F1A08E8B6000D2894 /* MineViewController.m in Sources */,
 				382A94B11A2700D600AAAFEA /* EmojiCollectionVC.m in Sources */,
@@ -1182,6 +1227,7 @@
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
 				38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,
+				38BD3D041A36A3E500682D1F /* OSCSoftwareCatalog.m in Sources */,
 				381EAB6D19FE7CD600C1937C /* PostsViewController.m in Sources */,
 				00EDF60919EF77A100A5C842 /* OSCTweet.m in Sources */,
 			);

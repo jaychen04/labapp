@@ -16,6 +16,7 @@
 #import "OSCNews.h"
 #import "OSCBlog.h"
 #import "OSCPost.h"
+#import "OSCSoftware.h"
 #import "OSCNewsDetails.h"
 #import "OSCBlogDetails.h"
 #import "OSCPostDetails.h"
@@ -105,6 +106,20 @@
     self.tag = @"post";
     self.detailsClass = [OSCPostDetails class];
     self.loadMethod = @selector(loadPostDetails:);
+    
+    return self;
+}
+
+- (instancetype)initWithSoftware:(OSCSoftware *)software
+{
+    self = [super init];
+    if (!self) {return nil;}
+    
+    self.hidesBottomBarWhenPushed = YES;
+    self.detailsURL = [NSString stringWithFormat:@"%@%@?ident=%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_DETAIL, software.url.absoluteString.lastPathComponent];
+    self.tag = @"software";
+    self.detailsClass = [OSCSoftwareDetails class];
+    self.loadMethod = @selector(loadSoftwareDetails:);
     
     return self;
 }

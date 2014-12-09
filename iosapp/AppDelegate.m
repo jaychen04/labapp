@@ -16,6 +16,9 @@
 #import "LoginViewController.h"
 #import "DiscoverTableVC.h"
 
+#import "SoftwareCatalogVC.h"
+#import "SoftwareListVC.h"
+
 
 @interface AppDelegate () <UIApplicationDelegate,UITabBarControllerDelegate>
 
@@ -57,23 +60,36 @@
     
     LoginViewController *loginVC = [LoginViewController new];
     
+    // test
+    SwipeableViewController *softwareSVC = [[SwipeableViewController alloc] initWithTitle:@"开源软件"
+                                                                           andSubTitles:@[@"分类", @"推荐", @"最新", @"热门", @"国产"]
+                                                                         andControllers:@[
+                                                                                          [[SoftwareCatalogVC alloc] initWithTag:0],
+                                                                                          [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeRecommended],
+                                                                                          [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeNewest],
+                                                                                          [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeHottest],
+                                                                                          [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeCN]
+                                                                                          ]];
+    
+    
     UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:newsSVC];
     UINavigationController *tweetsNav = [[UINavigationController alloc] initWithRootViewController:tweetsSVC];
     //UINavigationController *postsNav = [[UINavigationController alloc] initWithRootViewController:postsSVC];
     UINavigationController *discoverNav = [[UINavigationController alloc] initWithRootViewController:dicoverTableVC];
     UINavigationController *loginNav = [[UINavigationController alloc] initWithRootViewController:loginVC];
+    UINavigationController *softwareNav = [[UINavigationController alloc] initWithRootViewController:softwareSVC];
     
     self.tabBarController = [UITabBarController new];
     self.tabBarController.delegate = self;
     self.tabBarController.tabBar.translucent = NO;
-    self.tabBarController.viewControllers = @[newsNav, tweetsNav, /*postsNav,*/ discoverNav, loginNav];
+    self.tabBarController.viewControllers = @[newsNav, tweetsNav, /*postsNav,*/ discoverNav, loginNav, softwareNav];
     
     [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor colorWithHex:0xE1E1E1]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x007F00]} forState:UIControlStateSelected];
     
-    NSArray *titles = @[@"资讯", @"动弹", @"发现", @"登录"];
+    NSArray *titles = @[@"资讯", @"动弹", @"发现", @"登录", @"开源软件"];
     for (NSUInteger i = 0, count = [self.tabBarController.tabBar.items count]; i < count; i++) {
         [self.tabBarController.tabBar.items[i] setTitle:titles[i]];
     }

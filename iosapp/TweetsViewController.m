@@ -73,7 +73,7 @@
         else {responseObjectsCount < 20? [weakSelf.lastCell statusFinished]: [weakSelf.lastCell statusMore];}
     };
     
-    self.generateURL = ^(NSUInteger page) {
+    self.generateURL = ^NSString * (NSUInteger page) {
         return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
     };
     
