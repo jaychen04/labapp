@@ -29,7 +29,7 @@
     [super viewDidLoad];
     
     self.tableView.backgroundColor = [UIColor themeColor];
-    UIView *footer =[[UIView alloc] initWithFrame:CGRectZero];
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
     
     self.refreshControl = [UIRefreshControl new];
