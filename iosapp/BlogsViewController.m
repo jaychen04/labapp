@@ -30,7 +30,7 @@ static NSString *kBlogCellID = @"BlogCell";
         self.generateURL = ^NSString * (NSUInteger page) {
             return [NSString stringWithFormat:@"%@%@?type=%@&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_BLOGS_LIST, blogType, (unsigned long)page, OSCAPI_SUFFIX];
         };
-        [self setBlockAndClass];
+        self.objClass = [OSCBlog class];
     }
     
     return self;
@@ -42,20 +42,17 @@ static NSString *kBlogCellID = @"BlogCell";
         self.generateURL = ^NSString * (NSUInteger page) {
             return [NSString stringWithFormat:@"%@%@?authoruid=%lld&pageIndex=1&pageSize=%d&uid=%lld", OSCAPI_PREFIX, OSCAPI_USERBLOGS_LIST, userID, 20, [Config getOwnID]];
         };
-        [self setBlockAndClass];
+        self.objClass = [OSCBlog class];
     }
     
     return self;
 }
 
-- (void)setBlockAndClass
-{
-    self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
-        return [[xml.rootElement firstChildWithTag:@"blogs"] childrenWithTag:@"blog"];
-    };
-    self.objClass = [OSCBlog class];
-}
 
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
+{
+    return [[xml.rootElement firstChildWithTag:@"blogs"] childrenWithTag:@"blog"];
+}
 
 
 

@@ -36,7 +36,7 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
         return [NSString stringWithFormat:@"%@%@?searchTag=%@&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_LIST, searchTag, (unsigned long)page, OSCAPI_SUFFIX];
     };
     
-    [self setBlockAndClass];
+    self.objClass = [OSCSoftware class];
     
     return self;
 }
@@ -48,20 +48,19 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
             return [NSString stringWithFormat:@"%@%@?searchTag=%d&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_SOFTWARETAG_LIST, searchTag, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
-        [self setBlockAndClass];
+        self.objClass = [OSCSoftware class];
     }
     
     return self;
 }
 
-- (void)setBlockAndClass
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
 {
-    self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
-        return [[xml.rootElement firstChildWithTag:@"softwares"] childrenWithTag:@"software"];
-    };
-    
-    self.objClass = [OSCSoftware class];
+    return [[xml.rootElement firstChildWithTag:@"softwares"] childrenWithTag:@"software"];
 }
+
+
 
 - (void)viewDidLoad
 {

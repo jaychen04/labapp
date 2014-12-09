@@ -26,15 +26,18 @@ static NSString *kPostCellID = @"PostCell";
             return [NSString stringWithFormat:@"%@%@?catalog=%d&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_POSTS_LIST, type, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
-        self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
-            return [[xml.rootElement firstChildWithTag:@"posts"] childrenWithTag:@"post"];
-        };
-        
         self.objClass = [OSCPost class];
     }
     
     return self;
 }
+
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
+{
+    return [[xml.rootElement firstChildWithTag:@"posts"] childrenWithTag:@"post"];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

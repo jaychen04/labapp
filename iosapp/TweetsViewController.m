@@ -77,12 +77,15 @@
         return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
     };
     
-    self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
-        return [[xml.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
-    };
-    
     self.objClass = [OSCTweet class];
 }
+
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
+{
+    return [[xml.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
+}
+
 
 
 

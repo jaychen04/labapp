@@ -42,10 +42,6 @@ static NSString *kNewsCellID = @"NewsCell";
             }
         };
         
-        self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
-            return [[xml.rootElement firstChildWithTag:@"newslist"] childrenWithTag:@"news"];
-        };
-        
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             if (type >= 4) {[weakSelf.lastCell statusFinished];}
             else {responseObjectsCount < 20? [weakSelf.lastCell statusFinished]: [weakSelf.lastCell statusMore];}
@@ -56,6 +52,13 @@ static NSString *kNewsCellID = @"NewsCell";
     
     return self;
 }
+
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
+{
+    return [[xml.rootElement firstChildWithTag:@"newslist"] childrenWithTag:@"news"];
+}
+
 
 - (void)viewDidLoad
 {

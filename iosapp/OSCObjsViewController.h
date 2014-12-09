@@ -21,7 +21,6 @@
 - (void)fetchMore;
 
 @property (nonatomic, copy) NSString * (^generateURL)(NSUInteger page);
-@property (nonatomic, copy) NSArray * (^parseXML)(ONOXMLDocument *responseDocument);
 @property (nonatomic, copy) void (^tableWillReload)(NSUInteger responseObjectsCount);
 
 @property Class objClass;
@@ -29,5 +28,7 @@
 @property (nonatomic, assign) int allCount;
 @property (nonatomic, strong) LastCell *lastCell;
 @property (nonatomic, strong) UILabel *label;
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml;
 
 @end

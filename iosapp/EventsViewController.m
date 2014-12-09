@@ -35,13 +35,17 @@ static NSString * const EventCellID = @"EventCell";
         self.generateURL = ^NSString * (NSUInteger page) {
             return [NSString stringWithFormat:@"%@%@?catalog=1&pageIndex=%lu&pageSize=20&uid=%lld", OSCAPI_PREFIX, OSCAPI_ACTIVE_LIST, (unsigned long)page, [Config getOwnID]];
         };
-        self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
-            return [[xml.rootElement firstChildWithTag:@"activies"] childrenWithTag:@"active"];
-        };
     }
     
     return self;
 }
+
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
+{
+    return [[xml.rootElement firstChildWithTag:@"activies"] childrenWithTag:@"active"];
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

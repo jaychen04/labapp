@@ -155,7 +155,7 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
              _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
-             NSArray *objectsXML = self.parseXML(responseDocument);
+             NSArray *objectsXML = [self parseXML:responseDocument];
              
              if (refresh) {[_objects removeAllObjects];}
              
@@ -186,6 +186,12 @@
      ];
 }
 
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
+{
+    NSAssert(false, @"Over ride in subclasses");
+    return nil;
+}
 
 
 @end

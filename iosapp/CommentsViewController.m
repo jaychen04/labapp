@@ -30,15 +30,19 @@ static NSString *kCommentCellID = @"CommentCell";
             return [NSString stringWithFormat:@"%@%@?catalog=%d&id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST, type, objectID, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
-        self.parseXML = ^NSArray * (ONOXMLDocument *xml) {
-            return [[xml.rootElement firstChildWithTag:@"comments"] childrenWithTag:@"comment"];
-        };
-        
         self.objClass = [OSCComment class];
     }
     
     return self;
 }
+
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
+{
+    return [[xml.rootElement firstChildWithTag:@"comments"] childrenWithTag:@"comment"];
+}
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
