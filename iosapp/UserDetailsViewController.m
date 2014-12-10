@@ -34,6 +34,7 @@
 - (instancetype)initWithUser:(OSCUser *)user
 {
     self = [super init];
+    self.hidesBottomBarWhenPushed = YES;
     if (!self) {return nil;}
     
     self.user = user;
@@ -44,6 +45,7 @@
 - (instancetype)initWithUserID:(int64_t)userID
 {
     self = [super init];
+    self.hidesBottomBarWhenPushed = YES;
     if (!self) {return self;}
     
     __block BOOL done = NO;

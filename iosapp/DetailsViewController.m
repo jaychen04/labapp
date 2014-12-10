@@ -137,7 +137,7 @@
     [self.view bringSubviewToFront:(UIView *)self.bottomBar];
     
     NSDictionary *views = @{@"detailsView": _detailsView, @"bottomBar": self.bottomBar};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailsView][bottomBar]|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailsView][bottomBar]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[detailsView]|" options:0 metrics:nil views:views]];
     
     //[self.view bringSubviewToFront:self.emojiPanel];

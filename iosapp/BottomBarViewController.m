@@ -51,7 +51,6 @@
     //[self.view addSubview:_emojiPanelVC.view];
     
 #if 1
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_bottomBar]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_bottomBar)]];
     _bottomBarYConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
                                                         toItem:_bottomBar attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
     _bottomBarHeightConstraint = [NSLayoutConstraint constraintWithItem:_bottomBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual
