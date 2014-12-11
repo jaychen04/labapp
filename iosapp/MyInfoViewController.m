@@ -11,6 +11,8 @@
 #import "OSCAPI.h"
 #import "Config.h"
 #import "Utils.h"
+#import "FavoritesViewController.h"
+#import "SwipeableViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -77,10 +79,12 @@
 {
     [super viewDidLoad];
     
+    self.tableView.bounces = NO;
+    self.navigationItem.title = @"我";
+    self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
+    
     UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
-    
-    self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
 }
 
 
@@ -120,6 +124,8 @@
     setButtonStyle(_collectionsBtn, [NSString stringWithFormat:@"收藏\n83", nil]);
     setButtonStyle(_followsBtn, [NSString stringWithFormat:@"关注\n%lu", _user.followersCount]);
     setButtonStyle(_fansBtn, [NSString stringWithFormat:@"粉丝\n%lu", _user.fansCount]);
+    
+    [_collectionsBtn addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
     
     for (UIView *view in header.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
@@ -171,6 +177,21 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 45;
+}
+
+- (void)pushFavoriteSVC
+{
+    SwipeableViewController *favoritesSVC = [[SwipeableViewController alloc] initWithTitle:@"收藏"
+                                                                              andSubTitles:@[@"软件", @"话题", @"博客", @"新闻", @"代码"]
+                                                                            andControllers:@[
+                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
+                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
+                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
+                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews],
+                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode]
+                                                                                             ]];
+    
+    [self.navigationController pushViewController:favoritesSVC animated:YES];
 }
 
 

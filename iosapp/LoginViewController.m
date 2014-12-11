@@ -32,7 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = @"登录";
+    self.navigationItem.title = @"登录";
     self.view.backgroundColor = [UIColor themeColor];
     
     [self initSubviews];
@@ -244,7 +244,6 @@
               OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
               [Config saveOwnID:user.userID];
-              //UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUser:user];
               MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithUser:user];
               [self.navigationController pushViewController:myInfoVC animated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
