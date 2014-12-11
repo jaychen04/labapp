@@ -7,6 +7,7 @@
 //
 
 #import "Utils.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation Utils
 

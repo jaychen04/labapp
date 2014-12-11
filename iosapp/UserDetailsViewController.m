@@ -13,6 +13,7 @@
 #import "SwipeableViewController.h"
 #import "TweetsViewController.h"
 #import "BlogsViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface UserDetailsViewController ()
 

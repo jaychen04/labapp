@@ -13,6 +13,7 @@
 #import "TweetCell.h"
 #import "OSCTweet.h"
 #import "Config.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 
 @interface TweetsViewController ()

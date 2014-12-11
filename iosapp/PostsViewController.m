@@ -10,6 +10,7 @@
 #import "PostCell.h"
 #import "OSCPost.h"
 #import "DetailsViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 
 static NSString *kPostCellID = @"PostCell";

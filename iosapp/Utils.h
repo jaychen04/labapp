@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
 #import "UIImageView+Util.h"

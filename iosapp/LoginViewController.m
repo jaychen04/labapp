@@ -12,6 +12,7 @@
 #import "OSCUser.h"
 #import "Utils.h"
 #import "Config.h"
+#import "MyInfoViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -226,6 +227,7 @@
 - (void)login {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_LOGIN_VALIDATE]
        parameters:@{@"username" : _accountField.text , @"pwd" : _passwordField.text, @"keep_login" : @(1)}
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
@@ -242,8 +244,9 @@
               OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
               [Config saveOwnID:user.userID];
-              UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUser:user];
-              [self.navigationController pushViewController:userDetailsVC animated:YES];
+              //UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUser:user];
+              MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithUser:user];
+              [self.navigationController pushViewController:myInfoVC animated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"网络异常，错误码：%ld", (long)error.code);
           }
