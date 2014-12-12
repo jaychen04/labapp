@@ -19,16 +19,16 @@
         self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         self.backgroundColor = [UIColor themeColor];
         
-        self.thumbnailConstraints = [NSArray new];
-        self.noThumbnailConstraints = [NSArray new];
+        _thumbnailConstraints = [NSArray new];
+        _noThumbnailConstraints = [NSArray new];
         
         [self initSubviews];
         [self setLayout];
         
         if ([reuseIdentifier isEqualToString:kTweeWithoutImagetCellID]) {
-            [self.contentView addConstraints:self.noThumbnailConstraints];
+            [self.contentView addConstraints:_noThumbnailConstraints];
         } else if ([reuseIdentifier isEqualToString:kTweetWithImageCellID]) {
-            [self.contentView addConstraints:self.thumbnailConstraints];
+            [self.contentView addConstraints:_thumbnailConstraints];
         }
         
         UIView *selectedBackground = [UIView new];
@@ -40,50 +40,48 @@
 
 - (void)initSubviews
 {
-    self.portrait = [UIImageView new];
-    self.portrait.contentMode = UIViewContentModeScaleAspectFit;
-    self.portrait.userInteractionEnabled = YES;
-    [self.portrait setCornerRadius:5.0];
-    [self.contentView addSubview:self.portrait];
+    _portrait = [UIImageView new];
+    _portrait.contentMode = UIViewContentModeScaleAspectFit;
+    _portrait.userInteractionEnabled = YES;
+    [_portrait setCornerRadius:5.0];
+    [self.contentView addSubview:_portrait];
 
-    self.authorLabel = [UILabel new];
-    self.authorLabel.font = [UIFont boldSystemFontOfSize:14];
-    self.authorLabel.userInteractionEnabled = YES;
-    self.authorLabel.textColor = [UIColor colorWithHex:0x0083FF];
-    [self.contentView addSubview:self.authorLabel];
+    _authorLabel = [UILabel new];
+    _authorLabel.font = [UIFont boldSystemFontOfSize:14];
+    _authorLabel.userInteractionEnabled = YES;
+    _authorLabel.textColor = [UIColor colorWithHex:0x0083FF];
+    [self.contentView addSubview:_authorLabel];
     
-    self.timeLabel = [UILabel new];
-    self.timeLabel.font = [UIFont systemFontOfSize:14];
-    self.timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
-    [self.contentView addSubview:self.timeLabel];
+    _timeLabel = [UILabel new];
+    _timeLabel.font = [UIFont systemFontOfSize:14];
+    _timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    [self.contentView addSubview:_timeLabel];
     
-    self.appclientLabel = [UILabel new];
-    self.appclientLabel.font = [UIFont systemFontOfSize:14];
-    self.appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
-    [self.contentView addSubview:self.appclientLabel];
+    _appclientLabel = [UILabel new];
+    _appclientLabel.font = [UIFont systemFontOfSize:14];
+    _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    [self.contentView addSubview:_appclientLabel];
     
-    self.contentLabel = [UILabel new];
-    self.contentLabel.numberOfLines = 0;
-    self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.contentLabel.font = [UIFont boldSystemFontOfSize:14];
-    [self.contentView addSubview:self.contentLabel];
+    _contentLabel = [UILabel new];
+    _contentLabel.numberOfLines = 0;
+    _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _contentLabel.font = [UIFont boldSystemFontOfSize:14];
+    [self.contentView addSubview:_contentLabel];
     
-    self.commentCount = [UILabel new];
-    self.commentCount.font = [UIFont systemFontOfSize:14];
-    self.commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
-    [self.contentView addSubview:self.commentCount];
+    _commentCount = [UILabel new];
+    _commentCount.font = [UIFont systemFontOfSize:14];
+    _commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
+    [self.contentView addSubview:_commentCount];
     
-    self.thumbnail = [UIImageView new];
-    self.thumbnail.contentMode = UIViewContentModeScaleAspectFill;
-    self.thumbnail.userInteractionEnabled = YES;
-    [self.contentView addSubview:self.thumbnail];
+    _thumbnail = [UIImageView new];
+    _thumbnail.contentMode = UIViewContentModeScaleAspectFill;
+    _thumbnail.userInteractionEnabled = YES;
+    [self.contentView addSubview:_thumbnail];
 }
 
 - (void)setLayout
 {
-    for (UIView *view in [self.contentView subviews]) {
-        view.translatesAutoresizingMaskIntoConstraints = NO;
-    }
+    for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _commentCount, _thumbnail);
     
@@ -102,10 +100,10 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     
-    self.thumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_thumbnail]-8-|"
+    _thumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_thumbnail]-8-|"
                                                                         options:NSLayoutFormatAlignAllLeft metrics:nil views:views];
     
-    self.noThumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-|"
+    _noThumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-|"
                                                                           options:NSLayoutFormatAlignAllLeft metrics:nil views:views];
 }
 
@@ -115,12 +113,12 @@
 
 - (void)setContentWithTweet:(OSCTweet *)tweet
 {
-    [self.portrait loadPortrait:tweet.portraitURL];
-    [self.authorLabel setText:tweet.author];
-    [self.timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
-    [self.appclientLabel setText:[Utils getAppclient:tweet.appclient]];
-    [self.commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
-    [self.contentLabel setText:tweet.body];
+    [_portrait loadPortrait:tweet.portraitURL];
+    [_authorLabel setText:tweet.author];
+    [_timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
+    [_appclientLabel setText:[Utils getAppclient:tweet.appclient]];
+    [_commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
+    [_contentLabel setText:tweet.body];
 }
 
 

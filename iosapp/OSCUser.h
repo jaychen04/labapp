@@ -16,6 +16,7 @@
 @property (readonly, nonatomic, assign) NSUInteger followersCount;
 @property (readonly, nonatomic, assign) NSUInteger fansCount;
 @property (readonly, nonatomic, assign) NSInteger score;
-@property (readonly, nonatomic, copy) NSURL *portraitURL;
+@property (readonly, nonatomic, strong) NSURL *portraitURL;
+@property (readonly, nonatomic, strong) NSString *expertise;
 
 @end

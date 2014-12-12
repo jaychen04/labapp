@@ -36,12 +36,12 @@
     if (self) {
         switch (type) {
             case TweetsTypeAllTweets:
-                self.uid = 0; break;
+                _uid = 0; break;
             case TweetsTypeHotestTweets:
-                self.uid = -1; break;
+                _uid = -1; break;
             case TweetsTypeOwnTweets:
-                self.uid = [Config getOwnID];
-                if (self.uid == 0) {
+                _uid = [Config getOwnID];
+                if (_uid == 0) {
                     // 显示提示页面
                 }
                 break;
@@ -60,7 +60,7 @@
     self = [super init];
     if (!self) {return nil;}
     
-    self.uid = userID;
+    _uid = userID;
     [self setBlockAndClass];
     
     return self;

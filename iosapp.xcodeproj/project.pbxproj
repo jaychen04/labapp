@@ -168,6 +168,8 @@
 		38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */; };
 		38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */; };
 		38B0BF881A399A1A00A2FDB0 /* OSCFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */; };
+		38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF8A1A39C68B00A2FDB0 /* FriendsViewController.m */; };
+		38B0BF8E1A39CAF200A2FDB0 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF8D1A39CAF200A2FDB0 /* FriendCell.m */; };
 		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
 		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
 		38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3CFF1A369B1600682D1F /* SoftwareCatalogVC.m */; };
@@ -404,6 +406,10 @@
 		38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoritesViewController.m; sourceTree = "<group>"; };
 		38B0BF861A399A1A00A2FDB0 /* OSCFavorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCFavorite.h; sourceTree = "<group>"; };
 		38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCFavorite.m; sourceTree = "<group>"; };
+		38B0BF891A39C68B00A2FDB0 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
+		38B0BF8A1A39C68B00A2FDB0 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
+		38B0BF8C1A39CAF200A2FDB0 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
+		38B0BF8D1A39CAF200A2FDB0 /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
 		38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareDetails.h; sourceTree = "<group>"; };
 		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
 		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
@@ -888,6 +894,10 @@
 				38BD3D0F1A37F38900682D1F /* MyInfoViewController.m */,
 				38B0BF831A3993CD00A2FDB0 /* FavoritesViewController.h */,
 				38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */,
+				38B0BF891A39C68B00A2FDB0 /* FriendsViewController.h */,
+				38B0BF8A1A39C68B00A2FDB0 /* FriendsViewController.m */,
+				38B0BF8C1A39CAF200A2FDB0 /* FriendCell.h */,
+				38B0BF8D1A39CAF200A2FDB0 /* FriendCell.m */,
 			);
 			name = MyInfoVC;
 			sourceTree = "<group>";
@@ -1241,11 +1251,13 @@
 				38BD3D101A37F38900682D1F /* MyInfoViewController.m in Sources */,
 				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
+				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				382A94B11A2700D600AAAFEA /* EmojiCollectionVC.m in Sources */,
 				38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
+				38B0BF8E1A39CAF200A2FDB0 /* FriendCell.m in Sources */,
 				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
