@@ -28,12 +28,17 @@ static NSString * const EventCellID = @"EventCell";
 
 - (instancetype)init
 {
+    return [self initWithCatalog:1];
+}
+
+- (instancetype)initWithCatalog:(int)catalog
+{
     if (self = [super init]) {
         self.hidesBottomBarWhenPushed = YES;
         
         self.objClass = [OSCEvent class];
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?catalog=1&pageIndex=%lu&pageSize=20&uid=%lld", OSCAPI_PREFIX, OSCAPI_ACTIVE_LIST, (unsigned long)page, [Config getOwnID]];
+            return [NSString stringWithFormat:@"%@%@?catalog=%d&pageIndex=%lu&pageSize=20&uid=%lld", OSCAPI_PREFIX, OSCAPI_ACTIVE_LIST, catalog, (unsigned long)page, [Config getOwnID]];
         };
     }
     

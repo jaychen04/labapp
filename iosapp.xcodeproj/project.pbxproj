@@ -170,6 +170,9 @@
 		38B0BF881A399A1A00A2FDB0 /* OSCFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */; };
 		38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF8A1A39C68B00A2FDB0 /* FriendsViewController.m */; };
 		38B0BF8E1A39CAF200A2FDB0 /* FriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF8D1A39CAF200A2FDB0 /* FriendCell.m */; };
+		38B0BF921A3AE77300A2FDB0 /* MessagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF911A3AE77300A2FDB0 /* MessagesViewController.m */; };
+		38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF941A3AE79700A2FDB0 /* OSCMessage.m */; };
+		38B0BF991A3AFED800A2FDB0 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF981A3AFED800A2FDB0 /* MessageCell.m */; };
 		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
 		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
 		38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3CFF1A369B1600682D1F /* SoftwareCatalogVC.m */; };
@@ -410,6 +413,12 @@
 		38B0BF8A1A39C68B00A2FDB0 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		38B0BF8C1A39CAF200A2FDB0 /* FriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendCell.h; sourceTree = "<group>"; };
 		38B0BF8D1A39CAF200A2FDB0 /* FriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendCell.m; sourceTree = "<group>"; };
+		38B0BF901A3AE77200A2FDB0 /* MessagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessagesViewController.h; sourceTree = "<group>"; };
+		38B0BF911A3AE77300A2FDB0 /* MessagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessagesViewController.m; sourceTree = "<group>"; };
+		38B0BF931A3AE79700A2FDB0 /* OSCMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMessage.h; sourceTree = "<group>"; };
+		38B0BF941A3AE79700A2FDB0 /* OSCMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMessage.m; sourceTree = "<group>"; };
+		38B0BF971A3AFED800A2FDB0 /* MessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCell.h; sourceTree = "<group>"; };
+		38B0BF981A3AFED800A2FDB0 /* MessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCell.m; sourceTree = "<group>"; };
 		38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareDetails.h; sourceTree = "<group>"; };
 		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
 		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
@@ -493,6 +502,8 @@
 				38BD3D011A36A3B800682D1F /* Software */,
 				38B0BF861A399A1A00A2FDB0 /* OSCFavorite.h */,
 				38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */,
+				38B0BF931A3AE79700A2FDB0 /* OSCMessage.h */,
+				38B0BF941A3AE79700A2FDB0 /* OSCMessage.m */,
 			);
 			name = OSC;
 			sourceTree = "<group>";
@@ -861,6 +872,28 @@
 			name = Component;
 			sourceTree = "<group>";
 		};
+		38B0BF8F1A3AE72E00A2FDB0 /* Friends */ = {
+			isa = PBXGroup;
+			children = (
+				38B0BF891A39C68B00A2FDB0 /* FriendsViewController.h */,
+				38B0BF8A1A39C68B00A2FDB0 /* FriendsViewController.m */,
+				38B0BF8C1A39CAF200A2FDB0 /* FriendCell.h */,
+				38B0BF8D1A39CAF200A2FDB0 /* FriendCell.m */,
+			);
+			name = Friends;
+			sourceTree = "<group>";
+		};
+		38B0BF961A3AFEB400A2FDB0 /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+				38B0BF901A3AE77200A2FDB0 /* MessagesViewController.h */,
+				38B0BF911A3AE77300A2FDB0 /* MessagesViewController.m */,
+				38B0BF971A3AFED800A2FDB0 /* MessageCell.h */,
+				38B0BF981A3AFED800A2FDB0 /* MessageCell.m */,
+			);
+			name = Messages;
+			sourceTree = "<group>";
+		};
 		38BD3CFA1A369A0500682D1F /* Software */ = {
 			isa = PBXGroup;
 			children = (
@@ -894,10 +927,8 @@
 				38BD3D0F1A37F38900682D1F /* MyInfoViewController.m */,
 				38B0BF831A3993CD00A2FDB0 /* FavoritesViewController.h */,
 				38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */,
-				38B0BF891A39C68B00A2FDB0 /* FriendsViewController.h */,
-				38B0BF8A1A39C68B00A2FDB0 /* FriendsViewController.m */,
-				38B0BF8C1A39CAF200A2FDB0 /* FriendCell.h */,
-				38B0BF8D1A39CAF200A2FDB0 /* FriendCell.m */,
+				38B0BF8F1A3AE72E00A2FDB0 /* Friends */,
+				38B0BF961A3AFEB400A2FDB0 /* Messages */,
 			);
 			name = MyInfoVC;
 			sourceTree = "<group>";
@@ -1239,6 +1270,7 @@
 				38B0BF881A399A1A00A2FDB0 /* OSCFavorite.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
+				38B0BF921A3AE77300A2FDB0 /* MessagesViewController.m in Sources */,
 				38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */,
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
@@ -1255,6 +1287,7 @@
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				382A94B11A2700D600AAAFEA /* EmojiCollectionVC.m in Sources */,
+				38B0BF991A3AFED800A2FDB0 /* MessageCell.m in Sources */,
 				38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
 				38B0BF8E1A39CAF200A2FDB0 /* FriendCell.m in Sources */,
@@ -1262,6 +1295,7 @@
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
+				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
 				3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */,

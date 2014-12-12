@@ -14,6 +14,9 @@
 #import "SwipeableViewController.h"
 #import "FavoritesViewController.h"
 #import "FriendsViewController.h"
+#import "BlogsViewController.h"
+#import "EventsViewController.h"
+#import "MessagesViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -165,6 +168,33 @@
     cell.textLabel.text = @[@"消息", @"团队", @"博客", @"便签"][indexPath.row];
     //cell.imageView.image = [UIImage imageNamed:@[@"", @"", @"", @""][indexPath.row]];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch (indexPath.row) {
+        case 0: {
+            [self.navigationController pushViewController:[[SwipeableViewController alloc] initWithTitle:@"消息中心"
+                                                                                            andSubTitles:@[@"@我", @"评论", @"留言", @"粉丝"]
+                                                                                          andControllers:@[
+                                                                                                           [[EventsViewController alloc] initWithCatalog:2],
+                                                                                                           [[EventsViewController alloc] initWithCatalog:3],
+                                                                                                           [MessagesViewController new],
+                                                                                                           [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:0]
+                                                                                                           ]]
+                                                 animated:YES]; break;
+        }
+        case 1: {
+            break;
+        }
+        case 2: {
+            [self.navigationController pushViewController:[[BlogsViewController alloc] initWithUserID:_user.userID] animated:YES]; break;
+        }
+        case 3: {
+            break;
+        }
+        default: break;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

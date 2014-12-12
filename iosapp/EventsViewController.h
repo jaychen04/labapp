@@ -10,4 +10,6 @@
 
 @interface EventsViewController : OSCObjsViewController
 
+- (instancetype)initWithCatalog:(int)catalog;
+
 @end
