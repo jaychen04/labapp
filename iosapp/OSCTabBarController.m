@@ -16,7 +16,14 @@
 #import "DiscoverTableVC.h"
 #import "MyInfoViewController.h"
 #import "Config.h"
-#import "TabBarCenterButton.h"
+#import "Utils.h"
+
+@interface OSCTabBarController ()
+
+@property (nonatomic, strong) UIView *bgView;
+@property (nonatomic, assign) BOOL isPressed;
+
+@end
 
 @implementation OSCTabBarController
 
@@ -69,9 +76,97 @@
     }
     [self.tabBar.items[2] setEnabled:NO];
     
-    TabBarCenterButton *centerBtn = [[TabBarCenterButton alloc] initWithTabBar:self.tabBar];
+    [self addCenterButtonWithImage:nil andHighlightImage:nil];
+    
+    [self.tabBar addObserver:self
+                  forKeyPath:@"selectedItem"
+                     options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
+                     context:nil];
 }
 
+
+-(void)addCenterButtonWithImage:(UIImage *)buttonImage andHighlightImage:(UIImage *)highlightImage
+{
+    _centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    CGPoint origin = [self.view convertPoint:self.tabBar.center toView:self.tabBar];
+    CGSize buttonSize = CGSizeMake(self.tabBar.frame.size.width / 5 - 6, self.tabBar.frame.size.height - 4);
+    _centerButton.frame = CGRectMake(origin.x - buttonSize.width/2, origin.y - buttonSize.height/2, buttonSize.width, buttonSize.height);
+    [_centerButton setBackgroundColor:[UIColor orangeColor]];
+    [_centerButton setCornerRadius:5.0];
+    
+    [_centerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [_centerButton setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
+    
+    [_centerButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.tabBar addSubview:_centerButton];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if ([keyPath isEqualToString:@"selectedItem"]) {
+        if(self.isPressed) {[self buttonPressed];}
+    }
+}
+
+
+- (void)buttonPressed
+{
+    [self changeTheButtonStateAnimatedToOpen:_isPressed];
+    
+    _isPressed = !_isPressed;
+}
+
+
+- (void)changeTheButtonStateAnimatedToOpen:(BOOL)isPressed
+{
+    if(isPressed) {
+        [self removeBackgroundView];
+    } else {
+        [self addBackgroundView];
+    }
+}
+
+- (void)addBackgroundView
+{
+    _centerButton.enabled = NO;
+    _bgView = [[UIView alloc] initWithFrame:self.tabBar.superview.bounds];
+    _bgView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin |
+                               UIViewAutoresizingFlexibleHeight     | UIViewAutoresizingFlexibleWidth |
+                               UIViewAutoresizingFlexibleTopMargin  | UIViewAutoresizingFlexibleBottomMargin;
+    [_bgView setTranslatesAutoresizingMaskIntoConstraints:YES];
+    
+    _bgView.backgroundColor = [UIColor blackColor];
+    _bgView.alpha = 0.0;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressed)];
+    [_bgView addGestureRecognizer:tap];
+    
+    [self.view insertSubview:_bgView belowSubview:self.tabBar];
+    [UIView animateWithDuration:0.3
+                     animations:^{_bgView.alpha = 0.7;}
+                     completion:^(BOOL finished) {
+                         if (finished) {_centerButton.enabled = YES;}
+                     }];
+}
+
+
+- (void)removeBackgroundView
+{
+    _centerButton.enabled = NO;
+    [UIView animateWithDuration:0.3
+                     animations:^{self.bgView.alpha = 0.0;}
+                     completion:^(BOOL finished) {
+                         if(finished) {
+                             [self.bgView removeFromSuperview];
+                             self.bgView = nil;
+                             _centerButton.enabled = YES;
+                         }
+                     }];
+}
 
 
 @end
