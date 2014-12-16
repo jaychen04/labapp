@@ -8,21 +8,12 @@
 
 #import "AppDelegate.h"
 #import "UIColor+Util.h"
-#import "SwipeableViewController.h"
-#import "TweetsViewController.h"
-#import "PostsViewController.h"
-#import "NewsViewController.h"
-#import "BlogsViewController.h"
-#import "LoginViewController.h"
-#import "DiscoverTableVC.h"
-#import "MyInfoViewController.h"
-#import "Config.h"
-
-#import "SoftwareCatalogVC.h"
-#import "SoftwareListVC.h"
+#import "OSCTabBarController.h"
 
 
 @interface AppDelegate () <UIApplicationDelegate,UITabBarControllerDelegate>
+
+@property (nonatomic, strong) OSCTabBarController *tabBarController;
 
 @end
 
@@ -30,79 +21,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    SwipeableViewController *newsSVC = [[SwipeableViewController alloc] initWithTitle:@"资讯"
-                                                                         andSubTitles:@[@"最新资讯", @"本周热点", @"本月热点"]
-                                                                       andControllers:@[
-                                                                                        [[NewsViewController alloc] initWithNewsListType:NewsListTypeNews],
-                                                                                        [[NewsViewController alloc] initWithNewsListType:NewsListTypeAllTypeWeekHottest],
-                                                                                        [[NewsViewController alloc] initWithNewsListType:NewsListTypeAllTypeMonthHottest]
-                                                                                        ]];
-    
-    SwipeableViewController *tweetsSVC = [[SwipeableViewController alloc] initWithTitle:@"动弹"
-                                                                           andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
-                                                                         andControllers:@[
-                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
-                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
-                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
-                                                                                          ]];
-    
-    DiscoverTableVC *dicoverTableVC = [DiscoverTableVC new];
-    
-#if 0
-    SwipeableViewController *postsSVC = [[SwipeableViewController alloc] initWithTitle:@"讨论区"
-                                                                          andSubTitles:@[@"问答", @"分享", @"综合", @"职业", @"站务"]
-                                                                        andControllers:@[
-                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeQA],
-                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeShare],
-                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeSynthesis],
-                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager],
-                                                                                         [[PostsViewController alloc] initWithPostsType:PostsTypeCaree]
-                                                                                         ]];
-    UINavigationController *postsNav = [[UINavigationController alloc] initWithRootViewController:postsSVC];
-    
-    SwipeableViewController *softwareSVC = [[SwipeableViewController alloc] initWithTitle:@"开源软件"
-                                                                             andSubTitles:@[@"分类", @"推荐", @"最新", @"热门", @"国产"]
-                                                                           andControllers:@[
-                                                                                            [[SoftwareCatalogVC alloc] initWithTag:0],
-                                                                                            [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeRecommended],
-                                                                                            [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeNewest],
-                                                                                            [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeHottest],
-                                                                                            [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeCN]
-                                                                                            ]];
-#endif
-    
-    UINavigationController *MeNav;
-    if ([Config getOwnID] > 0) {
-        MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithUserID:[Config getOwnID]];
-        MeNav = [[UINavigationController alloc] initWithRootViewController:myInfoVC];
-    } else {
-        LoginViewController *loginVC = [LoginViewController new];
-        MeNav = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    }
-    
-    
-    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:newsSVC];
-    UINavigationController *tweetsNav = [[UINavigationController alloc] initWithRootViewController:tweetsSVC];
-    UINavigationController *discoverNav = [[UINavigationController alloc] initWithRootViewController:dicoverTableVC];
-    
-    self.tabBarController = [UITabBarController new];
-    self.tabBarController.delegate = self;
-    self.tabBarController.tabBar.translucent = NO;
-    self.tabBarController.viewControllers = @[newsNav, tweetsNav, discoverNav, MeNav];
-    
-    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UITabBar appearance] setSelectedImageTintColor:[UIColor colorWithHex:0xE1E1E1]];
-    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x007F00]} forState:UIControlStateSelected];
-    
-    NSArray *titles = @[@"资讯", @"动弹", @"发现", @"我"];
-    for (NSUInteger i = 0, count = [self.tabBarController.tabBar.items count]; i < count; i++) {
-        [self.tabBarController.tabBar.items[i] setTitle:titles[i]];
-    }
+    _tabBarController = [OSCTabBarController new];
+    _tabBarController.delegate = self;
     
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = self.tabBarController;
+    self.window.rootViewController = _tabBarController;
     [self.window makeKeyAndVisible];
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x008000]];
