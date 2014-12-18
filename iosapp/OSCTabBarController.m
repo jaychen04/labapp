@@ -17,11 +17,18 @@
 #import "MyInfoViewController.h"
 #import "Config.h"
 #import "Utils.h"
+#import "OptionButton.h"
 
 @interface OSCTabBarController ()
 
 @property (nonatomic, strong) UIView *bgView;
 @property (nonatomic, assign) BOOL isPressed;
+@property (nonatomic, strong) NSMutableArray *optionButtons;
+@property (nonatomic, strong) UIDynamicAnimator *animator;
+
+@property (nonatomic, assign) CGFloat screenHeight;
+@property (nonatomic, assign) CGFloat screenWidth;
+@property (nonatomic, assign) CGGlyph length;
 
 @end
 
@@ -82,6 +89,29 @@
                   forKeyPath:@"selectedItem"
                      options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                      context:nil];
+    
+    // 功能键
+    _optionButtons = [NSMutableArray new];
+    _screenHeight = [UIScreen mainScreen].bounds.size.height;
+    _screenWidth  = [UIScreen mainScreen].bounds.size.width;
+    _length = 70;
+    
+    NSArray *buttonTitles = @[@"文字", @"相册", @"拍照", @"语音", @"扫一扫", @"便签"];
+    NSArray *buttonColors = @[[UIColor purpleColor], [UIColor greenColor], [UIColor yellowColor],
+                              [UIColor brownColor],  [UIColor blueColor],  [UIColor redColor]];
+    
+    for (int i = 0; i < 6; i++) {
+        OptionButton *optionButton = [[OptionButton alloc] initWithTitle:buttonTitles[i]
+                                                                   image:nil
+                                                                andColor:buttonColors[i]];
+        
+        optionButton.frame = CGRectMake((_screenWidth/6 * (i%3*2+1) - (_length+16)/2), _screenHeight + 150 + i/3*125,
+                                        _length + 16, _length + [UIFont systemFontOfSize:17].lineHeight + 24);
+        [optionButton.button setCornerRadius:_length/2];
+        
+        [self.view addSubview:optionButton];
+        [_optionButtons addObject:optionButton];
+    }
 }
 
 
@@ -126,22 +156,51 @@
 {
     if(isPressed) {
         [self removeBackgroundView];
+        
+        [_animator removeAllBehaviors];
+        for (int i = 0; i < 6; i++) {
+            UIButton *button = _optionButtons[i];
+            
+            UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:button
+                                                                         attachedToAnchor:CGPointMake(_screenWidth/6 * (i%3*2+1),
+                                                                                                      _screenHeight + 200 + i/3*125)];
+            attachment.damping = 0.5;
+            attachment.frequency = 4;
+            attachment.length = 1;
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC * (5 - i)), dispatch_get_main_queue(), ^{
+                [_animator addBehavior:attachment];
+            });
+        }
     } else {
         [self addBackgroundView];
+        
+        _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+        
+        for (int i = 0; i < 6; i++) {
+            UIButton *button = _optionButtons[i];
+            
+            UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:button
+                                                                         attachedToAnchor:CGPointMake(_screenWidth/6 * (i%3*2+1),
+                                                                                                      _screenHeight - 300 + i/3*125)];
+            attachment.damping = 0.5;
+            attachment.frequency = 4;
+            attachment.length = 1;
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC * i), dispatch_get_main_queue(), ^{
+                [_animator addBehavior:attachment];
+            });
+        }
     }
 }
 
 - (void)addBackgroundView
 {
     _centerButton.enabled = NO;
-    _bgView = [[UIView alloc] initWithFrame:self.tabBar.superview.bounds];
-    _bgView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin |
-                               UIViewAutoresizingFlexibleHeight     | UIViewAutoresizingFlexibleWidth |
-                               UIViewAutoresizingFlexibleTopMargin  | UIViewAutoresizingFlexibleBottomMargin;
-    [_bgView setTranslatesAutoresizingMaskIntoConstraints:YES];
-    
-    _bgView.backgroundColor = [UIColor blackColor];
+    _bgView = [[UIView alloc] initWithFrame:self.view.bounds];
+    _bgView.backgroundColor = [UIColor whiteColor];
     _bgView.alpha = 0.0;
+    
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressed)];
     [_bgView addGestureRecognizer:tap];
     
