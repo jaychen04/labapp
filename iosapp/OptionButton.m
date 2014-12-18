@@ -20,7 +20,7 @@
 - (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image andColor:(UIColor *)color
 {
     if (self = [super init]) {
-        _button = [UIButton buttonWithType:UIButtonTypeCustom];
+        _button = [UIView new];
         _button.backgroundColor = color;
         
         _titleLabel = [UILabel new];

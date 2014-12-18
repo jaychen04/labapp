@@ -10,7 +10,7 @@
 
 @interface OptionButton : UIView
 
-@property (nonatomic, strong) UIButton *button;
+@property (nonatomic, strong) UIView *button;
 
 - (instancetype)initWithTitle:(NSString *)title image:(UIImage *)image andColor:(UIColor *)color;
 

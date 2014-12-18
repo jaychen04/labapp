@@ -175,6 +175,7 @@
 		38B0BF991A3AFED800A2FDB0 /* MessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF981A3AFED800A2FDB0 /* MessageCell.m */; };
 		38B0BF9C1A3E8F9C00A2FDB0 /* OSCTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF9B1A3E8F9C00A2FDB0 /* OSCTabBarController.m */; };
 		38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BFA21A41349800A2FDB0 /* OptionButton.m */; };
+		38B0BFA91A42AF5500A2FDB0 /* TweetEditingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */; };
 		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
 		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
 		38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3CFF1A369B1600682D1F /* SoftwareCatalogVC.m */; };
@@ -425,6 +426,8 @@
 		38B0BF9B1A3E8F9C00A2FDB0 /* OSCTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCTabBarController.m; sourceTree = "<group>"; };
 		38B0BFA11A41349800A2FDB0 /* OptionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OptionButton.h; sourceTree = "<group>"; };
 		38B0BFA21A41349800A2FDB0 /* OptionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OptionButton.m; sourceTree = "<group>"; };
+		38B0BFA71A42AF5500A2FDB0 /* TweetEditingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetEditingVC.h; sourceTree = "<group>"; };
+		38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetEditingVC.m; sourceTree = "<group>"; };
 		38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareDetails.h; sourceTree = "<group>"; };
 		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
 		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
@@ -908,6 +911,8 @@
 				38B0BF9B1A3E8F9C00A2FDB0 /* OSCTabBarController.m */,
 				38B0BFA11A41349800A2FDB0 /* OptionButton.h */,
 				38B0BFA21A41349800A2FDB0 /* OptionButton.m */,
+				38B0BFA71A42AF5500A2FDB0 /* TweetEditingVC.h */,
+				38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */,
 			);
 			name = MainTabBar;
 			sourceTree = "<group>";
@@ -1310,6 +1315,7 @@
 				38B0BF991A3AFED800A2FDB0 /* MessageCell.m in Sources */,
 				38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
+				38B0BFA91A42AF5500A2FDB0 /* TweetEditingVC.m in Sources */,
 				38B0BF8E1A39CAF200A2FDB0 /* FriendCell.m in Sources */,
 				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,

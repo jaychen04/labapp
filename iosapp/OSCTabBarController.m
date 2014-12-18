@@ -18,6 +18,7 @@
 #import "Config.h"
 #import "Utils.h"
 #import "OptionButton.h"
+#import "TweetEditingVC.h"
 
 @interface OSCTabBarController ()
 
@@ -90,11 +91,11 @@
                      options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                      context:nil];
     
-    // 功能键
+    // 功能键初始化
     _optionButtons = [NSMutableArray new];
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     _screenWidth  = [UIScreen mainScreen].bounds.size.width;
-    _length = 70;
+    _length = 70;        // 圆形按钮的直径
     
     NSArray *buttonTitles = @[@"文字", @"相册", @"拍照", @"语音", @"扫一扫", @"便签"];
     NSArray *buttonColors = @[[UIColor purpleColor], [UIColor greenColor], [UIColor yellowColor],
@@ -105,9 +106,15 @@
                                                                    image:nil
                                                                 andColor:buttonColors[i]];
         
-        optionButton.frame = CGRectMake((_screenWidth/6 * (i%3*2+1) - (_length+16)/2), _screenHeight + 150 + i/3*125,
-                                        _length + 16, _length + [UIFont systemFontOfSize:17].lineHeight + 24);
+        optionButton.frame = CGRectMake((_screenWidth/6 * (i%3*2+1) - (_length+16)/2),
+                                        _screenHeight + 150 + i/3*125,
+                                        _length + 16,
+                                        _length + [UIFont systemFontOfSize:17].lineHeight + 24);
         [optionButton.button setCornerRadius:_length/2];
+        
+        optionButton.tag = i;
+        optionButton.userInteractionEnabled = YES;
+        [optionButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapOptionButton:)]];
         
         [self.view addSubview:optionButton];
         [_optionButtons addObject:optionButton];
@@ -206,7 +213,7 @@
     
     [self.view insertSubview:_bgView belowSubview:self.tabBar];
     [UIView animateWithDuration:0.3
-                     animations:^{_bgView.alpha = 0.7;}
+                     animations:^{_bgView.alpha = 0.9;}
                      completion:^(BOOL finished) {
                          if (finished) {_centerButton.enabled = YES;}
                      }];
@@ -226,6 +233,31 @@
                          }
                      }];
 }
+
+
+
+#pragma mark - 处理点击事件
+
+- (void)onTapOptionButton:(UIGestureRecognizer *)recognizer
+{
+    switch (recognizer.view.tag) {
+        case 0: {
+            TweetEditingVC *tweetEditingVC = [TweetEditingVC new];
+            UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+            [self.selectedViewController presentViewController:tweetEditingNav animated:YES completion:nil];
+            [self buttonPressed];
+            break;
+        }
+        case 1: {break;}
+        case 2: {break;}
+        case 3: {break;}
+        case 4: {break;}
+        case 5: {break;}
+        default: break;
+    }
+}
+
+
 
 
 @end
