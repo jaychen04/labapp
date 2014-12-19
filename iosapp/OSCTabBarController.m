@@ -91,11 +91,12 @@
                      options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                      context:nil];
     
-    // 功能键初始化
+    // 功能键相关
     _optionButtons = [NSMutableArray new];
     _screenHeight = [UIScreen mainScreen].bounds.size.height;
     _screenWidth  = [UIScreen mainScreen].bounds.size.width;
     _length = 70;        // 圆形按钮的直径
+    _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     
     NSArray *buttonTitles = @[@"文字", @"相册", @"拍照", @"语音", @"扫一扫", @"便签"];
     NSArray *buttonColors = @[[UIColor purpleColor], [UIColor greenColor], [UIColor yellowColor],
@@ -182,8 +183,7 @@
     } else {
         [self addBackgroundView];
         
-        _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
-        
+        [_animator removeAllBehaviors];
         for (int i = 0; i < 6; i++) {
             UIButton *button = _optionButtons[i];
             
