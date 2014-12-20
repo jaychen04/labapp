@@ -155,9 +155,7 @@
     [_edittingArea becomeFirstResponder];
     
     NSUInteger cursorLocation = _edittingArea.selectedRange.location;
-    NSMutableString *newContent = [[NSMutableString alloc] initWithString:_edittingArea.text];
-    [newContent insertString:string atIndex:cursorLocation];
-    _edittingArea.text = [newContent copy];
+    [_edittingArea replaceRange:_edittingArea.selectedTextRange withText:string];
     
     UITextPosition *selectedStartPos = [_edittingArea positionFromPosition:_edittingArea.beginningOfDocument offset:cursorLocation + 1];
     UITextPosition *selectedEndPos   = [_edittingArea positionFromPosition:_edittingArea.beginningOfDocument offset:cursorLocation + string.length - 1];
