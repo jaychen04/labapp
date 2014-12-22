@@ -33,7 +33,6 @@
 		381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */; };
 		381EAB6D19FE7CD600C1937C /* PostsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6C19FE7CD600C1937C /* PostsViewController.m */; };
 		381EAB7019FE7D6700C1937C /* PostCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6F19FE7D6700C1937C /* PostCell.m */; };
-		382A93DC1A2586A900AAAFEA /* EmojiPanelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A93DB1A2586A900AAAFEA /* EmojiPanelView.m */; };
 		382A94451A26D27400AAAFEA /* 001@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A93DE1A26D27400AAAFEA /* 001@2x.png */; };
 		382A94461A26D27400AAAFEA /* 002@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A93DF1A26D27400AAAFEA /* 002@2x.png */; };
 		382A94471A26D27400AAAFEA /* 003@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A93E01A26D27400AAAFEA /* 003@2x.png */; };
@@ -138,7 +137,6 @@
 		382A94AA1A26D27400AAAFEA /* 105@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94431A26D27400AAAFEA /* 105@2x.png */; };
 		382A94AB1A26D27400AAAFEA /* 99@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94441A26D27400AAAFEA /* 99@2x.png */; };
 		382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */; };
-		382A94B11A2700D600AAAFEA /* EmojiCollectionVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94B01A2700D600AAAFEA /* EmojiCollectionVC.m */; };
 		382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */; };
 		382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A95BA1A29D2C300AAAFEA /* EventsViewController.m */; };
 		382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A95BD1A29DC4700AAAFEA /* OSCEvent.m */; };
@@ -198,6 +196,7 @@
 		38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7119FF7FD0003ABB80 /* CommentCell.m */; };
 		38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7419FF8521003ABB80 /* OSCComment.m */; };
 		38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7819FFCB79003ABB80 /* TweetDetailsViewController.m */; };
+		38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */; };
 		38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E067431A19AC4900D41976 /* GrowingTextView.m */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -265,8 +264,6 @@
 		381EAB6C19FE7CD600C1937C /* PostsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostsViewController.m; sourceTree = "<group>"; };
 		381EAB6E19FE7D6700C1937C /* PostCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PostCell.h; sourceTree = "<group>"; };
 		381EAB6F19FE7D6700C1937C /* PostCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PostCell.m; sourceTree = "<group>"; };
-		382A93DA1A2586A900AAAFEA /* EmojiPanelView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiPanelView.h; sourceTree = "<group>"; };
-		382A93DB1A2586A900AAAFEA /* EmojiPanelView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiPanelView.m; sourceTree = "<group>"; };
 		382A93DE1A26D27400AAAFEA /* 001@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "001@2x.png"; sourceTree = "<group>"; };
 		382A93DF1A26D27400AAAFEA /* 002@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "002@2x.png"; sourceTree = "<group>"; };
 		382A93E01A26D27400AAAFEA /* 003@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "003@2x.png"; sourceTree = "<group>"; };
@@ -372,8 +369,6 @@
 		382A94441A26D27400AAAFEA /* 99@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "99@2x.png"; sourceTree = "<group>"; };
 		382A94AC1A26DBDD00AAAFEA /* EmojiPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiPageVC.h; sourceTree = "<group>"; };
 		382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiPageVC.m; sourceTree = "<group>"; };
-		382A94AF1A2700D600AAAFEA /* EmojiCollectionVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiCollectionVC.h; sourceTree = "<group>"; };
-		382A94B01A2700D600AAAFEA /* EmojiCollectionVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiCollectionVC.m; sourceTree = "<group>"; };
 		382A94B71A28659D00AAAFEA /* DiscoverTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverTableVC.h; sourceTree = "<group>"; };
 		382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverTableVC.m; sourceTree = "<group>"; };
 		382A95B91A29D2C300AAAFEA /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
@@ -472,6 +467,8 @@
 		38BD7D7419FF8521003ABB80 /* OSCComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCComment.m; sourceTree = "<group>"; };
 		38BD7D7719FFCB79003ABB80 /* TweetDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailsViewController.h; sourceTree = "<group>"; };
 		38BD7D7819FFCB79003ABB80 /* TweetDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsViewController.m; sourceTree = "<group>"; };
+		38DB5E8B1A46E0B60092C966 /* EmojiPanelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiPanelVC.h; sourceTree = "<group>"; };
+		38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiPanelVC.m; sourceTree = "<group>"; };
 		38E067421A19AC4900D41976 /* GrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowingTextView.h; sourceTree = "<group>"; };
 		38E067431A19AC4900D41976 /* GrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowingTextView.m; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -694,12 +691,10 @@
 		382A93D91A25867B00AAAFEA /* EmojiPanel */ = {
 			isa = PBXGroup;
 			children = (
-				382A93DA1A2586A900AAAFEA /* EmojiPanelView.h */,
-				382A93DB1A2586A900AAAFEA /* EmojiPanelView.m */,
 				382A94AC1A26DBDD00AAAFEA /* EmojiPageVC.h */,
 				382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */,
-				382A94AF1A2700D600AAAFEA /* EmojiCollectionVC.h */,
-				382A94B01A2700D600AAAFEA /* EmojiCollectionVC.m */,
+				38DB5E8B1A46E0B60092C966 /* EmojiPanelVC.h */,
+				38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */,
 			);
 			name = EmojiPanel;
 			sourceTree = "<group>";
@@ -1357,9 +1352,9 @@
 				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
+				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
-				382A94B11A2700D600AAAFEA /* EmojiCollectionVC.m in Sources */,
 				38B0BF991A3AFED800A2FDB0 /* MessageCell.m in Sources */,
 				38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
@@ -1373,7 +1368,6 @@
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
 				3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */,
-				382A93DC1A2586A900AAAFEA /* EmojiPanelView.m in Sources */,
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
 				38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,
