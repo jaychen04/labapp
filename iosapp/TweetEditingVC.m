@@ -8,6 +8,7 @@
 
 #import "TweetEditingVC.h"
 #import "EmojiPageVC.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
 @interface TweetEditingVC ()
 
@@ -78,7 +79,7 @@
     fixedSpace.width = 25.0f;
     NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:fixedSpace, nil];
     NSArray *iconName = @[@"compose_toolbar_picture_normal", @"compose_toolbar_mention_normal", @"compose_toolbar_trend_normal", @"compose_toolbar_emoji_normal"];
-    NSArray *action   = @[@"mentionSomenone", @"mentionSomenone", @"referSoftware", @"selectEmoji"];
+    NSArray *action   = @[@"addImage", @"mentionSomenone", @"referSoftware", @"selectEmoji"];
     for (int i = 0; i < 4; i++) {
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:iconName[i]]
                                                                    style:UIBarButtonItemStylePlain
@@ -186,6 +187,18 @@
     
     _keyboardHeight.constant = 216;
     [self.view layoutIfNeeded];
+}
+
+- (void)addImage
+{
+    UIImagePickerController *imagePickerController = [UIImagePickerController new];
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+    imagePickerController.allowsEditing = YES;
+    imagePickerController.showsCameraControls = YES;
+    imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+    imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+    
+    [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 
