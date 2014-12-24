@@ -197,6 +197,7 @@
 		38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7419FF8521003ABB80 /* OSCComment.m */; };
 		38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7819FFCB79003ABB80 /* TweetDetailsViewController.m */; };
 		38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */; };
+		38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38DB5E8E1A496FFD0092C966 /* emoji.plist */; };
 		38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E067431A19AC4900D41976 /* GrowingTextView.m */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 /* End PBXBuildFile section */
@@ -469,6 +470,7 @@
 		38BD7D7819FFCB79003ABB80 /* TweetDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsViewController.m; sourceTree = "<group>"; };
 		38DB5E8B1A46E0B60092C966 /* EmojiPanelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiPanelVC.h; sourceTree = "<group>"; };
 		38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiPanelVC.m; sourceTree = "<group>"; };
+		38DB5E8E1A496FFD0092C966 /* emoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji.plist; sourceTree = "<group>"; };
 		38E067421A19AC4900D41976 /* GrowingTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GrowingTextView.h; sourceTree = "<group>"; };
 		38E067431A19AC4900D41976 /* GrowingTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GrowingTextView.m; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -584,6 +586,7 @@
 			children = (
 				00D6BCDE19EB673200E8754E /* Info.plist */,
 				00D6BCDF19EB673200E8754E /* main.m */,
+				38DB5E8E1A496FFD0092C966 /* emoji.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1148,6 +1151,7 @@
 				382A94701A26D27400AAAFEA /* 044@2x.png in Resources */,
 				382A94901A26D27400AAAFEA /* 077@2x.png in Resources */,
 				382A949B1A26D27400AAAFEA /* 088@2x.png in Resources */,
+				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				382A94A61A26D27400AAAFEA /* 100@2x.png in Resources */,
 				382A94581A26D27400AAAFEA /* 020@2x.png in Resources */,
 				382A94571A26D27400AAAFEA /* 019@2x.png in Resources */,

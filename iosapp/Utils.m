@@ -106,6 +106,53 @@
 }
 
 
+// 参考 http://www.cnblogs.com/ludashi/p/3962573.html
+
++ (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString
+{
+    NSMutableAttributedString *emojiString = [[NSMutableAttributedString alloc] initWithString:rawString];
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *path = [bundle pathForResource:@"emoji" ofType:@"plist"];
+    NSDictionary *emoji = [[NSDictionary alloc] initWithContentsOfFile:path];
+    
+    NSString *pattern = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+    NSError *error = nil;
+    NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
+    
+    if (!re) {NSLog(@"%@", error.localizedDescription);}
+    
+    NSArray *resultsArray = [re matchesInString:rawString options:0 range:NSMakeRange(0, rawString.length)];
+    
+    NSMutableArray *emojiArray = [NSMutableArray arrayWithCapacity:resultsArray.count];
+    
+    for (NSTextCheckingResult *match in resultsArray) {
+        NSRange range = [match range];
+        NSString *emojiName = [rawString substringWithRange:range];
+        
+        for (NSString *name in emoji) {
+            if ([emoji[name] isEqualToString:emojiName]) {
+                NSTextAttachment *textAttachment = [NSTextAttachment new];
+                textAttachment.image = [UIImage imageNamed:name];
+                
+                NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+                
+                NSDictionary *emojiToReplace = @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]};
+                [emojiArray addObject:emojiToReplace];
+            }
+        }
+    }
+    
+    for (NSInteger i = emojiArray.count -1; i >= 0; i--) {
+        NSRange range;
+        [emojiArray[i][@"range"] getValue:&range];
+        [emojiString replaceCharactersInRange:range withAttributedString:emojiArray[i][@"image"]];
+    }
+    
+    return emojiString;
+}
+
+
 #pragma mark - UI处理
 
 + (void)roundView:(UIView *)view cornerRadius:(CGFloat)cornerRadius

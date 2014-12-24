@@ -20,6 +20,7 @@
 + (NSString *)GenerateTags:(NSArray *)tags;
 
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
++ (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent;
 
