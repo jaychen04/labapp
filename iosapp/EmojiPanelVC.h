@@ -10,8 +10,9 @@
 
 @interface EmojiPanelVC : UIViewController
 
-@property (nonatomic, readonly, assign) int pageIndex;
-
 - (instancetype)initWithPageIndex:(int)pageIndex;
+
+@property (nonatomic, readonly, assign) int pageIndex;
+@property (nonatomic, copy) void (^didSelectEmoji)(NSTextAttachment *textAttachment);
 
 @end

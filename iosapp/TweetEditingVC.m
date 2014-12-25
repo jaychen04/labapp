@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIImageView        *imageView;
 @property (nonatomic, strong) UIToolbar          *toolBar;
 @property (nonatomic, assign) NSLayoutConstraint *keyboardHeight;
+@property (nonatomic, strong) EmojiPageVC        *emojiPageVC;
 
 @end
 
@@ -79,7 +80,7 @@
     fixedSpace.width = 25.0f;
     NSMutableArray *barButtonItems = [[NSMutableArray alloc] initWithObjects:fixedSpace, nil];
     NSArray *iconName = @[@"compose_toolbar_picture_normal", @"compose_toolbar_mention_normal", @"compose_toolbar_trend_normal", @"compose_toolbar_emoji_normal"];
-    NSArray *action   = @[@"addImage", @"mentionSomenone", @"referSoftware", @"selectEmoji"];
+    NSArray *action   = @[@"addImage", @"mentionSomenone", @"referSoftware", @"switchInputView"];
     for (int i = 0; i < 4; i++) {
         UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:iconName[i]]
                                                                    style:UIBarButtonItemStylePlain
@@ -147,6 +148,8 @@
 
 #pragma mark - ToolBar 操作
 
+#pragma mark - 插入字符串操作（@人和引用软件）
+
 - (void)mentionSomenone
 {
     [self insertEditingString:@"@请输入用户名 "];
@@ -172,22 +175,50 @@
     [_edittingArea setSelectedTextRange:newRange];
 }
 
-- (void)selectEmoji
+
+
+
+#pragma mark - 表情面板与键盘切换
+
+- (void)switchInputView
 {
-    EmojiPageVC *emojiPageVC = [[EmojiPageVC alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-                                                      navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                    options:nil];
-    [self addChildViewController:emojiPageVC];
-    [self.view addSubview:emojiPageVC.view];
+    // 还要考虑一下用外接键盘输入时，置空inputView后，字体小的情况
     
-    NSDictionary *views = @{@"emojiView": emojiPageVC.view};
-    emojiPageVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[emojiView(216)]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[emojiView]|" options:0 metrics:nil views:views]];
-    
-    _keyboardHeight.constant = 216;
-    [self.view layoutIfNeeded];
+    if (_edittingArea.inputView == self.emojiPageVC.view) {
+        [_toolBar.items[7] setImage:[UIImage imageNamed:@"compose_toolbar_emoji_normal"]];
+        _edittingArea.inputView = nil;
+        _edittingArea.font = [UIFont systemFontOfSize:18];
+        [_edittingArea reloadInputViews];
+    } else {
+        _keyboardHeight.constant = 216;
+        [self.view layoutIfNeeded];
+        
+        [_toolBar.items[7] setImage:[UIImage imageNamed:@"compose_toolbar_keyboard_normal"]];
+        _edittingArea.inputView = _emojiPageVC.view;
+        [_edittingArea reloadInputViews];
+    }
 }
+
+- (EmojiPageVC *)emojiPageVC
+{
+    if (!_emojiPageVC) {
+        _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_edittingArea];
+        [self addChildViewController:_emojiPageVC];
+        [self.view addSubview:_emojiPageVC.view];
+        
+        NSDictionary *views = @{@"emojiView": _emojiPageVC.view};
+        _emojiPageVC.view.translatesAutoresizingMaskIntoConstraints = NO;
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[emojiView(216)]|" options:0 metrics:nil views:views]];
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[emojiView]|" options:0 metrics:nil views:views]];
+    }
+    
+    return _emojiPageVC;
+}
+
+
+
+
+#pragma mark - 添加图片
 
 - (void)addImage
 {

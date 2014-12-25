@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface EmojiPageVC : UIPageViewController <UIPageViewControllerDataSource>
+@interface EmojiPageVC : UIPageViewController
+
+- (instancetype)initWithTextView:(UITextView *)textView;
 
 @end

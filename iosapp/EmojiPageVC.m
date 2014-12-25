@@ -10,7 +10,34 @@
 #import "EmojiPanelVC.h"
 
 
+@interface EmojiPageVC () <UIPageViewControllerDataSource>
+
+@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, copy) void (^didSelectEmoji) (NSTextAttachment *);
+
+@end
+
+
 @implementation EmojiPageVC
+
+- (instancetype)initWithTextView:(UITextView *)textView
+{
+    self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                          navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                  options:nil];
+    if (self) {
+        _textView = textView;
+        __weak UITextView *weakTextView = _textView;
+        _didSelectEmoji = ^(NSTextAttachment *textAttachment) {
+            NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+            NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:weakTextView.attributedText];
+            [mutableAttributeString replaceCharactersInRange:[weakTextView selectedRange] withAttributedString:emojiAttributedString];
+            weakTextView.attributedText = [mutableAttributeString copy];
+        };
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -18,6 +45,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:0];
+    emojiPanelVC.didSelectEmoji = _didSelectEmoji;
     if (emojiPanelVC != nil) {
         self.dataSource = self;
         [self setViewControllers:@[emojiPanelVC]
@@ -39,8 +67,11 @@
     
     if (index == 0) {
         return nil;
+    } else {
+        EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:index-1];
+        emojiPanelVC.didSelectEmoji = _didSelectEmoji;
+        return emojiPanelVC;
     }
-    return [[EmojiPanelVC alloc] initWithPageIndex:index-1];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(EmojiPanelVC *)vc
@@ -49,8 +80,11 @@
     
     if (index == 5) {
         return nil;
+    } else {
+        EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:index+1];
+        emojiPanelVC.didSelectEmoji = _didSelectEmoji;
+        return emojiPanelVC;
     }
-    return [[EmojiPanelVC alloc] initWithPageIndex:index+1];
 }
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
