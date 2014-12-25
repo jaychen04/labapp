@@ -9,9 +9,6 @@
 #import "EmojiPageVC.h"
 #import "EmojiPanelVC.h"
 
-@interface EmojiPageVC ()
-
-@end
 
 @implementation EmojiPageVC
 

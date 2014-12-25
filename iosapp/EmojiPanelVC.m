@@ -68,19 +68,15 @@
 {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"EmojiCell" forIndexPath:indexPath];
     
-    NSInteger emojiNum = _pageIndex * 21 +
-                         indexPath.section * 7 +
-                         indexPath.row + 1;
-    NSString *emojiName = [NSString stringWithFormat:@"%03ld", emojiNum];
-    //[cell addSubview:[[UIImageView alloc] initWithImage:[UIImage imageNamed:emojiName]]];
-    [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:emojiName]]];
+    NSInteger emojiNum = _pageIndex * 21 + indexPath.section * 7 + indexPath.row + 1;
+    NSString *emojiImageName = [NSString stringWithFormat:@"%03ld", emojiNum];
+    [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:emojiImageName]]];
     
     return cell;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
 }
 
 

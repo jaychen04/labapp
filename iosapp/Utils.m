@@ -130,16 +130,14 @@
         NSRange range = [match range];
         NSString *emojiName = [rawString substringWithRange:range];
         
-        for (NSString *name in emoji) {
-            if ([emoji[name] isEqualToString:emojiName]) {
-                NSTextAttachment *textAttachment = [NSTextAttachment new];
-                textAttachment.image = [UIImage imageNamed:name];
-                
-                NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-                
-                NSDictionary *emojiToReplace = @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]};
-                [emojiArray addObject:emojiToReplace];
-            }
+        if (emoji[emojiName]) {
+            NSTextAttachment *textAttachment = [NSTextAttachment new];
+            textAttachment.image = [UIImage imageNamed:emoji[emojiName]];
+            
+            NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+            
+            NSDictionary *emojiToReplace = @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]};
+            [emojiArray addObject:emojiToReplace];
         }
     }
     
@@ -154,13 +152,6 @@
 
 
 #pragma mark - UI处理
-
-+ (void)roundView:(UIView *)view cornerRadius:(CGFloat)cornerRadius
-{
-    view.layer.cornerRadius = cornerRadius;
-    view.layer.masksToBounds = YES;
-}
-
 
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent
 {
