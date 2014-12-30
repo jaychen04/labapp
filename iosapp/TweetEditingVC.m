@@ -10,7 +10,7 @@
 #import "EmojiPageVC.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 
-@interface TweetEditingVC () <UIActionSheetDelegate>
+@interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UITextView         *edittingArea;
 @property (nonatomic, strong) UIImageView        *imageView;
@@ -70,9 +70,14 @@
     _edittingArea.font = [UIFont systemFontOfSize:18];
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.view addSubview:_edittingArea];
+    [_edittingArea becomeFirstResponder];
     
     _imageView = [UIImageView new];
-    //[self.view addSubview:_imageView];
+    _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView.clipsToBounds = YES;
+    [_imageView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressInImage)]];
+    _imageView.userInteractionEnabled = YES;
+    [self.view addSubview:_imageView];
     
     _toolBar = [UIToolbar new];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
@@ -101,12 +106,12 @@
     for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(_edittingArea, _imageView, _toolBar);
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_edittingArea]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_edittingArea(>=200)]-15-[_imageView(90)]" options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_edittingArea]-8-|" options:0 metrics:nil views:views]];
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imageView(90)]" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_toolBar]|" options:0 metrics:nil views:views]];
     _keyboardHeight = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
-                                                      toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0];
+                                                      toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:216];
     
     [self.view addConstraint:_keyboardHeight];
 }
@@ -218,7 +223,7 @@
 
 
 
-#pragma mark - 添加图片
+#pragma mark - 增删图片
 
 - (void)addImage
 {
@@ -239,6 +244,7 @@
         return;
     } else if (buttonIndex == 0) {
         UIImagePickerController *imagePickerController = [UIImagePickerController new];
+        imagePickerController.delegate = self;
         imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         imagePickerController.allowsEditing = YES;
         imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
@@ -255,6 +261,7 @@
             [alertView show];
         } else {
             UIImagePickerController *imagePickerController = [UIImagePickerController new];
+            imagePickerController.delegate = self;
             imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePickerController.allowsEditing = YES;
             imagePickerController.showsCameraControls = YES;
@@ -266,6 +273,24 @@
     }
 }
 
+#pragma mark - UIImagePickerController 回调函数
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    _imageView.image = info[UIImagePickerControllerEditedImage];
+    
+    //如果是拍照的照片，则需要手动保存到本地，系统不会自动保存拍照成功后的照片
+    //UIImageWriteToSavedPhotosAlbum(edit, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - handle long press gesture
+
+- (void)handleLongPressInImage
+{
+    _imageView.image = nil;
+}
 
 
 
