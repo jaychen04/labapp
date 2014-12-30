@@ -24,12 +24,13 @@
     _tabBarController = [OSCTabBarController new];
     _tabBarController.delegate = self;
     
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = _tabBarController;
     [self.window makeKeyAndVisible];
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x008000]];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x15A230]];
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];               //UIColorFromRGB(0xdadada)
