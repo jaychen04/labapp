@@ -124,10 +124,10 @@
         [countView addSubview:button];
     };
     
-    setButtonStyle(_creditsBtn, [NSString stringWithFormat:@"积分\n%lu", _user.score]);
+    setButtonStyle(_creditsBtn, [NSString stringWithFormat:@"积分\n%lu", (long)_user.score]);
     setButtonStyle(_collectionsBtn, [NSString stringWithFormat:@"收藏\n83", nil]);
-    setButtonStyle(_followsBtn, [NSString stringWithFormat:@"关注\n%lu", _user.followersCount]);
-    setButtonStyle(_fansBtn, [NSString stringWithFormat:@"粉丝\n%lu", _user.fansCount]);
+    setButtonStyle(_followsBtn, [NSString stringWithFormat:@"关注\n%lu", (unsigned long)_user.followersCount]);
+    setButtonStyle(_fansBtn, [NSString stringWithFormat:@"粉丝\n%lu", (unsigned long)_user.fansCount]);
     
     [_collectionsBtn addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
     [_followsBtn addTarget:self action:@selector(pushFriendsSVC) forControlEvents:UIControlEventTouchUpInside];

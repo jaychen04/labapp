@@ -70,6 +70,7 @@
     _edittingArea.font = [UIFont systemFontOfSize:18];
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
     [self.view addSubview:_edittingArea];
+    [_edittingArea becomeFirstResponder];
     
     _imageView = [UIImageView new];
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -110,7 +111,7 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imageView(90)]" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_toolBar]|" options:0 metrics:nil views:views]];
     _keyboardHeight = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
-                                                      toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0];
+                                                      toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:216];
     
     [self.view addConstraint:_keyboardHeight];
 }
