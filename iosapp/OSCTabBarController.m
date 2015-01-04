@@ -99,12 +99,13 @@
     _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     
     NSArray *buttonTitles = @[@"文字", @"相册", @"拍照", @"语音", @"扫一扫", @"便签"];
+    NSArray *buttonImages = @[@"tweet_words", @"tweet_picture", @"tweet_shooting", @"tweet_sound", @"tweet_QRcode", @"tweet_note"];
     NSArray *buttonColors = @[[UIColor purpleColor], [UIColor greenColor], [UIColor yellowColor],
                               [UIColor brownColor],  [UIColor blueColor],  [UIColor redColor]];
     
     for (int i = 0; i < 6; i++) {
         OptionButton *optionButton = [[OptionButton alloc] initWithTitle:buttonTitles[i]
-                                                                   image:nil
+                                                                   image:[UIImage imageNamed:buttonImages[i]]
                                                                 andColor:buttonColors[i]];
         
         optionButton.frame = CGRectMake((_screenWidth/6 * (i%3*2+1) - (_length+16)/2),
