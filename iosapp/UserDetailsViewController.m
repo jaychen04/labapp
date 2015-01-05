@@ -49,11 +49,31 @@
     self.hidesBottomBarWhenPushed = YES;
     if (!self) {return self;}
     
+    NSString *url = [NSString stringWithFormat:@"%@%@?uid=%lld&hisuid=%lld&pageIndex=0&%@", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userID, OSCAPI_SUFFIX];
+    self.user = [self fetchAUser:url];
+    
+    return self;
+}
+
+- (instancetype)initWithUserName:(NSString *)userName
+{
+    self = [super init];
+    self.hidesBottomBarWhenPushed = YES;
+    if (!self) {return self;}
+    
+    NSString *url = [NSString stringWithFormat:@"%@%@?uid=%lld&hisname=%@&pageIndex=0&%@", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userName, OSCAPI_SUFFIX];
+    self.user = [self fetchAUser:url];
+    
+    return self;
+}
+
+- (OSCUser *)fetchAUser:(NSString *)url
+{
     __block BOOL done = NO;
     __block OSCUser *tmpUser;
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld&hisuid=%lld&pageIndex=0&pageSize=20", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userID]
+    [manager GET:url
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
              ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
@@ -67,11 +87,9 @@
     while (!done) {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
     }
-    self.user = tmpUser;
     
-    return self;
+    return tmpUser;
 }
-
 
 
 

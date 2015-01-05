@@ -18,6 +18,7 @@
 + (NSString *)getAppclient:(int)clientType;
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 + (NSString *)GenerateTags:(NSArray *)tags;
++ (void)analysis:(NSString *)url andNavController:(UINavigationController *)navigationController;
 
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;

@@ -14,5 +14,6 @@
 
 - (instancetype)initWithUser:(OSCUser *)user;
 - (instancetype)initWithUserID:(int64_t)userID;
+- (instancetype)initWithUserName:(NSString *)userName;
 
 @end

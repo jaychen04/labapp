@@ -48,6 +48,7 @@
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
+        self.navigationItem.title = @"资讯详情";
         _news = news;
         switch (news.type) {
             case NewsTypeStandardNews:
@@ -87,6 +88,7 @@
     self = [super init];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
+        self.navigationItem.title = @"博客详情";
         self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, blog.blogID];
         self.tag = @"blog";
         self.detailsClass = [OSCBlogDetails class];
@@ -102,6 +104,7 @@
     if (!self) {return nil;}
     
     self.hidesBottomBarWhenPushed = YES;
+    self.navigationItem.title = @"帖子详情";
     self.detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, post.postID];
     self.tag = @"post";
     self.detailsClass = [OSCPostDetails class];
@@ -116,6 +119,7 @@
     if (!self) {return nil;}
     
     self.hidesBottomBarWhenPushed = YES;
+    self.navigationItem.title = @"软件详情";
     self.detailsURL = [NSString stringWithFormat:@"%@%@?ident=%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_DETAIL, software.url.absoluteString.lastPathComponent];
     self.tag = @"software";
     self.detailsClass = [OSCSoftwareDetails class];
@@ -130,7 +134,11 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    [self.navigationItem setBackBarButtonItem:backItem];
+    
     _detailsView = [UIWebView new];
+    _detailsView.delegate = self;
     _detailsView.scrollView.bounces = NO;
     _detailsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_detailsView];
@@ -173,7 +181,7 @@
 
 - (void)loadNewsDetails:(OSCNewsDetails *)newsDetails
 {
-    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", _news.authorID, _news.author, _news.pubDate];
+    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", newsDetails.authorID, newsDetails.author, newsDetails.pubDate];
     
     NSString *software = @"";
     if ([newsDetails.softwareName isEqualToString:@""] == NO) {
@@ -232,6 +240,15 @@
     [self.detailsView loadHTMLString:html baseURL:nil];
 }
 
+
+
+
+#pragma mark - 浏览器链接处理
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
+    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
 
 
 
