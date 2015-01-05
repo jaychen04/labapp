@@ -73,14 +73,15 @@
     self.tabBar.translucent = NO;
     self.viewControllers = @[newsNav, tweetsNav, [UIViewController new], discoverNav, meNav];
     
-    [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
-    [[UITabBar appearance] setSelectedImageTintColor:[UIColor colorWithHex:0xE1E1E1]];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x007F00]} forState:UIControlStateSelected];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x15A230]} forState:UIControlStateSelected];
     
     NSArray *titles = @[@"资讯", @"动弹", @"", @"发现", @"我"];
+    NSArray *images = @[@"news", @"tweet", @"", @"discover", @"me"];
     for (NSUInteger i = 0, count = [self.tabBar.items count]; i < count; i++) {
         [self.tabBar.items[i] setTitle:titles[i]];
+        [self.tabBar.items[i] setImage:[UIImage imageNamed:images[i]]];
     }
     [self.tabBar.items[2] setEnabled:NO];
     
