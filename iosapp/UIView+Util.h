@@ -13,4 +13,7 @@
 - (void)setCornerRadius:(CGFloat)cornerRadius;
 - (void)setBorderWidth:(CGFloat)width andColor:(CGColorRef)color;
 
+- (UIImage *)convertViewToImage;
+- (UIImage *)updateBlur;
+
 @end

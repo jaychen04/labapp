@@ -7,6 +7,7 @@
 //
 
 #import "UIView+Util.h"
+#import <GPUImage/GPUImage.h>
 
 @implementation UIView (Util)
 
@@ -20,6 +21,29 @@
 {
     self.layer.borderWidth = width;
     self.layer.borderColor = color;
+}
+
+
+- (UIImage *)convertViewToImage
+{
+    UIGraphicsBeginImageContext(self.bounds.size);
+    [self drawViewHierarchyInRect:self.bounds afterScreenUpdates:YES];
+    UIImage *screenshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return screenshot;
+}
+
+- (UIImage *)updateBlur
+{
+    UIImage *screenshot = [self convertViewToImage];
+    GPUImageiOSBlurFilter *blurFilter = [GPUImageiOSBlurFilter new];
+    blurFilter.saturation = 1.0;
+    blurFilter.rangeReductionFactor = 0.1;
+    
+    UIImage *blurImage = [blurFilter imageByFilteringImage:screenshot];
+    
+    return blurImage;
 }
 
 @end
