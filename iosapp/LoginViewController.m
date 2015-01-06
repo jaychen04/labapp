@@ -38,10 +38,6 @@
     [self initSubviews];
     [self setLayout];
     
-    NSArray *accountAndPassword = [Config getOwnAccountAndPassword];
-    if (!accountAndPassword) {return;}
-    _accountField.text = accountAndPassword[0];
-    _passwordField.text = accountAndPassword[1];
     
     RACSignal *valid = [RACSignal combineLatest:@[_accountField.rac_textSignal, _passwordField.rac_textSignal]
                                          reduce:^(NSString *account, NSString *password) {
@@ -51,30 +47,17 @@
     RAC(_loginButton, alpha) = [valid map:^(NSNumber *b) {
         return b.boolValue ? @1: @0.4;
     }];
+    
+    
+    NSArray *accountAndPassword = [Config getOwnAccountAndPassword];
+    if (!accountAndPassword) {return;}
+    _accountField.text = accountAndPassword[0];
+    _passwordField.text = accountAndPassword[1];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
-
-#if 0
-- (void)viewDidAppear:(BOOL)animated
-{
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *email = [userDefaults objectForKey:@"email"];
-    
-    _accountField.text = email ?: @"";
-    _passwordField.text = password ?: @"";
-    
-    if (!_accountField.text.length || !_passwordField.text.length) {
-        self.loginButton.alpha = 0.4;
-        self.loginButton.enabled = NO;
-    }
-}
-#endif
-
 
 
 
@@ -227,9 +210,8 @@
 - (void)login {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_LOGIN_VALIDATE]
-       parameters:@{@"username" : _accountField.text , @"pwd" : _passwordField.text, @"keep_login" : @(1)}
+       parameters:@{@"username" : _accountField.text, @"pwd" : _passwordField.text, @"keep_login" : @(1)}
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
               ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
