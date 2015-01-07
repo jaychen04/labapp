@@ -8,6 +8,7 @@
 
 #import "OptionButton.h"
 #import "UIView+Util.h"
+#import "UIColor+Util.h"
 
 @interface OptionButton ()
 
@@ -30,6 +31,7 @@
         [_button addSubview:_image];
         
         _titleLabel = [UILabel new];
+        _titleLabel.textColor = [UIColor colorWithHex:0x666666];
         _titleLabel.text = title;
         
         [self addSubview:_button];
