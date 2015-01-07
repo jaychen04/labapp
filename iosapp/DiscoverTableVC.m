@@ -9,6 +9,7 @@
 #import "DiscoverTableVC.h"
 #import "UIColor+Util.h"
 #import "EventsViewController.h"
+#import "PersonSearchViewController.h"
 
 @interface DiscoverTableVC ()
 
@@ -99,6 +100,11 @@
         case 0:
             [self.navigationController pushViewController:[EventsViewController new] animated:YES];
             break;
+        case 1:
+            if (indexPath.row == 0) {
+                [self.navigationController pushViewController:[PersonSearchViewController new] animated:YES];
+                break;
+            }
             
         default:
             break;

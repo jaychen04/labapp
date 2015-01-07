@@ -2,13 +2,17 @@
 //  PersonSearchViewController.m
 //  iosapp
 //
-//  Created by ChanAetern on 12/26/14.
+//  Created by chenhaoxiang on 12/26/14.
 //  Copyright (c) 2014 oschina. All rights reserved.
 //
 
 #import "PersonSearchViewController.h"
+#import "PeopleTableViewController.h"
 
-@interface PersonSearchViewController () <UISearchResultsUpdating>
+@interface PersonSearchViewController () <UISearchBarDelegate>
+
+@property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) PeopleTableViewController *resultsTableVC;
 
 @end
 
@@ -16,12 +20,59 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.searchResultsUpdater = self;
-    self.dimsBackgroundDuringPresentation = NO;
+    self.navigationItem.title = @"找人";
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    [self initSubviews];
+    [self setAutoLayout];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+{
+    if (_searchBar.text.length == 0) {return;}
+    
+    [searchBar resignFirstResponder];
+    
+    _resultsTableVC.queryString = _searchBar.text;
+    [_resultsTableVC refresh];
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+{
+    searchBar.text = @"";
+    [searchBar resignFirstResponder];
+}
+
+
+- (void)initSubviews
+{
+    _searchBar = [UISearchBar new];
+    _searchBar.placeholder = @"输入用户昵称";
+    _searchBar.showsCancelButton = YES;
+    _searchBar.delegate = self;
+    [self.view addSubview:_searchBar];
+    [_searchBar becomeFirstResponder];
+    
+    _resultsTableVC = [PeopleTableViewController new];
+    [self addChildViewController:_resultsTableVC];
+    [self.view addSubview:_resultsTableVC.tableView];
+}
+
+- (void)setAutoLayout
+{
+    for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+    NSDictionary *views = @{@"_searchBar": _searchBar, @"resultsTable": _resultsTableVC.tableView};
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_searchBar]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_searchBar][resultsTable]|"
+                                                                      options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                      metrics:nil
+                                                                        views:views]];
 }
 
 

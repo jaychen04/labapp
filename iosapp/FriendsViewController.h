@@ -2,7 +2,7 @@
 //  FriendsViewController.h
 //  iosapp
 //
-//  Created by ChanAetern on 12/11/14.
+//  Created by chenhaoxiang on 12/11/14.
 //  Copyright (c) 2014 oschina. All rights reserved.
 //
 

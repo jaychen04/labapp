@@ -1,15 +1,15 @@
 //
-//  FriendCell.m
+//  PersonCell.m
 //  iosapp
 //
-//  Created by ChanAetern on 12/11/14.
-//  Copyright (c) 2014 oschina. All rights reserved.
+//  Created by ChanAetern on 1/7/15.
+//  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "FriendCell.h"
+#import "PersonCell.h"
 #import "Utils.h"
 
-@implementation FriendCell
+@implementation PersonCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -43,22 +43,22 @@
     _nameLabel.textColor = [UIColor colorWithHex:0x6A5ACD];
     [self.contentView addSubview:_nameLabel];
     
-    _expertiseLabel = [UILabel new];
-    _expertiseLabel.numberOfLines = 0;
-    _expertiseLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _expertiseLabel.font = [UIFont systemFontOfSize:12];
-    [self.contentView addSubview:_expertiseLabel];
+    _infoLabel = [UILabel new];
+    _infoLabel.numberOfLines = 0;
+    _infoLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _infoLabel.font = [UIFont systemFontOfSize:12];
+    [self.contentView addSubview:_infoLabel];
 }
 
 - (void)setLayout
 {
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _expertiseLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _infoLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_nameLabel]-8-|" options:NSLayoutFormatAlignAllTop metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_portrait(36)]" options:0 metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_nameLabel]-2-[_expertiseLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_nameLabel]-8-|" options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_nameLabel]-2-[_infoLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
 }
 

@@ -1,34 +1,29 @@
 //
-//  FriendsViewController.m
+//  PeopleTableViewController.m
 //  iosapp
 //
-//  Created by chenhaoxiang on 12/11/14.
-//  Copyright (c) 2014 oschina. All rights reserved.
+//  Created by ChanAetern on 1/7/15.
+//  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "FriendsViewController.h"
-#import "OSCUser.h"
+#import "PeopleTableViewController.h"
 #import "PersonCell.h"
+#import "OSCUser.h"
 #import "UserDetailsViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const kPersonCellID = @"PersonCell";
 
-@interface FriendsViewController ()
+@implementation PeopleTableViewController
 
-@property (nonatomic, assign) int64_t uid;
-
-@end
-
-@implementation FriendsViewController
-
-- (instancetype)initWithUserID:(int64_t)userID andFriendsRelation:(int)relation
+- (instancetype)init
 {
     self = [super init];
     if (!self) {return nil;}
     
+    __weak PeopleTableViewController *weakSelf = self;
     self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?uid=%lld&relation=%d&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_FRIENDS_LIST, userID, relation, (unsigned long)page, OSCAPI_SUFFIX];
+        return [NSString stringWithFormat:@"%@%@?name=%@&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_SEARCH_USERS, weakSelf.queryString, (unsigned long)page, OSCAPI_SUFFIX];
     };
     
     self.objClass = [OSCUser class];
@@ -40,7 +35,7 @@ static NSString * const kPersonCellID = @"PersonCell";
 
 - (NSArray *)parseXML:(ONOXMLDocument *)xml
 {
-    return [[xml.rootElement firstChildWithTag:@"friends"] childrenWithTag:@"friend"];
+    return [[xml.rootElement firstChildWithTag:@"users"] childrenWithTag:@"user"];
 }
 
 
@@ -68,12 +63,12 @@ static NSString * const kPersonCellID = @"PersonCell";
 {
     NSInteger row = indexPath.row;
     if (row < self.objects.count) {
-        OSCUser *friend = self.objects[row];
+        OSCUser *user = self.objects[row];
         PersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kPersonCellID forIndexPath:indexPath];
         
-        [cell.portrait sd_setImageWithURL:friend.portraitURL placeholderImage:nil];
-        cell.nameLabel.text = friend.name;
-        cell.infoLabel.text = friend.expertise;
+        [cell.portrait sd_setImageWithURL:user.portraitURL placeholderImage:nil];
+        cell.nameLabel.text = user.name;
+        cell.infoLabel.text = user.location;
         
         return cell;
     } else {
@@ -89,7 +84,7 @@ static NSString * const kPersonCellID = @"PersonCell";
         self.label.font = [UIFont systemFontOfSize:16];
         CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
         
-        self.label.text = friend.expertise;
+        self.label.text = friend.location;
         self.label.font = [UIFont systemFontOfSize:12];
         CGSize infoLabelSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
         
@@ -105,15 +100,12 @@ static NSString * const kPersonCellID = @"PersonCell";
     NSInteger row = indexPath.row;
     
     if (row < self.objects.count) {
-        OSCUser *friend = self.objects[row];
-        UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:friend.userID];
+        OSCUser *user = self.objects[row];
+        UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:user.userID];
         [self.navigationController pushViewController:userDetailsVC animated:YES];
     } else {
         [self fetchMore];
     }
 }
-
-
-
 
 @end

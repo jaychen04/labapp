@@ -30,5 +30,6 @@
 @property (nonatomic, strong) UILabel *label;
 
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;
+- (void)refresh;
 
 @end
