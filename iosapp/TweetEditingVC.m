@@ -8,7 +8,13 @@
 
 #import "TweetEditingVC.h"
 #import "EmojiPageVC.h"
+#import "OSCAPI.h"
+#import "Config.h"
 #import <MobileCoreServices/MobileCoreServices.h>
+#import <AFNetworking.h>
+#import <AFOnoResponseSerializer.h>
+#import <Ono.h>
+#import <objc/runtime.h>
 
 @interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
@@ -51,7 +57,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发表"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
-                                                                             action:nil];
+                                                                             action:@selector(pubTweet)];
     self.view.backgroundColor = [UIColor whiteColor];
 }
 
@@ -121,6 +127,8 @@
     [_edittingArea resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
@@ -293,5 +301,59 @@
 }
 
 
+#pragma mark - 发表动弹
+
+- (void)pubTweet
+{
+    if (_edittingArea.text.length == 0) {
+        NSLog(@"内容不能为空");
+        return;
+    }
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_PUB]
+       parameters:@{@"uid": @([Config getOwnID]), @"msg": [self convertRichTextToRawText]}
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+              ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
+              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+              NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+              
+              switch (errorCode) {
+                  case 1: {
+                      _edittingArea.text = @"";
+                      _imageView.image = nil;
+                      break;
+                  }
+                  case 0:
+                  case -2:
+                  case -1: {
+                      NSLog(@"错误 %@", errorMessage);
+                      break;
+                  }
+                  default: break;
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"网络异常，错误码：%ld", (long)error.code);
+          }];
+}
+
+- (NSString *)convertRichTextToRawText
+{
+    NSMutableString *rawText = [[NSMutableString alloc] initWithString:_edittingArea.text];
+    
+    [_edittingArea.attributedText enumerateAttribute:NSAttachmentAttributeName
+                                             inRange:NSMakeRange(0, _edittingArea.attributedText.length)
+                                             options:NSAttributedStringEnumerationReverse
+                                          usingBlock:^(NSTextAttachment *attachment, NSRange range, BOOL *stop) {
+                                              if (!attachment) {return;}
+                                              
+                                              NSInteger emojiNum = [objc_getAssociatedObject(attachment, @"number") integerValue];
+                                              [rawText insertString:[NSString stringWithFormat:@"[%ld]", emojiNum-1] atIndex:range.location];
+                                          }];
+    
+    return [rawText copy];
+}
 
 @end

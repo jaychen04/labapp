@@ -7,6 +7,7 @@
 //
 
 #import "EmojiPanelVC.h"
+#import <objc/runtime.h>
 
 @interface EmojiPanelVC () <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 
@@ -82,6 +83,8 @@
     
     NSTextAttachment *textAttachment = [NSTextAttachment new];
     textAttachment.image = [UIImage imageNamed:emojiImageName];
+    
+    objc_setAssociatedObject(textAttachment, @"number", @(emojiNum), OBJC_ASSOCIATION_ASSIGN);
     
     _didSelectEmoji(textAttachment);
 }
