@@ -20,6 +20,7 @@
 #import "OptionButton.h"
 #import "TweetEditingVC.h"
 #import "UIView+Util.h"
+#import "PersonSearchViewController.h"
 
 
 @interface OSCTabBarController ()
@@ -101,8 +102,8 @@
     _length = 70;        // 圆形按钮的直径
     _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     
-    NSArray *buttonTitles = @[@"文字", @"相册", @"拍照", @"语音", @"扫一扫", @"便签"];
-    NSArray *buttonImages = @[@"tweet", @"picture", @"shooting", @"sound", @"scan", @"note"];
+    NSArray *buttonTitles = @[@"文字", @"相册", @"拍照", @"语音", @"扫一扫", @"找人"];
+    NSArray *buttonImages = @[@"tweet", @"picture", @"shooting", @"sound", @"scan", @"search"];
     int buttonColors[] = {0xe69961, 0x0dac6b, 0x24a0c4, 0xe96360, 0x61b644, 0xf1c50e};
     
     for (int i = 0; i < 6; i++) {
@@ -256,7 +257,13 @@
         case 2: {break;}
         case 3: {break;}
         case 4: {break;}
-        case 5: {break;}
+        case 5: {
+            PersonSearchViewController *personSearchVC = [PersonSearchViewController new];
+            UINavigationController *personSearchNav = [[UINavigationController alloc] initWithRootViewController:personSearchVC];
+            [self.selectedViewController presentViewController:personSearchNav animated:YES completion:nil];
+            [self buttonPressed];
+            break;
+        }
         default: break;
     }
 }

@@ -24,9 +24,27 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:@selector(cancelButtonClicked)];
+    
     [self initSubviews];
     [self setAutoLayout];
 }
+
+- (void)cancelButtonClicked
+{
+    [_searchBar resignFirstResponder];
+    
+    if (self.navigationController.viewControllers.count <= 1) {
+        [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

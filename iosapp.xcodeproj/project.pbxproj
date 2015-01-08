@@ -217,6 +217,9 @@
 		38BC59B71A5D406300F3C4D2 /* tweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BC59A51A5D406300F3C4D2 /* tweet.png */; };
 		38BC59B81A5D406300F3C4D2 /* tweet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BC59A61A5D406300F3C4D2 /* tweet@2x.png */; };
 		38BC59B91A5D406300F3C4D2 /* tweet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BC59A71A5D406300F3C4D2 /* tweet@3x.png */; };
+		38BC59BD1A5E231300F3C4D2 /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BC59BA1A5E231300F3C4D2 /* search.png */; };
+		38BC59BE1A5E231300F3C4D2 /* search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BC59BB1A5E231300F3C4D2 /* search@2x.png */; };
+		38BC59BF1A5E231300F3C4D2 /* search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BC59BC1A5E231300F3C4D2 /* search@3x.png */; };
 		38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3CFF1A369B1600682D1F /* SoftwareCatalogVC.m */; };
 		38BD3D041A36A3E500682D1F /* OSCSoftwareCatalog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D031A36A3E500682D1F /* OSCSoftwareCatalog.m */; };
 		38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D061A36A97400682D1F /* OSCSoftware.m */; };
@@ -512,6 +515,9 @@
 		38BC59A51A5D406300F3C4D2 /* tweet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tweet.png; sourceTree = "<group>"; };
 		38BC59A61A5D406300F3C4D2 /* tweet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweet@2x.png"; sourceTree = "<group>"; };
 		38BC59A71A5D406300F3C4D2 /* tweet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweet@3x.png"; sourceTree = "<group>"; };
+		38BC59BA1A5E231300F3C4D2 /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
+		38BC59BB1A5E231300F3C4D2 /* search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@2x.png"; sourceTree = "<group>"; };
+		38BC59BC1A5E231300F3C4D2 /* search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search@3x.png"; sourceTree = "<group>"; };
 		38BD3CFE1A369B1600682D1F /* SoftwareCatalogVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareCatalogVC.h; sourceTree = "<group>"; };
 		38BD3CFF1A369B1600682D1F /* SoftwareCatalogVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareCatalogVC.m; sourceTree = "<group>"; };
 		38BD3D021A36A3E500682D1F /* OSCSoftwareCatalog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareCatalog.h; sourceTree = "<group>"; };
@@ -1055,6 +1061,9 @@
 		38BC59951A5D406300F3C4D2 /* option buttons */ = {
 			isa = PBXGroup;
 			children = (
+				38BC59BA1A5E231300F3C4D2 /* search.png */,
+				38BC59BB1A5E231300F3C4D2 /* search@2x.png */,
+				38BC59BC1A5E231300F3C4D2 /* search@3x.png */,
 				38BC59961A5D406300F3C4D2 /* note.png */,
 				38BC59971A5D406300F3C4D2 /* note@2x.png */,
 				38BC59981A5D406300F3C4D2 /* note@3x.png */,
@@ -1294,14 +1303,17 @@
 				382A94501A26D27400AAAFEA /* 012@2x.png in Resources */,
 				38BC59AB1A5D406300F3C4D2 /* picture.png in Resources */,
 				382A94781A26D27400AAAFEA /* 052@2x.png in Resources */,
+				38BC59BF1A5E231300F3C4D2 /* search@3x.png in Resources */,
 				382A94491A26D27400AAAFEA /* 005@2x.png in Resources */,
 				382A948E1A26D27400AAAFEA /* 075@2x.png in Resources */,
 				38BC59B71A5D406300F3C4D2 /* tweet.png in Resources */,
 				38BC59891A5A992200F3C4D2 /* tweet.png in Resources */,
 				382A94A11A26D27400AAAFEA /* 094@2x.png in Resources */,
 				382A94631A26D27400AAAFEA /* 031@2x.png in Resources */,
+				38BC59BD1A5E231300F3C4D2 /* search.png in Resources */,
 				382A94451A26D27400AAAFEA /* 001@2x.png in Resources */,
 				38BC59851A5A992200F3C4D2 /* me@3x.png in Resources */,
+				38BC59BE1A5E231300F3C4D2 /* search@2x.png in Resources */,
 				382A947B1A26D27400AAAFEA /* 055@2x.png in Resources */,
 				382A944B1A26D27400AAAFEA /* 007@2x.png in Resources */,
 				382A94521A26D27400AAAFEA /* 014@2x.png in Resources */,
