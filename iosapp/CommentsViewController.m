@@ -98,7 +98,7 @@ static NSString *kCommentCellID = @"CommentCell";
         return self.heightForOtherSectionCell(indexPath);
     } else if (indexPath.row < self.objects.count) {
         OSCComment *comment = self.objects[indexPath.row];
-        [self.label setText:comment.content];
+        [self.label setAttributedText:[Utils emojiStringFromRawString:comment.content]];
         
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 52, MAXFLOAT)];
         

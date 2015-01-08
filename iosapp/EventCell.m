@@ -129,7 +129,7 @@
     [_appclientLabel setText:[Utils getAppclient:event.appclient]];
     [_actionLabel setAttributedText:event.actionStr];
     _commentCount.text = event.commentCount? [NSString stringWithFormat:@"评论：%d", event.commentCount] : @"";
-    [_contentLabel setText:event.message];
+    [_contentLabel setAttributedText:[Utils emojiStringFromRawString:event.message]];
     
 
     if (event.hasReference) {

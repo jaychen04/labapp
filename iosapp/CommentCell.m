@@ -88,7 +88,7 @@
 - (void)setContentWithComment:(OSCComment *)comment
 {
     [self.portrait loadPortrait:comment.portraitURL];
-    [self.contentLabel setText:comment.content];
+    [self.contentLabel setAttributedText:[Utils emojiStringFromRawString:comment.content]];
     [self.authorLabel setText:comment.author];
     [self.timeLabel setText:[Utils intervalSinceNow:comment.pubDate]];
 }
