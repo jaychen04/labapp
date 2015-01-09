@@ -253,6 +253,22 @@
     return emojiString;
 }
 
++ (NSData *)compressImage:(UIImage *)image
+{
+    NSUInteger maxFileSize = 500 * 1024;
+    CGFloat compressionRatio = 1.0f;
+    CGFloat maxCompressionRatio = 0.1f;
+    
+    NSData *imageData = UIImageJPEGRepresentation(image, compressionRatio);
+    
+    while (imageData.length > maxFileSize && compressionRatio > maxCompressionRatio) {
+        compressionRatio -= 0.1f;
+        imageData = UIImageJPEGRepresentation(image, compressionRatio);
+    }
+    
+    return imageData;
+}
+
 
 #pragma mark - UI处理
 

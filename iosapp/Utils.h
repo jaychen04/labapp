@@ -22,6 +22,7 @@
 
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
++ (NSData *)compressImage:(UIImage *)image;
 
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent;
 

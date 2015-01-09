@@ -10,6 +10,7 @@
 #import "EmojiPageVC.h"
 #import "OSCAPI.h"
 #import "Config.h"
+#import "Utils.h"
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -309,12 +310,21 @@
         NSLog(@"内容不能为空");
         return;
     }
-    
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_PUB]
-       parameters:@{@"uid": @([Config getOwnID]), @"msg": [self convertRichTextToRawText]}
+       parameters:@{
+                    @"uid": @([Config getOwnID]),
+                    @"msg": [self convertRichTextToRawText]
+                    }
+constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:[Utils compressImage:_imageView.image]
+                                    name:@"img"
+                                fileName:@"img.jpg"
+                                mimeType:@"image/jpeg"];
+    }
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
               ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
               int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];

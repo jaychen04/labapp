@@ -194,7 +194,7 @@
             
             UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:button
                                                                          attachedToAnchor:CGPointMake(_screenWidth/6 * (i%3*2+1),
-                                                                                                      _screenHeight - 300 + i/3*125)];
+                                                                                                      _screenHeight - 250 + i/3*115)];
             attachment.damping = 0.5;
             attachment.frequency = 4;
             attachment.length = 1;
