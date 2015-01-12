@@ -11,6 +11,12 @@
 #import "UIColor+Util.h"
 #import "UIImageView+Util.h"
 
+typedef NS_ENUM(NSUInteger, hudType) {
+    hudTypeSendingTweet,
+    hudTypeLoading,
+    hudTypeCompleted
+};
+
 @class OSCUser;
 
 @interface Utils : NSObject
@@ -25,5 +31,7 @@
 + (NSData *)compressImage:(UIImage *)image;
 
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent;
+
++ (void)showProgressHUDInView:(UIView *)view ofType:(hudType)hudType;
 
 @end

@@ -16,6 +16,7 @@
 #import "DetailsViewController.h"
 #import "PostsViewController.h"
 #import "TweetDetailsViewController.h"
+#import <MBProgressHUD.h>
 
 @implementation Utils
 
@@ -276,6 +277,30 @@
 {
     return min + (max - min) * percent;
 }
+
+/*
++ (void)showProgressHUDInView:(UIView *)view ofType:(hudType)hudType
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    
+    switch (hudType) {
+        case hudTypeSendingTweet:
+            hud.labelText = @"动弹发送中...";
+            break;
+        case hudTypeCompleted:
+            hud.labelText = @"发送成功";
+            break;
+        default:
+            break;
+    }
+    
+    [self doSomethingInBackgroundWithProgressCallback:^(float progress) {
+        hud.progress = progress;
+    } completionCallback:^{
+        [hud hide:YES];
+    }];
+}
+*/
 
 
 

@@ -5,4 +5,5 @@ pod 'SDWebImage', '~> 3.7.1'
 pod 'SSKeychain'
 pod 'ReactiveCocoa'
 pod 'GPUImage', '~> 0.1.6'
+pod 'MBProgressHUD', '~> 0.8'
 
