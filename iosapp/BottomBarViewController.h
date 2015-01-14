@@ -19,4 +19,6 @@
 @property (nonatomic, strong) NSLayoutConstraint *bottomBarYConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *bottomBarHeightConstraint;
 
+- (instancetype)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton;
+
 @end

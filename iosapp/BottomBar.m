@@ -16,19 +16,19 @@
 
 @implementation BottomBar
 
-- (id)init
+- (id)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton
 {
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor grayColor];
-        [self setLayout];
+        [self setLayoutWithModeSwitchButton:hasAModeSwitchButton];
     }
     
     return self;
 }
 
 
-- (void)setLayout
+- (void)setLayoutWithModeSwitchButton:(BOOL)hasAModeSwitchButton
 {
     _modeSwitchButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_modeSwitchButton setImage:[UIImage imageNamed:@"button_keyboard_normal"] forState:UIControlStateNormal];
@@ -50,13 +50,20 @@
     [self addSubview:commentButton];
     
     for (UIView *view in [self subviews]) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_modeSwitchButton, _inputViewButton, commentButton, _editView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_modeSwitchButton, _inputViewButton, commentButton, _editView);
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_modeSwitchButton]-5-[_editView]-5-[_inputViewButton][commentButton]-5-|" options:0 metrics:nil views:viewsDict]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_modeSwitchButton]-3-|" options:0 metrics:nil views:viewsDict]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_inputViewButton]-3-|" options:0 metrics:nil views:viewsDict]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[commentButton]-3-|" options:0 metrics:nil views:viewsDict]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_editView]-5-|" options:0 metrics:nil views:viewsDict]];
+    if (hasAModeSwitchButton) {
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_modeSwitchButton]-5-[_editView]-5-[_inputViewButton][commentButton]-5-|" options:0 metrics:nil views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_modeSwitchButton]-3-|" options:0 metrics:nil views:views]];
+    } else {
+        [_modeSwitchButton removeFromSuperview];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_editView]-5-[_inputViewButton][commentButton]-5-|"
+                                                                     options:0 metrics:nil views:views]];
+    }
+    
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_inputViewButton]-3-|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[commentButton]-3-|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_editView]-5-|" options:0 metrics:nil views:views]];
 }
 
 

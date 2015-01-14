@@ -19,4 +19,6 @@
 @property (nonatomic, strong) UIButton *modeSwitchButton;
 @property (nonatomic, strong) UIButton *inputViewButton;
 
+- (instancetype)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton;
+
 @end
