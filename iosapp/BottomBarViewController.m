@@ -13,19 +13,17 @@
 
 @interface BottomBarViewController ()
 
+@property (nonatomic, strong) EmojiPageVC *emojiPageVC;
+
 @end
 
 @implementation BottomBarViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    [self addBottomBar];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidUpdate:) name:UITextViewTextDidChangeNotification object:nil];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
+    [self setup];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -34,6 +32,18 @@
 }
 
 
+#pragma mark -
+
+- (void)setup
+{
+    [self addBottomBar];
+    _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_bottomBar.editView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidUpdate:) name:UITextViewTextDidChangeNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
+}
 
 
 - (void)addBottomBar
@@ -42,38 +52,43 @@
     _bottomBar.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_bottomBar];
     
-    //_emojiPanel = [[EmojiPanelView alloc] initWithPanelHeight:150];
-    //_emojiPanel.translatesAutoresizingMaskIntoConstraints = NO;
-    //[self.view addSubview:_emojiPanel];
+    _bottomBarYConstraint = [NSLayoutConstraint constraintWithItem:self.view    attribute:NSLayoutAttributeBottom   relatedBy:NSLayoutRelationEqual
+                                                            toItem:_bottomBar   attribute:NSLayoutAttributeBottom   multiplier:1.0 constant:0];
     
-    //_emojiPanelVC = [[EmojiPageVC alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
-    //[self addChildViewController:_emojiPanelVC];
-    //[self.view addSubview:_emojiPanelVC.view];
-    
-#if 1
-    _bottomBarYConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
-                                                        toItem:_bottomBar attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0];
-    _bottomBarHeightConstraint = [NSLayoutConstraint constraintWithItem:_bottomBar attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual
-                                                                 toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:[self minimumInputbarHeight]];
+    _bottomBarHeightConstraint = [NSLayoutConstraint constraintWithItem:_bottomBar attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
+                                                                 toItem:nil        attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:[self minimumInputbarHeight]];
     
     [self.view addConstraint:_bottomBarYConstraint];
     [self.view addConstraint:_bottomBarHeightConstraint];
-#endif
     
-#if 0
-    //CGFloat screenWidth = [[UIScreen mainScreen] bounds].size.width;
-    //NSDictionary *metrics = @{@"panelWidth": @(screenWidth * 5)};
-    _emojiPanel = _emojiPanelVC.view;
-    [self.view addSubview:_emojiPanel];
-    NSDictionary *views = NSDictionaryOfVariableBindings(_emojiPanel);
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_emojiPanel]" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_emojiPanel(150)]|" options:0 metrics:nil views:views]];
-#endif
+    
+    [_bottomBar.inputViewButton addTarget:self action:@selector(switchInputView) forControlEvents:UIControlEventTouchUpInside];
+}
+
+
+- (void)switchInputView
+{
+    if (_bottomBar.editView.inputView == self.emojiPageVC.view) {
+        [_bottomBar.editView becomeFirstResponder];
+        
+        [_bottomBar.inputViewButton setImage:[UIImage imageNamed:@"compose_toolbar_emoji_normal"] forState:UIControlStateNormal];
+        _bottomBar.editView.inputView = nil;
+        _bottomBar.editView.font = [UIFont systemFontOfSize:18];
+        [_bottomBar.editView reloadInputViews];
+    } else {
+        [_bottomBar.editView becomeFirstResponder];
+        
+        [_bottomBar.inputViewButton setImage:[UIImage imageNamed:@"compose_toolbar_keyboard_normal"] forState:UIControlStateNormal];
+        _bottomBar.editView.inputView = _emojiPageVC.view;
+        [_bottomBar.editView reloadInputViews];
+        
+        [self setBottomBarHeight:216];
+    }
 }
 
 
 
-
+#pragma mark - textView的基本设置
 
 - (GrowingTextView *)textView
 {
@@ -100,6 +115,38 @@
 }
 
 
+
+
+
+#pragma mark - 调整bar的高度
+
+- (void)keyboardWillShow:(NSNotification *)notification
+{
+    CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    
+    [self setBottomBarHeight:keyboardBounds.size.height];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification
+{
+    [self setBottomBarHeight:0];
+}
+
+- (void)setBottomBarHeight:(CGFloat)height
+{
+    _bottomBarYConstraint.constant = height;
+    [self.view setNeedsUpdateConstraints];
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+}
+
+
+
+#pragma mark - 编辑框相关
+
 - (CGFloat)appropriateInputbarHeight
 {
     CGFloat height = 0.0;
@@ -122,24 +169,6 @@
 }
 
 
-
-
-- (void)keyboardWillShow:(NSNotification *)notification
-{
-    CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    
-    _bottomBarYConstraint.constant = keyboardBounds.size.height;
-    [self.view layoutIfNeeded];
-}
-
-
-- (void)keyboardWillHide:(NSNotification *)notification
-{
-    _bottomBarYConstraint.constant = 0;
-    [self.view layoutIfNeeded];
-}
-
-
 - (void)didchangeTextViewText:(NSNotification *)notification
 {
     
@@ -148,57 +177,13 @@
 
 - (void)textDidUpdate:(NSNotification *)notification
 {
-    // Disables animation if not first responder
-    //if (![self.textView isFirstResponder]) {
-    //    animated = NO;
-    //}
-    
     CGFloat inputbarHeight = [self appropriateInputbarHeight];
     
     if (inputbarHeight != self.bottomBarHeightConstraint.constant) {
         self.bottomBarHeightConstraint.constant = inputbarHeight;
-        //self.scrollViewHC.constant = [self appropriateScrollViewHeight];
-        
-#if 0
-        if (animated) {
-            
-            //BOOL bounces = self.bounces && [self.textView isFirstResponder];
-            
-            [UIView animateWithDuration:0.5
-                                  delay:0.0
-                 usingSpringWithDamping:0.7
-                  initialSpringVelocity:0.7
-                                options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionLayoutSubviews|UIViewAnimationOptionBeginFromCurrentState
-                             animations:^{
-                                 [self.view layoutIfNeeded];
-                                 
-                                 if (animations) {
-                                     animations();
-                                 }
-                             }
-                             completion:NULL];
-            
-            [self.view slk_animateLayoutIfNeededWithBounce:bounces
-                                                   options:UIViewAnimationOptionCurveEaseInOut|UIViewAnimationOptionLayoutSubviews|UIViewAnimationOptionBeginFromCurrentState
-                                                animations:^{
-                                                    if (self.isEditing) {
-                                                        [self.textView slk_scrollToCaretPositonAnimated:NO];
-                                                    }
-                                                }];
-        }
-        else {
-            [self.view layoutIfNeeded];
-        }
-#endif
         
         [self.view layoutIfNeeded];
     }
-    
-    // Only updates the input view if the number of line changed
-    //[self reloadInputAccessoryViewIfNeeded];
-    
-    // Toggles auto-correction if requiered
-    //[self enableTypingSuggestionIfNeeded];
 }
 
 

@@ -16,6 +16,7 @@
 
 @property (nonatomic, strong) GrowingTextView *editView;
 @property (nonatomic, strong) UIButton *sendButton;
-@property (nonatomic, strong) UIButton *switchModeButton;
+@property (nonatomic, strong) UIButton *modeSwitchButton;
+@property (nonatomic, strong) UIButton *inputViewButton;
 
 @end

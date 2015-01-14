@@ -133,9 +133,15 @@
     
     CGPoint origin = [self.view convertPoint:self.tabBar.center toView:self.tabBar];
     CGSize buttonSize = CGSizeMake(self.tabBar.frame.size.width / 5 - 6, self.tabBar.frame.size.height - 4);
+#if 1
     _centerButton.frame = CGRectMake(origin.x - buttonSize.width/2, origin.y - buttonSize.height/2, buttonSize.width, buttonSize.height);
-    [_centerButton setBackgroundColor:[UIColor orangeColor]];
     [_centerButton setCornerRadius:5.0];
+#else
+    _centerButton.frame = CGRectMake(origin.x - buttonSize.height/2, origin.y - buttonSize.height/2, buttonSize.height, buttonSize.height);
+    [_centerButton setCornerRadius:buttonSize.height/2];
+#endif
+    [_centerButton setBackgroundColor:[UIColor orangeColor]];
+    
     
     [_centerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
     [_centerButton setBackgroundImage:highlightImage forState:UIControlStateHighlighted];

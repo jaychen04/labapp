@@ -159,7 +159,11 @@
                 }
             }
         }
-        [navigationController pushViewController:viewController animated:YES];
+        if (viewController) {
+            [navigationController pushViewController:viewController animated:YES];
+        } else {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", url]]];
+        }
     }
 }
 

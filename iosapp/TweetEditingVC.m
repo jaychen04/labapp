@@ -61,6 +61,8 @@
                                                                              target:self
                                                                              action:@selector(pubTweet)];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_edittingArea];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -213,23 +215,6 @@
         [_edittingArea reloadInputViews];
     }
 }
-
-- (EmojiPageVC *)emojiPageVC
-{
-    if (!_emojiPageVC) {
-        _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_edittingArea];
-        [self addChildViewController:_emojiPageVC];
-        [self.view addSubview:_emojiPageVC.view];
-        
-        NSDictionary *views = @{@"emojiView": _emojiPageVC.view};
-        _emojiPageVC.view.translatesAutoresizingMaskIntoConstraints = NO;
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[emojiView(216)]|" options:0 metrics:nil views:views]];
-        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[emojiView]|" options:0 metrics:nil views:views]];
-    }
-    
-    return _emojiPageVC;
-}
-
 
 
 
