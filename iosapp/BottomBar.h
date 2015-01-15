@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@class GrowingTextView;
+#import "GrowingTextView.h"
 
 @interface BottomBar : UIToolbar
 

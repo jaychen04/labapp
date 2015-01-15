@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BottomBar.h"
 
-@class BottomBar;
 @class EmojiPageVC;
 
 @interface BottomBarViewController : UIViewController

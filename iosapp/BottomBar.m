@@ -38,8 +38,8 @@
     _inputViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_inputViewButton setImage:[UIImage imageNamed:@"button_emoji_normal"] forState:UIControlStateNormal];
     
-    UIButton *commentButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [commentButton setImage:[UIImage imageNamed:@"button_comment_normal"] forState:UIControlStateNormal];
+    _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_sendButton setImage:[UIImage imageNamed:@"button_comment_normal"] forState:UIControlStateNormal];
     
     _editView = [GrowingTextView new];
     [_editView setCornerRadius:5.0];
@@ -49,22 +49,22 @@
     [self addSubview:_editView];
     [self addSubview:_modeSwitchButton];
     [self addSubview:_inputViewButton];
-    [self addSubview:commentButton];
+    [self addSubview:_sendButton];
     
     for (UIView *view in [self subviews]) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = NSDictionaryOfVariableBindings(_modeSwitchButton, _inputViewButton, commentButton, _editView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_modeSwitchButton, _inputViewButton, _sendButton, _editView);
     
     if (hasAModeSwitchButton) {
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_modeSwitchButton]-5-[_editView]-5-[_inputViewButton][commentButton]-5-|" options:0 metrics:nil views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_modeSwitchButton]-5-[_editView]-5-[_inputViewButton][_sendButton]-5-|" options:0 metrics:nil views:views]];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_modeSwitchButton]-3-|" options:0 metrics:nil views:views]];
     } else {
         [_modeSwitchButton removeFromSuperview];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_editView]-5-[_inputViewButton][commentButton]-5-|"
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_editView]-5-[_inputViewButton][_sendButton]-5-|"
                                                                      options:0 metrics:nil views:views]];
     }
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_inputViewButton]-3-|" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[commentButton]-3-|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_sendButton]-3-|" options:0 metrics:nil views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_editView]-5-|" options:0 metrics:nil views:views]];
 }
 
