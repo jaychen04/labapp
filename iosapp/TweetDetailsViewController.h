@@ -12,6 +12,6 @@
 
 @interface TweetDetailsViewController : CommentsViewController
 
-- (instancetype)initWithTweet:(OSCTweet *)tweet;
+- (instancetype)initWithTweetID:(int64_t)tweetID;
 
 @end

@@ -1,5 +1,5 @@
 //
-//  NewTweetDetailsViewController.h
+//  TweetDetailsWithBottomBarViewController.h
 //  iosapp
 //
 //  Created by chenhaoxiang on 1/14/15.
@@ -9,10 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "BottomBarViewController.h"
 
-@class OSCTweet;
 
 @interface TweetDetailsWithBottomBarViewController : BottomBarViewController
 
-- (instancetype)initWithTweet:(OSCTweet *)tweet;
+- (instancetype)initWithTweetID:(int64_t)tweetID;
 
 @end

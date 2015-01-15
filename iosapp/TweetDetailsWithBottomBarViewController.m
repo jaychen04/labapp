@@ -1,5 +1,5 @@
 //
-//  NewTweetDetailsViewController.m
+//  TweetDetailsWithBottomBarViewController.m
 //  iosapp
 //
 //  Created by chenhaoxiang on 1/14/15.
@@ -17,22 +17,19 @@
 
 @interface TweetDetailsWithBottomBarViewController () <UIWebViewDelegate>
 
-@property (nonatomic, strong) OSCTweet *tweet;
 @property (nonatomic, strong) TweetDetailsViewController *tweetDetailsVC;
 
 @end
 
 @implementation TweetDetailsWithBottomBarViewController
 
-- (instancetype)initWithTweet:(OSCTweet *)tweet
+- (instancetype)initWithTweetID:(int64_t)tweetID
 {
     self = [super initWithModeSwitchButton:NO];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
         
-        _tweet = tweet;
-        
-        _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweet:tweet];
+        _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweetID:tweetID];
         [self addChildViewController:_tweetDetailsVC];
     }
     

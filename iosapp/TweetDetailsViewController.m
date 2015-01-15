@@ -15,37 +15,41 @@
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
+#import <MBProgressHUD.h>
 
 @interface TweetDetailsViewController () <UIWebViewDelegate>
 
 @property (nonatomic, strong) OSCTweet *tweet;
+@property (nonatomic, assign) int64_t tweetID;
 
 @property (nonatomic, assign) BOOL isLoadingFinished;
 @property (nonatomic, assign) CGFloat webViewHeight;
-@property (nonatomic, copy) NSString *HTML;
 
 @end
 
 @implementation TweetDetailsViewController
 
-- (instancetype)initWithTweet:(OSCTweet *)tweet
+- (instancetype)initWithTweetID:(int64_t)tweetID
 {
-    self = [super initWithCommentsType:CommentsTypeTweet andID:tweet.tweetID];
+    self = [super initWithCommentsType:CommentsTypeTweet andID:tweetID];
     
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
-        _tweet = tweet;
+        
+        _tweetID = tweetID;
         
         __weak TweetDetailsViewController *weakSelf = self;
         self.otherSectionCell = ^UITableViewCell * (NSIndexPath *indexPath) {
             TweetDetailsCell *cell = [TweetDetailsCell new];
-            cell.webView.delegate = weakSelf;
             
-            [cell.portrait loadPortrait:tweet.portraitURL];
-            [cell.authorLabel setText:tweet.author];
-            [cell.timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
-            [cell.appclientLabel setText:[Utils getAppclient:tweet.appclient]];
-            [cell.webView loadHTMLString:weakSelf.HTML baseURL:nil];
+            if (weakSelf.tweet) {
+                [cell.portrait loadPortrait:weakSelf.tweet.portraitURL];
+                [cell.authorLabel setText:weakSelf.tweet.author];
+                [cell.timeLabel setText:[Utils intervalSinceNow:weakSelf.tweet.pubDate]];
+                [cell.appclientLabel setText:[Utils getAppclient:weakSelf.tweet.appclient]];
+                cell.webView.delegate = weakSelf;
+                [cell.webView loadHTMLString:weakSelf.tweet.body baseURL:nil];
+            }
             
             return cell;
         };
@@ -65,19 +69,15 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
-    [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_TWEET_DETAIL, _tweet.tweetID]
+    [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_TWEET_DETAIL, _tweetID]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             ONOXMLElement *tweetDetails = [responseObject.rootElement firstChildWithTag:@"tweet"];
-             NSString *text = [[tweetDetails firstChildWithTag:@"body"] stringValue];
+             ONOXMLElement *tweetDetailsXML = [responseObject.rootElement firstChildWithTag:@"tweet"];
              
-             NSString *imageURL = [[tweetDetails firstChildWithTag:@"imgBig"] stringValue];
-             
-             
-             _HTML = [NSString stringWithFormat:@"<font size=\"3\"><strong>%@</strong></font>\
-                                                  <br/><a href='%@'><img style='max-width:300px;' src='%@'/></a>",
-                                                text,  imageURL, imageURL];
-             _tweet.commentCount = [[[tweetDetails firstChildWithTag:@"commentCount"] numberValue] intValue];
+             _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
+             _tweet.body = [NSString stringWithFormat:@"<font size=\"3\"><strong>%@</strong></font>\
+                                                       <br/><a href='%@'><img style='max-width:300px;' src='%@'/></a>",
+                                                       _tweet.body,  _tweet.bigImgURL, _tweet.bigImgURL];
              
              [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
                                    withRowAnimation:UITableViewRowAnimationNone];

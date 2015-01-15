@@ -173,7 +173,7 @@
     
     if (row < self.objects.count) {
         OSCTweet *tweet = self.objects[row];
-        TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweet:tweet];
+        TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
         [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
     } else {
         [self fetchMore];

@@ -15,7 +15,7 @@
 #import "UserDetailsViewController.h"
 #import "DetailsViewController.h"
 #import "PostsViewController.h"
-#import "TweetDetailsViewController.h"
+#import "TweetDetailsWithBottomBarViewController.h"
 #import <MBProgressHUD.h>
 
 @implementation Utils
@@ -103,7 +103,7 @@
                 } else if ([type isEqualToString:@"tweet"]){
                     OSCTweet *tweet = [OSCTweet new];
                     tweet.tweetID = [urlComponents[3] longLongValue];
-                    viewController = [[TweetDetailsViewController alloc] initWithTweet:tweet];
+                    viewController = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
                 }
             }
         } else if ([prefix isEqualToString:@"www"]) {
