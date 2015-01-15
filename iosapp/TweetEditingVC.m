@@ -89,6 +89,8 @@
     _imageView.userInteractionEnabled = YES;
     [self.view addSubview:_imageView];
     
+    /****** toolBar ******/
+    
     _toolBar = [UIToolbar new];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
     UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:self action:nil];
@@ -107,6 +109,18 @@
     }
     [barButtonItems addObject:fixedSpace];
     [_toolBar setItems:barButtonItems];
+    
+    // 底部添加border
+    
+    UIView *bottomBorder = [UIView new];
+    bottomBorder.backgroundColor = [UIColor lightGrayColor];
+    bottomBorder.translatesAutoresizingMaskIntoConstraints = NO;
+    [_toolBar addSubview:bottomBorder];
+    
+    NSDictionary *views = NSDictionaryOfVariableBindings(bottomBorder);
+    
+    [_toolBar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[bottomBorder]|" options:0 metrics:nil views:views]];
+    [_toolBar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomBorder(0.5)]|" options:0 metrics:nil views:views]];
     
     [self.view addSubview:_toolBar];
 }
