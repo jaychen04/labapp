@@ -8,6 +8,7 @@
 
 #import "TweetsViewController.h"
 #import "TweetDetailsViewController.h"
+#import "TweetDetailsWithBottomBarViewController.h"
 #import "UserDetailsViewController.h"
 #import "ImageViewerController.h"
 #import "TweetCell.h"
@@ -172,8 +173,8 @@
     
     if (row < self.objects.count) {
         OSCTweet *tweet = self.objects[row];
-        TweetDetailsViewController *tweetDetailsViewController = [[TweetDetailsViewController alloc] initWithTweet:tweet];
-        [self.navigationController pushViewController:tweetDetailsViewController animated:YES];
+        TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweet:tweet];
+        [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
     } else {
         [self fetchMore];
     }

@@ -149,6 +149,8 @@
 		386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039631A0A179A007C9B88 /* UserDetailsViewController.m */; };
 		386039691A0A3532007C9B88 /* portrait_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 386039671A0A3532007C9B88 /* portrait_loading.png */; };
 		3860396A1A0A3532007C9B88 /* portrait_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 386039681A0A3532007C9B88 /* portrait_loading@2x.png */; };
+		386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386BEA411A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m */; };
+		386BEA451A66500400C078A8 /* TweetDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 386BEA441A66500400C078A8 /* TweetDetailsCell.m */; };
 		3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC1B1A08DB8E000D2894 /* BottomBar.m */; };
 		3874EC281A08E957000D2894 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC271A08E957000D2894 /* LoginViewController.m */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
@@ -427,6 +429,10 @@
 		386039631A0A179A007C9B88 /* UserDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsViewController.m; sourceTree = "<group>"; };
 		386039671A0A3532007C9B88 /* portrait_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = portrait_loading.png; sourceTree = "<group>"; };
 		386039681A0A3532007C9B88 /* portrait_loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "portrait_loading@2x.png"; sourceTree = "<group>"; };
+		386BEA401A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailsWithBottomBarViewController.h; sourceTree = "<group>"; };
+		386BEA411A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsWithBottomBarViewController.m; sourceTree = "<group>"; };
+		386BEA431A66500400C078A8 /* TweetDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailsCell.h; sourceTree = "<group>"; };
+		386BEA441A66500400C078A8 /* TweetDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsCell.m; sourceTree = "<group>"; };
 		3874EC1A1A08DB8E000D2894 /* BottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomBar.h; sourceTree = "<group>"; };
 		3874EC1B1A08DB8E000D2894 /* BottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomBar.m; sourceTree = "<group>"; };
 		3874EC261A08E957000D2894 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -1163,6 +1169,10 @@
 			children = (
 				38BD7D7719FFCB79003ABB80 /* TweetDetailsViewController.h */,
 				38BD7D7819FFCB79003ABB80 /* TweetDetailsViewController.m */,
+				386BEA401A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.h */,
+				386BEA411A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m */,
+				386BEA431A66500400C078A8 /* TweetDetailsCell.h */,
+				386BEA441A66500400C078A8 /* TweetDetailsCell.m */,
 			);
 			name = TweetDetails;
 			sourceTree = "<group>";
@@ -1480,6 +1490,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				386BEA451A66500400C078A8 /* TweetDetailsCell.m in Sources */,
 				38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */,
 				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
@@ -1538,6 +1549,7 @@
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
+				386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */,
 				3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */,
 				38BDC5401A4D5F84006080F7 /* PersonSearchViewController.m in Sources */,
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
