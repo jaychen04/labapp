@@ -29,6 +29,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 + (NSData *)compressImage:(UIImage *)image;
++ (NSString *)convertRichTextToRawText:(UITextView *)textView;
 
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent;
 

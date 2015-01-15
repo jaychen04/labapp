@@ -15,6 +15,7 @@
 #import "TweetDetailsCell.h"
 #import "Config.h"
 #import <MBProgressHUD.h>
+#import <objc/runtime.h>
 
 
 @interface TweetDetailsWithBottomBarViewController () <UIWebViewDelegate>
@@ -82,7 +83,7 @@
                     @"catalog": @(3),
                     @"id": @(_tweetID),
                     @"uid": @([Config getOwnID]),
-                    @"content": self.bottomBar.editView.text,
+                    @"content": [Utils convertRichTextToRawText:self.bottomBar.editView],
                     @"isPostToMyZone": @(0)
                     }
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
@@ -118,6 +119,7 @@
               [HUD hide:YES afterDelay:2];
           }];
 }
+
 
 
 

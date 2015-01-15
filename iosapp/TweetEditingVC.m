@@ -327,7 +327,7 @@
     [manager             POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_PUB]
                    parameters:@{
                                 @"uid": @([Config getOwnID]),
-                                @"msg": [self convertRichTextToRawText]
+                                @"msg": [Utils convertRichTextToRawText:_edittingArea]
                                 }
      
     constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -375,21 +375,5 @@
                       }];
 }
 
-- (NSString *)convertRichTextToRawText
-{
-    NSMutableString *rawText = [[NSMutableString alloc] initWithString:_edittingArea.text];
-    
-    [_edittingArea.attributedText enumerateAttribute:NSAttachmentAttributeName
-                                             inRange:NSMakeRange(0, _edittingArea.attributedText.length)
-                                             options:NSAttributedStringEnumerationReverse
-                                          usingBlock:^(NSTextAttachment *attachment, NSRange range, BOOL *stop) {
-                                              if (!attachment) {return;}
-                                              
-                                              int emojiNum = [objc_getAssociatedObject(attachment, @"number") intValue];
-                                              [rawText insertString:[NSString stringWithFormat:@"[%d]", emojiNum-1] atIndex:range.location];
-                                          }];
-    
-    return [rawText copy];
-}
 
 @end
