@@ -18,9 +18,11 @@ typedef NS_ENUM(int, CommentsType)
 
 @interface CommentsViewController : OSCObjsViewController
 
-- (instancetype)initWithCommentsType:(CommentsType)type andID:(int64_t)objectID;
-
 @property (nonatomic, copy) UITableViewCell * (^otherSectionCell)(NSIndexPath *indexPath);
 @property (nonatomic, copy) CGFloat (^heightForOtherSectionCell)(NSIndexPath *indexPath);
+
+@property (nonatomic, copy) void (^didCommentSelected)(NSString *authorName);
+
+- (instancetype)initWithCommentsType:(CommentsType)type andID:(int64_t)objectID;
 
 @end
