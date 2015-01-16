@@ -22,6 +22,7 @@ typedef NS_ENUM(int, CommentsType)
 @property (nonatomic, copy) CGFloat (^heightForOtherSectionCell)(NSIndexPath *indexPath);
 
 @property (nonatomic, copy) void (^didCommentSelected)(NSString *authorName);
+@property (nonatomic, copy) void (^didScroll)();
 
 - (instancetype)initWithCommentsType:(CommentsType)type andID:(int64_t)objectID;
 

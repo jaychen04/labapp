@@ -40,15 +40,25 @@
         [self addChildViewController:_tweetDetailsVC];
         [self.bottomBar.sendButton addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
         
-        __weak TweetDetailsWithBottomBarViewController *weakSelf = self;
-        _tweetDetailsVC.didCommentSelected = ^(NSString *authorName) {
-            NSString *stringToInsert = [NSString stringWithFormat:@"@%@ ", authorName];
-            
-            [weakSelf.bottomBar.editView replaceRange:weakSelf.bottomBar.editView.selectedTextRange withText:stringToInsert];
-        };
+        [self setUpBlock];
     }
     
     return self;
+}
+
+- (void)setUpBlock
+{
+    __weak TweetDetailsWithBottomBarViewController *weakSelf = self;
+    
+    _tweetDetailsVC.didCommentSelected = ^(NSString *authorName) {
+        NSString *stringToInsert = [NSString stringWithFormat:@"@%@ ", authorName];
+        
+        [weakSelf.bottomBar.editView replaceRange:weakSelf.bottomBar.editView.selectedTextRange withText:stringToInsert];
+    };
+    
+    _tweetDetailsVC.didScroll = ^ {
+        [weakSelf.bottomBar.editView resignFirstResponder];
+    };
 }
 
 

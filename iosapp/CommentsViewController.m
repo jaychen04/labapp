@@ -124,6 +124,16 @@ static NSString *kCommentCellID = @"CommentCell";
 }
 
 
+#pragma mark - scrollView
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (self.didScroll) {
+        self.didScroll();
+    }
+}
+
+
 
 
 #pragma mark - 跳转到用户详情页
