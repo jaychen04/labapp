@@ -48,6 +48,11 @@ static NSString *kCommentCellID = @"CommentCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[CommentCell class] forCellReuseIdentifier:kCommentCellID];
+    
+    UIMenuItem *menuItemCopy = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)];
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuItems:@[menuItemCopy]];
+    [menuController setMenuVisible:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -121,6 +126,20 @@ static NSString *kCommentCellID = @"CommentCell";
     } else {
         [self fetchMore];
     }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    return action == @selector(copyText:);
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    // required
 }
 
 

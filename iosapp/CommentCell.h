@@ -19,5 +19,6 @@
 @property (nonatomic, strong) UIView *repliesView;
 
 - (void)setContentWithComment:(OSCComment *)comment;
+- (void)copyText:(id)sender;
 
 @end

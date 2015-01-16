@@ -101,12 +101,8 @@
     _thumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_thumbnail]-8-|"
                                                                         options:NSLayoutFormatAlignAllLeft metrics:nil views:views];
     
-    _noThumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-|"
-                                                                          options:NSLayoutFormatAlignAllLeft metrics:nil views:views];
+    _noThumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-|" options:0 metrics:nil views:views];
 }
-
-
-
 
 
 - (void)setContentWithTweet:(OSCTweet *)tweet
@@ -120,6 +116,23 @@
 }
 
 
+#pragma mark - 处理长按操作
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    return action == @selector(copyText:);
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void)copyText:(id)sender
+{
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:_contentLabel.text];
+}
 
 
 

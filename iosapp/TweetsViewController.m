@@ -100,6 +100,11 @@
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweeWithoutImagetCellID];
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetWithImageCellID];
+    
+    UIMenuItem *menuItemCopy = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)];
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuItems:@[menuItemCopy]];
+    [menuController setMenuVisible:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -151,7 +156,7 @@
         OSCTweet *tweet = self.objects[indexPath.row];
         [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
+        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)];
         
         CGFloat height = size.height + 65;
         if (tweet.hasAnImage) {
@@ -180,6 +185,20 @@
     }
 }
 
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    return action == @selector(copyText:);
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    // required
+}
 
 
 
