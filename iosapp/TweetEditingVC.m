@@ -18,6 +18,7 @@
 #import <objc/runtime.h>
 #import <MBProgressHUD.h>
 
+
 @interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, strong) UITextView         *edittingArea;
@@ -306,7 +307,7 @@
 
 - (void)pubTweet
 {
-    MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
     
     if (_edittingArea.text.length == 0) {
         HUD.mode = MBProgressHUDModeCustomView;

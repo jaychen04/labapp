@@ -300,6 +300,16 @@
     return min + (max - min) * percent;
 }
 
++ (MBProgressHUD *)createHUDInWindowOfView:(UIView *)view
+{
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithWindow:window];
+    [window addSubview:HUD];
+    [HUD show:YES];
+    
+    return HUD;
+}
+
 
 
 @end

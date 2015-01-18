@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
     hudTypeCompleted
 };
 
-@class OSCUser;
+@class MBProgressHUD;
 
 @interface Utils : NSObject
 
@@ -32,6 +32,8 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSString *)convertRichTextToRawText:(UITextView *)textView;
 
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent;
+
++ (MBProgressHUD *)createHUDInWindowOfView:(UIView *)view;
 
 
 @end
