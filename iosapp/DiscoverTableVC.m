@@ -20,6 +20,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"发现";
     self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
     self.clearsSelectionOnViewWillAppear = NO;
     self.tableView.bounces = NO;
@@ -46,7 +47,7 @@
         case 0:
             return 1; break;
         case 1:
-            return 3; break;
+            return 2; break;
         case 2:
             return 2; break;
         default:
@@ -73,7 +74,7 @@
             cell.textLabel.text = @"好友圈";
             break;
         case 1:
-            cell.textLabel.text = @[@"找人", @"同城", @"活动"][indexPath.row];
+            cell.textLabel.text = @[@"找人", @"活动"][indexPath.row];
             break;
         case 2:
             cell.textLabel.text = @[@"扫一扫", @"摇一摇"][indexPath.row];

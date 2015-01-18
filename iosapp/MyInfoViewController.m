@@ -154,7 +154,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -165,7 +165,7 @@
     selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
     [cell setSelectedBackgroundView:selectedBackground];
     
-    cell.textLabel.text = @[@"消息", @"团队", @"博客", @"便签"][indexPath.row];
+    cell.textLabel.text = @[@"消息", @"博客"][indexPath.row];
     //cell.imageView.image = [UIImage imageNamed:@[@"", @"", @"", @""][indexPath.row]];
     return cell;
 }
