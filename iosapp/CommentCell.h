@@ -18,7 +18,11 @@
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UIView *repliesView;
 
+@property (nonatomic, copy) BOOL (^canPerformAction)(UITableViewCell *cell, SEL action);
+@property (nonatomic, copy) void (^deleteComment)(UITableViewCell *cell);
+
 - (void)setContentWithComment:(OSCComment *)comment;
 - (void)copyText:(id)sender;
+- (void)deleteComment:(id)sender;
 
 @end

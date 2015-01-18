@@ -19,6 +19,8 @@
 
 @interface TweetDetailsViewController () <UIWebViewDelegate>
 
+@property (nonatomic, readwrite, assign) int64_t objectAuthorID;
+
 @property (nonatomic, strong) OSCTweet *tweet;
 @property (nonatomic, assign) int64_t tweetID;
 
@@ -31,7 +33,7 @@
 
 - (instancetype)initWithTweetID:(int64_t)tweetID
 {
-    self = [super initWithCommentsType:CommentsTypeTweet andID:tweetID];
+    self = [super initWithCommentType:CommentTypeTweet andObjectID:tweetID];
     
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
@@ -75,9 +77,11 @@
              ONOXMLElement *tweetDetailsXML = [responseObject.rootElement firstChildWithTag:@"tweet"];
              
              _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
+             self.objectAuthorID = _tweet.authorID;
              _tweet.body = [NSString stringWithFormat:@"<font size=\"3\"><strong>%@</strong></font>\
                                                        <br/><a href='%@'><img style='max-width:300px;' src='%@'/></a>",
                                                        _tweet.body,  _tweet.bigImgURL, _tweet.bigImgURL];
+             
              
              [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
                                    withRowAnimation:UITableViewRowAnimationNone];

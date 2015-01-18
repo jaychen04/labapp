@@ -8,7 +8,6 @@
 
 #import "CommentsViewController.h"
 
-@class OSCTweet;
 
 @interface TweetDetailsViewController : CommentsViewController
 

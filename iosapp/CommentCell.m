@@ -87,10 +87,10 @@
 
 - (void)setContentWithComment:(OSCComment *)comment
 {
-    [self.portrait loadPortrait:comment.portraitURL];
-    [self.contentLabel setAttributedText:[Utils emojiStringFromRawString:comment.content]];
-    [self.authorLabel setText:comment.author];
-    [self.timeLabel setText:[Utils intervalSinceNow:comment.pubDate]];
+    [_portrait loadPortrait:comment.portraitURL];
+    [_contentLabel setAttributedText:[Utils emojiStringFromRawString:comment.content]];
+    [_authorLabel setText:comment.author];
+    [_timeLabel setText:[Utils intervalSinceNow:comment.pubDate]];
 }
 
 
@@ -99,7 +99,7 @@
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
-    return action == @selector(copyText:);
+    return _canPerformAction(self, action);
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -111,6 +111,11 @@
 {
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     [pasteBoard setString:_contentLabel.text];
+}
+
+- (void)deleteComment:(id)sender
+{
+    _deleteComment(self);
 }
 
 

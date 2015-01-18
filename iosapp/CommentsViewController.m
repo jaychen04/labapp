@@ -10,6 +10,8 @@
 #import "CommentCell.h"
 #import "OSCComment.h"
 #import "UserDetailsViewController.h"
+#import "Config.h"
+#import <MBProgressHUD.h>
 
 
 static NSString *kCommentCellID = @"CommentCell";
@@ -17,15 +19,20 @@ static NSString *kCommentCellID = @"CommentCell";
 
 @interface CommentsViewController ()
 
+@property (nonatomic, assign) int64_t objectID;
+@property (nonatomic, assign) CommentType commentType;
+
 @end
 
 @implementation CommentsViewController
 
-- (instancetype)initWithCommentsType:(CommentsType)type andID:(int64_t)objectID
+- (instancetype)initWithCommentType:(CommentType)type andObjectID:(int64_t)objectID
 {
     self = [super init];
     
     if (self) {
+        _objectID = objectID;
+        
         self.generateURL = ^NSString * (NSUInteger page) {
             return [NSString stringWithFormat:@"%@%@?catalog=%d&id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST, type, objectID, (unsigned long)page, OSCAPI_SUFFIX];
         };
@@ -49,10 +56,12 @@ static NSString *kCommentCellID = @"CommentCell";
     
     [self.tableView registerClass:[CommentCell class] forCellReuseIdentifier:kCommentCellID];
     
-    UIMenuItem *menuItemCopy = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)];
     UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuItems:@[menuItemCopy]];
     [menuController setMenuVisible:YES animated:YES];
+    [menuController setMenuItems:@[
+                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
+                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteComment:)]
+                                   ]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,6 +93,7 @@ static NSString *kCommentCellID = @"CommentCell";
         CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
         OSCComment *comment = self.objects[row];
         
+        [self setBlockForCommentCell:cell];
         [cell setContentWithComment:comment];
         
         cell.portrait.tag = row; cell.authorLabel.tag = row;
@@ -133,14 +143,86 @@ static NSString *kCommentCellID = @"CommentCell";
     return YES;
 }
 
-- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
-{
-    return action == @selector(copyText:);
-}
+
+// 参考 http://stackoverflow.com/questions/12290828/how-to-show-a-custom-uimenuitem-for-a-uitableviewcell
 
 - (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
     // required
 }
+
+- (void)setBlockForCommentCell:(CommentCell *)cell
+{
+    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
+        if (action == @selector(copyText:)) {
+            return YES;
+        } else if (action == @selector(deleteComment:)) {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            
+            OSCComment *comment = self.objects[indexPath.row];
+            int64_t ownID = [Config getOwnID];
+            
+            return (comment.authorID == ownID || _objectAuthorID == ownID);
+        }
+        
+        return NO;
+    };
+    
+    cell.deleteComment = ^ (UITableViewCell *cell) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        OSCComment *comment = self.objects[indexPath.row];
+        
+        MBProgressHUD *HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        HUD.labelText = @"正在删除评论";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        [manager POST:[NSString stringWithFormat:@"%@%@?", OSCAPI_PREFIX, OSCAPI_COMMENT_DELETE]
+           parameters:@{
+                        @"catalog": @(_commentType),
+                        @"id": @(_objectID),
+                        @"replyid": @(comment.commentID),
+                        @"authorid": @(comment.authorID)
+                        }
+              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                  ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
+                  int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
+                  NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
+                  
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  
+                  switch (errorCode) {
+                      case 1: {
+                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                          HUD.labelText = @"评论删除成功";
+                          
+                          [self.objects removeObjectAtIndex:indexPath.row];
+                          [self.tableView beginUpdates];
+                          [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                          [self.tableView endUpdates];
+                          
+                          break;
+                      }
+                      case 0:
+                      case -2:
+                      case -1: {
+                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                          HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                          break;
+                      }
+                      default: break;
+                  }
+                  
+                  [HUD hide:YES afterDelay:2];
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = @"网络异常，操作失败";
+                  
+                  [HUD hide:YES afterDelay:2];
+              }];
+    };
+}
+
 
 
 #pragma mark - scrollView
