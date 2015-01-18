@@ -120,7 +120,7 @@
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender
 {
-    return action == @selector(copyText:);
+    return _canPerformAction(self, action);
 }
 
 - (BOOL)canBecomeFirstResponder
@@ -132,6 +132,11 @@
 {
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     [pasteBoard setString:_contentLabel.text];
+}
+
+- (void)deleteTweet:(id)sender
+{
+    _deleteTweet(self);
 }
 
 

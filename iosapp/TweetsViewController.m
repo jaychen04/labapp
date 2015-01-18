@@ -16,6 +16,7 @@
 #import "Config.h"
 #import "Utils.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
 
 
 @interface TweetsViewController ()
@@ -101,10 +102,12 @@
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweeWithoutImagetCellID];
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetWithImageCellID];
     
-    UIMenuItem *menuItemCopy = [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)];
     UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuItems:@[menuItemCopy]];
     [menuController setMenuVisible:YES animated:YES];
+    [menuController setMenuItems:@[
+                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
+                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteTweet:)]
+                                   ]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -126,6 +129,7 @@
         NSString *cellID = tweet.hasAnImage ? kTweetWithImageCellID : kTweeWithoutImagetCellID;
         TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
         
+        [self setBlockForCommentCell:cell];
         [cell setContentWithTweet:tweet];
         
         if (tweet.hasAnImage) {
@@ -198,6 +202,77 @@
 
 - (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
     // required
+}
+
+- (void)setBlockForCommentCell:(TweetCell *)cell
+{
+    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
+        if (action == @selector(copyText:)) {
+            return YES;
+        } else if (action == @selector(deleteTweet:)) {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            
+            OSCTweet *tweet = self.objects[indexPath.row];
+            int64_t ownID = [Config getOwnID];
+            
+            return tweet.authorID == ownID;
+        }
+        
+        return NO;
+    };
+    
+    cell.deleteTweet = ^ (UITableViewCell *cell) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        OSCTweet *tweet = self.objects[indexPath.row];
+        
+        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+        HUD.labelText = @"正在删除动弹";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        [manager POST:[NSString stringWithFormat:@"%@%@?", OSCAPI_PREFIX, OSCAPI_TWEET_DELETE]
+           parameters:@{
+                        @"uid": @([Config getOwnID]),
+                        @"tweetid": @(tweet.tweetID)
+                        }
+              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                  ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
+                  int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
+                  NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
+                  
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  
+                  switch (errorCode) {
+                      case 1: {
+                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                          HUD.labelText = @"动弹删除成功";
+                          
+                          [self.objects removeObjectAtIndex:indexPath.row];
+                          [self.tableView beginUpdates];
+                          [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                          [self.tableView endUpdates];
+                          
+                          break;
+                      }
+                      case 0:
+                      case -2:
+                      case -1: {
+                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                          HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                          break;
+                      }
+                      default: break;
+                  }
+                  
+                  [HUD hide:YES afterDelay:2];
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = @"网络异常，操作失败";
+                  
+                  [HUD hide:YES afterDelay:2];
+              }];
+    };
 }
 
 
