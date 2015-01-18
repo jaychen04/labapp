@@ -26,6 +26,6 @@ typedef NS_ENUM(int, CommentType)
 @property (nonatomic, copy) void (^didCommentSelected)(NSString *authorName);
 @property (nonatomic, copy) void (^didScroll)();
 
-- (instancetype)initWithCommentType:(CommentType)type andObjectID:(int64_t)objectID;
+- (instancetype)initWithCommentType:(CommentType)commentType andObjectID:(int64_t)objectID;
 
 @end

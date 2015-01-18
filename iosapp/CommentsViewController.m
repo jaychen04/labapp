@@ -26,15 +26,16 @@ static NSString *kCommentCellID = @"CommentCell";
 
 @implementation CommentsViewController
 
-- (instancetype)initWithCommentType:(CommentType)type andObjectID:(int64_t)objectID
+- (instancetype)initWithCommentType:(CommentType)commentType andObjectID:(int64_t)objectID
 {
     self = [super init];
     
     if (self) {
         _objectID = objectID;
+        _commentType = commentType;
         
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?catalog=%d&id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST, type, objectID, (unsigned long)page, OSCAPI_SUFFIX];
+            return [NSString stringWithFormat:@"%@%@?catalog=%d&id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST, commentType, objectID, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
         self.objClass = [OSCComment class];
