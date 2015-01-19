@@ -16,4 +16,10 @@
 @property (nonatomic, strong) UIButton *shareButton;
 @property (nonatomic, strong) UIButton *reportButton;
 
+@property (nonatomic, copy) void (^switchMode)();
+@property (nonatomic, copy) void (^showComments)();
+@property (nonatomic, copy) void (^toggleStar)();
+@property (nonatomic, copy) void (^share)();
+@property (nonatomic, copy) void (^report)();
+
 @end

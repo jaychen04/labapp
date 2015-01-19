@@ -10,50 +10,61 @@
 
 @implementation OperationBar
 
-- (id)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton
+- (id)init
 {
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor grayColor];
         
         [self addBorder];
-        [self setLayoutWithModeSwitchButton:hasAModeSwitchButton];
+        [self setLayout];
     }
     
     return self;
 }
 
 
-- (void)setLayoutWithModeSwitchButton:(BOOL)hasAModeSwitchButton
+- (void)setLayout
 {
-    _modeSwitchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_modeSwitchButton setImage:[UIImage imageNamed:@"button_keyboard_normal"] forState:UIControlStateNormal];
+    NSMutableArray *items = [NSMutableArray new];
+    NSArray *images    = @[@"button_keyboard_normal", @"toolbar-showComments", @"toolbar-star", @"toolbar-share", @"toolbar-report"];
+    NSArray *selectors = @[@"switchMode:", @"showComments:", @"toggleStar:", @"share:", @"report:"];
     
-    _commentsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_commentsButton setImage:[UIImage imageNamed:@"button_emoji_normal"] forState:UIControlStateNormal];
+    for (int i = 0; i < 5; ++i) {
+        [items addObject:[[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:images[i]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
+                                                          style:UIBarButtonItemStylePlain
+                                                         target:self
+                                                         action:NSSelectorFromString(selectors[i])]];
+        [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+    }
     
-    _starButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_starButton setImage:[UIImage imageNamed:@"button_comment_normal"] forState:UIControlStateNormal];
-    
-    _shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_shareButton setImage:[UIImage imageNamed:@"button_comment_normal"] forState:UIControlStateNormal];
-    
-    _reportButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_reportButton setImage:[UIImage imageNamed:@"button_comment_normal"] forState:UIControlStateNormal];
-    
-    [self addSubview:_modeSwitchButton];
-    [self addSubview:_commentsButton];
-    [self addSubview:_starButton];
-    [self addSubview:_shareButton];
-    [self addSubview:_reportButton];
-    
-    for (UIView *view in self.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = NSDictionaryOfVariableBindings(_modeSwitchButton, _commentsButton, _starButton, _shareButton, _reportButton);
-    
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_modeSwitchButton]-3-|" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_modeSwitchButton]-5-[_commentsButton]-5-[_starButton]-5-[_shareButton]-5-[_reportButton]-5-|"
-                                                                 options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom
-                                                                 metrics:nil views:views]];
+    [self setItems:items];
+}
+
+
+- (void)switchMode:(id)sender
+{
+    if (_switchMode) {_switchMode();}
+}
+
+- (void)showComments:(id)sender
+{
+    if (_showComments) {_showComments();}
+}
+
+- (void)toggleStar:(id)sender
+{
+    if (_toggleStar) {_toggleStar();}
+}
+
+- (void)share:(id)sender
+{
+    if (_share) {_share();}
+}
+
+- (void)report:(id)sender
+{
+    if (_report) {_report();}
 }
 
 
