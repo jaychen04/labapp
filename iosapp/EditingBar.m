@@ -51,7 +51,7 @@
     [self addSubview:_inputViewButton];
     [self addSubview:_sendButton];
     
-    for (UIView *view in [self subviews]) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+    for (UIView *view in self.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(_modeSwitchButton, _inputViewButton, _sendButton, _editView);
     
     if (hasAModeSwitchButton) {

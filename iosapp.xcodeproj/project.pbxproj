@@ -143,6 +143,7 @@
 		382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */; };
 		382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */; };
 		382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */; };
+		3838D15C1A6C9D0900CC7913 /* OperationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D15B1A6C9D0900CC7913 /* OperationBar.m */; };
 		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1F1A1341BB008E2CFA /* ImageViewerController.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
@@ -419,6 +420,8 @@
 		382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetails.m; sourceTree = "<group>"; };
 		382F5EB41A036EE500A8EF11 /* OSCNewsDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewsDetails.h; sourceTree = "<group>"; };
 		382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewsDetails.m; sourceTree = "<group>"; };
+		3838D15A1A6C9D0900CC7913 /* OperationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OperationBar.h; sourceTree = "<group>"; };
+		3838D15B1A6C9D0900CC7913 /* OperationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OperationBar.m; sourceTree = "<group>"; };
 		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
 		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		38590C1E1A1341BB008E2CFA /* ImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerController.h; sourceTree = "<group>"; };
@@ -761,10 +764,9 @@
 		382A93D51A25792800AAAFEA /* BottomBar */ = {
 			isa = PBXGroup;
 			children = (
-				3874EC1A1A08DB8E000D2894 /* EditingBar.h */,
-				3874EC1B1A08DB8E000D2894 /* EditingBar.m */,
-				38E067421A19AC4900D41976 /* GrowingTextView.h */,
-				38E067431A19AC4900D41976 /* GrowingTextView.m */,
+				3838D1591A6C9C9500CC7913 /* EditingBar */,
+				3838D15A1A6C9D0900CC7913 /* OperationBar.h */,
+				3838D15B1A6C9D0900CC7913 /* OperationBar.m */,
 			);
 			name = BottomBar;
 			sourceTree = "<group>";
@@ -910,6 +912,17 @@
 				3801789B1A2C1A7300922858 /* EventCell.m */,
 			);
 			name = "好友圈";
+			sourceTree = "<group>";
+		};
+		3838D1591A6C9C9500CC7913 /* EditingBar */ = {
+			isa = PBXGroup;
+			children = (
+				3874EC1A1A08DB8E000D2894 /* EditingBar.h */,
+				3874EC1B1A08DB8E000D2894 /* EditingBar.m */,
+				38E067421A19AC4900D41976 /* GrowingTextView.h */,
+				38E067431A19AC4900D41976 /* GrowingTextView.m */,
+			);
+			name = EditingBar;
 			sourceTree = "<group>";
 		};
 		386039661A0A34F5007C9B88 /* Resource */ = {
@@ -1495,6 +1508,7 @@
 				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
+				3838D15C1A6C9D0900CC7913 /* OperationBar.m in Sources */,
 				382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
