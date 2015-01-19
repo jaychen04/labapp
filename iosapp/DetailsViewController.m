@@ -30,7 +30,7 @@
 
 
 
-@interface DetailsViewController () <UIWebViewDelegate>
+@interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) OSCNews *news;
 @property (nonatomic, copy) NSString *detailsURL;
@@ -42,6 +42,8 @@
 @end
 
 @implementation DetailsViewController
+
+#pragma mark - 初始化方法
 
 - (instancetype)initWithNews:(OSCNews *)news
 {
@@ -128,6 +130,9 @@
     return self;
 }
 
+
+#pragma mark - life cycle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -139,9 +144,11 @@
     
     _detailsView = [UIWebView new];
     _detailsView.delegate = self;
+    _detailsView.scrollView.delegate = self;
     _detailsView.scrollView.bounces = NO;
     _detailsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_detailsView];
+    
     [self.view bringSubviewToFront:(UIView *)self.editingBar];
     
     NSDictionary *views = @{@"detailsView": _detailsView, @"bottomBar": self.editingBar};
@@ -240,6 +247,13 @@
     [self.detailsView loadHTMLString:html baseURL:nil];
 }
 
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self.editingBar.editView resignFirstResponder];
+}
 
 
 
