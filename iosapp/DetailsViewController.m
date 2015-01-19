@@ -142,9 +142,9 @@
     _detailsView.scrollView.bounces = NO;
     _detailsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_detailsView];
-    [self.view bringSubviewToFront:(UIView *)self.bottomBar];
+    [self.view bringSubviewToFront:(UIView *)self.editingBar];
     
-    NSDictionary *views = @{@"detailsView": _detailsView, @"bottomBar": self.bottomBar};
+    NSDictionary *views = @{@"detailsView": _detailsView, @"bottomBar": self.editingBar};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailsView][bottomBar]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[detailsView]|" options:0 metrics:nil views:views]];
     

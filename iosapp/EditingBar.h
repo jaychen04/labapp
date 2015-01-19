@@ -1,5 +1,5 @@
 //
-//  BottomBar.h
+//  EditingBar.h
 //  iosapp
 //
 //  Created by chenhaoxiang on 11/4/14.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "GrowingTextView.h"
 
-@interface BottomBar : UIToolbar
+@interface EditingBar : UIToolbar
 
 @property (nonatomic, copy) void (^sendContent)(NSString *content);
 

@@ -1,20 +1,20 @@
 //
-//  BottomBar.m
+//  EditingBar.m
 //  iosapp
 //
 //  Created by chenhaoxiang on 11/4/14.
 //  Copyright (c) 2014 oschina. All rights reserved.
 //
 
-#import "BottomBar.h"
+#import "EditingBar.h"
 #import "GrowingTextView.h"
 #import "Utils.h"
 
-@interface BottomBar ()
+@interface EditingBar ()
 
 @end
 
-@implementation BottomBar
+@implementation EditingBar
 
 - (id)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton
 {

@@ -39,7 +39,7 @@
         
         _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweetID:tweetID];
         [self addChildViewController:_tweetDetailsVC];
-        [self.bottomBar.sendButton addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
+        [self.editingBar.sendButton addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
         
         [self setUpBlock];
     }
@@ -54,11 +54,11 @@
     _tweetDetailsVC.didCommentSelected = ^(NSString *authorName) {
         NSString *stringToInsert = [NSString stringWithFormat:@"@%@ ", authorName];
         
-        [weakSelf.bottomBar.editView replaceRange:weakSelf.bottomBar.editView.selectedTextRange withText:stringToInsert];
+        [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:stringToInsert];
     };
     
     _tweetDetailsVC.didScroll = ^ {
-        [weakSelf.bottomBar.editView resignFirstResponder];
+        [weakSelf.editingBar.editView resignFirstResponder];
     };
 }
 
@@ -79,10 +79,10 @@
     [self.view addSubview:_tweetDetailsVC.view];
     
     for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = @{@"tableView": _tweetDetailsVC.view, @"bottomBar": self.bottomBar};
+    NSDictionary *views = @{@"tableView": _tweetDetailsVC.view, @"editingBar": self.editingBar};
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[tableView]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView][bottomBar]"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView][editingBar]"
                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                       metrics:nil views:views]];
 }
@@ -101,7 +101,7 @@
                     @"catalog": @(3),
                     @"id": @(_tweetID),
                     @"uid": @([Config getOwnID]),
-                    @"content": [Utils convertRichTextToRawText:self.bottomBar.editView],
+                    @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
                     @"isPostToMyZone": @(0)
                     }
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
@@ -113,7 +113,7 @@
               
               switch (errorCode) {
                   case 1: {
-                      self.bottomBar.editView.text = @"";
+                      self.editingBar.editView.text = @"";
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                       HUD.labelText = @"评论发表成功";
                       break;

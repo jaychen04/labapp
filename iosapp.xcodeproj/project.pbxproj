@@ -151,7 +151,7 @@
 		3860396A1A0A3532007C9B88 /* portrait_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 386039681A0A3532007C9B88 /* portrait_loading@2x.png */; };
 		386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386BEA411A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m */; };
 		386BEA451A66500400C078A8 /* TweetDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 386BEA441A66500400C078A8 /* TweetDetailsCell.m */; };
-		3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC1B1A08DB8E000D2894 /* BottomBar.m */; };
+		3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC1B1A08DB8E000D2894 /* EditingBar.m */; };
 		3874EC281A08E957000D2894 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC271A08E957000D2894 /* LoginViewController.m */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
@@ -433,8 +433,8 @@
 		386BEA411A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsWithBottomBarViewController.m; sourceTree = "<group>"; };
 		386BEA431A66500400C078A8 /* TweetDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailsCell.h; sourceTree = "<group>"; };
 		386BEA441A66500400C078A8 /* TweetDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsCell.m; sourceTree = "<group>"; };
-		3874EC1A1A08DB8E000D2894 /* BottomBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomBar.h; sourceTree = "<group>"; };
-		3874EC1B1A08DB8E000D2894 /* BottomBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomBar.m; sourceTree = "<group>"; };
+		3874EC1A1A08DB8E000D2894 /* EditingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditingBar.h; sourceTree = "<group>"; };
+		3874EC1B1A08DB8E000D2894 /* EditingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditingBar.m; sourceTree = "<group>"; };
 		3874EC261A08E957000D2894 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		3874EC271A08E957000D2894 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		387794231A0B60C700C41C78 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
@@ -761,8 +761,8 @@
 		382A93D51A25792800AAAFEA /* BottomBar */ = {
 			isa = PBXGroup;
 			children = (
-				3874EC1A1A08DB8E000D2894 /* BottomBar.h */,
-				3874EC1B1A08DB8E000D2894 /* BottomBar.m */,
+				3874EC1A1A08DB8E000D2894 /* EditingBar.h */,
+				3874EC1B1A08DB8E000D2894 /* EditingBar.m */,
 				38E067421A19AC4900D41976 /* GrowingTextView.h */,
 				38E067431A19AC4900D41976 /* GrowingTextView.m */,
 			);
@@ -1550,7 +1550,7 @@
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
 				386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */,
-				3874EC1C1A08DB8E000D2894 /* BottomBar.m in Sources */,
+				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
 				38BDC5401A4D5F84006080F7 /* PersonSearchViewController.m in Sources */,
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
 				38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */,

@@ -7,7 +7,7 @@
 //
 
 #import "BottomBarViewController.h"
-#import "BottomBar.h"
+#import "EditingBar.h"
 #import "GrowingTextView.h"
 #import "EmojiPageVC.h"
 
@@ -23,7 +23,7 @@
 {
     self = [super init];
     if (self) {
-        _bottomBar = [[BottomBar alloc] initWithModeSwitchButton:hasAModeSwitchButton];
+        _editingBar = [[EditingBar alloc] initWithModeSwitchButton:hasAModeSwitchButton];
     }
     
     return self;
@@ -47,7 +47,7 @@
 - (void)setup
 {
     [self addBottomBar];
-    _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_bottomBar.editView];
+    _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_editingBar.editView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -58,38 +58,38 @@
 
 - (void)addBottomBar
 {
-    _bottomBar.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_bottomBar];
+    _editingBar.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:_editingBar];
     
-    _bottomBarYConstraint = [NSLayoutConstraint constraintWithItem:self.view    attribute:NSLayoutAttributeBottom   relatedBy:NSLayoutRelationEqual
-                                                            toItem:_bottomBar   attribute:NSLayoutAttributeBottom   multiplier:1.0 constant:0];
+    _editingBarYConstraint = [NSLayoutConstraint constraintWithItem:self.view    attribute:NSLayoutAttributeBottom   relatedBy:NSLayoutRelationEqual
+                                                            toItem:_editingBar   attribute:NSLayoutAttributeBottom   multiplier:1.0 constant:0];
     
-    _bottomBarHeightConstraint = [NSLayoutConstraint constraintWithItem:_bottomBar attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
+    _editingBarHeightConstraint = [NSLayoutConstraint constraintWithItem:_editingBar attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
                                                                  toItem:nil        attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:[self minimumInputbarHeight]];
     
-    [self.view addConstraint:_bottomBarYConstraint];
-    [self.view addConstraint:_bottomBarHeightConstraint];
+    [self.view addConstraint:_editingBarYConstraint];
+    [self.view addConstraint:_editingBarHeightConstraint];
     
     
-    [_bottomBar.inputViewButton addTarget:self action:@selector(switchInputView) forControlEvents:UIControlEventTouchUpInside];
+    [_editingBar.inputViewButton addTarget:self action:@selector(switchInputView) forControlEvents:UIControlEventTouchUpInside];
 }
 
 
 - (void)switchInputView
 {
-    if (_bottomBar.editView.inputView == self.emojiPageVC.view) {
-        [_bottomBar.editView becomeFirstResponder];
+    if (_editingBar.editView.inputView == self.emojiPageVC.view) {
+        [_editingBar.editView becomeFirstResponder];
         
-        [_bottomBar.inputViewButton setImage:[UIImage imageNamed:@"compose_toolbar_emoji_normal"] forState:UIControlStateNormal];
-        _bottomBar.editView.inputView = nil;
-        _bottomBar.editView.font = [UIFont systemFontOfSize:18];
-        [_bottomBar.editView reloadInputViews];
+        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"compose_toolbar_emoji_normal"] forState:UIControlStateNormal];
+        _editingBar.editView.inputView = nil;
+        _editingBar.editView.font = [UIFont systemFontOfSize:18];
+        [_editingBar.editView reloadInputViews];
     } else {
-        [_bottomBar.editView becomeFirstResponder];
+        [_editingBar.editView becomeFirstResponder];
         
-        [_bottomBar.inputViewButton setImage:[UIImage imageNamed:@"compose_toolbar_keyboard_normal"] forState:UIControlStateNormal];
-        _bottomBar.editView.inputView = _emojiPageVC.view;
-        [_bottomBar.editView reloadInputViews];
+        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"compose_toolbar_keyboard_normal"] forState:UIControlStateNormal];
+        _editingBar.editView.inputView = _emojiPageVC.view;
+        [_editingBar.editView reloadInputViews];
         
         [self setBottomBarHeight:216];
     }
@@ -101,17 +101,17 @@
 
 - (GrowingTextView *)textView
 {
-    return _bottomBar.editView;
+    return _editingBar.editView;
 }
 
 - (CGFloat)minimumInputbarHeight
 {
-    return _bottomBar.intrinsicContentSize.height;
+    return _editingBar.intrinsicContentSize.height;
 }
 
 - (CGFloat)deltaInputbarHeight
 {
-    return _bottomBar.intrinsicContentSize.height - self.textView.font.lineHeight;
+    return _editingBar.intrinsicContentSize.height - self.textView.font.lineHeight;
 }
 
 - (CGFloat)barHeightForLines:(NSUInteger)numberOfLines
@@ -144,7 +144,7 @@
 
 - (void)setBottomBarHeight:(CGFloat)height
 {
-    _bottomBarYConstraint.constant = height;
+    _editingBarYConstraint.constant = height;
     [self.view setNeedsUpdateConstraints];
     
     [UIView animateWithDuration:0.25 animations:^{
@@ -188,8 +188,8 @@
 {
     CGFloat inputbarHeight = [self appropriateInputbarHeight];
     
-    if (inputbarHeight != self.bottomBarHeightConstraint.constant) {
-        self.bottomBarHeightConstraint.constant = inputbarHeight;
+    if (inputbarHeight != self.editingBarHeightConstraint.constant) {
+        self.editingBarHeightConstraint.constant = inputbarHeight;
         
         [self.view layoutIfNeeded];
     }
