@@ -21,6 +21,7 @@
 #import "TweetEditingVC.h"
 #import "UIView+Util.h"
 #import "PersonSearchViewController.h"
+#import "ScanViewController.h"
 
 
 @interface OSCTabBarController ()
@@ -262,7 +263,12 @@
         case 1: {break;}
         case 2: {break;}
         case 3: {break;}
-        case 4: {break;}
+        case 4: {
+            ScanViewController *scanVC = [ScanViewController new];
+            UINavigationController *scanNav = [[UINavigationController alloc] initWithRootViewController:scanVC];
+            [self.selectedViewController presentViewController:scanNav animated:NO completion:nil];
+            break;
+        }
         case 5: {
             PersonSearchViewController *personSearchVC = [PersonSearchViewController new];
             UINavigationController *personSearchNav = [[UINavigationController alloc] initWithRootViewController:personSearchVC];

@@ -156,6 +156,7 @@
 		3838D1991A6D046B00CC7913 /* toolbar-star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D18D1A6D046B00CC7913 /* toolbar-star@2x.png */; };
 		3838D19A1A6D046B00CC7913 /* toolbar-starred.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D18E1A6D046B00CC7913 /* toolbar-starred.png */; };
 		3838D19B1A6D046B00CC7913 /* toolbar-starred@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D18F1A6D046B00CC7913 /* toolbar-starred@2x.png */; };
+		3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D19E1A6DFE9000CC7913 /* ScanViewController.m */; };
 		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1F1A1341BB008E2CFA /* ImageViewerController.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
@@ -446,6 +447,8 @@
 		3838D18D1A6D046B00CC7913 /* toolbar-star@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-star@2x.png"; sourceTree = "<group>"; };
 		3838D18E1A6D046B00CC7913 /* toolbar-starred.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-starred.png"; sourceTree = "<group>"; };
 		3838D18F1A6D046B00CC7913 /* toolbar-starred@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-starred@2x.png"; sourceTree = "<group>"; };
+		3838D19D1A6DFE9000CC7913 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
+		3838D19E1A6DFE9000CC7913 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
 		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		38590C1E1A1341BB008E2CFA /* ImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerController.h; sourceTree = "<group>"; };
@@ -923,6 +926,7 @@
 				382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */,
 				382A94B31A28655900AAAFEA /* 好友圈 */,
 				38BC598C1A5D20AC00F3C4D2 /* 找人 */,
+				3838D19C1A6DFE6400CC7913 /* 扫一扫 */,
 			);
 			name = Discover;
 			sourceTree = "<group>";
@@ -966,6 +970,15 @@
 				3838D18F1A6D046B00CC7913 /* toolbar-starred@2x.png */,
 			);
 			path = operationbar;
+			sourceTree = "<group>";
+		};
+		3838D19C1A6DFE6400CC7913 /* 扫一扫 */ = {
+			isa = PBXGroup;
+			children = (
+				3838D19D1A6DFE9000CC7913 /* ScanViewController.h */,
+				3838D19E1A6DFE9000CC7913 /* ScanViewController.m */,
+			);
+			name = "扫一扫";
 			sourceTree = "<group>";
 		};
 		386039661A0A34F5007C9B88 /* Resource */ = {
@@ -1570,6 +1583,7 @@
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				3801789C1A2C1A7300922858 /* EventCell.m in Sources */,
+				3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,

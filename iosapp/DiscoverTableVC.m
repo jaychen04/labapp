@@ -10,6 +10,7 @@
 #import "UIColor+Util.h"
 #import "EventsViewController.h"
 #import "PersonSearchViewController.h"
+#import "ScanViewController.h"
 
 @interface DiscoverTableVC ()
 
@@ -103,7 +104,16 @@
             break;
         case 1:
             if (indexPath.row == 0) {
-                [self.navigationController pushViewController:[PersonSearchViewController new] animated:YES];
+                ScanViewController *scanVC = [ScanViewController new];
+                UINavigationController *scanNav = [[UINavigationController alloc] initWithRootViewController:scanVC];
+                [self.navigationController presentViewController:scanNav animated:NO completion:nil];
+                break;
+            } else if (indexPath.row == 1) {
+                break;
+            }
+        case 2:
+            if (indexPath.row == 0) {
+                [self.navigationController pushViewController:[ScanViewController new] animated:YES];
                 break;
             }
             
