@@ -310,6 +310,37 @@
     return HUD;
 }
 
++ (UIImage *)createQRCodeFromString:(NSString *)string
+{
+    NSData *stringData = [string dataUsingEncoding:NSUTF8StringEncoding];
+    
+    CIFilter *QRFilter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    // Set the message content and error-correction level
+    [QRFilter setValue:stringData forKey:@"inputMessage"];
+    [QRFilter setValue:@"M" forKey:@"inputCorrectionLevel"];
+    
+    CGFloat scale = 5;
+    CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:QRFilter.outputImage fromRect:QRFilter.outputImage.extent];
+    
+    //Scale the image usign CoreGraphics
+    CGFloat width = QRFilter.outputImage.extent.size.width * scale;
+    UIGraphicsBeginImageContext(CGSizeMake(width, width));
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetInterpolationQuality(context, kCGInterpolationNone);
+    CGContextDrawImage(context, CGContextGetClipBoundingBox(context), cgImage);
+    UIImage *preImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    //Cleaning up
+    UIGraphicsEndImageContext();
+    CGImageRelease(cgImage);
+    
+    // Rotate the image
+    UIImage *QRImage = [UIImage imageWithCGImage:preImage.CGImage
+                                           scale:preImage.scale
+                                     orientation:UIImageOrientationDownMirrored];
+    return QRImage;
+}
+
 
 
 @end

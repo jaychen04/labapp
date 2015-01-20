@@ -34,6 +34,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent;
 
 + (MBProgressHUD *)createHUDInWindowOfView:(UIView *)view;
++ (UIImage *)createQRCodeFromString:(NSString *)string;
 
 
 @end

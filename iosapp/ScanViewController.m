@@ -75,18 +75,18 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
 {
-    NSString *stringValue;
+    NSString *message;
     
     if (metadataObjects.count > 0) {
         AVMetadataMachineReadableCodeObject *metadataObject = metadataObjects[0];
         
-        stringValue = metadataObject.stringValue;
+        message = metadataObject.stringValue;
     }
     
     [_session stopRunning];
     
     [[[UIAlertView alloc] initWithTitle:nil
-                                message:stringValue
+                                message:message
                                delegate:self
                       cancelButtonTitle:@"确定"
                       otherButtonTitles:nil,nil]
