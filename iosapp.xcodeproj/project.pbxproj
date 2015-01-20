@@ -1237,10 +1237,10 @@
 		38BD7D6F19FF7F9A003ABB80 /* Comments */ = {
 			isa = PBXGroup;
 			children = (
-				38BD7D7119FF7FD0003ABB80 /* CommentCell.m */,
 				38BD7D6C19FF7F94003ABB80 /* CommentsViewController.h */,
 				38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */,
 				38BD7D7019FF7FD0003ABB80 /* CommentCell.h */,
+				38BD7D7119FF7FD0003ABB80 /* CommentCell.m */,
 			);
 			name = Comments;
 			sourceTree = "<group>";

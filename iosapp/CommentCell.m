@@ -60,27 +60,16 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _contentLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _contentLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]-8-[_contentLabel]-8-|"
-                                                                             options:NSLayoutFormatAlignAllLeft
-                                                                             metrics:nil
-                                                                               views:viewsDict]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-5-[_authorLabel]-8-|"
-                                                                             options:0
-                                                                             metrics:nil
-                                                                               views:viewsDict]];
+                                                                             options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_contentLabel]-8-|"
-                                                                            options:0
-                                                                            metrics:nil
-                                                                              views:viewsDict]];
-    
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_authorLabel]-2-[_timeLabel]"
-                                                                             options:NSLayoutFormatAlignAllLeft
-                                                                             metrics:nil
-                                                                               views:viewsDict]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_authorLabel]-2-[_timeLabel]-5-[_contentLabel]"
+                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                             metrics:nil views:views]];
 }
 
 

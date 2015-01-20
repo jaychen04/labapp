@@ -124,9 +124,9 @@ static NSString *kCommentCellID = @"CommentCell";
         OSCComment *comment = self.objects[indexPath.row];
         [self.label setAttributedText:[Utils emojiStringFromRawString:comment.content]];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 52, MAXFLOAT)];
+        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)];
         
-        return size.height + 64;
+        return size.height + 52;
     } else {
         return 60;
     }
