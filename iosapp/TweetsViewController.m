@@ -69,6 +69,20 @@
     return self;
 }
 
+- (instancetype)initWIthSoftwareID:(int64_t)softwareID
+{
+    self = [super init];
+    if (self) {
+        self.generateURL = ^NSString * (NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?project=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_TWEET_LIST, softwareID, (unsigned long)page, OSCAPI_SUFFIX];
+        };
+        
+        self.objClass = [OSCTweet class];
+    }
+    
+    return self;
+}
+
 - (void)setBlockAndClass
 {
     __weak TweetsViewController *weakSelf = self;

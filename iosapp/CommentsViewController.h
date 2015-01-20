@@ -14,6 +14,9 @@ typedef NS_ENUM(int, CommentType)
     CommentTypePost,
     CommentTypeTweet,
     CommentTypeMessageCenter,
+    
+    CommentTypeBlog,
+    CommentTypeSoftware,
 };
 
 @interface CommentsViewController : OSCObjsViewController

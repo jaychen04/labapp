@@ -35,7 +35,15 @@ static NSString *kCommentCellID = @"CommentCell";
         _commentType = commentType;
         
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?catalog=%d&id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST, commentType, objectID, (unsigned long)page, OSCAPI_SUFFIX];
+            NSString *URL;
+            if (commentType <= 4) {
+                URL = [NSString stringWithFormat:@"%@%@?catalog=%d&id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST, commentType, objectID, (unsigned long)page, OSCAPI_SUFFIX];
+            } else if (commentType == CommentTypeBlog) {
+                URL = [NSString stringWithFormat:@"%@%@?id=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENTS_LIST, objectID, (unsigned long)page, OSCAPI_SUFFIX];
+            } else if (commentType == CommentTypeSoftware) {
+                URL = [NSString stringWithFormat:@"%@%@?project=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_TWEET_LIST, objectID, (unsigned long)page, OSCAPI_SUFFIX];
+            }
+            return URL;
         };
         
         self.objClass = [OSCComment class];
