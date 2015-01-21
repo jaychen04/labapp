@@ -24,13 +24,6 @@
         _pubDate = [[[xml firstChildWithTag:@"pubDate"] stringValue] copy];
         _commentCount = [[[xml firstChildWithTag:@"commentCount"] numberValue] intValue];
         _url = [NSURL URLWithString:[[[xml firstChildWithTag:@"url"] stringValue] copy]];
-        
-        ONOXMLElement *newsTypeXML = [xml firstChildWithTag:@"newstype"];
-        _newsType = @{
-                      @"type": [[[newsTypeXML firstChildWithTag:@"type"] stringValue] copy],
-                      @"authorid2": @([[[newsTypeXML firstChildWithTag:@"authorid2"] numberValue] longLongValue]),
-                      @"eventurl": [NSURL URLWithString:[[[newsTypeXML firstChildWithTag:@"eventurl"] stringValue] copy]]
-                      };
     }
     
     return self;

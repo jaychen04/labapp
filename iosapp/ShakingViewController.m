@@ -9,6 +9,7 @@
 #import "ShakingViewController.h"
 #import "RandomMessageCell.h"
 #import <CoreMotion/CoreMotion.h>
+#import "Utils.h"
 
 static const double accelerationThreshold = 2.0f;
 
@@ -93,7 +94,7 @@ static const double accelerationThreshold = 2.0f;
     imageDown.contentMode = UIViewContentModeScaleAspectFill;
     [_layer addSubview:imageDown];
     
-#if 0
+#if 1
     _cell = [RandomMessageCell new];
     UITapGestureRecognizer *tapGestureRacognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCell)];
     [_cell addGestureRecognizer:tapGestureRacognizer];
@@ -107,7 +108,7 @@ static const double accelerationThreshold = 2.0f;
     
     for (UIView *view in _layer.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_layer, imageUp, imageDown);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_layer, imageUp, imageDown, _cell);
     
     // layer
     
@@ -131,10 +132,10 @@ static const double accelerationThreshold = 2.0f;
                                                                    options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                    metrics:nil views:views]];
     
-    // projectCell
+    // cell
     
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cell(>=60)]|" options:0 metrics:nil views:views]];
-    //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_cell]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cell(>=60)]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_cell]|" options:0 metrics:nil views:views]];
 }
 
 -(void)startAccelerometer

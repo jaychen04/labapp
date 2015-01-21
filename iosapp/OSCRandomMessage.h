@@ -20,6 +20,5 @@
 @property (nonatomic, readonly, copy) NSString *pubDate;
 @property (nonatomic, readonly, assign) int commentCount;
 @property (nonatomic, readonly, strong) NSURL *url;
-@property (nonatomic, readonly, strong) NSDictionary *newsType;
 
 @end
