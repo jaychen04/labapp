@@ -160,6 +160,9 @@
 		3838D1A61A6E703F00CC7913 /* OSCRandomMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */; };
 		3838D1A91A6F455600CC7913 /* ShakingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D1A81A6F455600CC7913 /* ShakingViewController.m */; };
 		3838D1AD1A6F463E00CC7913 /* RandomMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D1AC1A6F463E00CC7913 /* RandomMessageCell.m */; };
+		3838D1B11A6F4EB100CC7913 /* redPotato.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D1AE1A6F4EB100CC7913 /* redPotato.png */; };
+		3838D1B21A6F4EB100CC7913 /* shake_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D1AF1A6F4EB100CC7913 /* shake_down.png */; };
+		3838D1B31A6F4EB100CC7913 /* shake_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D1B01A6F4EB100CC7913 /* shake_up.png */; };
 		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1F1A1341BB008E2CFA /* ImageViewerController.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
@@ -458,6 +461,9 @@
 		3838D1A81A6F455600CC7913 /* ShakingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakingViewController.m; sourceTree = "<group>"; };
 		3838D1AB1A6F463E00CC7913 /* RandomMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomMessageCell.h; sourceTree = "<group>"; };
 		3838D1AC1A6F463E00CC7913 /* RandomMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomMessageCell.m; sourceTree = "<group>"; };
+		3838D1AE1A6F4EB100CC7913 /* redPotato.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redPotato.png; sourceTree = "<group>"; };
+		3838D1AF1A6F4EB100CC7913 /* shake_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shake_down.png; sourceTree = "<group>"; };
+		3838D1B01A6F4EB100CC7913 /* shake_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shake_up.png; sourceTree = "<group>"; };
 		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
 		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		38590C1E1A1341BB008E2CFA /* ImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerController.h; sourceTree = "<group>"; };
@@ -1007,6 +1013,9 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				3838D1AE1A6F4EB100CC7913 /* redPotato.png */,
+				3838D1AF1A6F4EB100CC7913 /* shake_down.png */,
+				3838D1B01A6F4EB100CC7913 /* shake_up.png */,
 				3838D1831A6D046B00CC7913 /* operationbar */,
 				38BC59951A5D406300F3C4D2 /* option buttons */,
 				38BC59731A5A992200F3C4D2 /* TabBar icons */,
@@ -1387,6 +1396,7 @@
 				38A9A9D01A5FD98E00B28B4F /* tweetEditing@2x.png in Resources */,
 				382A94A51A26D27400AAAFEA /* 098@2x.png in Resources */,
 				38BC598B1A5A992200F3C4D2 /* tweet@3x.png in Resources */,
+				3838D1B21A6F4EB100CC7913 /* shake_down.png in Resources */,
 				382A94701A26D27400AAAFEA /* 044@2x.png in Resources */,
 				3838D1971A6D046B00CC7913 /* toolbar-showComments@2x.png in Resources */,
 				382A94901A26D27400AAAFEA /* 077@2x.png in Resources */,
@@ -1487,6 +1497,7 @@
 				3860396A1A0A3532007C9B88 /* portrait_loading@2x.png in Resources */,
 				3838D19A1A6D046B00CC7913 /* toolbar-starred.png in Resources */,
 				382A94481A26D27400AAAFEA /* 004@2x.png in Resources */,
+				3838D1B11A6F4EB100CC7913 /* redPotato.png in Resources */,
 				38BC59B41A5D406300F3C4D2 /* sound.png in Resources */,
 				382A94471A26D27400AAAFEA /* 003@2x.png in Resources */,
 				382A949F1A26D27400AAAFEA /* 092@2x.png in Resources */,
@@ -1518,6 +1529,7 @@
 				382A94851A26D27400AAAFEA /* 065@2x.png in Resources */,
 				38BC59AC1A5D406300F3C4D2 /* picture@2x.png in Resources */,
 				382A945C1A26D27400AAAFEA /* 024@2x.png in Resources */,
+				3838D1B31A6F4EB100CC7913 /* shake_up.png in Resources */,
 				38BC59B51A5D406300F3C4D2 /* sound@2x.png in Resources */,
 				382A94AB1A26D27400AAAFEA /* 99@2x.png in Resources */,
 				382A94821A26D27400AAAFEA /* 062@2x.png in Resources */,

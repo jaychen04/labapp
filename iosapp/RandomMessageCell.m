@@ -15,6 +15,9 @@
 {
     self = [super init];
     if (self) {
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        self.backgroundColor = [UIColor themeColor];
+        
         [self setUpSubViews];
         [self setLayout];
         
@@ -62,11 +65,14 @@
     for (UIView *view in self.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _titleLabel, _contentLabel, _authorLabel, _commentCount, _timeLabel);
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-5-[_titlelabel]-5-|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-5-[_titleLabel]-5-|" options:0 metrics:nil views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_titleLabel]-2-[_contentLabel]-5-[_authorLabel]-5-|"
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_titleLabel]-2-[_contentLabel]"
+                                                                 options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_authorLabel]-5-|"
                                                                  options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-3-[_commentCount]-3-[_timeLabel]"
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-3-[_commentCount]-3-[_timeLabel]-5-|"
                                                                  options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 
