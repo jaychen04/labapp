@@ -158,6 +158,8 @@
 		3838D19B1A6D046B00CC7913 /* toolbar-starred@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D18F1A6D046B00CC7913 /* toolbar-starred@2x.png */; };
 		3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D19E1A6DFE9000CC7913 /* ScanViewController.m */; };
 		3838D1A61A6E703F00CC7913 /* OSCRandomMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */; };
+		3838D1A91A6F455600CC7913 /* ShakingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D1A81A6F455600CC7913 /* ShakingViewController.m */; };
+		3838D1AD1A6F463E00CC7913 /* RandomMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D1AC1A6F463E00CC7913 /* RandomMessageCell.m */; };
 		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1F1A1341BB008E2CFA /* ImageViewerController.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
@@ -452,6 +454,10 @@
 		3838D19E1A6DFE9000CC7913 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		3838D1A41A6E703F00CC7913 /* OSCRandomMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCRandomMessage.h; sourceTree = "<group>"; };
 		3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCRandomMessage.m; sourceTree = "<group>"; };
+		3838D1A71A6F455600CC7913 /* ShakingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShakingViewController.h; sourceTree = "<group>"; };
+		3838D1A81A6F455600CC7913 /* ShakingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShakingViewController.m; sourceTree = "<group>"; };
+		3838D1AB1A6F463E00CC7913 /* RandomMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomMessageCell.h; sourceTree = "<group>"; };
+		3838D1AC1A6F463E00CC7913 /* RandomMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomMessageCell.m; sourceTree = "<group>"; };
 		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
 		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		38590C1E1A1341BB008E2CFA /* ImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerController.h; sourceTree = "<group>"; };
@@ -932,6 +938,7 @@
 				382A94B31A28655900AAAFEA /* 好友圈 */,
 				38BC598C1A5D20AC00F3C4D2 /* 找人 */,
 				3838D19C1A6DFE6400CC7913 /* 扫一扫 */,
+				3838D1AA1A6F455E00CC7913 /* 摇一摇 */,
 			);
 			name = Discover;
 			sourceTree = "<group>";
@@ -984,6 +991,17 @@
 				3838D19E1A6DFE9000CC7913 /* ScanViewController.m */,
 			);
 			name = "扫一扫";
+			sourceTree = "<group>";
+		};
+		3838D1AA1A6F455E00CC7913 /* 摇一摇 */ = {
+			isa = PBXGroup;
+			children = (
+				3838D1A71A6F455600CC7913 /* ShakingViewController.h */,
+				3838D1A81A6F455600CC7913 /* ShakingViewController.m */,
+				3838D1AB1A6F463E00CC7913 /* RandomMessageCell.h */,
+				3838D1AC1A6F463E00CC7913 /* RandomMessageCell.m */,
+			);
+			name = "摇一摇";
 			sourceTree = "<group>";
 		};
 		386039661A0A34F5007C9B88 /* Resource */ = {
@@ -1591,6 +1609,7 @@
 				3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
+				3838D1AD1A6F463E00CC7913 /* RandomMessageCell.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
 				38BD3D0D1A36D19400682D1F /* SoftwareCell.m in Sources */,
 				382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */,
@@ -1599,6 +1618,7 @@
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,
+				3838D1A91A6F455600CC7913 /* ShakingViewController.m in Sources */,
 				38996A521A02642C0025AA52 /* OSCBlog.m in Sources */,
 				38BD7D6E19FF7F94003ABB80 /* CommentsViewController.m in Sources */,
 				38BD3D0A1A36AA9700682D1F /* SoftwareListVC.m in Sources */,
