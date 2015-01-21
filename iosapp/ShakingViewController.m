@@ -8,11 +8,17 @@
 
 #import "ShakingViewController.h"
 #import "RandomMessageCell.h"
+#import <CoreMotion/CoreMotion.h>
+
+static const double accelerationThreshold = 2.0f;
 
 @interface ShakingViewController ()
 
 @property (nonatomic, strong) UIView *layer;
 @property (nonatomic, strong) RandomMessageCell *cell;
+@property CMMotionManager *motionManager;
+@property NSOperationQueue *operationQueue;
+@property (nonatomic, assign) BOOL isShaking;
 
 @end
 
@@ -28,6 +34,7 @@
     return self;
 }
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -35,11 +42,41 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self setLayout];
+    
+    _operationQueue = [NSOperationQueue new];
+    _motionManager = [CMMotionManager new];
+    _motionManager.accelerometerUpdateInterval = 0.1;
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self startAccelerometer];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receiveNotification:)
+                                                 name:UIApplicationDidEnterBackgroundNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receiveNotification:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [_motionManager stopAccelerometerUpdates];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    
+    [super viewDidDisappear:animated];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)setLayout
@@ -74,7 +111,7 @@
     
     // layer
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-80-[_layer(195)]" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[_layer(195)]" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|->=50-[_layer(168.75)]->=50-|"
                                                                       options:NSLayoutFormatAlignAllCenterX
                                                                       metrics:nil views:views]];
@@ -98,6 +135,90 @@
     
     //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cell(>=60)]|" options:0 metrics:nil views:views]];
     //[self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_cell]|" options:0 metrics:nil views:views]];
+}
+
+-(void)startAccelerometer
+{
+    //以push的方式更新并在block中接收加速度
+    
+    [_motionManager startAccelerometerUpdatesToQueue:_operationQueue
+                                         withHandler:^(CMAccelerometerData *accelerometerData, NSError *error) {
+                                             [self outputAccelertionData:accelerometerData.acceleration];
+                                         }];
+}
+
+-(void)outputAccelertionData:(CMAcceleration)acceleration
+{
+    double accelerameter = sqrt(pow(acceleration.x, 2) + pow(acceleration.y, 2) + pow(acceleration.z, 2));
+    
+    if (accelerameter > accelerationThreshold) {
+        [_motionManager stopAccelerometerUpdates];
+        [_operationQueue cancelAllOperations];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (_isShaking) {return;}
+            _isShaking = YES;
+            
+            [self rotate:_layer];
+            [self startAccelerometer];
+#if 0
+            if ([Tools isNetworkExist]) {
+                [self requestProject];
+            } else {
+                [Tools toastNotification:@"网络连接失败，请检查网络设置" inView:self.view];
+            }
+#endif
+            _isShaking = NO;
+        });
+    }
+}
+
+-(void)receiveNotification:(NSNotification *)notification
+{
+    if ([notification.name isEqualToString:UIApplicationDidEnterBackgroundNotification]) {
+        [_motionManager stopAccelerometerUpdates];
+    } else {
+        [self startAccelerometer];
+    }
+}
+
+- (void)rotate:(UIView *)view
+{
+    CABasicAnimation *rotate = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+    rotate.fromValue = [NSNumber numberWithFloat:0];
+    rotate.toValue = [NSNumber numberWithFloat:M_PI / 3.0];
+    rotate.duration = 0.2;
+    rotate.repeatCount = 2;
+    rotate.autoreverses = YES;
+    
+    [self setAnchorPoint:CGPointMake(-0.2, 0.9) forView:view];
+    //view.layer.anchorPoint = CGPointMake(0, 1);
+    
+    [view.layer addAnimation:rotate forKey:nil];
+}
+
+// 参考 http://stackoverflow.com/questions/1968017/changing-my-calayers-anchorpoint-moves-the-view
+
+-(void)setAnchorPoint:(CGPoint)anchorPoint forView:(UIView *)view
+{
+    CGPoint newPoint = CGPointMake(view.bounds.size.width * anchorPoint.x,
+                                   view.bounds.size.height * anchorPoint.y);
+    CGPoint oldPoint = CGPointMake(view.bounds.size.width * view.layer.anchorPoint.x,
+                                   view.bounds.size.height * view.layer.anchorPoint.y);
+    
+    newPoint = CGPointApplyAffineTransform(newPoint, view.transform);
+    oldPoint = CGPointApplyAffineTransform(oldPoint, view.transform);
+    
+    CGPoint position = view.layer.position;
+    
+    position.x -= oldPoint.x;
+    position.x += newPoint.x;
+    
+    position.y -= oldPoint.y;
+    position.y += newPoint.y;
+    
+    view.layer.position = position;
+    view.layer.anchorPoint = anchorPoint;
 }
 
 - (void)tapCell
