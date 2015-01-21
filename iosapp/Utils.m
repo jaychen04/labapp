@@ -328,17 +328,13 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetInterpolationQuality(context, kCGInterpolationNone);
     CGContextDrawImage(context, CGContextGetClipBoundingBox(context), cgImage);
-    UIImage *preImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     
     //Cleaning up
     UIGraphicsEndImageContext();
     CGImageRelease(cgImage);
     
-    // Rotate the image
-    UIImage *QRImage = [UIImage imageWithCGImage:preImage.CGImage
-                                           scale:preImage.scale
-                                     orientation:UIImageOrientationDownMirrored];
-    return QRImage;
+    return image;
 }
 
 

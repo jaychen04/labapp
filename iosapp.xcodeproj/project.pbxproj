@@ -157,6 +157,7 @@
 		3838D19A1A6D046B00CC7913 /* toolbar-starred.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D18E1A6D046B00CC7913 /* toolbar-starred.png */; };
 		3838D19B1A6D046B00CC7913 /* toolbar-starred@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3838D18F1A6D046B00CC7913 /* toolbar-starred@2x.png */; };
 		3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D19E1A6DFE9000CC7913 /* ScanViewController.m */; };
+		3838D1A61A6E703F00CC7913 /* OSCRandomMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */; };
 		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1F1A1341BB008E2CFA /* ImageViewerController.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
@@ -449,6 +450,8 @@
 		3838D18F1A6D046B00CC7913 /* toolbar-starred@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-starred@2x.png"; sourceTree = "<group>"; };
 		3838D19D1A6DFE9000CC7913 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
 		3838D19E1A6DFE9000CC7913 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
+		3838D1A41A6E703F00CC7913 /* OSCRandomMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCRandomMessage.h; sourceTree = "<group>"; };
+		3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCRandomMessage.m; sourceTree = "<group>"; };
 		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
 		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		38590C1E1A1341BB008E2CFA /* ImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerController.h; sourceTree = "<group>"; };
@@ -640,6 +643,8 @@
 				38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */,
 				38B0BF931A3AE79700A2FDB0 /* OSCMessage.h */,
 				38B0BF941A3AE79700A2FDB0 /* OSCMessage.m */,
+				3838D1A41A6E703F00CC7913 /* OSCRandomMessage.h */,
+				3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */,
 			);
 			name = "OSC API and Model";
 			sourceTree = "<group>";
@@ -1627,6 +1632,7 @@
 				38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */,
 				38B0BFA91A42AF5500A2FDB0 /* TweetEditingVC.m in Sources */,
 				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
+				3838D1A61A6E703F00CC7913 /* OSCRandomMessage.m in Sources */,
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
