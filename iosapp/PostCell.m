@@ -39,7 +39,7 @@
     
     self.authorLabel = [UILabel new];
     self.authorLabel.font = [UIFont systemFontOfSize:13];
-    self.authorLabel.textColor = [UIColor colorWithHex:0x0083FF];
+    self.authorLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:self.authorLabel];
     
     self.timeLabel = [UILabel new];

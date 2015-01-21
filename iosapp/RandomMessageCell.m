@@ -8,6 +8,8 @@
 
 #import "RandomMessageCell.h"
 #import "Utils.h"
+#import "OSCRandomMessage.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation RandomMessageCell
 
@@ -38,42 +40,58 @@
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFill;
     [_portrait setCornerRadius:5.0];
-    [self addSubview:_portrait];
+    [self.contentView addSubview:_portrait];
     
     _titleLabel = [UILabel new];
-    _titleLabel.font = [UIFont systemFontOfSize:14];
-    [self addSubview:_titleLabel];
+    _titleLabel.font = [UIFont systemFontOfSize:15];
+    _titleLabel.textColor = [UIColor nameColor];
+    [self.contentView addSubview:_titleLabel];
     
     _contentLabel = [UILabel new];
-    [self addSubview:_contentLabel];
+    _contentLabel.font = [UIFont systemFontOfSize:14];
+    [self.contentView addSubview:_contentLabel];
     
     _authorLabel = [UILabel new];
-    _authorLabel.font = [UIFont systemFontOfSize:12];
-    [self addSubview:_authorLabel];
+    _authorLabel.font = [UIFont systemFontOfSize:10];
+    _authorLabel.textColor = [UIColor grayColor];
+    [self.contentView addSubview:_authorLabel];
     
     _commentCount = [UILabel new];
-    _commentCount.font = [UIFont systemFontOfSize:12];
-    [self addSubview:_commentCount];
+    _commentCount.font = [UIFont systemFontOfSize:10];
+    _commentCount.textColor = [UIColor grayColor];
+    [self.contentView addSubview:_commentCount];
     
     _timeLabel = [UILabel new];
-    _timeLabel.font = [UIFont systemFontOfSize:12];
-    [self addSubview:_timeLabel];
+    _timeLabel.font = [UIFont systemFontOfSize:10];
+    _timeLabel.textColor = [UIColor grayColor];
+    [self.contentView addSubview:_timeLabel];
 }
 
 - (void)setLayout
 {
-    for (UIView *view in self.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+    for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _titleLabel, _contentLabel, _authorLabel, _commentCount, _timeLabel);
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-5-[_titleLabel]-5-|" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_titleLabel]-2-[_contentLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-5-[_titleLabel]-5-|" options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_titleLabel]-2-[_contentLabel]"
                                                                  options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                  metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_authorLabel]-5-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_authorLabel]-5-|"
                                                                  options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-3-[_commentCount]-3-[_timeLabel]-5-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-3-[_commentCount]-3-[_timeLabel]-5-|"
                                                                  options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+}
+
+
+- (void)setContentWithMessage:(OSCRandomMessage *)message
+{
+    [_portrait sd_setImageWithURL:message.portraitURL];
+    _titleLabel.text    = message.title;
+    _contentLabel.text  = message.detail;
+    _authorLabel.text   = [NSString stringWithFormat:@"作者:%@", message.author];
+    _commentCount.text  = [NSString stringWithFormat:@"评论:%d", message.commentCount];
+    _timeLabel.text     = [NSString stringWithFormat:@"时间:%@", message.pubDate];
 }
 
 

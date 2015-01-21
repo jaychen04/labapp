@@ -38,7 +38,7 @@
     
     self.authorLabel = [UILabel new];
     self.authorLabel.font = [UIFont boldSystemFontOfSize:14];
-    self.authorLabel.textColor = [UIColor colorWithHex:0x0083FF];
+    self.authorLabel.textColor = [UIColor nameColor];
     self.authorLabel.userInteractionEnabled = YES;
     [self.contentView addSubview:self.authorLabel];
     

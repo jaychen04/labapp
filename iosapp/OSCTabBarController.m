@@ -141,7 +141,7 @@
     _centerButton.frame = CGRectMake(origin.x - buttonSize.height/2, origin.y - buttonSize.height/2, buttonSize.height, buttonSize.height);
     [_centerButton setCornerRadius:buttonSize.height/2];
 #endif
-    [_centerButton setBackgroundColor:[UIColor orangeColor]];
+    [_centerButton setBackgroundColor:[UIColor colorWithHex:0x15C230]];
     
     
     [_centerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];

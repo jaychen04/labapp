@@ -48,7 +48,7 @@
     _authorLabel = [UILabel new];
     _authorLabel.font = [UIFont boldSystemFontOfSize:14];
     _authorLabel.userInteractionEnabled = YES;
-    _authorLabel.textColor = [UIColor colorWithHex:0x0083FF];
+    _authorLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:_authorLabel];
     
     _actionLabel = [UILabel new];

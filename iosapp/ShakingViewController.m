@@ -7,14 +7,22 @@
 //
 
 #import "ShakingViewController.h"
+#import "OSCRandomMessage.h"
 #import "RandomMessageCell.h"
-#import <CoreMotion/CoreMotion.h>
 #import "Utils.h"
+#import "OSCAPI.h"
+#import <CoreMotion/CoreMotion.h>
+#import <AFNetworking.h>
+#import <AFOnoResponseSerializer.h>
+#import <Ono.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <MBProgressHUD.h>
 
 static const double accelerationThreshold = 2.0f;
 
 @interface ShakingViewController ()
 
+@property (nonatomic, strong) OSCRandomMessage *randomMessage;
 @property (nonatomic, strong) UIView *layer;
 @property (nonatomic, strong) RandomMessageCell *cell;
 @property CMMotionManager *motionManager;
@@ -80,6 +88,10 @@ static const double accelerationThreshold = 2.0f;
     [super didReceiveMemoryWarning];
 }
 
+
+
+#pragma mark - 视图布局
+
 - (void)setLayout
 {
     _layer = [UIView new];
@@ -94,13 +106,11 @@ static const double accelerationThreshold = 2.0f;
     imageDown.contentMode = UIViewContentModeScaleAspectFill;
     [_layer addSubview:imageDown];
     
-#if 1
     _cell = [RandomMessageCell new];
     UITapGestureRecognizer *tapGestureRacognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCell)];
     [_cell addGestureRecognizer:tapGestureRacognizer];
-    [_cell setHidden:YES];
+    _cell.hidden = YES;
     [self.view addSubview:_cell];
-#endif
     
     for (UIView *view in self.view.subviews) {
         view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -134,9 +144,12 @@ static const double accelerationThreshold = 2.0f;
     
     // cell
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cell(>=60)]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_cell(>=80)]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_cell]|" options:0 metrics:nil views:views]];
 }
+
+
+#pragma mark - 监听动作
 
 -(void)startAccelerometer
 {
@@ -161,7 +174,7 @@ static const double accelerationThreshold = 2.0f;
             _isShaking = YES;
             
             [self rotate:_layer];
-            [self startAccelerometer];
+            [self getRandomMessage];
 #if 0
             if ([Tools isNetworkExist]) {
                 [self requestProject];
@@ -183,6 +196,10 @@ static const double accelerationThreshold = 2.0f;
     }
 }
 
+
+
+#pragma mark - 动画效果
+
 - (void)rotate:(UIView *)view
 {
     CABasicAnimation *rotate = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
@@ -193,7 +210,6 @@ static const double accelerationThreshold = 2.0f;
     rotate.autoreverses = YES;
     
     [self setAnchorPoint:CGPointMake(-0.2, 0.9) forView:view];
-    //view.layer.anchorPoint = CGPointMake(0, 1);
     
     [view.layer addAnimation:rotate forKey:nil];
 }
@@ -221,6 +237,40 @@ static const double accelerationThreshold = 2.0f;
     view.layer.position = position;
     view.layer.anchorPoint = anchorPoint;
 }
+
+
+
+#pragma mark - 获取数据
+
+- (void)getRandomMessage
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_RANDOM_MESSAGE]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+             _randomMessage = [[OSCRandomMessage alloc] initWithXML:responseObject.rootElement];
+             [_cell setContentWithMessage:_randomMessage];
+             _cell.hidden = NO;
+             
+             [self startAccelerometer];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+             HUD.mode = MBProgressHUDModeCustomView;
+             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+             HUD.labelText = @"网络异常，请检测网络";
+             
+             [HUD hide:YES afterDelay:2];
+             
+             [self startAccelerometer];
+         }];
+}
+
+
+
+
+#pragma mark - 响应点击事件
 
 - (void)tapCell
 {

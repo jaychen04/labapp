@@ -33,5 +33,10 @@
     return [UIColor colorWithRed:235.0/255 green:235.0/255 blue:243.0/255 alpha:1.0];
 }
 
++ (UIColor *)nameColor
+{
+    return [UIColor colorWithHex:0x087221];
+}
+
 
 @end

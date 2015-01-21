@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class OSCRandomMessage;
+
 @interface RandomMessageCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *portrait;
@@ -16,5 +18,7 @@
 @property (nonatomic, strong) UILabel *authorLabel;
 @property (nonatomic, strong) UILabel *commentCount;
 @property (nonatomic, strong) UILabel *timeLabel;
+
+- (void)setContentWithMessage:(OSCRandomMessage *)message;
 
 @end
