@@ -75,12 +75,12 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-5-[_titleLabel]-5-|" options:0 metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_titleLabel]-2-[_contentLabel]"
-                                                                 options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                 metrics:nil views:views]];
+                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                             metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_authorLabel]-5-|"
-                                                                 options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-3-[_commentCount]-3-[_timeLabel]-5-|"
-                                                                 options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+                                                                             options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-20-[_commentCount]-20-[_timeLabel]"
+                                                                             options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 
 
@@ -89,9 +89,9 @@
     [_portrait sd_setImageWithURL:message.portraitURL];
     _titleLabel.text    = message.title;
     _contentLabel.text  = message.detail;
-    _authorLabel.text   = [NSString stringWithFormat:@"作者:%@", message.author];
-    _commentCount.text  = [NSString stringWithFormat:@"评论:%d", message.commentCount];
-    _timeLabel.text     = [NSString stringWithFormat:@"时间:%@", message.pubDate];
+    _authorLabel.text   = [NSString stringWithFormat:@"作者：%@", message.author];
+    _commentCount.text  = [NSString stringWithFormat:@"评论：%d", message.commentCount];
+    _timeLabel.text     = [NSString stringWithFormat:@"时间：%@", [message.pubDate componentsSeparatedByString:@" "][0]];
 }
 
 
