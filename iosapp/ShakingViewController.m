@@ -53,12 +53,20 @@ static const double accelerationThreshold = 2.0f;
     
     self.navigationItem.title = @"摇一摇";
     self.view.backgroundColor = [UIColor whiteColor];
+    if (self.navigationController.viewControllers.count <= 1) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonClick)];
+    }
     
     [self setLayout];
     
     _operationQueue = [NSOperationQueue new];
     _motionManager = [CMMotionManager new];
     _motionManager.accelerometerUpdateInterval = 0.1;
+}
+
+- (void)backButtonClick
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated
