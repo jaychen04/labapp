@@ -10,7 +10,7 @@
 
 @interface SearchResultsViewController : OSCObjsViewController
 
-@property (nonatomic, readonly, copy) NSString *keyword;
+@property (nonatomic, copy) NSString *keyword;
 
 - (instancetype)initWithType:(NSString *)type;
 
