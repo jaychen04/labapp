@@ -133,7 +133,7 @@ static const double accelerationThreshold = 2.0f;
     
     // layer
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-100-[_layer(195)]" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_layer(195)]-200-|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|->=50-[_layer(168.75)]->=50-|"
                                                                       options:NSLayoutFormatAlignAllCenterX
                                                                       metrics:nil views:views]];
