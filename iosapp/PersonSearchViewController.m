@@ -50,7 +50,7 @@
     [super didReceiveMemoryWarning];
 }
 
--(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
     if (_searchBar.text.length == 0) {return;}
     
@@ -60,7 +60,7 @@
     [_resultsTableVC refresh];
 }
 
--(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
 {
     searchBar.text = @"";
     [searchBar resignFirstResponder];

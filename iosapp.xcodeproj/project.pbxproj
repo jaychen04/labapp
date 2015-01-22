@@ -168,6 +168,9 @@
 		386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039631A0A179A007C9B88 /* UserDetailsViewController.m */; };
 		386039691A0A3532007C9B88 /* portrait_loading.png in Resources */ = {isa = PBXBuildFile; fileRef = 386039671A0A3532007C9B88 /* portrait_loading.png */; };
 		3860396A1A0A3532007C9B88 /* portrait_loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 386039681A0A3532007C9B88 /* portrait_loading@2x.png */; };
+		386825A51A70A3B3008F5706 /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386825A41A70A3B3008F5706 /* SearchViewController.m */; };
+		386825A91A70D5E6008F5706 /* OSCSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 386825A81A70D5E6008F5706 /* OSCSearchResult.m */; };
+		386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386825AB1A70D721008F5706 /* SearchResultsViewController.m */; };
 		386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 386BEA411A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m */; };
 		386BEA451A66500400C078A8 /* TweetDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 386BEA441A66500400C078A8 /* TweetDetailsCell.m */; };
 		3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC1B1A08DB8E000D2894 /* EditingBar.m */; };
@@ -471,6 +474,12 @@
 		386039631A0A179A007C9B88 /* UserDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDetailsViewController.m; sourceTree = "<group>"; };
 		386039671A0A3532007C9B88 /* portrait_loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = portrait_loading.png; sourceTree = "<group>"; };
 		386039681A0A3532007C9B88 /* portrait_loading@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "portrait_loading@2x.png"; sourceTree = "<group>"; };
+		386825A31A70A3B3008F5706 /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		386825A41A70A3B3008F5706 /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		386825A71A70D5E6008F5706 /* OSCSearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSearchResult.h; sourceTree = "<group>"; };
+		386825A81A70D5E6008F5706 /* OSCSearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSearchResult.m; sourceTree = "<group>"; };
+		386825AA1A70D721008F5706 /* SearchResultsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchResultsViewController.h; sourceTree = "<group>"; };
+		386825AB1A70D721008F5706 /* SearchResultsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchResultsViewController.m; sourceTree = "<group>"; };
 		386BEA401A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailsWithBottomBarViewController.h; sourceTree = "<group>"; };
 		386BEA411A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsWithBottomBarViewController.m; sourceTree = "<group>"; };
 		386BEA431A66500400C078A8 /* TweetDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailsCell.h; sourceTree = "<group>"; };
@@ -654,6 +663,8 @@
 				38B0BF941A3AE79700A2FDB0 /* OSCMessage.m */,
 				3838D1A41A6E703F00CC7913 /* OSCRandomMessage.h */,
 				3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */,
+				386825A71A70D5E6008F5706 /* OSCSearchResult.h */,
+				386825A81A70D5E6008F5706 /* OSCSearchResult.m */,
 			);
 			name = "OSC API and Model";
 			sourceTree = "<group>";
@@ -684,13 +695,13 @@
 				00C9A73919EE8536000EA878 /* OSC API and Model */,
 				00EDF60C19EFC13500A5C842 /* Utils */,
 				3874EC221A08E8EA000D2894 /* User */,
-				382A94B21A28653200AAAFEA /* Discover */,
-				381EAB6019FE373100C1937C /* News */,
-				38996A561A0266F80025AA52 /* Blog */,
-				381EAB6A19FE7CA400C1937C /* Posts */,
-				38BD3CFA1A369A0500682D1F /* Software */,
-				38BD7D6F19FF7F9A003ABB80 /* Comments */,
-				00D6BD3219ECD73B00E8754E /* Tweets */,
+				382A94B21A28653200AAAFEA /* 发现 */,
+				381EAB6019FE373100C1937C /* 新闻 */,
+				38996A561A0266F80025AA52 /* 博客 */,
+				381EAB6A19FE7CA400C1937C /* 帖子 */,
+				38BD3CFA1A369A0500682D1F /* 软件 */,
+				38BD7D6F19FF7F9A003ABB80 /* 评论 */,
+				00D6BD3219ECD73B00E8754E /* 动弹 */,
 				00EDF60B19EFB42500A5C842 /* Main ViewControllers */,
 				386039661A0A34F5007C9B88 /* Resource */,
 				00D6BCE119EB673200E8754E /* AppDelegate.h */,
@@ -730,7 +741,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		00D6BD3219ECD73B00E8754E /* Tweets */ = {
+		00D6BD3219ECD73B00E8754E /* 动弹 */ = {
 			isa = PBXGroup;
 			children = (
 				00D6BD2F19ECD71B00E8754E /* TweetsViewController.h */,
@@ -739,7 +750,7 @@
 				00D6BD3419ECFD8E00E8754E /* TweetCell.m */,
 				38BD7D6B19FF7F31003ABB80 /* TweetDetails */,
 			);
-			name = Tweets;
+			name = "动弹";
 			sourceTree = "<group>";
 		};
 		00EDF60B19EFB42500A5C842 /* Main ViewControllers */ = {
@@ -747,6 +758,7 @@
 			children = (
 				381EAB6719FE3B9800C1937C /* OSCObjsViewController.h */,
 				381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */,
+				386825A61A70D5AC008F5706 /* 搜索 */,
 				3868259F1A709F77008F5706 /* DetailsViewController */,
 				00364FF519F5F93600871255 /* SwipeableViewController */,
 				38B0BF9D1A3EBBE500A2FDB0 /* MainTabBar */,
@@ -775,7 +787,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		381EAB6019FE373100C1937C /* News */ = {
+		381EAB6019FE373100C1937C /* 新闻 */ = {
 			isa = PBXGroup;
 			children = (
 				381EAB6119FE377700C1937C /* NewsViewController.h */,
@@ -783,10 +795,10 @@
 				381EAB6419FE379C00C1937C /* NewsCell.h */,
 				381EAB6519FE379C00C1937C /* NewsCell.m */,
 			);
-			name = News;
+			name = "新闻";
 			sourceTree = "<group>";
 		};
-		381EAB6A19FE7CA400C1937C /* Posts */ = {
+		381EAB6A19FE7CA400C1937C /* 帖子 */ = {
 			isa = PBXGroup;
 			children = (
 				381EAB6B19FE7CD600C1937C /* PostsViewController.h */,
@@ -794,7 +806,7 @@
 				381EAB6E19FE7D6700C1937C /* PostCell.h */,
 				381EAB6F19FE7D6700C1937C /* PostCell.m */,
 			);
-			name = Posts;
+			name = "帖子";
 			sourceTree = "<group>";
 		};
 		382A93D51A25792800AAAFEA /* BottomBar */ = {
@@ -928,7 +940,7 @@
 			path = emoji;
 			sourceTree = "<group>";
 		};
-		382A94B21A28653200AAAFEA /* Discover */ = {
+		382A94B21A28653200AAAFEA /* 发现 */ = {
 			isa = PBXGroup;
 			children = (
 				382A94B71A28659D00AAAFEA /* DiscoverTableVC.h */,
@@ -938,7 +950,7 @@
 				3838D19C1A6DFE6400CC7913 /* 扫一扫 */,
 				3838D1AA1A6F455E00CC7913 /* 摇一摇 */,
 			);
-			name = Discover;
+			name = "发现";
 			sourceTree = "<group>";
 		};
 		382A94B31A28655900AAAFEA /* 好友圈 */ = {
@@ -1038,6 +1050,17 @@
 			name = DetailsViewController;
 			sourceTree = "<group>";
 		};
+		386825A61A70D5AC008F5706 /* 搜索 */ = {
+			isa = PBXGroup;
+			children = (
+				386825A31A70A3B3008F5706 /* SearchViewController.h */,
+				386825A41A70A3B3008F5706 /* SearchViewController.m */,
+				386825AA1A70D721008F5706 /* SearchResultsViewController.h */,
+				386825AB1A70D721008F5706 /* SearchResultsViewController.m */,
+			);
+			name = "搜索";
+			sourceTree = "<group>";
+		};
 		3874EC221A08E8EA000D2894 /* User */ = {
 			isa = PBXGroup;
 			children = (
@@ -1050,7 +1073,7 @@
 			name = User;
 			sourceTree = "<group>";
 		};
-		38996A561A0266F80025AA52 /* Blog */ = {
+		38996A561A0266F80025AA52 /* 博客 */ = {
 			isa = PBXGroup;
 			children = (
 				38996A531A0266F10025AA52 /* BlogsViewController.h */,
@@ -1058,7 +1081,7 @@
 				38996A571A026D6A0025AA52 /* BlogCell.h */,
 				38996A581A026D6A0025AA52 /* BlogCell.m */,
 			);
-			name = Blog;
+			name = "博客";
 			sourceTree = "<group>";
 		};
 		38A1A1571A15BAB500AFD144 /* Catagory */ = {
@@ -1197,7 +1220,7 @@
 			path = "option buttons";
 			sourceTree = "<group>";
 		};
-		38BD3CFA1A369A0500682D1F /* Software */ = {
+		38BD3CFA1A369A0500682D1F /* 软件 */ = {
 			isa = PBXGroup;
 			children = (
 				38BD3CFE1A369B1600682D1F /* SoftwareCatalogVC.h */,
@@ -1207,7 +1230,7 @@
 				38BD3D0B1A36D19400682D1F /* SoftwareCell.h */,
 				38BD3D0C1A36D19400682D1F /* SoftwareCell.m */,
 			);
-			name = Software;
+			name = "软件";
 			sourceTree = "<group>";
 		};
 		38BD3D011A36A3B800682D1F /* Software */ = {
@@ -1282,7 +1305,7 @@
 			name = TweetDetails;
 			sourceTree = "<group>";
 		};
-		38BD7D6F19FF7F9A003ABB80 /* Comments */ = {
+		38BD7D6F19FF7F9A003ABB80 /* 评论 */ = {
 			isa = PBXGroup;
 			children = (
 				38BD7D6C19FF7F94003ABB80 /* CommentsViewController.h */,
@@ -1290,7 +1313,7 @@
 				38BD7D7019FF7FD0003ABB80 /* CommentCell.h */,
 				38BD7D7119FF7FD0003ABB80 /* CommentCell.m */,
 			);
-			name = Comments;
+			name = "评论";
 			sourceTree = "<group>";
 		};
 		4E7EF408DB16D07ABAD0FA2A /* Pods */ = {
@@ -1612,6 +1635,7 @@
 			files = (
 				386BEA451A66500400C078A8 /* TweetDetailsCell.m in Sources */,
 				38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */,
+				386825A51A70A3B3008F5706 /* SearchViewController.m in Sources */,
 				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
@@ -1645,6 +1669,7 @@
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
+				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,
 				38B0BF9C1A3E8F9C00A2FDB0 /* OSCTabBarController.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
 				38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */,
@@ -1679,6 +1704,7 @@
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
 				38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,
+				386825A91A70D5E6008F5706 /* OSCSearchResult.m in Sources */,
 				38BD3D041A36A3E500682D1F /* OSCSoftwareCatalog.m in Sources */,
 				381EAB6D19FE7CD600C1937C /* PostsViewController.m in Sources */,
 				00EDF60919EF77A100A5C842 /* OSCTweet.m in Sources */,
