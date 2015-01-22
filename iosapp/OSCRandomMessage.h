@@ -8,9 +8,16 @@
 
 #import "OSCBaseObject.h"
 
+typedef NS_ENUM(int, RandomType)
+{
+    RandomTypeNews = 1,
+    RandomTypeBlog,
+    RandomTypeSoftware,
+};
+
 @interface OSCRandomMessage : OSCBaseObject
 
-@property (nonatomic, readonly, assign) int randomType;
+@property (nonatomic, readonly, assign) RandomType type;
 @property (nonatomic, readonly, assign) int64_t randomMessageID;
 @property (nonatomic, readonly, copy) NSString *title;
 @property (nonatomic, readonly, copy) NSString *detail;

@@ -14,7 +14,7 @@
 {
     self = [super init];
     if (self) {
-        _randomType = [[[xml firstChildWithTag:@"randomtype"] numberValue] intValue];
+        _type = [[[xml firstChildWithTag:@"randomtype"] numberValue] intValue];
         _randomMessageID = [[[xml firstChildWithTag:@"id"] numberValue] longLongValue];
         _title = [[[xml firstChildWithTag:@"title"] stringValue] copy];
         _detail = [[[xml firstChildWithTag:@"detail"] stringValue] copy];
