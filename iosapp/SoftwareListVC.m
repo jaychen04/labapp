@@ -93,17 +93,11 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
 {
     if (indexPath.row < self.objects.count) {
         OSCSoftware *software = self.objects[indexPath.row];
-        
-        self.label.font = [UIFont systemFontOfSize:20];
         self.label.text = software.name;
+        
         CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
-        CGFloat height = size.height;
         
-        self.label.font = [UIFont systemFontOfSize:13];
-        self.label.text = software.softwareDescription;
-        size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
-        
-        return height + size.height + 21;
+        return size.height + 39;
     } else {
         return 60;
     }
