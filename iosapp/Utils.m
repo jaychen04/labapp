@@ -15,6 +15,7 @@
 #import "UserDetailsViewController.h"
 #import "DetailsViewController.h"
 #import "PostsViewController.h"
+#import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 #import <MBProgressHUD.h>
 #import <objc/runtime.h>
@@ -75,10 +76,11 @@
         //站内链接
         
         url = [url substringFromIndex:7];
-        NSString *prefix = [url substringToIndex:3];
+        NSArray *pathComponents = [url pathComponents];
+        NSString *prefix = [pathComponents[0] componentsSeparatedByString:@"."][0];
         UIViewController *viewController;
         
-        if ([prefix isEqualToString:@"my."])
+        if ([prefix isEqualToString:@"my"])
         {
             NSArray *urlComponents = [url componentsSeparatedByString:@"/"];
             if (urlComponents.count == 2) {
@@ -159,6 +161,14 @@
                     }
                 }
             }
+        } else if ([prefix isEqualToString:@"static"]) {
+#if 1
+            ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", url]]];
+            
+            [navigationController presentViewController:imageViewerVC animated:YES completion:nil];
+            
+            return;
+#endif
         }
         if (viewController) {
             [navigationController pushViewController:viewController animated:YES];

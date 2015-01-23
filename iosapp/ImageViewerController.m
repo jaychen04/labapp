@@ -27,17 +27,26 @@ const double kAnimationDuration = 0.3;
 
 #pragma mark - init method
 
-- (instancetype)initWithImageURL:(NSURL *)imageURL thumbnail:(UIImageView *)thumbnail andTapLocation:(CGPoint)location
+- (instancetype)initWithImageURL:(NSURL *)imageURL
 {
     self = [super init];
-    if (!self) {return nil;}
+    if (self) {
+        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        
+        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
+        _imageView = [[UIImageView alloc] initWithImage:image];
+    }
     
-    self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
-    
-    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
-    _imageView = [[UIImageView alloc] initWithImage:image];
-    _thumbnail = thumbnail;
-    _location = location;
+    return self;
+}
+
+
+- (instancetype)initWithImageURL:(NSURL *)imageURL thumbnail:(UIImageView *)thumbnail
+{
+    self = [self initWithImageURL:imageURL];
+    if (self) {
+        _thumbnail = thumbnail;
+    }
     
     return self;
 }
@@ -80,6 +89,12 @@ const double kAnimationDuration = 0.3;
     UIApplication *app = [UIApplication sharedApplication];
     UIView *window = [app keyWindow];
     
+    if (!_thumbnail) {
+        CGSize mainFrameSize = self.view.frame.size;
+        _thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(mainFrameSize.width/2, mainFrameSize.height/2, mainFrameSize.width, mainFrameSize.height)];
+        _thumbnail.image = _imageView.image;
+        _thumbnail.contentMode = UIViewContentModeScaleAspectFit;
+    }
     _imageView.frame = _thumbnail.frame;
     
     _originalFrame = [self.thumbnail convertRect:self.thumbnail.bounds toView:window];
