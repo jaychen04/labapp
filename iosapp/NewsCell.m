@@ -58,18 +58,14 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_titleLabel]-5-[_authorLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft
-                                                                             metrics:nil
-                                                                               views:viewsDict]];
+                                                                             metrics:nil views:viewsDict]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_titleLabel]-8-|"
-                                                                             options:0
-                                                                             metrics:nil
-                                                                               views:viewsDict]];
+                                                                             options:0 metrics:nil views:viewsDict]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-5-[_timeLabel]-5-[_commentCount]"
                                                                              options:NSLayoutFormatAlignAllCenterY
-                                                                             metrics:nil
-                                                                               views:viewsDict]];
+                                                                             metrics:nil views:viewsDict]];
 }
 
 @end

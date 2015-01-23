@@ -10,6 +10,12 @@
 #import "OSCBaseObject.h"
 #import "LastCell.h"
 
+@interface OSCObjsViewController ()
+
+@property (nonatomic, assign) BOOL refreshInProgress;
+
+@end
+
 
 @implementation OSCObjsViewController
 
@@ -88,15 +94,15 @@
 
 - (void)refresh
 {
-    static BOOL refreshInProgress = NO;
+    _refreshInProgress = NO;
     
-    if (!refreshInProgress)
+    if (!_refreshInProgress)
     {
-        refreshInProgress = YES;
+        _refreshInProgress = YES;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self fetchObjectsOnPage:0 refresh:YES];
-            refreshInProgress = NO;
+            _refreshInProgress = NO;
         });
     }
 }

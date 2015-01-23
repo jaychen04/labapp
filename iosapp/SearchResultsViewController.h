@@ -11,6 +11,7 @@
 @interface SearchResultsViewController : OSCObjsViewController
 
 @property (nonatomic, copy) NSString *keyword;
+@property (nonatomic, copy) void (^viewDidScroll)();
 
 - (instancetype)initWithType:(NSString *)type;
 
