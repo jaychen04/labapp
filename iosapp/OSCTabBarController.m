@@ -291,6 +291,23 @@
     }
 }
 
+
+#pragma mark - UITabBarDelegate
+
+- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
+{
+    if (self.selectedIndex <= 1 && self.selectedIndex == [tabBar.items indexOfObject:item]) {
+        SwipeableViewController *swipeableVC = (SwipeableViewController *)((UINavigationController *)self.selectedViewController).viewControllers[0];
+        OSCObjsViewController *objsViewController = (OSCObjsViewController *)swipeableVC.viewPager.childViewControllers[swipeableVC.titleBar.currentIndex];
+        
+        [objsViewController.refreshControl beginRefreshing];
+        [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)
+                                              animated:NO];
+        
+        [objsViewController performSelectorOnMainThread:@selector(refresh) withObject:nil waitUntilDone:1];
+    }
+}
+
 #pragma mark - 处理左右navigationItem点击事件
 
 - (void)pushSearchViewController
