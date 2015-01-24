@@ -1,45 +1,41 @@
 //
-//  TweetDetailsWithBottomBarViewController.m
+//  CommentsBottomBarViewController.m
 //  iosapp
 //
-//  Created by chenhaoxiang on 1/14/15.
+//  Created by ChanAetern on 1/24/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "TweetDetailsWithBottomBarViewController.h"
-#import "TweetDetailsViewController.h"
+#import "CommentsBottomBarViewController.h"
 #import "CommentsViewController.h"
-#import "UserDetailsViewController.h"
-#import "ImageViewerController.h"
-#import "OSCTweet.h"
 #import "OSCComment.h"
-#import "TweetDetailsCell.h"
 #import "Config.h"
-#import "Utils.h"
-#import <objc/runtime.h>
 #import <MBProgressHUD.h>
 
+@interface CommentsBottomBarViewController ()
 
-@interface TweetDetailsWithBottomBarViewController () <UIWebViewDelegate>
-
-@property (nonatomic, strong) TweetDetailsViewController *tweetDetailsVC;
-@property (nonatomic, assign) int64_t tweetID;
-@property (nonatomic, assign) BOOL isReply;
+@property (nonatomic, strong) CommentsViewController *commentsVC;
+@property (nonatomic, assign) int64_t objectID;
+@property (nonatomic, assign) int64_t objectUID;
+@property (nonatomic, assign) int64_t replyID;
+@property (nonatomic, assign) CommentType commentType;
 
 @end
 
-@implementation TweetDetailsWithBottomBarViewController
+@implementation CommentsBottomBarViewController
 
-- (instancetype)initWithTweetID:(int64_t)tweetID
+
+- (instancetype)initWithCommentType:(CommentType)commentType andObjectID:(int64_t)objectID
 {
     self = [super initWithModeSwitchButton:NO];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
         
-        _tweetID = tweetID;
+        _objectID = objectID;
+        _commentType = commentType;
         
-        _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweetID:tweetID];
-        [self addChildViewController:_tweetDetailsVC];
+        _commentsVC = [[CommentsViewController alloc] initWithCommentType:commentType andObjectID:objectID];
+        [self addChildViewController:_commentsVC];
         [self.editingBar.sendButton addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
         
         [self setUpBlock];
@@ -50,15 +46,15 @@
 
 - (void)setUpBlock
 {
-    __weak TweetDetailsWithBottomBarViewController *weakSelf = self;
+    __weak CommentsBottomBarViewController *weakSelf = self;
     
-    _tweetDetailsVC.didCommentSelected = ^(OSCComment *comment) {
-        NSString *stringToInsert = [NSString stringWithFormat:@"@%@ ", comment.author];
+    _commentsVC.didCommentSelected = ^(OSCComment *comment) {
+        //NSString *stringToInsert = [NSString stringWithFormat:@"@%@ ", authorName];
         
-        [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:stringToInsert];
+        //[weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:stringToInsert];
     };
     
-    _tweetDetailsVC.didScroll = ^ {
+    _commentsVC.didScroll = ^ {
         [weakSelf.editingBar.editView resignFirstResponder];
     };
 }
@@ -77,10 +73,10 @@
 
 - (void)setLayout
 {
-    [self.view addSubview:_tweetDetailsVC.view];
+    [self.view addSubview:_commentsVC.view];
     
     for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = @{@"tableView": _tweetDetailsVC.view, @"editingBar": self.editingBar};
+    NSDictionary *views = @{@"tableView": _commentsVC.view, @"editingBar": self.editingBar};
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[tableView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView][editingBar]"
@@ -97,14 +93,27 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENT_PUB]
-       parameters:@{
-                    @"catalog": @(3),
-                    @"id": @(_tweetID),
-                    @"uid": @([Config getOwnID]),
-                    @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
-                    @"isPostToMyZone": @(0)
-                    }
+    
+    NSString *URL = _commentType == CommentTypeBlog? [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB] :
+                                                     [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENT_PUB];
+    
+    NSDictionary *parameters = _commentType == CommentTypeBlog?
+                                @{
+                                  @"blog": @(_objectID),
+                                  @"uid": @([Config getOwnID]),
+                                  @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
+                                  @"reply_id": @(_replyID),
+                                  @"objuid": @(_objectUID)
+                                  }:
+                                @{
+                                  @"catalog": @(_commentType),
+                                  @"id": @(_objectID),
+                                  @"uid": @([Config getOwnID]),
+                                  @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
+                                  @"isPostToMyZone": @(0)
+                                };
+    [manager POST:URL
+       parameters:parameters
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
               ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
               int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
@@ -138,9 +147,6 @@
               [HUD hide:YES afterDelay:2];
           }];
 }
-
-
-
 
 
 

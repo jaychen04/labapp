@@ -25,6 +25,7 @@
 		00FF954819F2BF8B002F4737 /* LastCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954719F2BF8B002F4737 /* LastCell.m */; };
 		00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */; };
 		3801789C1A2C1A7300922858 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3801789B1A2C1A7300922858 /* EventCell.m */; };
+		380FD2191A739CA6003C4021 /* CommentsBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2181A739CA6003C4021 /* CommentsBottomBarViewController.m */; };
 		381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5819FE1FCF00C1937C /* OSCNews.m */; };
 		381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5B19FE25DF00C1937C /* OSCPost.m */; };
 		381EAB6319FE377700C1937C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6219FE377700C1937C /* NewsViewController.m */; };
@@ -308,6 +309,8 @@
 		00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeableViewController.m; sourceTree = "<group>"; };
 		3801789A1A2C1A7300922858 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		3801789B1A2C1A7300922858 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
+		380FD2171A739CA6003C4021 /* CommentsBottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsBottomBarViewController.h; sourceTree = "<group>"; };
+		380FD2181A739CA6003C4021 /* CommentsBottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsBottomBarViewController.m; sourceTree = "<group>"; };
 		381EAB5719FE1FCF00C1937C /* OSCNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNews.h; sourceTree = "<group>"; };
 		381EAB5819FE1FCF00C1937C /* OSCNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNews.m; sourceTree = "<group>"; };
 		381EAB5A19FE25DF00C1937C /* OSCPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPost.h; sourceTree = "<group>"; };
@@ -696,12 +699,12 @@
 				00EDF60C19EFC13500A5C842 /* Utils */,
 				3874EC221A08E8EA000D2894 /* User */,
 				382A94B21A28653200AAAFEA /* 发现 */,
+				00D6BD3219ECD73B00E8754E /* 动弹 */,
 				381EAB6019FE373100C1937C /* 新闻 */,
 				38996A561A0266F80025AA52 /* 博客 */,
 				381EAB6A19FE7CA400C1937C /* 帖子 */,
 				38BD3CFA1A369A0500682D1F /* 软件 */,
 				38BD7D6F19FF7F9A003ABB80 /* 评论 */,
-				00D6BD3219ECD73B00E8754E /* 动弹 */,
 				00EDF60B19EFB42500A5C842 /* Main ViewControllers */,
 				386039661A0A34F5007C9B88 /* Resource */,
 				00D6BCE119EB673200E8754E /* AppDelegate.h */,
@@ -1312,6 +1315,8 @@
 				38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */,
 				38BD7D7019FF7FD0003ABB80 /* CommentCell.h */,
 				38BD7D7119FF7FD0003ABB80 /* CommentCell.m */,
+				380FD2171A739CA6003C4021 /* CommentsBottomBarViewController.h */,
+				380FD2181A739CA6003C4021 /* CommentsBottomBarViewController.m */,
 			);
 			name = "评论";
 			sourceTree = "<group>";
@@ -1694,6 +1699,7 @@
 				3838D1A61A6E703F00CC7913 /* OSCRandomMessage.m in Sources */,
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
+				380FD2191A739CA6003C4021 /* CommentsBottomBarViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,

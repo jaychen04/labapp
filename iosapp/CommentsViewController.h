@@ -19,6 +19,8 @@ typedef NS_ENUM(int, CommentType)
     CommentTypeSoftware,
 };
 
+@class OSCComment;
+
 @interface CommentsViewController : OSCObjsViewController
 
 @property (nonatomic, readwrite, assign) int64_t objectAuthorID;
@@ -26,7 +28,7 @@ typedef NS_ENUM(int, CommentType)
 @property (nonatomic, copy) UITableViewCell * (^otherSectionCell)(NSIndexPath *indexPath);
 @property (nonatomic, copy) CGFloat (^heightForOtherSectionCell)(NSIndexPath *indexPath);
 
-@property (nonatomic, copy) void (^didCommentSelected)(NSString *authorName);
+@property (nonatomic, copy) void (^didCommentSelected)(OSCComment *comment);
 @property (nonatomic, copy) void (^didScroll)();
 
 - (instancetype)initWithCommentType:(CommentType)commentType andObjectID:(int64_t)objectID;
