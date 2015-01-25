@@ -26,6 +26,9 @@
 		00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */; };
 		3801789C1A2C1A7300922858 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3801789B1A2C1A7300922858 /* EventCell.m */; };
 		380FD2191A739CA6003C4021 /* CommentsBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2181A739CA6003C4021 /* CommentsBottomBarViewController.m */; };
+		380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */; };
+		380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21F1A74DFEE003C4021 /* ActivityCell.m */; };
+		380FD2231A74E702003C4021 /* OSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2221A74E702003C4021 /* OSCActivity.m */; };
 		381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5819FE1FCF00C1937C /* OSCNews.m */; };
 		381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5B19FE25DF00C1937C /* OSCPost.m */; };
 		381EAB6319FE377700C1937C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6219FE377700C1937C /* NewsViewController.m */; };
@@ -311,6 +314,12 @@
 		3801789B1A2C1A7300922858 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		380FD2171A739CA6003C4021 /* CommentsBottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsBottomBarViewController.h; sourceTree = "<group>"; };
 		380FD2181A739CA6003C4021 /* CommentsBottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsBottomBarViewController.m; sourceTree = "<group>"; };
+		380FD21B1A74DFCE003C4021 /* ActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitiesViewController.h; sourceTree = "<group>"; };
+		380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitiesViewController.m; sourceTree = "<group>"; };
+		380FD21E1A74DFEE003C4021 /* ActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityCell.h; sourceTree = "<group>"; };
+		380FD21F1A74DFEE003C4021 /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityCell.m; sourceTree = "<group>"; };
+		380FD2211A74E702003C4021 /* OSCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCActivity.h; sourceTree = "<group>"; };
+		380FD2221A74E702003C4021 /* OSCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCActivity.m; sourceTree = "<group>"; };
 		381EAB5719FE1FCF00C1937C /* OSCNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNews.h; sourceTree = "<group>"; };
 		381EAB5819FE1FCF00C1937C /* OSCNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNews.m; sourceTree = "<group>"; };
 		381EAB5A19FE25DF00C1937C /* OSCPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPost.h; sourceTree = "<group>"; };
@@ -668,6 +677,8 @@
 				3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */,
 				386825A71A70D5E6008F5706 /* OSCSearchResult.h */,
 				386825A81A70D5E6008F5706 /* OSCSearchResult.m */,
+				380FD2211A74E702003C4021 /* OSCActivity.h */,
+				380FD2221A74E702003C4021 /* OSCActivity.m */,
 			);
 			name = "OSC API and Model";
 			sourceTree = "<group>";
@@ -788,6 +799,17 @@
 				E50FD03E01F2716AFACD8E30 /* libPods.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		380FD21A1A74DF22003C4021 /* 活动 */ = {
+			isa = PBXGroup;
+			children = (
+				380FD21B1A74DFCE003C4021 /* ActivitiesViewController.h */,
+				380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */,
+				380FD21E1A74DFEE003C4021 /* ActivityCell.h */,
+				380FD21F1A74DFEE003C4021 /* ActivityCell.m */,
+			);
+			name = "活动";
 			sourceTree = "<group>";
 		};
 		381EAB6019FE373100C1937C /* 新闻 */ = {
@@ -950,6 +972,7 @@
 				382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */,
 				382A94B31A28655900AAAFEA /* 好友圈 */,
 				38BC598C1A5D20AC00F3C4D2 /* 找人 */,
+				380FD21A1A74DF22003C4021 /* 活动 */,
 				3838D19C1A6DFE6400CC7913 /* 扫一扫 */,
 				3838D1AA1A6F455E00CC7913 /* 摇一摇 */,
 			);
@@ -1646,6 +1669,7 @@
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				3838D15C1A6C9D0900CC7913 /* OperationBar.m in Sources */,
 				382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */,
+				380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
@@ -1657,6 +1681,7 @@
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
 				38BD3D0D1A36D19400682D1F /* SoftwareCell.m in Sources */,
 				382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */,
+				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
@@ -1688,6 +1713,7 @@
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
+				380FD2231A74E702003C4021 /* OSCActivity.m in Sources */,
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				38B0BF991A3AFED800A2FDB0 /* MessageCell.m in Sources */,

@@ -72,6 +72,7 @@
 
 #define OSCAPI_SEARCH_USERS             @"find_user"
 #define OSCAPI_RANDOM_MESSAGE           @"rock_rock"
+#define OSCAPI_EVENT_LIST               @"event_list"
 
 
 #endif

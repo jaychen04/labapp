@@ -11,15 +11,9 @@
 #import "OSCNews.h"
 #import "DetailsViewController.h"
 
-
-
 static NSString *kNewsCellID = @"NewsCell";
 
-
-
 @interface NewsViewController ()
-
-@property (nonatomic, strong) UILabel *label;
 
 @end
 
