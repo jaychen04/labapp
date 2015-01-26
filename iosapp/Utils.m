@@ -82,31 +82,40 @@
         
         if ([prefix isEqualToString:@"my"])
         {
-            NSArray *urlComponents = [url componentsSeparatedByString:@"/"];
-            if (urlComponents.count == 2) {
+            if (pathComponents.count == 2) {
                 // 个人专页 my.oschina.net/dong706
                 
-                viewController = [[UserDetailsViewController alloc] initWithUserName:urlComponents[1]];
+                viewController = [[UserDetailsViewController alloc] initWithUserName:pathComponents[1]];
                 viewController.navigationItem.title = @"用户详情";
-            } else if (urlComponents.count == 3) {
+            } else if (pathComponents.count == 3) {
                 // 个人专页 my.oschina.net/u/12
                 
-                if ([urlComponents[1] isEqualToString:@"u"]) {
-                    viewController= [[UserDetailsViewController alloc] initWithUserID:[urlComponents[2] longLongValue]];
+                if ([pathComponents[1] isEqualToString:@"u"]) {
+                    viewController= [[UserDetailsViewController alloc] initWithUserID:[pathComponents[2] longLongValue]];
                     viewController.navigationItem.title = @"用户详情";
                 }
-            } else if (urlComponents.count == 4) {
-                NSString *type = urlComponents[2];
+            } else if (pathComponents.count == 4) {
+                NSString *type = pathComponents[2];
                 if ([type isEqualToString:@"blog"]) {
                     OSCNews *news = [OSCNews new];
                     news.type = NewsTypeBlog;
-                    news.attachment = urlComponents[3];
+                    news.attachment = pathComponents[3];
                     viewController = [[DetailsViewController alloc] initWithNews:news];
                     viewController.navigationItem.title = @"博客详情";
                 } else if ([type isEqualToString:@"tweet"]){
                     OSCTweet *tweet = [OSCTweet new];
-                    tweet.tweetID = [urlComponents[3] longLongValue];
+                    tweet.tweetID = [pathComponents[3] longLongValue];
                     viewController = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+                    viewController.navigationItem.title = @"动弹详情";
+                }
+            } else if(pathComponents.count == 5) {
+                NSString *type = pathComponents[3];
+                if ([type isEqualToString:@"blog"]) {
+                    OSCNews *news = [OSCNews new];
+                    news.type = NewsTypeBlog;
+                    news.attachment = pathComponents[4];
+                    viewController = [[DetailsViewController alloc] initWithNews:news];
+                    viewController.navigationItem.title = @"博客详情";
                 }
             }
         } else if ([prefix isEqualToString:@"www"]) {

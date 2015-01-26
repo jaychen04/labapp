@@ -29,6 +29,9 @@
 		380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */; };
 		380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21F1A74DFEE003C4021 /* ActivityCell.m */; };
 		380FD2231A74E702003C4021 /* OSCActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2221A74E702003C4021 /* OSCActivity.m */; };
+		380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2251A761119003C4021 /* ActivityDetailsViewController.m */; };
+		380FD22A1A7612E8003C4021 /* ActivityBasicInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2291A7612E8003C4021 /* ActivityBasicInfoCell.m */; };
+		380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD22C1A7621C5003C4021 /* ActivityDetailsCell.m */; };
 		381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5819FE1FCF00C1937C /* OSCNews.m */; };
 		381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5B19FE25DF00C1937C /* OSCPost.m */; };
 		381EAB6319FE377700C1937C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6219FE377700C1937C /* NewsViewController.m */; };
@@ -320,6 +323,12 @@
 		380FD21F1A74DFEE003C4021 /* ActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityCell.m; sourceTree = "<group>"; };
 		380FD2211A74E702003C4021 /* OSCActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCActivity.h; sourceTree = "<group>"; };
 		380FD2221A74E702003C4021 /* OSCActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCActivity.m; sourceTree = "<group>"; };
+		380FD2241A761119003C4021 /* ActivityDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailsViewController.h; sourceTree = "<group>"; };
+		380FD2251A761119003C4021 /* ActivityDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailsViewController.m; sourceTree = "<group>"; };
+		380FD2281A7612E8003C4021 /* ActivityBasicInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityBasicInfoCell.h; sourceTree = "<group>"; };
+		380FD2291A7612E8003C4021 /* ActivityBasicInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityBasicInfoCell.m; sourceTree = "<group>"; };
+		380FD22B1A7621C5003C4021 /* ActivityDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailsCell.h; sourceTree = "<group>"; };
+		380FD22C1A7621C5003C4021 /* ActivityDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailsCell.m; sourceTree = "<group>"; };
 		381EAB5719FE1FCF00C1937C /* OSCNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNews.h; sourceTree = "<group>"; };
 		381EAB5819FE1FCF00C1937C /* OSCNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNews.m; sourceTree = "<group>"; };
 		381EAB5A19FE25DF00C1937C /* OSCPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPost.h; sourceTree = "<group>"; };
@@ -762,7 +771,7 @@
 				00D6BD3019ECD71B00E8754E /* TweetsViewController.m */,
 				00D6BD3319ECFD8E00E8754E /* TweetCell.h */,
 				00D6BD3419ECFD8E00E8754E /* TweetCell.m */,
-				38BD7D6B19FF7F31003ABB80 /* TweetDetails */,
+				38BD7D6B19FF7F31003ABB80 /* 动弹详情 */,
 			);
 			name = "动弹";
 			sourceTree = "<group>";
@@ -808,8 +817,22 @@
 				380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */,
 				380FD21E1A74DFEE003C4021 /* ActivityCell.h */,
 				380FD21F1A74DFEE003C4021 /* ActivityCell.m */,
+				380FD2271A76126B003C4021 /* 活动详情 */,
 			);
 			name = "活动";
+			sourceTree = "<group>";
+		};
+		380FD2271A76126B003C4021 /* 活动详情 */ = {
+			isa = PBXGroup;
+			children = (
+				380FD2241A761119003C4021 /* ActivityDetailsViewController.h */,
+				380FD2251A761119003C4021 /* ActivityDetailsViewController.m */,
+				380FD2281A7612E8003C4021 /* ActivityBasicInfoCell.h */,
+				380FD2291A7612E8003C4021 /* ActivityBasicInfoCell.m */,
+				380FD22B1A7621C5003C4021 /* ActivityDetailsCell.h */,
+				380FD22C1A7621C5003C4021 /* ActivityDetailsCell.m */,
+			);
+			name = "活动详情";
 			sourceTree = "<group>";
 		};
 		381EAB6019FE373100C1937C /* 新闻 */ = {
@@ -1318,7 +1341,7 @@
 			name = News;
 			sourceTree = "<group>";
 		};
-		38BD7D6B19FF7F31003ABB80 /* TweetDetails */ = {
+		38BD7D6B19FF7F31003ABB80 /* 动弹详情 */ = {
 			isa = PBXGroup;
 			children = (
 				38BD7D7719FFCB79003ABB80 /* TweetDetailsViewController.h */,
@@ -1328,7 +1351,7 @@
 				386BEA431A66500400C078A8 /* TweetDetailsCell.h */,
 				386BEA441A66500400C078A8 /* TweetDetailsCell.m */,
 			);
-			name = TweetDetails;
+			name = "动弹详情";
 			sourceTree = "<group>";
 		};
 		38BD7D6F19FF7F9A003ABB80 /* 评论 */ = {
@@ -1669,6 +1692,7 @@
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				3838D15C1A6C9D0900CC7913 /* OperationBar.m in Sources */,
 				382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */,
+				380FD22A1A7612E8003C4021 /* ActivityBasicInfoCell.m in Sources */,
 				380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
@@ -1705,6 +1729,7 @@
 				38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */,
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
 				38996A591A026D6A0025AA52 /* BlogCell.m in Sources */,
+				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
 				386039611A09C5A1007C9B88 /* OSCUser.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				38BD3D101A37F38900682D1F /* MyInfoViewController.m in Sources */,
@@ -1712,6 +1737,7 @@
 				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
+				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
 				380FD2231A74E702003C4021 /* OSCActivity.m in Sources */,
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,

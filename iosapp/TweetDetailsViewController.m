@@ -141,10 +141,7 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if (_isLoadingFinished) {
-        webView.hidden = NO;
-        return;
-    }
+    if (_isLoadingFinished) {return;}
     
     _webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
     

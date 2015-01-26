@@ -9,6 +9,8 @@
 #import "ActivitiesViewController.h"
 #import "OSCActivity.h"
 #import "ActivityCell.h"
+#import "ActivityDetailsViewController.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const kActivtyCellID = @"ActivityCell";
@@ -27,7 +29,7 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     
     if (self) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_EVENT_LIST, userID, page, OSCAPI_SUFFIX];
+            return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_EVENT_LIST, userID, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
         self.objClass = [OSCActivity class];
@@ -96,8 +98,8 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     
     if (row < self.objects.count) {
         OSCActivity *activity = self.objects[indexPath.row];
-        //DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNews:news];
-        //[self.navigationController pushViewController:detailsViewController animated:YES];
+        ActivityDetailsViewController *activityVC = [[ActivityDetailsViewController alloc] initWithActivity:activity];
+        [self.navigationController pushViewController:activityVC animated:YES];
     } else {
         [self fetchMore];
     }

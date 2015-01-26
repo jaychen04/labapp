@@ -20,6 +20,6 @@
 @property (nonatomic, readonly, copy)     NSString   *location;
 @property (nonatomic, readonly, copy)     NSString   *city;
 @property (nonatomic, readonly, assign)   int         status;
-@property (nonatomic, readonly, assign)   int         attendence;
+@property (nonatomic, readonly, assign)   int         applyStatus;
 
 @end

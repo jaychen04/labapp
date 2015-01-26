@@ -46,7 +46,6 @@
     _searchBar = [UISearchBar new];
     _searchBar.delegate = self;
     _searchBar.placeholder = @"请输入关键字";
-    _searchBar.tintColor = [UIColor colorWithHex:0x15A230];
     
     self.navigationItem.titleView = _searchBar;
 }
