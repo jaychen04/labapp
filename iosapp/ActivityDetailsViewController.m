@@ -128,6 +128,7 @@
             cell.titleLabel.text = _activity.title;
             cell.timeLabel.text = [NSString stringWithFormat:@"开始：%@\n结束：%@", _activity.startTime, _activity.endTime];
             cell.locationLabel.text = [NSString stringWithFormat:@"地点：%@ %@", _activity.city, _activity.location];
+            [cell.applicationButton addTarget:self action:@selector(enrollActivity) forControlEvents:UIControlEventTouchUpInside];
             
             return cell;
         }
@@ -150,6 +151,29 @@
             return nil;
     }
 }
+
+
+#pragma mark - 报名
+
+- (void)enrollActivity
+{
+#if 0
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_EVENT_APPLY]
+       parameters:@{
+                    
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+          }];
+#endif
+}
+
 
 
 #pragma mark - UIWebViewDelegate

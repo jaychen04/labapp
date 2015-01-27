@@ -61,27 +61,19 @@
                                                                                           ]];
     
     DiscoverTableVC *discoverTableVC = [DiscoverTableVC new];
+    MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithUserID:[Config getOwnID]];
     
-    UINavigationController *meNav;
-    if ([Config getOwnID] > 0) {
-        MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithUserID:[Config getOwnID]];
-        meNav = [[UINavigationController alloc] initWithRootViewController:myInfoVC];
-    } else {
-        LoginViewController *loginVC = [LoginViewController new];
-        meNav = [[UINavigationController alloc] initWithRootViewController:loginVC];
-    }
-    
-    
-    UINavigationController *newsNav = [[UINavigationController alloc] initWithRootViewController:newsSVC];
-    UINavigationController *tweetsNav = [[UINavigationController alloc] initWithRootViewController:tweetsSVC];
+    UINavigationController *newsNav     = [[UINavigationController alloc] initWithRootViewController:newsSVC];
+    UINavigationController *tweetsNav   = [[UINavigationController alloc] initWithRootViewController:tweetsSVC];
     UINavigationController *discoverNav = [[UINavigationController alloc] initWithRootViewController:discoverTableVC];
+    UINavigationController *meNav       = [[UINavigationController alloc] initWithRootViewController:myInfoVC];
+    
+    for (UIViewController *viewController in @[newsSVC, tweetsSVC, discoverTableVC, myInfoVC]) {
+        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(pushSearchViewController)];
+    }
     
     self.tabBar.translucent = NO;
     self.viewControllers = @[newsNav, tweetsNav, [UIViewController new], discoverNav, meNav];
-    
-    for (UIViewController *viewController in @[newsSVC, tweetsSVC]) {
-        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"搜索" style:UIBarButtonItemStylePlain target:self action:@selector(pushSearchViewController)];
-    }
     
     [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
@@ -314,7 +306,7 @@
 
 - (void)pushSearchViewController
 {
-    //[(UINavigationController *)self.selectedViewController pushViewController:[SearchViewController new] animated:YES];
+    [(UINavigationController *)self.selectedViewController pushViewController:[SearchViewController new] animated:YES];
 }
 
 
