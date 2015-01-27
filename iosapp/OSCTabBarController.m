@@ -68,7 +68,7 @@
     UINavigationController *discoverNav = [[UINavigationController alloc] initWithRootViewController:discoverTableVC];
     UINavigationController *meNav       = [[UINavigationController alloc] initWithRootViewController:myInfoVC];
     
-    for (UIViewController *viewController in @[newsSVC, tweetsSVC, discoverTableVC, myInfoVC]) {
+    for (UIViewController *viewController in @[newsSVC, tweetsSVC, discoverTableVC]) {
         viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-search"] style:UIBarButtonItemStylePlain target:self action:@selector(pushSearchViewController)];
         viewController.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"] style:UIBarButtonItemStylePlain target:self action:nil];
     }

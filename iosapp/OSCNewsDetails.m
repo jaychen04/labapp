@@ -41,7 +41,7 @@ static NSString *kRURL = @"rurl";
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
         _softwareLink = [NSURL URLWithString:[[xml firstChildWithTag:kSoftwareLink] stringValue]];
         _softwareName = [[xml firstChildWithTag:kSoftwareName] stringValue];
-        _favoriteCount = [[[xml firstChildWithTag:kFavorite] numberValue] intValue];
+        _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
         NSMutableArray *mutableRelatives = [NSMutableArray new];
         NSArray *relativesXML = [[xml firstChildWithTag:kRelatives] childrenWithTag:kRelative];
         for (ONOXMLElement *relativeXML in relativesXML) {

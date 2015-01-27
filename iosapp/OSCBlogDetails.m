@@ -35,7 +35,7 @@ static NSString *kDocumentType = @"documentType";
         _author = [[xml firstChildWithTag:kAuthor] stringValue];
         _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
-        _favoriteCount = [[[xml firstChildWithTag:kFavorite] numberValue] intValue];
+        _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
         _where = [[xml firstChildWithTag:kWhere] stringValue];
         _documentType = [[[xml firstChildWithTag:kDocumentType] numberValue] intValue];
     }

@@ -20,7 +20,7 @@
 @property (nonatomic, copy) NSString *pubDate;
 @property (nonatomic, copy) NSURL *softwareLink;
 @property (nonatomic, copy) NSString *softwareName;
-@property (nonatomic, assign) int favoriteCount;
+@property (nonatomic, assign) BOOL isFavorite;
 @property (nonatomic, strong) NSArray *relatives;
 
 @end

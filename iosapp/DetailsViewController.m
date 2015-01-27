@@ -36,6 +36,7 @@
 
 @property (nonatomic, assign) CommentType commentType;
 @property (nonatomic, assign) int64_t objectID;
+@property (nonatomic, assign) BOOL isStarred;
 
 @property (nonatomic, strong) OSCNews *news;
 @property (nonatomic, copy) NSString *detailsURL;
@@ -252,6 +253,7 @@
     NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@%@</body>", HTML_STYLE, newsDetails.title, authorStr, newsDetails.body, software, [Utils generateRelativeNewsString:newsDetails.relatives], HTML_BOTTOM];
     
     [self.detailsView loadHTMLString:html baseURL:nil];
+    _isStarred = newsDetails.isFavorite;
 }
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
@@ -260,6 +262,7 @@
     NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@</body>",HTML_STYLE, blogDetails.title, authorStr, blogDetails.body, HTML_BOTTOM];
     
     [self.detailsView loadHTMLString:html baseURL:nil];
+    _isStarred = blogDetails.isFavorite;
 }
 
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
@@ -271,6 +274,7 @@
     NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'><img src='%@' width='34' height='34'/>%@</div><hr/><div id='oschina_body'>%@</div><div>%@</div>%@%@</body>", HTML_STYLE, softwareDetails.logoURL, titleStr, softwareDetails.body, tail, [self createButtonsWithHomepageURL:softwareDetails.homepageURL andDocumentURL:softwareDetails.documentURL andDownloadURL:softwareDetails.downloadURL], HTML_BOTTOM];
     
     [self.detailsView loadHTMLString:html baseURL:nil];
+    _isStarred = softwareDetails.isFavorite;
 }
 
 - (NSString *)createButtonsWithHomepageURL:(NSString *)homepageURL andDocumentURL:(NSString *)documentURL andDownloadURL:(NSString *)downloadURL
@@ -299,6 +303,7 @@
     NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3;'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@</body>",HTML_STYLE, postDetails.title, authorStr, postDetails.body, [Utils GenerateTags:postDetails.tags], HTML_BOTTOM];
     
     [self.detailsView loadHTMLString:html baseURL:nil];
+    _isStarred = postDetails.isFavorite;
 }
 
 

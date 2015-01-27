@@ -38,6 +38,7 @@ static NSString *kTag = @"tag";
         _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
         _answerCount = [[[xml firstChildWithTag:kAnswerCount] numberValue] intValue];
         _viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
+        _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
         
         NSMutableArray *mutableTags = [NSMutableArray new];

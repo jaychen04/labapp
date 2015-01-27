@@ -20,6 +20,6 @@
 @property (nonatomic, assign) int64_t authorID;
 @property (nonatomic, assign) int documentType;
 @property (nonatomic, copy) NSString *pubDate;
-@property (nonatomic, assign) int favoriteCount;
+@property (nonatomic, assign) BOOL isFavorite;
 
 @end

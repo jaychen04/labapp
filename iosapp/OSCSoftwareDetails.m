@@ -44,7 +44,7 @@ static NSString * const kTweetCount = @"tweetCount";
         _documentURL = [[xml firstChildWithTag:kDocument] stringValue];
         _downloadURL = [[xml firstChildWithTag:kDownload] stringValue];
         _logoURL = [[xml firstChildWithTag:kLogo] stringValue];
-        _favoriteCount = [[[xml firstChildWithTag:kFavorite] numberValue] intValue];
+        _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
         _tweetCount = [[[xml firstChildWithTag:kTweetCount] numberValue] intValue];
     }
     

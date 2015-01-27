@@ -20,7 +20,7 @@
 @property (nonatomic, copy) NSURL *portraitURL;
 @property (nonatomic, assign) int answerCount;
 @property (nonatomic, assign) int viewCount;
-@property (nonatomic, assign) int favoriteCount;
+@property (nonatomic, assign) BOOL isFavorite;
 @property (nonatomic, strong) NSArray *tags;
 
 @end

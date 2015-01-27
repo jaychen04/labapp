@@ -17,6 +17,8 @@
 #import "BlogsViewController.h"
 #import "EventsViewController.h"
 #import "MessagesViewController.h"
+#import "LoginViewController.h"
+#import "SearchResultsViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -83,6 +85,9 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-search"] style:UIBarButtonItemStylePlain target:self action:@selector(pushSearchViewController)];
+    self.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"] style:UIBarButtonItemStylePlain target:self action:nil];
+    
     self.tableView.bounces = NO;
     self.navigationItem.title = @"我";
     self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
@@ -102,6 +107,8 @@
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];
     [_portrait loadPortrait:_user.portraitURL];
+    _portrait.userInteractionEnabled = YES;
+    [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortrait)]];
     [header addSubview:_portrait];
     
     _nameLabel = [UILabel new];
@@ -238,6 +245,20 @@
                                                                                            ]];
     
     [self.navigationController pushViewController:friendsSVC animated:YES];
+}
+
+
+- (void)pushSearchViewController
+{
+    [self.navigationController pushViewController:[SearchResultsViewController new] animated:YES];
+}
+
+
+- (void)tapPortrait
+{
+    if ([Config getOwnID] == 0) {
+        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+    }
 }
 
 

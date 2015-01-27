@@ -23,7 +23,7 @@
 @property (nonatomic, copy) NSString *documentURL;
 @property (nonatomic, copy) NSString *downloadURL;
 @property (nonatomic, copy) NSString *logoURL;
-@property (nonatomic, assign) int favoriteCount;
+@property (nonatomic, assign) BOOL isFavorite;
 @property (nonatomic, assign) int tweetCount;
 
 @end
