@@ -216,7 +216,9 @@
     __weak DetailsViewController *weakSelf = self;
     
     self.operationBar.toggleStar = ^ {
-        
+        if (weakSelf.isStarred) {
+            NSLog(@"starred!");
+        }
     };
     
     self.operationBar.showComments = ^ {

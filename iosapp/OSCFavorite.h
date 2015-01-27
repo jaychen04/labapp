@@ -10,7 +10,7 @@
 
 typedef NS_ENUM(int, FavoritesType)
 {
-    FavoritesTypeSoftware,
+    FavoritesTypeSoftware = 1,
     FavoritesTypeTopic,
     FavoritesTypeBlog,
     FavoritesTypeNews,

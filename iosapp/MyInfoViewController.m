@@ -223,13 +223,13 @@
 - (void)pushFavoriteSVC
 {
     SwipeableViewController *favoritesSVC = [[SwipeableViewController alloc] initWithTitle:@"收藏"
-                                                                              andSubTitles:@[@"软件", @"话题", @"博客", @"新闻", @"代码"]
+                                                                              andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
                                                                             andControllers:@[
                                                                                              [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
                                                                                              [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
+                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
                                                                                              [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode]
+                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
                                                                                              ]];
     
     [self.navigationController pushViewController:favoritesSVC animated:YES];
