@@ -55,13 +55,13 @@
     self = [super initWithModeSwitchButton:YES];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
-        self.navigationItem.title = @"资讯详情";
         
         _news = news;
         _objectID = news.newsID;
         
         switch (news.type) {
             case NewsTypeStandardNews:
+                self.navigationItem.title = @"资讯详情";
                 _detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_NEWS_DETAIL, news.newsID];
                 _tag = @"news";
                 _commentType = CommentTypeNews;
@@ -69,6 +69,7 @@
                 _loadMethod = @selector(loadNewsDetails:);
                 break;
             case NewsTypeSoftWare:
+                self.navigationItem.title = @"软件详情";
                 _detailsURL = [NSString stringWithFormat:@"%@%@?ident=%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_DETAIL, news.attachment];
                 _tag = @"software";
                 _commentType = CommentTypeSoftware;
@@ -76,13 +77,16 @@
                 _loadMethod = @selector(loadSoftwareDetails:);
                 break;
             case NewsTypeQA:
+                self.navigationItem.title = @"帖子详情";
                 _detailsURL = [NSString stringWithFormat:@"%@%@?id=%@", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, news.attachment];
                 _tag = @"post";
+                _objectID = [news.attachment longLongValue];
                 _commentType = CommentTypePost;
                 _detailsClass = [OSCPostDetails class];
                 _loadMethod = @selector(loadPostDetails:);
                 break;
             case NewsTypeBlog:
+                self.navigationItem.title = @"博客详情";
                 _detailsURL = [NSString stringWithFormat:@"%@%@?id=%@", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, news.attachment];
                 _tag = @"blog";
                 _commentType = CommentTypeBlog;

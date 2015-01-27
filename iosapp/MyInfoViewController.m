@@ -105,6 +105,7 @@
     [header addSubview:_portrait];
     
     _nameLabel = [UILabel new];
+    _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     _nameLabel.text = _user.name;
     [header addSubview:_nameLabel];
     
@@ -117,7 +118,7 @@
     _fansBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     
     void (^setButtonStyle)(UIButton *, NSString *) = ^(UIButton *button, NSString *title) {
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor colorWithHex:0xEEEEEE] forState:UIControlStateNormal];
         button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
         [button setTitle:title forState:UIControlStateNormal];
