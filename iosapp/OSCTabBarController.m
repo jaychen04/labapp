@@ -80,16 +80,15 @@
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x15A230]} forState:UIControlStateSelected];
     
     NSArray *titles = @[@"资讯", @"动弹", @"", @"发现", @"我"];
-    NSArray *imagesNormal  = @[@"tabbar-news", @"tabbar-tweet", @"", @"tabbar-discover", @"tabbar-me"];
-    NSArray *imagesPressed = @[@"tabbar-news-selected", @"tabbar-tweet-selected", @"", @"tabbar-discover-selected", @"tabbar-me-selected"];
+    NSArray *images = @[@"tabbar-news", @"tabbar-tweet", @"", @"tabbar-discover", @"tabbar-me"];
     for (NSUInteger i = 0, count = [self.tabBar.items count]; i < count; i++) {
         [self.tabBar.items[i] setTitle:titles[i]];
-        [self.tabBar.items[i] setImage:[UIImage imageNamed:imagesNormal[i]]];
-        [self.tabBar.items[i] setSelectedImage:[UIImage imageNamed:imagesPressed[i]]];
+        [self.tabBar.items[i] setImage:[UIImage imageNamed:images[i]]];
+        [self.tabBar.items[i] setSelectedImage:[UIImage imageNamed:[images[i] stringByAppendingString:@"-selected"]]];
     }
     [self.tabBar.items[2] setEnabled:NO];
     
-    [self addCenterButtonWithImage:nil andHighlightImage:nil];
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"tabbar-more"]];
     
     [self.tabBar addObserver:self
                   forKeyPath:@"selectedItem"
@@ -128,24 +127,22 @@
 }
 
 
--(void)addCenterButtonWithImage:(UIImage *)buttonImage andHighlightImage:(UIImage *)highlightImage
+-(void)addCenterButtonWithImage:(UIImage *)buttonImage
 {
     _centerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     CGPoint origin = [self.view convertPoint:self.tabBar.center toView:self.tabBar];
     CGSize buttonSize = CGSizeMake(self.tabBar.frame.size.width / 5 - 6, self.tabBar.frame.size.height - 4);
-#if 1
+#if 0
     _centerButton.frame = CGRectMake(origin.x - buttonSize.width/2, origin.y - buttonSize.height/2, buttonSize.width, buttonSize.height);
     [_centerButton setCornerRadius:5.0];
 #else
     _centerButton.frame = CGRectMake(origin.x - buttonSize.height/2, origin.y - buttonSize.height/2, buttonSize.height, buttonSize.height);
     [_centerButton setCornerRadius:buttonSize.height/2];
 #endif
-    [_centerButton setBackgroundColor:[UIColor colorWithHex:0x15C230]];
+    [_centerButton setBackgroundColor:[UIColor colorWithHex:0x24a83d]];
     
-    
-    [_centerButton setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [_centerButton setBackgroundImage:highlightImage forState:UIControlStateHighlighted];
+    [_centerButton setImage:buttonImage forState:UIControlStateNormal];
     
     [_centerButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
     

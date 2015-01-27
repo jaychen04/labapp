@@ -27,7 +27,7 @@ static const double accelerationThreshold = 2.0f;
 @interface ShakingViewController ()
 
 @property (nonatomic, strong) OSCRandomMessage *randomMessage;
-@property (nonatomic, strong) UIView *layer;
+@property (nonatomic, strong) UIImageView *layer;
 @property (nonatomic, strong) RandomMessageCell *cell;
 @property CMMotionManager *motionManager;
 @property NSOperationQueue *operationQueue;
@@ -106,17 +106,9 @@ static const double accelerationThreshold = 2.0f;
 
 - (void)setLayout
 {
-    _layer = [UIView new];
+    _layer = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shake"]];
     _layer.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_layer];
-    
-    UIImageView *imageUp = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shake_up"]];
-    imageUp.contentMode = UIViewContentModeScaleAspectFill;
-    [_layer addSubview:imageUp];
-    
-    UIImageView *imageDown = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"shake_down"]];
-    imageDown.contentMode = UIViewContentModeScaleAspectFill;
-    [_layer addSubview:imageDown];
     
     _cell = [RandomMessageCell new];
     [_cell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCell:)]];
@@ -129,7 +121,7 @@ static const double accelerationThreshold = 2.0f;
     
     for (UIView *view in _layer.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_layer, imageUp, imageDown, _cell);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_layer, _cell);
     
     // layer
     
@@ -144,14 +136,6 @@ static const double accelerationThreshold = 2.0f;
                                                              toItem:self.view
                                                           attribute:NSLayoutAttributeCenterX
                                                          multiplier:1.f constant:0.f]];
-    
-    
-    // imageUp and imageDown
-    
-    [_layer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[imageUp(168.75)]|" options:0 metrics:nil views:views]];
-    [_layer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|->=1-[imageUp(95.25)][imageDown(95.25)]|"
-                                                                   options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                   metrics:nil views:views]];
     
     // cell
     
