@@ -101,7 +101,7 @@
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];
-    [_portrait sd_setImageWithURL:_user.portraitURL placeholderImage:nil];
+    [_portrait loadPortrait:_user.portraitURL];
     [header addSubview:_portrait];
     
     _nameLabel = [UILabel new];

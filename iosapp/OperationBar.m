@@ -27,7 +27,7 @@
 - (void)setLayout
 {
     NSMutableArray *items = [NSMutableArray new];
-    NSArray *images    = @[@"button_keyboard_normal", @"toolbar-showComments", @"toolbar-star", @"toolbar-share", @"toolbar-report"];
+    NSArray *images    = @[@"editingbar", @"toolbar-showComments", @"toolbar-star", @"toolbar-share", @"toolbar-report"];
     NSArray *selectors = @[@"switchMode:", @"showComments:", @"toggleStar:", @"share:", @"report:"];
     
     for (int i = 0; i < 5; ++i) {

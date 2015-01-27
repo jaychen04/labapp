@@ -99,14 +99,14 @@
     if (_editingBar.editView.inputView == self.emojiPageVC.view) {
         [_editingBar.editView becomeFirstResponder];
         
-        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"compose_toolbar_emoji_normal"] forState:UIControlStateNormal];
+        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"emoji"] forState:UIControlStateNormal];
         _editingBar.editView.inputView = nil;
         _editingBar.editView.font = [UIFont systemFontOfSize:18];
         [_editingBar.editView reloadInputViews];
     } else {
         [_editingBar.editView becomeFirstResponder];
         
-        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"compose_toolbar_keyboard_normal"] forState:UIControlStateNormal];
+        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"toolbar-text"] forState:UIControlStateNormal];
         _editingBar.editView.inputView = _emojiPageVC.view;
         [_editingBar.editView reloadInputViews];
         

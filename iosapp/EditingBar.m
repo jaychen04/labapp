@@ -33,13 +33,13 @@
 - (void)setLayoutWithModeSwitchButton:(BOOL)hasAModeSwitchButton
 {
     _modeSwitchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_modeSwitchButton setImage:[UIImage imageNamed:@"button_keyboard_normal"] forState:UIControlStateNormal];
+    [_modeSwitchButton setImage:[UIImage imageNamed:@"operationbar"] forState:UIControlStateNormal];
     
     _inputViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_inputViewButton setImage:[UIImage imageNamed:@"button_emoji_normal"] forState:UIControlStateNormal];
+    [_inputViewButton setImage:[UIImage imageNamed:@"emoji"] forState:UIControlStateNormal];
     
     _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_sendButton setImage:[UIImage imageNamed:@"button_comment_normal"] forState:UIControlStateNormal];
+    [_sendButton setImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
     
     _editView = [GrowingTextView new];
     [_editView setCornerRadius:5.0];
@@ -55,11 +55,11 @@
     NSDictionary *views = NSDictionaryOfVariableBindings(_modeSwitchButton, _inputViewButton, _sendButton, _editView);
     
     if (hasAModeSwitchButton) {
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_modeSwitchButton]-5-[_editView]-5-[_inputViewButton][_sendButton]-5-|" options:0 metrics:nil views:views]];
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_modeSwitchButton]-5-[_editView]-5-[_inputViewButton]-2-[_sendButton]-5-|" options:0 metrics:nil views:views]];
         [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-3-[_modeSwitchButton]-3-|" options:0 metrics:nil views:views]];
     } else {
         [_modeSwitchButton removeFromSuperview];
-        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_editView]-5-[_inputViewButton][_sendButton]-5-|"
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-5-[_editView]-5-[_inputViewButton]-2-[_sendButton]-5-|"
                                                                      options:0 metrics:nil views:views]];
     }
     
