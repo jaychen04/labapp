@@ -8,11 +8,20 @@
 
 #import "BottomBarViewController.h"
 
-typedef NS_ENUM(NSUInteger, DetailsType)
+typedef NS_ENUM(int, DetailsType)
 {
     DetailsTypeNews,
     DetailsTypeBlog,
     DetailsTypeSoftware,
+};
+
+typedef NS_ENUM(int, FavoriteType)
+{
+    FavoriteTypeSoftware = 1,
+    FavoriteTypeTopic,
+    FavoriteTypeBlog,
+    FavoriteTypeNews,
+    FavoriteTypeCode,
 };
 
 @class OSCNews;

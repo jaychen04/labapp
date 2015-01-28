@@ -16,6 +16,8 @@
 @property (nonatomic, strong) UIButton *shareButton;
 @property (nonatomic, strong) UIButton *reportButton;
 
+@property (nonatomic, assign) BOOL isStarred;
+
 @property (nonatomic, copy) void (^switchMode)();
 @property (nonatomic, copy) void (^showComments)();
 @property (nonatomic, copy) void (^toggleStar)();

@@ -7,6 +7,7 @@
 //
 
 #import "OperationBar.h"
+#import <ReactiveCocoa.h>
 
 @implementation OperationBar
 
@@ -16,8 +17,8 @@
     if (self) {
         self.backgroundColor = [UIColor grayColor];
         
-        [self addBorder];
         [self setLayout];
+        [self addBorder];
     }
     
     return self;
@@ -39,6 +40,19 @@
     }
     
     [self setItems:items];
+}
+
+- (void)setIsStarred:(BOOL)isStarred
+{
+    UIBarButtonItem *starButton = self.items[4];
+    
+    if (isStarred) {
+        [starButton setImage:[[UIImage imageNamed:@"toolbar-starred"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    } else {
+        [starButton setImage:[[UIImage imageNamed:@"toolbar-star"]    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+    }
+    
+    _isStarred = isStarred;
 }
 
 
