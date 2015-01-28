@@ -34,7 +34,7 @@
 
 
 
-@interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate>
+@interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, assign) CommentType commentType;
 @property (nonatomic, assign) FavoriteType favoriteType;
@@ -288,7 +288,14 @@
     };
     
     self.operationBar.report = ^ {
-        
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
+                                                            message:[NSString stringWithFormat:@"链接地址：%@", weakSelf.detailsURL]
+                                                           delegate:weakSelf
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"确定", nil];
+        alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+        [alertView textFieldAtIndex:0].placeholder = @"举报原因";
+        [alertView show];
     };
 }
 
@@ -371,12 +378,46 @@
 
 
 #pragma mark - 浏览器链接处理
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
 
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != [alertView cancelButtonIndex]) {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        
+        [manager POST:@"http://www.oschina.net/action/communityManage/report"
+           parameters:@{
+                        @"memo":        [alertView textFieldAtIndex:0].text == 0? @"其他原因": [alertView textFieldAtIndex:0],
+                        @"obj_id":      @(_objectID),
+                        @"obj_type":    @"4",
+                        @"url":         _detailsURL
+                        }
+              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                  MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.labelText = @"举报成功";
+                  
+                  [HUD hide:YES afterDelay:1];
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = @"网络异常，操作失败";
+                  
+                  [HUD hide:YES afterDelay:1];
+              }];
+    }
+}
 
 
 
