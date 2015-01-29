@@ -43,6 +43,7 @@
 
 @property (nonatomic, strong) OSCNews *news;
 @property (nonatomic, copy) NSString *detailsURL;
+@property (nonatomic, copy) NSString *URL;
 @property (nonatomic, strong) UIWebView *detailsView;
 @property (nonatomic, copy) NSString *tag;
 @property (nonatomic, assign) SEL loadMethod;
@@ -289,7 +290,7 @@
     
     self.operationBar.report = ^ {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
-                                                            message:[NSString stringWithFormat:@"链接地址：%@", weakSelf.detailsURL]
+                                                            message:[NSString stringWithFormat:@"链接地址：%@", weakSelf.URL]
                                                            delegate:weakSelf
                                                   cancelButtonTitle:@"取消"
                                                   otherButtonTitles:@"确定", nil];
@@ -315,6 +316,7 @@
     
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = newsDetails.isFavorite;
+    _URL = [newsDetails.url absoluteString];
 }
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
@@ -324,6 +326,7 @@
     
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = blogDetails.isFavorite;
+    _URL = [blogDetails.url absoluteString];
 }
 
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
@@ -336,6 +339,7 @@
     
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = softwareDetails.isFavorite;
+    _URL = [softwareDetails.url absoluteString];
 }
 
 - (NSString *)createButtonsWithHomepageURL:(NSString *)homepageURL andDocumentURL:(NSString *)documentURL andDownloadURL:(NSString *)downloadURL
@@ -365,6 +369,7 @@
     
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = postDetails.isFavorite;
+    _URL = [postDetails.url absoluteString];
 }
 
 
@@ -396,10 +401,10 @@
         
         [manager POST:@"http://www.oschina.net/action/communityManage/report"
            parameters:@{
-                        @"memo":        [alertView textFieldAtIndex:0].text == 0? @"其他原因": [alertView textFieldAtIndex:0],
+                        @"memo":        [alertView textFieldAtIndex:0].text.length == 0? @"其他原因": [alertView textFieldAtIndex:0].text,
                         @"obj_id":      @(_objectID),
                         @"obj_type":    @"4",
-                        @"url":         _detailsURL
+                        @"url":         _URL
                         }
               success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
                   MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
