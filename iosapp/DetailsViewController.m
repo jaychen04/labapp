@@ -185,6 +185,11 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backItem];
     
+    if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware) {
+        // 资讯和软件详情没有“举报”选项
+        self.operationBar.items = [self.operationBar.items subarrayWithRange:NSMakeRange(0, 8)];
+    }
+    
     _detailsView = [UIWebView new];
     _detailsView.delegate = self;
     _detailsView.scrollView.delegate = self;
