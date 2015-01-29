@@ -797,7 +797,7 @@
 			name = SwipeableViewController;
 			sourceTree = "<group>";
 		};
-		00C9A73919EE8536000EA878 /* OSC API and Model */ = {
+		00C9A73919EE8536000EA878 /* API */ = {
 			isa = PBXGroup;
 			children = (
 				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
@@ -826,7 +826,7 @@
 				380FD2211A74E702003C4021 /* OSCActivity.h */,
 				380FD2221A74E702003C4021 /* OSCActivity.m */,
 			);
-			name = "OSC API and Model";
+			name = API;
 			sourceTree = "<group>";
 		};
 		00D6BCD119EB673200E8754E = {
@@ -852,10 +852,10 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
-				00C9A73919EE8536000EA878 /* OSC API and Model */,
+				00C9A73919EE8536000EA878 /* API */,
 				386F1E1C1A7A0CDA00B773EE /* UMSocial_Sdk_4.2.1 */,
 				00EDF60C19EFC13500A5C842 /* Utils */,
-				3874EC221A08E8EA000D2894 /* User */,
+				3874EC221A08E8EA000D2894 /* 用户 */,
 				382A94B21A28653200AAAFEA /* 发现 */,
 				00D6BD3219ECD73B00E8754E /* 动弹 */,
 				381EAB6019FE373100C1937C /* 新闻 */,
@@ -1416,16 +1416,16 @@
 			path = Sina;
 			sourceTree = "<group>";
 		};
-		3874EC221A08E8EA000D2894 /* User */ = {
+		3874EC221A08E8EA000D2894 /* 用户 */ = {
 			isa = PBXGroup;
 			children = (
 				3874EC261A08E957000D2894 /* LoginViewController.h */,
 				3874EC271A08E957000D2894 /* LoginViewController.m */,
 				386039621A0A179A007C9B88 /* UserDetailsViewController.h */,
 				386039631A0A179A007C9B88 /* UserDetailsViewController.m */,
-				38BD3D151A37FD1500682D1F /* MyInfoVC */,
+				38BD3D151A37FD1500682D1F /* 我 */,
 			);
-			name = User;
+			name = "用户";
 			sourceTree = "<group>";
 		};
 		38996A561A0266F80025AA52 /* 博客 */ = {
@@ -1565,7 +1565,7 @@
 			name = Software;
 			sourceTree = "<group>";
 		};
-		38BD3D151A37FD1500682D1F /* MyInfoVC */ = {
+		38BD3D151A37FD1500682D1F /* 我 */ = {
 			isa = PBXGroup;
 			children = (
 				38BD3D0E1A37F38900682D1F /* MyInfoViewController.h */,
@@ -1575,7 +1575,7 @@
 				38B0BF8F1A3AE72E00A2FDB0 /* Friends */,
 				38B0BF961A3AFEB400A2FDB0 /* Messages */,
 			);
-			name = MyInfoVC;
+			name = "我";
 			sourceTree = "<group>";
 		};
 		38BD3D191A38343F00682D1F /* Blog */ = {
