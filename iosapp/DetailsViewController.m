@@ -26,6 +26,7 @@
 #import "Config.h"
 #import "CommentsBottomBarViewController.h"
 #import "TweetsViewController.h"
+#import "UMSocial.h"
 
 
 #define HTML_STYLE @"<style>#oschina_title {color: #000000; margin-bottom: 6px; font-weight:bold;}#oschina_title img{vertical-align:middle;margin-right:6px;}#oschina_title a{color:#0D6DA8;}#oschina_outline {color: #707070; font-size: 12px;}#oschina_outline a{color:#0D6DA8;}#oschina_software{color:#808080;font-size:12px}#oschina_body img {max-width: 300px;}#oschina_body {font-size:16px;max-width:300px;line-height:24px;} #oschina_body table{max-width:300px;}#oschina_body pre { font-size:9pt;font-family:Courier New,Arial;border:1px solid #ddd;border-left:5px solid #6CE26C;background:#f6f6f6;padding:5px;}</style>"
@@ -44,6 +45,7 @@
 @property (nonatomic, strong) OSCNews *news;
 @property (nonatomic, copy) NSString *detailsURL;
 @property (nonatomic, copy) NSString *URL;
+@property (nonatomic, copy) NSString *objectTitle;
 @property (nonatomic, strong) UIWebView *detailsView;
 @property (nonatomic, copy) NSString *tag;
 @property (nonatomic, assign) SEL loadMethod;
@@ -63,6 +65,7 @@
         
         _news = news;
         _objectID = news.newsID;
+        _objectTitle = news.title;
         
         switch (news.type) {
             case NewsTypeStandardNews:
@@ -118,6 +121,7 @@
         _commentType = CommentTypeBlog;
         _favoriteType = FavoriteTypeBlog;
         _objectID = blog.blogID;
+        _objectTitle = blog.title;
         
         self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.title = @"博客详情";
@@ -138,6 +142,7 @@
     _commentType = CommentTypePost;
     _favoriteType = FavoriteTypeTopic;
     _objectID = post.postID;
+    _objectTitle = post.title;
     
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"帖子详情";
@@ -156,6 +161,7 @@
     
     _commentType = CommentTypeSoftware;
     _favoriteType = FavoriteTypeSoftware;
+    _objectTitle = software.name;
     
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"软件详情";
@@ -226,6 +232,8 @@
 {
     __weak DetailsViewController *weakSelf = self;
     
+    /********* 收藏 **********/
+    
     self.operationBar.toggleStar = ^ {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
@@ -274,6 +282,9 @@
               }];
     };
     
+    
+    /********** 显示回复 ***********/
+    
     self.operationBar.showComments = ^ {
         if (weakSelf.commentType == CommentTypeSoftware) {
             TweetsViewController *tweetsVC = [[TweetsViewController alloc] initWIthSoftwareID:weakSelf.objectID];
@@ -284,9 +295,39 @@
         }
     };
     
+    
+    /********** 分享设置 ***********/
+    
     self.operationBar.share = ^ {
+        NSString *title = [NSString stringWithFormat:@"开源中国%@分享", [weakSelf.navigationItem.title substringToIndex:2]];
+        // 微信相关设置
         
+        [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
+        [UMSocialData defaultData].extConfig.wechatSessionData.url = weakSelf.URL;
+        [UMSocialData defaultData].extConfig.wechatTimelineData.url = weakSelf.URL;
+        [UMSocialData defaultData].extConfig.title = title;
+        
+        // 手机QQ相关设置
+        
+        [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
+        [UMSocialData defaultData].extConfig.qqData.title = title;
+        //[UMSocialData defaultData].extConfig.qqData.shareText = weakSelf.objectTitle;
+        [UMSocialData defaultData].extConfig.qqData.url = weakSelf.URL;
+        
+        // 新浪微博相关设置
+        
+        [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:weakSelf.URL];
+        
+        [UMSocialSnsService presentSnsIconSheetView:weakSelf
+                                             appKey:@"54c9a412fd98c5779c000752"
+                                          shareText:[NSString stringWithFormat:@"《%@》，分享来自 %@", weakSelf.objectTitle, weakSelf.URL]
+                                         shareImage:[UIImage imageNamed:@"AppIcon"]
+                                    shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
+                                           delegate:nil];
     };
+    
+    
+    /*********** 举报 ************/
     
     self.operationBar.report = ^ {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
