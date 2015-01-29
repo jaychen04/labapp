@@ -193,10 +193,11 @@
                                                  animated:YES]; break;
         }
         case 1: {
+            [self.navigationController pushViewController:[[BlogsViewController alloc] initWithUserID:_user.userID] animated:YES];
             break;
         }
         case 2: {
-            [self.navigationController pushViewController:[[BlogsViewController alloc] initWithUserID:_user.userID] animated:YES]; break;
+             break;
         }
         case 3: {
             break;
