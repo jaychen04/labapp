@@ -263,6 +263,7 @@
 		386F1E621A7A2A8A00B773EE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E611A7A2A8A00B773EE /* CoreTelephony.framework */; };
 		386F1E641A7A2A9B00B773EE /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E631A7A2A9B00B773EE /* libstdc++.dylib */; };
 		386F1E661A7A2AA300B773EE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E651A7A2AA300B773EE /* libz.dylib */; };
+		386F1E6A1A7A47E800B773EE /* share-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 386F1E691A7A47E800B773EE /* share-image.png */; };
 		3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC1B1A08DB8E000D2894 /* EditingBar.m */; };
 		3874EC281A08E957000D2894 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC271A08E957000D2894 /* LoginViewController.m */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
@@ -658,6 +659,7 @@
 		386F1E611A7A2A8A00B773EE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		386F1E631A7A2A9B00B773EE /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		386F1E651A7A2AA300B773EE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		386F1E691A7A47E800B773EE /* share-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-image.png"; sourceTree = "<group>"; };
 		3874EC1A1A08DB8E000D2894 /* EditingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditingBar.h; sourceTree = "<group>"; };
 		3874EC1B1A08DB8E000D2894 /* EditingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditingBar.m; sourceTree = "<group>"; };
 		3874EC261A08E957000D2894 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -1290,6 +1292,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				386F1E691A7A47E800B773EE /* share-image.png */,
 				380FD3481A77726E003C4021 /* editting bar */,
 				380FD30A1A776D96003C4021 /* tweet editting */,
 				380FD2961A7762A8003C4021 /* tabbar */,
@@ -1915,6 +1918,7 @@
 				3838D1B31A6F4EB100CC7913 /* shake_up.png in Resources */,
 				380FD2C01A7762A8003C4021 /* tabbar-more@3x.png in Resources */,
 				38BC59B51A5D406300F3C4D2 /* sound@2x.png in Resources */,
+				386F1E6A1A7A47E800B773EE /* share-image.png in Resources */,
 				382A94AB1A26D27400AAAFEA /* 99@2x.png in Resources */,
 				382A94821A26D27400AAAFEA /* 062@2x.png in Resources */,
 				380FD2C21A7762A8003C4021 /* tabbar-news-selected@2x.png in Resources */,
