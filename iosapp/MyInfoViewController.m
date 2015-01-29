@@ -18,7 +18,7 @@
 #import "EventsViewController.h"
 #import "MessagesViewController.h"
 #import "LoginViewController.h"
-#import "SearchResultsViewController.h"
+#import "SearchViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -250,7 +250,7 @@
 
 - (void)pushSearchViewController
 {
-    [self.navigationController pushViewController:[SearchResultsViewController new] animated:YES];
+    [self.navigationController pushViewController:[SearchViewController new] animated:YES];
 }
 
 
