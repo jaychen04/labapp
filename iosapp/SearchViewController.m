@@ -61,22 +61,15 @@
     
     [searchBar resignFirstResponder];
     
-    for (SearchResultsViewController *searchVC in self.viewPager.childViewControllers) {
-        searchVC.keyword = searchBar.text;
-        [searchVC refresh];
+    for (SearchResultsViewController *searchResultsVC in self.viewPager.childViewControllers) {
+        searchResultsVC.keyword = searchBar.text;
+        [searchResultsVC refresh];
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.viewPager.tableView reloadData];
     });
 }
-
-- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar
-{
-    searchBar.text = @"";
-    [searchBar resignFirstResponder];
-}
-
 
 
 
