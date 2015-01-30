@@ -16,7 +16,7 @@
 #import "UMSocialSinaHandler.h"
 
 
-@interface AppDelegate () <UIApplicationDelegate,UITabBarControllerDelegate>
+@interface AppDelegate () <UIApplicationDelegate, UITabBarControllerDelegate>
 
 @property (nonatomic, strong) OSCTabBarController *tabBarController;
 

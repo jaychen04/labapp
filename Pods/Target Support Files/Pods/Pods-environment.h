@@ -54,6 +54,12 @@
 #define COCOAPODS_VERSION_MINOR_AFOnoResponseSerializer 0
 #define COCOAPODS_VERSION_PATCH_AFOnoResponseSerializer 0
 
+// ECSlidingViewController
+#define COCOAPODS_POD_AVAILABLE_ECSlidingViewController
+#define COCOAPODS_VERSION_MAJOR_ECSlidingViewController 2
+#define COCOAPODS_VERSION_MINOR_ECSlidingViewController 0
+#define COCOAPODS_VERSION_PATCH_ECSlidingViewController 3
+
 // GPUImage
 #define COCOAPODS_POD_AVAILABLE_GPUImage
 #define COCOAPODS_VERSION_MAJOR_GPUImage 0
@@ -69,32 +75,32 @@
 // Ono
 #define COCOAPODS_POD_AVAILABLE_Ono
 #define COCOAPODS_VERSION_MAJOR_Ono 1
-#define COCOAPODS_VERSION_MINOR_Ono 1
-#define COCOAPODS_VERSION_PATCH_Ono 3
+#define COCOAPODS_VERSION_MINOR_Ono 2
+#define COCOAPODS_VERSION_PATCH_Ono 0
 
 // ReactiveCocoa
 #define COCOAPODS_POD_AVAILABLE_ReactiveCocoa
 #define COCOAPODS_VERSION_MAJOR_ReactiveCocoa 2
 #define COCOAPODS_VERSION_MINOR_ReactiveCocoa 4
-#define COCOAPODS_VERSION_PATCH_ReactiveCocoa 2
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa 4
 
 // ReactiveCocoa/Core
 #define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_Core
 #define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_Core 2
 #define COCOAPODS_VERSION_MINOR_ReactiveCocoa_Core 4
-#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_Core 2
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_Core 4
 
 // ReactiveCocoa/UI
 #define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_UI
 #define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_UI 2
 #define COCOAPODS_VERSION_MINOR_ReactiveCocoa_UI 4
-#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_UI 2
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_UI 4
 
 // ReactiveCocoa/no-arc
 #define COCOAPODS_POD_AVAILABLE_ReactiveCocoa_no_arc
 #define COCOAPODS_VERSION_MAJOR_ReactiveCocoa_no_arc 2
 #define COCOAPODS_VERSION_MINOR_ReactiveCocoa_no_arc 4
-#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_no_arc 2
+#define COCOAPODS_VERSION_PATCH_ReactiveCocoa_no_arc 4
 
 // SDWebImage
 #define COCOAPODS_POD_AVAILABLE_SDWebImage
