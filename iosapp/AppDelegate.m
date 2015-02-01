@@ -10,10 +10,14 @@
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
 #import "OSCTabBarController.h"
+#import "SideMenuViewController.h"
+
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialQQHandler.h"
 #import "UMSocialSinaHandler.h"
+
+#import <RESideMenu/RESideMenu.h>
 
 
 @interface AppDelegate () <UIApplicationDelegate, UITabBarControllerDelegate>
@@ -29,10 +33,20 @@
     _tabBarController = [OSCTabBarController new];
     _tabBarController.delegate = self;
     
+    RESideMenu *sideMenuTabBarViewController = [[RESideMenu alloc] initWithContentViewController:_tabBarController
+                                                                          leftMenuViewController:[SideMenuViewController new]
+                                                                         rightMenuViewController:nil];
+    sideMenuTabBarViewController.scaleContentView = NO;
+    sideMenuTabBarViewController.scaleMenuView = NO;
+    
+    _tabBarController.presentLeftMenuViewController = ^ {
+        [sideMenuTabBarViewController presentLeftMenuViewController];
+    };
+    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = _tabBarController;
+    self.window.rootViewController = sideMenuTabBarViewController;
     [self.window makeKeyAndVisible];
     
     

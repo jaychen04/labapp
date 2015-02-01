@@ -25,6 +25,8 @@
 #import "ShakingViewController.h"
 #import "SearchViewController.h"
 
+#import <RESideMenu/RESideMenu.h>
+
 
 @interface OSCTabBarController ()
 
@@ -64,18 +66,17 @@
     DiscoverTableVC *discoverTableVC = [DiscoverTableVC new];
     MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithUserID:[Config getOwnID]];
     
-    UINavigationController *newsNav     = [[UINavigationController alloc] initWithRootViewController:newsSVC];
-    UINavigationController *tweetsNav   = [[UINavigationController alloc] initWithRootViewController:tweetsSVC];
-    UINavigationController *discoverNav = [[UINavigationController alloc] initWithRootViewController:discoverTableVC];
-    UINavigationController *meNav       = [[UINavigationController alloc] initWithRootViewController:myInfoVC];
+    UINavigationController *meNav = [[UINavigationController alloc] initWithRootViewController:myInfoVC];
     
-    for (UIViewController *viewController in @[newsSVC, tweetsSVC, discoverTableVC]) {
-        viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-search"] style:UIBarButtonItemStylePlain target:self action:@selector(pushSearchViewController)];
-        viewController.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"] style:UIBarButtonItemStylePlain target:self action:nil];
-    }
     
     self.tabBar.translucent = NO;
-    self.viewControllers = @[newsNav, tweetsNav, [UIViewController new], discoverNav, meNav];
+    self.viewControllers = @[
+                             [self addNavigationItemForViewController:newsSVC],
+                             [self addNavigationItemForViewController:tweetsSVC],
+                             [UIViewController new],
+                             [self addNavigationItemForViewController:discoverTableVC],
+                             meNav
+                             ];
     
     [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
@@ -282,6 +283,32 @@
         }
         default: break;
     }
+}
+
+
+#pragma mark -
+
+- (UINavigationController *)addNavigationItemForViewController:(UIViewController *)viewController
+{
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    
+    viewController.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"]
+                                                                                        style:UIBarButtonItemStylePlain
+                                                                                       target:self action:@selector(onClickMenuButton)];
+    
+    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-search"]
+                                                                                        style:UIBarButtonItemStylePlain
+                                                                                       target:self action:@selector(pushSearchViewController)];
+    
+    
+    
+    return navigationController;
+}
+
+- (void)onClickMenuButton
+{
+    _presentLeftMenuViewController();
 }
 
 

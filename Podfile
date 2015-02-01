@@ -6,5 +6,5 @@ pod 'SSKeychain'
 pod 'ReactiveCocoa'
 pod 'GPUImage', '~> 0.1.6'
 pod 'MBProgressHUD', '~> 0.8'
-pod 'ECSlidingViewController', '~> 2.0.3'
+pod 'RESideMenu', '~> 4.0.7'
 
