@@ -35,24 +35,23 @@
     self.window.rootViewController = _tabBarController;
     [self.window makeKeyAndVisible];
     
+    
+    /************ 控件外观设置 ************/
+    
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x15A230]];
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];               //UIColorFromRGB(0xdadada)
     
     
-    
-    /************ 控件外观设置 ************/
-    
-    //UITextField *globalTextField = [UITextField appearanceWhenContainedIn:[UISearchBar class], nil];
     [UISearchBar appearance].tintColor = [UIColor colorWithHex:0x15A230];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setCornerRadius:14.0];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setAlpha:0.6];
     
+    
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor colorWithHex:0xDCDCDC];
     pageControl.currentPageIndicatorTintColor = [UIColor grayColor];
-    
     
     
     /************ 友盟分享组件 **************/
