@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
     
+    self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -47,8 +48,17 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *headerView = [UIView new];
-    
     headerView.backgroundColor = [UIColor colorWithHex:0x15A230];
+    
+    UILabel *titleLabel = [UILabel new];
+    titleLabel.text = @"开源中国";
+    titleLabel.font = [UIFont boldSystemFontOfSize:18];
+    titleLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
+    titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [headerView addSubview:titleLabel];
+    NSDictionary *views = NSDictionaryOfVariableBindings(titleLabel);
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[titleLabel]-10-|" options:0 metrics:nil views:views]];
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[titleLabel]" options:0 metrics:nil views:views]];
     
     return headerView;
 }
@@ -68,7 +78,10 @@
 {
     UITableViewCell *cell = [UITableViewCell new];
     
+    cell.backgroundColor = [UIColor themeColor];
+    cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"sidemenu-logout"][indexPath.row]];
     cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"注销"][indexPath.row];
+    //cell.textLabel.font = [UIFont systemFontOfSize:21];
     
     return cell;
 }

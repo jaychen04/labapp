@@ -37,6 +37,7 @@
     sideMenuTabBarViewController.scaleContentView = NO;
     sideMenuTabBarViewController.scaleMenuView = NO;
     sideMenuTabBarViewController.contentViewShadowEnabled = YES;
+    sideMenuTabBarViewController.contentViewShadowRadius = 4.5;
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
