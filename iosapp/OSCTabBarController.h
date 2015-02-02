@@ -11,6 +11,5 @@
 @interface OSCTabBarController : UITabBarController
 
 @property (nonatomic, strong) UIButton *centerButton;
-@property (nonatomic, copy) void (^presentLeftMenuViewController)();
 
 @end

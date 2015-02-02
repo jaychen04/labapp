@@ -22,26 +22,21 @@
 
 @interface AppDelegate () <UIApplicationDelegate, UITabBarControllerDelegate>
 
-@property (nonatomic, strong) OSCTabBarController *tabBarController;
-
 @end
 
 @implementation AppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    _tabBarController = [OSCTabBarController new];
-    _tabBarController.delegate = self;
+    OSCTabBarController *tabBarController = [OSCTabBarController new];
+    tabBarController.delegate = self;
     
-    RESideMenu *sideMenuTabBarViewController = [[RESideMenu alloc] initWithContentViewController:_tabBarController
+    RESideMenu *sideMenuTabBarViewController = [[RESideMenu alloc] initWithContentViewController:tabBarController
                                                                           leftMenuViewController:[SideMenuViewController new]
                                                                          rightMenuViewController:nil];
     sideMenuTabBarViewController.scaleContentView = NO;
     sideMenuTabBarViewController.scaleMenuView = NO;
-    
-    _tabBarController.presentLeftMenuViewController = ^ {
-        [sideMenuTabBarViewController presentLeftMenuViewController];
-    };
+    sideMenuTabBarViewController.contentViewShadowEnabled = YES;
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     

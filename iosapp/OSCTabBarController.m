@@ -308,7 +308,7 @@
 
 - (void)onClickMenuButton
 {
-    _presentLeftMenuViewController();
+    [self.sideMenuViewController presentLeftMenuViewController];
 }
 
 
