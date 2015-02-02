@@ -74,7 +74,7 @@ static NSString * const kSoftwareCatalogCellID = @"SoftwareCatalogCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.objects.count) {
-        return 60;
+        return 48;
     } else {
         return 60;
     }

@@ -18,6 +18,8 @@
 
 @interface SideMenuViewController ()
 
+@property (nonatomic, strong) UIViewController *reservedViewController;
+
 @end
 
 @implementation SideMenuViewController
@@ -73,6 +75,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     switch (indexPath.row) {
         case 0: {
             SwipeableViewController *newsSVC = [[SwipeableViewController alloc] initWithTitle:@"技术问答"
@@ -85,11 +89,7 @@
                                                                                                 [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager]
                                                                                                 ]];
             
-            UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:newsSVC];
-            //newsSVC.navigationItem.leftBarButtonItem = [UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(selector)
-            
-            [self.sideMenuViewController setContentViewController:navigationController animated:YES];
-            [self.sideMenuViewController hideMenuViewController];
+            [self setMenuContentViewController:newsSVC];
             
             break;
         }
@@ -97,16 +97,27 @@
             SwipeableViewController *softwaresSVC = [[SwipeableViewController alloc] initWithTitle:@"开源软件"
                                                                                       andSubTitles:@[@"分类", @"推荐", @"最新", @"热门", @"国产"]
                                                                                     andControllers:@[
-                                                                                                     [SoftwareCatalogVC new],
+                                                                                                     [[SoftwareCatalogVC alloc] initWithTag:0],
                                                                                                      [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeRecommended],
                                                                                                      [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeNewest],
                                                                                                      [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeHottest],
                                                                                                      [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeCN]
                                                                                                      ]];
             
+            [self setMenuContentViewController:softwaresSVC];
+            
             break;
         }
         case 2: {
+            SwipeableViewController *blogsSVC = [[SwipeableViewController alloc] initWithTitle:@"博客区"
+                                                                                  andSubTitles:@[@"最新博客", @"推荐阅读"]
+                                                                                andControllers:@[
+                                                                                                 [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
+                                                                                                 [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
+                                                                                                 ]];
+            
+            [self setMenuContentViewController:blogsSVC];
+            
             break;
         }
         case 3: {
@@ -115,6 +126,26 @@
         default:
             break;
     }
+}
+
+
+- (void)setMenuContentViewController:(UIViewController *)viewController
+{
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                                                       style:UIBarButtonItemStylePlain
+                                                                                      target:self action:@selector(backToHomePage)];
+    
+    _reservedViewController = self.sideMenuViewController.contentViewController;
+    [self.sideMenuViewController setContentViewController:navigationController];
+    [self.sideMenuViewController hideMenuViewController];
+}
+
+
+- (void)backToHomePage
+{
+    [self.sideMenuViewController setContentViewController:_reservedViewController animated:NO];
+    [self.sideMenuViewController hideMenuViewController];
 }
 
 
