@@ -441,25 +441,36 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
+    NSString *URL;
+    NSDictionary *parameters;
+    NSString *content = [Utils convertRichTextToRawText:self.editingBar.editView];
     
-    NSString *URL = _commentType == CommentTypeBlog? [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB] :
-    [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENT_PUB];
+    if (_commentType == CommentTypeSoftware) {
+        URL = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_PUB];
+        parameters = @{
+                       @"uid": @([Config getOwnID]),
+                       @"msg": [content stringByAppendingString:[NSString stringWithFormat:@" #%@#", _softwareName]]
+                       };
+    } else if (_commentType == CommentTypeBlog) {
+        URL = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB];
+        parameters = @{
+                       @"blog": @(_objectID),
+                       @"uid": @([Config getOwnID]),
+                       @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
+                       @"reply_id": @(0),
+                       @"objuid": @(0)
+                       };
+    } else {
+        URL = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENT_PUB];
+        parameters = @{
+                       @"catalog": @(_commentType),
+                       @"id": @(_objectID),
+                       @"uid": @([Config getOwnID]),
+                       @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
+                       @"isPostToMyZone": @(0)
+                       };
+    }
     
-    NSDictionary *parameters = _commentType == CommentTypeBlog?
-                                @{
-                                  @"blog": @(_objectID),
-                                  @"uid": @([Config getOwnID]),
-                                  @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
-                                  @"reply_id": @(0),
-                                  @"objuid": @(0)
-                                  }:
-                                @{
-                                  @"catalog": @(_commentType),
-                                  @"id": @(_objectID),
-                                  @"uid": @([Config getOwnID]),
-                                  @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
-                                  @"isPostToMyZone": @(0)
-                                  };
     [manager POST:URL
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
