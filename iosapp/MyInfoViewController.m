@@ -24,6 +24,7 @@
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <RESideMenu.h>
 
 @interface MyInfoViewController ()
 
@@ -86,7 +87,7 @@
     [super viewDidLoad];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-search"] style:UIBarButtonItemStylePlain target:self action:@selector(pushSearchViewController)];
-    self.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"] style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"] style:UIBarButtonItemStylePlain target:self action:@selector(onClickMenuButton)];
     
     self.tableView.bounces = NO;
     self.navigationItem.title = @"我";
@@ -248,6 +249,11 @@
     [self.navigationController pushViewController:friendsSVC animated:YES];
 }
 
+
+- (void)onClickMenuButton
+{
+    [self.sideMenuViewController presentLeftMenuViewController];
+}
 
 - (void)pushSearchViewController
 {

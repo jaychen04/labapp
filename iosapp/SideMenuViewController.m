@@ -28,6 +28,7 @@
 {
     [super viewDidLoad];
     
+    self.tableView.bounces = NO;
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
