@@ -104,15 +104,19 @@
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    switch (indexPath.section) {
+    switch (indexPath.section)
+    {
         case 0:
             [self.navigationController pushViewController:[EventsViewController new] animated:YES];
             break;
         case 1:
-            if (indexPath.row == 0) {
+            if (indexPath.row == 0)
+            {
                 [self.navigationController pushViewController:[PersonSearchViewController new] animated:YES];
                 break;
-            } else if (indexPath.row == 1) {
+            }
+            else if (indexPath.row == 1)
+            {
                 SwipeableViewController *activitySVC = [[SwipeableViewController alloc] initWithTitle:@"活动"
                                                                                          andSubTitles:@[@"近期活动", @"我的活动"]
                                                                                        andControllers:@[[[ActivitiesViewController alloc] initWithUID:0],
@@ -121,12 +125,15 @@
                 break;
             }
         case 2:
-            if (indexPath.row == 0) {
+            if (indexPath.row == 0)
+            {
                 ScanViewController *scanVC = [ScanViewController new];
                 UINavigationController *scanNav = [[UINavigationController alloc] initWithRootViewController:scanVC];
                 [self.navigationController presentViewController:scanNav animated:NO completion:nil];
                 break;
-            } else if (indexPath.row == 1) {
+            }
+            else if (indexPath.row == 1)
+            {
                 [self.navigationController pushViewController:[ShakingViewController new] animated:YES];
             }
             

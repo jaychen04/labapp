@@ -64,6 +64,7 @@ static NSString *kPostCellID = @"PostCell";
         
         [cell.portrait sd_setImageWithURL:post.portraitURL placeholderImage:nil options:0];        
         [cell.titleLabel setText:post.title];
+        [cell.bodyLabel setText:post.body];
         [cell.authorLabel setText:post.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:post.pubDate]];
         [cell.commentAndView setText:[NSString stringWithFormat:@"%d回 / %d阅", post.replyCount, post.viewCount]];
@@ -81,9 +82,13 @@ static NSString *kPostCellID = @"PostCell";
         OSCPost *post = self.objects[indexPath.row];
         [self.label setText:post.title];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
         
-        return size.height + 39;
+        [self.label setText:post.body];
+        self.label.font = [UIFont systemFontOfSize:13];
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+        
+        return height + 44;
     } else {
         return 60;
     }

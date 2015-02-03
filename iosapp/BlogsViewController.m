@@ -80,6 +80,7 @@ static NSString *kBlogCellID = @"BlogCell";
         OSCBlog *blog = self.objects[indexPath.row];
         
         [cell.titleLabel setText:blog.title];
+        [cell.bodyLabel setText:blog.body];
         [cell.authorLabel setText:blog.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:blog.pubDate]];
         [cell.commentCount setText:[NSString stringWithFormat:@"%d 评", blog.commentCount]];
@@ -97,9 +98,13 @@ static NSString *kBlogCellID = @"BlogCell";
         OSCBlog *blog = self.objects[indexPath.row];
         [self.label setText:blog.title];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
         
-        return size.height + 39;
+        [self.label setText:blog.body];
+        self.label.font = [UIFont systemFontOfSize:13];
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+        
+        return height + 44;
     } else {
         return 60;
     }
