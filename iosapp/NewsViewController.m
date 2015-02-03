@@ -72,6 +72,7 @@ static NSString *kNewsCellID = @"NewsCell";
         OSCNews *news = self.objects[indexPath.row];
         
         [cell.titleLabel setText:news.title];
+        [cell.bodyLabel setText:news.body];
         [cell.authorLabel setText:news.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:news.pubDate]];
         [cell.commentCount setText:[NSString stringWithFormat:@"%d 评", news.commentCount]];
@@ -88,10 +89,16 @@ static NSString *kNewsCellID = @"NewsCell";
         OSCNews *news = self.objects[indexPath.row];
         [self.label setText:news.title];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
         
-        return size.height + 39;
-    } else {
+        [self.label setText:news.body];
+        self.label.font = [UIFont systemFontOfSize:13];
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+        
+        return height + 44;
+    }
+    else
+    {
         return 60;
     }
 }

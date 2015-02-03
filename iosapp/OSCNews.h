@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, NewsType)
 
 @property (nonatomic, assign) int64_t newsID;
 @property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *body;
 @property (nonatomic, assign) int commentCount;
 @property (nonatomic, copy) NSString *author;
 @property (nonatomic, assign) int64_t authorID;

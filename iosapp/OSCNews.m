@@ -10,6 +10,7 @@
 
 static NSString * const kID = @"id";
 static NSString * const kTitle = @"title";
+static NSString * const kBody = @"body";
 static NSString * const kCommentCount = @"commentCount";
 static NSString * const kAuthor = @"author";
 static NSString * const kAuthorID = @"authorid";
@@ -26,6 +27,7 @@ static NSString * const kAuthorUID2 = @"authoruid2";
     if (self = [super init]) {
         _newsID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
         _title = [[xml firstChildWithTag:kTitle] stringValue];
+        _body = [[xml firstChildWithTag:kBody] stringValue];
         
         _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
         _author = [[xml firstChildWithTag:kAuthor] stringValue];

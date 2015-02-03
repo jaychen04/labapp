@@ -37,18 +37,25 @@
     self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.contentView addSubview:self.titleLabel];
     
+    self.bodyLabel = [UILabel new];
+    self.bodyLabel.numberOfLines = 0;
+    self.bodyLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    self.bodyLabel.font = [UIFont systemFontOfSize:13];
+    self.bodyLabel.textColor = [UIColor grayColor];
+    [self.contentView addSubview:self.bodyLabel];
+    
     self.authorLabel = [UILabel new];
-    self.authorLabel.font = [UIFont systemFontOfSize:13];
+    self.authorLabel.font = [UIFont systemFontOfSize:12];
     self.authorLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:self.authorLabel];
     
     self.timeLabel = [UILabel new];
-    self.timeLabel.font = [UIFont systemFontOfSize:13];
+    self.timeLabel.font = [UIFont systemFontOfSize:12];
     self.timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:self.timeLabel];
     
     self.commentAndView = [UILabel new];
-    self.commentAndView.font = [UIFont systemFontOfSize:13];
+    self.commentAndView.font = [UIFont systemFontOfSize:12];
     self.commentAndView.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:self.commentAndView];
 }
@@ -59,9 +66,17 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_portrait, _titleLabel, _authorLabel, _timeLabel, _commentAndView);
+    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_portrait, _bodyLabel, _titleLabel, _authorLabel, _timeLabel, _commentAndView);
+    
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_portrait(36)]-8-[_titleLabel]-8-|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:viewsDict]];
+    
+    
+    /////
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_portrait(36)]-8-[_bodyLabel]-8-|"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:viewsDict]];
@@ -70,8 +85,12 @@
                                                                              options:0
                                                                              metrics:nil
                                                                                views:viewsDict]];
+    /////
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_titleLabel]-5-[_bodyLabel]"
+                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                             metrics:nil views:viewsDict]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_titleLabel]-5-[_authorLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_bodyLabel]-5-[_authorLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil
                                                                                views:viewsDict]];
