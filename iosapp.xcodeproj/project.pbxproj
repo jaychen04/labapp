@@ -282,6 +282,7 @@
 		387639F51A7F8A94008E6805 /* sidemenu-software.png in Resources */ = {isa = PBXBuildFile; fileRef = 387639E61A7F8A94008E6805 /* sidemenu-software.png */; };
 		387639F61A7F8A94008E6805 /* sidemenu-software@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 387639E71A7F8A94008E6805 /* sidemenu-software@2x.png */; };
 		387639F71A7F8A94008E6805 /* sidemenu-software@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 387639E81A7F8A94008E6805 /* sidemenu-software@3x.png */; };
+		387639FD1A807918008E6805 /* SoftwareCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
@@ -697,6 +698,8 @@
 		387639E61A7F8A94008E6805 /* sidemenu-software.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-software.png"; sourceTree = "<group>"; };
 		387639E71A7F8A94008E6805 /* sidemenu-software@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-software@2x.png"; sourceTree = "<group>"; };
 		387639E81A7F8A94008E6805 /* sidemenu-software@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-software@3x.png"; sourceTree = "<group>"; };
+		387639FB1A807918008E6805 /* SoftwareCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareCommentsViewController.h; sourceTree = "<group>"; };
+		387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareCommentsViewController.m; sourceTree = "<group>"; };
 		387794231A0B60C700C41C78 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		387794241A0B60C700C41C78 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		38996A501A02642C0025AA52 /* OSCBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlog.h; sourceTree = "<group>"; };
@@ -942,6 +945,8 @@
 			children = (
 				00D6BD2F19ECD71B00E8754E /* TweetsViewController.h */,
 				00D6BD3019ECD71B00E8754E /* TweetsViewController.m */,
+				387639FB1A807918008E6805 /* SoftwareCommentsViewController.h */,
+				387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */,
 				00D6BD3319ECFD8E00E8754E /* TweetCell.h */,
 				00D6BD3419ECFD8E00E8754E /* TweetCell.m */,
 				38BD7D6B19FF7F31003ABB80 /* 动弹详情 */,
@@ -1487,6 +1492,15 @@
 			path = sidemenu;
 			sourceTree = "<group>";
 		};
+		387639FE1A807B33008E6805 /* 侧边栏 */ = {
+			isa = PBXGroup;
+			children = (
+				387639AF1A7CF95D008E6805 /* SideMenuViewController.h */,
+				387639B01A7CF95D008E6805 /* SideMenuViewController.m */,
+			);
+			name = "侧边栏";
+			sourceTree = "<group>";
+		};
 		38996A561A0266F80025AA52 /* 博客 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1553,8 +1567,7 @@
 				38B0BFA21A41349800A2FDB0 /* OptionButton.m */,
 				38B0BFA71A42AF5500A2FDB0 /* TweetEditingVC.h */,
 				38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */,
-				387639AF1A7CF95D008E6805 /* SideMenuViewController.h */,
-				387639B01A7CF95D008E6805 /* SideMenuViewController.m */,
+				387639FE1A807B33008E6805 /* 侧边栏 */,
 			);
 			name = MainTabBar;
 			sourceTree = "<group>";
@@ -2085,6 +2098,7 @@
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				3801789C1A2C1A7300922858 /* EventCell.m in Sources */,
+				387639FD1A807918008E6805 /* SoftwareCommentsViewController.m in Sources */,
 				3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,

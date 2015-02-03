@@ -25,7 +25,7 @@
 #import "Utils.h"
 #import "Config.h"
 #import "CommentsBottomBarViewController.h"
-#import "TweetsViewController.h"
+#import "SoftwareCommentsViewController.h"
 #import "UMSocial.h"
 
 
@@ -48,6 +48,7 @@
 @property (nonatomic, copy) NSString *objectTitle;
 @property (nonatomic, strong) UIWebView *detailsView;
 @property (nonatomic, copy) NSString *tag;
+@property (nonatomic, copy) NSString *softwareName;
 @property (nonatomic, assign) SEL loadMethod;
 @property (nonatomic, assign) Class detailsClass;
 
@@ -83,6 +84,7 @@
                 _tag = @"software";
                 _commentType = CommentTypeSoftware;
                 _favoriteType = FavoriteTypeSoftware;
+                _softwareName = news.attachment;
                 _detailsClass = [OSCSoftwareDetails class];
                 _loadMethod = @selector(loadSoftwareDetails:);
                 break;
@@ -167,6 +169,7 @@
     self.navigationItem.title = @"软件详情";
     _detailsURL = [NSString stringWithFormat:@"%@%@?ident=%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_DETAIL, software.url.absoluteString.lastPathComponent];
     _tag = @"software";
+    _softwareName = software.name;
     _detailsClass = [OSCSoftwareDetails class];
     _loadMethod = @selector(loadSoftwareDetails:);
     
@@ -293,8 +296,8 @@
     
     self.operationBar.showComments = ^ {
         if (weakSelf.commentType == CommentTypeSoftware) {
-            TweetsViewController *tweetsVC = [[TweetsViewController alloc] initWIthSoftwareID:weakSelf.objectID];
-            [weakSelf.navigationController pushViewController:tweetsVC animated:YES];
+            SoftwareCommentsViewController *softwareCommentsVC = [[SoftwareCommentsViewController alloc] initWithSoftwareID:weakSelf.objectID andSoftwareName:weakSelf.softwareName];
+            [weakSelf.navigationController pushViewController:softwareCommentsVC animated:YES];
         } else {
             CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:weakSelf.commentType andObjectID:weakSelf.objectID];
             [weakSelf.navigationController pushViewController:commentsBVC animated:YES];
