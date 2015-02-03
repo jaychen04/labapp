@@ -32,24 +32,31 @@
     NSArray *selectors = @[@"switchMode:", @"showComments:", @"toggleStar:", @"share:", @"report:"];
     
     for (int i = 0; i < 5; ++i) {
-        [items addObject:[[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:images[i]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
-                                                          style:UIBarButtonItemStylePlain
-                                                         target:self
-                                                         action:NSSelectorFromString(selectors[i])]];
+        UIImage *Image = [UIImage imageNamed:images[i]];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button addTarget:self action:NSSelectorFromString(selectors[i]) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(0, 0, Image.size.width, Image.size.height);
+        [button setBackgroundImage:Image forState:UIControlStateNormal];
+        
+        UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+        [items addObject:barButton];
+        
         [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
     }
+
     
     [self setItems:items];
 }
 
 - (void)setIsStarred:(BOOL)isStarred
 {
-    UIBarButtonItem *starButton = self.items[4];
+    UIBarButtonItem *starBarButton = self.items[4];
+    UIButton *starButton = (UIButton *)starBarButton.customView;
     
     if (isStarred) {
-        [starButton setImage:[[UIImage imageNamed:@"toolbar-starred"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [starButton setImage:[UIImage imageNamed:@"toolbar-starred"] forState:UIControlStateNormal];
     } else {
-        [starButton setImage:[[UIImage imageNamed:@"toolbar-star"]    imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [starButton setImage:[UIImage imageNamed:@"toolbar-star"] forState:UIControlStateNormal];
     }
     
     _isStarred = isStarred;

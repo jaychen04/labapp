@@ -263,7 +263,8 @@
 
 - (void)tapPortrait
 {
-    if ([Config getOwnID] == 0) {
+    if ([Config getOwnID] == 0)
+    {
         [self.navigationController pushViewController:[LoginViewController new] animated:YES];
     }
 }

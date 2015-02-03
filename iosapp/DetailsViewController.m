@@ -28,6 +28,9 @@
 #import "TweetsViewController.h"
 #import "UMSocial.h"
 
+#import "UIBarButtonItem+Badge.h"
+#import "Utils.h"
+
 
 #define HTML_STYLE @"<style>#oschina_title {color: #000000; margin-bottom: 6px; font-weight:bold;}#oschina_title img{vertical-align:middle;margin-right:6px;}#oschina_title a{color:#0D6DA8;}#oschina_outline {color: #707070; font-size: 12px;}#oschina_outline a{color:#0D6DA8;}#oschina_software{color:#808080;font-size:12px}#oschina_body img {max-width: 300px;}#oschina_body {font-size:16px;max-width:300px;line-height:24px;} #oschina_body table{max-width:300px;}#oschina_body pre { font-size:9pt;font-family:Courier New,Arial;border:1px solid #ddd;border-left:5px solid #6CE26C;background:#f6f6f6;padding:5px;}</style>"
 
@@ -44,6 +47,7 @@
 
 @property (nonatomic, strong) OSCNews *news;
 @property (nonatomic, copy) NSString *detailsURL;
+@property (nonatomic, readonly, assign) int commentCount;
 @property (nonatomic, copy) NSString *URL;
 @property (nonatomic, copy) NSString *objectTitle;
 @property (nonatomic, strong) UIWebView *detailsView;
@@ -66,6 +70,7 @@
         _news = news;
         _objectID = news.newsID;
         _objectTitle = news.title;
+        _commentCount = news.commentCount;
         
         switch (news.type) {
             case NewsTypeStandardNews:
@@ -122,6 +127,7 @@
         _favoriteType = FavoriteTypeBlog;
         _objectID = blog.blogID;
         _objectTitle = blog.title;
+        _commentCount = blog.commentCount;
         
         self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.title = @"博客详情";
@@ -143,6 +149,7 @@
     _favoriteType = FavoriteTypeTopic;
     _objectID = post.postID;
     _objectTitle = post.title;
+    _commentCount = post.replyCount;
     
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"帖子详情";
@@ -213,7 +220,16 @@
              
              id details = [[_detailsClass alloc] initWithXML:XML];
              [self performSelector:_loadMethod withObject:details];
+             
              self.operationBar.isStarred = _isStarred;
+             
+             UIBarButtonItem *commentsCountButton = self.operationBar.items[2];
+             commentsCountButton.shouldHideBadgeAtZero = YES;
+             commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
+             commentsCountButton.badgePadding = 1;
+             commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x087221];
+             
+             
              if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -386,6 +402,8 @@
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = softwareDetails.isFavorite;
     _URL = [softwareDetails.url absoluteString];
+    
+    _commentCount = softwareDetails.tweetCount;
 }
 
 - (NSString *)createButtonsWithHomepageURL:(NSString *)homepageURL andDocumentURL:(NSString *)documentURL andDownloadURL:(NSString *)downloadURL
