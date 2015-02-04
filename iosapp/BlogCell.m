@@ -77,7 +77,7 @@
                                                                                views:viewsDict]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-5-[_timeLabel]-5-[_commentCount]"
-                                                                             options:NSLayoutFormatAlignAllCenterY
+                                                                             options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom
                                                                              metrics:nil
                                                                                views:viewsDict]];
 }

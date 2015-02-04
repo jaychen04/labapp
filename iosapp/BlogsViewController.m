@@ -96,15 +96,16 @@ static NSString *kBlogCellID = @"BlogCell";
 {
     if (indexPath.row < self.objects.count) {
         OSCBlog *blog = self.objects[indexPath.row];
-        [self.label setText:blog.title];
         
+        self.label.text = blog.title;
+        self.label.font = [UIFont boldSystemFontOfSize:14];
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
         
-        [self.label setText:blog.body];
+        self.label.text = blog.body;
         self.label.font = [UIFont systemFontOfSize:13];
         height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
         
-        return height + 44;
+        return height + 41;
     } else {
         return 60;
     }

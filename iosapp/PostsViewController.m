@@ -80,15 +80,16 @@ static NSString *kPostCellID = @"PostCell";
 {
     if (indexPath.row < self.objects.count) {
         OSCPost *post = self.objects[indexPath.row];
-        [self.label setText:post.title];
         
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+        self.label.text = post.title;
+        self.label.font = [UIFont boldSystemFontOfSize:14];
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 62, MAXFLOAT)].height;
         
-        [self.label setText:post.body];
+        self.label.text = post.body;
         self.label.font = [UIFont systemFontOfSize:13];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 62, MAXFLOAT)].height;
         
-        return height + 44;
+        return height + 41;
     } else {
         return 60;
     }
