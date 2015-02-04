@@ -969,6 +969,7 @@
 				3868259F1A709F77008F5706 /* 详情页面 */,
 				00364FF519F5F93600871255 /* SwipeableViewController */,
 				38B0BF9D1A3EBBE500A2FDB0 /* MainTabBar */,
+				387639FE1A807B33008E6805 /* 侧边栏 */,
 			);
 			name = "Main ViewControllers";
 			sourceTree = "<group>";
@@ -1577,7 +1578,6 @@
 				38B0BFA21A41349800A2FDB0 /* OptionButton.m */,
 				38B0BFA71A42AF5500A2FDB0 /* TweetEditingVC.h */,
 				38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */,
-				387639FE1A807B33008E6805 /* 侧边栏 */,
 			);
 			name = MainTabBar;
 			sourceTree = "<group>";

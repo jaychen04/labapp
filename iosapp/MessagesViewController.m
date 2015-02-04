@@ -8,6 +8,7 @@
 
 #import "MessagesViewController.h"
 #import "Config.h"
+#import "Utils.h"
 #import "OSCMessage.h"
 #import "MessageCell.h"
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -50,7 +51,7 @@ static NSString * const kMessageCellID = @"MessageCell";
         OSCMessage *message = self.objects[indexPath.row];
         
         cell.backgroundColor = [UIColor themeColor];
-        [cell.portrait sd_setImageWithURL:message.portraitURL placeholderImage:nil];
+        [cell.portrait loadPortrait:message.portraitURL];
         cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", message.senderID == [Config getOwnID] ? @"发给" : @"来自", message.friendName];
         cell.contentLabel.text = message.content;
         cell.timeLabel.text = [Utils intervalSinceNow:message.pubDate];
@@ -68,12 +69,12 @@ static NSString * const kMessageCellID = @"MessageCell";
     if (indexPath.row < self.objects.count) {
         OSCMessage *message = self.objects[indexPath.row];
         self.label.text = message.senderName;
-        CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+        CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 70, MAXFLOAT)];
         
         self.label.text = message.content;
         CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
         
-        return nameSize.height + contentSize.height + 50;
+        return nameSize.height + contentSize.height + 42;
     } else {
         return 60;
     }

@@ -40,7 +40,7 @@
     _nameLabel.numberOfLines = 0;
     _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _nameLabel.font = [UIFont systemFontOfSize:14];
-    _nameLabel.textColor = [UIColor colorWithHex:0x6A5ACD];
+    _nameLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:_nameLabel];
     
     _contentLabel = [UILabel new];
@@ -64,10 +64,16 @@
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _contentLabel, _commentCountLabel, _timeLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_nameLabel]->=0-[_commentCountLabel]-8-|" options:NSLayoutFormatAlignAllTop metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_nameLabel]->=0-[_commentCountLabel]-8-|"
+                                                                             options:NSLayoutFormatAlignAllTop metrics:nil views:views]];
+    
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_portrait(36)]" options:0 metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_nameLabel]-3-[_contentLabel]-8-[_timeLabel]-8-|"
-                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_nameLabel]-3-[_contentLabel]"
+                                                                             options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_commentCountLabel]->=0-[_contentLabel]-8-[_timeLabel]-8-|"
+                                                                             options:NSLayoutFormatAlignAllRight metrics:nil views:views]];
 }
 
 @end
