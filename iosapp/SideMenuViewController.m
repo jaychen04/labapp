@@ -7,6 +7,7 @@
 //
 
 #import "SideMenuViewController.h"
+#import "Config.h"
 #import "Utils.h"
 #import "SwipeableViewController.h"
 #import "PostsViewController.h"
@@ -135,7 +136,12 @@
             break;
         }
         case 3: {
+            [Config saveOwnID:0];
             
+            NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+            for (NSHTTPCookie *cookie in [cookieStorage cookies]) {
+                [cookieStorage deleteCookie:cookie];
+            }
         }
         default:
             break;
