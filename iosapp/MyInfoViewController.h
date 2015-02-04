@@ -8,11 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@class OSCUser;
-
 @interface MyInfoViewController : UITableViewController
 
-- (instancetype)initWithUser:(OSCUser *)user;
-- (instancetype)initWithUserID:(int64_t)userID;
+- (void)refreshView;
 
 @end

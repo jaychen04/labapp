@@ -7,8 +7,8 @@
 //
 
 #import "MyInfoViewController.h"
-#import "OSCUser.h"
 #import "OSCAPI.h"
+#import "OSCMyInfo.h"
 #import "Config.h"
 #import "Utils.h"
 #import "SwipeableViewController.h"
@@ -28,7 +28,8 @@
 
 @interface MyInfoViewController ()
 
-@property (nonatomic, strong) OSCUser *user;
+@property (nonatomic, strong) OSCMyInfo *myInfo;
+@property (nonatomic, readonly, assign) int64_t myID;
 
 @property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel *nameLabel;
@@ -43,45 +44,6 @@
 
 @implementation MyInfoViewController
 
-- (instancetype)initWithUser:(OSCUser *)user
-{
-    self = [super init];
-    if (!self) {return nil;}
-    
-    _user = user;
-    
-    return self;
-}
-
-- (instancetype)initWithUserID:(int64_t)userID
-{
-    self = [super init];
-    if (!self) {return self;}
-    
-    __block BOOL done = NO;
-    __block OSCUser *tmpUser;
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld&hisuid=%lld&pageIndex=0&pageSize=20", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userID]
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
-             tmpUser = [[OSCUser alloc] initWithXML:userXML];
-             done = YES;
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"网络异常，错误码：%ld", (long)error.code);
-             done = YES;
-         }];
-    
-    while (!done) {
-        [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
-    }
-    _user = tmpUser;
-    
-    return self;
-}
-
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -95,6 +57,28 @@
     
     UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
+    
+    [self refreshView];
+}
+
+- (void)refreshView
+{
+    _myID = [Config getOwnID];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID]
+      parameters:nil
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+             ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
+             _myInfo = [[OSCMyInfo alloc] initWithXML:userXML];
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.tableView reloadData];
+             });
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"网络异常，错误码：%ld", (long)error.code);
+         }];
 }
 
 
@@ -107,14 +91,14 @@
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];
-    [_portrait loadPortrait:_user.portraitURL];
+    [_portrait loadPortrait:_myInfo.portraitURL];
     _portrait.userInteractionEnabled = YES;
     [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortrait)]];
     [header addSubview:_portrait];
     
     _nameLabel = [UILabel new];
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
-    _nameLabel.text = _user.name;
+    _nameLabel.text = _myID? _myInfo.name: @"点击头像登录";
     [header addSubview:_nameLabel];
     
     UIView *countView = [UIView new];
@@ -133,10 +117,10 @@
         [countView addSubview:button];
     };
     
-    setButtonStyle(_creditsBtn, [NSString stringWithFormat:@"积分\n%lu", (long)_user.score]);
-    setButtonStyle(_collectionsBtn, [NSString stringWithFormat:@"收藏\n83", nil]);
-    setButtonStyle(_followsBtn, [NSString stringWithFormat:@"关注\n%lu", (unsigned long)_user.followersCount]);
-    setButtonStyle(_fansBtn, [NSString stringWithFormat:@"粉丝\n%lu", (unsigned long)_user.fansCount]);
+    setButtonStyle(_creditsBtn, [NSString stringWithFormat:@"积分\n%d", _myInfo.score]);
+    setButtonStyle(_collectionsBtn, [NSString stringWithFormat:@"收藏\n%d", _myInfo.favoriteCount]);
+    setButtonStyle(_followsBtn, [NSString stringWithFormat:@"关注\n%d", _myInfo.followersCount]);
+    setButtonStyle(_fansBtn, [NSString stringWithFormat:@"粉丝\n%d", _myInfo.fansCount]);
     
     [_collectionsBtn addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
     [_followsBtn addTarget:self action:@selector(pushFriendsSVC) forControlEvents:UIControlEventTouchUpInside];
@@ -189,12 +173,12 @@
                                                                                                            [[EventsViewController alloc] initWithCatalog:2],
                                                                                                            [[EventsViewController alloc] initWithCatalog:3],
                                                                                                            [MessagesViewController new],
-                                                                                                           [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:0]
+                                                                                                           [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
                                                                                                            ]]
                                                  animated:YES]; break;
         }
         case 1: {
-            [self.navigationController pushViewController:[[BlogsViewController alloc] initWithUserID:_user.userID] animated:YES];
+            [self.navigationController pushViewController:[[BlogsViewController alloc] initWithUserID:_myID] animated:YES];
             break;
         }
         case 2: {
@@ -242,8 +226,8 @@
     SwipeableViewController *friendsSVC = [[SwipeableViewController alloc] initWithTitle:@"关注/粉丝"
                                                                             andSubTitles:@[@"关注", @"粉丝"]
                                                                           andControllers:@[
-                                                                                           [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:1],
-                                                                                           [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:0]
+                                                                                           [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
+                                                                                           [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
                                                                                            ]];
     
     [self.navigationController pushViewController:friendsSVC animated:YES];
@@ -263,8 +247,7 @@
 
 - (void)tapPortrait
 {
-    if ([Config getOwnID] == 0)
-    {
+    if ([Config getOwnID] == 0) {
         [self.navigationController pushViewController:[LoginViewController new] animated:YES];
     }
 }

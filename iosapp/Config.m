@@ -28,7 +28,7 @@ NSString * const kUserID = @"userID";
 + (void)saveOwnID:(int64_t)userID
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:[NSString stringWithFormat:@"%lld", userID] forKey:kUserID];
+    [userDefaults setObject:@(userID) forKey:kUserID];
     [userDefaults synchronize];
 }
 
@@ -48,7 +48,7 @@ NSString * const kUserID = @"userID";
 + (int64_t)getOwnID
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSString *userID = [userDefaults objectForKey:kUserID];
+    NSNumber *userID = [userDefaults objectForKey:kUserID];
     
     if (userID) {return [userID longLongValue];}
     return 0;

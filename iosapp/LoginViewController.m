@@ -18,6 +18,7 @@
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <ReactiveCocoa.h>
+#import <MBProgressHUD.h>
 
 @interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
@@ -50,6 +51,14 @@
     RAC(_loginButton, alpha) = [valid map:^(NSNumber *b) {
         return b.boolValue ? @1: @0.4;
     }];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    MyInfoViewController *myInfoVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
+    [myInfoVC refreshView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -204,7 +213,8 @@
     }
 }
 
-- (void)login {
+- (void)login
+{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_LOGIN_VALIDATE]
@@ -216,15 +226,20 @@
               NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
               if (!errorCode) {
                   NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-                  NSLog(@"%@", errorMessage);
+                  
+                  MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  [HUD hide:YES afterDelay:1];
+                  
                   return;
               }
               
               OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
               [Config saveOwnID:user.userID];
-              MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithUser:user];
-              [self.navigationController pushViewController:myInfoVC animated:YES];
+              [self.navigationController popViewControllerAnimated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"网络异常，错误码：%ld", (long)error.code);
           }

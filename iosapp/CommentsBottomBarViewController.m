@@ -128,21 +128,13 @@
               
               HUD.mode = MBProgressHUDModeCustomView;
               
-              switch (errorCode) {
-                  case 1: {
-                      self.editingBar.editView.text = @"";
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.labelText = @"评论发表成功";
-                      break;
-                  }
-                  case 0:
-                  case -2:
-                  case -1: {
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                      break;
-                  }
-                  default: break;
+              if (errorCode == 1) {
+                  self.editingBar.editView.text = @"";
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.labelText = @"评论发表成功";
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
               [HUD hide:YES afterDelay:2];

@@ -11,12 +11,12 @@
 @interface OSCUser : OSCBaseObject
 
 @property (readonly, nonatomic, assign) int64_t userID;
-@property (readonly, nonatomic, strong) NSString *location;
-@property (readonly, nonatomic, strong) NSString *name;
-@property (readonly, nonatomic, assign) NSUInteger followersCount;
-@property (readonly, nonatomic, assign) NSUInteger fansCount;
-@property (readonly, nonatomic, assign) NSInteger score;
+@property (readonly, nonatomic, copy) NSString *location;
+@property (readonly, nonatomic, copy) NSString *name;
+@property (readonly, nonatomic, assign) int followersCount;
+@property (readonly, nonatomic, assign) int fansCount;
+@property (readonly, nonatomic, assign) int score;
 @property (readonly, nonatomic, strong) NSURL *portraitURL;
-@property (readonly, nonatomic, strong) NSString *expertise;
+@property (readonly, nonatomic, copy) NSString *expertise;
 
 @end

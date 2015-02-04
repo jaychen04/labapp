@@ -283,6 +283,7 @@
 		387639F61A7F8A94008E6805 /* sidemenu-software@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 387639E71A7F8A94008E6805 /* sidemenu-software@2x.png */; };
 		387639F71A7F8A94008E6805 /* sidemenu-software@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 387639E81A7F8A94008E6805 /* sidemenu-software@3x.png */; };
 		387639FD1A807918008E6805 /* SoftwareCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */; };
+		38763A011A820B46008E6805 /* OSCMyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A001A820B46008E6805 /* OSCMyInfo.m */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
@@ -702,6 +703,8 @@
 		387639E81A7F8A94008E6805 /* sidemenu-software@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-software@3x.png"; sourceTree = "<group>"; };
 		387639FB1A807918008E6805 /* SoftwareCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareCommentsViewController.h; sourceTree = "<group>"; };
 		387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareCommentsViewController.m; sourceTree = "<group>"; };
+		387639FF1A820B46008E6805 /* OSCMyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMyInfo.h; sourceTree = "<group>"; };
+		38763A001A820B46008E6805 /* OSCMyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMyInfo.m; sourceTree = "<group>"; };
 		387794231A0B60C700C41C78 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		387794241A0B60C700C41C78 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		38996A501A02642C0025AA52 /* OSCBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlog.h; sourceTree = "<group>"; };
@@ -869,6 +872,8 @@
 				386825A81A70D5E6008F5706 /* OSCSearchResult.m */,
 				380FD2211A74E702003C4021 /* OSCActivity.h */,
 				380FD2221A74E702003C4021 /* OSCActivity.m */,
+				387639FF1A820B46008E6805 /* OSCMyInfo.h */,
+				38763A001A820B46008E6805 /* OSCMyInfo.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -2142,6 +2147,7 @@
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
 				38996A591A026D6A0025AA52 /* BlogCell.m in Sources */,
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
+				38763A011A820B46008E6805 /* OSCMyInfo.m in Sources */,
 				386039611A09C5A1007C9B88 /* OSCUser.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				38BD3D101A37F38900682D1F /* MyInfoViewController.m in Sources */,
