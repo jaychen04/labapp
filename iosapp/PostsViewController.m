@@ -10,6 +10,7 @@
 #import "PostCell.h"
 #import "OSCPost.h"
 #import "DetailsViewController.h"
+#import "UIImageView+Util.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 
@@ -62,7 +63,7 @@ static NSString *kPostCellID = @"PostCell";
         PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kPostCellID forIndexPath:indexPath];
         OSCPost *post = self.objects[indexPath.row];
         
-        [cell.portrait sd_setImageWithURL:post.portraitURL placeholderImage:nil options:0];        
+        [cell.portrait loadPortrait:post.portraitURL];
         [cell.titleLabel setText:post.title];
         [cell.bodyLabel setText:post.body];
         [cell.authorLabel setText:post.author];
