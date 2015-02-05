@@ -55,8 +55,8 @@
 - (void)onClick:(UIButton *)button
 {
     if (_currentIndex != button.tag) {
-        NSLog(@"点击的按钮的tag值=====%ld => %p", button.tag, button);
-        NSLog(@"上一次按钮的tag值_currentIndex===>%ld ", _currentIndex);
+//        NSLog(@"点击的按钮的tag值=====%ld => %p", button.tag, button);
+//        NSLog(@"上一次按钮的tag值_currentIndex===>%ld ", _currentIndex);
         
         //获取点击的原来的那个按钮
         UIButton *preTitle = _titleButtons[_currentIndex];

@@ -198,7 +198,7 @@
 		382A94A81A26D27400AAAFEA /* 103@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94411A26D27400AAAFEA /* 103@2x.png */; };
 		382A94A91A26D27400AAAFEA /* 104@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94421A26D27400AAAFEA /* 104@2x.png */; };
 		382A94AA1A26D27400AAAFEA /* 105@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94431A26D27400AAAFEA /* 105@2x.png */; };
-		382A94AB1A26D27400AAAFEA /* 99@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94441A26D27400AAAFEA /* 99@2x.png */; };
+		382A94AB1A26D27400AAAFEA /* 099@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94441A26D27400AAAFEA /* 099@2x.png */; };
 		382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */; };
 		382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */; };
 		382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A95BA1A29D2C300AAAFEA /* EventsViewController.m */; };
@@ -338,6 +338,8 @@
 		38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E067431A19AC4900D41976 /* GrowingTextView.m */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 		EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */; };
+		EE7B45E31A834DE5002508C6 /* 066@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7B45E21A834DE5002508C6 /* 066@2x.png */; };
+		EE7B45E51A834EA3002508C6 /* 102@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7B45E41A834EA3002508C6 /* 102@2x.png */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 /* End PBXBuildFile section */
@@ -576,7 +578,7 @@
 		382A94411A26D27400AAAFEA /* 103@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "103@2x.png"; sourceTree = "<group>"; };
 		382A94421A26D27400AAAFEA /* 104@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "104@2x.png"; sourceTree = "<group>"; };
 		382A94431A26D27400AAAFEA /* 105@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "105@2x.png"; sourceTree = "<group>"; };
-		382A94441A26D27400AAAFEA /* 99@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "99@2x.png"; sourceTree = "<group>"; };
+		382A94441A26D27400AAAFEA /* 099@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "099@2x.png"; sourceTree = "<group>"; };
 		382A94AC1A26DBDD00AAAFEA /* EmojiPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiPageVC.h; sourceTree = "<group>"; };
 		382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiPageVC.m; sourceTree = "<group>"; };
 		382A94B71A28659D00AAAFEA /* DiscoverTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverTableVC.h; sourceTree = "<group>"; };
@@ -793,6 +795,8 @@
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBasicInfoViewController.h; sourceTree = "<group>"; };
 		EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBasicInfoViewController.m; sourceTree = "<group>"; };
+		EE7B45E21A834DE5002508C6 /* 066@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "066@2x.png"; sourceTree = "<group>"; };
+		EE7B45E41A834EA3002508C6 /* 102@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "102@2x.png"; sourceTree = "<group>"; };
 		EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
@@ -1222,6 +1226,7 @@
 				382A941C1A26D27400AAAFEA /* 063@2x.png */,
 				382A941D1A26D27400AAAFEA /* 064@2x.png */,
 				382A941E1A26D27400AAAFEA /* 065@2x.png */,
+				EE7B45E21A834DE5002508C6 /* 066@2x.png */,
 				382A941F1A26D27400AAAFEA /* 067@2x.png */,
 				382A94201A26D27400AAAFEA /* 068@2x.png */,
 				382A94211A26D27400AAAFEA /* 069@2x.png */,
@@ -1256,10 +1261,11 @@
 				382A943E1A26D27400AAAFEA /* 098@2x.png */,
 				382A943F1A26D27400AAAFEA /* 100@2x.png */,
 				382A94401A26D27400AAAFEA /* 101@2x.png */,
+				EE7B45E41A834EA3002508C6 /* 102@2x.png */,
 				382A94411A26D27400AAAFEA /* 103@2x.png */,
 				382A94421A26D27400AAAFEA /* 104@2x.png */,
 				382A94431A26D27400AAAFEA /* 105@2x.png */,
-				382A94441A26D27400AAAFEA /* 99@2x.png */,
+				382A94441A26D27400AAAFEA /* 099@2x.png */,
 			);
 			path = emoji;
 			sourceTree = "<group>";
@@ -1954,6 +1960,7 @@
 				380FD2C51A7762A8003C4021 /* tabbar-news@2x.png in Resources */,
 				387639F21A7F8A94008E6805 /* sidemenu-setting.png in Resources */,
 				380FD2CB1A7762A8003C4021 /* tabbar-tweet@2x.png in Resources */,
+				EE7B45E51A834EA3002508C6 /* 102@2x.png in Resources */,
 				00D6BCF119EB673200E8754E /* LaunchScreen.xib in Resources */,
 				380FD2BB1A7762A8003C4021 /* tabbar-me.png in Resources */,
 				380FD2CC1A7762A8003C4021 /* tabbar-tweet@3x.png in Resources */,
@@ -2020,7 +2027,7 @@
 				38BC59B51A5D406300F3C4D2 /* sound@2x.png in Resources */,
 				386F1E6A1A7A47E800B773EE /* share-image.png in Resources */,
 				387639F61A7F8A94008E6805 /* sidemenu-software@2x.png in Resources */,
-				382A94AB1A26D27400AAAFEA /* 99@2x.png in Resources */,
+				382A94AB1A26D27400AAAFEA /* 099@2x.png in Resources */,
 				382A94821A26D27400AAAFEA /* 062@2x.png in Resources */,
 				380FD2C21A7762A8003C4021 /* tabbar-news-selected@2x.png in Resources */,
 				380FD3221A776D96003C4021 /* toolbar-mention@3x.png in Resources */,
@@ -2048,6 +2055,7 @@
 				382A94771A26D27400AAAFEA /* 051@2x.png in Resources */,
 				380FD2B81A7762A8003C4021 /* tabbar-me-selected.png in Resources */,
 				38A9A9D11A5FD98E00B28B4F /* tweetEditing@3x.png in Resources */,
+				EE7B45E31A834DE5002508C6 /* 066@2x.png in Resources */,
 				382A94671A26D27400AAAFEA /* 035@2x.png in Resources */,
 				380FD2BE1A7762A8003C4021 /* tabbar-more.png in Resources */,
 			);

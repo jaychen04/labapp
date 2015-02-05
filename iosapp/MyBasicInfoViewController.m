@@ -20,7 +20,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <RESideMenu.h>
 
-@interface MyBasicInfoViewController ()
+@interface MyBasicInfoViewController () <UIActionSheetDelegate>
 
 @property (nonatomic, strong) OSCMyInfo *myInfo;
 @property (nonatomic, readonly, assign) int64_t myID;
@@ -138,7 +138,9 @@
 
 - (void)tapPortrait
 {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"更换头像" otherButtonTitles:@"查看大头像", nil];
     
+    [actionSheet showInView:self.view];
 }
 
 
