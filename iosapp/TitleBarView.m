@@ -55,23 +55,14 @@
 - (void)onClick:(UIButton *)button
 {
     if (_currentIndex != button.tag) {
-        NSLog(@"点击的按钮的tag值=====%ld => %p", button.tag, button);
-        NSLog(@"上一次按钮的tag值_currentIndex===>%ld ", _currentIndex);
-        
-        //获取点击的原来的那个按钮
         UIButton *preTitle = _titleButtons[_currentIndex];
         
-        //设置原来按钮的颜色为统一色
         [preTitle setTitleColor:[UIColor colorWithHex:0x808080] forState:UIControlStateNormal];
-        
-        //设置被点击的按钮为显眼颜色
         [button setTitleColor:[UIColor colorWithHex:0x008000] forState:UIControlStateNormal];
-        //记录上一次被点击按钮的tag值
-        _currentIndex = button.tag;
         
+        _currentIndex = button.tag;
         _titleButtonClicked(button.tag);
     }
-    
 }
 
 
