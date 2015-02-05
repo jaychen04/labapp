@@ -67,7 +67,7 @@ static NSString * const kPersonCellID = @"PersonCell";
         OSCUser *user = self.objects[row];
         PersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kPersonCellID forIndexPath:indexPath];
         
-        [cell.portrait sd_setImageWithURL:user.portraitURL placeholderImage:nil];
+        [cell.portrait loadPortrait:user.portraitURL];
         cell.nameLabel.text = user.name;
         cell.infoLabel.text = user.location;
         
