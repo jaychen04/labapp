@@ -118,6 +118,7 @@
                                                                                          andSubTitles:@[@"近期活动", @"我的活动"]
                                                                                        andControllers:@[[[ActivitiesViewController alloc] initWithUID:0],
                                                                                                         [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]]]];
+                activitySVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:activitySVC animated:YES];
                 break;
             }

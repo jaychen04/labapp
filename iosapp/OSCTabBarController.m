@@ -25,7 +25,6 @@
 #import "ShakingViewController.h"
 #import "SearchViewController.h"
 
-///
 #import "UIBarButtonItem+Badge.h"
 
 #import <RESideMenu/RESideMenu.h>
