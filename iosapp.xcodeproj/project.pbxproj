@@ -971,7 +971,7 @@
 				3868259F1A709F77008F5706 /* 详情页面 */,
 				00364FF519F5F93600871255 /* SwipeableViewController */,
 				38B0BF9D1A3EBBE500A2FDB0 /* MainTabBar */,
-				387639FE1A807B33008E6805 /* 侧边栏 */,
+				387639FE1A807B33008E6805 /* 侧拉菜单 */,
 			);
 			name = "Main ViewControllers";
 			sourceTree = "<group>";
@@ -1501,13 +1501,13 @@
 			path = sidemenu;
 			sourceTree = "<group>";
 		};
-		387639FE1A807B33008E6805 /* 侧边栏 */ = {
+		387639FE1A807B33008E6805 /* 侧拉菜单 */ = {
 			isa = PBXGroup;
 			children = (
 				387639AF1A7CF95D008E6805 /* SideMenuViewController.h */,
 				387639B01A7CF95D008E6805 /* SideMenuViewController.m */,
 			);
-			name = "侧边栏";
+			name = "侧拉菜单";
 			sourceTree = "<group>";
 		};
 		38996A561A0266F80025AA52 /* 博客 */ = {
