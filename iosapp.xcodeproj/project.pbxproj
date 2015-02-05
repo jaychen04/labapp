@@ -13,7 +13,6 @@
 		00D6BCE019EB673200E8754E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCDF19EB673200E8754E /* main.m */; };
 		00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCE219EB673200E8754E /* AppDelegate.m */; };
 		00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00D6BCED19EB673200E8754E /* Images.xcassets */; };
-		00D6BCF119EB673200E8754E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 00D6BCEF19EB673200E8754E /* LaunchScreen.xib */; };
 		00D6BCFD19EB673200E8754E /* iosappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BCFC19EB673200E8754E /* iosappTests.m */; };
 		00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BD3019ECD71B00E8754E /* TweetsViewController.m */; };
 		00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00D6BD3419ECFD8E00E8754E /* TweetCell.m */; };
@@ -367,7 +366,6 @@
 		00D6BCE119EB673200E8754E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		00D6BCE219EB673200E8754E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		00D6BCED19EB673200E8754E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		00D6BCF019EB673200E8754E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		00D6BCF619EB673200E8754E /* iosappTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosappTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00D6BCFB19EB673200E8754E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00D6BCFC19EB673200E8754E /* iosappTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iosappTests.m; sourceTree = "<group>"; };
@@ -922,7 +920,6 @@
 				00D6BCE119EB673200E8754E /* AppDelegate.h */,
 				00D6BCE219EB673200E8754E /* AppDelegate.m */,
 				00D6BCED19EB673200E8754E /* Images.xcassets */,
-				00D6BCEF19EB673200E8754E /* LaunchScreen.xib */,
 				00D6BCDD19EB673200E8754E /* Supporting Files */,
 			);
 			path = iosapp;
@@ -1961,7 +1958,6 @@
 				387639F21A7F8A94008E6805 /* sidemenu-setting.png in Resources */,
 				380FD2CB1A7762A8003C4021 /* tabbar-tweet@2x.png in Resources */,
 				EE7B45E51A834EA3002508C6 /* 102@2x.png in Resources */,
-				00D6BCF119EB673200E8754E /* LaunchScreen.xib in Resources */,
 				380FD2BB1A7762A8003C4021 /* tabbar-me.png in Resources */,
 				380FD2CC1A7762A8003C4021 /* tabbar-tweet@3x.png in Resources */,
 				380FD2B91A7762A8003C4021 /* tabbar-me-selected@2x.png in Resources */,
@@ -2218,14 +2214,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		00D6BCEF19EB673200E8754E /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				00D6BCF019EB673200E8754E /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
 		386F1E1D1A7A0CDA00B773EE /* UMSocialLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
