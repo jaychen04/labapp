@@ -14,12 +14,6 @@
 #import "Config.h"
 #import "Utils.h"
 
-#import <AFNetworking.h>
-#import <AFOnoResponseSerializer.h>
-#import <Ono.h>
-#import <SDWebImage/UIImageView+WebCache.h>
-#import <RESideMenu.h>
-
 @interface MyBasicInfoViewController () <UIActionSheetDelegate>
 
 @property (nonatomic, strong) OSCMyInfo *myInfo;
