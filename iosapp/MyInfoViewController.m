@@ -19,6 +19,7 @@
 #import "MessagesViewController.h"
 #import "LoginViewController.h"
 #import "SearchViewController.h"
+#import "MyBasicInfoViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -249,6 +250,9 @@
 {
     if ([Config getOwnID] == 0) {
         [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+    }else{
+        [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myInfo]
+                                                       animated:YES];
     }
 }
 

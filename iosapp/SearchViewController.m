@@ -57,7 +57,10 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    if (_searchBar.text.length == 0) {return;}
+    if (_searchBar.text.length == 0) {
+        
+        return;
+    }
     
     [searchBar resignFirstResponder];
     
