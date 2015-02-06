@@ -17,6 +17,7 @@
 #import "MyInfoViewController.h"
 
 #import <RESideMenu.h>
+#import <MBProgressHUD.h>
 
 @interface SideMenuViewController ()
 
@@ -143,6 +144,12 @@
             for (NSHTTPCookie *cookie in [cookieStorage cookies]) {
                 [cookieStorage deleteCookie:cookie];
             }
+            
+            MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+            HUD.labelText = @"注销成功";
+            [HUD hide:YES afterDelay:0.5];
             
             UITabBarController *tabBarController = (UITabBarController *)self.sideMenuViewController.contentViewController;
             MyInfoViewController *myInfoVC = ((UINavigationController *)tabBarController.viewControllers[4]).viewControllers[0];
