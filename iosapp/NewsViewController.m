@@ -75,7 +75,7 @@ static NSString *kNewsCellID = @"NewsCell";
         [cell.bodyLabel setText:news.body];
         [cell.authorLabel setText:news.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:news.pubDate]];
-        [cell.commentCount setText:[NSString stringWithFormat:@"%d 评", news.commentCount]];
+        [cell.commentCount setText:[NSString stringWithFormat:@"%d评", news.commentCount]];
         
         return cell;
     } else {

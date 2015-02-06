@@ -40,7 +40,7 @@ static NSString *kBlogCellID = @"BlogCell";
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?authoruid=%lld&pageIndex=1&pageSize=%d&uid=%lld", OSCAPI_PREFIX, OSCAPI_USERBLOGS_LIST, userID, 20, [Config getOwnID]];
+            return [NSString stringWithFormat:@"%@%@?authoruid=%lld&pageIndex=%lu&uid=%lld", OSCAPI_PREFIX, OSCAPI_USERBLOGS_LIST, userID, (unsigned long)page, [Config getOwnID]];
         };
         self.objClass = [OSCBlog class];
     }
@@ -83,7 +83,7 @@ static NSString *kBlogCellID = @"BlogCell";
         [cell.bodyLabel setText:blog.body];
         [cell.authorLabel setText:blog.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:blog.pubDate]];
-        [cell.commentCount setText:[NSString stringWithFormat:@"%d 评", blog.commentCount]];
+        [cell.commentCount setText:[NSString stringWithFormat:@"%d评", blog.commentCount]];
         
         return cell;
     } else {

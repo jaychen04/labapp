@@ -39,6 +39,8 @@
 {
     self = [super self];
     if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+        
         _myInfo = myInfo;
     }
     

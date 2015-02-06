@@ -25,7 +25,6 @@
 #import "ShakingViewController.h"
 #import "SearchViewController.h"
 
-///
 #import "UIBarButtonItem+Badge.h"
 
 #import <RESideMenu/RESideMenu.h>
@@ -69,8 +68,6 @@
     DiscoverTableVC *discoverTableVC = [DiscoverTableVC new];
     MyInfoViewController *myInfoVC = [MyInfoViewController new];
     
-    UINavigationController *meNav = [[UINavigationController alloc] initWithRootViewController:myInfoVC];
-    
     
     self.tabBar.translucent = NO;
     self.viewControllers = @[
@@ -78,7 +75,7 @@
                              [self addNavigationItemForViewController:tweetsSVC],
                              [UIViewController new],
                              [self addNavigationItemForViewController:discoverTableVC],
-                             meNav
+                             [[UINavigationController alloc] initWithRootViewController:myInfoVC]
                              ];
     
     [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];

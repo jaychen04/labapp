@@ -71,7 +71,7 @@ static NSString * const kPersonCellID = @"PersonCell";
         OSCUser *friend = self.objects[row];
         PersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kPersonCellID forIndexPath:indexPath];
         
-        [cell.portrait sd_setImageWithURL:friend.portraitURL placeholderImage:nil];
+        [cell.portrait loadPortrait:friend.portraitURL];
         cell.nameLabel.text = friend.name;
         cell.infoLabel.text = friend.expertise;
         

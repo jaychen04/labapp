@@ -29,6 +29,8 @@
                                   [[SearchResultsViewController alloc] initWithType:@"news"]
                                   ]];
     if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+        
         __weak SearchViewController *weakSelf = self;
         for (SearchResultsViewController *searchResultsVC in self.viewPager.childViewControllers) {
             searchResultsVC.viewDidScroll = ^ {
@@ -57,10 +59,7 @@
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    if (_searchBar.text.length == 0) {
-        
-        return;
-    }
+    if (_searchBar.text.length == 0) {return;}
     
     [searchBar resignFirstResponder];
     

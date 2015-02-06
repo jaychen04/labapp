@@ -323,7 +323,7 @@
     /********** 分享设置 ***********/
     
     self.operationBar.share = ^ {
-        NSString *title = [NSString stringWithFormat:@"开源中国%@分享", [weakSelf.navigationItem.title substringToIndex:2]];
+        NSString *title = weakSelf.objectTitle;
         // 微信相关设置
         
         [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
