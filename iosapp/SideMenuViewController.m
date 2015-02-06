@@ -69,7 +69,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    if ([Config getOwnID]) {return 4;}
+    return 3;
 }
 
 
@@ -154,6 +155,10 @@
             UITabBarController *tabBarController = (UITabBarController *)self.sideMenuViewController.contentViewController;
             MyInfoViewController *myInfoVC = ((UINavigationController *)tabBarController.viewControllers[4]).viewControllers[0];
             [myInfoVC refreshView];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
         }
         default:
             break;
