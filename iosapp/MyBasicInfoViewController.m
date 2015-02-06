@@ -14,13 +14,13 @@
 #import "Config.h"
 #import "Utils.h"
 
+#import <MobileCoreServices/MobileCoreServices.h>
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
-#import <SDWebImage/UIImageView+WebCache.h>
-#import <RESideMenu.h>
+#import <MBProgressHUD.h>
 
-@interface MyBasicInfoViewController () <UIActionSheetDelegate>
+@interface MyBasicInfoViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) OSCMyInfo *myInfo;
 @property (nonatomic, readonly, assign) int64_t myID;
@@ -28,6 +28,8 @@
 @property (nonatomic, strong) UIView *backView;
 @property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel *nameLabel;
+
+@property (nonatomic, strong) UIImage *image;
 
 @end
 
@@ -138,14 +140,110 @@
 
 - (void)tapPortrait
 {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"选择操作" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"更换头像" otherButtonTitles:@"查看大头像", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择操作" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"更换头像", @"查看大头像", nil];
+    alertView.tag = 1;
     
-    [actionSheet showInView:self.view];
+    [alertView show];
 }
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 1)
+    {
+        if (buttonIndex == alertView.cancelButtonIndex) {
+            return;
+        } else if (buttonIndex == 1){
+            UIAlertView *ChangeImgView = [[UIAlertView alloc] initWithTitle:@"选择图片" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"相机", @"相册", nil];
+            ChangeImgView.tag = 2;
+            
+            [ChangeImgView show];
+            
+        } else {
+            NSLog(@"点击选择操作的放大头像");
+            
+        }
 
+    } else{
+        if (buttonIndex == alertView.cancelButtonIndex) {
+            return;
+        } else if (buttonIndex == 1) {
+            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                    message:@"Device has no camera"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles: nil];
+                
+                [alertView show];
+            } else {
+                UIImagePickerController *imagePickerController = [UIImagePickerController new];
+                imagePickerController.delegate = self;
+                imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                imagePickerController.allowsEditing = YES;
+                imagePickerController.showsCameraControls = YES;
+                imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+                imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+                
+                [self presentViewController:imagePickerController animated:YES completion:nil];
+            }
 
+            
+        } else {
+            UIImagePickerController *imagePickerController = [UIImagePickerController new];
+            imagePickerController.delegate = self;
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePickerController.allowsEditing = YES;
+            imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+            
+            [self presentViewController:imagePickerController animated:YES completion:nil];
+        }
+    }
+}
 
+- (void)updatePortrait
+{
+    MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+    HUD.labelText = @"正在上传头像";
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USERINFO_UPDATE] parameters:@{@"uid":@([Config getOwnID])}
+    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        if (_image) {
+            [formData appendPartWithFileData:[Utils compressImage:_image] name:@"portrait" fileName:@"img.jpg" mimeType:@"image/jpeg"];
+        }
+    } success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
+        ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
+        int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+        NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+        
+        HUD.mode = MBProgressHUDModeCustomView;
+        if (errorCode) {
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+            HUD.labelText = @"头像更新成功";
+        } else {
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+            HUD.labelText = errorMessage;
+        }
+        [HUD hide:YES afterDelay:1];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+        HUD.labelText = @" 网络异常,头像更换失败";
+    }];
+}
+
+#pragma mark - UIImagePickerController
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    _image = info[UIImagePickerControllerEditedImage];
+    
+    [picker dismissViewControllerAnimated:YES completion:^ {
+        [self updatePortrait];
+    }];
+}
 
 
 
