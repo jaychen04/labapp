@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventsViewController.h"
 
-@class OSCUser;
+@interface UserDetailsViewController : EventsViewController
 
-@interface UserDetailsViewController : UITableViewController
-
-- (instancetype)initWithUser:(OSCUser *)user;
 - (instancetype)initWithUserID:(int64_t)userID;
 - (instancetype)initWithUserName:(NSString *)userName;
 

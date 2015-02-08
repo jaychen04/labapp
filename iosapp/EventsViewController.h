@@ -11,5 +11,7 @@
 @interface EventsViewController : OSCObjsViewController
 
 - (instancetype)initWithCatalog:(int)catalog;
+- (instancetype)initWithUserID:(int64_t)userID;
+- (instancetype)initWithUserName:(NSString *)userName;
 
 @end

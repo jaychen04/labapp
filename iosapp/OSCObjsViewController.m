@@ -159,6 +159,8 @@
              
              if (refresh) {[_objects removeAllObjects];}
              
+             if (_parseExtraInfo) {_parseExtraInfo(responseDocument);}
+             
              /* 这里要添加一个去重步骤 */
              
              for (ONOXMLElement *objectXML in objectsXML) {

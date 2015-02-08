@@ -26,6 +26,8 @@ static NSString * const EventCellID = @"EventCell";
 
 @implementation EventsViewController
 
+#pragma mark - 个人中心动态
+
 - (instancetype)init
 {
     return [self initWithCatalog:1];
@@ -46,11 +48,44 @@ static NSString * const EventCellID = @"EventCell";
 }
 
 
+#pragma mark - 用户动态
+
+- (instancetype)initWithUserID:(int64_t)userID
+{
+    if (self = [super init]) {
+        self.hidesBottomBarWhenPushed = YES;
+        
+        self.objClass = [OSCEvent class];
+        self.generateURL = ^NSString * (NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?uid=%lld&hisuid=%lld&pageIndex=%lu&pageSize=20", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userID, (unsigned long)page];
+        };
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithUserName:(NSString *)userName
+{
+    if (self = [super init]) {
+        self.hidesBottomBarWhenPushed = YES;
+        
+        self.objClass = [OSCEvent class];
+        self.generateURL = ^NSString * (NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?uid=%lld&hisname=%@&pageIndex=%lu&pageSize=20", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userName, (unsigned long)page];
+        };
+    }
+    
+    return self;
+}
+
+
 - (NSArray *)parseXML:(ONOXMLDocument *)xml
 {
     return [[xml.rootElement firstChildWithTag:@"activies"] childrenWithTag:@"active"];
 }
 
+
+#pragma mark - 生命周期
 
 - (void)viewDidLoad {
     [super viewDidLoad];

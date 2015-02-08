@@ -41,8 +41,10 @@ static NSString * const kExpertise = @"expertise";
     _followersCount = [[[xml firstChildWithTag:kFollowers] numberValue] intValue];
     _fansCount = [[[xml firstChildWithTag:kFans] numberValue] intValue];
     _score = [[[xml firstChildWithTag:kScore] numberValue] intValue];
+    _relationship = [[[xml firstChildWithTag:@"relation"] numberValue] intValue];
     _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
     _expertise = [[[xml firstChildWithTag:kExpertise] stringValue] copy];
+    _latestOnlineTime = [[[xml firstChildWithTag:@"latestonline"] stringValue] copy];
     
     return self;
 }

@@ -16,7 +16,9 @@
 @property (readonly, nonatomic, assign) int followersCount;
 @property (readonly, nonatomic, assign) int fansCount;
 @property (readonly, nonatomic, assign) int score;
+@property (readonly, nonatomic, assign) int relationship;
 @property (readonly, nonatomic, strong) NSURL *portraitURL;
 @property (readonly, nonatomic, copy) NSString *expertise;
+@property (readonly, nonatomic, copy) NSString *latestOnlineTime;
 
 @end
