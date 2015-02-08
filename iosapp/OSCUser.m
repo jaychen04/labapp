@@ -43,7 +43,9 @@ static NSString * const kExpertise = @"expertise";
     _score = [[[xml firstChildWithTag:kScore] numberValue] intValue];
     _relationship = [[[xml firstChildWithTag:@"relation"] numberValue] intValue];
     _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
+    _developPlatform    = [[[xml firstChildWithTag:@"devplatform"] stringValue] copy];
     _expertise = [[[xml firstChildWithTag:kExpertise] stringValue] copy];
+    _joinTime = [[[xml firstChildWithTag:@"jointime"] stringValue] copy];
     _latestOnlineTime = [[[xml firstChildWithTag:@"latestonline"] stringValue] copy];
     
     return self;

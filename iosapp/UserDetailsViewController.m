@@ -17,8 +17,9 @@
 #import "EventCell.h"
 #import "UserHeaderCell.h"
 #import "UserOperationCell.h"
+#import "BlogsViewController.h"
 
-#import <Ono.h>
+#import <MBProgressHUD.h>
 
 @interface UserDetailsViewController ()
 
@@ -127,6 +128,9 @@
             if (_user) {
                 cell.loginTimeLabel.text = [NSString stringWithFormat:@"上次登录：%@", [Utils intervalSinceNow:_user.latestOnlineTime]];
                 [cell setFollowButtonByRelationship:_user.relationship];
+                [cell.followButton addTarget:self action:@selector(updateRelationship) forControlEvents:UIControlEventTouchUpInside];
+                [cell.blogsButton addTarget:self action:@selector(pushBlogsVC) forControlEvents:UIControlEventTouchUpInside];
+                [cell.informationButton addTarget:self action:@selector(showUserInformation) forControlEvents:UIControlEventTouchUpInside];
             }
             
             return cell;
@@ -134,6 +138,12 @@
     } else {
         return [super tableView:tableView cellForRowAtIndexPath:indexPath];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {return;}
+    else {[super tableView:tableView didSelectRowAtIndexPath:indexPath];}
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -144,7 +154,7 @@
 
 
 
-#pragma mark - Layout
+#pragma mark - 处理页面跳转
 
 - (void)pushFriendsSVC
 {
@@ -154,10 +164,80 @@
                                                                                            [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:1],
                                                                                            [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:0]
                                                                                            ]];
-    friendsSVC.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:friendsSVC animated:YES];
 }
+
+
+- (void)updateRelationship
+{
+    if ([Config getOwnID] == 0) {
+        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.labelText = @"请先登录";
+        [HUD hide:YES afterDelay:0.5];
+    } else {
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        
+        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_UPDATERELATION]
+           parameters:@{
+                        @"uid":             @([Config getOwnID]),
+                        @"hisuid":          @(_user.userID),
+                        @"newrelation":     _user.relationship <= 2? @(0) : @(1)
+                        }
+              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
+                  ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
+                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+                  
+                  if (errorCode == 1) {
+                      _user.relationship = [[[responseDoment.rootElement firstChildWithTag:@"relation"] numberValue] intValue];
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]]
+                                                withRowAnimation:UITableViewRowAnimationNone];
+                      });
+                  } else {
+                      MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                      HUD.mode = MBProgressHUDModeCustomView;
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                      HUD.labelText = errorMessage;
+                  }
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                HUD.labelText = @"网络异常，操作失败";
+                
+                [HUD hide:YES afterDelay:1];
+            }];
+    }
+}
+
+- (void)pushBlogsVC
+{
+    [self.navigationController pushViewController:[[BlogsViewController alloc] initWithUserID:_user.userID]
+                                         animated:YES];
+}
+
+- (void)showUserInformation
+{
+#if 0
+    NSArray *title = @[@"加入时间：", @"所在地区：", @"开发平台：", @"专长领域："];
+    NSString *joinTime = [_user.joinTime componentsSeparatedByString:@" "][0];
+    NSArray *content = @[joinTime, _user.location, _user.developPlatform, _user.expertise];
+    
+    NSMutableString *userInformation = [NSMutableString new];
+    for (int i = 0; i < 4; ++i) {
+        [userInformation appendFormat:@"%@%@\n", title[i], content[i]];
+    }
+    
+    UIAlertView *informationAlertView = [[UIAlertView alloc] initWithTitle:nil message:userInformation delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [informationAlertView show];
+#endif
+}
+
 
 
 

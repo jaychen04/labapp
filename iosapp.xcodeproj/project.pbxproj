@@ -980,7 +980,7 @@
 				386825A61A70D5AC008F5706 /* 搜索 */,
 				3868259F1A709F77008F5706 /* 详情页面 */,
 				00364FF519F5F93600871255 /* SwipeableViewController */,
-				38B0BF9D1A3EBBE500A2FDB0 /* MainTabBar */,
+				38B0BF9D1A3EBBE500A2FDB0 /* Tab Bar */,
 				387639FE1A807B33008E6805 /* 侧拉菜单 */,
 			);
 			name = "Main ViewControllers";
@@ -1595,7 +1595,7 @@
 			name = Messages;
 			sourceTree = "<group>";
 		};
-		38B0BF9D1A3EBBE500A2FDB0 /* MainTabBar */ = {
+		38B0BF9D1A3EBBE500A2FDB0 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
 				38B0BF9A1A3E8F9C00A2FDB0 /* OSCTabBarController.h */,
@@ -1605,7 +1605,7 @@
 				38B0BFA71A42AF5500A2FDB0 /* TweetEditingVC.h */,
 				38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */,
 			);
-			name = MainTabBar;
+			name = "Tab Bar";
 			sourceTree = "<group>";
 		};
 		38BC598C1A5D20AC00F3C4D2 /* 找人 */ = {
