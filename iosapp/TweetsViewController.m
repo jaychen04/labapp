@@ -331,6 +331,7 @@
 }
 
 
+#pragma mark - 加载大图
 
 - (void)loadLargeImage:(UITapGestureRecognizer *)recognizer
 {
