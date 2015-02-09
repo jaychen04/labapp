@@ -17,6 +17,7 @@
 #import "MyInfoViewController.h"
 
 #import <RESideMenu.h>
+#import <MBProgressHUD.h>
 
 @interface SideMenuViewController ()
 
@@ -68,7 +69,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    if ([Config getOwnID]) {return 4;}
+    return 3;
 }
 
 
@@ -144,9 +146,19 @@
                 [cookieStorage deleteCookie:cookie];
             }
             
+            MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+            HUD.labelText = @"注销成功";
+            [HUD hide:YES afterDelay:0.5];
+            
             UITabBarController *tabBarController = (UITabBarController *)self.sideMenuViewController.contentViewController;
             MyInfoViewController *myInfoVC = ((UINavigationController *)tabBarController.viewControllers[4]).viewControllers[0];
             [myInfoVC refreshView];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
         }
         default:
             break;
