@@ -99,9 +99,9 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
     CGFloat offsetRatio = (NSUInteger)horizonalOffset % (NSUInteger)screenWidth / screenWidth;
     NSUInteger index = (horizonalOffset + screenWidth / 2) / screenWidth;
     
-    self.scrollView(offsetRatio, index);
+    _scrollView(offsetRatio, index);
     if (didScrollStop) {
-        self.changeIndex(index);
+        _changeIndex(index);
     }
 }
 
