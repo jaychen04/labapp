@@ -8,18 +8,21 @@
 
 #import "MyBasicInfoViewController.h"
 
+//#import "OSCUser.h"
 #import "UIColor+Util.h"
 #import "OSCAPI.h"
 #import "OSCMyInfo.h"
 #import "Config.h"
 #import "Utils.h"
 #import "MyInfoViewController.h"
+#import "ImageViewerController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <MBProgressHUD.h>
+
 
 @interface MyBasicInfoViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
 
@@ -167,6 +170,16 @@
             
         } else {
             
+            NSString *str = [NSString stringWithFormat:@"%@", _myInfo.portraitURL];
+            NSArray *array1 = [str componentsSeparatedByString:@"_"];
+            
+            NSArray *array2 = [array1[1] componentsSeparatedByString:@"."];
+            
+            NSString *bigPortraitURL = [NSString stringWithFormat:@"%@_200.%@", array1[0], array2[1]];
+            
+            ImageViewerController *imgViewweVC = [[ImageViewerController alloc] initWithImageURL:[NSURL URLWithString:bigPortraitURL] thumbnail:_portrait];
+            
+            [self presentViewController:imgViewweVC animated:YES completion:nil];
         }
 
     } else {
