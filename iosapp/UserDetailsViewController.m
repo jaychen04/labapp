@@ -223,19 +223,43 @@
 
 - (void)showUserInformation
 {
-#if 0
+    MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+    HUD.mode = MBProgressHUDModeCustomView;
+    HUD.color = [UIColor colorWithHex:0xEEEEEE];
+    
+    UILabel *detailsLabel = [HUD valueForKey:@"detailsLabel"];
+    detailsLabel.textAlignment = NSTextAlignmentLeft;
+    detailsLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    NSDictionary *titleAttributes = @{NSForegroundColorAttributeName:[UIColor grayColor]};
+    
     NSArray *title = @[@"加入时间：", @"所在地区：", @"开发平台：", @"专长领域："];
     NSString *joinTime = [_user.joinTime componentsSeparatedByString:@" "][0];
     NSArray *content = @[joinTime, _user.location, _user.developPlatform, _user.expertise];
     
-    NSMutableString *userInformation = [NSMutableString new];
+    NSMutableAttributedString *userInformation = [NSMutableAttributedString new];
     for (int i = 0; i < 4; ++i) {
-        [userInformation appendFormat:@"%@%@\n", title[i], content[i]];
+        NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:title[i]
+                                                                                           attributes:titleAttributes];
+        if (i  < 3) {
+            [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n\n", content[i]]]];
+        } else {
+            [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", content[i]]]];
+        }
+        
+        [userInformation appendAttributedString:attributedText];
     }
     
-    UIAlertView *informationAlertView = [[UIAlertView alloc] initWithTitle:nil message:userInformation delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    [informationAlertView show];
-#endif
+    HUD.detailsLabelColor = [UIColor blackColor];
+    HUD.detailsLabelFont = [UIFont systemFontOfSize:14];
+    detailsLabel.attributedText = userInformation;
+    
+    [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHUD:)]];
+}
+
+- (void)hideHUD:(UITapGestureRecognizer *)recognizer
+{
+    [(MBProgressHUD *)recognizer.view hide:YES];
 }
 
 
