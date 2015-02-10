@@ -28,7 +28,7 @@
     if (self) {
         if (title) {self.title = title;}
         
-        CGFloat titleBarHeight = 38;
+        CGFloat titleBarHeight = 36;
         _titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, titleBarHeight) andTitles:subTitles];
         _titleBar.backgroundColor = [UIColor clearColor];
         [self.view addSubview:_titleBar];
@@ -56,13 +56,10 @@
             }
             [weakViewPager scrollToViewAtIndex:index];
         };
-        _viewPager.scrollView = ^(CGFloat offsetRatio, NSUInteger index) {
-            if (index > weakTitleBar.currentIndex) {
-                offsetRatio = 1 - offsetRatio;
-             }
-            
-            UIButton *titleFrom = weakTitleBar.titleButtons[weakTitleBar.currentIndex];
-            UIButton *titleTo = weakTitleBar.titleButtons[index];
+        
+        _viewPager.scrollView = ^(CGFloat offsetRatio, NSUInteger focusIndex, NSUInteger animationIndex) {
+            UIButton *titleFrom = weakTitleBar.titleButtons[animationIndex];
+            UIButton *titleTo = weakTitleBar.titleButtons[focusIndex];
             CGFloat colorValue = (CGFloat)0x90 / (CGFloat)0xFF;
             
             [UIView transitionWithView:titleFrom duration:0.1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
