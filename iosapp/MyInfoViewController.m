@@ -26,6 +26,7 @@
 #import <Ono.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <RESideMenu.h>
+#import <MBProgressHUD.h>
 
 @interface MyInfoViewController ()
 
@@ -34,6 +35,7 @@
 
 @property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UIImageView *myQRCodeImageView;
 
 @property (nonatomic, strong) UIButton *creditsBtn;
 @property (nonatomic, strong) UIButton *collectionsBtn;
@@ -102,6 +104,13 @@
     _nameLabel.text = _myID? _myInfo.name: @"点击头像登录";
     [header addSubview:_nameLabel];
     
+    UIImageView *QRCodeImageView = [UIImageView new];
+    QRCodeImageView.image = [UIImage imageNamed:@"QR-Code"];
+    QRCodeImageView.userInteractionEnabled = YES;
+    [QRCodeImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapQRCodeImage)]];
+    [header addSubview:QRCodeImageView];
+    if ([Config getOwnID] == 0) {QRCodeImageView.hidden = YES;}
+    
     UIView *countView = [UIView new];
     [header addSubview:countView];
     
@@ -130,13 +139,17 @@
     for (UIView *view in header.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsBtn, _collectionsBtn, _followsBtn, _fansBtn, countView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsBtn, _collectionsBtn, _followsBtn, _fansBtn, QRCodeImageView, countView);
     NSDictionary *metrics = @{@"width": @(tableView.frame.size.width / 4)};
     
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portrait(50)]-8-[_nameLabel]-15-[countView(50)]|"
                                                                    options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_portrait(50)]" options:0 metrics:nil views:views]];
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[countView]|" options:0 metrics:nil views:views]];
+    
+    
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[QRCodeImageView]" options:0 metrics:nil views:views]];
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[QRCodeImageView]-15-|" options:0 metrics:nil views:views]];
     
     
     [countView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_creditsBtn(width)][_collectionsBtn(width)][_followsBtn(width)][_fansBtn(width)]|"
@@ -258,6 +271,36 @@
     }
 }
 
+
+#pragma mark - 二维码相关
+
+- (void)tapQRCodeImage
+{
+    MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+    HUD.mode = MBProgressHUDModeCustomView;
+    HUD.color = [UIColor whiteColor];
+    
+    HUD.labelText = @"扫一扫上面的二维码，加我为好友";
+    HUD.labelFont = [UIFont systemFontOfSize:13];
+    HUD.labelColor = [UIColor grayColor];
+    HUD.customView = self.myQRCodeImageView;
+    [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHUD:)]];
+}
+
+- (void)hideHUD:(UIGestureRecognizer *)recognizer
+{
+    [(MBProgressHUD *)recognizer.view hide:YES];
+}
+
+- (UIImageView *)myQRCodeImageView
+{
+    if (!_myQRCodeImageView) {
+        UIImage *myQRCode = [Utils createQRCodeFromString:[NSString stringWithFormat:@"http://my.oschina.net/u/%llu", [Config getOwnID]]];
+        _myQRCodeImageView = [[UIImageView alloc] initWithImage:myQRCode];
+    }
+    
+    return _myQRCodeImageView;
+}
 
 
 
