@@ -95,12 +95,4 @@
 
 
 
-#pragma mark - <TitleBarDelegate>
-
-- (void)selectTitleAtIndex:(NSUInteger)index
-{
-    [_viewPager scrollToViewAtIndex:index];
-}
-
-
 @end
