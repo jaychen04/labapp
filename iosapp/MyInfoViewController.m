@@ -252,7 +252,7 @@
 {
     if ([Config getOwnID] == 0) {
         [self.navigationController pushViewController:[LoginViewController new] animated:YES];
-    }else{
+    } else {
         [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myInfo]
                                              animated:YES];
     }

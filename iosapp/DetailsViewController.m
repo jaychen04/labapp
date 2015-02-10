@@ -71,7 +71,6 @@
         _news = news;
         _objectID = news.newsID;
         _objectTitle = news.title;
-        _commentCount = news.commentCount;
         
         switch (news.type) {
             case NewsTypeStandardNews:
@@ -129,7 +128,6 @@
         _favoriteType = FavoriteTypeBlog;
         _objectID = blog.blogID;
         _objectTitle = blog.title;
-        _commentCount = blog.commentCount;
         
         self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.title = @"博客详情";
@@ -151,7 +149,6 @@
     _favoriteType = FavoriteTypeTopic;
     _objectID = post.postID;
     _objectTitle = post.title;
-    _commentCount = post.replyCount;
     
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"帖子详情";
@@ -222,6 +219,7 @@
              ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
              
              id details = [[_detailsClass alloc] initWithXML:XML];
+             _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
              [self performSelector:_loadMethod withObject:details];
              
              self.operationBar.isStarred = _isStarred;
@@ -437,6 +435,7 @@
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = postDetails.isFavorite;
     _URL = [postDetails.url absoluteString];
+    _commentCount = postDetails.answerCount;
 }
 
 
