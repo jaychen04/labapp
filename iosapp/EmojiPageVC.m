@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, copy) void (^didSelectEmoji) (NSTextAttachment *);
+@property (nonatomic, copy) void (^deleteEmoji)();
 
 @end
 
@@ -31,7 +32,17 @@
         _didSelectEmoji = ^(NSTextAttachment *textAttachment) {
             NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
             NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:weakTextView.attributedText];
-            [mutableAttributeString replaceCharactersInRange:[weakTextView selectedRange] withAttributedString:emojiAttributedString];
+            [mutableAttributeString replaceCharactersInRange:weakTextView.selectedRange withAttributedString:emojiAttributedString];
+            weakTextView.attributedText = [mutableAttributeString copy];
+        };
+        _deleteEmoji = ^ {
+            NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:weakTextView.attributedText];
+            NSRange range = weakTextView.selectedRange;
+            if (range.length == 0 && range.location != 0) {
+                [mutableAttributeString deleteCharactersInRange:NSMakeRange(range.location - 1, 1)];
+            } else {
+                [mutableAttributeString deleteCharactersInRange:weakTextView.selectedRange];
+            }
             weakTextView.attributedText = [mutableAttributeString copy];
         };
     }
@@ -46,6 +57,7 @@
     
     EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:0];
     emojiPanelVC.didSelectEmoji = _didSelectEmoji;
+    emojiPanelVC.deleteEmoji    = _deleteEmoji;
     if (emojiPanelVC != nil) {
         self.dataSource = self;
         [self setViewControllers:@[emojiPanelVC]
@@ -70,6 +82,7 @@
     } else {
         EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:index-1];
         emojiPanelVC.didSelectEmoji = _didSelectEmoji;
+        emojiPanelVC.deleteEmoji    = _deleteEmoji;
         return emojiPanelVC;
     }
 }
@@ -83,6 +96,7 @@
     } else {
         EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:index+1];
         emojiPanelVC.didSelectEmoji = _didSelectEmoji;
+        emojiPanelVC.deleteEmoji    = _deleteEmoji;
         return emojiPanelVC;
     }
 }

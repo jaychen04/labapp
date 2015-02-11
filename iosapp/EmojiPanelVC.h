@@ -14,5 +14,6 @@
 
 @property (nonatomic, readonly, assign) int pageIndex;
 @property (nonatomic, copy) void (^didSelectEmoji)(NSTextAttachment *textAttachment);
+@property (nonatomic, copy) void (^deleteEmoji)();
 
 @end
