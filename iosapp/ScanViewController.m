@@ -7,8 +7,13 @@
 //
 
 #import "ScanViewController.h"
-#import <AVFoundation/AVFoundation.h>
 #import "Utils.h"
+#import "Config.h"
+
+#import <AVFoundation/AVFoundation.h>
+#import <MBProgressHUD.h>
+#import <AFNetworking.h>
+
 
 @interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
 
@@ -41,6 +46,11 @@
     [self setUpCamera];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [_session startRunning];
+}
+
 - (void)cancelButtonClicked
 {
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
@@ -68,8 +78,6 @@
     [_preview setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     [_preview setFrame:self.view.layer.bounds];
     [self.view.layer addSublayer:_preview];
-    
-    [_session startRunning];
 }
 
 
@@ -78,27 +86,96 @@
     NSString *message;
     
     if (metadataObjects.count > 0) {
+        [_session stopRunning];
+        
         AVMetadataMachineReadableCodeObject *metadataObject = metadataObjects[0];
         
         message = metadataObject.stringValue;
+        
+        if ([message hasPrefix:@"{"]) {
+            if ([Config getOwnID] == 0) {
+                MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                HUD.labelText = @"您还没登录，请先登录再扫描签到";
+                [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapHUD:)]];
+                
+                return;
+            }
+            
+            NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            
+            NSNumber *requireLogin = json[@"require_login"];
+            NSString *title = json[@"title"];
+            NSNumber *type = json[@"type"];
+            NSString *URL = json[@"url"];
+            
+            if (!requireLogin || !title || !type || !URL) {
+                MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                HUD.labelText = @"无效二维码";
+                [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapHUD:)]];
+                
+                return;
+            }
+            
+            if ([type intValue] != 1) {
+                MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                HUD.mode = MBProgressHUDModeText;
+                HUD.labelText = title;
+                
+                [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapHUD:)]];
+            } else {
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+                
+                [manager GET:URL
+                  parameters:nil
+                     success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
+                         MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                         HUD.mode = MBProgressHUDModeCustomView;
+                         [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapHUD:)]];
+                         
+                         NSString *message = responseObject[@"msg"];
+                         NSString *error   = responseObject[@"error"];
+                         
+                         if (message) {
+                             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                             HUD.labelText = message;
+                         } else {
+                             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                             HUD.labelText = error;
+                         }
+                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                       MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                       HUD.mode = MBProgressHUDModeCustomView;
+                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                       HUD.labelText = @"网络连接故障";
+                }];
+            }
+        } else if ([Utils isURL:message]) {
+            [Utils analysis:message andNavController:self.navigationController];
+        } else {
+            MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+            HUD.mode = MBProgressHUDModeText;
+            HUD.detailsLabelText = message;
+            
+            [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapHUD:)]];
+        }
     }
-    
-    [_session stopRunning];
-    
-    [[[UIAlertView alloc] initWithTitle:nil
-                                message:message
-                               delegate:self
-                      cancelButtonTitle:@"确定"
-                      otherButtonTitles:nil,nil]
-     show];
 }
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+
+- (void)onTapHUD:(UIGestureRecognizer *)recognizer
 {
-    if (buttonIndex == [alertView cancelButtonIndex]) {
-        [_session startRunning];
-    }
+    [(MBProgressHUD *)recognizer.view hide:YES];
+    
+    [_session startRunning];
 }
+
+
 
 
 @end
