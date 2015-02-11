@@ -31,7 +31,7 @@
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
             button.backgroundColor = [UIColor colorWithHex:0xE1E1E1];
             button.titleLabel.font = [UIFont systemFontOfSize:15];
-            [button setTitleColor:[UIColor colorWithHex:0x808080] forState:UIControlStateNormal];
+            [button setTitleColor:[UIColor colorWithHex:0x909090] forState:UIControlStateNormal];
             [button setTitle:title forState:UIControlStateNormal];
             
             button.frame = CGRectMake(buttonWidth * i, 0, buttonWidth, buttonHeight);

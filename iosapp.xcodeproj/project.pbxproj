@@ -284,6 +284,9 @@
 		38763A011A820B46008E6805 /* OSCMyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A001A820B46008E6805 /* OSCMyInfo.m */; };
 		38763A071A85E591008E6805 /* UserHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A061A85E591008E6805 /* UserHeaderCell.m */; };
 		38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A091A860A96008E6805 /* UserOperationCell.m */; };
+		38763A211A89F3E8008E6805 /* QR-Code.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A1E1A89F3E8008E6805 /* QR-Code.png */; };
+		38763A221A89F3E8008E6805 /* QR-Code@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A1F1A89F3E8008E6805 /* QR-Code@2x.png */; };
+		38763A231A89F3E8008E6805 /* QR-Code@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A201A89F3E8008E6805 /* QR-Code@3x.png */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
@@ -710,6 +713,9 @@
 		38763A061A85E591008E6805 /* UserHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserHeaderCell.m; sourceTree = "<group>"; };
 		38763A081A860A96008E6805 /* UserOperationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOperationCell.h; sourceTree = "<group>"; };
 		38763A091A860A96008E6805 /* UserOperationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserOperationCell.m; sourceTree = "<group>"; };
+		38763A1E1A89F3E8008E6805 /* QR-Code.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QR-Code.png"; sourceTree = "<group>"; };
+		38763A1F1A89F3E8008E6805 /* QR-Code@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QR-Code@2x.png"; sourceTree = "<group>"; };
+		38763A201A89F3E8008E6805 /* QR-Code@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QR-Code@3x.png"; sourceTree = "<group>"; };
 		387794231A0B60C700C41C78 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		387794241A0B60C700C41C78 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		38996A501A02642C0025AA52 /* OSCBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlog.h; sourceTree = "<group>"; };
@@ -911,7 +917,6 @@
 			isa = PBXGroup;
 			children = (
 				00C9A73919EE8536000EA878 /* API */,
-				386F1E1C1A7A0CDA00B773EE /* UMSocial_Sdk_4.2.1 */,
 				00EDF60C19EFC13500A5C842 /* Utils */,
 				3874EC221A08E8EA000D2894 /* 用户 */,
 				382A94B21A28653200AAAFEA /* 发现 */,
@@ -923,6 +928,7 @@
 				38BD7D6F19FF7F9A003ABB80 /* 评论 */,
 				00EDF60B19EFB42500A5C842 /* Main ViewControllers */,
 				386039661A0A34F5007C9B88 /* Resource */,
+				386F1E1C1A7A0CDA00B773EE /* UMSocial_Sdk_4.2.1 */,
 				00D6BCE119EB673200E8754E /* AppDelegate.h */,
 				00D6BCE219EB673200E8754E /* AppDelegate.m */,
 				00D6BCED19EB673200E8754E /* Images.xcassets */,
@@ -1351,6 +1357,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				38763A111A89EB9B008E6805 /* QR-Code */,
 				387639C51A7F7BE6008E6805 /* sidemenu */,
 				386F1E691A7A47E800B773EE /* share-image.png */,
 				380FD3481A77726E003C4021 /* editting bar */,
@@ -1532,6 +1539,16 @@
 				38763A091A860A96008E6805 /* UserOperationCell.m */,
 			);
 			name = "用户详情页";
+			sourceTree = "<group>";
+		};
+		38763A111A89EB9B008E6805 /* QR-Code */ = {
+			isa = PBXGroup;
+			children = (
+				38763A1E1A89F3E8008E6805 /* QR-Code.png */,
+				38763A1F1A89F3E8008E6805 /* QR-Code@2x.png */,
+				38763A201A89F3E8008E6805 /* QR-Code@3x.png */,
+			);
+			path = "QR-Code";
 			sourceTree = "<group>";
 		};
 		38996A561A0266F80025AA52 /* 博客 */ = {
@@ -1866,6 +1883,7 @@
 				382A94901A26D27400AAAFEA /* 077@2x.png in Resources */,
 				380FD2CA1A7762A8003C4021 /* tabbar-tweet.png in Resources */,
 				38BC59B11A5D406300F3C4D2 /* shooting.png in Resources */,
+				38763A211A89F3E8008E6805 /* QR-Code.png in Resources */,
 				382A949B1A26D27400AAAFEA /* 088@2x.png in Resources */,
 				387639EB1A7F8A94008E6805 /* sidemenu-blog@3x.png in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
@@ -1968,6 +1986,7 @@
 				386F1E401A7A0CDA00B773EE /* UMSShareListController.xib in Resources */,
 				3838D1981A6D046B00CC7913 /* toolbar-star.png in Resources */,
 				382A94761A26D27400AAAFEA /* 050@2x.png in Resources */,
+				38763A231A89F3E8008E6805 /* QR-Code@3x.png in Resources */,
 				382A94991A26D27400AAAFEA /* 086@2x.png in Resources */,
 				387639ED1A7F8A94008E6805 /* sidemenu-logout@2x.png in Resources */,
 				382A94641A26D27400AAAFEA /* 032@2x.png in Resources */,
@@ -2015,6 +2034,7 @@
 				386F1E391A7A0CDA00B773EE /* UMSCommentDetailController.xib in Resources */,
 				382A945E1A26D27400AAAFEA /* 026@2x.png in Resources */,
 				382A94621A26D27400AAAFEA /* 030@2x.png in Resources */,
+				38763A221A89F3E8008E6805 /* QR-Code@2x.png in Resources */,
 				382A945B1A26D27400AAAFEA /* 023@2x.png in Resources */,
 				380FD2C91A7762A8003C4021 /* tabbar-tweet-selected@3x.png in Resources */,
 				382A94801A26D27400AAAFEA /* 060@2x.png in Resources */,
