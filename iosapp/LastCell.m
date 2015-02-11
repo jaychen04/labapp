@@ -12,7 +12,6 @@
 @interface LastCell ()
 
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
-@property (nonatomic, strong) UILabel *statusLabel;
 @property (readwrite, nonatomic, assign) LastCellStatus status;
 
 @end
@@ -33,22 +32,22 @@
 
 - (void)setLayout
 {
-    _statusLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, self.contentView.bounds.size.width, 20)];
-    _statusLabel.backgroundColor = [UIColor themeColor];
-    _statusLabel.textAlignment = NSTextAlignmentCenter;
-    _statusLabel.font = [UIFont boldSystemFontOfSize:18];
-    [self.contentView addSubview:_statusLabel];
+    self.textLabel.backgroundColor = [UIColor themeColor];
+    self.textLabel.textAlignment = NSTextAlignmentCenter;
+    self.textLabel.font = [UIFont boldSystemFontOfSize:18];
     
     _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _indicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin  | UIViewAutoresizingFlexibleBottomMargin |
+                                  UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     _indicator.color = [UIColor colorWithRed:54/255 green:54/255 blue:54/255 alpha:1.0];
-    _indicator.center = CGPointMake(self.contentView.frame.size.width/2, self.contentView.frame.size.height/2 + 5);
+    _indicator.center = self.center;
     [self.contentView addSubview:_indicator];
 }
 
 - (void)statusMore
 {
     [_indicator stopAnimating];
-    _statusLabel.text = @"More...";
+    self.textLabel.text = @"More...";
     self.userInteractionEnabled = YES;
     self.status = LastCellStatusMore;
 }
@@ -56,7 +55,7 @@
 - (void)statusLoading
 {
     [_indicator startAnimating];
-    _statusLabel.text = @"";
+    self.textLabel.text = @"";
     self.userInteractionEnabled = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.status = LastCellStatusLoading;
@@ -65,7 +64,7 @@
 - (void)statusFinished
 {
     [_indicator stopAnimating];
-    _statusLabel.text = @"全部加载完毕";
+    self.textLabel.text = @"全部加载完毕";
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.status = LastCellStatusFinished;
 }
@@ -73,7 +72,7 @@
 - (void)statusError
 {
     [_indicator stopAnimating];
-    _statusLabel.text = @"加载数据出错";
+    self.textLabel.text = @"加载数据出错";
     self.userInteractionEnabled = YES;
     self.status = LastCellStatusError;
 }
