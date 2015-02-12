@@ -353,6 +353,8 @@
                                   _imageView.image = nil;
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                                   HUD.labelText = @"动弹发表成功";
+                                  
+                                  [self dismissViewControllerAnimated:YES completion:nil];
                                   break;
                               }
                               case 0:
