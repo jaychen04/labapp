@@ -290,7 +290,7 @@
                                                     [rawText insertString:[NSString stringWithFormat:@"[%d]", emojiNum-1] atIndex:range.location];
                                                 }];
     
-    return [rawText copy];
+    return [rawText stringByReplacingOccurrencesOfString:@"\U0000fffc" withString:@""];
 }
 
 + (NSData *)compressImage:(UIImage *)image
