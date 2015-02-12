@@ -96,7 +96,7 @@
         NSTextAttachment *textAttachment = [NSTextAttachment new];
         textAttachment.image = [UIImage imageNamed:emojiImageName];
         
-        objc_setAssociatedObject(textAttachment, @"number", @(emojiNum), OBJC_ASSOCIATION_ASSIGN);
+        objc_setAssociatedObject(textAttachment, @"number", @(emojiNum), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
         _didSelectEmoji(textAttachment);
     }
