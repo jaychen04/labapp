@@ -1601,7 +1601,7 @@
 			name = Friends;
 			sourceTree = "<group>";
 		};
-		38B0BF961A3AFEB400A2FDB0 /* Messages */ = {
+		38B0BF961A3AFEB400A2FDB0 /* 留言 */ = {
 			isa = PBXGroup;
 			children = (
 				38B0BF901A3AE77200A2FDB0 /* MessagesViewController.h */,
@@ -1609,7 +1609,7 @@
 				38B0BF971A3AFED800A2FDB0 /* MessageCell.h */,
 				38B0BF981A3AFED800A2FDB0 /* MessageCell.m */,
 			);
-			name = Messages;
+			name = "留言";
 			sourceTree = "<group>";
 		};
 		38B0BF9D1A3EBBE500A2FDB0 /* Tab Bar */ = {
@@ -1702,7 +1702,7 @@
 				EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */,
 				EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */,
 				38B0BF8F1A3AE72E00A2FDB0 /* Friends */,
-				38B0BF961A3AFEB400A2FDB0 /* Messages */,
+				38B0BF961A3AFEB400A2FDB0 /* 留言 */,
 			);
 			name = "我";
 			sourceTree = "<group>";

@@ -368,6 +368,8 @@
 
 - (void)loadNewsDetails:(OSCNewsDetails *)newsDetails
 {
+    newsDetails.title = [Utils escapeHTML:newsDetails.title];
+    
     NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", newsDetails.authorID, newsDetails.author, newsDetails.pubDate];
     
     NSString *software = @"";
@@ -384,6 +386,8 @@
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
 {
+    blogDetails.title = [Utils escapeHTML:blogDetails.title];
+    
     NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a>&nbsp;发表于&nbsp;%@", blogDetails.authorID, blogDetails.author,  [Utils intervalSinceNow:blogDetails.pubDate]];
     NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@</body>",HTML_STYLE, blogDetails.title, authorStr, blogDetails.body, HTML_BOTTOM];
     
@@ -392,8 +396,24 @@
     _URL = [blogDetails.url absoluteString];
 }
 
+- (void)loadPostDetails:(OSCPostDetails *)postDetails
+{
+    postDetails.title = [Utils escapeHTML:postDetails.title];
+    
+    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", postDetails.authorID, postDetails.author, [Utils intervalSinceNow:postDetails.pubDate]];
+    
+    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3;'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@</body>",HTML_STYLE, postDetails.title, authorStr, postDetails.body, [Utils GenerateTags:postDetails.tags], HTML_BOTTOM];
+    
+    [self.detailsView loadHTMLString:html baseURL:nil];
+    _isStarred = postDetails.isFavorite;
+    _URL = [postDetails.url absoluteString];
+    _commentCount = postDetails.answerCount;
+}
+
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
 {
+    softwareDetails.title = [Utils escapeHTML:softwareDetails.title];
+    
     NSString *titleStr = [NSString stringWithFormat:@"%@ %@", softwareDetails.extensionTitle, softwareDetails.title];
     
     NSString *tail = [NSString stringWithFormat:@"<div><table><tr><td style='font-weight:bold'>授权协议:&nbsp;</td><td>%@</td></tr><tr><td style='font-weight:bold'>开发语言:</td><td>%@</td></tr><tr><td style='font-weight:bold'>操作系统:</td><td>%@</td></tr><tr><td style='font-weight:bold'>收录时间:</td><td>%@</td></tr></table></div>", softwareDetails.license, softwareDetails.language, softwareDetails.os, softwareDetails.recordTime];
@@ -426,17 +446,6 @@
     return [NSString stringWithFormat:@"<p>%@&nbsp;&nbsp;%@&nbsp;&nbsp;%@</p>", strHomePage, strDocument, strDownload];
 }
 
-- (void)loadPostDetails:(OSCPostDetails *)postDetails
-{
-    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", postDetails.authorID, postDetails.author, [Utils intervalSinceNow:postDetails.pubDate]];
-    
-    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3;'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@</body>",HTML_STYLE, postDetails.title, authorStr, postDetails.body, [Utils GenerateTags:postDetails.tags], HTML_BOTTOM];
-    
-    [self.detailsView loadHTMLString:html baseURL:nil];
-    _isStarred = postDetails.isFavorite;
-    _URL = [postDetails.url absoluteString];
-    _commentCount = postDetails.answerCount;
-}
 
 
 #pragma mark - 发表评论
