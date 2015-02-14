@@ -11,6 +11,8 @@
 @interface MessageBubbleCell : UITableViewCell
 
 @property (nonatomic, strong) UIImageView *portrait;
-@property (nonatomic, strong) UITextView  *messageTextView;
+@property (nonatomic, strong) UILabel     *messageLabel;
+
+- (void)setContent:(NSString *)content andPortrait:(NSURL *)portraitURL;
 
 @end

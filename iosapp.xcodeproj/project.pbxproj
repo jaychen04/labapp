@@ -287,6 +287,12 @@
 		38763A211A89F3E8008E6805 /* QR-Code.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A1E1A89F3E8008E6805 /* QR-Code.png */; };
 		38763A221A89F3E8008E6805 /* QR-Code@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A1F1A89F3E8008E6805 /* QR-Code@2x.png */; };
 		38763A231A89F3E8008E6805 /* QR-Code@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A201A89F3E8008E6805 /* QR-Code@3x.png */; };
+		38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A321A8DDF51008E6805 /* MessageBubbleCell.m */; };
+		38763A361A8DDF51008E6805 /* MessageBubbleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A341A8DDF51008E6805 /* MessageBubbleViewController.m */; };
+		38763A3A1A8DDF86008E6805 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A371A8DDF86008E6805 /* bubble.png */; };
+		38763A3B1A8DDF86008E6805 /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A381A8DDF86008E6805 /* bubble@2x.png */; };
+		38763A3C1A8DDF86008E6805 /* bubble@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A391A8DDF86008E6805 /* bubble@3x.png */; };
+		38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A3F1A8DFB11008E6805 /* UIImage+Util.m */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
@@ -716,6 +722,15 @@
 		38763A1E1A89F3E8008E6805 /* QR-Code.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QR-Code.png"; sourceTree = "<group>"; };
 		38763A1F1A89F3E8008E6805 /* QR-Code@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QR-Code@2x.png"; sourceTree = "<group>"; };
 		38763A201A89F3E8008E6805 /* QR-Code@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "QR-Code@3x.png"; sourceTree = "<group>"; };
+		38763A311A8DDF51008E6805 /* MessageBubbleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBubbleCell.h; sourceTree = "<group>"; };
+		38763A321A8DDF51008E6805 /* MessageBubbleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBubbleCell.m; sourceTree = "<group>"; };
+		38763A331A8DDF51008E6805 /* MessageBubbleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageBubbleViewController.h; sourceTree = "<group>"; };
+		38763A341A8DDF51008E6805 /* MessageBubbleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageBubbleViewController.m; sourceTree = "<group>"; };
+		38763A371A8DDF86008E6805 /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
+		38763A381A8DDF86008E6805 /* bubble@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@2x.png"; sourceTree = "<group>"; };
+		38763A391A8DDF86008E6805 /* bubble@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@3x.png"; sourceTree = "<group>"; };
+		38763A3E1A8DFB11008E6805 /* UIImage+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Util.h"; sourceTree = "<group>"; };
+		38763A3F1A8DFB11008E6805 /* UIImage+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Util.m"; sourceTree = "<group>"; };
 		387794231A0B60C700C41C78 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		387794241A0B60C700C41C78 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		38996A501A02642C0025AA52 /* OSCBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlog.h; sourceTree = "<group>"; };
@@ -1357,6 +1372,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				38763A3D1A8DDF8D008E6805 /* bubble */,
 				38763A111A89EB9B008E6805 /* QR-Code */,
 				387639C51A7F7BE6008E6805 /* sidemenu */,
 				386F1E691A7A47E800B773EE /* share-image.png */,
@@ -1551,6 +1567,16 @@
 			path = "QR-Code";
 			sourceTree = "<group>";
 		};
+		38763A3D1A8DDF8D008E6805 /* bubble */ = {
+			isa = PBXGroup;
+			children = (
+				38763A371A8DDF86008E6805 /* bubble.png */,
+				38763A381A8DDF86008E6805 /* bubble@2x.png */,
+				38763A391A8DDF86008E6805 /* bubble@3x.png */,
+			);
+			name = bubble;
+			sourceTree = "<group>";
+		};
 		38996A561A0266F80025AA52 /* 博客 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1575,6 +1601,8 @@
 				00FF954419F2B37E002F4737 /* UIColor+Util.m */,
 				38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */,
 				38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */,
+				38763A3E1A8DFB11008E6805 /* UIImage+Util.h */,
+				38763A3F1A8DFB11008E6805 /* UIImage+Util.m */,
 			);
 			name = Catagory;
 			sourceTree = "<group>";
@@ -1608,6 +1636,10 @@
 				38B0BF911A3AE77300A2FDB0 /* MessagesViewController.m */,
 				38B0BF971A3AFED800A2FDB0 /* MessageCell.h */,
 				38B0BF981A3AFED800A2FDB0 /* MessageCell.m */,
+				38763A331A8DDF51008E6805 /* MessageBubbleViewController.h */,
+				38763A341A8DDF51008E6805 /* MessageBubbleViewController.m */,
+				38763A311A8DDF51008E6805 /* MessageBubbleCell.h */,
+				38763A321A8DDF51008E6805 /* MessageBubbleCell.m */,
 			);
 			name = "留言";
 			sourceTree = "<group>";
@@ -1978,6 +2010,7 @@
 				387639EC1A7F8A94008E6805 /* sidemenu-logout.png in Resources */,
 				382A94911A26D27400AAAFEA /* 078@2x.png in Resources */,
 				382A94591A26D27400AAAFEA /* 021@2x.png in Resources */,
+				38763A3A1A8DDF86008E6805 /* bubble.png in Resources */,
 				382A94531A26D27400AAAFEA /* 015@2x.png in Resources */,
 				382A94931A26D27400AAAFEA /* 080@2x.png in Resources */,
 				380FD2C61A7762A8003C4021 /* tabbar-news@3x.png in Resources */,
@@ -1997,6 +2030,7 @@
 				EE7B45E51A834EA3002508C6 /* 102@2x.png in Resources */,
 				380FD2BB1A7762A8003C4021 /* tabbar-me.png in Resources */,
 				380FD2CC1A7762A8003C4021 /* tabbar-tweet@3x.png in Resources */,
+				38763A3C1A8DDF86008E6805 /* bubble@3x.png in Resources */,
 				380FD2B91A7762A8003C4021 /* tabbar-me-selected@2x.png in Resources */,
 				382A94921A26D27400AAAFEA /* 079@2x.png in Resources */,
 				380FD31A1A776D96003C4021 /* toolbar-emoji.png in Resources */,
@@ -2066,6 +2100,7 @@
 				380FD2C21A7762A8003C4021 /* tabbar-news-selected@2x.png in Resources */,
 				380FD3221A776D96003C4021 /* toolbar-mention@3x.png in Resources */,
 				38BC59AA1A5D406300F3C4D2 /* note@3x.png in Resources */,
+				38763A3B1A8DDF86008E6805 /* bubble@2x.png in Resources */,
 				382A946A1A26D27400AAAFEA /* 038@2x.png in Resources */,
 				38BC59AE1A5D406300F3C4D2 /* scan.png in Resources */,
 				382A94561A26D27400AAAFEA /* 018@2x.png in Resources */,
@@ -2158,11 +2193,13 @@
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				3801789C1A2C1A7300922858 /* EventCell.m in Sources */,
 				387639FD1A807918008E6805 /* SoftwareCommentsViewController.m in Sources */,
+				38763A361A8DDF51008E6805 /* MessageBubbleViewController.m in Sources */,
 				3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				3838D1AD1A6F463E00CC7913 /* RandomMessageCell.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
+				38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */,
 				38BD3D0D1A36D19400682D1F /* SoftwareCell.m in Sources */,
 				38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */,
 				382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */,
@@ -2193,6 +2230,7 @@
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
 				38996A591A026D6A0025AA52 /* BlogCell.m in Sources */,
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
+				38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */,
 				38763A011A820B46008E6805 /* OSCMyInfo.m in Sources */,
 				386039611A09C5A1007C9B88 /* OSCUser.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,

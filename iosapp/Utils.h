@@ -10,6 +10,7 @@
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
 #import "UIImageView+Util.h"
+#import "UIImage+Util.h"
 
 typedef NS_ENUM(NSUInteger, hudType) {
     hudTypeSendingTweet,
