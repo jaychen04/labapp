@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MessageBubbleCell : UITableViewCell
+static NSString * const kMessageBubbleOthers = @"MessageBubbleOthers";
+static NSString * const kMessageBubbleMe     = @"MessageBubbleMe";
 
-@property (nonatomic, strong) UIImageView *portrait;
-@property (nonatomic, strong) UILabel     *messageLabel;
+@interface MessageBubbleCell : UITableViewCell
 
 - (void)setContent:(NSString *)content andPortrait:(NSURL *)portraitURL;
 

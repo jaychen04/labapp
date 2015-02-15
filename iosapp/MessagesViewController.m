@@ -11,7 +11,8 @@
 #import "Utils.h"
 #import "OSCMessage.h"
 #import "MessageCell.h"
-#import "MessageBubbleCell.h"
+#import "MessageBubbleViewController.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const kMessageCellID = @"MessageCell";
@@ -41,10 +42,7 @@ static NSString * const kMessageCellID = @"MessageCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[MessageBubbleCell class] forCellReuseIdentifier:kMessageCellID];
-    
-    // MessageBubble
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.tableView registerClass:[MessageCell class] forCellReuseIdentifier:kMessageCellID];
 }
 
 
@@ -52,7 +50,7 @@ static NSString * const kMessageCellID = @"MessageCell";
 {
     if (indexPath.row < self.objects.count) {
         OSCMessage *message = self.objects[indexPath.row];
-#if 0
+        
         MessageCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageCellID forIndexPath:indexPath];
         
         cell.backgroundColor = [UIColor themeColor];
@@ -61,11 +59,6 @@ static NSString * const kMessageCellID = @"MessageCell";
         cell.contentLabel.text = message.content;
         cell.timeLabel.text = [Utils intervalSinceNow:message.pubDate];
         cell.commentCountLabel.text = [NSString stringWithFormat:@"%d条留言", message.messageCount];
-#else
-        MessageBubbleCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageCellID forIndexPath:indexPath];
-        
-        [cell setContent:message.content andPortrait:message.portraitURL];
-#endif
         
         return cell;
     } else {
@@ -79,7 +72,6 @@ static NSString * const kMessageCellID = @"MessageCell";
     if (indexPath.row < self.objects.count) {
         OSCMessage *message = self.objects[indexPath.row];
         
-#if 0
         self.label.text = message.senderName;
         CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 70, MAXFLOAT)];
         
@@ -87,13 +79,6 @@ static NSString * const kMessageCellID = @"MessageCell";
         CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
         
         return nameSize.height + contentSize.height + 42;
-#else
-        self.label.text = message.content;
-        self.label.font = [UIFont systemFontOfSize:15];
-        CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 85, MAXFLOAT)];
-        
-        return contentSize.height + 36;
-#endif
     } else {
         return 60;
     }
@@ -104,7 +89,10 @@ static NSString * const kMessageCellID = @"MessageCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     if (indexPath.row < self.objects.count) {
-            
+        OSCMessage *message = self.objects[indexPath.row];
+        MessageBubbleViewController *messageBubbleVC = [[MessageBubbleViewController alloc] initWithUserID:message.friendID andUserName:message.friendName];
+        
+        [self.navigationController pushViewController:messageBubbleVC animated:YES];
     } else {
         [self fetchMore];
     }

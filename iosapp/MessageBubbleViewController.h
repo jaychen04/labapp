@@ -10,4 +10,6 @@
 
 @interface MessageBubbleViewController : OSCObjsViewController
 
+- (instancetype)initWithUserID:(int64_t)userID andUserName:(NSString *)userName;
+
 @end
