@@ -18,6 +18,7 @@
 #import "UserHeaderCell.h"
 #import "UserOperationCell.h"
 #import "BlogsViewController.h"
+#import "BubbleChatViewController.h"
 
 #import <MBProgressHUD.h>
 
@@ -130,6 +131,7 @@
                 [cell setFollowButtonByRelationship:_user.relationship];
                 [cell.followButton addTarget:self action:@selector(updateRelationship) forControlEvents:UIControlEventTouchUpInside];
                 [cell.blogsButton addTarget:self action:@selector(pushBlogsVC) forControlEvents:UIControlEventTouchUpInside];
+                [cell.messageButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
                 [cell.informationButton addTarget:self action:@selector(showUserInformation) forControlEvents:UIControlEventTouchUpInside];
             }
             
@@ -218,6 +220,12 @@
 - (void)pushBlogsVC
 {
     [self.navigationController pushViewController:[[BlogsViewController alloc] initWithUserID:_user.userID]
+                                         animated:YES];
+}
+
+- (void)sendMessage
+{
+    [self.navigationController pushViewController:[[BubbleChatViewController alloc] initWithUserID:_user.userID andUserName:_user.name]
                                          animated:YES];
 }
 
