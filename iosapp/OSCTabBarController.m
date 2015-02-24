@@ -7,7 +7,7 @@
 //
 
 #import "OSCTabBarController.h"
-#import "SwipeableViewController.h"
+#import "SwipableViewController.h"
 #import "TweetsViewController.h"
 #import "PostsViewController.h"
 #import "NewsViewController.h"
@@ -48,22 +48,22 @@
 
 - (void)viewDidLoad
 {
-    SwipeableViewController *newsSVC = [[SwipeableViewController alloc] initWithTitle:@"综合"
-                                                                         andSubTitles:@[@"资讯", @"热点", @"博客", @"推荐"]
-                                                                       andControllers:@[
-                                                                                        [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews],
-                                                                                        [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest],
-                                                                                        [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
-                                                                                        [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
-                                                                                        ]];
+    SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"综合"
+                                                                       andSubTitles:@[@"资讯", @"热点", @"博客", @"推荐"]
+                                                                     andControllers:@[
+                                                                                      [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews],
+                                                                                      [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest],
+                                                                                      [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
+                                                                                      [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
+                                                                                      ]];
     
-    SwipeableViewController *tweetsSVC = [[SwipeableViewController alloc] initWithTitle:@"动弹"
-                                                                           andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
-                                                                         andControllers:@[
-                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
-                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
-                                                                                          [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
-                                                                                          ]];
+    SwipableViewController *tweetsSVC = [[SwipableViewController alloc] initWithTitle:@"动弹"
+                                                                         andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
+                                                                       andControllers:@[
+                                                                                        [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
+                                                                                        [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
+                                                                                        [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
+                                                                                        ]];
     
     DiscoverTableVC *discoverTableVC = [DiscoverTableVC new];
     MyInfoViewController *myInfoVC = [MyInfoViewController new];
@@ -317,7 +317,7 @@
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
 {
     if (self.selectedIndex <= 1 && self.selectedIndex == [tabBar.items indexOfObject:item]) {
-        SwipeableViewController *swipeableVC = (SwipeableViewController *)((UINavigationController *)self.selectedViewController).viewControllers[0];
+        SwipableViewController *swipeableVC = (SwipableViewController *)((UINavigationController *)self.selectedViewController).viewControllers[0];
         OSCObjsViewController *objsViewController = (OSCObjsViewController *)swipeableVC.viewPager.childViewControllers[swipeableVC.titleBar.currentIndex];
         
         [objsViewController.refreshControl beginRefreshing];

@@ -21,7 +21,7 @@
 		00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954119F10DEE002F4737 /* UIView+Util.m */; };
 		00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954419F2B37E002F4737 /* UIColor+Util.m */; };
 		00FF954819F2BF8B002F4737 /* LastCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954719F2BF8B002F4737 /* LastCell.m */; };
-		00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */; };
+		00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954D19F3E5FF002F4737 /* SwipableViewController.m */; };
 		3801789C1A2C1A7300922858 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3801789B1A2C1A7300922858 /* EventCell.m */; };
 		380FD2191A739CA6003C4021 /* CommentsBottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2181A739CA6003C4021 /* CommentsBottomBarViewController.m */; };
 		380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */; };
@@ -396,8 +396,8 @@
 		00FF954419F2B37E002F4737 /* UIColor+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Util.m"; sourceTree = "<group>"; };
 		00FF954619F2BF8B002F4737 /* LastCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LastCell.h; sourceTree = "<group>"; };
 		00FF954719F2BF8B002F4737 /* LastCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LastCell.m; sourceTree = "<group>"; };
-		00FF954C19F3E5FF002F4737 /* SwipeableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeableViewController.h; sourceTree = "<group>"; };
-		00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeableViewController.m; sourceTree = "<group>"; };
+		00FF954C19F3E5FF002F4737 /* SwipableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipableViewController.h; sourceTree = "<group>"; };
+		00FF954D19F3E5FF002F4737 /* SwipableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipableViewController.m; sourceTree = "<group>"; };
 		3801789A1A2C1A7300922858 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		3801789B1A2C1A7300922858 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		380FD2171A739CA6003C4021 /* CommentsBottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsBottomBarViewController.h; sourceTree = "<group>"; };
@@ -864,17 +864,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00364FF519F5F93600871255 /* SwipeableViewController */ = {
+		00364FF519F5F93600871255 /* SwipableViewController */ = {
 			isa = PBXGroup;
 			children = (
-				00FF954C19F3E5FF002F4737 /* SwipeableViewController.h */,
-				00FF954D19F3E5FF002F4737 /* SwipeableViewController.m */,
+				00FF954C19F3E5FF002F4737 /* SwipableViewController.h */,
+				00FF954D19F3E5FF002F4737 /* SwipableViewController.m */,
 				00364FF219F543DE00871255 /* TitleBarView.h */,
 				00364FF319F543DE00871255 /* TitleBarView.m */,
 				0004918C19F8FFE9001F3A36 /* HorizonalTableViewController.h */,
 				0004918D19F8FFE9001F3A36 /* HorizonalTableViewController.m */,
 			);
-			name = SwipeableViewController;
+			name = SwipableViewController;
 			sourceTree = "<group>";
 		};
 		00C9A73919EE8536000EA878 /* API */ = {
@@ -1003,7 +1003,7 @@
 				381EAB6819FE3B9800C1937C /* OSCObjsViewController.m */,
 				386825A61A70D5AC008F5706 /* 搜索 */,
 				3868259F1A709F77008F5706 /* 详情页面 */,
-				00364FF519F5F93600871255 /* SwipeableViewController */,
+				00364FF519F5F93600871255 /* SwipableViewController */,
 				38B0BF9D1A3EBBE500A2FDB0 /* Tab Bar */,
 				387639FE1A807B33008E6805 /* 侧拉菜单 */,
 			);
@@ -2219,7 +2219,7 @@
 				382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */,
 				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,
 				EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */,
-				00FF954E19F3E5FF002F4737 /* SwipeableViewController.m in Sources */,
+				00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,

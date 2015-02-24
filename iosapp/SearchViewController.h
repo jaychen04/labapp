@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "SwipeableViewController.h"
+#import "SwipableViewController.h"
 
-@interface SearchViewController : SwipeableViewController
+@interface SearchViewController : SwipableViewController
 
 @end

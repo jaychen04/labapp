@@ -1,18 +1,18 @@
 //
-//  SwipeableViewController.m
+//  SwipableViewController.m
 //  iosapp
 //
 //  Created by chenhaoxiang on 14-10-19.
 //  Copyright (c) 2014年 oschina. All rights reserved.
 //
 
-#import "SwipeableViewController.h"
+#import "SwipableViewController.h"
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "TweetsViewController.h"
 #import "PostsViewController.h"
 
-@interface SwipeableViewController ()  <UIScrollViewDelegate>
+@interface SwipableViewController ()  <UIScrollViewDelegate>
 
 @property (nonatomic, strong) NSArray *controllers;
 
@@ -20,7 +20,7 @@
 
 
 
-@implementation SwipeableViewController
+@implementation SwipableViewController
 
 - (instancetype)initWithTitle:(NSString *)title andSubTitles:(NSArray *)subTitles andControllers:(NSArray *)controllers
 {

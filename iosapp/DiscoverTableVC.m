@@ -114,10 +114,10 @@
                 break;
             }
             else if (indexPath.row == 1) {
-                SwipeableViewController *activitySVC = [[SwipeableViewController alloc] initWithTitle:@"活动"
-                                                                                         andSubTitles:@[@"近期活动", @"我的活动"]
-                                                                                       andControllers:@[[[ActivitiesViewController alloc] initWithUID:0],
-                                                                                                        [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]]]];
+                SwipableViewController *activitySVC = [[SwipableViewController alloc] initWithTitle:@"活动"
+                                                                                       andSubTitles:@[@"近期活动", @"我的活动"]
+                                                                                     andControllers:@[[[ActivitiesViewController alloc] initWithUID:0],
+                                                                                                      [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]]]];
                 activitySVC.hidesBottomBarWhenPushed = YES;
                 [self.navigationController pushViewController:activitySVC animated:YES];
                 break;

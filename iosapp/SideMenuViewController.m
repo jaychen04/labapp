@@ -9,7 +9,7 @@
 #import "SideMenuViewController.h"
 #import "Config.h"
 #import "Utils.h"
-#import "SwipeableViewController.h"
+#import "SwipableViewController.h"
 #import "PostsViewController.h"
 #import "BlogsViewController.h"
 #import "SoftwareCatalogVC.h"
@@ -97,42 +97,42 @@
     
     switch (indexPath.row) {
         case 0: {
-            SwipeableViewController *newsSVC = [[SwipeableViewController alloc] initWithTitle:@"技术问答"
-                                                                                 andSubTitles:@[@"提问", @"分享", @"综合", @"职业", @"站务"]
-                                                                               andControllers:@[
-                                                                                                [[PostsViewController alloc] initWithPostsType:PostsTypeQA],
-                                                                                                [[PostsViewController alloc] initWithPostsType:PostsTypeShare],
-                                                                                                [[PostsViewController alloc] initWithPostsType:PostsTypeSynthesis],
-                                                                                                [[PostsViewController alloc] initWithPostsType:PostsTypeCaree],
-                                                                                                [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager]
-                                                                                                ]];
+            SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"技术问答"
+                                                                               andSubTitles:@[@"提问", @"分享", @"综合", @"职业", @"站务"]
+                                                                             andControllers:@[
+                                                                                              [[PostsViewController alloc] initWithPostsType:PostsTypeQA],
+                                                                                              [[PostsViewController alloc] initWithPostsType:PostsTypeShare],
+                                                                                              [[PostsViewController alloc] initWithPostsType:PostsTypeSynthesis],
+                                                                                              [[PostsViewController alloc] initWithPostsType:PostsTypeCaree],
+                                                                                              [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager]
+                                                                                              ]];
             
             [self setMenuContentViewController:newsSVC];
             
             break;
         }
         case 1: {
-            SwipeableViewController *softwaresSVC = [[SwipeableViewController alloc] initWithTitle:@"开源软件"
-                                                                                      andSubTitles:@[@"分类", @"推荐", @"最新", @"热门", @"国产"]
-                                                                                    andControllers:@[
-                                                                                                     [[SoftwareCatalogVC alloc] initWithTag:0],
-                                                                                                     [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeRecommended],
-                                                                                                     [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeNewest],
-                                                                                                     [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeHottest],
-                                                                                                     [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeCN]
-                                                                                                     ]];
+            SwipableViewController *softwaresSVC = [[SwipableViewController alloc] initWithTitle:@"开源软件"
+                                                                                    andSubTitles:@[@"分类", @"推荐", @"最新", @"热门", @"国产"]
+                                                                                  andControllers:@[
+                                                                                                   [[SoftwareCatalogVC alloc] initWithTag:0],
+                                                                                                   [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeRecommended],
+                                                                                                   [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeNewest],
+                                                                                                   [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeHottest],
+                                                                                                   [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeCN]
+                                                                                                   ]];
             
             [self setMenuContentViewController:softwaresSVC];
             
             break;
         }
         case 2: {
-            SwipeableViewController *blogsSVC = [[SwipeableViewController alloc] initWithTitle:@"博客区"
-                                                                                  andSubTitles:@[@"最新博客", @"推荐阅读"]
-                                                                                andControllers:@[
-                                                                                                 [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
-                                                                                                 [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
-                                                                                                 ]];
+            SwipableViewController *blogsSVC = [[SwipableViewController alloc] initWithTitle:@"博客区"
+                                                                                andSubTitles:@[@"最新博客", @"推荐阅读"]
+                                                                              andControllers:@[
+                                                                                               [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
+                                                                                               [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
+                                                                                               ]];
             
             [self setMenuContentViewController:blogsSVC];
             

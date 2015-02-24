@@ -11,7 +11,7 @@
 #import "Utils.h"
 #import "Config.h"
 #import "BlogsViewController.h"
-#import "SwipeableViewController.h"
+#import "SwipableViewController.h"
 #import "FriendsViewController.h"
 #import "OSCEvent.h"
 #import "EventCell.h"
@@ -160,12 +160,12 @@
 
 - (void)pushFriendsSVC
 {
-    SwipeableViewController *friendsSVC = [[SwipeableViewController alloc] initWithTitle:@"关注/粉丝"
-                                                                            andSubTitles:@[@"关注", @"粉丝"]
-                                                                          andControllers:@[
-                                                                                           [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:1],
-                                                                                           [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:0]
-                                                                                           ]];
+    SwipableViewController *friendsSVC = [[SwipableViewController alloc] initWithTitle:@"关注/粉丝"
+                                                                          andSubTitles:@[@"关注", @"粉丝"]
+                                                                        andControllers:@[
+                                                                                         [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:1],
+                                                                                         [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:0]
+                                                                                         ]];
     
     [self.navigationController pushViewController:friendsSVC animated:YES];
 }

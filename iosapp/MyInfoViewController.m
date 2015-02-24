@@ -11,7 +11,7 @@
 #import "OSCMyInfo.h"
 #import "Config.h"
 #import "Utils.h"
-#import "SwipeableViewController.h"
+#import "SwipableViewController.h"
 #import "FavoritesViewController.h"
 #import "FriendsViewController.h"
 #import "BlogsViewController.h"
@@ -189,14 +189,14 @@
     
     switch (indexPath.row) {
         case 0: {
-            SwipeableViewController *messageCenterVC = [[SwipeableViewController alloc] initWithTitle:@"消息中心"
-                                                                                         andSubTitles:@[@"@我", @"评论", @"留言", @"粉丝"]
-                                                                                       andControllers:@[
-                                                                                                        [[EventsViewController alloc] initWithCatalog:2],
-                                                                                                        [[EventsViewController alloc] initWithCatalog:3],
-                                                                                                        [MessagesViewController new],
-                                                                                                        [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
-                                                                                                        ]];
+            SwipableViewController *messageCenterVC = [[SwipableViewController alloc] initWithTitle:@"消息中心"
+                                                                                       andSubTitles:@[@"@我", @"评论", @"留言", @"粉丝"]
+                                                                                     andControllers:@[
+                                                                                                      [[EventsViewController alloc] initWithCatalog:2],
+                                                                                                      [[EventsViewController alloc] initWithCatalog:3],
+                                                                                                      [MessagesViewController new],
+                                                                                                      [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
+                                                                                                      ]];
             messageCenterVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:messageCenterVC animated:YES];
             
@@ -230,7 +230,7 @@
 
 - (void)pushFavoriteSVC
 {
-    SwipeableViewController *favoritesSVC = [[SwipeableViewController alloc] initWithTitle:@"收藏"
+    SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
                                                                               andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
                                                                             andControllers:@[
                                                                                              [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
@@ -246,7 +246,7 @@
 
 - (void)pushFriendsSVC
 {
-    SwipeableViewController *friendsSVC = [[SwipeableViewController alloc] initWithTitle:@"关注/粉丝"
+    SwipableViewController *friendsSVC = [[SwipableViewController alloc] initWithTitle:@"关注/粉丝"
                                                                             andSubTitles:@[@"关注", @"粉丝"]
                                                                           andControllers:@[
                                                                                            [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
