@@ -15,6 +15,7 @@
 #import "OSCTweet.h"
 #import "Config.h"
 #import "Utils.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
 
@@ -223,9 +224,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (_didScroll) {
-        _didScroll();
-    }
+    if (_didScroll) {_didScroll();}
 }
 
 - (void)setBlockForCommentCell:(TweetCell *)cell

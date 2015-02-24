@@ -10,6 +10,8 @@
 
 @interface MessageBubbleViewController : OSCObjsViewController
 
+@property (nonatomic, copy) void (^didScroll)();
+
 - (instancetype)initWithUserID:(int64_t)userID andUserName:(NSString *)userName;
 
 @end

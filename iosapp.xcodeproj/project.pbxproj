@@ -293,6 +293,7 @@
 		38763A3B1A8DDF86008E6805 /* bubble@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A381A8DDF86008E6805 /* bubble@2x.png */; };
 		38763A3C1A8DDF86008E6805 /* bubble@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38763A391A8DDF86008E6805 /* bubble@3x.png */; };
 		38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A3F1A8DFB11008E6805 /* UIImage+Util.m */; };
+		38763A441A9048D0008E6805 /* BubbleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A431A9048D0008E6805 /* BubbleChatViewController.m */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
@@ -731,6 +732,8 @@
 		38763A391A8DDF86008E6805 /* bubble@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bubble@3x.png"; sourceTree = "<group>"; };
 		38763A3E1A8DFB11008E6805 /* UIImage+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Util.h"; sourceTree = "<group>"; };
 		38763A3F1A8DFB11008E6805 /* UIImage+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Util.m"; sourceTree = "<group>"; };
+		38763A421A9048D0008E6805 /* BubbleChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BubbleChatViewController.h; sourceTree = "<group>"; };
+		38763A431A9048D0008E6805 /* BubbleChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleChatViewController.m; sourceTree = "<group>"; };
 		387794231A0B60C700C41C78 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		387794241A0B60C700C41C78 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
 		38996A501A02642C0025AA52 /* OSCBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlog.h; sourceTree = "<group>"; };
@@ -1577,6 +1580,19 @@
 			name = bubble;
 			sourceTree = "<group>";
 		};
+		38763A411A904528008E6805 /* 气泡对话 */ = {
+			isa = PBXGroup;
+			children = (
+				38763A331A8DDF51008E6805 /* MessageBubbleViewController.h */,
+				38763A341A8DDF51008E6805 /* MessageBubbleViewController.m */,
+				38763A311A8DDF51008E6805 /* MessageBubbleCell.h */,
+				38763A321A8DDF51008E6805 /* MessageBubbleCell.m */,
+				38763A421A9048D0008E6805 /* BubbleChatViewController.h */,
+				38763A431A9048D0008E6805 /* BubbleChatViewController.m */,
+			);
+			name = "气泡对话";
+			sourceTree = "<group>";
+		};
 		38996A561A0266F80025AA52 /* 博客 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1629,19 +1645,16 @@
 			name = Friends;
 			sourceTree = "<group>";
 		};
-		38B0BF961A3AFEB400A2FDB0 /* 留言 */ = {
+		38B0BF961A3AFEB400A2FDB0 /* 留言列表 */ = {
 			isa = PBXGroup;
 			children = (
 				38B0BF901A3AE77200A2FDB0 /* MessagesViewController.h */,
 				38B0BF911A3AE77300A2FDB0 /* MessagesViewController.m */,
 				38B0BF971A3AFED800A2FDB0 /* MessageCell.h */,
 				38B0BF981A3AFED800A2FDB0 /* MessageCell.m */,
-				38763A331A8DDF51008E6805 /* MessageBubbleViewController.h */,
-				38763A341A8DDF51008E6805 /* MessageBubbleViewController.m */,
-				38763A311A8DDF51008E6805 /* MessageBubbleCell.h */,
-				38763A321A8DDF51008E6805 /* MessageBubbleCell.m */,
+				38763A411A904528008E6805 /* 气泡对话 */,
 			);
-			name = "留言";
+			name = "留言列表";
 			sourceTree = "<group>";
 		};
 		38B0BF9D1A3EBBE500A2FDB0 /* Tab Bar */ = {
@@ -1734,7 +1747,7 @@
 				EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */,
 				EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */,
 				38B0BF8F1A3AE72E00A2FDB0 /* Friends */,
-				38B0BF961A3AFEB400A2FDB0 /* 留言 */,
+				38B0BF961A3AFEB400A2FDB0 /* 留言列表 */,
 			);
 			name = "我";
 			sourceTree = "<group>";
@@ -2177,6 +2190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38763A441A9048D0008E6805 /* BubbleChatViewController.m in Sources */,
 				386BEA451A66500400C078A8 /* TweetDetailsCell.m in Sources */,
 				38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */,
 				386825A51A70A3B3008F5706 /* SearchViewController.m in Sources */,

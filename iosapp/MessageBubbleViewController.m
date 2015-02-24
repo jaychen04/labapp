@@ -95,4 +95,11 @@
 
 
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_didScroll) {_didScroll();}
+}
+
+
+
 @end
