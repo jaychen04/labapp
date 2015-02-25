@@ -213,6 +213,8 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailsView][bottomBar]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[detailsView]|" options:0 metrics:nil views:views]];
     
+    [self.editingBar.modeSwitchButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
     // 添加等待动画
     _HUD = [Utils createHUDInWindowOfView:self.view];
     
