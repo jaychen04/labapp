@@ -27,9 +27,9 @@
 #import "CommentsBottomBarViewController.h"
 #import "SoftwareCommentsViewController.h"
 #import "UMSocial.h"
-
 #import "UIBarButtonItem+Badge.h"
-#import "Utils.h"
+
+#import <MBProgressHUD.h>
 
 
 #define HTML_STYLE @"<style>#oschina_title {color: #000000; margin-bottom: 6px; font-weight:bold;}#oschina_title img{vertical-align:middle;margin-right:6px;}#oschina_title a{color:#0D6DA8;}#oschina_outline {color: #707070; font-size: 12px;}#oschina_outline a{color:#0D6DA8;}#oschina_software{color:#808080;font-size:12px}#oschina_body img {max-width: 300px;}#oschina_body {font-size:16px;max-width:300px;line-height:24px;} #oschina_body table{max-width:300px;}#oschina_body pre { font-size:9pt;font-family:Courier New,Arial;border:1px solid #ddd;border-left:5px solid #6CE26C;background:#f6f6f6;padding:5px;}</style>"
@@ -55,6 +55,8 @@
 @property (nonatomic, copy) NSString *softwareName;
 @property (nonatomic, assign) SEL loadMethod;
 @property (nonatomic, assign) Class detailsClass;
+
+@property (nonatomic, strong) MBProgressHUD *HUD;
 
 @end
 
@@ -192,8 +194,8 @@
     UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
     [self.navigationItem setBackBarButtonItem:backItem];
     
+    // 资讯和软件详情没有“举报”选项
     if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware) {
-        // 资讯和软件详情没有“举报”选项
         self.operationBar.items = [self.operationBar.items subarrayWithRange:NSMakeRange(0, 8)];
     }
     
@@ -210,6 +212,9 @@
     NSDictionary *views = @{@"detailsView": _detailsView, @"bottomBar": self.editingBar};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailsView][bottomBar]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[detailsView]|" options:0 metrics:nil views:views]];
+    
+    // 添加等待动画
+    _HUD = [Utils createHUDInWindowOfView:self.view];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
@@ -242,6 +247,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -548,6 +555,11 @@
 {
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [_HUD hide:YES];
 }
 
 
