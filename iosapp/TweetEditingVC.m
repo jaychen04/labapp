@@ -28,16 +28,20 @@
 @property (nonatomic, assign) NSLayoutConstraint *keyboardHeight;
 @property (nonatomic, strong) EmojiPageVC        *emojiPageVC;
 
+@property (nonatomic, strong) UIImage            *image;
+
 @end
 
 @implementation TweetEditingVC
 
-- (void)loadView
+- (instancetype)initWithImage:(UIImage *)image
 {
-    [super loadView];
+    self = [super init];
+    if (self) {
+        _image = image;
+    }
     
-    [self initSubViews];
-    [self setLayout];
+    return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -64,6 +68,9 @@
                                                                              action:@selector(pubTweet)];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    [self initSubViews];
+    [self setLayout];
+    
     _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_edittingArea];
 }
 
@@ -89,6 +96,8 @@
     _imageView.clipsToBounds = YES;
     [_imageView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressInImage)]];
     _imageView.userInteractionEnabled = YES;
+    _imageView.image = _image;
+    _image = nil;
     [self.view addSubview:_imageView];
     
     /****** toolBar ******/

@@ -30,7 +30,7 @@
 #import <RESideMenu/RESideMenu.h>
 
 
-@interface OSCTabBarController ()
+@interface OSCTabBarController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UIImageView *blurView;
 @property (nonatomic, assign) BOOL isPressed;
@@ -260,8 +260,39 @@
             [self buttonPressed];
             break;
         }
-        case 1: {break;}
-        case 2: {break;}
+        case 1: {
+            UIImagePickerController *imagePickerController = [UIImagePickerController new];
+            imagePickerController.delegate = self;
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            imagePickerController.allowsEditing = YES;
+            imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+            
+            [self presentViewController:imagePickerController animated:YES completion:nil];
+            
+            break;
+        }
+        case 2: {
+            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                    message:@"Device has no camera"
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles: nil];
+                
+                [alertView show];
+            } else {
+                UIImagePickerController *imagePickerController = [UIImagePickerController new];
+                imagePickerController.delegate = self;
+                imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+                imagePickerController.allowsEditing = YES;
+                imagePickerController.showsCameraControls = YES;
+                imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+                imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+                
+                [self presentViewController:imagePickerController animated:YES completion:nil];
+            }
+            break;
+        }
         case 3: {
             ShakingViewController *shakingVC = [ShakingViewController new];
             UINavigationController *shakingNav = [[UINavigationController alloc] initWithRootViewController:shakingVC];
@@ -283,6 +314,19 @@
         }
         default: break;
     }
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{    
+    //如果是拍照的照片，则需要手动保存到本地，系统不会自动保存拍照成功后的照片
+    //UIImageWriteToSavedPhotosAlbum(edit, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    
+    [picker dismissViewControllerAnimated:NO completion:^{
+        TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImage:info[UIImagePickerControllerEditedImage]];
+        UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+        [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:nil];
+        [self buttonPressed];
+    }];
 }
 
 

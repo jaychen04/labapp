@@ -10,4 +10,6 @@
 
 @interface TweetEditingVC : UIViewController
 
+- (instancetype)initWithImage:(UIImage *)image;
+
 @end
