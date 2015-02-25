@@ -12,6 +12,7 @@
 #import "UserDetailsViewController.h"
 #import "ImageViewerController.h"
 #import "TweetDetailsCell.h"
+
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
@@ -26,6 +27,8 @@
 
 @property (nonatomic, assign) BOOL isLoadingFinished;
 @property (nonatomic, assign) CGFloat webViewHeight;
+
+@property (nonatomic, strong) MBProgressHUD *HUD;
 
 @end
 
@@ -67,6 +70,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _HUD = [Utils createHUDInWindowOfView:self.view];
+    _HUD.dimBackground = YES;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
@@ -141,7 +147,10 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if (_isLoadingFinished) {return;}
+    if (_isLoadingFinished) {
+        [_HUD hide:YES];
+        return;
+    }
     
     _webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
     
