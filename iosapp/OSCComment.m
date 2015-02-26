@@ -16,6 +16,8 @@ static NSString * const kContent = @"content";
 static NSString * const kPubDate = @"pubDate";
 static NSString * const kReplies = @"replies";
 static NSString * const kReply = @"reply";
+static NSString * const kRefers = @"refers";
+static NSString * const kRefer = @"refer";
 static NSString * const kRauthor = @"rauthor";
 static NSString * const kRContent = @"rcontent";
 
@@ -36,11 +38,18 @@ static NSString * const kRContent = @"rcontent";
         NSMutableArray *mutableReplies = [NSMutableArray new];
         NSArray *repliesXML = [[xml firstChildWithTag:kReplies] childrenWithTag:kReply];
         for (ONOXMLElement *replyXML in repliesXML) {
-            NSString *rauthor = [[replyXML firstChildWithTag:kRauthor] stringValue];
-            NSString *rcontent = [[replyXML firstChildWithTag:kRContent] stringValue];
-            [mutableReplies addObject:@[rauthor, rcontent]];
+            OSCReply *reply = [[OSCReply alloc] initWithXML:replyXML];
+            [mutableReplies addObject:reply];
         }
         _replies = [NSArray arrayWithArray:mutableReplies];
+        
+        NSMutableArray *mutableReferences = [NSMutableArray new];
+        NSArray *refersXML = [[xml firstChildWithTag:kRefers] childrenWithTag:kRefer];
+        for (ONOXMLElement *referXML in refersXML) {
+            OSCReference *reference = [[OSCReference alloc] initWithXML:referXML];
+            [mutableReferences addObject:reference];
+        }
+        _references = [NSArray arrayWithArray:mutableReferences];
     }
     
     return self;

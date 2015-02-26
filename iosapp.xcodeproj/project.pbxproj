@@ -298,6 +298,8 @@
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
 		38996A591A026D6A0025AA52 /* BlogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A581A026D6A0025AA52 /* BlogCell.m */; };
+		38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A93F9F1A9F8F8F00A515E8 /* OSCReply.m */; };
+		38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A93FA21A9F912B00A515E8 /* OSCReference.m */; };
 		38A9A9CF1A5FD98E00B28B4F /* tweetEditing.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CC1A5FD98E00B28B4F /* tweetEditing.png */; };
 		38A9A9D01A5FD98E00B28B4F /* tweetEditing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CD1A5FD98E00B28B4F /* tweetEditing@2x.png */; };
 		38A9A9D11A5FD98E00B28B4F /* tweetEditing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CE1A5FD98E00B28B4F /* tweetEditing@3x.png */; };
@@ -742,6 +744,10 @@
 		38996A541A0266F10025AA52 /* BlogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlogsViewController.m; sourceTree = "<group>"; };
 		38996A571A026D6A0025AA52 /* BlogCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlogCell.h; sourceTree = "<group>"; };
 		38996A581A026D6A0025AA52 /* BlogCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlogCell.m; sourceTree = "<group>"; };
+		38A93F9E1A9F8F8F00A515E8 /* OSCReply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCReply.h; sourceTree = "<group>"; };
+		38A93F9F1A9F8F8F00A515E8 /* OSCReply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCReply.m; sourceTree = "<group>"; };
+		38A93FA11A9F912B00A515E8 /* OSCReference.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCReference.h; sourceTree = "<group>"; };
+		38A93FA21A9F912B00A515E8 /* OSCReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCReference.m; sourceTree = "<group>"; };
 		38A9A9CC1A5FD98E00B28B4F /* tweetEditing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tweetEditing.png; sourceTree = "<group>"; };
 		38A9A9CD1A5FD98E00B28B4F /* tweetEditing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweetEditing@2x.png"; sourceTree = "<group>"; };
 		38A9A9CE1A5FD98E00B28B4F /* tweetEditing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweetEditing@3x.png"; sourceTree = "<group>"; };
@@ -887,6 +893,10 @@
 				00EDF60819EF77A100A5C842 /* OSCTweet.m */,
 				38BD7D7319FF8521003ABB80 /* OSCComment.h */,
 				38BD7D7419FF8521003ABB80 /* OSCComment.m */,
+				38A93F9E1A9F8F8F00A515E8 /* OSCReply.h */,
+				38A93F9F1A9F8F8F00A515E8 /* OSCReply.m */,
+				38A93FA11A9F912B00A515E8 /* OSCReference.h */,
+				38A93FA21A9F912B00A515E8 /* OSCReference.m */,
 				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
 				386039601A09C5A1007C9B88 /* OSCUser.m */,
 				382A95BC1A29DC4700AAAFEA /* OSCEvent.h */,
@@ -2236,6 +2246,7 @@
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
+				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,
 				EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */,
 				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,
 				38B0BF9C1A3E8F9C00A2FDB0 /* OSCTabBarController.m in Sources */,
@@ -2250,6 +2261,7 @@
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				38BD3D101A37F38900682D1F /* MyInfoViewController.m in Sources */,
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,
+				38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */,
 				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
