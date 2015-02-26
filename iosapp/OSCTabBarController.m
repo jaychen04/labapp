@@ -264,7 +264,7 @@
             UIImagePickerController *imagePickerController = [UIImagePickerController new];
             imagePickerController.delegate = self;
             imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            imagePickerController.allowsEditing = YES;
+            imagePickerController.allowsEditing = NO;
             imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
             
             [self presentViewController:imagePickerController animated:YES completion:nil];
@@ -284,7 +284,7 @@
                 UIImagePickerController *imagePickerController = [UIImagePickerController new];
                 imagePickerController.delegate = self;
                 imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-                imagePickerController.allowsEditing = YES;
+                imagePickerController.allowsEditing = NO;
                 imagePickerController.showsCameraControls = YES;
                 imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
                 imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
@@ -322,7 +322,7 @@
     //UIImageWriteToSavedPhotosAlbum(edit, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     
     [picker dismissViewControllerAnimated:NO completion:^{
-        TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImage:info[UIImagePickerControllerEditedImage]];
+        TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImage:info[UIImagePickerControllerOriginalImage]];
         UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
         [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:nil];
         [self buttonPressed];
