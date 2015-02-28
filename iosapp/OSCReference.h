@@ -8,7 +8,7 @@
 
 #import "OSCBaseObject.h"
 
-@interface OSCReference : OSCBaseObject
+@interface OSCReference : OSCBaseObject <NSCopying>
 
 @property (nonatomic, readonly, copy) NSString *title;
 @property (nonatomic, readonly, copy) NSString *body;

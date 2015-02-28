@@ -40,8 +40,8 @@
         [self.view addSubview:_viewPager.view];
         
         
-        __block TitleBarView *weakTitleBar = _titleBar;
-        __block HorizonalTableViewController *weakViewPager = _viewPager;
+        __weak TitleBarView *weakTitleBar = _titleBar;
+        __weak HorizonalTableViewController *weakViewPager = _viewPager;
         
         _viewPager.changeIndex = ^(NSUInteger index) {
             weakTitleBar.currentIndex = index;

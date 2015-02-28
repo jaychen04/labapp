@@ -10,6 +10,12 @@
 #import "OSCComment.h"
 #import "Utils.h"
 
+@interface CommentCell ()
+
+@property (nonatomic, strong) UIView *currentContainer;
+
+@end
+
 @implementation CommentCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -67,7 +73,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-5-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_authorLabel]-2-[_timeLabel]-5-[_contentLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_authorLabel]-2-[_timeLabel]->=5-[_contentLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                              metrics:nil views:views]];
 }
@@ -80,6 +86,50 @@
     [_contentLabel setAttributedText:[Utils emojiStringFromRawString:comment.content]];
     [_authorLabel setText:comment.author];
     [_timeLabel setText:[Utils intervalSinceNow:comment.pubDate]];
+    
+    if (comment.references.count == 0) {return;}
+    
+    NSArray *references = comment.references;
+    _currentContainer = [UIView new];
+    [self.contentView addSubview:_currentContainer];
+    _currentContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *views = NSDictionaryOfVariableBindings(_timeLabel, _contentLabel, _currentContainer);
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]-8-[_currentContainer]-8-[_contentLabel]"
+                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                             metrics:nil views:views]];
+    
+    for (OSCReference *reference in [references reverseObjectEnumerator]) {
+        [_currentContainer setBorderWidth:1.0 andColor:[UIColor lightGrayColor]];
+        _currentContainer.backgroundColor = [UIColor colorWithHex:0xFFFAF0];
+        
+        UILabel *label = [UILabel new];
+        label.numberOfLines = 0;
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.font = [UIFont systemFontOfSize:13];
+        
+        NSMutableAttributedString *referenceText = [[NSMutableAttributedString alloc] initWithString:reference.title
+                                                                                          attributes:@{NSForegroundColorAttributeName:[UIColor nameColor]}];
+        [referenceText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", reference.body]]];
+        label.attributedText = referenceText;
+        label.backgroundColor = [UIColor colorWithHex:0xFFFAF0];
+        [_currentContainer addSubview:label];
+        
+        UIView *container = [UIView new];
+        [_currentContainer addSubview:container];
+        
+        for (UIView *view in _currentContainer.subviews) {
+            view.translatesAutoresizingMaskIntoConstraints = NO;
+        }
+        NSDictionary *views = NSDictionaryOfVariableBindings(label, container);
+        
+        [_currentContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-4-[container]-<=5-[label]-4-|"
+                                                                                  options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                                  metrics:nil views:views]];
+        
+        [_currentContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-4-[container]-4-|" options:0 metrics:nil views:views]];
+        
+        _currentContainer = container;
+    }
 }
 
 

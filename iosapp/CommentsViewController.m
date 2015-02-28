@@ -99,7 +99,8 @@ static NSString *kCommentCellID = @"CommentCell";
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
     } else if (row < self.objects.count) {
-        CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
+        //CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
+        CommentCell *cell = [CommentCell new];
         OSCComment *comment = self.objects[row];
         
         [self setBlockForCommentCell:cell];
@@ -122,11 +123,23 @@ static NSString *kCommentCellID = @"CommentCell";
         return self.heightForOtherSectionCell(indexPath);
     } else if (indexPath.row < self.objects.count) {
         OSCComment *comment = self.objects[indexPath.row];
+        
         [self.label setAttributedText:[Utils emojiStringFromRawString:comment.content]];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)];
+        self.label.font = [UIFont boldSystemFontOfSize:14];
+        __block CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)].height;
+        CGFloat width = self.tableView.frame.size.width - 57;
         
-        return size.height + 52;
+        NSArray *references = comment.references;
+        if (references.count > 0) {height += 6;}
+        
+        self.label.font = [UIFont systemFontOfSize:13];
+        [references enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(OSCReference *reference, NSUInteger idx, BOOL *stop) {
+            self.label.text = [NSString stringWithFormat:@"%@\n%@", reference.title, reference.body];
+            height += [self.label sizeThatFits:CGSizeMake(width - (references.count-idx)*10, MAXFLOAT)].height + 13;
+        }];
+        
+        return height + 56;
     } else {
         return 60;
     }

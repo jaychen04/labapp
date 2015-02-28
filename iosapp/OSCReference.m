@@ -8,6 +8,13 @@
 
 #import "OSCReference.h"
 
+@interface OSCReference ()
+
+@property (nonatomic, readwrite, copy) NSString *title;
+@property (nonatomic, readwrite, copy) NSString *body;
+
+@end
+
 @implementation OSCReference
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml
@@ -19,6 +26,15 @@
     }
     
     return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    OSCReference *referenceCopy = [OSCReference allocWithZone:zone];
+    referenceCopy.title = _title;
+    referenceCopy.body  = _body;
+    
+    return referenceCopy;
 }
 
 @end

@@ -33,7 +33,7 @@ static NSString * const kSoftwareCatalogCellID = @"SoftwareCatalogCell";
         return [NSString stringWithFormat:@"%@%@?tag=%d", OSCAPI_PREFIX, OSCAPI_SOFTWARECATALOG_LIST, tag];
     };
     
-    __block SoftwareCatalogVC *weakSelf = self;
+    __weak SoftwareCatalogVC *weakSelf = self;
     self.tableWillReload = ^(NSUInteger responseObjectsCount) {
         [weakSelf.lastCell statusFinished];
     };

@@ -44,7 +44,7 @@
     self.hidesBottomBarWhenPushed = YES;
     if (!self) {return self;}
     
-    __block UserDetailsViewController *weakSelf = self;
+    __weak UserDetailsViewController *weakSelf = self;
     self.parseExtraInfo = ^(ONOXMLDocument *XML) {
         ONOXMLElement *userXML = [XML.rootElement firstChildWithTag:@"user"];
         weakSelf.user = [[OSCUser alloc] initWithXML:userXML];
@@ -59,7 +59,7 @@
     self.hidesBottomBarWhenPushed = YES;
     if (!self) {return self;}
     
-    __block UserDetailsViewController *weakSelf = self;
+    __weak UserDetailsViewController *weakSelf = self;
     self.parseExtraInfo = ^(ONOXMLDocument *XML) {
         ONOXMLElement *userXML = [XML.rootElement firstChildWithTag:@"user"];
         weakSelf.user = [[OSCUser alloc] initWithXML:userXML];

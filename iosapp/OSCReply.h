@@ -8,7 +8,7 @@
 
 #import "OSCBaseObject.h"
 
-@interface OSCReply : OSCBaseObject
+@interface OSCReply : OSCBaseObject <NSCopying>
 
 @property (nonatomic, readonly, copy) NSString *author;
 @property (nonatomic, readonly, copy) NSString *pubDate;
