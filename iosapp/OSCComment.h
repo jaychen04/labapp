@@ -21,4 +21,6 @@
 @property (nonatomic, strong) NSArray *references;
 @property (nonatomic, strong) NSArray *replies;
 
++ (NSAttributedString *)attributedTextFromReplies:(NSArray *)replies;
+
 @end

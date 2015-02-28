@@ -124,7 +124,11 @@ static NSString *kCommentCellID = @"CommentCell";
     } else if (indexPath.row < self.objects.count) {
         OSCComment *comment = self.objects[indexPath.row];
         
-        [self.label setAttributedText:[Utils emojiStringFromRawString:comment.content]];
+        NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
+        if (comment.replies.count > 0) {
+            [contentString appendAttributedString:[OSCComment attributedTextFromReplies:comment.replies]];
+        }
+        [self.label setAttributedText:contentString];
         
         self.label.font = [UIFont boldSystemFontOfSize:14];
         __block CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)].height;

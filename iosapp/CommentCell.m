@@ -83,13 +83,23 @@
 - (void)setContentWithComment:(OSCComment *)comment
 {
     [_portrait loadPortrait:comment.portraitURL];
-    [_contentLabel setAttributedText:[Utils emojiStringFromRawString:comment.content]];
     [_authorLabel setText:comment.author];
     [_timeLabel setText:[Utils intervalSinceNow:comment.pubDate]];
     
-    if (comment.references.count == 0) {return;}
+    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
+    if (comment.replies.count > 0) {
+        [contentString appendAttributedString:[OSCComment attributedTextFromReplies:comment.replies]];
+    }
+    [_contentLabel setAttributedText:contentString];
     
-    NSArray *references = comment.references;
+    [self dealWithReferences:comment.references];
+}
+
+
+- (void)dealWithReferences:(NSArray *)references
+{
+    if (references.count == 0) {return;}
+    
     _currentContainer = [UIView new];
     [self.contentView addSubview:_currentContainer];
     _currentContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -131,7 +141,6 @@
         _currentContainer = container;
     }
 }
-
 
 
 #pragma mark - 处理长按操作
