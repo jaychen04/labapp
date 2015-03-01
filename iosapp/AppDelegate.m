@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "OSCThread.h"
+#import "Config.h"
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
 #import "OSCTabBarController.h"
@@ -46,7 +48,7 @@
     [self.window makeKeyAndVisible];
     
     
-    /************ 控件外观设置 ************/
+    /************ 控件外观设置 **************/
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x15A230]];
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
@@ -62,6 +64,11 @@
     UIPageControl *pageControl = [UIPageControl appearance];
     pageControl.pageIndicatorTintColor = [UIColor colorWithHex:0xDCDCDC];
     pageControl.currentPageIndicatorTintColor = [UIColor grayColor];
+    
+    
+    /************ 检测通知 **************/
+    
+    if ([Config getOwnID] != 0) {[OSCThread startPollingNotice];}
     
     
     /************ 友盟分享组件 **************/

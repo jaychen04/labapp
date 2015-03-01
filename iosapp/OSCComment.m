@@ -58,7 +58,7 @@ static NSString * const kRContent = @"rcontent";
 
 + (NSAttributedString *)attributedTextFromReplies:(NSArray *)replies
 {
-    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n\n--共有%d条评论--\n", replies.count]
+    NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n\n--共有%lu条评论--\n", (unsigned long)replies.count]
                                                                                        attributes:@{NSForegroundColorAttributeName:[UIColor grayColor]}];
     
     [replies enumerateObjectsUsingBlock:^(OSCReply *reply, NSUInteger idx, BOOL *stop) {
