@@ -79,7 +79,26 @@ static NSString *kBlogCellID = @"BlogCell";
         BlogCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBlogCellID forIndexPath:indexPath];
         OSCBlog *blog = self.objects[indexPath.row];
         
-        [cell.titleLabel setText:blog.title];
+        
+        if (0 == blog.documentType) {
+            NSTextAttachment *textAttachment = [NSTextAttachment new];
+            textAttachment.image = [UIImage imageNamed:@"widget_repaste_icon.png"];
+            NSAttributedString *attributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+            NSMutableAttributedString *strTitle = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
+            [strTitle appendAttributedString:[[NSAttributedString alloc] initWithString:blog.title]];
+            [cell.titleLabel setAttributedText:strTitle];
+            
+        }else{
+            NSTextAttachment *textAttachment = [NSTextAttachment new];
+            textAttachment.image = [UIImage imageNamed:@"widget_original_icon.png"];
+            NSAttributedString *attributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+            NSMutableAttributedString *strTitle = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
+            [strTitle appendAttributedString:[[NSAttributedString alloc] initWithString:blog.title]];
+            [cell.titleLabel setAttributedText:strTitle];
+        }
+
+        
+        //[cell.titleLabel setText:blog.title];
         [cell.bodyLabel setText:blog.body];
         [cell.authorLabel setText:blog.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:blog.pubDate]];
