@@ -301,6 +301,7 @@
 		38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A93F9F1A9F8F8F00A515E8 /* OSCReply.m */; };
 		38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A93FA21A9F912B00A515E8 /* OSCReference.m */; };
 		38A93FA61AA2B51100A515E8 /* OSCThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A93FA51AA2B51100A515E8 /* OSCThread.m */; };
+		38A93FA91AA31DB400A515E8 /* MessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A93FA81AA31DB400A515E8 /* MessageCenter.m */; };
 		38A9A9CF1A5FD98E00B28B4F /* tweetEditing.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CC1A5FD98E00B28B4F /* tweetEditing.png */; };
 		38A9A9D01A5FD98E00B28B4F /* tweetEditing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CD1A5FD98E00B28B4F /* tweetEditing@2x.png */; };
 		38A9A9D11A5FD98E00B28B4F /* tweetEditing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CE1A5FD98E00B28B4F /* tweetEditing@3x.png */; };
@@ -751,6 +752,8 @@
 		38A93FA21A9F912B00A515E8 /* OSCReference.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCReference.m; sourceTree = "<group>"; };
 		38A93FA41AA2B51100A515E8 /* OSCThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCThread.h; sourceTree = "<group>"; };
 		38A93FA51AA2B51100A515E8 /* OSCThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCThread.m; sourceTree = "<group>"; };
+		38A93FA71AA31DB400A515E8 /* MessageCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageCenter.h; sourceTree = "<group>"; };
+		38A93FA81AA31DB400A515E8 /* MessageCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageCenter.m; sourceTree = "<group>"; };
 		38A9A9CC1A5FD98E00B28B4F /* tweetEditing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tweetEditing.png; sourceTree = "<group>"; };
 		38A9A9CD1A5FD98E00B28B4F /* tweetEditing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweetEditing@2x.png"; sourceTree = "<group>"; };
 		38A9A9CE1A5FD98E00B28B4F /* tweetEditing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweetEditing@3x.png"; sourceTree = "<group>"; };
@@ -1651,13 +1654,31 @@
 			name = Component;
 			sourceTree = "<group>";
 		};
-		38B0BF8F1A3AE72E00A2FDB0 /* Friends */ = {
+		38A93FAA1AA31DE100A515E8 /* 消息中心 */ = {
+			isa = PBXGroup;
+			children = (
+				38A93FA71AA31DB400A515E8 /* MessageCenter.h */,
+				38A93FA81AA31DB400A515E8 /* MessageCenter.m */,
+			);
+			name = "消息中心";
+			sourceTree = "<group>";
+		};
+		38A93FAB1AA31DEB00A515E8 /* 收藏 */ = {
+			isa = PBXGroup;
+			children = (
+				38B0BF831A3993CD00A2FDB0 /* FavoritesViewController.h */,
+				38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */,
+			);
+			name = "收藏";
+			sourceTree = "<group>";
+		};
+		38B0BF8F1A3AE72E00A2FDB0 /* 关注/粉丝 */ = {
 			isa = PBXGroup;
 			children = (
 				38B0BF891A39C68B00A2FDB0 /* FriendsViewController.h */,
 				38B0BF8A1A39C68B00A2FDB0 /* FriendsViewController.m */,
 			);
-			name = Friends;
+			name = "关注/粉丝";
 			sourceTree = "<group>";
 		};
 		38B0BF961A3AFEB400A2FDB0 /* 留言列表 */ = {
@@ -1757,11 +1778,11 @@
 			children = (
 				38BD3D0E1A37F38900682D1F /* MyInfoViewController.h */,
 				38BD3D0F1A37F38900682D1F /* MyInfoViewController.m */,
-				38B0BF831A3993CD00A2FDB0 /* FavoritesViewController.h */,
-				38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */,
 				EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */,
 				EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */,
-				38B0BF8F1A3AE72E00A2FDB0 /* Friends */,
+				38A93FAB1AA31DEB00A515E8 /* 收藏 */,
+				38A93FAA1AA31DE100A515E8 /* 消息中心 */,
+				38B0BF8F1A3AE72E00A2FDB0 /* 关注/粉丝 */,
 				38B0BF961A3AFEB400A2FDB0 /* 留言列表 */,
 			);
 			name = "我";
@@ -2235,6 +2256,7 @@
 				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,
 				EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */,
+				38A93FA91AA31DB400A515E8 /* MessageCenter.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,

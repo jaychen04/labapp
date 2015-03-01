@@ -12,11 +12,10 @@
 #import "Config.h"
 #import "Utils.h"
 #import "SwipableViewController.h"
-#import "FavoritesViewController.h"
 #import "FriendsViewController.h"
+#import "FavoritesViewController.h"
 #import "BlogsViewController.h"
-#import "EventsViewController.h"
-#import "MessagesViewController.h"
+#import "MessageCenter.h"
 #import "LoginViewController.h"
 #import "SearchViewController.h"
 #import "MyBasicInfoViewController.h"
@@ -42,7 +41,7 @@
 @property (nonatomic, strong) UIButton *followsBtn;
 @property (nonatomic, strong) UIButton *fansBtn;
 
-@property (nonatomic, assign) int badageValue;
+@property (nonatomic, assign) int badgeValue;
 
 @end
 
@@ -196,21 +195,21 @@
     //cell.imageView.image = [UIImage imageNamed:@[@"", @"", @"", @""][indexPath.row]];
     
     if (indexPath.row == 0) {
-        if (_badageValue == 0) {
+        if (_badgeValue == 0) {
             cell.accessoryView.hidden = YES;
         } else {
-            UILabel *accessoryBadage = [UILabel new];
-            accessoryBadage.backgroundColor = [UIColor redColor];
-            accessoryBadage.text = [@(_badageValue) stringValue];
-            accessoryBadage.textColor = [UIColor whiteColor];
-            accessoryBadage.textAlignment = NSTextAlignmentCenter;
-            accessoryBadage.layer.cornerRadius = 13;
-            accessoryBadage.clipsToBounds = YES;
+            UILabel *accessoryBadge = [UILabel new];
+            accessoryBadge.backgroundColor = [UIColor redColor];
+            accessoryBadge.text = [@(_badgeValue) stringValue];
+            accessoryBadge.textColor = [UIColor whiteColor];
+            accessoryBadge.textAlignment = NSTextAlignmentCenter;
+            accessoryBadge.layer.cornerRadius = 13;
+            accessoryBadge.clipsToBounds = YES;
             
-            CGFloat width = [accessoryBadage sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
+            CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
             width = width > 26? width: 26;
-            accessoryBadage.frame = CGRectMake(0, 0, width, 26);
-            cell.accessoryView = accessoryBadage;
+            accessoryBadge.frame = CGRectMake(0, 0, width, 26);
+            cell.accessoryView = accessoryBadge;
             cell.accessoryView.hidden = NO;
         }
     }
@@ -227,14 +226,7 @@
     
     switch (indexPath.row) {
         case 0: {
-            SwipableViewController *messageCenterVC = [[SwipableViewController alloc] initWithTitle:@"消息中心"
-                                                                                       andSubTitles:@[@"@我", @"评论", @"留言", @"粉丝"]
-                                                                                     andControllers:@[
-                                                                                                      [[EventsViewController alloc] initWithCatalog:2],
-                                                                                                      [[EventsViewController alloc] initWithCatalog:3],
-                                                                                                      [MessagesViewController new],
-                                                                                                      [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
-                                                                                                      ]];
+            MessageCenter *messageCenterVC = [MessageCenter new];
             messageCenterVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:messageCenterVC animated:YES];
             
@@ -361,7 +353,7 @@
     }
     
     if (sumOfCount) {
-        _badageValue = sumOfCount;
+        _badgeValue = sumOfCount;
         self.navigationController.tabBarItem.badgeValue = [@(sumOfCount) stringValue];
         
         dispatch_async(dispatch_get_main_queue(), ^{
