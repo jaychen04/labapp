@@ -331,24 +331,32 @@
     
     self.operationBar.share = ^ {
         NSString *title = weakSelf.objectTitle;
+        
+        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@", weakSelf.URL];
+        NSString *strBlog = @"/blog";
+        if ([strUrl rangeOfString:strBlog].length) {
+            strUrl = [NSMutableString stringWithFormat:@"http://m.oschina.net/blog/%i", (int)weakSelf.objectID];
+        }
+        else{
+            [strUrl replaceCharactersInRange:NSMakeRange(7, 3) withString:@"m"];
+        }
+        weakSelf.URL = strUrl;
+        
         // 微信相关设置
         
         [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
         [UMSocialData defaultData].extConfig.wechatSessionData.url = weakSelf.URL;
         [UMSocialData defaultData].extConfig.wechatTimelineData.url = weakSelf.URL;
         [UMSocialData defaultData].extConfig.title = title;
-        
         // 手机QQ相关设置
         
         [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
         [UMSocialData defaultData].extConfig.qqData.title = title;
         //[UMSocialData defaultData].extConfig.qqData.shareText = weakSelf.objectTitle;
         [UMSocialData defaultData].extConfig.qqData.url = weakSelf.URL;
-        
         // 新浪微博相关设置
         
         [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:weakSelf.URL];
-        
         [UMSocialSnsService presentSnsIconSheetView:weakSelf
                                              appKey:@"54c9a412fd98c5779c000752"
                                           shareText:[NSString stringWithFormat:@"《%@》，分享来自 %@", weakSelf.objectTitle, weakSelf.URL]
