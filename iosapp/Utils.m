@@ -194,7 +194,7 @@
 
 #pragma mark - 信息处理
 
-+ (NSString *)intervalSinceNow:(NSString *)dateStr
++ (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
@@ -210,6 +210,24 @@
     NSInteger days = [compsNow day] - [compsPast day] + months * 30;
     NSInteger hours = [compsNow hour] - [compsPast hour] + days * 24;
     NSInteger minutes = [compsNow minute] - [compsPast minute] + hours * 60;
+    
+    return @{
+             kKeyYears:  @(years),
+             kKeyMonths: @(months),
+             kKeyDays:   @(days),
+             kKeyHours:  @(hours),
+             kKeyMinutes:@(minutes)
+             };
+}
+
++ (NSString *)intervalSinceNow:(NSString *)dateStr
+{
+    NSDictionary *dic = [Utils timeIntervalArrayFromString:dateStr];
+    //NSInteger years = [[dic objectForKey:kKeyYears] integerValue];
+    NSInteger months = [[dic objectForKey:kKeyMonths] integerValue];
+    NSInteger days = [[dic objectForKey:kKeyDays] integerValue];
+    NSInteger hours = [[dic objectForKey:kKeyHours] integerValue];
+    NSInteger minutes = [[dic objectForKey:kKeyMinutes] integerValue];
     
     if (minutes < 1) {
         return @"刚刚";
