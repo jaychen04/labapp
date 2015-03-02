@@ -93,6 +93,11 @@
 }
 
 
+- (void)scrollToViewAtIndex:(NSUInteger)index
+{
+    _viewPager.changeIndex(index);
+}
+
 
 
 @end
