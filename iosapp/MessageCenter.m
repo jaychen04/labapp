@@ -40,7 +40,7 @@
             CGSize size = [button.titleLabel sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
             button.badgeValue = @"1";
             button.badgeOriginX = (button.frame.size.width + size.width) / 2;
-            button.badgeOriginY = (button.frame.size.height - size.height) / 2;
+            button.badgeOriginY = (button.frame.size.height - button.badge.frame.size.height) / 2;
             button.badgeBGColor = [UIColor redColor];
             button.badgeTextColor = [UIColor whiteColor];
         }];
