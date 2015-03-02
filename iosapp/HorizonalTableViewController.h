@@ -10,6 +10,7 @@
 
 @interface HorizonalTableViewController : UITableViewController
 
+@property (nonatomic, strong) NSArray *controllers;
 @property (nonatomic, copy) void (^changeIndex)(NSUInteger index);
 @property (nonatomic, copy) void (^scrollView)(CGFloat offsetRatio, NSUInteger focusIndex, NSUInteger animationIndex);
 

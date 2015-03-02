@@ -157,7 +157,10 @@
              _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
              NSArray *objectsXML = [self parseXML:responseDocument];
              
-             if (refresh) {[_objects removeAllObjects];}
+             if (refresh) {
+                 [_objects removeAllObjects];
+                 if (_didRefreshSucceed) {_didRefreshSucceed();}
+             }
              
              if (_parseExtraInfo) {_parseExtraInfo(responseDocument);}
              

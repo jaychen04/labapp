@@ -11,8 +11,6 @@
 
 @interface HorizonalTableViewController ()
 
-@property (nonatomic, strong) NSArray *controllers;
-
 @end
 
 static NSString *kHorizonalCellID = @"HorizonalCell";
