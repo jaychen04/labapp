@@ -362,14 +362,18 @@
         sumOfCount += [count intValue];
     }];
     
-    if (sumOfCount) {
-        _badgeValue = sumOfCount;
+    _badgeValue = sumOfCount;
+    if (_badgeValue) {
         self.navigationController.tabBarItem.badgeValue = [@(sumOfCount) stringValue];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
+    } else {
+        self.navigationController.tabBarItem.badgeValue = nil;
     }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
 }
 
 

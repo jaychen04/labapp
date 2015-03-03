@@ -47,10 +47,8 @@ static NSTimer *timer;
              int reviewCount = [[[notice firstChildWithTag:@"reviewCount"] numberValue] intValue];
              int newFansCount = [[[notice firstChildWithTag:@"newFansCount"] numberValue] intValue];
              
-             if (atCount || msgCount || reviewCount || newFansCount) {
-                 [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
-                                                                     object:@[@(atCount), @(reviewCount), @(msgCount), @(newFansCount)]];
-             }
+             [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
+                                                                 object:@[@(atCount), @(reviewCount), @(msgCount), @(newFansCount)]];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"%@", error);
          }];
