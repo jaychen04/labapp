@@ -71,7 +71,18 @@ static NSString *kNewsCellID = @"NewsCell";
         NewsCell *cell = [tableView dequeueReusableCellWithIdentifier:kNewsCellID forIndexPath:indexPath];
         OSCNews *news = self.objects[indexPath.row];
         
-        [cell.titleLabel setText:news.title];
+        if ([[Utils timeIntervalArrayFromString:news.pubDate][kKeyDays] integerValue] == 0) {
+            NSTextAttachment *textAttachment = [NSTextAttachment new];
+            textAttachment.image = [UIImage imageNamed:@"widget_today_icon.png"];
+            NSAttributedString *attributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+            NSMutableAttributedString *strTitle = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
+            [strTitle appendAttributedString:[[NSAttributedString alloc] initWithString:news.title]];
+            [cell.titleLabel setAttributedText:strTitle];
+
+        }else{
+            [cell.titleLabel setText:news.title];
+        }
+        
         [cell.bodyLabel setText:news.body];
         [cell.authorLabel setText:news.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:news.pubDate]];

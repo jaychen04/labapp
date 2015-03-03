@@ -12,6 +12,12 @@
 #import "UIImageView+Util.h"
 #import "UIImage+Util.h"
 
+static NSString * const kKeyYears = @"years";
+static NSString * const kKeyMonths = @"months";
+static NSString * const kKeyDays = @"days";
+static NSString * const kKeyHours = @"hours";
+static NSString * const kKeyMinutes = @"minutes";
+
 typedef NS_ENUM(NSUInteger, hudType) {
     hudTypeSendingTweet,
     hudTypeLoading,
@@ -27,6 +33,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSString *)GenerateTags:(NSArray *)tags;
 + (void)analysis:(NSString *)url andNavController:(UINavigationController *)navigationController;
 
++ (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr;
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 + (NSData *)compressImage:(UIImage *)image;
