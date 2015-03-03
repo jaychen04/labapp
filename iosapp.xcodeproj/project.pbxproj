@@ -305,6 +305,7 @@
 		38A9A9CF1A5FD98E00B28B4F /* tweetEditing.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CC1A5FD98E00B28B4F /* tweetEditing.png */; };
 		38A9A9D01A5FD98E00B28B4F /* tweetEditing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CD1A5FD98E00B28B4F /* tweetEditing@2x.png */; };
 		38A9A9D11A5FD98E00B28B4F /* tweetEditing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CE1A5FD98E00B28B4F /* tweetEditing@3x.png */; };
+		38A9EEA01AA5BE66006C95BD /* TextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A9EE9F1AA5BE66006C95BD /* TextViewWithPlaceholder.m */; };
 		38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */; };
 		38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */; };
 		38B0BF881A399A1A00A2FDB0 /* OSCFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */; };
@@ -760,6 +761,8 @@
 		38A9A9CC1A5FD98E00B28B4F /* tweetEditing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tweetEditing.png; sourceTree = "<group>"; };
 		38A9A9CD1A5FD98E00B28B4F /* tweetEditing@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweetEditing@2x.png"; sourceTree = "<group>"; };
 		38A9A9CE1A5FD98E00B28B4F /* tweetEditing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweetEditing@3x.png"; sourceTree = "<group>"; };
+		38A9EE9E1AA5BE66006C95BD /* TextViewWithPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewWithPlaceholder.h; sourceTree = "<group>"; };
+		38A9EE9F1AA5BE66006C95BD /* TextViewWithPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewWithPlaceholder.m; sourceTree = "<group>"; };
 		38AB26491A1C4D2100D761CB /* BottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomBarViewController.h; sourceTree = "<group>"; };
 		38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomBarViewController.m; sourceTree = "<group>"; };
 		38B0BF831A3993CD00A2FDB0 /* FavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesViewController.h; sourceTree = "<group>"; };
@@ -1653,6 +1656,8 @@
 		38A1A1581A15BAF100AFD144 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				38A9EE9E1AA5BE66006C95BD /* TextViewWithPlaceholder.h */,
+				38A9EE9F1AA5BE66006C95BD /* TextViewWithPlaceholder.m */,
 				00FF954619F2BF8B002F4737 /* LastCell.h */,
 				00FF954719F2BF8B002F4737 /* LastCell.m */,
 				38590C1E1A1341BB008E2CFA /* ImageViewerController.h */,
@@ -2285,6 +2290,7 @@
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
+				38A9EEA01AA5BE66006C95BD /* TextViewWithPlaceholder.m in Sources */,
 				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,
 				EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */,
 				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,
