@@ -49,6 +49,7 @@
 @property (nonatomic, copy) NSString *detailsURL;
 @property (nonatomic, readonly, assign) int commentCount;
 @property (nonatomic, copy) NSString *URL;
+@property (nonatomic, copy) NSString *mURL;
 @property (nonatomic, copy) NSString *objectTitle;
 @property (nonatomic, strong) UIWebView *detailsView;
 @property (nonatomic, copy) NSString *tag;
@@ -207,7 +208,7 @@
     [self.view addSubview:_detailsView];
     
     [self.view bringSubviewToFront:(UIView *)self.editingBar];
-    [self setBlockForOperationBar];
+    
     
     NSDictionary *views = @{@"detailsView": _detailsView, @"bottomBar": self.editingBar};
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailsView][bottomBar]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
@@ -239,6 +240,8 @@
              commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
              
              if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
+             
+             [self setBlockForOperationBar];
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"网络异常，错误码：%ld", (long)error.code);
@@ -332,36 +335,46 @@
     self.operationBar.share = ^ {
         NSString *title = weakSelf.objectTitle;
         
-        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@", weakSelf.URL];
-        NSString *strBlog = @"/blog";
-        if ([strUrl rangeOfString:strBlog].length) {
-            strUrl = [NSMutableString stringWithFormat:@"http://m.oschina.net/blog/%i", (int)weakSelf.objectID];
-        }
-        else{
-            [strUrl replaceCharactersInRange:NSMakeRange(7, 3) withString:@"m"];
-        }
-        weakSelf.URL = strUrl;
-        
         // 微信相关设置
-        
         [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
-        [UMSocialData defaultData].extConfig.wechatSessionData.url = weakSelf.URL;
-        [UMSocialData defaultData].extConfig.wechatTimelineData.url = weakSelf.URL;
+        [UMSocialData defaultData].extConfig.wechatSessionData.url = weakSelf.mURL;
+        [UMSocialData defaultData].extConfig.wechatTimelineData.url = weakSelf.mURL;
         [UMSocialData defaultData].extConfig.title = title;
-        // 手机QQ相关设置
         
+        // 手机QQ相关设置
         [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
         [UMSocialData defaultData].extConfig.qqData.title = title;
         //[UMSocialData defaultData].extConfig.qqData.shareText = weakSelf.objectTitle;
-        [UMSocialData defaultData].extConfig.qqData.url = weakSelf.URL;
-        // 新浪微博相关设置
+        [UMSocialData defaultData].extConfig.qqData.url = weakSelf.mURL;
         
-        [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:weakSelf.URL];
+        // 新浪微博相关设置
+        [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:weakSelf.mURL];
+        
+        // 复制链接
+        UMSocialSnsPlatform *snsPlatform = [[UMSocialSnsPlatform alloc] initWithPlatformName:@"CustomPlatform"];
+        snsPlatform.displayName = @"复制链接";
+        snsPlatform.bigImageName = @"UMS_facebook_icon";
+        snsPlatform.snsClickHandler = ^(UIViewController *presentingController, UMSocialControllerService *socialControllerService, BOOL isPresentInController){
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            NSLog(@"\n%@\n%@", weakSelf.URL, weakSelf.mURL);
+            pasteboard.string = weakSelf.mURL;
+            
+            MBProgressHUD *HUD = [Utils createHUDInWindowOfView:weakSelf.view];
+            HUD.mode = MBProgressHUDModeText;
+            HUD.labelText = @"复制成功";
+            
+            [HUD hide:YES afterDelay:1];
+        };
+        
+        [UMSocialConfig addSocialSnsPlatform:@[snsPlatform]];
+        [UMSocialConfig setSnsPlatformNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina, @"CustomPlatform"]];
+    
+        
         [UMSocialSnsService presentSnsIconSheetView:weakSelf
                                              appKey:@"54c9a412fd98c5779c000752"
-                                          shareText:[NSString stringWithFormat:@"《%@》，分享来自 %@", weakSelf.objectTitle, weakSelf.URL]
+                                          shareText:[NSString stringWithFormat:@"《%@》，分享来自 %@", weakSelf.objectTitle, weakSelf.mURL]
                                          shareImage:[UIImage imageNamed:@"share-image"]
-                                    shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
+                                    shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina, @"CustomPlatform"]
                                            delegate:nil];
     };
     
@@ -378,6 +391,23 @@
         [alertView textFieldAtIndex:0].placeholder = @"举报原因";
         [alertView show];
     };
+}
+
+- (NSString *)mURL
+{
+    if (_mURL) {
+        return _mURL;
+    } else {
+        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@", _URL];
+        if (_commentType == CommentTypeBlog) {
+            strUrl = [NSMutableString stringWithFormat:@"http://m.oschina.net/blog/%lld", _objectID];
+        } else {
+            [strUrl replaceCharactersInRange:NSMakeRange(7, 3) withString:@"m"];
+        }
+        _mURL = [strUrl copy];
+        NSLog(@"mUrl = %@", _mURL);
+        return _mURL;
+    }
 }
 
 
