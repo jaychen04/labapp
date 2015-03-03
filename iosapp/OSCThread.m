@@ -28,7 +28,7 @@ static NSTimer *timer;
     if (isPollingStarted) {
         return;
     } else {
-        timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
+        timer = [NSTimer scheduledTimerWithTimeInterval:6 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
         isPollingStarted = YES;
     }
 }
@@ -49,7 +49,7 @@ static NSTimer *timer;
              
              if (atCount || msgCount || reviewCount || newFansCount) {
                  [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
-                                                                     object:@[@(atCount), @(msgCount), @(reviewCount), @(newFansCount)]];
+                                                                     object:@[@(atCount), @(reviewCount), @(msgCount), @(newFansCount)]];
              }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"%@", error);
