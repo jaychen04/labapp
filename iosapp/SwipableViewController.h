@@ -16,5 +16,6 @@
 @property (nonatomic, strong) TitleBarView *titleBar;
 
 - (instancetype)initWithTitle:(NSString *)title andSubTitles:(NSArray *)subTitles andControllers:(NSArray *)controllers;
+- (void)scrollToViewAtIndex:(NSUInteger)index;
 
 @end

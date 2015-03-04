@@ -12,6 +12,7 @@
 #import "OSCUser.h"
 #import "Utils.h"
 #import "Config.h"
+#import "OSCThread.h"
 #import "MyInfoViewController.h"
 
 #import <AFNetworking.h>
@@ -251,6 +252,8 @@
               OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
               [Config saveOwnID:user.userID];
+              [OSCThread startPollingNotice];
+              
               [self.navigationController popViewControllerAnimated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"网络异常，错误码：%ld", (long)error.code);

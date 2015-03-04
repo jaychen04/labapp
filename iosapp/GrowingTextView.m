@@ -10,9 +10,10 @@
 
 @implementation GrowingTextView
 
-- (instancetype)init
+- (instancetype)initWithPlaceholder:(NSString *)placeholder
 {
-    if (self = [super init]) {
+    self = [super initWithPlaceholder:placeholder];
+    if (self) {
         self.font = [UIFont systemFontOfSize:14.0];
         self.scrollEnabled = YES;
         self.scrollsToTop = NO;

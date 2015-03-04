@@ -28,6 +28,7 @@
 + (NSString *)getAppclient:(int)clientType
 {
     switch (clientType) {
+        case 0:
         case 1: return @"";
         case 2: return @"来自手机";
         case 3: return @"来自Android";
@@ -192,7 +193,7 @@
 
 #pragma mark - 通用
 
-#pragma mark - 信息处理
+#pragma mark 信息处理
 
 + (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr
 {
@@ -349,7 +350,7 @@
 }
 
 
-#pragma mark - UI处理
+#pragma mark UI处理
 
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent
 {

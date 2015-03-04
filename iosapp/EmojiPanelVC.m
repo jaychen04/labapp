@@ -29,7 +29,8 @@
 - (void)viewDidLoad
 {
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
-    flowLayout.minimumInteritemSpacing = 10;
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    flowLayout.minimumInteritemSpacing = (screenWidth - 40 - 30 * 7) / 7;
     flowLayout.minimumLineSpacing = 25;
     flowLayout.sectionInset = UIEdgeInsetsMake(15, 0, 5, 0);
     

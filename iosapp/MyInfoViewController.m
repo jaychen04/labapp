@@ -12,11 +12,10 @@
 #import "Config.h"
 #import "Utils.h"
 #import "SwipableViewController.h"
-#import "FavoritesViewController.h"
 #import "FriendsViewController.h"
+#import "FavoritesViewController.h"
 #import "BlogsViewController.h"
-#import "EventsViewController.h"
-#import "MessagesViewController.h"
+#import "MessageCenter.h"
 #import "LoginViewController.h"
 #import "SearchViewController.h"
 #import "MyBasicInfoViewController.h"
@@ -32,6 +31,7 @@
 
 @property (nonatomic, strong) OSCMyInfo *myInfo;
 @property (nonatomic, readonly, assign) int64_t myID;
+@property (nonatomic, strong) NSMutableArray *noticeCounts;
 
 @property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel *nameLabel;
@@ -42,10 +42,23 @@
 @property (nonatomic, strong) UIButton *followsBtn;
 @property (nonatomic, strong) UIButton *fansBtn;
 
+@property (nonatomic, assign) int badgeValue;
+
 @end
 
 
 @implementation MyInfoViewController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noticeUpdateHandler:) name:OSCAPI_USER_NOTICE object:nil];
+        _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0)]];
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -62,6 +75,11 @@
     self.tableView.tableFooterView = footer;
     
     [self refreshView];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)refreshView
@@ -133,8 +151,8 @@
     setButtonStyle(_fansBtn, [NSString stringWithFormat:@"粉丝\n%d", _myInfo.fansCount]);
     
     [_collectionsBtn addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
-    [_followsBtn addTarget:self action:@selector(pushFriendsSVC) forControlEvents:UIControlEventTouchUpInside];
-    [_fansBtn addTarget:self action:@selector(pushFriendsSVC) forControlEvents:UIControlEventTouchUpInside];
+    [_followsBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+    [_fansBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
     
     for (UIView *view in header.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
@@ -177,6 +195,26 @@
     
     cell.textLabel.text = @[@"消息", @"博客"][indexPath.row];
     //cell.imageView.image = [UIImage imageNamed:@[@"", @"", @"", @""][indexPath.row]];
+    
+    if (indexPath.row == 0) {
+        if (_badgeValue == 0) {
+            cell.accessoryView = nil;
+        } else {
+            UILabel *accessoryBadge = [UILabel new];
+            accessoryBadge.backgroundColor = [UIColor redColor];
+            accessoryBadge.text = [@(_badgeValue) stringValue];
+            accessoryBadge.textColor = [UIColor whiteColor];
+            accessoryBadge.textAlignment = NSTextAlignmentCenter;
+            accessoryBadge.layer.cornerRadius = 13;
+            accessoryBadge.clipsToBounds = YES;
+            
+            CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
+            width = width > 26? width: 26;
+            accessoryBadge.frame = CGRectMake(0, 0, width, 26);
+            cell.accessoryView = accessoryBadge;
+        }
+    }
+    
     return cell;
 }
 
@@ -189,14 +227,13 @@
     
     switch (indexPath.row) {
         case 0: {
-            SwipableViewController *messageCenterVC = [[SwipableViewController alloc] initWithTitle:@"消息中心"
-                                                                                       andSubTitles:@[@"@我", @"评论", @"留言", @"粉丝"]
-                                                                                     andControllers:@[
-                                                                                                      [[EventsViewController alloc] initWithCatalog:2],
-                                                                                                      [[EventsViewController alloc] initWithCatalog:3],
-                                                                                                      [MessagesViewController new],
-                                                                                                      [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
-                                                                                                      ]];
+            _badgeValue = 0;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            });
+            self.navigationController.tabBarItem.badgeValue = nil;
+            
+            MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
             messageCenterVC.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:messageCenterVC animated:YES];
             
@@ -244,7 +281,7 @@
     [self.navigationController pushViewController:favoritesSVC animated:YES];
 }
 
-- (void)pushFriendsSVC
+- (void)pushFriendsSVC:(UIButton *)button
 {
     SwipableViewController *friendsSVC = [[SwipableViewController alloc] initWithTitle:@"关注/粉丝"
                                                                             andSubTitles:@[@"关注", @"粉丝"]
@@ -252,6 +289,8 @@
                                                                                            [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
                                                                                            [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
                                                                                            ]];
+    if (button == _fansBtn) {[friendsSVC scrollToViewAtIndex:1];}
+    
     friendsSVC.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:friendsSVC animated:YES];
@@ -309,6 +348,34 @@
     
     return _myQRCodeImageView;
 }
+
+
+#pragma mark - 处理消息通知
+
+- (void)noticeUpdateHandler:(NSNotification *)notification
+{
+    NSArray *noticeCounts = [notification object];
+    
+    __block int sumOfCount = 0;
+    [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *count, NSUInteger idx, BOOL *stop) {
+        _noticeCounts[idx] = count;
+        sumOfCount += [count intValue];
+    }];
+    
+    _badgeValue = sumOfCount;
+    if (_badgeValue) {
+        self.navigationController.tabBarItem.badgeValue = [@(sumOfCount) stringValue];
+    } else {
+        self.navigationController.tabBarItem.badgeValue = nil;
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
+}
+
 
 
 

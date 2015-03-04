@@ -84,7 +84,7 @@
              
              _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
              self.objectAuthorID = _tweet.authorID;
-             _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221}</style>\
+             _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;}</style>\
                                                         <font size=\"3\"><strong>%@</strong></font>\
                                                         <br/><a href='%@'><img style='max-width:300px;' src='%@'/></a>",
                                                         _tweet.body,  _tweet.bigImgURL, _tweet.bigImgURL];

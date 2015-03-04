@@ -81,6 +81,7 @@
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
         HUD.labelText = @"评论内容不能为空";
+        [HUD hide:YES afterDelay:1];
         
         return;
     }
