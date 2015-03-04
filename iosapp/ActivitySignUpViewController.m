@@ -167,28 +167,31 @@
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    float y = self.view.frame.origin.y;
-    float width = self.view.frame.size.width;
-    float height = self.view.frame.size.height;
-    
-    if (textField == _corporateNameTextfield || textField == _positionNameTextfield) {
-        CGRect rect = CGRectMake(0.0f, y-100, width, height);
-        self.view.frame = rect;
+    if (self.view.frame.size.height < 568) {
+        float y = self.view.frame.origin.y;
+        float width = self.view.frame.size.width;
+        float height = self.view.frame.size.height;
+        
+        if (textField == _corporateNameTextfield || textField == _positionNameTextfield) {
+            CGRect rect = CGRectMake(0.0f, y-100, width, height);
+            self.view.frame = rect;
+        }
     }
     return YES;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    float y = self.view.frame.origin.y;
-    float width = self.view.frame.size.width;
-    float height = self.view.frame.size.height;
-    
-    if (textField == _corporateNameTextfield || textField == _positionNameTextfield){
-        CGRect rect = CGRectMake(0.0f, y+100, width, height);
-        self.view.frame = rect;
+    if (self.view.frame.size.height < 568) {
+        float y = self.view.frame.origin.y;
+        float width = self.view.frame.size.width;
+        float height = self.view.frame.size.height;
+        
+        if (textField == _corporateNameTextfield || textField == _positionNameTextfield){
+            CGRect rect = CGRectMake(0.0f, y+100, width, height);
+            self.view.frame = rect;
+        }
     }
-    
     return YES;
 }
 
