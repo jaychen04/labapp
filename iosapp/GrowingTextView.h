@@ -11,7 +11,6 @@
 
 @interface GrowingTextView : TextViewWithPlaceholder
 
-@property (nonatomic, copy) NSString *placeholder;
 @property (nonatomic, readonly) NSUInteger numberOfLines;
 @property (nonatomic, assign) NSUInteger maxNumberOfLines;
 
