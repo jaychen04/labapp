@@ -16,8 +16,8 @@
 
 @property (nonatomic, strong) CommentsViewController *commentsVC;
 @property (nonatomic, assign) int64_t objectID;
-@property (nonatomic, assign) int64_t objectUID;
 @property (nonatomic, assign) int64_t replyID;
+@property (nonatomic, assign) int64_t replyUID;
 @property (nonatomic, assign) CommentType commentType;
 
 @end
@@ -49,7 +49,15 @@
     __weak CommentsBottomBarViewController *weakSelf = self;
     
     _commentsVC.didCommentSelected = ^(OSCComment *comment) {
-        [weakSelf.editingBar.editView setPlaceholder:[NSString stringWithFormat:@"回复%@：", comment.author]];
+        if (weakSelf.replyID == comment.commentID) {
+            weakSelf.replyID = 0;
+            weakSelf.replyUID = 0;
+            [weakSelf.editingBar.editView setPlaceholder:@"说点什么"];
+        } else {
+            weakSelf.replyID = comment.commentID;
+            weakSelf.replyUID = comment.authorID;
+            [weakSelf.editingBar.editView setPlaceholder:[NSString stringWithFormat:@"回复%@：", comment.author]];
+        }
     };
     
     _commentsVC.didScroll = ^ {
@@ -99,22 +107,29 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
-    
-    NSString *URL = _commentType == CommentTypeBlog? [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB] :
-                                                     [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENT_PUB];
+    NSString *URL;
+    if (_commentType == CommentTypeBlog) {
+        URL = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB];
+    } else if (_replyID == 0) {
+        URL = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENT_PUB];
+    } else {
+        URL = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENT_REPLY];
+    }
     
     NSDictionary *parameters = _commentType == CommentTypeBlog?
                                 @{
                                   @"blog": @(_objectID),
                                   @"uid": @([Config getOwnID]),
-                                  @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
                                   @"reply_id": @(_replyID),
-                                  @"objuid": @(_objectUID)
+                                  @"objuid": @(_replyUID),
+                                  @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
                                   }:
                                 @{
                                   @"catalog": @(_commentType),
                                   @"id": @(_objectID),
                                   @"uid": @([Config getOwnID]),
+                                  @"replyid": @(_replyID),
+                                  @"authorid": @(_replyUID),
                                   @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
                                   @"isPostToMyZone": @(0)
                                 };
