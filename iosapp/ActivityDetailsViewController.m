@@ -19,6 +19,7 @@
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 
+#import "ActivitySignUpViewController.h"
 
 @interface ActivityDetailsViewController () <UIWebViewDelegate>
 
@@ -74,6 +75,7 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -137,7 +139,7 @@
             cell.textLabel.text = @"活动详情";
             cell.textLabel.textColor = [UIColor darkGrayColor];
             cell.backgroundColor = [UIColor themeColor];
-            
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             return cell;
         }
         case 2: {
@@ -157,24 +159,11 @@
 
 - (void)enrollActivity
 {
-#if 0
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_EVENT_APPLY]
-       parameters:@{
-                    
-                    }
-          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-          }];
-#endif
+    [self.navigationController pushViewController:signUpViewController animated:YES];
+    
 }
-
-
 
 #pragma mark - UIWebViewDelegate
 

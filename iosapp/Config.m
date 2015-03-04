@@ -13,6 +13,11 @@ NSString * const kService = @"OSChina";
 NSString * const kAccount = @"account";
 NSString * const kUserID = @"userID";
 
+NSString * const kActorName = @"Actor";
+NSString * const kSex = @"Sex";
+NSString * const kTelephoneNumber = @"TelephoneNumber";
+NSString * const kCorporateName = @"CorporateName";
+NSString * const kPositionName = @"PositionName";
 
 @implementation Config
 
@@ -32,8 +37,17 @@ NSString * const kUserID = @"userID";
     [userDefaults synchronize];
 }
 
-
-
++ (void)saveActivityActorName:(NSString *)actorName andSex:(NSInteger)sex andTelephoneNumber:(NSString *)telephoneNumber andCorporateName:(NSString *)corporateName andPositionName:(NSString *)positionName
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setObject:actorName forKey:kActorName];
+    [userDefaults setObject:@(sex) forKey:kSex];
+    [userDefaults setObject:telephoneNumber forKey:kTelephoneNumber];
+    [userDefaults setObject:corporateName forKey:kCorporateName];
+    [userDefaults setObject:positionName forKey:kPositionName];
+    [userDefaults synchronize];
+}
 
 + (NSArray *)getOwnAccountAndPassword
 {
@@ -54,7 +68,20 @@ NSString * const kUserID = @"userID";
     return 0;
 }
 
-
++ (NSArray *)getActivitySignUpInfomation
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *actorName = [userDefaults objectForKey:kActorName];
+    NSNumber *sex = [userDefaults objectForKey:kSex];
+    NSString *telephoneNumber = [userDefaults objectForKey:kTelephoneNumber];
+    NSString *corporateName = [userDefaults objectForKey:kCorporateName];
+    NSString *positionName = [userDefaults objectForKey:kPositionName];
+    if (actorName) {
+        return @[actorName, sex, telephoneNumber, corporateName, positionName];
+    }
+    return nil;
+}
 
 
 
