@@ -38,8 +38,8 @@
     
     _placeholderLabel.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *views = NSDictionaryOfVariableBindings(_placeholderLabel);
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-6-[_placeholderLabel]-6-|" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-9-[_placeholderLabel]"   options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_placeholderLabel]-6-|" options:0 metrics:nil views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_placeholderLabel]"   options:0 metrics:nil views:views]];
 }
 
 - (void)setPlaceholder:(NSString *)placeholder
