@@ -50,18 +50,23 @@
 
 #pragma mark - UITextViewDelegate
 
+- (void)checkShouldHidePlaceholder
+{
+    if ([self hasText]) {
+        _placeholderLabel.hidden = YES;
+    } else {
+        _placeholderLabel.hidden = NO;
+    }
+}
+
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
-    [self textViewDidChange:textView];
+    [self checkShouldHidePlaceholder];
 }
 
 - (void)textViewDidChange:(UITextView *)textView
 {
-    if ([textView hasText]) {
-        _placeholderLabel.hidden = YES;
-    } else {
-        _placeholderLabel.hidden = NO;
-    }  
+    [self checkShouldHidePlaceholder];
 }
 
 @end

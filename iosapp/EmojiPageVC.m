@@ -8,11 +8,11 @@
 
 #import "EmojiPageVC.h"
 #import "EmojiPanelVC.h"
+#import "TextViewWithPlaceholder.h"
 
 
 @interface EmojiPageVC () <UIPageViewControllerDataSource>
 
-@property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, copy) void (^didSelectEmoji) (NSTextAttachment *);
 @property (nonatomic, copy) void (^deleteEmoji)();
 
@@ -21,29 +21,30 @@
 
 @implementation EmojiPageVC
 
-- (instancetype)initWithTextView:(UITextView *)textView
+- (instancetype)initWithTextView:(TextViewWithPlaceholder *)textView
 {
     self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                           navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
                                   options:nil];
     if (self) {
-        _textView = textView;
-        __weak UITextView *weakTextView = _textView;
         _didSelectEmoji = ^(NSTextAttachment *textAttachment) {
             NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-            NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:weakTextView.attributedText];
-            [mutableAttributeString replaceCharactersInRange:weakTextView.selectedRange withAttributedString:emojiAttributedString];
-            weakTextView.attributedText = [mutableAttributeString copy];
+            NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:textView.attributedText];
+            [mutableAttributeString replaceCharactersInRange:textView.selectedRange withAttributedString:emojiAttributedString];
+            textView.attributedText = [mutableAttributeString copy];
+            [textView checkShouldHidePlaceholder];
         };
         _deleteEmoji = ^ {
-            NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:weakTextView.attributedText];
-            NSRange range = weakTextView.selectedRange;
+            NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:textView.attributedText];
+            NSRange range = textView.selectedRange;
             if (range.length == 0 && range.location != 0) {
                 [mutableAttributeString deleteCharactersInRange:NSMakeRange(range.location - 1, 1)];
             } else {
-                [mutableAttributeString deleteCharactersInRange:weakTextView.selectedRange];
+                [mutableAttributeString deleteCharactersInRange:textView.selectedRange];
             }
-            weakTextView.attributedText = [mutableAttributeString copy];
+            textView.attributedText = [mutableAttributeString copy];
+            textView.font = [UIFont systemFontOfSize:18];
+            [textView checkShouldHidePlaceholder];
         };
     }
     

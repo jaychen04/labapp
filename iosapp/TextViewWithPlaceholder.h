@@ -12,5 +12,6 @@
 
 - (instancetype)initWithPlaceholder:(NSString *)placeholder;
 - (void)setPlaceholder:(NSString *)placeholder;
+- (void)checkShouldHidePlaceholder;
 
 @end
