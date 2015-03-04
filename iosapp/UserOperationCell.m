@@ -70,7 +70,7 @@
     for (UIView *view in buttonsView2.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_loginTimeLabel, _messageButton, _followButton, _blogsButton, _informationButton, buttonsView, buttonsView2);
-    NSDictionary *metrics = @{@"width": @(self.frame.size.width / 2)};
+    NSDictionary *metrics = @{@"width": @([UIScreen mainScreen].bounds.size.width / 2)};
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-5-[_loginTimeLabel]-5-[buttonsView(35)]-5-[buttonsView2(35)]|"
                                                                              options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];

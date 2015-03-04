@@ -61,7 +61,7 @@
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsButton, _followsButton, _fansButton, countView);
-    NSDictionary *metrics = @{@"width": @(self.frame.size.width / 3)};
+    NSDictionary *metrics = @{@"width": @([UIScreen mainScreen].bounds.size.width / 3)};
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portrait(50)]-8-[_nameLabel]-15-[countView(50)]|"
                                                                    options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
