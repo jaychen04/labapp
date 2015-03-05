@@ -22,5 +22,8 @@
 @property (nonatomic, assign) int viewCount;
 @property (nonatomic, assign) BOOL isFavorite;
 @property (nonatomic, strong) NSArray *tags;
+@property (nonatomic, assign, readonly) int status;
+@property (nonatomic, assign, readonly) int applyStatus;
+@property (nonatomic, assign, readonly) int category;
 
 @end

@@ -22,6 +22,9 @@
 #import "ActivitySignUpViewController.h"
 
 @interface ActivityDetailsViewController () <UIWebViewDelegate>
+{
+    OSCPostDetails *postDetails;
+}
 
 @property (nonatomic, readonly, strong) OSCActivity *activity;
 
@@ -61,11 +64,10 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              ONOXMLElement *postXML = [responseObject.rootElement firstChildWithTag:@"post"];
-             OSCPostDetails *postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
+             postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
              _HTML = [postDetails.body copy];
              
-             [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]]
-                                   withRowAnimation:UITableViewRowAnimationNone];
+             [self.tableView reloadData];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"wrong");
          }];
@@ -75,7 +77,6 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -130,17 +131,21 @@
             cell.titleLabel.text = _activity.title;
             cell.timeLabel.text = [NSString stringWithFormat:@"开始：%@\n结束：%@", _activity.startTime, _activity.endTime];
             cell.locationLabel.text = [NSString stringWithFormat:@"地点：%@ %@", _activity.city, _activity.location];
-            [cell.applicationButton addTarget:self action:@selector(enrollActivity) forControlEvents:UIControlEventTouchUpInside];
             
+            [cell.applicationButton addTarget:self action:@selector(enrollActivity) forControlEvents:UIControlEventTouchUpInside];
+            if (postDetails.category == 4) {
+                [cell.applicationButton setTitle:@"报名链接" forState:UIControlStateNormal];
+            }
             return cell;
         }
         case 1: {
-            UITableViewCell *cell = [UITableViewCell new];
-            cell.textLabel.text = @"活动详情";
-            cell.textLabel.textColor = [UIColor darkGrayColor];
-            cell.backgroundColor = [UIColor themeColor];
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            return cell;
+            UITableViewCell *Cell = [UITableViewCell new];
+            Cell.textLabel.text = @"活动详情";
+            Cell.textLabel.textColor = [UIColor darkGrayColor];
+            Cell.backgroundColor = [UIColor themeColor];
+            Cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return Cell;
         }
         case 2: {
             ActivityDetailsCell *cell = [ActivityDetailsCell new];
@@ -154,15 +159,20 @@
     }
 }
 
-
+//, postDetails.status, postDetails.applyStatus
 #pragma mark - 报名
 
 - (void)enrollActivity
 {
-    ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
-    
-    [self.navigationController pushViewController:signUpViewController animated:YES];
-    
+    if (postDetails.category == 4) {
+        NSLog(@"站外活动");
+        
+        
+    } else {
+        ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
+        signUpViewController.eventId = postDetails.postID;
+        [self.navigationController pushViewController:signUpViewController animated:YES];
+    }
 }
 
 #pragma mark - UIWebViewDelegate

@@ -10,6 +10,12 @@
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
 #import "Config.h"
+#import <AFNetworking.h>
+#import <AFOnoResponseSerializer.h>
+#import "OSCAPI.h"
+#import <Ono.h>
+#import <MBProgressHUD.h>
+#import "Utils.h"
 
 #import <ReactiveCocoa.h>
 
@@ -120,7 +126,7 @@
     [self.view addSubview:_saveButton];
     _saveButton.userInteractionEnabled = YES;
     
-    [_saveButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(saveInformation)]];
+    [_saveButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterActivity)]];
     
     for (UIView *subView in [self.view subviews]) {
         subView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -197,16 +203,51 @@
 
 
 //保存报名信息
-- (void)saveInformation
+- (void)enterActivity
 {
-    [Config saveActivityActorName:_nameTextfield.text
-                           andSex:_sexSegmentCtl.selectedSegmentIndex
-               andTelephoneNumber:_telephoneTextfield.text
-                 andCorporateName:_corporateNameTextfield.text
-                  andPositionName:_positionNameTextfield.text];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_EVENT_APPLY]
+       parameters:@{
+                    @"event":@(_eventId),
+                    @"user": @([Config getOwnID]),
+                    @"name":_nameTextfield.text,
+                    @"gender":@(_sexSegmentCtl.selectedSegmentIndex) ,
+                    @"mobile":_telephoneTextfield.text,
+                    @"company":_corporateNameTextfield.text,
+                    @"job":_positionNameTextfield.text
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              
+              NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
+              NSString *errorMessage = [[result firstChildWithTag:@"errormessage"] stringValue];
+              
+              MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+              HUD.mode = MBProgressHUDModeCustomView;
+              
+              if (errorCode == 1) {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.labelText = [NSString stringWithFormat:@"%@", errorMessage];
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+              }
+              
+              [HUD hide:YES afterDelay:2];
+              
+              [Config saveActivityActorName:_nameTextfield.text
+                                     andSex:_sexSegmentCtl.selectedSegmentIndex
+                         andTelephoneNumber:_telephoneTextfield.text
+                           andCorporateName:_corporateNameTextfield.text
+                            andPositionName:_positionNameTextfield.text];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"网络异常，错误码：%ld", (long)error.code);
+          }
+     ];
+    
 }
-
-
 
 
 @end

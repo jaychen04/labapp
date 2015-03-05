@@ -10,4 +10,6 @@
 
 @interface ActivitySignUpViewController : UIViewController
 
+@property (nonatomic, readwrite, assign) int64_t eventId;
+
 @end

@@ -24,7 +24,7 @@
         _createTime  = [[xml firstChildWithTag:@"createTime"] stringValue];
         _location    = [[xml firstChildWithTag:@"spot"] stringValue];
         _city        = [[xml firstChildWithTag:@"city"] stringValue];
-        _status      = [[[xml firstChildWithTag:@"statur"] numberValue] intValue];
+        _status      = [[[xml firstChildWithTag:@"status"] numberValue] intValue];
         _applyStatus = [[[xml firstChildWithTag:@"applyStatus"] numberValue] intValue];
     }
     

@@ -21,6 +21,9 @@ static NSString *kPubDate = @"pubDate";
 static NSString *kFavorite = @"favorite";
 static NSString *kTags = @"tags";
 static NSString *kTag = @"tag";
+static NSString *kStatus = @"status";
+static NSString *kApplyStatus = @"applyStatus";
+static NSString *kCategory = @"category";
 
 @implementation OSCPostDetails
 
@@ -40,6 +43,10 @@ static NSString *kTag = @"tag";
         _viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
         _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        ONOXMLElement *eventElement = [xml firstChildWithTag:@"event"];
+        _status = [[[eventElement firstChildWithTag:kStatus] numberValue] intValue];
+        _applyStatus = [[[eventElement firstChildWithTag:kApplyStatus] numberValue] intValue];
+        _category    = [[[eventElement firstChildWithTag:kCategory] numberValue] intValue];
         
         NSMutableArray *mutableTags = [NSMutableArray new];
         NSArray *tagsXML = [xml childrenWithTag:kTags];

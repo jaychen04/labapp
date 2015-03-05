@@ -65,7 +65,6 @@ static NSString * const kActivtyCellID = @"ActivityCell";
         cell.titleLabel.text       = activity.title;
         cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
         [cell.posterView sd_setImageWithURL:activity.coverURL placeholderImage:nil];
-        
         return cell;
     } else {
         return self.lastCell;
