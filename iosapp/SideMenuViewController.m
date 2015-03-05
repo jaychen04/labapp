@@ -18,6 +18,7 @@
 
 #import <RESideMenu.h>
 #import <MBProgressHUD.h>
+#import <AFNetworking.h>
 
 @interface SideMenuViewController ()
 
@@ -69,8 +70,10 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if ([Config getOwnID]) {return 4;}
-    return 3;
+    NSInteger number = 4;
+    if ([Config getOwnID]) {++number;}
+    
+    return number;
 }
 
 
@@ -84,8 +87,8 @@
     UITableViewCell *cell = [UITableViewCell new];
     
     cell.backgroundColor = [UIColor themeColor];
-    cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"sidemenu-logout"][indexPath.row]];
-    cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"注销"][indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"", @"sidemenu-logout"][indexPath.row]];
+    cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"清理缓存", @"注销"][indexPath.row];
     //cell.textLabel.font = [UIFont systemFontOfSize:21];
     
     return cell;
@@ -139,6 +142,11 @@
             break;
         }
         case 3: {
+            [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            
+            break;
+        }
+        case 4: {
             [Config saveOwnID:0];
             
             NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
