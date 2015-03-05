@@ -72,6 +72,7 @@
     [super viewDidLoad];
     
     _HUD = [Utils createHUDInWindowOfView:self.view];
+    _HUD.userInteractionEnabled = NO;
     _HUD.dimBackground = YES;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -99,6 +100,12 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [_HUD hide:YES];
+    [super viewWillDisappear:animated];
 }
 
 
