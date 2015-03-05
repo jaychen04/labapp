@@ -78,17 +78,13 @@
                              [[UINavigationController alloc] initWithRootViewController:myInfoVC]
                              ];
     
-    [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];
-    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
-    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x15A230]} forState:UIControlStateSelected];
-    
     NSArray *titles = @[@"综合", @"动弹", @"", @"发现", @"我"];
     NSArray *images = @[@"tabbar-news", @"tabbar-tweet", @"", @"tabbar-discover", @"tabbar-me"];
-    for (NSUInteger i = 0, count = [self.tabBar.items count]; i < count; i++) {
-        [self.tabBar.items[i] setTitle:titles[i]];
-        [self.tabBar.items[i] setImage:[UIImage imageNamed:images[i]]];
-        [self.tabBar.items[i] setSelectedImage:[UIImage imageNamed:[images[i] stringByAppendingString:@"-selected"]]];
-    }
+    [self.tabBar.items enumerateObjectsUsingBlock:^(UITabBarItem *item, NSUInteger idx, BOOL *stop) {
+        [item setTitle:titles[idx]];
+        [item setImage:[UIImage imageNamed:images[idx]]];
+        [item setSelectedImage:[UIImage imageNamed:[images[idx] stringByAppendingString:@"-selected"]]];
+    }];
     [self.tabBar.items[2] setEnabled:NO];
     
     [self addCenterButtonWithImage:[UIImage imageNamed:@"tabbar-more"]];

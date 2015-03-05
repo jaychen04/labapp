@@ -37,6 +37,7 @@
                                                                           leftMenuViewController:[SideMenuViewController new]
                                                                          rightMenuViewController:nil];
     sideMenuTabBarViewController.scaleContentView = NO;
+    sideMenuTabBarViewController.contentViewScaleValue = 0.95;
     sideMenuTabBarViewController.scaleMenuView = NO;
     sideMenuTabBarViewController.contentViewShadowEnabled = YES;
     sideMenuTabBarViewController.contentViewShadowRadius = 4.5;
@@ -53,7 +54,12 @@
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x15A230]];
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
-    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];               //UIColorFromRGB(0xdadada)
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    
+    [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
+    [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHex:0x15A230]} forState:UIControlStateSelected];
     
     
     [UISearchBar appearance].tintColor = [UIColor colorWithHex:0x15A230];
