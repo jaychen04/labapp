@@ -111,11 +111,17 @@
 
 #pragma mark - life cycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweeWithoutImagetCellID];
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetWithImageCellID];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuVisible:YES animated:YES];
@@ -235,9 +241,8 @@
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             
             OSCTweet *tweet = self.objects[indexPath.row];
-            int64_t ownID = [Config getOwnID];
             
-            return tweet.authorID == ownID;
+            return tweet.authorID == [Config getOwnID];
         }
         
         return NO;
@@ -252,7 +257,7 @@
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-        [manager POST:[NSString stringWithFormat:@"%@%@?", OSCAPI_PREFIX, OSCAPI_TWEET_DELETE]
+        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_DELETE]
            parameters:@{
                         @"uid": @([Config getOwnID]),
                         @"tweetid": @(tweet.tweetID)
@@ -264,26 +269,17 @@
                   
                   HUD.mode = MBProgressHUDModeCustomView;
                   
-                  switch (errorCode) {
-                      case 1: {
-                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                          HUD.labelText = @"动弹删除成功";
-                          
-                          [self.objects removeObjectAtIndex:indexPath.row];
-                          [self.tableView beginUpdates];
-                          [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-                          [self.tableView endUpdates];
-                          
-                          break;
-                      }
-                      case 0:
-                      case -2:
-                      case -1: {
-                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                          HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                          break;
-                      }
-                      default: break;
+                  if (errorCode == 1) {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                      HUD.labelText = @"动弹删除成功";
+                      
+                      [self.objects removeObjectAtIndex:indexPath.row];
+                      [self.tableView beginUpdates];
+                      [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                      [self.tableView endUpdates];
+                  } else {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }
                   
                   [HUD hide:YES afterDelay:1];
