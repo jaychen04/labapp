@@ -42,14 +42,15 @@
     sideMenuTabBarViewController.contentViewShadowEnabled = YES;
     sideMenuTabBarViewController.contentViewShadowRadius = 4.5;
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = sideMenuTabBarViewController;
     [self.window makeKeyAndVisible];
     
     
     /************ 控件外观设置 **************/
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x15A230]];
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
