@@ -11,16 +11,20 @@
 #import "ActivityBasicInfoCell.h"
 #import "ActivityDetailsCell.h"
 #import "OSCAPI.h"
-#import "OSCActivity.h"
 #import "OSCPostDetails.h"
 #import "Utils.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
+#import "PresentMembersViewController.h"
 
+#import "ActivitySignUpViewController.h"
 
 @interface ActivityDetailsViewController () <UIWebViewDelegate>
+{
+    OSCPostDetails *postDetails;
+}
 
 @property (nonatomic, readonly, strong) OSCActivity *activity;
 
@@ -60,11 +64,10 @@
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              ONOXMLElement *postXML = [responseObject.rootElement firstChildWithTag:@"post"];
-             OSCPostDetails *postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
+             postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
              _HTML = [postDetails.body copy];
              
-             [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]]
-                                   withRowAnimation:UITableViewRowAnimationNone];
+             [self.tableView reloadData];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              NSLog(@"wrong");
          }];
@@ -128,17 +131,34 @@
             cell.titleLabel.text = _activity.title;
             cell.timeLabel.text = [NSString stringWithFormat:@"开始：%@\n结束：%@", _activity.startTime, _activity.endTime];
             cell.locationLabel.text = [NSString stringWithFormat:@"地点：%@ %@", _activity.city, _activity.location];
-            [cell.applicationButton addTarget:self action:@selector(enrollActivity) forControlEvents:UIControlEventTouchUpInside];
             
+            if (postDetails.applyStatus == 0) {
+                [cell.applicationButton setTitle:@"审核中" forState:UIControlStateNormal];
+                
+            } else if (postDetails.applyStatus == 1) {
+                [cell.applicationButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                [cell.applicationButton setTitle:@"你的报名已确认，现场可以扫描二维码签到！" forState:UIControlStateNormal];
+                cell.applicationButton.titleLabel.font = [UIFont systemFontOfSize:14];
+                [cell.applicationButton setBackgroundColor:[UIColor clearColor]];
+            } else {
+                if (postDetails.applyStatus == 2) {
+                    [cell.applicationButton setTitle:@"出席人员" forState:UIControlStateNormal];
+                }
+                if (postDetails.category == 4) {
+                    [cell.applicationButton setTitle:@"报名链接" forState:UIControlStateNormal];
+                }
+                [cell.applicationButton addTarget:self action:@selector(enrollActivity) forControlEvents:UIControlEventTouchUpInside];
+            }
             return cell;
         }
         case 1: {
-            UITableViewCell *cell = [UITableViewCell new];
-            cell.textLabel.text = @"活动详情";
-            cell.textLabel.textColor = [UIColor darkGrayColor];
-            cell.backgroundColor = [UIColor themeColor];
+            UITableViewCell *Cell = [UITableViewCell new];
+            Cell.textLabel.text = @"活动详情";
+            Cell.textLabel.textColor = [UIColor darkGrayColor];
+            Cell.backgroundColor = [UIColor themeColor];
+            Cell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            return cell;
+            return Cell;
         }
         case 2: {
             ActivityDetailsCell *cell = [ActivityDetailsCell new];
@@ -152,29 +172,26 @@
     }
 }
 
-
+//, postDetails.status, postDetails.applyStatus
 #pragma mark - 报名
 
 - (void)enrollActivity
 {
-#if 0
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_EVENT_APPLY]
-       parameters:@{
-                    
-                    }
-          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-              
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              
-          }];
-#endif
+    if (postDetails.category == 4) {
+        [[UIApplication sharedApplication] openURL:postDetails.signUpUrl];
+    } else {
+        if (postDetails.applyStatus == 2) {
+            NSLog(@"出席人员列表");
+            PresentMembersViewController *presentMembersViewController = [[PresentMembersViewController alloc] initWithEventID:postDetails.postID];
+            [self.navigationController pushViewController:presentMembersViewController animated:YES];
+        } else {
+            ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
+            signUpViewController.eventId = postDetails.postID;
+            [self.navigationController pushViewController:signUpViewController animated:YES];
+        }
+
+    }
 }
-
-
 
 #pragma mark - UIWebViewDelegate
 

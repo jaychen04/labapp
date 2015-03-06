@@ -13,5 +13,6 @@
 @property (nonatomic, strong) UIImageView *posterView;
 @property (nonatomic, strong) UILabel     *titleLabel;
 @property (nonatomic, strong) UILabel     *descriptionLabel;
+@property (nonatomic, strong) UIImageView *tabImageView;
 
 @end
