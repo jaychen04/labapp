@@ -11,6 +11,7 @@
 #import "Config.h"
 #import "MyInfoViewController.h"
 #import "AboutPage.h"
+#import "OSLicensePage.h"
 
 #import <RESideMenu.h>
 #import <MBProgressHUD.h>
@@ -100,6 +101,8 @@
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/kai-yuan-zhong-guo/id524298520?mt=8"]];
         } else if (row == 2) {
             [self.navigationController pushViewController:[AboutPage new] animated:YES];
+        } else if (row == 3) {
+            [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
         }
     } else if (section == 2) {
 #if 0

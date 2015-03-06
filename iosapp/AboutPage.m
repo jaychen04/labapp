@@ -8,6 +8,7 @@
 
 #import "AboutPage.h"
 #import "Utils.h"
+#import "OSLicensePage.h"
 
 @interface AboutPage ()
 
@@ -37,6 +38,8 @@
     UILabel *OSLicenseLabel = [UILabel new];
     OSLicenseLabel.textColor = [UIColor colorWithHex:0x4169E1];
     OSLicenseLabel.text = @"开源许可";
+    OSLicenseLabel.userInteractionEnabled = YES;
+    [OSLicenseLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onClickOSLicenseLabel)]];
     [self.view addSubview:OSLicenseLabel];
     
     for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
@@ -60,6 +63,11 @@
     [super didReceiveMemoryWarning];
 }
 
+
+- (void)onClickOSLicenseLabel
+{
+    [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
+}
 
 
 

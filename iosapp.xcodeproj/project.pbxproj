@@ -310,6 +310,8 @@
 		38A9EEB41AA989CE006C95BD /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9EEB11AA989CE006C95BD /* logo.png */; };
 		38A9EEB51AA989CE006C95BD /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9EEB21AA989CE006C95BD /* logo@2x.png */; };
 		38A9EEB61AA989CE006C95BD /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9EEB31AA989CE006C95BD /* logo@3x.png */; };
+		38A9EEB81AA99862006C95BD /* OSLicense.html in Resources */ = {isa = PBXBuildFile; fileRef = 38A9EEB71AA99862006C95BD /* OSLicense.html */; };
+		38A9EEBC1AA998A7006C95BD /* OSLicensePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A9EEBB1AA998A7006C95BD /* OSLicensePage.m */; };
 		38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */; };
 		38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */; };
 		38B0BF881A399A1A00A2FDB0 /* OSCFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */; };
@@ -773,6 +775,9 @@
 		38A9EEB11AA989CE006C95BD /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		38A9EEB21AA989CE006C95BD /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		38A9EEB31AA989CE006C95BD /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
+		38A9EEB71AA99862006C95BD /* OSLicense.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = OSLicense.html; sourceTree = "<group>"; };
+		38A9EEBA1AA998A7006C95BD /* OSLicensePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSLicensePage.h; sourceTree = "<group>"; };
+		38A9EEBB1AA998A7006C95BD /* OSLicensePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSLicensePage.m; sourceTree = "<group>"; };
 		38AB26491A1C4D2100D761CB /* BottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomBarViewController.h; sourceTree = "<group>"; };
 		38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomBarViewController.m; sourceTree = "<group>"; };
 		38B0BF831A3993CD00A2FDB0 /* FavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesViewController.h; sourceTree = "<group>"; };
@@ -1412,6 +1417,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				38A9EEB91AA99868006C95BD /* html */,
 				38A9EEAA1AA9825D006C95BD /* logo */,
 				EEC20A251AA2EE8C008C4777 /* widget_original_icon.png */,
 				EEC20A261AA2EE8C008C4777 /* widget_repaste_icon.png */,
@@ -1704,6 +1710,8 @@
 				38A9EEA31AA84BE6006C95BD /* SettingsPage.m */,
 				38A9EEA71AA95AB4006C95BD /* AboutPage.h */,
 				38A9EEA81AA95AB4006C95BD /* AboutPage.m */,
+				38A9EEBA1AA998A7006C95BD /* OSLicensePage.h */,
+				38A9EEBB1AA998A7006C95BD /* OSLicensePage.m */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -1716,6 +1724,14 @@
 				38A9EEB31AA989CE006C95BD /* logo@3x.png */,
 			);
 			path = logo;
+			sourceTree = "<group>";
+		};
+		38A9EEB91AA99868006C95BD /* html */ = {
+			isa = PBXGroup;
+			children = (
+				38A9EEB71AA99862006C95BD /* OSLicense.html */,
+			);
+			name = html;
 			sourceTree = "<group>";
 		};
 		38B0BF8F1A3AE72E00A2FDB0 /* 关注/粉丝 */ = {
@@ -2182,6 +2198,7 @@
 				38BC59B21A5D406300F3C4D2 /* shooting@2x.png in Resources */,
 				380FD3201A776D96003C4021 /* toolbar-mention.png in Resources */,
 				380FD3211A776D96003C4021 /* toolbar-mention@2x.png in Resources */,
+				38A9EEB81AA99862006C95BD /* OSLicense.html in Resources */,
 				382A94601A26D27400AAAFEA /* 028@2x.png in Resources */,
 				386F1E501A7A0D6100B773EE /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				382A94A81A26D27400AAAFEA /* 103@2x.png in Resources */,
@@ -2351,6 +2368,7 @@
 				380FD2231A74E702003C4021 /* OSCActivity.m in Sources */,
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
+				38A9EEBC1AA998A7006C95BD /* OSLicensePage.m in Sources */,
 				38A93FA61AA2B51100A515E8 /* OSCThread.m in Sources */,
 				38B0BF991A3AFED800A2FDB0 /* MessageCell.m in Sources */,
 				38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */,
