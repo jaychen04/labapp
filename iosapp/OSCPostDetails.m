@@ -43,10 +43,12 @@ static NSString *kCategory = @"category";
         _viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
         _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        
         ONOXMLElement *eventElement = [xml firstChildWithTag:@"event"];
         _status = [[[eventElement firstChildWithTag:kStatus] numberValue] intValue];
         _applyStatus = [[[eventElement firstChildWithTag:kApplyStatus] numberValue] intValue];
         _category    = [[[eventElement firstChildWithTag:kCategory] numberValue] intValue];
+        _signUpUrl = [NSURL URLWithString:[[eventElement firstChildWithTag:kURL] stringValue]];
         
         NSMutableArray *mutableTags = [NSMutableArray new];
         NSArray *tagsXML = [xml childrenWithTag:kTags];

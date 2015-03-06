@@ -25,5 +25,6 @@
 @property (nonatomic, assign, readonly) int status;
 @property (nonatomic, assign, readonly) int applyStatus;
 @property (nonatomic, assign, readonly) int category;
+@property (nonatomic, copy) NSURL *signUpUrl;
 
 @end

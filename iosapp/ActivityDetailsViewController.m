@@ -165,9 +165,7 @@
 - (void)enrollActivity
 {
     if (postDetails.category == 4) {
-        NSLog(@"站外活动");
-        
-        
+        [[UIApplication sharedApplication] openURL:postDetails.signUpUrl];
     } else {
         ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
         signUpViewController.eventId = postDetails.postID;
