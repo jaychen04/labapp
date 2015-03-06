@@ -261,7 +261,6 @@
 		386F1E621A7A2A8A00B773EE /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E611A7A2A8A00B773EE /* CoreTelephony.framework */; };
 		386F1E641A7A2A9B00B773EE /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E631A7A2A9B00B773EE /* libstdc++.dylib */; };
 		386F1E661A7A2AA300B773EE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E651A7A2AA300B773EE /* libz.dylib */; };
-		386F1E6A1A7A47E800B773EE /* share-image.png in Resources */ = {isa = PBXBuildFile; fileRef = 386F1E691A7A47E800B773EE /* share-image.png */; };
 		3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC1B1A08DB8E000D2894 /* EditingBar.m */; };
 		3874EC281A08E957000D2894 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC271A08E957000D2894 /* LoginViewController.m */; };
 		387639B11A7CF95D008E6805 /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 387639B01A7CF95D008E6805 /* SideMenuViewController.m */; };
@@ -306,6 +305,11 @@
 		38A9A9D01A5FD98E00B28B4F /* tweetEditing@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CD1A5FD98E00B28B4F /* tweetEditing@2x.png */; };
 		38A9A9D11A5FD98E00B28B4F /* tweetEditing@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9A9CE1A5FD98E00B28B4F /* tweetEditing@3x.png */; };
 		38A9EEA01AA5BE66006C95BD /* TextViewWithPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A9EE9F1AA5BE66006C95BD /* TextViewWithPlaceholder.m */; };
+		38A9EEA41AA84BE6006C95BD /* SettingsPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A9EEA31AA84BE6006C95BD /* SettingsPage.m */; };
+		38A9EEA91AA95AB4006C95BD /* AboutPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38A9EEA81AA95AB4006C95BD /* AboutPage.m */; };
+		38A9EEB41AA989CE006C95BD /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9EEB11AA989CE006C95BD /* logo.png */; };
+		38A9EEB51AA989CE006C95BD /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9EEB21AA989CE006C95BD /* logo@2x.png */; };
+		38A9EEB61AA989CE006C95BD /* logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38A9EEB31AA989CE006C95BD /* logo@3x.png */; };
 		38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */; };
 		38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */; };
 		38B0BF881A399A1A00A2FDB0 /* OSCFavorite.m in Sources */ = {isa = PBXBuildFile; fileRef = 38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */; };
@@ -698,7 +702,6 @@
 		386F1E611A7A2A8A00B773EE /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		386F1E631A7A2A9B00B773EE /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		386F1E651A7A2AA300B773EE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		386F1E691A7A47E800B773EE /* share-image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share-image.png"; sourceTree = "<group>"; };
 		3874EC1A1A08DB8E000D2894 /* EditingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditingBar.h; sourceTree = "<group>"; };
 		3874EC1B1A08DB8E000D2894 /* EditingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditingBar.m; sourceTree = "<group>"; };
 		3874EC261A08E957000D2894 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -763,6 +766,13 @@
 		38A9A9CE1A5FD98E00B28B4F /* tweetEditing@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tweetEditing@3x.png"; sourceTree = "<group>"; };
 		38A9EE9E1AA5BE66006C95BD /* TextViewWithPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextViewWithPlaceholder.h; sourceTree = "<group>"; };
 		38A9EE9F1AA5BE66006C95BD /* TextViewWithPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextViewWithPlaceholder.m; sourceTree = "<group>"; };
+		38A9EEA21AA84BE6006C95BD /* SettingsPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsPage.h; sourceTree = "<group>"; };
+		38A9EEA31AA84BE6006C95BD /* SettingsPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsPage.m; sourceTree = "<group>"; };
+		38A9EEA71AA95AB4006C95BD /* AboutPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutPage.h; sourceTree = "<group>"; };
+		38A9EEA81AA95AB4006C95BD /* AboutPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutPage.m; sourceTree = "<group>"; };
+		38A9EEB11AA989CE006C95BD /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		38A9EEB21AA989CE006C95BD /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
+		38A9EEB31AA989CE006C95BD /* logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@3x.png"; sourceTree = "<group>"; };
 		38AB26491A1C4D2100D761CB /* BottomBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BottomBarViewController.h; sourceTree = "<group>"; };
 		38AB264A1A1C4D2100D761CB /* BottomBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BottomBarViewController.m; sourceTree = "<group>"; };
 		38B0BF831A3993CD00A2FDB0 /* FavoritesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoritesViewController.h; sourceTree = "<group>"; };
@@ -1402,13 +1412,13 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				38A9EEAA1AA9825D006C95BD /* logo */,
 				EEC20A251AA2EE8C008C4777 /* widget_original_icon.png */,
 				EEC20A261AA2EE8C008C4777 /* widget_repaste_icon.png */,
 				EEC20A271AA2EE8C008C4777 /* widget_today_icon.png */,
 				38763A3D1A8DDF8D008E6805 /* bubble */,
 				38763A111A89EB9B008E6805 /* QR-Code */,
 				387639C51A7F7BE6008E6805 /* sidemenu */,
-				386F1E691A7A47E800B773EE /* share-image.png */,
 				380FD3481A77726E003C4021 /* editting bar */,
 				380FD30A1A776D96003C4021 /* tweet editting */,
 				380FD2961A7762A8003C4021 /* tabbar */,
@@ -1573,6 +1583,7 @@
 			children = (
 				387639AF1A7CF95D008E6805 /* SideMenuViewController.h */,
 				387639B01A7CF95D008E6805 /* SideMenuViewController.m */,
+				38A9EEA11AA84A7E006C95BD /* 设置 */,
 			);
 			name = "侧拉菜单";
 			sourceTree = "<group>";
@@ -1684,6 +1695,27 @@
 				38B0BF841A3993CD00A2FDB0 /* FavoritesViewController.m */,
 			);
 			name = "收藏";
+			sourceTree = "<group>";
+		};
+		38A9EEA11AA84A7E006C95BD /* 设置 */ = {
+			isa = PBXGroup;
+			children = (
+				38A9EEA21AA84BE6006C95BD /* SettingsPage.h */,
+				38A9EEA31AA84BE6006C95BD /* SettingsPage.m */,
+				38A9EEA71AA95AB4006C95BD /* AboutPage.h */,
+				38A9EEA81AA95AB4006C95BD /* AboutPage.m */,
+			);
+			name = "设置";
+			sourceTree = "<group>";
+		};
+		38A9EEAA1AA9825D006C95BD /* logo */ = {
+			isa = PBXGroup;
+			children = (
+				38A9EEB11AA989CE006C95BD /* logo.png */,
+				38A9EEB21AA989CE006C95BD /* logo@2x.png */,
+				38A9EEB31AA989CE006C95BD /* logo@3x.png */,
+			);
+			path = logo;
 			sourceTree = "<group>";
 		};
 		38B0BF8F1A3AE72E00A2FDB0 /* 关注/粉丝 */ = {
@@ -1958,6 +1990,7 @@
 				387639EF1A7F8A94008E6805 /* sidemenu-QA.png in Resources */,
 				387639EE1A7F8A94008E6805 /* sidemenu-logout@3x.png in Resources */,
 				382A948B1A26D27400AAAFEA /* 072@2x.png in Resources */,
+				38A9EEB61AA989CE006C95BD /* logo@3x.png in Resources */,
 				382A94751A26D27400AAAFEA /* 049@2x.png in Resources */,
 				386F1E411A7A0CDA00B773EE /* UMSocialSDKResourcesNew.bundle in Resources */,
 				382A947D1A26D27400AAAFEA /* 057@2x.png in Resources */,
@@ -2159,7 +2192,6 @@
 				3838D1B31A6F4EB100CC7913 /* shake_up.png in Resources */,
 				380FD2C01A7762A8003C4021 /* tabbar-more@3x.png in Resources */,
 				38BC59B51A5D406300F3C4D2 /* sound@2x.png in Resources */,
-				386F1E6A1A7A47E800B773EE /* share-image.png in Resources */,
 				387639F61A7F8A94008E6805 /* sidemenu-software@2x.png in Resources */,
 				382A94AB1A26D27400AAAFEA /* 099@2x.png in Resources */,
 				382A94821A26D27400AAAFEA /* 062@2x.png in Resources */,
@@ -2180,6 +2212,7 @@
 				3838D1911A6D046B00CC7913 /* toolbar-editComment@2x.png in Resources */,
 				382A94741A26D27400AAAFEA /* 048@2x.png in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
+				38A9EEB51AA989CE006C95BD /* logo@2x.png in Resources */,
 				382A948D1A26D27400AAAFEA /* 074@2x.png in Resources */,
 				382A94841A26D27400AAAFEA /* 064@2x.png in Resources */,
 				382A94461A26D27400AAAFEA /* 002@2x.png in Resources */,
@@ -2190,6 +2223,7 @@
 				382A94771A26D27400AAAFEA /* 051@2x.png in Resources */,
 				380FD2B81A7762A8003C4021 /* tabbar-me-selected.png in Resources */,
 				38A9A9D11A5FD98E00B28B4F /* tweetEditing@3x.png in Resources */,
+				38A9EEB41AA989CE006C95BD /* logo.png in Resources */,
 				EE7B45E31A834DE5002508C6 /* 066@2x.png in Resources */,
 				382A94671A26D27400AAAFEA /* 035@2x.png in Resources */,
 				380FD2BE1A7762A8003C4021 /* tabbar-more.png in Resources */,
@@ -2266,6 +2300,7 @@
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				3838D1AD1A6F463E00CC7913 /* RandomMessageCell.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
+				38A9EEA91AA95AB4006C95BD /* AboutPage.m in Sources */,
 				38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */,
 				38BD3D0D1A36D19400682D1F /* SoftwareCell.m in Sources */,
 				38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */,
@@ -2322,6 +2357,7 @@
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
 				38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */,
 				38B0BFA91A42AF5500A2FDB0 /* TweetEditingVC.m in Sources */,
+				38A9EEA41AA84BE6006C95BD /* SettingsPage.m in Sources */,
 				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
 				3838D1A61A6E703F00CC7913 /* OSCRandomMessage.m in Sources */,
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,

@@ -369,7 +369,7 @@
         [UMSocialSnsService presentSnsIconSheetView:weakSelf
                                              appKey:@"54c9a412fd98c5779c000752"
                                           shareText:[NSString stringWithFormat:@"《%@》，分享来自 %@", weakSelf.objectTitle, weakSelf.URL]
-                                         shareImage:[UIImage imageNamed:@"share-image"]
+                                         shareImage:[UIImage imageNamed:@"logo"]
                                     shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
                                            delegate:nil];
     };

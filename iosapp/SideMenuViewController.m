@@ -14,6 +14,7 @@
 #import "BlogsViewController.h"
 #import "SoftwareCatalogVC.h"
 #import "SoftwareListVC.h"
+#import "SettingsPage.h"
 #import "MyInfoViewController.h"
 
 #import <RESideMenu.h>
@@ -70,10 +71,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSInteger number = 4;
-    if ([Config getOwnID]) {++number;}
-    
-    return number;
+    return 4;
 }
 
 
@@ -88,7 +86,7 @@
     
     cell.backgroundColor = [UIColor themeColor];
     cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"", @"sidemenu-logout"][indexPath.row]];
-    cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"清理缓存", @"注销"][indexPath.row];
+    cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"注销"][indexPath.row];
     //cell.textLabel.font = [UIFont systemFontOfSize:21];
     
     return cell;
@@ -142,34 +140,12 @@
             break;
         }
         case 3: {
-            [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            SettingsPage *settingPage = [SettingsPage new];
+            [self setMenuContentViewController:settingPage];
             
             break;
         }
-        case 4: {
-            [Config saveOwnID:0];
-            
-            NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-            for (NSHTTPCookie *cookie in [cookieStorage cookies]) {
-                [cookieStorage deleteCookie:cookie];
-            }
-            
-            MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
-            HUD.mode = MBProgressHUDModeCustomView;
-            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-            HUD.labelText = @"注销成功";
-            [HUD hide:YES afterDelay:0.5];
-            
-            UITabBarController *tabBarController = (UITabBarController *)self.sideMenuViewController.contentViewController;
-            MyInfoViewController *myInfoVC = ((UINavigationController *)tabBarController.viewControllers[4]).viewControllers[0];
-            [myInfoVC refreshView];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
-            });
-        }
-        default:
-            break;
+        default: break;
     }
 }
 
