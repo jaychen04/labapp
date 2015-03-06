@@ -65,6 +65,18 @@ static NSString * const kActivtyCellID = @"ActivityCell";
         cell.titleLabel.text       = activity.title;
         cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
         [cell.posterView sd_setImageWithURL:activity.coverURL placeholderImage:nil];
+
+        if (activity.status == 1) {
+            [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_over"]];
+        } else {
+            if (activity.applyStatus == 1) {
+                [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_checked"]];
+            } else if (activity.applyStatus == 2) {
+                [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
+            }
+            
+        }
+        
         return cell;
     } else {
         return self.lastCell;
@@ -78,11 +90,11 @@ static NSString * const kActivtyCellID = @"ActivityCell";
         
         self.label.text = activity.title;
         self.label.font = [UIFont boldSystemFontOfSize:14];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 64, MAXFLOAT)].height;
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 84, MAXFLOAT)].height;
         
         self.label.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
         self.label.font = [UIFont systemFontOfSize:13];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 64, MAXFLOAT)].height;
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 84, MAXFLOAT)].height;
         
         return height + 26;
     } else {
