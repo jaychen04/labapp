@@ -359,6 +359,8 @@
 		EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */; };
 		EE7B45E31A834DE5002508C6 /* 066@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7B45E21A834DE5002508C6 /* 066@2x.png */; };
 		EE7B45E51A834EA3002508C6 /* 102@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7B45E41A834EA3002508C6 /* 102@2x.png */; };
+		EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D32FE1AA95BF400ABFE58 /* PresentMembersViewController.m */; };
+		EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */; };
 		EEC20A281AA2EE8C008C4777 /* widget_original_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC20A251AA2EE8C008C4777 /* widget_original_icon.png */; };
 		EEC20A291AA2EE8C008C4777 /* widget_repaste_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC20A261AA2EE8C008C4777 /* widget_repaste_icon.png */; };
 		EEC20A2A1AA2EE8C008C4777 /* widget_today_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EEC20A271AA2EE8C008C4777 /* widget_today_icon.png */; };
@@ -850,6 +852,10 @@
 		EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBasicInfoViewController.m; sourceTree = "<group>"; };
 		EE7B45E21A834DE5002508C6 /* 066@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "066@2x.png"; sourceTree = "<group>"; };
 		EE7B45E41A834EA3002508C6 /* 102@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "102@2x.png"; sourceTree = "<group>"; };
+		EE7D32FD1AA95BF400ABFE58 /* PresentMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentMembersViewController.h; sourceTree = "<group>"; };
+		EE7D32FE1AA95BF400ABFE58 /* PresentMembersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentMembersViewController.m; sourceTree = "<group>"; };
+		EE7D33001AA986AB00ABFE58 /* OSCEventPersonInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCEventPersonInfo.h; sourceTree = "<group>"; };
+		EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCEventPersonInfo.m; sourceTree = "<group>"; };
 		EEC20A251AA2EE8C008C4777 /* widget_original_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = widget_original_icon.png; sourceTree = "<group>"; };
 		EEC20A261AA2EE8C008C4777 /* widget_repaste_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = widget_repaste_icon.png; sourceTree = "<group>"; };
 		EEC20A271AA2EE8C008C4777 /* widget_today_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = widget_today_icon.png; sourceTree = "<group>"; };
@@ -935,6 +941,8 @@
 				380FD2221A74E702003C4021 /* OSCActivity.m */,
 				387639FF1A820B46008E6805 /* OSCMyInfo.h */,
 				38763A001A820B46008E6805 /* OSCMyInfo.m */,
+				EE7D33001AA986AB00ABFE58 /* OSCEventPersonInfo.h */,
+				EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */,
 				38BD3D1B1A38345B00682D1F /* News */,
 				38BD3D1A1A38344E00682D1F /* Post */,
 				38BD3D191A38343F00682D1F /* Blog */,
@@ -1096,6 +1104,8 @@
 				380FD22C1A7621C5003C4021 /* ActivityDetailsCell.m */,
 				EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */,
 				EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */,
+				EE7D32FD1AA95BF400ABFE58 /* PresentMembersViewController.h */,
+				EE7D32FE1AA95BF400ABFE58 /* PresentMembersViewController.m */,
 			);
 			name = "活动详情";
 			sourceTree = "<group>";
@@ -2327,6 +2337,7 @@
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
+				EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */,
 				380FD2231A74E702003C4021 /* OSCActivity.m in Sources */,
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
@@ -2340,6 +2351,7 @@
 				3838D1A61A6E703F00CC7913 /* OSCRandomMessage.m in Sources */,
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
+				EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */,
 				380FD2191A739CA6003C4021 /* CommentsBottomBarViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
