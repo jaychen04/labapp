@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TextViewWithPlaceholder.h"
+#import "PlaceholderTextView.h"
 
-@interface GrowingTextView : TextViewWithPlaceholder
+@interface GrowingTextView : PlaceholderTextView
 
 @property (nonatomic, readonly) NSUInteger numberOfLines;
 @property (nonatomic, assign) NSUInteger maxNumberOfLines;

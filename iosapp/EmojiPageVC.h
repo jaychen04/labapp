@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class TextViewWithPlaceholder;
+@class PlaceholderTextView;
 
 @interface EmojiPageVC : UIPageViewController
 
-- (instancetype)initWithTextView:(TextViewWithPlaceholder *)textView;
+- (instancetype)initWithTextView:(PlaceholderTextView *)textView;
 
 @end

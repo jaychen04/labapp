@@ -1,28 +1,27 @@
 //
-//  TextViewWithPlaceholder.m
+//  PlaceholderTextView.m
 //  iosapp
 //
 //  Created by chenhaoxiang on 3/3/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "TextViewWithPlaceholder.h"
+#import "PlaceholderTextView.h"
+#import <ReactiveCocoa.h>
 
-@interface TextViewWithPlaceholder () <UITextViewDelegate>
+@interface PlaceholderTextView ()
 
 @property (nonatomic, strong) UILabel *placeholderLabel;
 
 @end
 
-@implementation TextViewWithPlaceholder
+@implementation PlaceholderTextView
 
 - (instancetype)initWithPlaceholder:(NSString *)placeholder
 {
     self = [super init];
     if (self) {
         [self setUpPlaceholderLabel:placeholder];
-        
-        self.delegate = self;
     }
     
     return self;
@@ -40,15 +39,17 @@
     NSDictionary *views = NSDictionaryOfVariableBindings(_placeholderLabel);
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_placeholderLabel]-6-|" options:0 metrics:nil views:views]];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_placeholderLabel]"   options:0 metrics:nil views:views]];
+    
+    
+    RAC(_placeholderLabel, hidden) = [self.rac_textSignal map:^(NSString *text) {
+        return @(text.length > 0);
+    }];
 }
 
 - (void)setPlaceholder:(NSString *)placeholder
 {
     _placeholderLabel.text = placeholder;
 }
-
-
-#pragma mark - UITextViewDelegate
 
 - (void)checkShouldHidePlaceholder
 {
@@ -59,14 +60,5 @@
     }
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView
-{
-    [self checkShouldHidePlaceholder];
-}
-
-- (void)textViewDidChange:(UITextView *)textView
-{
-    [self checkShouldHidePlaceholder];
-}
 
 @end

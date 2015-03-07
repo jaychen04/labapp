@@ -2,12 +2,12 @@
 //  FeedbackPage.m
 //  iosapp
 //
-//  Created by ChanAetern on 3/7/15.
+//  Created by chenhaoxiang on 3/7/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
 #import "FeedbackPage.h"
-#import "TextViewWithPlaceholder.h"
+#import "PlaceholderTextView.h"
 #import "Utils.h"
 #import "OSCAPI.h"
 
@@ -59,7 +59,7 @@
 
 - (void)setLayout
 {
-    _feedbackTextView = [UITextView new];//[[TextViewWithPlaceholder alloc] initWithPlaceholder:@"感谢您的反馈，请提出您的意见与建议"];
+    _feedbackTextView = [UITextView new];//[[PlaceholderTextView alloc] initWithPlaceholder:@"感谢您的反馈，请提出您的意见与建议"];
     [_feedbackTextView setCornerRadius:3.0];
     _feedbackTextView.font = [UIFont systemFontOfSize:17];
     _feedbackTextView.translatesAutoresizingMaskIntoConstraints = NO;
