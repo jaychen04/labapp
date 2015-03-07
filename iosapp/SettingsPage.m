@@ -17,7 +17,7 @@
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
 
-@interface SettingsPage ()
+@interface SettingsPage () <UIAlertViewDelegate>
 
 @end
 
@@ -74,7 +74,7 @@
     UITableViewCell *cell = [UITableViewCell new];
     
     NSArray *titles = @[
-                        @[@"清理缓存", @"消息通知"],
+                        @[@"清除缓存", @"消息通知"],
                         @[@"意见反馈", @"给应用评分", @"关于", @"开源许可"],
                         @[@"注销登录"],
                         ];
@@ -92,13 +92,9 @@
     
     if (section == 0) {
         if (row == 0) {
-            [[NSURLCache sharedURLCache] removeAllCachedResponses];
-            
-            MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
-            HUD.mode = MBProgressHUDModeCustomView;
-            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-            HUD.labelText = @"缓存清理成功";
-            [HUD hide:YES afterDelay:0.5];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:@"确定要清除缓存的图片和文件？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alertView show];
+
         } else if (row == 1){
             
         }
@@ -129,6 +125,18 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
+    }
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [alertView cancelButtonIndex]) {
+        return;
+    } else {
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
     }
 }
 
