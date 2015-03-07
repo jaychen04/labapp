@@ -93,6 +93,12 @@
     if (section == 0) {
         if (row == 0) {
             [[NSURLCache sharedURLCache] removeAllCachedResponses];
+            
+            MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+            HUD.labelText = @"缓存清理成功";
+            [HUD hide:YES afterDelay:0.5];
         } else if (row == 1){
             
         }
