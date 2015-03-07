@@ -40,7 +40,7 @@
     _nameLabel.numberOfLines = 0;
     _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _nameLabel.font = [UIFont systemFontOfSize:16];
-    _nameLabel.textColor = [UIColor colorWithHex:0x6A5ACD];
+    _nameLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:_nameLabel];
     
     _infoLabel = [UILabel new];

@@ -7,6 +7,7 @@
 //
 
 #import "OSCEvent.h"
+#import "Utils.h"
 #import <UIKit/UIKit.h>
 
 static NSString * const kID = @"uid";
@@ -86,7 +87,7 @@ static NSString * const kObjectCatalog = @"objectcatalog";
     
     NSDictionary *objectTitleAttributes = @{
                                             NSFontAttributeName:[UIFont systemFontOfSize:15],
-                                            NSForegroundColorAttributeName:[UIColor purpleColor]
+                                            NSForegroundColorAttributeName:[UIColor nameColor]
                                             };
     
     _actionStr = [NSMutableAttributedString alloc];
