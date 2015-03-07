@@ -46,10 +46,6 @@
     }];
 }
 
-- (void)setPlaceholder:(NSString *)placeholder
-{
-    _placeholderLabel.text = placeholder;
-}
 
 - (void)checkShouldHidePlaceholder
 {
@@ -59,6 +55,34 @@
         _placeholderLabel.hidden = NO;
     }
 }
+
+
+#pragma mark - property accessor
+#pragma mark placeholder
+
+- (void)setPlaceholder:(NSString *)placeholder
+{
+    _placeholderLabel.text = placeholder;
+}
+
+- (NSString *)placeholder
+{
+    return _placeholderLabel.text;
+}
+
+#pragma mark placeholderFont
+
+- (void)setPlaceholderFont:(UIFont *)placeholderFont
+{
+    _placeholderLabel.font = placeholderFont;
+}
+
+- (UIFont *)placeholderFont
+{
+    return _placeholderLabel.font;
+}
+
+
 
 
 @end

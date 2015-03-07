@@ -10,8 +10,10 @@
 
 @interface PlaceholderTextView : UITextView
 
+@property (nonatomic, strong) NSString *placeholder;
+@property (nonatomic, strong) UIFont   *placeholderFont;
+
 - (instancetype)initWithPlaceholder:(NSString *)placeholder;
-- (void)setPlaceholder:(NSString *)placeholder;
 - (void)checkShouldHidePlaceholder;
 
 @end

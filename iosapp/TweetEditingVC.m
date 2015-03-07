@@ -86,6 +86,7 @@
 - (void)initSubViews
 {
     _edittingArea = [[PlaceholderTextView alloc] initWithPlaceholder:@"今天你动弹了吗？"];
+    _edittingArea.placeholderFont = [UIFont systemFontOfSize:17];
     _edittingArea.scrollEnabled = NO;
     _edittingArea.font = [UIFont systemFontOfSize:18];
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
