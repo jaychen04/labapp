@@ -12,6 +12,7 @@
 #import "MyInfoViewController.h"
 #import "AboutPage.h"
 #import "OSLicensePage.h"
+#import "FeedbackPage.h"
 
 #import <RESideMenu.h>
 #import <MBProgressHUD.h>
@@ -33,6 +34,7 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"设置";
     self.clearsSelectionOnViewWillAppear = NO;
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -99,7 +101,9 @@
             
         }
     } else if (section == 1) {
-        if (row == 1) {
+        if (row == 0) {
+            [self.navigationController pushViewController:[FeedbackPage new] animated:YES];
+        } else if (row == 1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/kai-yuan-zhong-guo/id524298520?mt=8"]];
         } else if (row == 2) {
             [self.navigationController pushViewController:[AboutPage new] animated:YES];

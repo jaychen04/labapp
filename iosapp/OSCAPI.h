@@ -76,5 +76,7 @@
 #define OSCAPI_EVENT_APPLY              @"event_apply"
 #define OSCAPI_EVENT_ATTEND_USER        @"event_attend_user"
 
+#define OSCAPI_USER_REPORT_TO_ADMIN     @"user_report_to_admin"
+
 
 #endif

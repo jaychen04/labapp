@@ -20,6 +20,7 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"关于";
     self.view.backgroundColor = [UIColor themeColor];
     
     UIImageView *logo = [UIImageView new];

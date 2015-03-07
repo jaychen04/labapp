@@ -322,6 +322,7 @@
 		38BB277D1AAAD73F0088A15C /* sidemenu-software.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB276E1AAAD73F0088A15C /* sidemenu-software.png */; };
 		38BB277E1AAAD73F0088A15C /* sidemenu-software@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB276F1AAAD73F0088A15C /* sidemenu-software@2x.png */; };
 		38BB277F1AAAD73F0088A15C /* sidemenu-software@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27701AAAD73F0088A15C /* sidemenu-software@3x.png */; };
+		38BB27821AAAE11D0088A15C /* FeedbackPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB27811AAAE11D0088A15C /* FeedbackPage.m */; };
 		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
 		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
 		38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC598F1A5D214E00F3C4D2 /* PeopleTableViewController.m */; };
@@ -806,6 +807,8 @@
 		38BB276E1AAAD73F0088A15C /* sidemenu-software.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-software.png"; sourceTree = "<group>"; };
 		38BB276F1AAAD73F0088A15C /* sidemenu-software@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-software@2x.png"; sourceTree = "<group>"; };
 		38BB27701AAAD73F0088A15C /* sidemenu-software@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-software@3x.png"; sourceTree = "<group>"; };
+		38BB27801AAAE11D0088A15C /* FeedbackPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackPage.h; sourceTree = "<group>"; };
+		38BB27811AAAE11D0088A15C /* FeedbackPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackPage.m; sourceTree = "<group>"; };
 		38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareDetails.h; sourceTree = "<group>"; };
 		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
 		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
@@ -1720,6 +1723,8 @@
 				38A9EEA81AA95AB4006C95BD /* AboutPage.m */,
 				38A9EEBA1AA998A7006C95BD /* OSLicensePage.h */,
 				38A9EEBB1AA998A7006C95BD /* OSLicensePage.m */,
+				38BB27801AAAE11D0088A15C /* FeedbackPage.h */,
+				38BB27811AAAE11D0088A15C /* FeedbackPage.m */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -2418,6 +2423,7 @@
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,
 				EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */,
+				38BB27821AAAE11D0088A15C /* FeedbackPage.m in Sources */,
 				380FD2191A739CA6003C4021 /* CommentsBottomBarViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
