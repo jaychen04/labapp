@@ -1719,12 +1719,9 @@
 			children = (
 				38A9EEA21AA84BE6006C95BD /* SettingsPage.h */,
 				38A9EEA31AA84BE6006C95BD /* SettingsPage.m */,
-				38A9EEA71AA95AB4006C95BD /* AboutPage.h */,
-				38A9EEA81AA95AB4006C95BD /* AboutPage.m */,
-				38A9EEBA1AA998A7006C95BD /* OSLicensePage.h */,
-				38A9EEBB1AA998A7006C95BD /* OSLicensePage.m */,
-				38BB27801AAAE11D0088A15C /* FeedbackPage.h */,
-				38BB27811AAAE11D0088A15C /* FeedbackPage.m */,
+				38BB27831AAB03AD0088A15C /* 关于 */,
+				38BB27841AAB03B80088A15C /* 开源许可 */,
+				38BB27851AAB03C40088A15C /* 意见反馈 */,
 			);
 			name = "设置";
 			sourceTree = "<group>";
@@ -1801,6 +1798,33 @@
 				38BB27701AAAD73F0088A15C /* sidemenu-software@3x.png */,
 			);
 			path = "side menu";
+			sourceTree = "<group>";
+		};
+		38BB27831AAB03AD0088A15C /* 关于 */ = {
+			isa = PBXGroup;
+			children = (
+				38A9EEA71AA95AB4006C95BD /* AboutPage.h */,
+				38A9EEA81AA95AB4006C95BD /* AboutPage.m */,
+			);
+			name = "关于";
+			sourceTree = "<group>";
+		};
+		38BB27841AAB03B80088A15C /* 开源许可 */ = {
+			isa = PBXGroup;
+			children = (
+				38A9EEBA1AA998A7006C95BD /* OSLicensePage.h */,
+				38A9EEBB1AA998A7006C95BD /* OSLicensePage.m */,
+			);
+			name = "开源许可";
+			sourceTree = "<group>";
+		};
+		38BB27851AAB03C40088A15C /* 意见反馈 */ = {
+			isa = PBXGroup;
+			children = (
+				38BB27801AAAE11D0088A15C /* FeedbackPage.h */,
+				38BB27811AAAE11D0088A15C /* FeedbackPage.m */,
+			);
+			name = "意见反馈";
 			sourceTree = "<group>";
 		};
 		38BC598C1A5D20AC00F3C4D2 /* 找人 */ = {

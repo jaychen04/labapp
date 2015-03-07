@@ -117,7 +117,7 @@
                                                                                               [[PostsViewController alloc] initWithPostsType:PostsTypeSiteManager]
                                                                                               ]];
             
-            [self setMenuContentViewController:newsSVC];
+            [self setContentViewController:newsSVC];
             
             break;
         }
@@ -132,7 +132,7 @@
                                                                                                    [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeCN]
                                                                                                    ]];
             
-            [self setMenuContentViewController:softwaresSVC];
+            [self setContentViewController:softwaresSVC];
             
             break;
         }
@@ -144,13 +144,13 @@
                                                                                                [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
                                                                                                ]];
             
-            [self setMenuContentViewController:blogsSVC];
+            [self setContentViewController:blogsSVC];
             
             break;
         }
         case 3: {
             SettingsPage *settingPage = [SettingsPage new];
-            [self setMenuContentViewController:settingPage];
+            [self setContentViewController:settingPage];
             
             break;
         }
@@ -159,22 +159,14 @@
 }
 
 
-- (void)setMenuContentViewController:(UIViewController *)viewController
+- (void)setContentViewController:(UIViewController *)viewController
 {
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
-                                                                                       style:UIBarButtonItemStylePlain
-                                                                                      target:self action:@selector(backToHomePage)];
+    viewController.hidesBottomBarWhenPushed = YES;
+    UINavigationController *nav = (UINavigationController *)((UITabBarController *)self.sideMenuViewController.contentViewController).selectedViewController;
+    //UIViewController *vc = nav.viewControllers[0];
+    //vc.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    [nav pushViewController:viewController animated:NO];
     
-    _reservedViewController = self.sideMenuViewController.contentViewController;
-    [self.sideMenuViewController setContentViewController:navigationController];
-    [self.sideMenuViewController hideMenuViewController];
-}
-
-
-- (void)backToHomePage
-{
-    [self.sideMenuViewController setContentViewController:_reservedViewController animated:NO];
     [self.sideMenuViewController hideMenuViewController];
 }
 
