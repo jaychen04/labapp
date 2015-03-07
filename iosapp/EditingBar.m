@@ -9,6 +9,7 @@
 #import "EditingBar.h"
 #import "GrowingTextView.h"
 #import "Utils.h"
+#import <ReactiveCocoa.h>
 
 @interface EditingBar ()
 
@@ -46,6 +47,9 @@
     [_editView setCornerRadius:5.0];
     [_editView setBorderWidth:1.0f andColor:[UIColor colorWithHex:0xC8C8CD]];
     _editView.backgroundColor = [UIColor colorWithHex:0xF5FAFA];
+    RAC(_sendButton, enabled) = [_editView.rac_textSignal map:^(NSString *text) {
+        return @(text.length > 0);
+    }];
     
     [self addSubview:_editView];
     [self addSubview:_modeSwitchButton];
