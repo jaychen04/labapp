@@ -45,6 +45,7 @@
                 _uid = -1; break;
             case TweetsTypeOwnTweets:
                 _uid = [Config getOwnID];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRefreshHandler:)  name:@"userRefresh" object:nil];
                 if (_uid == 0) {
                     // 显示提示页面
                 }
@@ -133,6 +134,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -334,6 +340,17 @@
                                                                                  thumbnail:(UIImageView *)recognizer.view];
     
     [self presentViewController:imageViewerVC animated:YES completion:nil];
+}
+
+
+#pragma mark - 处理消息通知
+
+- (void)userRefreshHandler:(NSNotification *)notification
+{
+    _uid = [Config getOwnID];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self refresh];
+    });
 }
 
 
