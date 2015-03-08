@@ -323,6 +323,21 @@
 		38BB277E1AAAD73F0088A15C /* sidemenu-software@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB276F1AAAD73F0088A15C /* sidemenu-software@2x.png */; };
 		38BB277F1AAAD73F0088A15C /* sidemenu-software@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27701AAAD73F0088A15C /* sidemenu-software@3x.png */; };
 		38BB27821AAAE11D0088A15C /* FeedbackPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BB27811AAAE11D0088A15C /* FeedbackPage.m */; };
+		38BB27B51AAC016A0088A15C /* discover-activities.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27A61AAC016A0088A15C /* discover-activities.png */; };
+		38BB27B61AAC016A0088A15C /* discover-activities@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27A71AAC016A0088A15C /* discover-activities@2x.png */; };
+		38BB27B71AAC016A0088A15C /* discover-activities@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27A81AAC016A0088A15C /* discover-activities@3x.png */; };
+		38BB27B81AAC016A0088A15C /* discover-events.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27A91AAC016A0088A15C /* discover-events.png */; };
+		38BB27B91AAC016A0088A15C /* discover-events@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27AA1AAC016A0088A15C /* discover-events@2x.png */; };
+		38BB27BA1AAC016A0088A15C /* discover-events@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27AB1AAC016A0088A15C /* discover-events@3x.png */; };
+		38BB27BB1AAC016A0088A15C /* discover-scan.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27AC1AAC016A0088A15C /* discover-scan.png */; };
+		38BB27BC1AAC016A0088A15C /* discover-scan@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27AD1AAC016A0088A15C /* discover-scan@2x.png */; };
+		38BB27BD1AAC016A0088A15C /* discover-scan@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27AE1AAC016A0088A15C /* discover-scan@3x.png */; };
+		38BB27BE1AAC016A0088A15C /* discover-search.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27AF1AAC016A0088A15C /* discover-search.png */; };
+		38BB27BF1AAC016A0088A15C /* discover-search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27B01AAC016A0088A15C /* discover-search@2x.png */; };
+		38BB27C01AAC016A0088A15C /* discover-search@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27B11AAC016A0088A15C /* discover-search@3x.png */; };
+		38BB27C11AAC016A0088A15C /* discover-shake.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27B21AAC016A0088A15C /* discover-shake.png */; };
+		38BB27C21AAC016A0088A15C /* discover-shake@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27B31AAC016A0088A15C /* discover-shake@2x.png */; };
+		38BB27C31AAC016A0088A15C /* discover-shake@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27B41AAC016A0088A15C /* discover-shake@3x.png */; };
 		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
 		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
 		38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC598F1A5D214E00F3C4D2 /* PeopleTableViewController.m */; };
@@ -809,6 +824,21 @@
 		38BB27701AAAD73F0088A15C /* sidemenu-software@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-software@3x.png"; sourceTree = "<group>"; };
 		38BB27801AAAE11D0088A15C /* FeedbackPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedbackPage.h; sourceTree = "<group>"; };
 		38BB27811AAAE11D0088A15C /* FeedbackPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedbackPage.m; sourceTree = "<group>"; };
+		38BB27A61AAC016A0088A15C /* discover-activities.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-activities.png"; sourceTree = "<group>"; };
+		38BB27A71AAC016A0088A15C /* discover-activities@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-activities@2x.png"; sourceTree = "<group>"; };
+		38BB27A81AAC016A0088A15C /* discover-activities@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-activities@3x.png"; sourceTree = "<group>"; };
+		38BB27A91AAC016A0088A15C /* discover-events.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-events.png"; sourceTree = "<group>"; };
+		38BB27AA1AAC016A0088A15C /* discover-events@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-events@2x.png"; sourceTree = "<group>"; };
+		38BB27AB1AAC016A0088A15C /* discover-events@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-events@3x.png"; sourceTree = "<group>"; };
+		38BB27AC1AAC016A0088A15C /* discover-scan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-scan.png"; sourceTree = "<group>"; };
+		38BB27AD1AAC016A0088A15C /* discover-scan@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-scan@2x.png"; sourceTree = "<group>"; };
+		38BB27AE1AAC016A0088A15C /* discover-scan@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-scan@3x.png"; sourceTree = "<group>"; };
+		38BB27AF1AAC016A0088A15C /* discover-search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-search.png"; sourceTree = "<group>"; };
+		38BB27B01AAC016A0088A15C /* discover-search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-search@2x.png"; sourceTree = "<group>"; };
+		38BB27B11AAC016A0088A15C /* discover-search@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-search@3x.png"; sourceTree = "<group>"; };
+		38BB27B21AAC016A0088A15C /* discover-shake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-shake.png"; sourceTree = "<group>"; };
+		38BB27B31AAC016A0088A15C /* discover-shake@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-shake@2x.png"; sourceTree = "<group>"; };
+		38BB27B41AAC016A0088A15C /* discover-shake@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-shake@3x.png"; sourceTree = "<group>"; };
 		38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareDetails.h; sourceTree = "<group>"; };
 		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
 		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
@@ -1445,6 +1475,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				38BB27A51AAC016A0088A15C /* discover */,
 				38BB27611AAAD73F0088A15C /* side menu */,
 				38A9EEB91AA99868006C95BD /* html */,
 				38A9EEAA1AA9825D006C95BD /* logo */,
@@ -1827,6 +1858,28 @@
 			name = "意见反馈";
 			sourceTree = "<group>";
 		};
+		38BB27A51AAC016A0088A15C /* discover */ = {
+			isa = PBXGroup;
+			children = (
+				38BB27A61AAC016A0088A15C /* discover-activities.png */,
+				38BB27A71AAC016A0088A15C /* discover-activities@2x.png */,
+				38BB27A81AAC016A0088A15C /* discover-activities@3x.png */,
+				38BB27A91AAC016A0088A15C /* discover-events.png */,
+				38BB27AA1AAC016A0088A15C /* discover-events@2x.png */,
+				38BB27AB1AAC016A0088A15C /* discover-events@3x.png */,
+				38BB27AC1AAC016A0088A15C /* discover-scan.png */,
+				38BB27AD1AAC016A0088A15C /* discover-scan@2x.png */,
+				38BB27AE1AAC016A0088A15C /* discover-scan@3x.png */,
+				38BB27AF1AAC016A0088A15C /* discover-search.png */,
+				38BB27B01AAC016A0088A15C /* discover-search@2x.png */,
+				38BB27B11AAC016A0088A15C /* discover-search@3x.png */,
+				38BB27B21AAC016A0088A15C /* discover-shake.png */,
+				38BB27B31AAC016A0088A15C /* discover-shake@2x.png */,
+				38BB27B41AAC016A0088A15C /* discover-shake@3x.png */,
+			);
+			path = discover;
+			sourceTree = "<group>";
+		};
 		38BC598C1A5D20AC00F3C4D2 /* 找人 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2062,6 +2115,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				382A94A01A26D27400AAAFEA /* 093@2x.png in Resources */,
+				38BB27C01AAC016A0088A15C /* discover-search@3x.png in Resources */,
 				38BB27761AAAD73F0088A15C /* sidemenu-logout@3x.png in Resources */,
 				382A948B1A26D27400AAAFEA /* 072@2x.png in Resources */,
 				38A9EEB61AA989CE006C95BD /* logo@3x.png in Resources */,
@@ -2072,6 +2126,7 @@
 				380FD3241A776D96003C4021 /* toolbar-reference@3x.png in Resources */,
 				38BB27721AAAD73F0088A15C /* sidemenu-blog@2x.png in Resources */,
 				382A945A1A26D27400AAAFEA /* 022@2x.png in Resources */,
+				38BB27BB1AAC016A0088A15C /* discover-scan.png in Resources */,
 				382A94791A26D27400AAAFEA /* 053@2x.png in Resources */,
 				382A94981A26D27400AAAFEA /* 085@2x.png in Resources */,
 				382A944D1A26D27400AAAFEA /* 009@2x.png in Resources */,
@@ -2082,6 +2137,7 @@
 				386F1E3D1A7A0CDA00B773EE /* UMShareEditViewControlleriPad.xib in Resources */,
 				3838D1B21A6F4EB100CC7913 /* shake_down.png in Resources */,
 				382A94701A26D27400AAAFEA /* 044@2x.png in Resources */,
+				38BB27C21AAC016A0088A15C /* discover-shake@2x.png in Resources */,
 				3838D1971A6D046B00CC7913 /* toolbar-showComments@2x.png in Resources */,
 				382A94901A26D27400AAAFEA /* 077@2x.png in Resources */,
 				380FD2CA1A7762A8003C4021 /* tabbar-tweet.png in Resources */,
@@ -2090,11 +2146,13 @@
 				382A949B1A26D27400AAAFEA /* 088@2x.png in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				380FD35C1A77726E003C4021 /* editingbar@2x.png in Resources */,
+				38BB27BA1AAC016A0088A15C /* discover-events@3x.png in Resources */,
 				382A94A61A26D27400AAAFEA /* 100@2x.png in Resources */,
 				386F1E3C1A7A0CDA00B773EE /* UMShareEditViewController.xib in Resources */,
 				382A94581A26D27400AAAFEA /* 020@2x.png in Resources */,
 				380FD2951A774162003C4021 /* shake.png in Resources */,
 				386F1E371A7A0CDA00B773EE /* UMSocialLocalizable.strings in Resources */,
+				38BB27B81AAC016A0088A15C /* discover-events.png in Resources */,
 				38BB277B1AAAD73F0088A15C /* sidemenu-settings@2x.png in Resources */,
 				382A94571A26D27400AAAFEA /* 019@2x.png in Resources */,
 				382A947C1A26D27400AAAFEA /* 056@2x.png in Resources */,
@@ -2120,6 +2178,7 @@
 				382A948E1A26D27400AAAFEA /* 075@2x.png in Resources */,
 				382A94A11A26D27400AAAFEA /* 094@2x.png in Resources */,
 				380FD35E1A77726E003C4021 /* emoji.png in Resources */,
+				38BB27B91AAC016A0088A15C /* discover-events@2x.png in Resources */,
 				382A94631A26D27400AAAFEA /* 031@2x.png in Resources */,
 				38BC59BD1A5E231300F3C4D2 /* search.png in Resources */,
 				382A94451A26D27400AAAFEA /* 001@2x.png in Resources */,
@@ -2146,12 +2205,14 @@
 				38BC59B31A5D406300F3C4D2 /* shooting@3x.png in Resources */,
 				386F1E3B1A7A0CDA00B773EE /* UMSCommentInputControlleriPad.xib in Resources */,
 				EE7D33061AA9A00400ABFE58 /* icon_event_status_attend.png in Resources */,
+				38BB27BE1AAC016A0088A15C /* discover-search.png in Resources */,
 				EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */,
 				380FD3641A77726E003C4021 /* send.png in Resources */,
 				3838D1991A6D046B00CC7913 /* toolbar-star@2x.png in Resources */,
 				382A94721A26D27400AAAFEA /* 046@2x.png in Resources */,
 				382A94611A26D27400AAAFEA /* 029@2x.png in Resources */,
 				382A947F1A26D27400AAAFEA /* 059@2x.png in Resources */,
+				38BB27B51AAC016A0088A15C /* discover-activities.png in Resources */,
 				382A94971A26D27400AAAFEA /* 084@2x.png in Resources */,
 				382A94A21A26D27400AAAFEA /* 095@2x.png in Resources */,
 				380FD3231A776D96003C4021 /* toolbar-reference@2x.png in Resources */,
@@ -2161,6 +2222,7 @@
 				38BB277F1AAAD73F0088A15C /* sidemenu-software@3x.png in Resources */,
 				380FD2B61A7762A8003C4021 /* tabbar-discover@2x.png in Resources */,
 				382A948F1A26D27400AAAFEA /* 076@2x.png in Resources */,
+				38BB27B71AAC016A0088A15C /* discover-activities@3x.png in Resources */,
 				382A94831A26D27400AAAFEA /* 063@2x.png in Resources */,
 				380FD3651A77726E003C4021 /* send@2x.png in Resources */,
 				380FD3581A77726E003C4021 /* delete.png in Resources */,
@@ -2191,6 +2253,7 @@
 				382A94591A26D27400AAAFEA /* 021@2x.png in Resources */,
 				38763A3A1A8DDF86008E6805 /* bubble.png in Resources */,
 				382A94531A26D27400AAAFEA /* 015@2x.png in Resources */,
+				38BB27C31AAC016A0088A15C /* discover-shake@3x.png in Resources */,
 				382A94931A26D27400AAAFEA /* 080@2x.png in Resources */,
 				380FD2C61A7762A8003C4021 /* tabbar-news@3x.png in Resources */,
 				386039691A0A3532007C9B88 /* portrait_loading.png in Resources */,
@@ -2214,11 +2277,14 @@
 				382A94921A26D27400AAAFEA /* 079@2x.png in Resources */,
 				38BB277A1AAAD73F0088A15C /* sidemenu-settings.png in Resources */,
 				380FD31A1A776D96003C4021 /* toolbar-emoji.png in Resources */,
+				38BB27BC1AAC016A0088A15C /* discover-scan@2x.png in Resources */,
 				38BB277D1AAAD73F0088A15C /* sidemenu-software.png in Resources */,
 				380FD2B31A7762A8003C4021 /* tabbar-discover-selected@2x.png in Resources */,
 				382A944C1A26D27400AAAFEA /* 008@2x.png in Resources */,
+				38BB27BD1AAC016A0088A15C /* discover-scan@3x.png in Resources */,
 				38BC59B01A5D406300F3C4D2 /* scan@3x.png in Resources */,
 				380FD2BF1A7762A8003C4021 /* tabbar-more@2x.png in Resources */,
+				38BB27BF1AAC016A0088A15C /* discover-search@2x.png in Resources */,
 				382A94941A26D27400AAAFEA /* 081@2x.png in Resources */,
 				382A94811A26D27400AAAFEA /* 061@2x.png in Resources */,
 				382A949E1A26D27400AAAFEA /* 091@2x.png in Resources */,
@@ -2257,6 +2323,7 @@
 				382A94A71A26D27400AAAFEA /* 101@2x.png in Resources */,
 				38A9A9CF1A5FD98E00B28B4F /* tweetEditing.png in Resources */,
 				382A94881A26D27400AAAFEA /* 069@2x.png in Resources */,
+				38BB27B61AAC016A0088A15C /* discover-activities@2x.png in Resources */,
 				3838D1921A6D046B00CC7913 /* toolbar-report.png in Resources */,
 				380FD3281A776D96003C4021 /* toolbar-text@3x.png in Resources */,
 				382A944E1A26D27400AAAFEA /* 010@2x.png in Resources */,
@@ -2306,6 +2373,7 @@
 				38A9A9D11A5FD98E00B28B4F /* tweetEditing@3x.png in Resources */,
 				38A9EEB41AA989CE006C95BD /* logo.png in Resources */,
 				EE7B45E31A834DE5002508C6 /* 066@2x.png in Resources */,
+				38BB27C11AAC016A0088A15C /* discover-shake.png in Resources */,
 				382A94671A26D27400AAAFEA /* 035@2x.png in Resources */,
 				380FD2BE1A7762A8003C4021 /* tabbar-more.png in Resources */,
 			);

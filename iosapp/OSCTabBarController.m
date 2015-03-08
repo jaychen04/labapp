@@ -65,7 +65,7 @@
                                                                                         [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
                                                                                         ]];
     
-    DiscoverTableVC *discoverTableVC = [DiscoverTableVC new];
+    DiscoverTableVC *discoverTableVC = [[DiscoverTableVC alloc] initWithStyle:UITableViewStyleGrouped];
     MyInfoViewController *myInfoVC = [MyInfoViewController new];
     
     
