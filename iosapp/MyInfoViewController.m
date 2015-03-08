@@ -199,13 +199,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [UITableViewCell new];
+    cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
     
     UIView *selectedBackground = [UIView new];
     selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
     [cell setSelectedBackgroundView:selectedBackground];
     
     cell.textLabel.text = @[@"消息", @"博客"][indexPath.row];
-    //cell.imageView.image = [UIImage imageNamed:@[@"", @"", @"", @""][indexPath.row]];
+    cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog"][indexPath.row]];
     
     if (indexPath.row == 0) {
         if (_badgeValue == 0) {

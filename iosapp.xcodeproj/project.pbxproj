@@ -338,6 +338,12 @@
 		38BB27C11AAC016A0088A15C /* discover-shake.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27B21AAC016A0088A15C /* discover-shake.png */; };
 		38BB27C21AAC016A0088A15C /* discover-shake@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27B31AAC016A0088A15C /* discover-shake@2x.png */; };
 		38BB27C31AAC016A0088A15C /* discover-shake@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27B41AAC016A0088A15C /* discover-shake@3x.png */; };
+		38BB27CB1AAC130F0088A15C /* me-blog.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27C51AAC130F0088A15C /* me-blog.png */; };
+		38BB27CC1AAC130F0088A15C /* me-blog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27C61AAC130F0088A15C /* me-blog@2x.png */; };
+		38BB27CD1AAC130F0088A15C /* me-blog@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27C71AAC130F0088A15C /* me-blog@3x.png */; };
+		38BB27CE1AAC130F0088A15C /* me-message.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27C81AAC130F0088A15C /* me-message.png */; };
+		38BB27CF1AAC130F0088A15C /* me-message@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27C91AAC130F0088A15C /* me-message@2x.png */; };
+		38BB27D01AAC130F0088A15C /* me-message@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38BB27CA1AAC130F0088A15C /* me-message@3x.png */; };
 		38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */; };
 		38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC204C1A07643A00B8BB16 /* OSCPostDetails.m */; };
 		38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BC598F1A5D214E00F3C4D2 /* PeopleTableViewController.m */; };
@@ -839,6 +845,12 @@
 		38BB27B21AAC016A0088A15C /* discover-shake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-shake.png"; sourceTree = "<group>"; };
 		38BB27B31AAC016A0088A15C /* discover-shake@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-shake@2x.png"; sourceTree = "<group>"; };
 		38BB27B41AAC016A0088A15C /* discover-shake@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "discover-shake@3x.png"; sourceTree = "<group>"; };
+		38BB27C51AAC130F0088A15C /* me-blog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me-blog.png"; sourceTree = "<group>"; };
+		38BB27C61AAC130F0088A15C /* me-blog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me-blog@2x.png"; sourceTree = "<group>"; };
+		38BB27C71AAC130F0088A15C /* me-blog@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me-blog@3x.png"; sourceTree = "<group>"; };
+		38BB27C81AAC130F0088A15C /* me-message.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me-message.png"; sourceTree = "<group>"; };
+		38BB27C91AAC130F0088A15C /* me-message@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me-message@2x.png"; sourceTree = "<group>"; };
+		38BB27CA1AAC130F0088A15C /* me-message@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "me-message@3x.png"; sourceTree = "<group>"; };
 		38BC20481A073A7800B8BB16 /* OSCSoftwareDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCSoftwareDetails.h; sourceTree = "<group>"; };
 		38BC20491A073A7800B8BB16 /* OSCSoftwareDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCSoftwareDetails.m; sourceTree = "<group>"; };
 		38BC204B1A07643A00B8BB16 /* OSCPostDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPostDetails.h; sourceTree = "<group>"; };
@@ -1475,6 +1487,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				38BB27C41AAC130F0088A15C /* me */,
 				38BB27A51AAC016A0088A15C /* discover */,
 				38BB27611AAAD73F0088A15C /* side menu */,
 				38A9EEB91AA99868006C95BD /* html */,
@@ -1880,6 +1893,19 @@
 			path = discover;
 			sourceTree = "<group>";
 		};
+		38BB27C41AAC130F0088A15C /* me */ = {
+			isa = PBXGroup;
+			children = (
+				38BB27C51AAC130F0088A15C /* me-blog.png */,
+				38BB27C61AAC130F0088A15C /* me-blog@2x.png */,
+				38BB27C71AAC130F0088A15C /* me-blog@3x.png */,
+				38BB27C81AAC130F0088A15C /* me-message.png */,
+				38BB27C91AAC130F0088A15C /* me-message@2x.png */,
+				38BB27CA1AAC130F0088A15C /* me-message@3x.png */,
+			);
+			path = me;
+			sourceTree = "<group>";
+		};
 		38BC598C1A5D20AC00F3C4D2 /* 找人 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2144,6 +2170,7 @@
 				38BC59B11A5D406300F3C4D2 /* shooting.png in Resources */,
 				38763A211A89F3E8008E6805 /* QR-Code.png in Resources */,
 				382A949B1A26D27400AAAFEA /* 088@2x.png in Resources */,
+				38BB27CB1AAC130F0088A15C /* me-blog.png in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				380FD35C1A77726E003C4021 /* editingbar@2x.png in Resources */,
 				38BB27BA1AAC016A0088A15C /* discover-events@3x.png in Resources */,
@@ -2168,6 +2195,8 @@
 				EEC20A291AA2EE8C008C4777 /* widget_repaste_icon.png in Resources */,
 				382A94501A26D27400AAAFEA /* 012@2x.png in Resources */,
 				38BC59AB1A5D406300F3C4D2 /* picture.png in Resources */,
+				38BB27CF1AAC130F0088A15C /* me-message@2x.png in Resources */,
+				38BB27CE1AAC130F0088A15C /* me-message.png in Resources */,
 				38BB27741AAAD73F0088A15C /* sidemenu-logout.png in Resources */,
 				382A94781A26D27400AAAFEA /* 052@2x.png in Resources */,
 				380FD3621A77726E003C4021 /* operationbar@2x.png in Resources */,
@@ -2230,6 +2259,7 @@
 				382A94891A26D27400AAAFEA /* 070@2x.png in Resources */,
 				380FD2C11A7762A8003C4021 /* tabbar-news-selected.png in Resources */,
 				380FD2B41A7762A8003C4021 /* tabbar-discover-selected@3x.png in Resources */,
+				38BB27D01AAC130F0088A15C /* me-message@3x.png in Resources */,
 				38BB27781AAAD73F0088A15C /* sidemenu-QA@2x.png in Resources */,
 				382A945D1A26D27400AAAFEA /* 025@2x.png in Resources */,
 				3838D19B1A6D046B00CC7913 /* toolbar-starred@2x.png in Resources */,
@@ -2353,12 +2383,14 @@
 				38BB277E1AAAD73F0088A15C /* sidemenu-software@2x.png in Resources */,
 				380FD31F1A776D96003C4021 /* toolbar-image@3x.png in Resources */,
 				380FD35F1A77726E003C4021 /* emoji@2x.png in Resources */,
+				38BB27CD1AAC130F0088A15C /* me-blog@3x.png in Resources */,
 				380FD2BA1A7762A8003C4021 /* tabbar-me-selected@3x.png in Resources */,
 				382A94871A26D27400AAAFEA /* 068@2x.png in Resources */,
 				382A94861A26D27400AAAFEA /* 067@2x.png in Resources */,
 				386F1E3E1A7A0CDA00B773EE /* UMSLoginViewController.xib in Resources */,
 				3838D1911A6D046B00CC7913 /* toolbar-editComment@2x.png in Resources */,
 				382A94741A26D27400AAAFEA /* 048@2x.png in Resources */,
+				38BB27CC1AAC130F0088A15C /* me-blog@2x.png in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
 				38A9EEB51AA989CE006C95BD /* logo@2x.png in Resources */,
 				382A948D1A26D27400AAAFEA /* 074@2x.png in Resources */,

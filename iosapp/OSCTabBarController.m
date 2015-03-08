@@ -66,7 +66,7 @@
                                                                                         ]];
     
     DiscoverTableVC *discoverTableVC = [[DiscoverTableVC alloc] initWithStyle:UITableViewStyleGrouped];
-    MyInfoViewController *myInfoVC = [MyInfoViewController new];
+    MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
     
     self.tabBar.translucent = NO;
