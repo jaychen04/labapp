@@ -65,15 +65,6 @@
     }];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-    MyInfoViewController *myInfoVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-1];
-    [myInfoVC refreshView];
-    [((UITableViewController *)myInfoVC.sideMenuViewController.leftMenuViewController).tableView reloadData];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -254,6 +245,7 @@
               [Config saveOwnID:user.userID];
               [OSCThread startPollingNotice];
               
+              [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
               [self.navigationController popViewControllerAnimated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               NSLog(@"网络异常，错误码：%ld", (long)error.code);
