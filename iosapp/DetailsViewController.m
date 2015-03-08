@@ -73,7 +73,6 @@
         
         _news = news;
         _objectID = news.newsID;
-        _objectTitle = news.title;
         
         switch (news.type) {
             case NewsTypeStandardNews:
@@ -130,7 +129,6 @@
         _commentType = CommentTypeBlog;
         _favoriteType = FavoriteTypeBlog;
         _objectID = blog.blogID;
-        _objectTitle = blog.title;
         
         self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.title = @"博客详情";
@@ -151,7 +149,6 @@
     _commentType = CommentTypePost;
     _favoriteType = FavoriteTypeTopic;
     _objectID = post.postID;
-    _objectTitle = post.title;
     
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"帖子详情";
@@ -170,7 +167,6 @@
     
     _commentType = CommentTypeSoftware;
     _favoriteType = FavoriteTypeSoftware;
-    _objectTitle = software.name;
     
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"软件详情";
@@ -364,7 +360,6 @@
         snsPlatform.bigImageName = @"UMS_facebook_icon";
         snsPlatform.snsClickHandler = ^(UIViewController *presentingController, UMSocialControllerService *socialControllerService, BOOL isPresentInController){
             UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-            NSLog(@"\n%@\n%@", weakSelf.URL, weakSelf.mURL);
             pasteboard.string = weakSelf.mURL;
             
             MBProgressHUD *HUD = [Utils createHUDInWindowOfView:weakSelf.view];
@@ -413,7 +408,6 @@
             [strUrl replaceCharactersInRange:NSMakeRange(7, 3) withString:@"m"];
         }
         _mURL = [strUrl copy];
-        NSLog(@"mUrl = %@", _mURL);
         return _mURL;
     }
 }
@@ -437,6 +431,7 @@
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = newsDetails.isFavorite;
     _URL = [newsDetails.url absoluteString];
+    _objectTitle = newsDetails.title;
 }
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
@@ -449,6 +444,7 @@
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = blogDetails.isFavorite;
     _URL = [blogDetails.url absoluteString];
+    _objectTitle = blogDetails.title;
 }
 
 - (void)loadPostDetails:(OSCPostDetails *)postDetails
@@ -463,6 +459,7 @@
     _isStarred = postDetails.isFavorite;
     _URL = [postDetails.url absoluteString];
     _commentCount = postDetails.answerCount;
+    _objectTitle = postDetails.title;
 }
 
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
@@ -480,6 +477,7 @@
     _URL = [softwareDetails.url absoluteString];
     
     _commentCount = softwareDetails.tweetCount;
+    _objectTitle = softwareDetails.title;
 }
 
 - (NSString *)createButtonsWithHomepageURL:(NSString *)homepageURL andDocumentURL:(NSString *)documentURL andDownloadURL:(NSString *)downloadURL
