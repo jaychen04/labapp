@@ -60,13 +60,13 @@
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:14];
-    _timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _timeLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_timeLabel];
     
     _contentLabel = [UILabel new];
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _contentLabel.font = [UIFont boldSystemFontOfSize:14];
+    _contentLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.contentView addSubview:_contentLabel];
     
     _thumbnail = [UIImageView new];
@@ -84,12 +84,12 @@
     
     _appclientLabel = [UILabel new];
     _appclientLabel.font = [UIFont systemFontOfSize:14];
-    _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _appclientLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_appclientLabel];
     
     _commentCount = [UILabel new];
     _commentCount.font = [UIFont systemFontOfSize:14];
-    _commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _commentCount.textColor = [UIColor grayColor];
     [self.contentView addSubview:_commentCount];
 }
 

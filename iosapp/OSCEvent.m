@@ -81,12 +81,12 @@ static NSString * const kObjectCatalog = @"objectcatalog";
     if (_actionStr) {return _actionStr;}
     
     NSDictionary *actionStrAttributes = @{
-                                          NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                          NSFontAttributeName:[UIFont systemFontOfSize:14],
                                           NSForegroundColorAttributeName:[UIColor grayColor]
                                           };
     
     NSDictionary *objectTitleAttributes = @{
-                                            NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                            NSFontAttributeName:[UIFont systemFontOfSize:14],
                                             NSForegroundColorAttributeName:[UIColor nameColor]
                                             };
     
