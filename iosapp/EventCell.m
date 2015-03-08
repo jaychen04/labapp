@@ -118,6 +118,9 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-<=5@500-[_referenceText]"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
     
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-<=5@500-[_thumbnail]"
+                                                                             options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
+    
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_appclientLabel]->=0-[_commentCount]-5-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
