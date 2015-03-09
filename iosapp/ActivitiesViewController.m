@@ -74,14 +74,14 @@ static NSString * const kActivtyCellID = @"ActivityCell";
         } else {
             if (activity.applyStatus == 1) {
                 [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_checked"]];
+                cell.tabImageView.hidden = NO;
             } else if (activity.applyStatus == 2) {
                 [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
+                cell.tabImageView.hidden = NO;
             } else {
                 cell.tabImageView.hidden = YES;
             }
-            
         }
-        
         return cell;
     } else {
         return self.lastCell;
