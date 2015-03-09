@@ -147,8 +147,6 @@
     }
 #endif
     
-    if (!refresh) {[_lastCell statusLoading];}
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager GET:self.generateURL(page)

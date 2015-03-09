@@ -162,7 +162,7 @@ static NSString * const EventCellID = @"EventCell";
         if (event.shouleShowClientOrCommentCount) {
             height += [UIFont systemFontOfSize:14].lineHeight + 5;
         }
-
+        
         if (event.hasAnImage) {
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
             if (!image) {image = [UIImage imageNamed:@"portrait_loading"];}
@@ -228,17 +228,19 @@ static NSString * const EventCellID = @"EventCell";
 
 - (void)downloadImageThenReload:(NSURL *)imageURL
 {
-    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:imageURL
-                                                          options:SDWebImageDownloaderUseNSURLCache
-                                                         progress:nil
-                                                        completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                                                            [[SDImageCache sharedImageCache] storeImage:image forKey:imageURL.absoluteString toDisk:NO];
-                                                            
-                                                            // 单独刷新某一行会有闪烁，全部reload反而较为顺畅
-                                                            dispatch_async(dispatch_get_main_queue(), ^{
-                                                                [self.tableView reloadData];
-                                                            });
-                                                        }];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:imageURL
+                                                              options:SDWebImageDownloaderUseNSURLCache
+                                                             progress:nil
+                                                            completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                                                [[SDImageCache sharedImageCache] storeImage:image forKey:imageURL.absoluteString toDisk:NO];
+                                                                
+                                                                // 单独刷新某一行会有闪烁，全部reload反而较为顺畅
+                                                                dispatch_async(dispatch_get_main_queue(), ^{
+                                                                    [self.tableView reloadData];
+                                                                });
+                                                            }];
+    });
 }
 
 
