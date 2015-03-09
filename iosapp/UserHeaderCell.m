@@ -27,6 +27,15 @@
 
 - (void)setLayout
 {
+    UIImageView *backgroundImage = [UIImageView new];
+    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
+    NSString *imageName = @"user-background";
+    if (screenWidth.intValue < 400) {
+        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];;
+    }
+    backgroundImage.image = [UIImage imageNamed:imageName];
+    self.backgroundView = backgroundImage;
+    
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];
