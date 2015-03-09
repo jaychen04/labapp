@@ -39,22 +39,24 @@
     _nameLabel = [UILabel new];
     _nameLabel.numberOfLines = 0;
     _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _nameLabel.font = [UIFont systemFontOfSize:14];
+    _nameLabel.font = [UIFont boldSystemFontOfSize:14];
     _nameLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:_nameLabel];
     
     _contentLabel = [UILabel new];
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _contentLabel.font = [UIFont systemFontOfSize:14];
+    _contentLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.contentView addSubview:_contentLabel];
     
     _commentCountLabel = [UILabel new];
     _commentCountLabel.font = [UIFont systemFontOfSize:12];
+    _commentCountLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_commentCountLabel];
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:12];
+    _timeLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_timeLabel];
 }
 
@@ -69,11 +71,11 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_portrait(36)]" options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_nameLabel]-3-[_contentLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_nameLabel]-3-[_contentLabel]"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                              metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-[_commentCountLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_commentCountLabel]-5-|"
                                                                              options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_commentCountLabel]->=0-[_timeLabel]-8-|"

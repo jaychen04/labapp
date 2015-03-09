@@ -73,12 +73,14 @@ static NSString * const kMessageCellID = @"MessageCell";
         OSCMessage *message = self.objects[indexPath.row];
         
         self.label.text = message.senderName;
+        self.label.font = [UIFont boldSystemFontOfSize:14];
         CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 70, MAXFLOAT)];
         
         self.label.text = message.content;
+        self.label.font = [UIFont boldSystemFontOfSize:15];
         CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
         
-        return nameSize.height + contentSize.height + 42;
+        return nameSize.height + contentSize.height + 38;
     } else {
         return 60;
     }
