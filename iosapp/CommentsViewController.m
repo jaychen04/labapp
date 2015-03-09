@@ -87,7 +87,7 @@ static NSString *kCommentCellID = @"CommentCell";
     if (section == 0 && self.otherSectionCell) {
         return 1;
     } else {
-        return self.objects.count + 1;
+        return [super tableView:tableView numberOfRowsInSection:section];
     }
 }
 

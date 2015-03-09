@@ -72,7 +72,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_lastCell.status == LastCellStatusNotVisible) return _objects.count;
+    if (_lastCell.status == LastCellStatusNotVisible || _objects.count == 0) return _objects.count;
     return _objects.count + 1;
 }
 
