@@ -72,14 +72,13 @@
     _thumbnail = [UIImageView new];
     _thumbnail.contentMode = UIViewContentModeScaleAspectFill;
     _thumbnail.userInteractionEnabled = YES;
-    _thumbnail.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:_thumbnail];
     
     _referenceText = [UITextView new];
     _referenceText.backgroundColor = [UIColor colorWithHex:0xDEDEDE];
     _referenceText.scrollEnabled = NO;
     _referenceText.editable = NO;
-    _referenceText.translatesAutoresizingMaskIntoConstraints = NO;
+    _referenceText.userInteractionEnabled = NO;
     [self.contentView addSubview:_referenceText];
     
     _appclientLabel = [UILabel new];
