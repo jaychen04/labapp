@@ -114,7 +114,12 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIImageView *header = [UIImageView new];
-    header.image = [UIImage imageNamed:@"user-background"];
+    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
+    NSString *imageName = @"user-background";
+    if (screenWidth.intValue < 400) {
+        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];;
+    }
+    header.image = [UIImage imageNamed:imageName];
     
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
