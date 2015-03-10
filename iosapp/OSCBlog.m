@@ -7,6 +7,7 @@
 //
 
 #import "OSCBlog.h"
+#import <UIKit/UIKit.h>
 
 static NSString * const kID = @"id";
 static NSString * const kAuthor = @"authorname";
@@ -34,6 +35,22 @@ static NSString * const kDocumentType = @"documentType";
     }
     
     return self;
+}
+
+- (NSAttributedString *)attributedTittle
+{
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    if (_documentType == 0) {
+        textAttachment.image = [UIImage imageNamed:@"widget_repost"];
+    } else {
+        textAttachment.image = [UIImage imageNamed:@"widget-original"];
+    }
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    NSMutableAttributedString *attributedTittle = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedTittle appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedTittle appendAttributedString:[[NSAttributedString alloc] initWithString:_title]];
+    
+    return attributedTittle;
 }
 
 @end

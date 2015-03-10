@@ -79,19 +79,7 @@ static NSString *kBlogCellID = @"BlogCell";
         BlogCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBlogCellID forIndexPath:indexPath];
         OSCBlog *blog = self.objects[indexPath.row];
         
-        NSTextAttachment *textAttachment = [NSTextAttachment new];
-        if (0 == blog.documentType) {
-            textAttachment.image = [UIImage imageNamed:@"widget_repaste_icon.png"];
-            
-        }else{
-            textAttachment.image = [UIImage imageNamed:@"widget_original_icon.png"];
-        }
-        NSAttributedString *attributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-        NSMutableAttributedString *strTitle = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
-        [strTitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-        [strTitle appendAttributedString:[[NSAttributedString alloc] initWithString:blog.title]];
-        [cell.titleLabel setAttributedText:strTitle];
-
+        [cell.titleLabel setAttributedText:blog.attributedTittle];
         [cell.bodyLabel setText:blog.body];
         [cell.authorLabel setText:blog.author];
         [cell.timeLabel setText:[Utils intervalSinceNow:blog.pubDate]];
@@ -109,19 +97,7 @@ static NSString *kBlogCellID = @"BlogCell";
     if (indexPath.row < self.objects.count) {
         OSCBlog *blog = self.objects[indexPath.row];
         
-        NSTextAttachment *textAttachment = [NSTextAttachment new];
-        if (0 == blog.documentType) {
-            textAttachment.image = [UIImage imageNamed:@"widget_repaste_icon.png"];
-            
-        }else{
-            textAttachment.image = [UIImage imageNamed:@"widget_original_icon.png"];
-        }
-        NSAttributedString *attributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-        NSMutableAttributedString *strTitle = [[NSMutableAttributedString alloc] initWithAttributedString:attributedString];
-        [strTitle appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-        [strTitle appendAttributedString:[[NSAttributedString alloc] initWithString:blog.title]];
-        
-        [self.label setAttributedText:strTitle];
+        [self.label setAttributedText:blog.attributedTittle];
         
         self.label.font = [UIFont boldSystemFontOfSize:14];
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
