@@ -142,7 +142,7 @@ static NSString *kCommentCellID = @"CommentCell";
             height += [self.label sizeThatFits:CGSizeMake(width - (references.count-idx)*10, MAXFLOAT)].height + 13;
         }];
         
-        return height + 56;
+        return height + 58;
     } else {
         return 60;
     }
