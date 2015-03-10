@@ -46,6 +46,10 @@
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     [self.contentView addSubview:_nameLabel];
     
+    UIView *line = [UIView new];
+    line.backgroundColor = [UIColor colorWithHex:0x2bc157];
+    [self.contentView addSubview:line];
+    
     UIView *countView = [UIView new];
     [self.contentView addSubview:countView];
     
@@ -69,11 +73,12 @@
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsButton, _followsButton, _fansButton, countView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsButton, _followsButton, _fansButton, countView, line);
     NSDictionary *metrics = @{@"width": @([UIScreen mainScreen].bounds.size.width / 3)};
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portrait(50)]-8-[_nameLabel]-15-[countView(50)]|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portrait(50)]-8-[_nameLabel]-10-[line(1)]-4-[countView(50)]|"
                                                                    options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[line]|" options:0 metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_portrait(50)]" options:0 metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[countView]|" options:0 metrics:nil views:views]];
     

@@ -145,7 +145,10 @@
     QRCodeImageView.userInteractionEnabled = YES;
     [QRCodeImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapQRCodeImage)]];
     [header addSubview:QRCodeImageView];
-    if ([Config getOwnID] == 0) {QRCodeImageView.hidden = YES;}
+    
+    UIView *line = [UIView new];
+    line.backgroundColor = [UIColor colorWithHex:0x2bc157];
+    [header addSubview:line];
     
     UIView *countView = [UIView new];
     [header addSubview:countView];
@@ -176,11 +179,12 @@
     for (UIView *view in header.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsBtn, _collectionsBtn, _followsBtn, _fansBtn, QRCodeImageView, countView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsBtn, _collectionsBtn, _followsBtn, _fansBtn, QRCodeImageView, countView, line);
     NSDictionary *metrics = @{@"width": @(tableView.frame.size.width / 4)};
     
-    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portrait(50)]-8-[_nameLabel]-15-[countView(50)]|"
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portrait(50)]-8-[_nameLabel]-10-[line(1)]-4-[countView(50)]|"
                                                                    options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[line]|" options:0 metrics:nil views:views]];
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_portrait(50)]" options:0 metrics:nil views:views]];
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[countView]|" options:0 metrics:nil views:views]];
     
@@ -194,7 +198,11 @@
     [countView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_creditsBtn]|" options:0 metrics:nil views:views]];
     
     
-    if ([Config getOwnID] == 0) {countView.hidden = YES;}
+    if ([Config getOwnID] == 0) {
+        line.hidden = YES;
+        countView.hidden = YES;
+        QRCodeImageView.hidden = YES;
+    }
     
     return header;
 }
