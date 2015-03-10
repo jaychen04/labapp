@@ -185,18 +185,21 @@
 {
     if (indexPath.row < self.objects.count) {
         OSCTweet *tweet = self.objects[indexPath.row];
+        
+        [self.label setText:tweet.author];
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)].height;
+               
         [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
         
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)];
-        
-        CGFloat height = size.height + 65;
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)].height;
+
         if (tweet.hasAnImage) {
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
             if (!image) {image = [UIImage imageNamed:@"loading"];}
             height += image.size.height + 5;
         }
         
-        return height;
+        return height+42;
     } else {
         return 60;
     }
