@@ -134,7 +134,7 @@ static NSString *kCommentCellID = @"CommentCell";
         CGFloat width = self.tableView.frame.size.width - 57;
         
         NSArray *references = comment.references;
-        if (references.count > 0) {height += 6;}
+        if (references.count > 0) {height += 3;}
         
         self.label.font = [UIFont systemFontOfSize:13];
         [references enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(OSCReference *reference, NSUInteger idx, BOOL *stop) {
@@ -142,7 +142,7 @@ static NSString *kCommentCellID = @"CommentCell";
             height += [self.label sizeThatFits:CGSizeMake(width - (references.count-idx)*10, MAXFLOAT)].height + 13;
         }];
         
-        return height + 58;
+        return height + 60;
     } else {
         return 60;
     }

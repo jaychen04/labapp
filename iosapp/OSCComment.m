@@ -63,11 +63,14 @@ static NSString * const kRContent = @"rcontent";
     
     [replies enumerateObjectsUsingBlock:^(OSCReply *reply, NSUInteger idx, BOOL *stop) {
         NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@：", reply.author]
-                                                                                          attributes:@{NSForegroundColorAttributeName:[UIColor nameColor]}];
+                                                                                          attributes:@{
+                                                                                                       NSForegroundColorAttributeName:[UIColor nameColor],
+                                                                                                       NSFontAttributeName:[UIFont systemFontOfSize:13]
+                                                                                                       }];
         NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:reply.content]];
         [replyContent addAttributes:@{
                                       NSForegroundColorAttributeName:[UIColor grayColor],
-                                      NSFontAttributeName:[UIFont systemFontOfSize:14]
+                                      NSFontAttributeName:[UIFont systemFontOfSize:13]
                                       } range:NSMakeRange(0, replyContent.length)];
         [commentString appendAttributedString:replyContent];
         

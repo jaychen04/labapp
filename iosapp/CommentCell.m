@@ -73,7 +73,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-9-[_authorLabel]-4-[_timeLabel]->=5-[_contentLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]->=5-[_contentLabel]-8-[_timeLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                              metrics:nil views:views]];
 }
@@ -103,8 +103,8 @@
     _currentContainer = [UIView new];
     [self.contentView addSubview:_currentContainer];
     _currentContainer.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *views = NSDictionaryOfVariableBindings(_timeLabel, _contentLabel, _currentContainer);
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]-8-[_currentContainer]-8-[_contentLabel]"
+    NSDictionary *views = NSDictionaryOfVariableBindings(_authorLabel, _contentLabel, _currentContainer);
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_authorLabel]-5-[_currentContainer]-8-[_contentLabel]"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                              metrics:nil views:views]];
     
