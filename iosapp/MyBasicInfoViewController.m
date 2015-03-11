@@ -68,8 +68,16 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *header = [UIView new];
-    header.backgroundColor = [UIColor colorWithHex:0x00CD66];
+    UIImageView *header = [UIImageView new];
+    header.clipsToBounds = YES;
+    header.userInteractionEnabled = YES;
+    header.contentMode = UIViewContentModeScaleAspectFill;
+    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
+    NSString *imageName = @"user-background";
+    if (screenWidth.intValue < 400) {
+        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];
+    }
+    header.image = [UIImage imageNamed:imageName];
     
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
@@ -80,6 +88,7 @@
     [header addSubview:_portrait];
     
     _nameLabel = [UILabel new];
+    _nameLabel.font = [UIFont boldSystemFontOfSize:18];
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     _nameLabel.text = _myInfo.name;
     [header addSubview:_nameLabel];
