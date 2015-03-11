@@ -186,11 +186,11 @@
     if (indexPath.row < self.objects.count) {
         OSCTweet *tweet = self.objects[indexPath.row];
         
+        self.label.font = [UIFont boldSystemFontOfSize:14];
         [self.label setText:tweet.author];
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)].height;
-               
-        [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
         
+        [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
         height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)].height;
 
         if (tweet.hasAnImage) {
@@ -199,7 +199,7 @@
             height += image.size.height + 5;
         }
         
-        return height+42;
+        return height + 39;
     } else {
         return 60;
     }

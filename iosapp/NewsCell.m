@@ -29,7 +29,7 @@
     self.titleLabel = [UILabel new];
     self.titleLabel.numberOfLines = 0;
     self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    self.titleLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.contentView addSubview:self.titleLabel];
     
     self.bodyLabel = [UILabel new];

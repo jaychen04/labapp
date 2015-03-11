@@ -28,7 +28,7 @@
 - (void)initSubviews
 {
     _nameLabel = [UILabel new];
-    _nameLabel.font = [UIFont boldSystemFontOfSize:14];
+    _nameLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.contentView addSubview:_nameLabel];
     
     _descriptionLabel = [UILabel new];
