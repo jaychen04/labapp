@@ -73,7 +73,9 @@
 #pragma mark - life cycle
 
 - (void)viewDidLoad {
+    self.needRefreshAnimation = NO;
     [super viewDidLoad];
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationItem.title = @"用户中心";
     self.tableView.bounces = NO;

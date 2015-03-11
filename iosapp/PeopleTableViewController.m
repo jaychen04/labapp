@@ -46,6 +46,7 @@ static NSString * const kPersonCellID = @"PersonCell";
 #pragma mark - life cycle
 
 - (void)viewDidLoad {
+    self.needRefreshAnimation = NO;
     [super viewDidLoad];
     
     [self.tableView registerClass:[PersonCell class] forCellReuseIdentifier:kPersonCellID];

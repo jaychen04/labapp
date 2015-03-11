@@ -51,6 +51,7 @@ static NSString * const kSoftware       = @"software";
 
 
 - (void)viewDidLoad {
+    self.needRefreshAnimation = NO;
     [super viewDidLoad];
 }
 

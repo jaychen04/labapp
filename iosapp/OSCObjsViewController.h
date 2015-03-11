@@ -20,20 +20,20 @@
 
 @interface OSCObjsViewController : UITableViewController
 
-- (void)fetchMore;
-
 @property (nonatomic, copy) void (^parseExtraInfo)(ONOXMLDocument *);
 @property (nonatomic, copy) NSString * (^generateURL)(NSUInteger page);
 @property (nonatomic, copy) void (^tableWillReload)(NSUInteger responseObjectsCount);
 @property (nonatomic, copy) void (^didRefreshSucceed)();
 
 @property Class objClass;
+@property (nonatomic, assign) BOOL needRefreshAnimation;
 @property (nonatomic, strong) NSMutableArray *objects;
 @property (nonatomic, assign) int allCount;
 @property (nonatomic, strong) LastCell *lastCell;
 @property (nonatomic, strong) UILabel *label;
 
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;
+- (void)fetchMore;
 - (void)refresh;
 
 @end

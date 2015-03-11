@@ -69,6 +69,7 @@
 
 
 - (void)viewDidLoad {
+    self.needRefreshAnimation = NO;
     [super viewDidLoad];
     
     _HUD = [Utils createHUDInWindowOfView:self.view];
