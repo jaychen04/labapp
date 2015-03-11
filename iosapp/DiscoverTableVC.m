@@ -101,7 +101,9 @@
             break;
         case 1:
             if (indexPath.row == 0) {
-                [self.navigationController pushViewController:[PersonSearchViewController new] animated:YES];
+                PersonSearchViewController *personSearchVC = [PersonSearchViewController new];
+                personSearchVC.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:personSearchVC animated:YES];
                 break;
             }
             else if (indexPath.row == 1) {
