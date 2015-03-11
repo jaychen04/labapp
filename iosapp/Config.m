@@ -13,6 +13,12 @@ NSString * const kService = @"OSChina";
 NSString * const kAccount = @"account";
 NSString * const kUserID = @"userID";
 
+NSString * const kUserName = @"name";
+NSString * const kUserScore = @"score";
+NSString * const kUserFavoriteCount = @"favoritecount";
+NSString * const kUserFans = @"fans";
+NSString * const kUserFollowers = @"followers";
+
 NSString * const kActorName = @"Actor";
 NSString * const kSex = @"Sex";
 NSString * const kTelephoneNumber = @"TelephoneNumber";
@@ -30,9 +36,18 @@ NSString * const kPositionName = @"PositionName";
     [SSKeychain setPassword:password forService:kService account:account];
 }
 
-+ (void)saveOwnID:(int64_t)userID
+
++ (void)saveOwnUserName:(NSString *)userName
+           andUserScore:(int)score
+   andUserFavoriteCount:(int)favoriteCount
+            andUserFans:(int)fans andUserFollower:(int)follower andOwnID:(int64_t)userID
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:userName forKey:kUserName];
+    [userDefaults setObject:@(score) forKey:kUserScore];
+    [userDefaults setObject:@(favoriteCount) forKey:kUserFavoriteCount];
+    [userDefaults setObject:@(fans) forKey:kUserFans];
+    [userDefaults setObject:@(follower) forKey:kUserFollowers];
     [userDefaults setObject:@(userID) forKey:kUserID];
     [userDefaults synchronize];
 }
@@ -83,7 +98,21 @@ NSString * const kPositionName = @"PositionName";
     return nil;
 }
 
-
++ (NSArray *)getUsersInformation
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *userName = [userDefaults objectForKey:kUserName];
+    NSNumber *score = [userDefaults objectForKey:kUserScore];
+    NSNumber *favoriteCount = [userDefaults objectForKey:kUserFavoriteCount];
+    NSNumber *fans = [userDefaults objectForKey:kUserFans];
+    NSNumber *follower = [userDefaults objectForKey:kUserFollowers];
+    NSNumber *userID = [userDefaults objectForKey:kUserID];
+    if (userName) {
+        return @[userName, score, favoriteCount, fans, follower, userID];
+    }
+    return @[userName, score, favoriteCount, fans, follower, userID];
+}
 
 
 @end
