@@ -90,6 +90,8 @@
 		380FD3661A77726E003C4021 /* send@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD3571A77726E003C4021 /* send@3x.png */; };
 		381293241AB02BD700B29221 /* 01.png in Resources */ = {isa = PBXBuildFile; fileRef = 381293231AB02BD700B29221 /* 01.png */; };
 		381293261AB031F300B29221 /* bg-1080x1920.png in Resources */ = {isa = PBXBuildFile; fileRef = 381293251AB031F300B29221 /* bg-1080x1920.png */; };
+		381293281AB03F0C00B29221 /* bg03-1080x1920.png in Resources */ = {isa = PBXBuildFile; fileRef = 381293271AB03F0C00B29221 /* bg03-1080x1920.png */; };
+		3812932A1AB03F6300B29221 /* bg02-1080x1920.png in Resources */ = {isa = PBXBuildFile; fileRef = 381293291AB03F6300B29221 /* bg02-1080x1920.png */; };
 		381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5819FE1FCF00C1937C /* OSCNews.m */; };
 		381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5B19FE25DF00C1937C /* OSCPost.m */; };
 		381EAB6319FE377700C1937C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6219FE377700C1937C /* NewsViewController.m */; };
@@ -522,6 +524,8 @@
 		380FD3571A77726E003C4021 /* send@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send@3x.png"; sourceTree = "<group>"; };
 		381293231AB02BD700B29221 /* 01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01.png; sourceTree = "<group>"; };
 		381293251AB031F300B29221 /* bg-1080x1920.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-1080x1920.png"; sourceTree = "<group>"; };
+		381293271AB03F0C00B29221 /* bg03-1080x1920.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg03-1080x1920.png"; sourceTree = "<group>"; };
+		381293291AB03F6300B29221 /* bg02-1080x1920.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg02-1080x1920.png"; sourceTree = "<group>"; };
 		381EAB5719FE1FCF00C1937C /* OSCNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNews.h; sourceTree = "<group>"; };
 		381EAB5819FE1FCF00C1937C /* OSCNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNews.m; sourceTree = "<group>"; };
 		381EAB5A19FE25DF00C1937C /* OSCPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPost.h; sourceTree = "<group>"; };
@@ -1495,6 +1499,8 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				381293291AB03F6300B29221 /* bg02-1080x1920.png */,
+				381293271AB03F0C00B29221 /* bg03-1080x1920.png */,
 				381293251AB031F300B29221 /* bg-1080x1920.png */,
 				381293231AB02BD700B29221 /* 01.png */,
 				38F0A6211AAEC7C7001B531E /* cell widget */,
@@ -2270,6 +2276,7 @@
 				382A94971A26D27400AAAFEA /* 084@2x.png in Resources */,
 				38F0A6311AAEC7C7001B531E /* widget_repost@3x.png in Resources */,
 				382A94A21A26D27400AAAFEA /* 095@2x.png in Resources */,
+				381293281AB03F0C00B29221 /* bg03-1080x1920.png in Resources */,
 				380FD3231A776D96003C4021 /* toolbar-reference@2x.png in Resources */,
 				380FD2B51A7762A8003C4021 /* tabbar-discover.png in Resources */,
 				382A949A1A26D27400AAAFEA /* 087@2x.png in Resources */,
@@ -2371,6 +2378,7 @@
 				382A944F1A26D27400AAAFEA /* 011@2x.png in Resources */,
 				3838D1931A6D046B00CC7913 /* toolbar-report@2x.png in Resources */,
 				386F1E3A1A7A0CDA00B773EE /* UMSCommentInputController.xib in Resources */,
+				3812932A1AB03F6300B29221 /* bg02-1080x1920.png in Resources */,
 				38BC59AF1A5D406300F3C4D2 /* scan@2x.png in Resources */,
 				386F1E391A7A0CDA00B773EE /* UMSCommentDetailController.xib in Resources */,
 				382A945E1A26D27400AAAFEA /* 026@2x.png in Resources */,

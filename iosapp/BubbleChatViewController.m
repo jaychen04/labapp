@@ -76,12 +76,12 @@
 }
 
 
-- (void)sendComment
+- (void)sendContent
 {
     [self.editingBar.editView resignFirstResponder];
     
     MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
-    HUD.labelText = @"评论发送中";
+    HUD.labelText = @"留言发送中";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];

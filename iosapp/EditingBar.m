@@ -44,6 +44,7 @@
     
     _editView = [[GrowingTextView alloc] initWithPlaceholder:@"说点什么"];
     _editView.placeholderFont = [UIFont systemFontOfSize:16];
+    _editView.returnKeyType = UIReturnKeySend;
     [_editView setCornerRadius:5.0];
     [_editView setBorderWidth:1.0f andColor:[UIColor colorWithHex:0xC8C8CD]];
     _editView.backgroundColor = [UIColor colorWithHex:0xF5FAFA];

@@ -12,7 +12,7 @@
 #import "GrowingTextView.h"
 #import "EmojiPageVC.h"
 
-@interface BottomBarViewController ()
+@interface BottomBarViewController () <UITextViewDelegate>
 
 @property (nonatomic, strong) EmojiPageVC *emojiPageVC;
 @property (nonatomic, assign) BOOL hasAModeSwitchButton;
@@ -26,6 +26,7 @@
     self = [super init];
     if (self) {
         _editingBar = [[EditingBar alloc] initWithModeSwitchButton:hasAModeSwitchButton];
+        _editingBar.editView.delegate = self;
         if (hasAModeSwitchButton) {
             _hasAModeSwitchButton = hasAModeSwitchButton;
             _operationBar = [OperationBar new];
@@ -226,6 +227,21 @@
     }
 }
 
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString: @"\n"]) {
+        [self sendContent];
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)sendContent
+{
+    NSAssert(false, @"Over ride in subclasses");
+}
 
 
 

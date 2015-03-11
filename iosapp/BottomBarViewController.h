@@ -22,5 +22,6 @@
 @property (nonatomic, strong) NSLayoutConstraint *editingBarHeightConstraint;
 
 - (instancetype)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton;
+- (void)sendContent;
 
 @end
