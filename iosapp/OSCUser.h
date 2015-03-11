@@ -16,6 +16,7 @@
 @property (nonatomic, readonly, assign) int followersCount;
 @property (nonatomic, readonly, assign) int fansCount;
 @property (nonatomic, readonly, assign) int score;
+@property (nonatomic, readonly, assign) int favoriteCount;
 @property (nonatomic, assign)           int relationship;
 @property (nonatomic, readonly, strong) NSURL *portraitURL;
 @property (nonatomic, readonly, copy) NSString *developPlatform;
