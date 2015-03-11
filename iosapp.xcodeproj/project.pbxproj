@@ -88,6 +88,8 @@
 		380FD3641A77726E003C4021 /* send.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD3551A77726E003C4021 /* send.png */; };
 		380FD3651A77726E003C4021 /* send@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD3561A77726E003C4021 /* send@2x.png */; };
 		380FD3661A77726E003C4021 /* send@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD3571A77726E003C4021 /* send@3x.png */; };
+		381293241AB02BD700B29221 /* 01.png in Resources */ = {isa = PBXBuildFile; fileRef = 381293231AB02BD700B29221 /* 01.png */; };
+		381293261AB031F300B29221 /* bg-1080x1920.png in Resources */ = {isa = PBXBuildFile; fileRef = 381293251AB031F300B29221 /* bg-1080x1920.png */; };
 		381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5819FE1FCF00C1937C /* OSCNews.m */; };
 		381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB5B19FE25DF00C1937C /* OSCPost.m */; };
 		381EAB6319FE377700C1937C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 381EAB6219FE377700C1937C /* NewsViewController.m */; };
@@ -518,6 +520,8 @@
 		380FD3551A77726E003C4021 /* send.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = send.png; sourceTree = "<group>"; };
 		380FD3561A77726E003C4021 /* send@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send@2x.png"; sourceTree = "<group>"; };
 		380FD3571A77726E003C4021 /* send@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "send@3x.png"; sourceTree = "<group>"; };
+		381293231AB02BD700B29221 /* 01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 01.png; sourceTree = "<group>"; };
+		381293251AB031F300B29221 /* bg-1080x1920.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-1080x1920.png"; sourceTree = "<group>"; };
 		381EAB5719FE1FCF00C1937C /* OSCNews.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNews.h; sourceTree = "<group>"; };
 		381EAB5819FE1FCF00C1937C /* OSCNews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNews.m; sourceTree = "<group>"; };
 		381EAB5A19FE25DF00C1937C /* OSCPost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPost.h; sourceTree = "<group>"; };
@@ -1491,6 +1495,8 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				381293251AB031F300B29221 /* bg-1080x1920.png */,
+				381293231AB02BD700B29221 /* 01.png */,
 				38F0A6211AAEC7C7001B531E /* cell widget */,
 				38BB27D11AAD75A50088A15C /* user-background */,
 				38BB27C41AAC130F0088A15C /* me */,
@@ -2296,6 +2302,7 @@
 				3838D1961A6D046B00CC7913 /* toolbar-showComments.png in Resources */,
 				386F1E3F1A7A0CDA00B773EE /* UMSnsAccountViewController.xib in Resources */,
 				380FD3631A77726E003C4021 /* operationbar@3x.png in Resources */,
+				381293261AB031F300B29221 /* bg-1080x1920.png in Resources */,
 				380FD2C41A7762A8003C4021 /* tabbar-news.png in Resources */,
 				380FD2B21A7762A8003C4021 /* tabbar-discover-selected.png in Resources */,
 				382A94911A26D27400AAAFEA /* 078@2x.png in Resources */,
@@ -2369,6 +2376,7 @@
 				382A945E1A26D27400AAAFEA /* 026@2x.png in Resources */,
 				382A94621A26D27400AAAFEA /* 030@2x.png in Resources */,
 				38763A221A89F3E8008E6805 /* QR-Code@2x.png in Resources */,
+				381293241AB02BD700B29221 /* 01.png in Resources */,
 				382A945B1A26D27400AAAFEA /* 023@2x.png in Resources */,
 				380FD2C91A7762A8003C4021 /* tabbar-tweet-selected@3x.png in Resources */,
 				382A94801A26D27400AAAFEA /* 060@2x.png in Resources */,
