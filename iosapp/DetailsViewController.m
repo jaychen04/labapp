@@ -242,7 +242,7 @@
              [self performSelector:_loadMethod withObject:details];
              
              self.operationBar.isStarred = _isStarred;
-             [self.editingBar.sendButton addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
+             [self.editingBar.sendButton addTarget:self action:@selector(sendContent) forControlEvents:UIControlEventTouchUpInside];
              
              UIBarButtonItem *commentsCountButton = self.operationBar.items[2];
              commentsCountButton.shouldHideBadgeAtZero = YES;

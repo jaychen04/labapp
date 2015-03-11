@@ -41,7 +41,7 @@
         
         _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweetID:tweetID];
         [self addChildViewController:_tweetDetailsVC];
-        [self.editingBar.sendButton addTarget:self action:@selector(sendComment) forControlEvents:UIControlEventTouchUpInside];
+        [self.editingBar.sendButton addTarget:self action:@selector(sendContent) forControlEvents:UIControlEventTouchUpInside];
         
         [self setUpBlock];
     }
