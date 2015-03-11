@@ -25,7 +25,10 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
         for (UIViewController *controller in controllers) {
             [self addChildViewController:controller];
         }
-        self.tableView = [UITableView new];
+        
+        if (self.tableView.frame.size.height > 568) {
+            self.tableView = [UITableView new];
+        }
         self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         self.tableView.scrollsToTop = NO;
         self.tableView.transform = CGAffineTransformMakeRotation(-M_PI / 2);
