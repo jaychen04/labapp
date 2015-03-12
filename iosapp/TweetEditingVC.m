@@ -117,11 +117,11 @@
     NSArray *iconName = @[@"toolbar-image", @"toolbar-mention", @"toolbar-reference", @"toolbar-emoji"];
     NSArray *action   = @[@"addImage", @"mentionSomenone", @"referSoftware", @"switchInputView"];
     for (int i = 0; i < 4; i++) {
-        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:iconName[i]]
+        UIBarButtonItem *button = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:iconName[i]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]
                                                                    style:UIBarButtonItemStylePlain
                                                                   target:self
                                                                   action:NSSelectorFromString(action[i])];
-        button.tintColor = [UIColor grayColor];
+        //button.tintColor = [UIColor grayColor];
         [barButtonItems addObject:button];
         if (i < 3) {[barButtonItems addObject:flexibleSpace];}
     }
@@ -234,7 +234,7 @@
     // 还要考虑一下用外接键盘输入时，置空inputView后，字体小的情况
     
     if (_edittingArea.inputView == self.emojiPageVC.view) {
-        [_toolBar.items[7] setImage:[UIImage imageNamed:@"toolbar-emoji"]];
+        [_toolBar.items[7] setImage:[[UIImage imageNamed:@"toolbar-emoji"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         _edittingArea.inputView = nil;
         _edittingArea.font = [UIFont systemFontOfSize:18];
         [_edittingArea reloadInputViews];
@@ -242,7 +242,7 @@
         _keyboardHeight.constant = 216;
         [self.view layoutIfNeeded];
         
-        [_toolBar.items[7] setImage:[UIImage imageNamed:@"toolbar-text"]];
+        [_toolBar.items[7] setImage:[[UIImage imageNamed:@"toolbar-text"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
         _edittingArea.inputView = _emojiPageVC.view;
         [_edittingArea reloadInputViews];
     }
