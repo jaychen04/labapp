@@ -28,20 +28,33 @@
 - (void)setLayout
 {
     NSMutableArray *items = [NSMutableArray new];
-    NSArray *images    = @[@"toolbar-keyboardUp", @"toolbar-comments", @"toolbar-editingComment", @"toolbar-star", @"toolbar-share", @"toolbar-report"];
-    NSArray *selectors = @[@"switchMode:", @"showComments:", @"editComment:", @"toggleStar:", @"share:", @"report:"];
+    NSArray *images    = @[@"toolbar-keyboardUp", @"toolbar-separatorline", @"toolbar-comments", @"toolbar-editingComment", @"toolbar-star", @"toolbar-share", @"toolbar-report"];
+    NSArray *selectors = @[@"switchMode:", @"", @"showComments:", @"editComment:", @"toggleStar:", @"share:", @"report:"];
     
     [images enumerateObjectsUsingBlock:^(NSString *imageName, NSUInteger idx, BOOL *stop) {
         UIImage *image = [UIImage imageNamed:imageName];
-        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button addTarget:self action:NSSelectorFromString(selectors[idx]) forControlEvents:UIControlEventTouchUpInside];
-        button.frame = CGRectMake(0, 0, image.size.width, image.size.height);
-        [button setBackgroundImage:image forState:UIControlStateNormal];
+        if (idx != 1) {
+            UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+            [button addTarget:self action:NSSelectorFromString(selectors[idx]) forControlEvents:UIControlEventTouchUpInside];
+            button.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+            [button setBackgroundImage:image forState:UIControlStateNormal];
+            
+            UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+            [items addObject:barButton];
+        } else {
+            UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+            UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:imageView];
+            [items addObject:barButton];
+        }
         
-        UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
-        [items addObject:barButton];
-        
-        [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+        if (idx == 0) {
+            UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+            fixedSpace.width = 5;
+            [items addObject:fixedSpace];
+        } else {
+            [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
+        }
+
     }];
 
     
@@ -50,7 +63,7 @@
 
 - (void)setIsStarred:(BOOL)isStarred
 {
-    UIBarButtonItem *starBarButton = self.items[6];
+    UIBarButtonItem *starBarButton = self.items[8];
     UIButton *starButton = (UIButton *)starBarButton.customView;
     
     if (isStarred) {
