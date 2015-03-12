@@ -34,10 +34,10 @@
 - (void)setLayoutWithModeSwitchButton:(BOOL)hasAModeSwitchButton
 {
     _modeSwitchButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_modeSwitchButton setImage:[UIImage imageNamed:@"operationbar"] forState:UIControlStateNormal];
+    [_modeSwitchButton setImage:[UIImage imageNamed:@"toolbar-barSwitch"] forState:UIControlStateNormal];
     
     _inputViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_inputViewButton setImage:[UIImage imageNamed:@"emoji"] forState:UIControlStateNormal];
+    [_inputViewButton setImage:[UIImage imageNamed:@"toolbar-emoji2"] forState:UIControlStateNormal];
     
     _sendButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_sendButton setImage:[UIImage imageNamed:@"send"] forState:UIControlStateNormal];
