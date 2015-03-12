@@ -54,10 +54,13 @@
     __weak TweetDetailsWithBottomBarViewController *weakSelf = self;
     
     _tweetDetailsVC.didCommentSelected = ^(OSCComment *comment) {
-        NSString *stringToInsert = [NSString stringWithFormat:@"@%@ ", comment.author];
-        
-        [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:stringToInsert];
-        [weakSelf.editingBar.editView becomeFirstResponder];
+        NSString *authorString = [NSString stringWithFormat:@"@%@", comment.author];
+        if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {
+            NSString *stringToInsert = [NSString stringWithFormat:@"@%@ ", comment.author];
+            
+            [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:stringToInsert];
+            [weakSelf.editingBar.editView becomeFirstResponder];
+        }
     };
     
     _tweetDetailsVC.didScroll = ^ {
