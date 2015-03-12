@@ -36,6 +36,7 @@ static NSString * const kAuthorUID2 = @"authoruid2";
         
         _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _url = [NSURL URLWithString:[[xml firstChildWithTag:@"url"] stringValue]];
         
         ONOXMLElement *newsType = [xml firstChildWithTag:kNewsType];
         _type = [[[newsType firstChildWithTag:kType] numberValue] intValue];

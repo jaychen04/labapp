@@ -26,6 +26,7 @@ typedef NS_ENUM(NSUInteger, NewsType)
 @property (nonatomic, assign) int64_t authorID;
 @property (nonatomic, assign) NewsType type;
 @property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) NSURL *url;
 @property (nonatomic, copy) NSString *attachment;
 @property (nonatomic, assign) int64_t authorUID2;
 
