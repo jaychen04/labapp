@@ -221,6 +221,7 @@
     selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
     [cell setSelectedBackgroundView:selectedBackground];
     
+    cell.backgroundColor = [UIColor colorWithHex:0xF9F9F9];
     cell.textLabel.text = @[@"消息", @"博客"][indexPath.row];
     cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog"][indexPath.row]];
     
