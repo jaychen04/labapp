@@ -28,21 +28,21 @@
 - (void)setLayout
 {
     NSMutableArray *items = [NSMutableArray new];
-    NSArray *images    = @[@"toolbar-keyboardUp", @"toolbar-comments", @"toolbar-star", @"toolbar-share", @"toolbar-report"];
-    NSArray *selectors = @[@"switchMode:", @"showComments:", @"toggleStar:", @"share:", @"report:"];
+    NSArray *images    = @[@"toolbar-keyboardUp", @"toolbar-comments", @"toolbar-editingComment", @"toolbar-star", @"toolbar-share", @"toolbar-report"];
+    NSArray *selectors = @[@"switchMode:", @"showComments:", @"editComment:", @"toggleStar:", @"share:", @"report:"];
     
-    for (int i = 0; i < 5; ++i) {
-        UIImage *Image = [UIImage imageNamed:images[i]];
+    [images enumerateObjectsUsingBlock:^(NSString *imageName, NSUInteger idx, BOOL *stop) {
+        UIImage *image = [UIImage imageNamed:imageName];
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [button addTarget:self action:NSSelectorFromString(selectors[i]) forControlEvents:UIControlEventTouchUpInside];
-        button.frame = CGRectMake(0, 0, Image.size.width, Image.size.height);
-        [button setBackgroundImage:Image forState:UIControlStateNormal];
+        [button addTarget:self action:NSSelectorFromString(selectors[idx]) forControlEvents:UIControlEventTouchUpInside];
+        button.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+        [button setBackgroundImage:image forState:UIControlStateNormal];
         
         UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
         [items addObject:barButton];
         
         [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil]];
-    }
+    }];
 
     
     [self setItems:items];
@@ -50,7 +50,7 @@
 
 - (void)setIsStarred:(BOOL)isStarred
 {
-    UIBarButtonItem *starBarButton = self.items[4];
+    UIBarButtonItem *starBarButton = self.items[6];
     UIButton *starButton = (UIButton *)starBarButton.customView;
     
     if (isStarred) {
@@ -71,6 +71,11 @@
 - (void)showComments:(id)sender
 {
     if (_showComments) {_showComments();}
+}
+
+- (void)editComment:(id)sender
+{
+    if (_editComment) {_editComment();}
 }
 
 - (void)toggleStar:(id)sender

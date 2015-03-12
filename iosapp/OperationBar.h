@@ -20,6 +20,7 @@
 
 @property (nonatomic, copy) void (^switchMode)();
 @property (nonatomic, copy) void (^showComments)();
+@property (nonatomic, copy) void (^editComment)();
 @property (nonatomic, copy) void (^toggleStar)();
 @property (nonatomic, copy) void (^share)();
 @property (nonatomic, copy) void (^report)();

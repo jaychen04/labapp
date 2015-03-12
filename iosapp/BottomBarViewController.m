@@ -84,6 +84,10 @@
         [_operationBar.modeSwitchButton addTarget:self action:@selector(switchMode) forControlEvents:UIControlEventTouchUpInside];
         __weak BottomBarViewController *weakSelf = self;
         _operationBar.switchMode = ^ {[weakSelf switchMode];};
+        _operationBar.editComment = ^ {
+            [weakSelf switchMode];
+            [weakSelf.editingBar.editView becomeFirstResponder];
+        };
         
         _operationBar.translatesAutoresizingMaskIntoConstraints = NO;
         [self.view addSubview:_operationBar];

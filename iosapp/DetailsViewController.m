@@ -203,7 +203,7 @@
     
     // 资讯和软件详情没有“举报”选项
     if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware) {
-        self.operationBar.items = [self.operationBar.items subarrayWithRange:NSMakeRange(0, 8)];
+        self.operationBar.items = [self.operationBar.items subarrayWithRange:NSMakeRange(0, 10)];
     }
     
     _detailsView = [UIWebView new];
