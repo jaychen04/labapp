@@ -22,7 +22,7 @@
 #import <ReactiveCocoa.h>
 
 
-@interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) PlaceholderTextView   *edittingArea;
 @property (nonatomic, strong) UIImageView           *imageView;
@@ -91,7 +91,10 @@
 - (void)initSubViews
 {
     _edittingArea = [[PlaceholderTextView alloc] initWithPlaceholder:@"今天你动弹了吗？"];
+    _edittingArea.delegate = self;
     _edittingArea.placeholderFont = [UIFont systemFontOfSize:17];
+    _edittingArea.returnKeyType = UIReturnKeySend;
+    _edittingArea.enablesReturnKeyAutomatically = YES;
     _edittingArea.scrollEnabled = NO;
     _edittingArea.font = [UIFont systemFontOfSize:18];
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
@@ -373,6 +376,31 @@
                           
                           [HUD hide:YES afterDelay:2];
                       }];
+}
+
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString: @"\n"]) {
+        [self pubTweet];
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
+}
+
+- (void)textViewDidEndEditing:(PlaceholderTextView *)textView
+{
+    [textView checkShouldHidePlaceholder];
+    self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
+}
+
+- (void)textViewDidChange:(PlaceholderTextView *)textView
+{
+    [textView checkShouldHidePlaceholder];
+    self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
 }
 
 
