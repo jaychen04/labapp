@@ -110,7 +110,7 @@ static NSString *kNewsCellID = @"NewsCell";
     if (row < self.objects.count) {
         OSCNews *news = self.objects[row];
         if (news.url.absoluteString.length > 0) {
-            [[UIApplication sharedApplication] openURL:news.url];
+            [Utils analysis:news.url.absoluteString andNavController:self.navigationController];
         } else {
             DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNews:news];
             [self.navigationController pushViewController:detailsViewController animated:YES];
