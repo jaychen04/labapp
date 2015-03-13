@@ -11,7 +11,7 @@
 
 #import "ImageViewerController.h"
 
-const double kAnimationDuration = 0.3;
+const double kAnimationDuration = 0.1;
 
 @interface ImageViewerController () <UIScrollViewDelegate>
 

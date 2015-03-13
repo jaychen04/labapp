@@ -59,7 +59,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidUpdate:) name:UITextViewTextDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidUpdate:)    name:UITextViewTextDidChangeNotification object:nil];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
@@ -114,8 +114,6 @@
         [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"toolbar-text"] forState:UIControlStateNormal];
         _editingBar.editView.inputView = _emojiPageVC.view;
         [_editingBar.editView reloadInputViews];
-        
-        [self setBottomBarHeight:216];
     }
 }
 
@@ -168,24 +166,33 @@
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    _editingBarYConstraint.constant = keyboardBounds.size.height;
     
-    [self setBottomBarHeight:keyboardBounds.size.height];
+    [self setBottomBarHeightWithNotification:notification];
 }
-
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    [self setBottomBarHeight:0];
+    _editingBarYConstraint.constant = 0;
+
+    [self setBottomBarHeightWithNotification:notification];
 }
 
-- (void)setBottomBarHeight:(CGFloat)height
+- (void)setBottomBarHeightWithNotification:(NSNotification *)notification
 {
-    _editingBarYConstraint.constant = height;
-    [self.view setNeedsUpdateConstraints];
+    NSTimeInterval animationDuration;
+    [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
     
-    [UIView animateWithDuration:0.25 animations:^{
-        [self.view layoutIfNeeded];
-    }];
+    UIViewKeyframeAnimationOptions animationOptions;
+    animationOptions = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue] << 16;
+    
+    [self.view setNeedsUpdateConstraints];
+    [UIView animateKeyframesWithDuration:animationDuration
+                                   delay:0
+                                 options:animationOptions
+                              animations:^{
+                                  [self.view layoutIfNeeded];
+                              } completion:nil];
 }
 
 

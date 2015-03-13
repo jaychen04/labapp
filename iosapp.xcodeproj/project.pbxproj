@@ -1092,6 +1092,7 @@
 				00D6BD3319ECFD8E00E8754E /* TweetCell.h */,
 				00D6BD3419ECFD8E00E8754E /* TweetCell.m */,
 				38BD7D6B19FF7F31003ABB80 /* 动弹详情 */,
+				383B9FD61AB2C7D800C03C47 /* 编辑动弹 */,
 			);
 			name = "动弹";
 			sourceTree = "<group>";
@@ -1470,6 +1471,15 @@
 			name = "摇一摇";
 			sourceTree = "<group>";
 		};
+		383B9FD61AB2C7D800C03C47 /* 编辑动弹 */ = {
+			isa = PBXGroup;
+			children = (
+				38B0BFA71A42AF5500A2FDB0 /* TweetEditingVC.h */,
+				38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */,
+			);
+			name = "编辑动弹";
+			sourceTree = "<group>";
+		};
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -1805,8 +1815,6 @@
 				38B0BF9B1A3E8F9C00A2FDB0 /* OSCTabBarController.m */,
 				38B0BFA11A41349800A2FDB0 /* OptionButton.h */,
 				38B0BFA21A41349800A2FDB0 /* OptionButton.m */,
-				38B0BFA71A42AF5500A2FDB0 /* TweetEditingVC.h */,
-				38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */,
 			);
 			name = "Tab Bar";
 			sourceTree = "<group>";

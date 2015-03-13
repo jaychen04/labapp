@@ -192,20 +192,27 @@
 }
 
 
-
 - (void)keyboardWillShow:(NSNotification *)notification
 {
     CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
     _keyboardHeight.constant = keyboardBounds.size.height;
-    [self.view setNeedsUpdateConstraints];
     
     NSTimeInterval animationDuration;
     [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
-    [UIView animateWithDuration:animationDuration animations:^{
-        [self.view layoutIfNeeded];
-    }];
+    
+    UIViewKeyframeAnimationOptions animationOptions;
+    animationOptions = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue] << 16;
+    
+    [self.view setNeedsUpdateConstraints];
+    [UIView animateKeyframesWithDuration:animationDuration
+                                   delay:0
+                                 options:animationOptions
+                              animations:^{
+                                  [self.view layoutIfNeeded];
+                              } completion:nil];
 }
+
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
@@ -218,7 +225,6 @@
         [self.view layoutIfNeeded];
     }];
 }
-
 
 
 
