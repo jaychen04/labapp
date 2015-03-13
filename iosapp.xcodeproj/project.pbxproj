@@ -30,7 +30,7 @@
 		380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2251A761119003C4021 /* ActivityDetailsViewController.m */; };
 		380FD22A1A7612E8003C4021 /* ActivityBasicInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD2291A7612E8003C4021 /* ActivityBasicInfoCell.m */; };
 		380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD22C1A7621C5003C4021 /* ActivityDetailsCell.m */; };
-		380FD2951A774162003C4021 /* shake.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD2941A774162003C4021 /* shake.png */; };
+		380FD2951A774162003C4021 /* shaking.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD2941A774162003C4021 /* shaking.png */; };
 		380FD2B21A7762A8003C4021 /* tabbar-discover-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD2971A7762A8003C4021 /* tabbar-discover-selected.png */; };
 		380FD2B31A7762A8003C4021 /* tabbar-discover-selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD2981A7762A8003C4021 /* tabbar-discover-selected@2x.png */; };
 		380FD2B41A7762A8003C4021 /* tabbar-discover-selected@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 380FD2991A7762A8003C4021 /* tabbar-discover-selected@3x.png */; };
@@ -455,7 +455,7 @@
 		380FD2291A7612E8003C4021 /* ActivityBasicInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityBasicInfoCell.m; sourceTree = "<group>"; };
 		380FD22B1A7621C5003C4021 /* ActivityDetailsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailsCell.h; sourceTree = "<group>"; };
 		380FD22C1A7621C5003C4021 /* ActivityDetailsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailsCell.m; sourceTree = "<group>"; };
-		380FD2941A774162003C4021 /* shake.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shake.png; sourceTree = "<group>"; };
+		380FD2941A774162003C4021 /* shaking.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shaking.png; sourceTree = "<group>"; };
 		380FD2971A7762A8003C4021 /* tabbar-discover-selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-discover-selected.png"; sourceTree = "<group>"; };
 		380FD2981A7762A8003C4021 /* tabbar-discover-selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-discover-selected@2x.png"; sourceTree = "<group>"; };
 		380FD2991A7762A8003C4021 /* tabbar-discover-selected@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar-discover-selected@3x.png"; sourceTree = "<group>"; };
@@ -1494,7 +1494,7 @@
 				38763A111A89EB9B008E6805 /* QR-Code */,
 				380FD3481A77726E003C4021 /* editting bar */,
 				380FD2961A7762A8003C4021 /* tabbar */,
-				380FD2941A774162003C4021 /* shake.png */,
+				380FD2941A774162003C4021 /* shaking.png */,
 				3838D1AE1A6F4EB100CC7913 /* redPotato.png */,
 				3838D1AF1A6F4EB100CC7913 /* shake_down.png */,
 				3838D1B01A6F4EB100CC7913 /* shake_up.png */,
@@ -2184,7 +2184,7 @@
 				382A94A61A26D27400AAAFEA /* 100@2x.png in Resources */,
 				386F1E3C1A7A0CDA00B773EE /* UMShareEditViewController.xib in Resources */,
 				382A94581A26D27400AAAFEA /* 020@2x.png in Resources */,
-				380FD2951A774162003C4021 /* shake.png in Resources */,
+				380FD2951A774162003C4021 /* shaking.png in Resources */,
 				381293801AB17A5600B29221 /* toolbar-keyboardUp@3x.png in Resources */,
 				386F1E371A7A0CDA00B773EE /* UMSocialLocalizable.strings in Resources */,
 				38BB27B81AAC016A0088A15C /* discover-events.png in Resources */,
