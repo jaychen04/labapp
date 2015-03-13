@@ -26,6 +26,7 @@ PODS:
   - GPUImage (0.1.6)
   - MBProgressHUD (0.9.1)
   - Ono (1.2.0)
+  - Reachability (3.2)
   - ReactiveCocoa (2.4.7):
     - ReactiveCocoa/UI (= 2.4.7)
   - ReactiveCocoa/Core (2.4.7):
@@ -43,7 +44,8 @@ DEPENDENCIES:
   - AFOnoResponseSerializer (~> 1.0.0)
   - GPUImage (~> 0.1.6)
   - MBProgressHUD (~> 0.8)
-  - ReactiveCocoa
+  - Reachability
+  - ReactiveCocoa (~> 2.4.7)
   - RESideMenu (~> 4.0.7)
   - SDWebImage (~> 3.7.1)
   - SSKeychain
@@ -54,6 +56,7 @@ SPEC CHECKSUMS:
   GPUImage: cecb0830bb9428f50192042e3c7b53810f51388e
   MBProgressHUD: f3747dcbd45a9e855a6b0674550651e0b7ed250c
   Ono: 2c9f6c8c50af1b40e988ff85a3f200574ee445cd
+  Reachability: 1ef8adf5c4e3d362f96515d4278f68dad3c26930
   ReactiveCocoa: 313fc53cc9aeb2bbbc3f5f13c7eac16478d9af8f
   RESideMenu: a9c1cd2e64e60e1d3166ddac01a83e215a0e4d30
   SDWebImage: 116e88633b5b416ea0ca4b334a4ac59cf72dd38d
