@@ -244,8 +244,7 @@
               
               OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
-              NSLog(@"portraitURL = %@", user.portraitURL);
-              [Config saveOwnUserName:user.name andPortrait:[NSData dataWithContentsOfURL:user.portraitURL] andUserScore:user.score andUserFavoriteCount:user.favoriteCount andUserFans:user.fansCount andUserFollower:user.followersCount andOwnID:user.userID];
+              [Config saveOwnUserName:user.name andUserScore:user.score andUserFavoriteCount:user.favoriteCount andUserFans:user.fansCount andUserFollower:user.followersCount andOwnID:user.userID];
               [OSCThread startPollingNotice];
               
               [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];

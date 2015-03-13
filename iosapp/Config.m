@@ -44,19 +44,25 @@ NSString * const kPositionName = @"PositionName";
 
 
 + (void)saveOwnUserName:(NSString *)userName
-            andPortrait:(NSData *)portrait
            andUserScore:(int)score
    andUserFavoriteCount:(int)favoriteCount
             andUserFans:(int)fans andUserFollower:(int)follower andOwnID:(int64_t)userID
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:userName forKey:kUserName];
-    [userDefaults setObject:portrait forKey:kPortrait];
     [userDefaults setObject:@(score) forKey:kUserScore];
     [userDefaults setObject:@(favoriteCount) forKey:kUserFavoriteCount];
     [userDefaults setObject:@(fans) forKey:kUserFans];
     [userDefaults setObject:@(follower) forKey:kUserFollowers];
     [userDefaults setObject:@(userID) forKey:kUserID];
+    [userDefaults synchronize];
+}
+
++ (void)saveImage:(UIImage *)portrait
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:portrait forKey:kPortrait];
+    
     [userDefaults synchronize];
 }
 
@@ -111,7 +117,6 @@ NSString * const kPositionName = @"PositionName";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     NSString *userName = [userDefaults objectForKey:kUserName];
-    NSData *portrait = [userDefaults objectForKey:kPortrait];
     NSNumber *score = [userDefaults objectForKey:kUserScore];
     NSNumber *favoriteCount = [userDefaults objectForKey:kUserFavoriteCount];
     NSNumber *fans = [userDefaults objectForKey:kUserFans];
@@ -123,5 +128,12 @@ NSString * const kPositionName = @"PositionName";
     return @[userName, score, favoriteCount, follower, fans, userID];
 }
 
++ (UIImage *)getImage
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    UIImage *portrait = [userDefaults objectForKey:kPortrait];
+    
+    return portrait;
+}
 
 @end
