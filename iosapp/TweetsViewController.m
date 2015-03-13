@@ -188,10 +188,10 @@
         
         self.label.font = [UIFont boldSystemFontOfSize:14];
         [self.label setText:tweet.author];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)].height;
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
         
         [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 57, MAXFLOAT)].height;
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
 
         if (tweet.hasAnImage) {
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
