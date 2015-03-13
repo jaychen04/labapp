@@ -26,6 +26,7 @@
 
 @property (nonatomic, strong) PlaceholderTextView   *edittingArea;
 @property (nonatomic, strong) UIImageView           *imageView;
+@property (nonatomic, strong) UILabel               *deleteImageButton;
 @property (nonatomic, strong) UIToolbar             *toolBar;
 @property (nonatomic, assign) NSLayoutConstraint    *keyboardHeight;
 @property (nonatomic, strong) EmojiPageVC           *emojiPageVC;
@@ -104,11 +105,24 @@
     _imageView = [UIImageView new];
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
     _imageView.clipsToBounds = YES;
-    [_imageView addGestureRecognizer:[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPressInImage)]];
     _imageView.userInteractionEnabled = YES;
     _imageView.image = _image;
     _image = nil;
     [self.view addSubview:_imageView];
+    
+    
+    _deleteImageButton = [UILabel new];
+    _deleteImageButton.userInteractionEnabled = YES;
+    _deleteImageButton.text = @"✕";
+    _deleteImageButton.textColor = [UIColor whiteColor];
+    _deleteImageButton.backgroundColor = [UIColor redColor];
+    _deleteImageButton.textAlignment = NSTextAlignmentCenter;
+    _deleteImageButton.hidden = _imageView.image == nil;
+    [_deleteImageButton setCornerRadius:11];
+    [_deleteImageButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteImage)]];
+    [self.view addSubview:_deleteImageButton];
+    //RAC(_deleteImageButton, hidden) =
+    
     
     /****** toolBar ******/
     
@@ -149,7 +163,7 @@
 - (void)setLayout
 {
     for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = NSDictionaryOfVariableBindings(_edittingArea, _imageView, _toolBar);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_edittingArea, _imageView, _toolBar, _deleteImageButton);
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_edittingArea(>=200)]-15-[_imageView(90)]" options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_edittingArea]-8-|" options:0 metrics:nil views:views]];
@@ -158,7 +172,17 @@
     _keyboardHeight = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
                                                       toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:216];
     
+    
     [self.view addConstraint:_keyboardHeight];
+    
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+                                                              toItem:_deleteImageButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual
+                                                              toItem:_deleteImageButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_deleteImageButton(22)]" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_deleteImageButton(22)]"   options:0 metrics:nil views:views]];
 }
 
 - (void)cancelButtonClicked
@@ -308,6 +332,7 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     _imageView.image = info[UIImagePickerControllerOriginalImage];
+    _deleteImageButton.hidden = NO;
     
     //如果是拍照的照片，则需要手动保存到本地，系统不会自动保存拍照成功后的照片
     //UIImageWriteToSavedPhotosAlbum(edit, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
@@ -317,9 +342,10 @@
 
 #pragma mark - handle long press gesture
 
-- (void)handleLongPressInImage
+- (void)deleteImage
 {
     _imageView.image = nil;
+    _deleteImageButton.hidden = YES;
 }
 
 
