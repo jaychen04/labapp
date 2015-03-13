@@ -14,10 +14,16 @@ NSString * const kAccount = @"account";
 NSString * const kUserID = @"userID";
 
 NSString * const kUserName = @"name";
+NSString * const kPortrait = @"portrait";
 NSString * const kUserScore = @"score";
 NSString * const kUserFavoriteCount = @"favoritecount";
 NSString * const kUserFans = @"fans";
 NSString * const kUserFollowers = @"followers";
+
+NSString * const kJointime = @"jointime";
+NSString * const kDevelopPlatform = @"devplatform";
+NSString * const kExpertise = @"expertise";
+NSString * const kHometown = @"from";
 
 NSString * const kActorName = @"Actor";
 NSString * const kSex = @"Sex";
@@ -38,12 +44,14 @@ NSString * const kPositionName = @"PositionName";
 
 
 + (void)saveOwnUserName:(NSString *)userName
+            andPortrait:(NSData *)portrait
            andUserScore:(int)score
    andUserFavoriteCount:(int)favoriteCount
             andUserFans:(int)fans andUserFollower:(int)follower andOwnID:(int64_t)userID
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:userName forKey:kUserName];
+    [userDefaults setObject:portrait forKey:kPortrait];
     [userDefaults setObject:@(score) forKey:kUserScore];
     [userDefaults setObject:@(favoriteCount) forKey:kUserFavoriteCount];
     [userDefaults setObject:@(fans) forKey:kUserFans];
@@ -103,15 +111,16 @@ NSString * const kPositionName = @"PositionName";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     NSString *userName = [userDefaults objectForKey:kUserName];
+    NSData *portrait = [userDefaults objectForKey:kPortrait];
     NSNumber *score = [userDefaults objectForKey:kUserScore];
     NSNumber *favoriteCount = [userDefaults objectForKey:kUserFavoriteCount];
     NSNumber *fans = [userDefaults objectForKey:kUserFans];
     NSNumber *follower = [userDefaults objectForKey:kUserFollowers];
     NSNumber *userID = [userDefaults objectForKey:kUserID];
     if (userName) {
-        return @[userName, score, favoriteCount, fans, follower, userID];
+        return @[userName, score, favoriteCount, follower, fans, userID];
     }
-    return @[userName, score, favoriteCount, fans, follower, userID];
+    return @[userName, score, favoriteCount, follower, fans, userID];
 }
 
 

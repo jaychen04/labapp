@@ -76,14 +76,6 @@
     UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;
     
-    NSArray *usersInformation = [Config getUsersInformation];
-    _nameLabel.text = usersInformation[0];
-    [_creditsBtn setTitle:usersInformation[1] forState:UIControlStateNormal];
-    [_collectionsBtn setTitle:usersInformation[2] forState:UIControlStateNormal];
-    [_followsBtn setTitle:usersInformation[3] forState:UIControlStateNormal];
-    [_fansBtn setTitle:usersInformation[4] forState:UIControlStateNormal];
-  
-    
     [self refreshView];
 }
 
@@ -154,18 +146,18 @@
     [QRCodeImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapQRCodeImage)]];
     [header addSubview:QRCodeImageView];
     
+    _creditsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _collectionsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _followsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _fansBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    
     UIView *line = [UIView new];
     line.backgroundColor = [UIColor colorWithHex:0x2bc157];
     [header addSubview:line];
     
     UIView *countView = [UIView new];
     [header addSubview:countView];
-    
-    _creditsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _collectionsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _followsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _fansBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    
+
     void (^setButtonStyle)(UIButton *, NSString *) = ^(UIButton *button, NSString *title) {
         [button setTitleColor:[UIColor colorWithHex:0xEEEEEE] forState:UIControlStateNormal];
         button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -179,6 +171,25 @@
     setButtonStyle(_collectionsBtn, [NSString stringWithFormat:@"收藏\n%d", _myInfo.favoriteCount]);
     setButtonStyle(_followsBtn, [NSString stringWithFormat:@"关注\n%d", _myInfo.followersCount]);
     setButtonStyle(_fansBtn, [NSString stringWithFormat:@"粉丝\n%d", _myInfo.fansCount]);
+    
+    /////*
+    NSArray *usersInformation = [Config getUsersInformation];
+    
+    _nameLabel.text = usersInformation[0];
+    //_portrait.image = usersInformation[1];
+    [_creditsBtn setTitle:[NSString stringWithFormat:@"积分\n%@", usersInformation[1]] forState:UIControlStateNormal];
+    [_collectionsBtn setTitle:[NSString stringWithFormat:@"收藏\n%@", usersInformation[2]] forState:UIControlStateNormal];
+    [_followsBtn setTitle:[NSString stringWithFormat:@"关注\n%@", usersInformation[3]] forState:UIControlStateNormal];
+    [_fansBtn setTitle:[NSString stringWithFormat:@"粉丝\n%@", usersInformation[4]] forState:UIControlStateNormal];
+    
+//    NSLog(@"name = %@", _nameLabel.text);
+//    NSLog(@"portrait = %@", usersInformation[1]);
+//    NSLog(@"_creditsBtn = %@", usersInformation[1]);
+//    NSLog(@"_collectionsBtn = %@", usersInformation[2]);
+//    NSLog(@"_followsBtn = %@", usersInformation[3]);
+//    NSLog(@"_fansBtn = %@", usersInformation[4]);
+
+    /////
     
     [_collectionsBtn addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
     [_followsBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
@@ -346,11 +357,20 @@
 
 - (void)tapPortrait
 {
-    if ([Config getOwnID] == 0) {
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+    //没网
+    if (0) {
+        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+        HUD.labelText = @"网络错误";
+        
+        [HUD hide:YES afterDelay:2];
+        
     } else {
-        [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myInfo]
-                                             animated:YES];
+        if ([Config getOwnID] == 0) {
+            [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        } else {
+            [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myInfo]
+                                                 animated:YES];
+        }
     }
 }
 
