@@ -33,7 +33,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor whiteColor];
     
@@ -209,13 +208,13 @@
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_EVENT_APPLY]
        parameters:@{
-                    @"event":@(_eventId),
-                    @"user": @([Config getOwnID]),
-                    @"name":_nameTextfield.text,
-                    @"gender":@(_sexSegmentCtl.selectedSegmentIndex) ,
-                    @"mobile":_telephoneTextfield.text,
-                    @"company":_corporateNameTextfield.text,
-                    @"job":_positionNameTextfield.text
+                    @"event":   @(_eventId),
+                    @"user":    @([Config getOwnID]),
+                    @"name":    _nameTextfield.text,
+                    @"gender":  @(_sexSegmentCtl.selectedSegmentIndex) ,
+                    @"mobile":  _telephoneTextfield.text,
+                    @"company": _corporateNameTextfield.text,
+                    @"job":     _positionNameTextfield.text
                     }
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
@@ -234,7 +233,7 @@
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
-              [HUD hide:YES afterDelay:2];
+              [HUD hide:YES afterDelay:0.5];
               
               [Config saveActivityActorName:_nameTextfield.text
                                      andSex:_sexSegmentCtl.selectedSegmentIndex

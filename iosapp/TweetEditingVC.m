@@ -361,24 +361,25 @@
 {
     MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
     HUD.labelText = @"动弹发送中";
+    [HUD hide:YES afterDelay:0.5];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-        
+    
     [manager             POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_PUB]
                    parameters:@{
                                 @"uid": @([Config getOwnID]),
                                 @"msg": [Utils convertRichTextToRawText:_edittingArea]
                                 }
-     
+    
     constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                          if (_imageView.image) {
-                              [formData appendPartWithFileData:[Utils compressImage:_imageView.image]
-                                                          name:@"img"
-                                                      fileName:@"img.jpg"
-                                                      mimeType:@"image/jpeg"];
-                          }
-                     }
+                                  if (_imageView.image) {
+                                      [formData appendPartWithFileData:[Utils compressImage:_imageView.image]
+                                                                  name:@"img"
+                                                              fileName:@"img.jpg"
+                                                              mimeType:@"image/jpeg"];
+                                  }
+                             }
      
                       success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
                           ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
@@ -399,14 +400,14 @@
                               HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
                           }
                           
-                          [HUD hide:YES afterDelay:2];
+                          [HUD hide:YES afterDelay:0.5];
                           
                       } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                           HUD.mode = MBProgressHUDModeCustomView;
                           HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                           HUD.labelText = @"网络异常，动弹发送失败";
                           
-                          [HUD hide:YES afterDelay:2];
+                          [HUD hide:YES afterDelay:0.5];
                       }];
 }
 

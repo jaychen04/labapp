@@ -13,6 +13,8 @@
 #import "OSCAPI.h"
 #import "OSCPostDetails.h"
 #import "Utils.h"
+#import "ActivityDetailsWithBarViewController.h"
+#import "UIBarButtonItem+Badge.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -66,6 +68,12 @@
              ONOXMLElement *postXML = [responseObject.rootElement firstChildWithTag:@"post"];
              postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
              _HTML = [postDetails.body copy];
+             
+             UIBarButtonItem *commentsCountButton = _bottomBarVC.operationBar.items[4];
+             commentsCountButton.shouldHideBadgeAtZero = YES;
+             commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", postDetails.answerCount];
+             commentsCountButton.badgePadding = 1;
+             commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
              
              [self.tableView reloadData];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -181,13 +189,12 @@
         [[UIApplication sharedApplication] openURL:postDetails.signUpUrl];
     } else {
         if (postDetails.applyStatus == 2) {
-            NSLog(@"出席人员列表");
             PresentMembersViewController *presentMembersViewController = [[PresentMembersViewController alloc] initWithEventID:postDetails.postID];
-            [self.navigationController pushViewController:presentMembersViewController animated:YES];
+            [_bottomBarVC.navigationController pushViewController:presentMembersViewController animated:YES];
         } else {
             ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
             signUpViewController.eventId = postDetails.postID;
-            [self.navigationController pushViewController:signUpViewController animated:YES];
+            [_bottomBarVC.navigationController pushViewController:signUpViewController animated:YES];
         }
 
     }

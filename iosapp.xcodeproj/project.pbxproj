@@ -221,6 +221,7 @@
 		383B9FC91AB1955200C03C47 /* toolbar-comments@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 383B9FC71AB1955200C03C47 /* toolbar-comments@3x.png */; };
 		383B9FD41AB1985A00C03C47 /* toolbar-separatorline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 383B9FD21AB1985A00C03C47 /* toolbar-separatorline@2x.png */; };
 		383B9FD51AB1985A00C03C47 /* toolbar-separatorline@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 383B9FD31AB1985A00C03C47 /* toolbar-separatorline@3x.png */; };
+		383B9FD91AB416F000C03C47 /* ActivityDetailsWithBarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 383B9FD81AB416F000C03C47 /* ActivityDetailsWithBarViewController.m */; };
 		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1F1A1341BB008E2CFA /* ImageViewerController.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
@@ -665,6 +666,8 @@
 		383B9FC71AB1955200C03C47 /* toolbar-comments@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-comments@3x.png"; sourceTree = "<group>"; };
 		383B9FD21AB1985A00C03C47 /* toolbar-separatorline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-separatorline@2x.png"; sourceTree = "<group>"; };
 		383B9FD31AB1985A00C03C47 /* toolbar-separatorline@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-separatorline@3x.png"; sourceTree = "<group>"; };
+		383B9FD71AB416F000C03C47 /* ActivityDetailsWithBarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailsWithBarViewController.h; sourceTree = "<group>"; };
+		383B9FD81AB416F000C03C47 /* ActivityDetailsWithBarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailsWithBarViewController.m; sourceTree = "<group>"; };
 		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
 		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		38590C1E1A1341BB008E2CFA /* ImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerController.h; sourceTree = "<group>"; };
@@ -1167,6 +1170,8 @@
 				EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */,
 				EE7D32FD1AA95BF400ABFE58 /* PresentMembersViewController.h */,
 				EE7D32FE1AA95BF400ABFE58 /* PresentMembersViewController.m */,
+				383B9FD71AB416F000C03C47 /* ActivityDetailsWithBarViewController.h */,
+				383B9FD81AB416F000C03C47 /* ActivityDetailsWithBarViewController.m */,
 			);
 			name = "活动详情";
 			sourceTree = "<group>";
@@ -2539,6 +2544,7 @@
 				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
+				383B9FD91AB416F000C03C47 /* ActivityDetailsWithBarViewController.m in Sources */,
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,

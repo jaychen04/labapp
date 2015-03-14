@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class ActivityDetailsWithBarViewController;
+
 @class OSCActivity;
 
 @interface ActivityDetailsViewController : UITableViewController
+
+@property (nonatomic, weak) ActivityDetailsWithBarViewController *bottomBarVC;
 
 - (instancetype)initWithActivity:(OSCActivity *)activity;
 

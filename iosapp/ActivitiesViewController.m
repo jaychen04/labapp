@@ -9,7 +9,7 @@
 #import "ActivitiesViewController.h"
 #import "OSCActivity.h"
 #import "ActivityCell.h"
-#import "ActivityDetailsViewController.h"
+#import "ActivityDetailsWithBarViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -114,7 +114,7 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     
     if (row < self.objects.count) {
         OSCActivity *activity = self.objects[indexPath.row];
-        ActivityDetailsViewController *activityVC = [[ActivityDetailsViewController alloc] initWithActivity:activity];
+        ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivity:activity];
         [self.navigationController pushViewController:activityVC animated:YES];
     } else {
         [self fetchMore];
