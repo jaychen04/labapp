@@ -60,14 +60,6 @@
     [self fetchObjectsOnPage:0 refresh:YES];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if (_objects.count > 0 || _lastCell.status == LastCellStatusFinished) {
-        return;
-    }
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -85,10 +77,16 @@
     return _objects.count + 1;
 }
 
+/*
+// 这个方法会导致reloadData时，tableview自动滑动到底部
+// 暂时还没发现好的解决方法，只好不用这个方法了
+// http://stackoverflow.com/questions/22753858/implementing-estimatedheightforrowatindexpath-causes-the-tableview-to-scroll-do
+ 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 56;
 }
+*/
 
 
 
@@ -99,8 +97,7 @@
 {
     _refreshInProgress = NO;
     
-    if (!_refreshInProgress)
-    {
+    if (!_refreshInProgress) {
         _refreshInProgress = YES;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
