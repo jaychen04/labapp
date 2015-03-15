@@ -111,7 +111,8 @@ static NSString * const kSoftware       = @"software";
         NewsCell *cell = [NewsCell new];
         cell.titleLabel.text  = result.title;
         cell.authorLabel.text = result.author;
-        cell.timeLabel.text   = [result.pubDate componentsSeparatedByString:@" "][0];
+        cell.bodyLabel.text   = result.objectDescription;
+        cell.timeLabel.text   = [Utils intervalSinceNow:result.pubDate];
         
         return cell;
     }
@@ -120,11 +121,16 @@ static NSString * const kSoftware       = @"software";
 - (CGFloat)heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     OSCSearchResult *result = self.objects[indexPath.row];
-    [self.label setText:result.title];
-        
-    CGSize size = [self.label sizeThatFits:CGSizeMake(self.view.frame.size.width - 16, MAXFLOAT)];
     
-    return size.height + 39;
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    self.label.text = result.title;
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 16, MAXFLOAT)].height;
+    
+    self.label.text = result.objectDescription;
+    self.label.font = [UIFont systemFontOfSize:13];
+    height += [self.label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 16, MAXFLOAT)].height;
+    
+    return height + ([result.type isEqualToString:kSoftware]? 21: 42);
 }
 
 

@@ -32,6 +32,8 @@
     [self.contentView addSubview:_nameLabel];
     
     _descriptionLabel = [UILabel new];
+    _descriptionLabel.numberOfLines = 0;
+    _descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _descriptionLabel.font = [UIFont systemFontOfSize:13];
     _descriptionLabel.textColor = [UIColor colorWithHex:0x4F4F4F];
     [self.contentView addSubview:self.descriptionLabel];
