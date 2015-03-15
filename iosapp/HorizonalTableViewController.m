@@ -25,15 +25,6 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
         for (UIViewController *controller in controllers) {
             [self addChildViewController:controller];
         }
-        self.tableView = [UITableView new];
-        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        self.tableView.scrollsToTop = NO;
-        self.tableView.transform = CGAffineTransformMakeRotation(-M_PI / 2);
-        self.tableView.showsVerticalScrollIndicator = NO;
-        self.tableView.pagingEnabled = YES;
-        self.tableView.backgroundColor = [UIColor themeColor];
-        self.tableView.bounces = NO;
-        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kHorizonalCellID];
     }
     return self;
 }
@@ -41,6 +32,16 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    /*//*/self.tableView = [UITableView new];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.scrollsToTop = NO;
+    self.tableView.transform = CGAffineTransformMakeRotation(-M_PI_2);
+    self.tableView.showsVerticalScrollIndicator = NO;
+    self.tableView.pagingEnabled = YES;
+    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.bounces = NO;
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kHorizonalCellID];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -56,7 +57,7 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kHorizonalCellID forIndexPath:indexPath];
-    cell.contentView.transform = CGAffineTransformMakeRotation(M_PI / 2);
+    cell.contentView.transform = CGAffineTransformMakeRotation(M_PI_2);
     cell.contentView.backgroundColor = [UIColor themeColor];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
