@@ -41,4 +41,15 @@
     return self;
 }
 
+
+- (BOOL)isEqual:(id)object
+{
+    if ([self class] == [object class]) {
+        return _messageID == ((OSCMessage *)object).messageID;
+    }
+    
+    return NO;
+}
+
+
 @end

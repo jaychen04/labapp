@@ -26,4 +26,13 @@ static NSString * const kURL = @"url";
     return self;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if ([self class] == [object class]) {
+        return _objectID == ((OSCFavorite *)object).objectID;
+    }
+    
+    return NO;
+}
+
 @end

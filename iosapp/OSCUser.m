@@ -51,4 +51,15 @@ static NSString * const kExpertise = @"expertise";
     return self;
 }
 
+
+- (BOOL)isEqual:(id)object
+{
+    if ([self class] == [object class]) {
+        return _userID == ((OSCUser *)object).userID;
+    }
+    
+    return NO;
+}
+
+
 @end

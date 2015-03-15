@@ -31,4 +31,15 @@
     return self;
 }
 
+
+- (BOOL)isEqual:(id)object
+{
+    if ([self class] == [object class]) {
+        return _activityID == ((OSCActivity *)object).activityID;
+    }
+    
+    return NO;
+}
+
+
 @end

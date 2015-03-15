@@ -49,4 +49,13 @@ static NSString * const kAttach = @"attach";
     return self;
 }
 
+- (BOOL)isEqual:(id)object
+{
+    if ([self class] == [object class]) {
+        return _tweetID == ((OSCTweet *)object).tweetID;
+    }
+    
+    return NO;
+}
+
 @end
