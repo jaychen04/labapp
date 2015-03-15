@@ -17,6 +17,7 @@ static NSString * const kFollowers = @"followers";
 static NSString * const kFans = @"fans";
 static NSString * const kScore = @"score";
 static NSString * const kPortrait = @"portrait";
+static NSString * const kFavoriteCount = @"favoritecount";
 static NSString * const kExpertise = @"expertise";
 
 @interface OSCUser ()
@@ -43,6 +44,7 @@ static NSString * const kExpertise = @"expertise";
     _score = [[[xml firstChildWithTag:kScore] numberValue] intValue];
     _relationship = [[[xml firstChildWithTag:@"relation"] numberValue] intValue];
     _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
+    _favoriteCount = [[[xml firstChildWithTag:kFavoriteCount] numberValue] intValue];
     _developPlatform    = [[[xml firstChildWithTag:@"devplatform"] stringValue] copy];
     _expertise = [[[xml firstChildWithTag:kExpertise] stringValue] copy];
     _joinTime = [[[xml firstChildWithTag:@"jointime"] stringValue] copy];

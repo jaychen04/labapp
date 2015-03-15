@@ -81,6 +81,7 @@
     _accountField.keyboardType = UIKeyboardTypeEmailAddress;
     _accountField.delegate = self;
     _accountField.returnKeyType = UIReturnKeyNext;
+    _accountField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _accountField.enablesReturnKeyAutomatically = YES;
     
     self.passwordField = [UITextField new];
@@ -89,6 +90,7 @@
     _passwordField.secureTextEntry = YES;
     _passwordField.delegate = self;
     _passwordField.returnKeyType = UIReturnKeyDone;
+    _passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
     _passwordField.enablesReturnKeyAutomatically = YES;
     
     [_accountField addTarget:self action:@selector(returnOnKeyboard:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -242,7 +244,7 @@
               
               OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
-              [Config saveOwnID:user.userID];
+              [Config saveOwnUserName:user.name andUserScore:user.score andUserFavoriteCount:user.favoriteCount andUserFans:user.fansCount andUserFollower:user.followersCount andOwnID:user.userID];
               [OSCThread startPollingNotice];
               
               [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];

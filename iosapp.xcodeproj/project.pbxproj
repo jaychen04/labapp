@@ -385,6 +385,7 @@
 		EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */; };
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
+		EE713BA01AB2BBF100D318AF /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
 		EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */; };
 		EE7B45E31A834DE5002508C6 /* 066@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7B45E21A834DE5002508C6 /* 066@2x.png */; };
 		EE7B45E51A834EA3002508C6 /* 102@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7B45E41A834EA3002508C6 /* 102@2x.png */; };
@@ -911,6 +912,8 @@
 		EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UMS_facebook_icon@2x.png"; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
+		EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libNBSAppAgent.framework; sourceTree = "<group>"; };
+		EE713BA11AB2C12600D318AF /* iosapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosapp-Prefix.pch"; sourceTree = "<group>"; };
 		EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBasicInfoViewController.h; sourceTree = "<group>"; };
 		EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBasicInfoViewController.m; sourceTree = "<group>"; };
 		EE7B45E21A834DE5002508C6 /* 066@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "066@2x.png"; sourceTree = "<group>"; };
@@ -934,19 +937,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				386F1E661A7A2AA300B773EE /* libz.dylib in Frameworks */,
-				386F1E641A7A2A9B00B773EE /* libstdc++.dylib in Frameworks */,
+				386F1E5C1A7A2A6500B773EE /* SystemConfiguration.framework in Frameworks */,
+				386F1E581A7A2A4900B773EE /* Security.framework in Frameworks */,
 				386F1E621A7A2A8A00B773EE /* CoreTelephony.framework in Frameworks */,
+				386F1E641A7A2A9B00B773EE /* libstdc++.dylib in Frameworks */,
 				386F1E601A7A2A8000B773EE /* libsqlite3.dylib in Frameworks */,
 				386F1E5E1A7A2A7100B773EE /* CoreGraphics.framework in Frameworks */,
-				386F1E5C1A7A2A6500B773EE /* SystemConfiguration.framework in Frameworks */,
 				386F1E5A1A7A2A5800B773EE /* libiconv.dylib in Frameworks */,
-				386F1E581A7A2A4900B773EE /* Security.framework in Frameworks */,
 				386F1E4E1A7A0D6100B773EE /* libSocialQQ.a in Frameworks */,
 				386F1E511A7A0D6100B773EE /* libSocialWechat.a in Frameworks */,
 				386F1E521A7A0D6100B773EE /* libWeChatSDK.a in Frameworks */,
 				386F1E561A7A173700B773EE /* libSocialSina.a in Frameworks */,
 				386F1E4F1A7A0D6100B773EE /* TencentOpenAPI.framework in Frameworks */,
 				5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */,
+				EE713BA01AB2BBF100D318AF /* libNBSAppAgent.framework in Frameworks */,
 				386F1E381A7A0CDA00B773EE /* libUMSocial_Sdk_4.2.1.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1064,6 +1068,7 @@
 				00D6BCDE19EB673200E8754E /* Info.plist */,
 				00D6BCDF19EB673200E8754E /* main.m */,
 				38DB5E8E1A496FFD0092C966 /* emoji.plist */,
+				EE713BA11AB2C12600D318AF /* iosapp-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1132,6 +1137,7 @@
 		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */,
 				386F1E651A7A2AA300B773EE /* libz.dylib */,
 				386F1E631A7A2A9B00B773EE /* libstdc++.dylib */,
 				386F1E611A7A2A8A00B773EE /* CoreTelephony.framework */,
@@ -2703,7 +2709,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iosapp/UMSocial_Sdk_4.2.1/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
+					"$(PROJECT_DIR)",
 				);
+				GCC_PREFIX_HEADER = "iosapp/iosapp-Prefix.pch";
 				INFOPLIST_FILE = iosapp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2730,7 +2738,9 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iosapp/UMSocial_Sdk_4.2.1/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
+					"$(PROJECT_DIR)",
 				);
+				GCC_PREFIX_HEADER = "iosapp/iosapp-Prefix.pch";
 				INFOPLIST_FILE = iosapp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

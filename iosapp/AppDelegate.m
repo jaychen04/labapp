@@ -21,7 +21,6 @@
 
 #import <RESideMenu/RESideMenu.h>
 
-
 @interface AppDelegate () <UIApplicationDelegate, UITabBarControllerDelegate>
 
 @end
@@ -30,6 +29,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    [NBSAppAgent startWithAppID:@"2142ec9589c2480f952feab9ed19a535"];
+    
     OSCTabBarController *tabBarController = [OSCTabBarController new];
     tabBarController.delegate = self;
     
@@ -98,6 +100,8 @@
     [UMSocialWechatHandler setWXAppId:@"wx41be5fe48092e94c" appSecret:@"0101b0595ffe2042c214420fac358abc" url:@"http://www.umeng.com/social"];
     [UMSocialQQHandler setQQWithAppId:@"100942993" appKey:@"8edd3cc7ca8dcc15082d6fe75969601b" url:@"http://www.umeng.com/social"];
     [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    
+    
     
     return YES;
 }
