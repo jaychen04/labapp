@@ -12,6 +12,7 @@
 #import "Config.h"
 #import "Utils.h"
 #import "PlaceholderTextView.h"
+#import "LoginViewController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <objc/runtime.h>
@@ -359,6 +360,11 @@
 
 - (void)pubTweet
 {
+    if ([Config getOwnID] == 0) {
+        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        return;
+    }
+    
     MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
     HUD.labelText = @"动弹发送中";
     [HUD hide:YES afterDelay:0.5];
