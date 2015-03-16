@@ -244,7 +244,7 @@
               
               OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
-              [Config saveOwnUserName:user.name andUserScore:user.score andUserFavoriteCount:user.favoriteCount andUserFans:user.fansCount andUserFollower:user.followersCount andOwnID:user.userID];
+              [Config saveOwnID:user.userID userName:user.name score:user.score favoriteCount:user.favoriteCount fansCount:user.fansCount andFollowerCount:user.followersCount];
               [OSCThread startPollingNotice];
               
               [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];

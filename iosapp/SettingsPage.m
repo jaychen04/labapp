@@ -111,7 +111,7 @@
             [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
         }
     } else if (section == 2) {
-        [Config saveOwnUserName:@"点击头像登录" andUserScore:0 andUserFavoriteCount:0 andUserFans:0 andUserFollower:0 andOwnID:0];
+        [Config saveOwnID:0 userName:@"点击头像登录" score:0 favoriteCount:0 fansCount:0 andFollowerCount:0];
         
         NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
         for (NSHTTPCookie *cookie in [cookieStorage cookies]) {
