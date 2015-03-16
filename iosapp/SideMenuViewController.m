@@ -115,18 +115,19 @@
     UITableViewCell *cell = [UITableViewCell new];
     
     cell.backgroundColor = [UIColor clearColor];
+    UIView *selectedBackground = [UIView new];
+    selectedBackground.backgroundColor = [UIColor colorWithHex:0xCFCFCF];
+    [cell setSelectedBackgroundView:selectedBackground];
     cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"sidemenu-settings"][indexPath.row]];
     cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"注销"][indexPath.row];
-    cell.textLabel.textColor = [UIColor colorWithHex:0x696969];
-    cell.textLabel.font = [UIFont systemFontOfSize:21];
+    cell.textLabel.textColor = [UIColor colorWithHex:0x555555];
+    cell.textLabel.font = [UIFont systemFontOfSize:19];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     switch (indexPath.row) {
         case 0: {
             SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"技术问答"
