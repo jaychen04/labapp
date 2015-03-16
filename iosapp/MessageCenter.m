@@ -93,10 +93,25 @@
 
 - (void)setBadgeValue:(NSString *)badgeValue forButton:(UIButton *)button
 {
+#if 1
     if ([badgeValue isEqualToString:@"0"]) {
+        [button setTitle:[NSString stringWithFormat:@"%@", [button.titleLabel.text substringToIndex:2]] forState:UIControlStateNormal];
         return;
     }
-    [button setTitle:[NSString stringWithFormat:@"%@(%@)", button.titleLabel.text, badgeValue] forState:UIControlStateNormal];
+    [button setTitle:[NSString stringWithFormat:@"%@(%@)", [button.titleLabel.text substringToIndex:2], badgeValue] forState:UIControlStateNormal];
+#else
+    if ([badgeValue isEqualToString:@"0"]) {
+        button.badge.hidden = YES;
+        return;
+    }
+    
+    CGSize size = [button.titleLabel sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+    button.badgeValue = badgeValue;
+    button.badgeOriginX = (button.frame.size.width + size.width) / 2;
+    button.badgeOriginY = (button.frame.size.height - button.badge.frame.size.height) / 2;
+    button.badgeBGColor = [UIColor redColor];
+    button.badgeTextColor = [UIColor whiteColor];
+#endif
 }
 
 
