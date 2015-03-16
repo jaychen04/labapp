@@ -19,6 +19,7 @@
 #import "UserOperationCell.h"
 #import "BlogsViewController.h"
 #import "BubbleChatViewController.h"
+#import "LoginViewController.h"
 
 #import <MBProgressHUD.h>
 
@@ -183,10 +184,7 @@
 - (void)updateRelationship
 {
     if ([Config getOwnID] == 0) {
-        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
-        HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"请先登录";
-        [HUD hide:YES afterDelay:0.5];
+        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
     } else {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
@@ -234,8 +232,15 @@
 
 - (void)sendMessage
 {
-    [self.navigationController pushViewController:[[BubbleChatViewController alloc] initWithUserID:_user.userID andUserName:_user.name]
-                                         animated:YES];
+    if ([Config getOwnID] == 0) {
+        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.labelText = @"请先登录";
+        [HUD hide:YES afterDelay:0.5];
+    } else {
+        [self.navigationController pushViewController:[[BubbleChatViewController alloc] initWithUserID:_user.userID andUserName:_user.name]
+                                             animated:YES];
+    }
 }
 
 - (void)showUserInformation
