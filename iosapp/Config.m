@@ -130,7 +130,7 @@ NSString * const kPosition = @"position";
     return @[@"点击头像登录", @(0), @(0), @(0), @(0), @(0)];
 }
 
-+ (UIImage *)getImage
++ (UIImage *)getPortrait
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     UIImage *portrait = [UIImage imageWithData:[userDefaults objectForKey:kPortrait]];

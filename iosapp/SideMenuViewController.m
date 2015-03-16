@@ -35,6 +35,8 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reload) name:@"userRefresh" object:nil];
+    
     self.tableView.bounces = NO;
     
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
@@ -59,32 +61,40 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    NSArray *usersInformation = [Config getUsersInformation];
+    UIImage *portrait = [Config getPortrait];
+    
     UIView *headerView = [UIView new];
     headerView.backgroundColor = [UIColor clearColor];
     
-    /*
-    UIImageView *portrait = [UIImageView new];
-    portrait.contentMode = UIViewContentModeScaleAspectFit;
-    [portrait setCornerRadius:30];
-    portrait.userInteractionEnabled = YES;
-    portrait.translatesAutoresizingMaskIntoConstraints = NO;
-    [headerView addSubview:portrait];
+    UIImageView *portraitView = [UIImageView new];
+    portraitView.contentMode = UIViewContentModeScaleAspectFit;
+    [portraitView setCornerRadius:30];
+    portraitView.userInteractionEnabled = YES;
+    portraitView.translatesAutoresizingMaskIntoConstraints = NO;
+    [headerView addSubview:portraitView];
+    
+    if (portrait == nil) {
+        portraitView.image = [UIImage imageNamed:@"default-portrait"];
+    } else {
+        portraitView.image = portrait;
+    }
     
     UILabel *nameLabel = [UILabel new];
+    nameLabel.text = usersInformation[0];
     nameLabel.font = [UIFont boldSystemFontOfSize:20];
-    nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
+    nameLabel.textColor = [UIColor colorWithHex:0x696969];
     nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView addSubview:nameLabel];
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(portrait, nameLabel);
-    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[portrait(60)]-10-[nameLabel]-25-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
-    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-50-[portrait(60)]" options:0 metrics:nil views:views]];
+    NSDictionary *views = NSDictionaryOfVariableBindings(portraitView, nameLabel);
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[portraitView(60)]-10-[nameLabel]-15-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-50-[portraitView(60)]" options:0 metrics:nil views:views]];
     
-    portrait.userInteractionEnabled = YES;
+    portraitView.userInteractionEnabled = YES;
     nameLabel.userInteractionEnabled = YES;
-    [portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushLoginPage)]];
+    [portraitView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushLoginPage)]];
     [nameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushLoginPage)]];
-     */
         
     return headerView;
 }
@@ -183,8 +193,7 @@
 }
 
 
-/*
-#pragma mark - 点击头像
+#pragma mark - 点击登录
 
 - (void)pushLoginPage
 {
@@ -194,7 +203,13 @@
         return;
     }
 }
-*/
+
+- (void)reload
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
 
 
 @end

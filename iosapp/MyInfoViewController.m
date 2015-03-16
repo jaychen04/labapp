@@ -130,12 +130,14 @@
     if (_myID == 0) {
         _portrait.image = [UIImage imageNamed:@"default-portrait"];
     } else {
-        if (![Config getImage]) {
+        UIImage *portrait = [Config getPortrait];
+        if (portrait == nil) {
             [_portrait sd_setImageWithURL:_myInfo.portraitURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                 [Config savePortrait:image];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
             }];
         } else {
-            _portrait.image = [Config getImage];
+            _portrait.image = portrait;
         }
     }
     _portrait.userInteractionEnabled = YES;

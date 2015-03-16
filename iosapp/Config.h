@@ -22,6 +22,6 @@
 + (int64_t)getOwnID;
 + (NSArray *)getActivitySignUpInfomation;
 + (NSArray *)getUsersInformation;
-+ (UIImage *)getImage;
++ (UIImage *)getPortrait;
 
 @end
