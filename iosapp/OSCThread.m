@@ -13,9 +13,11 @@
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
+#import <Reachability.h>
 
 static BOOL isPollingStarted;
 static NSTimer *timer;
+static Reachability *reachability;
 
 @interface OSCThread ()
 
@@ -29,12 +31,15 @@ static NSTimer *timer;
         return;
     } else {
         timer = [NSTimer scheduledTimerWithTimeInterval:6 target:self selector:@selector(timerUpdate) userInfo:nil repeats:YES];
+        reachability = [Reachability reachabilityWithHostName:@"www.oschina.net"];
         isPollingStarted = YES;
     }
 }
 
 + (void)timerUpdate
 {
+    if (reachability.currentReachabilityStatus == 0) {return;}
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     

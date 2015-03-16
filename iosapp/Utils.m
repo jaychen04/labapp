@@ -353,8 +353,8 @@
 
 + (NSInteger)networkStatus
 {
-    Reachability *reach = [Reachability reachabilityWithHostName:@"www.oschina.net"];
-    return [reach currentReachabilityStatus];
+    Reachability *reachability = [Reachability reachabilityWithHostName:@"www.oschina.net"];
+    return reachability.currentReachabilityStatus;
 }
 
 + (BOOL)isNetworkExist
