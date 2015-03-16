@@ -15,7 +15,7 @@
 
 + (void)saveOwnUserName:(NSString *)userName andUserScore:(int)score andUserFavoriteCount:(int)favoriteCount andUserFans:(int)fans andUserFollower:(int)follower andOwnID:(int64_t)userID;
 
-+ (void)saveImage:(UIImage *)portrait;
++ (void)savePortrait:(UIImage *)portrait;
 
 + (void)saveActivityActorName:(NSString *)actorName andSex:(NSInteger)sex andTelephoneNumber:(NSString *)telephoneNumber andCorporateName:(NSString *)corporateName andPositionName:(NSString *)positionName;
 

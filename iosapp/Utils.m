@@ -19,6 +19,7 @@
 #import "TweetDetailsWithBottomBarViewController.h"
 #import <MBProgressHUD.h>
 #import <objc/runtime.h>
+#import <Reachability.h>
 
 @implementation Utils
 
@@ -347,6 +348,18 @@
     NSPredicate *urlPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", pattern];
     
     return [urlPredicate evaluateWithObject:string];
+}
+
+
++ (NSInteger)networkStatus
+{
+    Reachability *reach = [Reachability reachabilityWithHostName:@"www.oschina.net"];
+    return [reach currentReachabilityStatus];
+}
+
++ (BOOL)isNetworkExist
+{
+    return [self networkStatus] > 0;
 }
 
 

@@ -130,7 +130,7 @@
     } else {
         if (![Config getImage]) {
             [_portrait sd_setImageWithURL:_myInfo.portraitURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                [Config saveImage:image];
+                [Config savePortrait:image];
             }];
         } else {
             _portrait.image = [Config getImage];
@@ -356,20 +356,12 @@
 
 - (void)tapPortrait
 {
-    //没网
-    
-    
-    
-    
-    
-    
-    
-    if (0) {
+    if (![Utils isNetworkExist]) {
         MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
-        HUD.labelText = @"网络错误";
+        HUD.mode = MBProgressHUDModeText;
+        HUD.labelText = @"网络无连接，请检查网络";
         
-        [HUD hide:YES afterDelay:2];
-        
+        [HUD hide:YES afterDelay:1];
     } else {
         if ([Config getOwnID] == 0) {
             [self.navigationController pushViewController:[LoginViewController new] animated:YES];

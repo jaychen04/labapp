@@ -40,6 +40,8 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSString *)convertRichTextToRawText:(UITextView *)textView;
 + (NSString *)escapeHTML:(NSString *)originalHTML;
 + (BOOL)isURL:(NSString *)string;
++ (NSInteger)networkStatus;
++ (BOOL)isNetworkExist;
 
 + (CGFloat)valueBetweenMin:(CGFloat)min andMax:(CGFloat)max percent:(CGFloat)percent;
 

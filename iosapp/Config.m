@@ -58,10 +58,10 @@ NSString * const kPositionName = @"PositionName";
     [userDefaults synchronize];
 }
 
-+ (void)saveImage:(UIImage *)portrait
++ (void)savePortrait:(UIImage *)portrait
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:portrait forKey:kPortrait];
+    [userDefaults setObject:UIImagePNGRepresentation(portrait) forKey:kPortrait];
     
     [userDefaults synchronize];
 }
@@ -131,7 +131,7 @@ NSString * const kPositionName = @"PositionName";
 + (UIImage *)getImage
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    UIImage *portrait = [userDefaults objectForKey:kPortrait];
+    UIImage *portrait = [UIImage imageWithData:[userDefaults objectForKey:kPortrait]];
     
     return portrait;
 }
