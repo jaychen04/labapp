@@ -168,28 +168,31 @@
     CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     _editingBarYConstraint.constant = keyboardBounds.size.height;
     
-    [self setBottomBarHeightWithNotification:notification];
+    [self setBottomBarHeight];//WithNotification:notification];
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
     _editingBarYConstraint.constant = 0;
 
-    [self setBottomBarHeightWithNotification:notification];
+    [self setBottomBarHeight];//WithNotification:notification];
 }
 
-- (void)setBottomBarHeightWithNotification:(NSNotification *)notification
+- (void)setBottomBarHeight//WithNotification:(NSNotification *)notification
 {
+#if 0
     NSTimeInterval animationDuration;
     [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
     
     UIViewKeyframeAnimationOptions animationOptions;
     animationOptions = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue] << 16;
+#endif
+    // 用注释的方法有可能会遮住键盘
     
     [self.view setNeedsUpdateConstraints];
-    [UIView animateKeyframesWithDuration:animationDuration
+    [UIView animateKeyframesWithDuration:0.25       //animationDuration
                                    delay:0
-                                 options:animationOptions
+                                 options:7 << 16    //animationOptions
                               animations:^{
                                   [self.view layoutIfNeeded];
                               } completion:nil];
