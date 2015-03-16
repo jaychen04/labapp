@@ -88,8 +88,9 @@
     [headerView addSubview:nameLabel];
     
     NSDictionary *views = NSDictionaryOfVariableBindings(portraitView, nameLabel);
+    NSDictionary *metrics = @{@"x": @([UIScreen mainScreen].bounds.size.width / 4 - 15)};
     [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[portraitView(60)]-10-[nameLabel]-15-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
-    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-50-[portraitView(60)]" options:0 metrics:nil views:views]];
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-x-[portraitView(60)]" options:0 metrics:metrics views:views]];
     
     portraitView.userInteractionEnabled = YES;
     nameLabel.userInteractionEnabled = YES;
@@ -128,6 +129,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     switch (indexPath.row) {
         case 0: {
             SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"技术问答"
