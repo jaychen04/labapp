@@ -37,8 +37,10 @@
     
     self.tableView.bounces = NO;
     
-    //self.tableView.backgroundColor = [UIColor colorWithHex:0x15A230];
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg02-1080x1920"]];
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"menu-background(%dx%d)", (int)screenSize.width, (int)screenSize.height]];
+    NSLog(@"%@", [NSString stringWithFormat:@"menu-background(%dx%d)", (int)screenSize.width, (int)screenSize.height]);
+    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:image];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
@@ -105,7 +107,7 @@
     cell.backgroundColor = [UIColor clearColor];
     cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"sidemenu-settings"][indexPath.row]];
     cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"注销"][indexPath.row];
-    cell.textLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
+    cell.textLabel.textColor = [UIColor colorWithHex:0x696969];
     cell.textLabel.font = [UIFont systemFontOfSize:21];
     
     return cell;
