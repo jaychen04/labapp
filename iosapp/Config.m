@@ -46,7 +46,9 @@ NSString * const kPositionName = @"PositionName";
 + (void)saveOwnUserName:(NSString *)userName
            andUserScore:(int)score
    andUserFavoriteCount:(int)favoriteCount
-            andUserFans:(int)fans andUserFollower:(int)follower andOwnID:(int64_t)userID
+            andUserFans:(int)fans
+        andUserFollower:(int)follower
+               andOwnID:(int64_t)userID
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:userName forKey:kUserName];
@@ -125,7 +127,7 @@ NSString * const kPositionName = @"PositionName";
     if (userName) {
         return @[userName, score, favoriteCount, follower, fans, userID];
     }
-    return @[userName, score, favoriteCount, follower, fans, userID];
+    return @[@"点击头像登录", @(0), @(0), @(0), @(0), @(0)];
 }
 
 + (UIImage *)getImage

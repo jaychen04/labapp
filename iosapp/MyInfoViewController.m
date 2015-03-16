@@ -113,6 +113,8 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    NSArray *usersInformation = [Config getUsersInformation];
+    
     UIImageView *header = [UIImageView new];
     header.userInteractionEnabled = YES;
     NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
@@ -143,7 +145,7 @@
     _nameLabel = [UILabel new];
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     _nameLabel.font = [UIFont boldSystemFontOfSize:18];
-    _nameLabel.text = _myID? _myInfo.name: @"点击头像登录";
+    _nameLabel.text = usersInformation[0];
     [header addSubview:_nameLabel];
     
     UIImageView *QRCodeImageView = [UIImageView new];
@@ -178,16 +180,12 @@
     setButtonStyle(_followsBtn, [NSString stringWithFormat:@"关注\n%d", _myInfo.followersCount]);
     setButtonStyle(_fansBtn, [NSString stringWithFormat:@"粉丝\n%d", _myInfo.fansCount]);
     
-    /////*
-    NSArray *usersInformation = [Config getUsersInformation];
     
-    _nameLabel.text = usersInformation[0];
     [_creditsBtn setTitle:[NSString stringWithFormat:@"积分\n%@", usersInformation[1]] forState:UIControlStateNormal];
     [_collectionsBtn setTitle:[NSString stringWithFormat:@"收藏\n%@", usersInformation[2]] forState:UIControlStateNormal];
     [_followsBtn setTitle:[NSString stringWithFormat:@"关注\n%@", usersInformation[3]] forState:UIControlStateNormal];
     [_fansBtn setTitle:[NSString stringWithFormat:@"粉丝\n%@", usersInformation[4]] forState:UIControlStateNormal];
-
-    /////
+    
     
     [_collectionsBtn addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
     [_followsBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
