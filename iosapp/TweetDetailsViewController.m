@@ -89,9 +89,16 @@
              self.objectAuthorID = _tweet.authorID;
              _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;}</style>\
                                                         <font size=\"3\"><strong>%@</strong></font>\
-                                                        <br/><a href='%@'><img style='max-width:300px;' src='%@'/></a>",
-                                                        _tweet.body,  _tweet.bigImgURL, _tweet.bigImgURL];
-             
+                                                        <br/>",
+                                                        _tweet.body];
+             if (_tweet.hasAnImage) {
+                 _tweet.body = [NSString stringWithFormat:@"%@<a href='%@'>\
+                                                                    <img style='max-width:300px;\
+                                                                                margin-top:10px;\
+                                                                                margin-bottom:15px'\
+                                                                         src='%@'/>\
+                                                            </a>", _tweet.body, _tweet.bigImgURL, _tweet.bigImgURL];
+             }
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
              });
