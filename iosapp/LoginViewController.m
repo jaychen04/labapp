@@ -65,6 +65,14 @@
     }];
 }
 
+#if 0
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [_accountField becomeFirstResponder];
+}
+#endif
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -101,8 +109,8 @@
     
     _loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _loginButton.titleLabel.font = [UIFont systemFontOfSize:17];
-    _loginButton.backgroundColor = [UIColor redColor];
-    [_loginButton setCornerRadius:5.0];
+    _loginButton.backgroundColor = [UIColor colorWithHex:0x15A230];
+    [_loginButton setCornerRadius:20];
     [_loginButton setTitle:@"登录" forState:UIControlStateNormal];
     [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: _loginButton];
@@ -116,37 +124,30 @@
 
 - (void)setLayout
 {
-    UIImageView *loginLogo = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"loginLogo"]];
-    loginLogo.contentMode = UIViewContentModeScaleAspectFit;
-    
-    UIImageView *email = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"email"]];
+    UIImageView *email = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-email"]];
     email.contentMode = UIViewContentModeScaleAspectFill;
     
-    UIImageView *password = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"password"]];
+    UIImageView *password = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-password"]];
     password.contentMode = UIViewContentModeScaleAspectFit;
     
-    [self.view addSubview:loginLogo];
     [self.view addSubview:email];
     [self.view addSubview:password];
     
     for (UIView *view in [self.view subviews]) { view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(loginLogo, email, password, _accountField, _passwordField, _loginButton);
+    NSDictionary *views = NSDictionaryOfVariableBindings(email, password, _accountField, _passwordField, _loginButton);
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-40-[loginLogo(90)]-25-[email(20)]-20-[password(20)]" options:0 metrics:nil views:views]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view    attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual
+                                                             toItem:_loginButton attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|->=50-[loginLogo(90)]->=50-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
+                                                             toItem:_loginButton attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:loginLogo attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual
-                                                             toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.f constant:0.f]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[email(20)]-20-[password(20)]-30-[_loginButton(40)]" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_loginButton]-20-|" options:0 metrics:nil views:views]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[email(20)]-[_accountField]-30-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
-    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[email(20)]-[_accountField]-30-|"     options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[password(20)]-[_passwordField]-30-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[password]->=20-[_loginButton(35)]" options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_passwordField]-30-[_loginButton]" options:NSLayoutFormatAlignAllRight metrics:nil views:views]];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -160,58 +161,17 @@
 
 #pragma mark - 键盘操作
 
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    NSTimeInterval animationDuration=0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    
-    CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height;
-    
-    CGFloat y = -50;
-    CGRect rect = CGRectMake(0.0f, y, width, height);
-    self.view.frame = rect;
-    
-    [UIView commitAnimations];
-    
-    return YES;
-}
-
-- (void)resumeView
-{
-    NSTimeInterval animationDuration=0.30f;
-    [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
-    [UIView setAnimationDuration:animationDuration];
-    
-    CGFloat width = self.view.frame.size.width;
-    CGFloat height = self.view.frame.size.height;
-    
-    CGRect rect  =CGRectMake(0.0f, 64, width, height);
-    self.view.frame = rect;
-    
-    [UIView commitAnimations];
-}
-
 - (void)hidenKeyboard
 {
     [_accountField resignFirstResponder];
     [_passwordField resignFirstResponder];
-    [self resumeView];
 }
 
-
-- (BOOL)textFieldShouldClear:(UITextField *)textField{
-    _loginButton.enabled = NO;
-    return YES;
-}
-
-//点击键盘上的Return按钮响应的方法
 - (void)returnOnKeyboard:(UITextField *)sender
 {
     if (sender == _accountField) {
         [_passwordField becomeFirstResponder];
-    }else if (sender == _passwordField) {
+    } else if (sender == _passwordField) {
         [self hidenKeyboard];
         if (_loginButton.enabled) {
             [self login];
