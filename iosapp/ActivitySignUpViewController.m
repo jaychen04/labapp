@@ -63,7 +63,6 @@
     
     _nameTextField = [UITextField new];
     _nameTextField.placeholder = @" 请输入姓名（必填）";
-    //_nameTextField.delegate = self;
     _nameTextField.borderStyle = UITextBorderStyleRoundedRect;
     //_nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     
@@ -71,7 +70,6 @@
     
     _phoneNumberTextField = [UITextField new];
     _phoneNumberTextField.placeholder = @"请输入电话号码（必填）";
-    //_phoneNumberTextField.delegate = self;
     _phoneNumberTextField.borderStyle = UITextBorderStyleRoundedRect;
     //_phoneNumberTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
     [self.view addSubview:_phoneNumberTextField];

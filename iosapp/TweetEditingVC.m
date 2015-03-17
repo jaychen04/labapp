@@ -368,53 +368,54 @@
     MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
     HUD.labelText = @"动弹发送中";
     [HUD hide:YES afterDelay:0.5];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    
-    [manager             POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_PUB]
-                   parameters:@{
-                                @"uid": @([Config getOwnID]),
-                                @"msg": [Utils convertRichTextToRawText:_edittingArea]
-                                }
-    
-    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-                                  if (_imageView.image) {
-                                      [formData appendPartWithFileData:[Utils compressImage:_imageView.image]
-                                                                  name:@"img"
-                                                              fileName:@"img.jpg"
-                                                              mimeType:@"image/jpeg"];
-                                  }
-                             }
-     
-                      success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-                          ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
-                          int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-                          NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-                          
-                          HUD.mode = MBProgressHUDModeCustomView;
-                          
-                          if (errorCode == 1) {
-                              _edittingArea.text = @"";
-                              _imageView.image = nil;
-                              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                              HUD.labelText = @"动弹发表成功";
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        
+        [manager             POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_PUB]
+                       parameters:@{
+                                    @"uid": @([Config getOwnID]),
+                                    @"msg": [Utils convertRichTextToRawText:_edittingArea]
+                                    }
+         
+        constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            if (_imageView.image) {
+                [formData appendPartWithFileData:[Utils compressImage:_imageView.image]
+                                            name:@"img"
+                                        fileName:@"img.jpg"
+                                        mimeType:@"image/jpeg"];
+            }
+        }
+         
+                          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+                              ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
+                              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+                              NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
                               
-                              [self dismissViewControllerAnimated:YES completion:nil];
-                          } else {
+                              HUD.mode = MBProgressHUDModeCustomView;
+                              
+                              if (errorCode == 1) {
+                                  _edittingArea.text = @"";
+                                  _imageView.image = nil;
+                                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                                  HUD.labelText = @"动弹发表成功";
+                              } else {
+                                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                              }
+                              
+                              [HUD hide:YES afterDelay:0.5];
+                              
+                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              HUD.mode = MBProgressHUDModeCustomView;
                               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                              HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                          }
-                          
-                          [HUD hide:YES afterDelay:0.5];
-                          
-                      } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                          HUD.mode = MBProgressHUDModeCustomView;
-                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                          HUD.labelText = @"网络异常，动弹发送失败";
-                          
-                          [HUD hide:YES afterDelay:0.5];
-                      }];
+                              HUD.labelText = @"网络异常，动弹发送失败";
+                              
+                              [HUD hide:YES afterDelay:0.5];
+                          }];
+    });
 }
 
 

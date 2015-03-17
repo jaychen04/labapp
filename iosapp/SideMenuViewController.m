@@ -41,7 +41,6 @@
     
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"menu-background(%dx%d)", (int)screenSize.width, (int)screenSize.height]];
-    NSLog(@"%@", [NSString stringWithFormat:@"menu-background(%dx%d)", (int)screenSize.width, (int)screenSize.height]);
     self.tableView.backgroundView = [[UIImageView alloc] initWithImage:image];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];

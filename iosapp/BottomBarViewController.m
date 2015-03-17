@@ -257,13 +257,11 @@
 - (void)textViewDidEndEditing:(PlaceholderTextView *)textView
 {
     [textView checkShouldHidePlaceholder];
-    self.editingBar.sendButton.enabled = [textView hasText];
 }
 
 - (void)textViewDidChange:(PlaceholderTextView *)textView
 {
     [textView checkShouldHidePlaceholder];
-    self.editingBar.sendButton.enabled = [textView hasText];
 }
 
 

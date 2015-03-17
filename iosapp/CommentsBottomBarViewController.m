@@ -36,7 +36,6 @@
         
         _commentsVC = [[CommentsViewController alloc] initWithCommentType:commentType andObjectID:objectID];
         [self addChildViewController:_commentsVC];
-        [self.editingBar.sendButton addTarget:self action:@selector(sendContent) forControlEvents:UIControlEventTouchUpInside];
         
         [self setUpBlock];
     }

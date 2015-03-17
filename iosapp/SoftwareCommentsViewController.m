@@ -30,7 +30,6 @@
         _softwareName = [softwareName copy];
         _tweetsViewController = [[TweetsViewController alloc] initWithSoftwareID:softwareID];
         [self addChildViewController:_tweetsViewController];
-        [self.editingBar.sendButton addTarget:self action:@selector(sendContent) forControlEvents:UIControlEventTouchUpInside];
         
         [self setUpBlock];
     }

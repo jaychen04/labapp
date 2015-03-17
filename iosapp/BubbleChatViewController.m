@@ -31,7 +31,6 @@
         _userID = userID;
         _messageBubbleVC = [[MessageBubbleViewController alloc] initWithUserID:userID andUserName:userName];
         [self addChildViewController:_messageBubbleVC];
-        [self.editingBar.sendButton addTarget:self action:@selector(sendContent) forControlEvents:UIControlEventTouchUpInside];
         
         [self setUpBlock];
     }
