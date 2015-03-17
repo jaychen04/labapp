@@ -11,9 +11,11 @@
 
 #import "ImageViewerController.h"
 
-const double kAnimationDuration = 0.1;
+#import <UIImageView+WebCache.h>
 
 @interface ImageViewerController () <UIScrollViewDelegate>
+
+@property (nonatomic, strong) UIActivityIndicatorView *indicator;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *imageView;
@@ -33,24 +35,15 @@ const double kAnimationDuration = 0.1;
     if (self) {
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         
-        UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:imageURL]];
-        _imageView = [[UIImageView alloc] initWithImage:image];
+        _imageView = [UIImageView new];
+        _imageView.contentMode = UIViewContentModeScaleAspectFit;
+        [_imageView sd_setImageWithURL:imageURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            _indicator.hidden = YES;
+        }];
     }
     
     return self;
 }
-
-
-- (instancetype)initWithImageURL:(NSURL *)imageURL thumbnail:(UIImageView *)thumbnail
-{
-    self = [self initWithImageURL:imageURL];
-    if (self) {
-        _thumbnail = thumbnail;
-    }
-    
-    return self;
-}
-
 
 
 
@@ -61,14 +54,13 @@ const double kAnimationDuration = 0.1;
     
     self.view.backgroundColor = [UIColor blackColor];
     
-    self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    self.scrollView.delegate = self;
-    self.scrollView.maximumZoomScale = 2;
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:self.scrollView];
+    _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    _scrollView.delegate = self;
+    _scrollView.maximumZoomScale = 2;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:_scrollView];
     
-    _imageView.contentMode = UIViewContentModeScaleAspectFit;
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     doubleTap.numberOfTapsRequired = 2;
@@ -79,88 +71,34 @@ const double kAnimationDuration = 0.1;
     [_imageView addGestureRecognizer:singleTap];
     
     _imageView.userInteractionEnabled = YES;
-    self.scrollView.contentSize = _imageView.frame.size;
-    [self.scrollView addSubview:_imageView];
+    _scrollView.contentSize = _imageView.frame.size;
+    [_scrollView addSubview:_imageView];
+    
+    
+    _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _indicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin  | UIViewAutoresizingFlexibleBottomMargin |
+    UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    _indicator.color = [UIColor colorWithRed:54/255 green:54/255 blue:54/255 alpha:1.0];
+    _indicator.center = self.view.center;
+    [self.view addSubview:_indicator];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated
+{
     [super viewWillAppear:animated];
     
-    UIApplication *app = [UIApplication sharedApplication];
-    UIView *window = [app keyWindow];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:NO];
     
-    if (!_thumbnail) {
-        CGSize mainFrameSize = self.view.frame.size;
-        _thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(mainFrameSize.width/2, mainFrameSize.height/2, mainFrameSize.width, mainFrameSize.height)];
-        _thumbnail.image = _imageView.image;
-        _thumbnail.contentMode = UIViewContentModeScaleAspectFit;
-    }
-    _imageView.frame = _thumbnail.frame;
-    
-    _originalFrame = [self.thumbnail convertRect:self.thumbnail.bounds toView:window];
-    _imageView.layer.position = CGPointMake(_originalFrame.origin.x + floorf(_originalFrame.size.width/2), _originalFrame.origin.y + floorf(_originalFrame.size.height/2));
+    _imageView.frame = _scrollView.bounds;
 }
-
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    UIApplication *app = [UIApplication sharedApplication];
-    UIView *window = [app keyWindow];
-    
-    CGRect endFrame = [self.view convertRect:self.scrollView.bounds toView:window];
-    CABasicAnimation *center = [CABasicAnimation animationWithKeyPath:@"position"];
-    center.fromValue = [NSValue valueWithCGPoint:self.imageView.layer.position];
-    center.toValue = [NSValue valueWithCGPoint:CGPointMake(floorf(endFrame.size.width/2),floorf(endFrame.size.height/2))];
-    
-    CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"bounds"];
-    scale.fromValue = [NSValue valueWithCGRect:self.imageView.layer.bounds];
-    CGSize imageSize = self.thumbnail.image.size;
-    CGFloat maxHeight = MIN(endFrame.size.height, endFrame.size.width  * imageSize.height/imageSize.width);
-    CGFloat maxWidth  = MIN(endFrame.size.width,  endFrame.size.height * imageSize.width/imageSize.height);
-    scale.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, maxWidth, maxHeight)];
-    
-    CAAnimationGroup *group = [CAAnimationGroup animation];
-    group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    group.delegate = self;
-    group.duration = kAnimationDuration;
-    group.animations = @[scale, center];
-    [group setValue:@"expand" forKey:@"type"];
-    
-    [self.imageView.layer addAnimation:group forKey:nil];
-    
-    _imageView.frame = self.scrollView.bounds;
-}
-
 
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    UIApplication *app = [UIApplication sharedApplication];
-    UIWindow *window = [app keyWindow];
-    [window addSubview:self.imageView];
-    
-    CABasicAnimation *center = [CABasicAnimation animationWithKeyPath:@"position"];
-    center.fromValue = [NSValue valueWithCGPoint:self.imageView.layer.position];
-    center.toValue = [NSValue valueWithCGPoint:CGPointMake(_originalFrame.origin.x + floorf(_originalFrame.size.width/2), _originalFrame.origin.y + floorf(_originalFrame.size.height/2))];
-    
-    CABasicAnimation *scale = [CABasicAnimation animationWithKeyPath:@"bounds"];
-    scale.fromValue = [NSValue valueWithCGRect:self.imageView.layer.bounds];
-    scale.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, _originalFrame.size.width, _originalFrame.size.height)];
-    
-    CAAnimationGroup *group = [CAAnimationGroup animation];
-    group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    group.delegate = self;
-    group.duration = kAnimationDuration;
-    group.animations = @[scale, center];
-    [group setValue:@"contract" forKey:@"type"];
-    
-    self.imageView.layer.position = [center.toValue CGPointValue];
-    self.imageView.layer.bounds = [scale.toValue CGRectValue];
-    [self.imageView.layer addAnimation:group forKey:nil];
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
 }
-
 
 
 
@@ -185,41 +123,26 @@ const double kAnimationDuration = 0.1;
 {
     static BOOL zoomOut = NO;
     
-    CGFloat power = zoomOut ? 1/self.scrollView.maximumZoomScale : self.scrollView.maximumZoomScale;
+    CGFloat power = zoomOut ? 1/_scrollView.maximumZoomScale : _scrollView.maximumZoomScale;
     zoomOut = !zoomOut;
     
     CGPoint pointInView = [recognizer locationInView:self.imageView];
     
-    CGFloat newZoomScale = self.scrollView.zoomScale * power;
+    CGFloat newZoomScale = _scrollView.zoomScale * power;
     
-    CGSize scrollViewSize = self.scrollView.bounds.size;
+    CGSize scrollViewSize = _scrollView.bounds.size;
     
     CGFloat width = scrollViewSize.width / newZoomScale;
     CGFloat height = scrollViewSize.height / newZoomScale;
     CGFloat x = pointInView.x - (width / 2.0f);
-    CGFloat y = self.scrollView.center.y - (height / 2.0f);
+    CGFloat y = _scrollView.center.y - (height / 2.0f);
     
     CGRect rectToZoomTo = CGRectMake(x, y, width, height);
     
-    [self.scrollView zoomToRect:rectToZoomTo animated:YES];
+    [_scrollView zoomToRect:rectToZoomTo animated:YES];
 }
 
 
-#pragma mark - CAAnimationDelegate
-
-- (void)animationDidStart:(CAAnimation *)anim
-{
-    if ([[anim valueForKey:@"type"] isEqual:@"expand"]) {
-        self.thumbnail.hidden = YES;
-    }
-}
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    if ([[anim valueForKey:@"type"] isEqual:@"contract"]) {
-        self.thumbnail.hidden = NO;
-        [self.imageView removeFromSuperview];
-    }
-}
 
 
 

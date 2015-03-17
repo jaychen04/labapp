@@ -339,8 +339,7 @@
 - (void)loadLargeImage:(UITapGestureRecognizer *)recognizer
 {
     OSCTweet *tweet = self.objects[recognizer.view.tag];
-    ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:tweet.bigImgURL
-                                                                                 thumbnail:(UIImageView *)recognizer.view];
+    ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:tweet.bigImgURL];
     
     [self presentViewController:imageViewerVC animated:YES completion:nil];
 }
