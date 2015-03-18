@@ -66,7 +66,7 @@
                                                                             target:self
                                                                             action:@selector(cancelButtonClicked)];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"send"]
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发表"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(pubTweet)];
