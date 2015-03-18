@@ -40,8 +40,8 @@
                     #oschina_outline a {color:#0D6DA8; text-decoration:none;}\
                     #oschina_software {color:#808080;font-size:12px}\
                     #oschina_body {font-size:16px; line-height:24px;}\
-                    #oschina_body img {max-width: 300px;}\
-                    #oschina_body table {max-width:300px;}\
+                    #oschina_body img {max-width: 100%;}\
+                    #oschina_body table {max-width:100%;}\
                     #oschina_body pre {font-size:9pt; font-family:Courier New, Arial; border:1px solid #ddd; border-left:5px solid #6CE26C; background:#f6f6f6; padding:5px;}\
                     </style>"
 
