@@ -382,6 +382,7 @@
 		38F0A6311AAEC7C7001B531E /* widget_repost@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F0A6281AAEC7C7001B531E /* widget_repost@3x.png */; };
 		38F0A6321AAEC7C7001B531E /* widget_taday@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F0A6291AAEC7C7001B531E /* widget_taday@2x.png */; };
 		38F0A6331AAEC7C7001B531E /* widget_taday@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F0A62A1AAEC7C7001B531E /* widget_taday@3x.png */; };
+		38F5FA7E1AB9858C00E01A84 /* overlaygraphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 		EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */; };
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
@@ -907,6 +908,7 @@
 		38F0A6281AAEC7C7001B531E /* widget_repost@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "widget_repost@3x.png"; sourceTree = "<group>"; };
 		38F0A6291AAEC7C7001B531E /* widget_taday@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "widget_taday@2x.png"; sourceTree = "<group>"; };
 		38F0A62A1AAEC7C7001B531E /* widget_taday@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "widget_taday@3x.png"; sourceTree = "<group>"; };
+		38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlaygraphic.png; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1533,6 +1535,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */,
 				383B9FFC1AB7ED8B00C03C47 /* login */,
 				383B9FE31AB6CC5900C03C47 /* sidemenu */,
 				383B9FDA1AB6C95200C03C47 /* menu background */,
@@ -2232,6 +2235,7 @@
 				EE7D33071AA9A00400ABFE58 /* icon_event_status_checked.png in Resources */,
 				380FD2BD1A7762A8003C4021 /* tabbar-me@3x.png in Resources */,
 				382A947A1A26D27400AAAFEA /* 054@2x.png in Resources */,
+				38F5FA7E1AB9858C00E01A84 /* overlaygraphic.png in Resources */,
 				380FD2C81A7762A8003C4021 /* tabbar-tweet-selected@2x.png in Resources */,
 				382A94651A26D27400AAAFEA /* 033@2x.png in Resources */,
 				38BC59A91A5D406300F3C4D2 /* note@2x.png in Resources */,

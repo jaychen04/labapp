@@ -44,6 +44,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonClicked)];
     
     [self setUpCamera];
+    [self setScanRegion];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -78,6 +79,29 @@
     [_preview setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     [_preview setFrame:self.view.layer.bounds];
     [self.view.layer addSublayer:_preview];
+}
+
+- (void)setScanRegion
+{
+    UIImageView *overlayImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"overlaygraphic.png"]];
+    overlayImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addSubview:overlayImageView];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view        attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
+                                                             toItem:overlayImageView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view        attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual
+                                                             toItem:overlayImageView attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    
+    
+    
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    CGFloat screenWidth  = [UIScreen mainScreen].bounds.size.width;
+    
+    _output.rectOfInterest = CGRectMake((screenHeight - 200) / 2 / screenHeight,
+                                        (screenWidth  - 260) / 2 / screenWidth,
+                                        200 / screenHeight,
+                                        260 / screenWidth);
 }
 
 
