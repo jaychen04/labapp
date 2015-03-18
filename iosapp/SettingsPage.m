@@ -17,6 +17,7 @@
 #import <RESideMenu.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
+#import <SDImageCache.h>
 
 @interface SettingsPage () <UIAlertViewDelegate>
 
@@ -142,6 +143,8 @@
         return;
     } else {
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
+        [[SDImageCache sharedImageCache] clearMemory];
+        [[SDImageCache sharedImageCache] clearDisk];
     }
 }
 
