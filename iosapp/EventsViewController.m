@@ -14,9 +14,12 @@
 #import "OSCPost.h"
 #import "EventCell.h"
 #import "Config.h"
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "DetailsViewController.h"
+#import "UserDetailsViewController.h"
+#import "ImageViewerController.h"
+
+#import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const EventCellID = @"EventCell";
 
@@ -125,12 +128,9 @@ static NSString * const EventCellID = @"EventCell";
             }
         }
         
-#if 0
-        cell.portrait.tag = row; cell.authorLabel.tag = row; cell.thumbnail.tag = row;
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
-        [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+        cell.portrait.tag = row; cell.thumbnail.tag = row;
+        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
         [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
-#endif
         
         return cell;
     } else {
@@ -244,6 +244,30 @@ static NSString * const EventCellID = @"EventCell";
 }
 
 
+#pragma mark - 跳转到用户详情页
+
+- (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
+{
+    OSCEvent *event = self.objects[recognizer.view.tag];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:event.authorID];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
+
+
+#pragma mark - 加载大图
+
+- (void)loadLargeImage:(UITapGestureRecognizer *)recognizer
+{
+    OSCEvent *event = self.objects[recognizer.view.tag];
+    
+    NSMutableString *thumbURL = [NSMutableString stringWithString:event.tweetImg.absoluteString];
+    [thumbURL replaceCharactersInRange:NSMakeRange(thumbURL.length - 10, 10) withString:@".jpg"];
+    NSURL *bigImageURL = [NSURL URLWithString:thumbURL];
+    
+    ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:bigImageURL];
+    
+    [self presentViewController:imageViewerVC animated:YES completion:nil];
+}
 
 
 

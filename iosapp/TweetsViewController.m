@@ -172,7 +172,7 @@
         }
         
         cell.portrait.tag = row; cell.authorLabel.tag = row; cell.thumbnail.tag = row;
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
         [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
         
         return cell;
@@ -326,7 +326,7 @@
 
 #pragma mark - 跳转到用户详情页
 
-- (void)pushDetailsView:(UITapGestureRecognizer *)recognizer
+- (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
 {
     OSCTweet *tweet = self.objects[recognizer.view.tag];
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
