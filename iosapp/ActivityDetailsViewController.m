@@ -67,7 +67,7 @@
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              ONOXMLElement *postXML = [responseObject.rootElement firstChildWithTag:@"post"];
              postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
-             _HTML = [postDetails.body copy];
+             _HTML = [NSString stringWithFormat:@"%@\n%@", @"<style>img {max-width: 100%;}</style>", [postDetails.body copy]];
              
              UIBarButtonItem *commentsCountButton = _bottomBarVC.operationBar.items[4];
              commentsCountButton.shouldHideBadgeAtZero = YES;
