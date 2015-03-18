@@ -24,6 +24,7 @@
 @property (nonatomic, copy) NSString * (^generateURL)(NSUInteger page);
 @property (nonatomic, copy) void (^tableWillReload)(NSUInteger responseObjectsCount);
 @property (nonatomic, copy) void (^didRefreshSucceed)();
+@property (nonatomic, copy) void (^didAppear)();
 
 @property Class objClass;
 @property (nonatomic, assign) BOOL needRefreshAnimation;

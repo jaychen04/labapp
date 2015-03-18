@@ -23,6 +23,9 @@
 
 @property (nonatomic, strong) NSArray *noticesCount;
 
+@property (nonatomic, strong) NSMutableArray *viewAppeared;
+@property (nonatomic, strong) NSMutableArray *viewRefreshed;
+
 @end
 
 @implementation MessageCenter
@@ -38,32 +41,32 @@
                                   [[FriendsViewController alloc] initWithUserID:[Config getOwnID] andFriendsRelation:0]
                                   ]];
     
-    if (self) {        
-        __weak MessageCenter *weakSelf = self;
+    if (self) {
+        _viewAppeared  = [NSMutableArray arrayWithArray:@[@(NO), @(NO), @(NO), @(NO)]];
+        _viewRefreshed = [NSMutableArray arrayWithArray:@[@(NO), @(NO), @(NO), @(NO)]];
+        
         [self dealWithNotices:noticeCounts autoScroll:YES];
         
+        __weak MessageCenter *weakSelf = self;
         [self.viewPager.controllers enumerateObjectsUsingBlock:^(OSCObjsViewController *vc, NSUInteger idx, BOOL *stop) {
             vc.didRefreshSucceed = ^ {
                 UIButton *titleButton = weakSelf.titleBar.titleButtons[idx];
                 if ([titleButton.badgeValue isEqualToString:@"0"]) {return;}
                 
-                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+                weakSelf.viewRefreshed[idx] = @(YES);
+                if (_viewAppeared[idx] && _viewRefreshed[idx]) {
+                    [self markAsReaded:idx];
+                }
+            };
+            
+            vc.didAppear = ^ {
+                UIButton *titleButton = weakSelf.titleBar.titleButtons[idx];
+                if ([titleButton.badgeValue isEqualToString:@"0"]) {return;}
                 
-                [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_NOTICE_CLEAR]
-                   parameters:@{@"uid":@([Config getOwnID]),
-                                @"type":@[@(1), @(3), @(2), @(4)][idx]}
-                      success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-                          ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
-                          int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-                          
-                          if (errorCode == 1) {
-                              UIButton *button = weakSelf.titleBar.titleButtons[idx];
-                              button.badge.hidden = YES;
-                          }
-                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      
-                  }];
+                weakSelf.viewAppeared[idx] = @(YES);
+                if (_viewAppeared[idx] && _viewRefreshed[idx]) {
+                    [self markAsReaded:idx];
+                }
             };
         }];
     }
@@ -143,6 +146,31 @@
     NSArray *noticeCounts = [notification object];
     
     [self dealWithNotices:noticeCounts autoScroll:NO];
+}
+
+
+- (void)markAsReaded:(NSInteger)idx
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_NOTICE_CLEAR]
+       parameters:@{@"uid":@([Config getOwnID]),
+                    @"type":@[@(1), @(3), @(2), @(4)][idx]}
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+              ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
+              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+              
+              if (errorCode == 1) {
+                  UIButton *button = self.titleBar.titleButtons[idx];
+                  button.badge.hidden = YES;
+                  
+                  _viewAppeared[idx] = @(NO);
+                  _viewRefreshed[idx] = @(NO);
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+          }];
 }
 
 
