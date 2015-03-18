@@ -316,7 +316,7 @@
 + (NSData *)compressImage:(UIImage *)image
 {
     NSUInteger maxFileSize = 500 * 1024;
-    CGFloat compressionRatio = 1.0f;
+    CGFloat compressionRatio = 0.8f;
     CGFloat maxCompressionRatio = 0.1f;
     
     NSData *imageData = UIImageJPEGRepresentation(image, compressionRatio);
