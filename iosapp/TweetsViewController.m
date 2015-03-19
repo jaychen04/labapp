@@ -261,7 +261,7 @@
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         OSCTweet *tweet = self.objects[indexPath.row];
         
-        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+        MBProgressHUD *HUD = [Utils createHUD];
         HUD.labelText = @"正在删除动弹";
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

@@ -196,7 +196,7 @@ static NSString *kCommentCellID = @"CommentCell";
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         OSCComment *comment = self.objects[indexPath.row];
         
-        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+        MBProgressHUD *HUD = [Utils createHUD];
         HUD.labelText = @"正在删除评论";
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

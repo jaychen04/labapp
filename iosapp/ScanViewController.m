@@ -118,7 +118,7 @@
         
         if ([message hasPrefix:@"{"]) {
             if ([Config getOwnID] == 0) {
-                MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                 HUD.labelText = @"您还没登录，请先登录再扫描签到";
@@ -136,7 +136,7 @@
             NSString *URL = json[@"url"];
             
             if (!requireLogin || !title || !type || !URL) {
-                MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                 HUD.labelText = @"无效二维码";
@@ -146,7 +146,7 @@
             }
             
             if ([type intValue] != 1) {
-                MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeText;
                 HUD.labelText = title;
                 
@@ -158,7 +158,7 @@
                 [manager GET:URL
                   parameters:nil
                      success:^(AFHTTPRequestOperation *operation, NSDictionary *responseObject) {
-                         MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                         MBProgressHUD *HUD = [Utils createHUD];
                          HUD.mode = MBProgressHUDModeCustomView;
                          [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapHUD:)]];
                          
@@ -173,7 +173,7 @@
                              HUD.labelText = error;
                          }
                    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                       MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                       MBProgressHUD *HUD = [Utils createHUD];
                        HUD.mode = MBProgressHUDModeCustomView;
                        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                        HUD.labelText = @"网络连接故障";
@@ -182,7 +182,7 @@
         } else if ([Utils isURL:message]) {
             [Utils analysis:message andNavController:self.navigationController];
         } else {
-            MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+            MBProgressHUD *HUD = [Utils createHUD];
             HUD.mode = MBProgressHUDModeText;
             HUD.detailsLabelText = message;
             

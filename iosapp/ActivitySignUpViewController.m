@@ -188,7 +188,7 @@
               NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
               NSString *errorMessage = [[result firstChildWithTag:@"errormessage"] stringValue];
               
-              MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+              MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
               
               if (errorCode == 1) {

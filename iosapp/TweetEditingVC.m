@@ -365,7 +365,7 @@
         return;
     }
     
-    MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+    MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"动弹发送中";
     [HUD hide:YES afterDelay:1];
     [self dismissViewControllerAnimated:YES completion:nil];

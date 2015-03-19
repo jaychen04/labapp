@@ -78,7 +78,7 @@
 
 - (void)sendFeedback
 {
-    _HUD = [Utils createHUDInWindowOfView:self.view];
+    _HUD = [Utils createHUD];
     _HUD.labelText = @"正在发送反馈";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

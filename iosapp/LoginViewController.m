@@ -193,7 +193,7 @@
               if (!errorCode) {
                   NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
                   
-                  MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+                  MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];

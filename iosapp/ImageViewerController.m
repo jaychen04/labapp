@@ -60,7 +60,7 @@
     [self.view addSubview:_scrollView];
     
     if (![[SDWebImageManager sharedManager] cachedImageExistsForURL:_imageURL]) {
-        _HUD = [Utils createHUDInWindowOfView:self.view];
+        _HUD = [Utils createHUD];
         _HUD.mode = MBProgressHUDModeAnnularDeterminate;
     }
     

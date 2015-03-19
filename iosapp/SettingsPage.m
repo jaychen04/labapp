@@ -120,7 +120,7 @@
             [cookieStorage deleteCookie:cookie];
         }
         
-        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+        MBProgressHUD *HUD = [Utils createHUD];
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
         HUD.labelText = @"注销成功";

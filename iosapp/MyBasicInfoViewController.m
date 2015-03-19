@@ -228,7 +228,7 @@
 
 - (void)updatePortrait
 {
-    MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+    MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"正在上传头像";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

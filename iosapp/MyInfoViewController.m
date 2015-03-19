@@ -357,7 +357,7 @@
 - (void)tapPortrait
 {
     if (![Utils isNetworkExist]) {
-        MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+        MBProgressHUD *HUD = [Utils createHUD];
         HUD.mode = MBProgressHUDModeText;
         HUD.labelText = @"网络无连接，请检查网络";
         
@@ -377,7 +377,7 @@
 
 - (void)tapQRCodeImage
 {
-    MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
+    MBProgressHUD *HUD = [Utils createHUD];
     HUD.mode = MBProgressHUDModeCustomView;
     HUD.color = [UIColor whiteColor];
     
