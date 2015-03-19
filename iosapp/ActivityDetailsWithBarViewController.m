@@ -217,13 +217,13 @@
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
-              [HUD hide:YES afterDelay:2];
+              [HUD hide:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.labelText = @"网络异常，动弹发送失败";
               
-              [HUD hide:YES afterDelay:2];
+              [HUD hide:YES afterDelay:1];
           }];
 }
 
