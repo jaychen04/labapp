@@ -11,16 +11,17 @@
 #import "RandomMessageCell.h"
 #import "Utils.h"
 #import "OSCAPI.h"
+#import "DetailsViewController.h"
+#import "OSCNews.h"
+#import "OSCBlog.h"
+#import "OSCSoftware.h"
+
 #import <CoreMotion/CoreMotion.h>
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
-#import "DetailsViewController.h"
-#import "OSCNews.h"
-#import "OSCBlog.h"
-#import "OSCSoftware.h"
 
 static const double accelerationThreshold = 2.0f;
 
@@ -160,14 +161,12 @@ static const double accelerationThreshold = 2.0f;
     if (accelerameter > accelerationThreshold) {
         [_motionManager stopAccelerometerUpdates];
         [_operationQueue cancelAllOperations];
+        if (_isShaking) {return;}
+        _isShaking = YES;
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (_isShaking) {return;}
-            _isShaking = YES;
-            
             [self rotate:_layer];
-            [self getRandomMessage];
-            _isShaking = NO;
+            //[self getRandomMessage];
         });
     }
 }
@@ -190,14 +189,19 @@ static const double accelerationThreshold = 2.0f;
     CABasicAnimation *rotate = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
     rotate.fromValue = [NSNumber numberWithFloat:0];
     rotate.toValue = [NSNumber numberWithFloat:M_PI / 3.0];
-    rotate.duration = 0.2;
+    rotate.duration = 0.18;
     rotate.repeatCount = 2;
     rotate.autoreverses = YES;
     
+    [CATransaction begin];
     [self setAnchorPoint:CGPointMake(-0.2, 0.9) forView:view];
-    
+    [CATransaction setCompletionBlock:^{
+        [self getRandomMessage];
+    }];
     [view.layer addAnimation:rotate forKey:nil];
+    [CATransaction commit];
 }
+
 
 // 参考 http://stackoverflow.com/questions/1968017/changing-my-calayers-anchorpoint-moves-the-view
 
@@ -240,6 +244,7 @@ static const double accelerationThreshold = 2.0f;
              _cell.hidden = NO;
              
              [self startAccelerometer];
+             _isShaking = NO;
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              MBProgressHUD *HUD = [Utils createHUDInWindowOfView:self.view];
              HUD.mode = MBProgressHUDModeCustomView;
