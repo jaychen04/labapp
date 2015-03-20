@@ -132,10 +132,12 @@
     } else {
         UIImage *portrait = [Config getPortrait];
         if (portrait == nil) {
-            [_portrait sd_setImageWithURL:_myInfo.portraitURL completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                [Config savePortrait:image];
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
-            }];
+            [_portrait sd_setImageWithURL:_myInfo.portraitURL
+                         placeholderImage:[UIImage imageNamed:@"default-portrait"]
+                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                                [Config savePortrait:image];
+                                                [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
+                                            }];
         } else {
             _portrait.image = portrait;
         }
@@ -424,7 +426,7 @@
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     });
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
