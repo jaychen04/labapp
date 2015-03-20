@@ -14,6 +14,7 @@
 #import "Config.h"
 #import "Utils.h"
 #import "OSCActivity.h"
+#import "OSCPostDetails.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -169,9 +170,7 @@
     if (_mURL) {
         return _mURL;
     } else {
-        NSMutableString *mutableURL = [NSMutableString stringWithFormat:@"%@", _URL];
-        [mutableURL replaceCharactersInRange:NSMakeRange(7, 3) withString:@"m"];
-        _mURL = [mutableURL copy];
+        _mURL = [NSString stringWithFormat:@"http://m.oschina.net/question/%lld_%lld", _activityDetailsVC.postDetails.authorID, _activityID];
         
         return _mURL;
     }
