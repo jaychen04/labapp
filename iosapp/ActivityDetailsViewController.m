@@ -208,8 +208,10 @@
     
     _webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
     
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]]
-                          withRowAnimation:UITableViewRowAnimationNone];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]]
+                              withRowAnimation:UITableViewRowAnimationNone];
+    });
     
     //设置为已经加载完成
     _isLoadingFinished = YES;
