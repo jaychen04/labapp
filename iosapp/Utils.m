@@ -315,11 +315,17 @@
 
 + (NSData *)compressImage:(UIImage *)image
 {
+    CGSize size = [self scaleSize:image.size];
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage * scaledImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
     NSUInteger maxFileSize = 500 * 1024;
-    CGFloat compressionRatio = 0.8f;
+    CGFloat compressionRatio = 0.7f;
     CGFloat maxCompressionRatio = 0.1f;
     
-    NSData *imageData = UIImageJPEGRepresentation(image, compressionRatio);
+    NSData *imageData = UIImageJPEGRepresentation(scaledImage, compressionRatio);
     
     while (imageData.length > maxFileSize && compressionRatio > maxCompressionRatio) {
         compressionRatio -= 0.1f;
@@ -327,6 +333,17 @@
     }
     
     return imageData;
+}
+
++ (CGSize)scaleSize:(CGSize)sourceSize
+{
+    float width = sourceSize.width;
+    float height = sourceSize.height;
+    if (width >= height) {
+        return CGSizeMake(800, 800 * height / width);
+    } else {
+        return CGSizeMake(800 * width / height, 800);
+    }
 }
 
 + (NSString *)escapeHTML:(NSString *)originalHTML
