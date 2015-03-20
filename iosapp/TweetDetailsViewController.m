@@ -12,6 +12,7 @@
 #import "UserDetailsViewController.h"
 #import "ImageViewerController.h"
 #import "TweetDetailsCell.h"
+#import "UserDetailsViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -50,6 +51,10 @@
             if (weakSelf.tweet) {
                 [cell.portrait loadPortrait:weakSelf.tweet.portraitURL];
                 [cell.authorLabel setText:weakSelf.tweet.author];
+                
+                [cell.portrait    addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
+                [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
+                
                 [cell.timeLabel setText:[Utils intervalSinceNow:weakSelf.tweet.pubDate]];
                 [cell.appclientLabel setText:[Utils getAppclient:weakSelf.tweet.appclient]];
                 cell.webView.delegate = weakSelf;
@@ -159,6 +164,14 @@
 }
 
 
+#pragma mark - 头像点击事件处理
+
+- (void)pushUserDetails
+{
+    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:_tweet.authorID] animated:YES];
+}
+
+
 #pragma mark - UIWebViewDelegate
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -172,10 +185,10 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
+        
+        //设置为已经加载完成
+        _isLoadingFinished = YES;
     });
-    
-    //设置为已经加载完成
-    _isLoadingFinished = YES;
 }
 
 
