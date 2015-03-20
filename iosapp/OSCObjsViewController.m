@@ -60,13 +60,6 @@
     [self fetchObjectsOnPage:0 refresh:YES];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    if (_didAppear) {_didAppear();}
-}
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

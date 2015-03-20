@@ -45,8 +45,6 @@
         _viewAppeared  = [NSMutableArray arrayWithArray:@[@(NO), @(NO), @(NO), @(NO)]];
         _viewRefreshed = [NSMutableArray arrayWithArray:@[@(NO), @(NO), @(NO), @(NO)]];
         
-        [self dealWithNotices:noticeCounts autoScroll:YES];
-        
         __weak MessageCenter *weakSelf = self;
         [self.viewPager.controllers enumerateObjectsUsingBlock:^(OSCObjsViewController *vc, NSUInteger idx, BOOL *stop) {
             vc.didRefreshSucceed = ^ {
@@ -54,21 +52,23 @@
                 if ([titleButton.badgeValue isEqualToString:@"0"]) {return;}
                 
                 weakSelf.viewRefreshed[idx] = @(YES);
-                if (_viewAppeared[idx] && _viewRefreshed[idx]) {
-                    [self markAsReaded:idx];
-                }
-            };
-            
-            vc.didAppear = ^ {
-                UIButton *titleButton = weakSelf.titleBar.titleButtons[idx];
-                if ([titleButton.badgeValue isEqualToString:@"0"]) {return;}
-                
-                weakSelf.viewAppeared[idx] = @(YES);
-                if (_viewAppeared[idx] && _viewRefreshed[idx]) {
-                    [self markAsReaded:idx];
+                if ([weakSelf.viewAppeared[idx] boolValue] && [weakSelf.viewRefreshed[idx] boolValue]) {
+                    [weakSelf markAsReaded:idx];
                 }
             };
         }];
+        
+        self.viewPager.viewDidAppear = ^ (NSInteger index) {
+            UIButton *titleButton = weakSelf.titleBar.titleButtons[index];
+            if ([titleButton.badgeValue isEqualToString:@"0"]) {return;}
+            
+            weakSelf.viewAppeared[index] = @(YES);
+            if ([weakSelf.viewAppeared[index] boolValue] && [weakSelf.viewRefreshed[index] boolValue]) {
+                [weakSelf markAsReaded:index];
+            }
+        };
+        
+        [self dealWithNotices:noticeCounts autoScroll:YES];
     }
     
     return self;

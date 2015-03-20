@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSArray *controllers;
 @property (nonatomic, copy) void (^changeIndex)(NSUInteger index);
 @property (nonatomic, copy) void (^scrollView)(CGFloat offsetRatio, NSUInteger focusIndex, NSUInteger animationIndex);
+@property (nonatomic, copy) void (^viewDidAppear)(NSInteger index);
 
 - (instancetype)initWithViewControllers:(NSArray *)controllers;
 
