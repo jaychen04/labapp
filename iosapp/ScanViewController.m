@@ -44,11 +44,11 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonClicked)];
     
     [self setUpCamera];
-    [self setScanRegion];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self setScanRegion];
     [_session startRunning];
 }
 
