@@ -47,6 +47,8 @@
 - (void)statusMore
 {
     [_indicator stopAnimating];
+    _indicator.hidden = YES;
+    
     self.textLabel.text = @"More...";
     self.userInteractionEnabled = YES;
     self.status = LastCellStatusMore;
@@ -55,6 +57,8 @@
 - (void)statusLoading
 {
     [_indicator startAnimating];
+    _indicator.hidden = NO;
+    
     self.textLabel.text = @"";
     self.userInteractionEnabled = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -64,6 +68,8 @@
 - (void)statusFinished
 {
     [_indicator stopAnimating];
+    _indicator.hidden = YES;
+    
     self.textLabel.text = @"全部加载完毕";
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     self.status = LastCellStatusFinished;
@@ -72,6 +78,8 @@
 - (void)statusError
 {
     [_indicator stopAnimating];
+    _indicator.hidden = YES;
+    
     self.textLabel.text = @"加载数据出错";
     self.userInteractionEnabled = YES;
     self.status = LastCellStatusError;
