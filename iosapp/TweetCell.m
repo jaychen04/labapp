@@ -25,12 +25,6 @@
         [self initSubviews];
         [self setLayout];
         
-        if ([reuseIdentifier isEqualToString:kTweeWithoutImagetCellID]) {
-            [self.contentView addConstraints:_noThumbnailConstraints];
-        } else if ([reuseIdentifier isEqualToString:kTweetWithImageCellID]) {
-            [self.contentView addConstraints:_thumbnailConstraints];
-        }
-        
         UIView *selectedBackground = [UIView new];
         selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
         [self setSelectedBackgroundView:selectedBackground];
@@ -91,19 +85,15 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentLabel]"
-                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentLabel]-<=5-[_thumbnail]-6-[_timeLabel]-5-|"
+                                                                             options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]->=5-[_commentCount]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
-
-    _thumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-5-[_thumbnail]-6-[_timeLabel]-5-|"
-                                                                    options:NSLayoutFormatAlignAllLeft metrics:nil views:views];
     
-    _noThumbnailConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-6-[_timeLabel]-5-|"
-                                                                      options:NSLayoutFormatAlignAllLeft metrics:nil views:views];
-    
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_authorLabel  attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+                                                                    toItem:_contentLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
 }
 
 
