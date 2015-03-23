@@ -183,7 +183,7 @@
             attachment.frequency = 4;
             attachment.length = 1;
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC * (5 - i)), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.01 * NSEC_PER_SEC * (6 - i)), dispatch_get_main_queue(), ^{
                 [_animator addBehavior:attachment];
             });
         }
@@ -202,7 +202,7 @@
             attachment.frequency = 4;
             attachment.length = 1;
             
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.05 * NSEC_PER_SEC * i), dispatch_get_main_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.02 * NSEC_PER_SEC * (i + 1)), dispatch_get_main_queue(), ^{
                 [_animator addBehavior:attachment];
             });
         }
