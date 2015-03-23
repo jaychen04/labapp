@@ -199,7 +199,7 @@
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
-              [HUD hide:YES afterDelay:0.5];
+              [HUD hide:YES afterDelay:1];
               
               [Config saveName:_nameTextField.text
                            sex:_sexSegmentCtl.selectedSegmentIndex
@@ -208,7 +208,12 @@
                    andPosition:_positionTextField.text];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"网络异常，错误码：%ld", (long)error.code);
+              MBProgressHUD *HUD = [Utils createHUD];
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.labelText = @"网络异常，报名失败";
+              
+              [HUD hide:YES afterDelay:1];
           }
      ];
     

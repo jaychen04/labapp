@@ -393,6 +393,7 @@
     MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithWindow:window];
     [window addSubview:HUD];
     [HUD show:YES];
+    //[HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
     
     return HUD;
 }

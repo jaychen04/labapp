@@ -10,6 +10,8 @@
 #import "OSCBaseObject.h"
 #import "LastCell.h"
 
+#import <MBProgressHUD.h>
+
 @interface OSCObjsViewController ()
 
 @property (nonatomic, assign) BOOL refreshInProgress;
@@ -136,23 +138,6 @@
 
 - (void)fetchObjectsOnPage:(NSUInteger)page refresh:(BOOL)refresh
 {
-#if 0
-    if (![Tools isNetworkExist]) {
-        if (refresh) {
-            [self.refreshControl endRefreshing];
-        } else {
-            _isLoading = NO;
-            if (_isFinishedLoad) {
-                [_lastCell finishedLoad];
-            } else {
-                [_lastCell normal];
-            }
-        }
-        [Tools toastNotification:@"网络连接失败，请检查网络设置" inView:self.parentViewController.view];
-        return;
-    }
-#endif
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager GET:self.generateURL(page)
@@ -167,8 +152,6 @@
              }
              
              if (_parseExtraInfo) {_parseExtraInfo(responseDocument);}
-             
-             /* 这里要添加一个去重步骤 */
              
              for (ONOXMLElement *objectXML in objectsXML) {
                  BOOL shouldBeAdded = YES;
@@ -194,7 +177,12 @@
              });
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"网络异常，错误码：%ld", (long)error.code);
+             MBProgressHUD *HUD = [Utils createHUD];
+             HUD.mode = MBProgressHUDModeCustomView;
+             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+             HUD.labelText = @"网络异常，加载失败";
+             
+             [HUD hide:YES afterDelay:1];
              
              [_lastCell statusError];
              [self.tableView reloadData];
