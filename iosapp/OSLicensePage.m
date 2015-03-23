@@ -14,7 +14,7 @@
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"开源许可";
+    self.navigationItem.title = @"开源组件";
     
     UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
