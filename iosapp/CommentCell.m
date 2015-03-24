@@ -108,7 +108,8 @@
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                              metrics:nil views:views]];
     
-    for (OSCReference *reference in [references reverseObjectEnumerator]) {
+    NSUInteger count = references.count;
+    [references enumerateObjectsUsingBlock:^(OSCReference *reference, NSUInteger idx, BOOL *stop) {
         [_currentContainer setBorderWidth:1.0 andColor:[UIColor lightGrayColor]];
         _currentContainer.backgroundColor = [UIColor colorWithHex:0xFFFAF0];
         
@@ -119,7 +120,7 @@
         
         NSMutableAttributedString *referenceText = [[NSMutableAttributedString alloc] initWithString:reference.title
                                                                                           attributes:@{NSForegroundColorAttributeName:[UIColor nameColor]}];
-        [referenceText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", reference.body]]];
+        [referenceText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", ((OSCReference *)references[count-1-idx]).body]]];
         label.attributedText = referenceText;
         label.backgroundColor = [UIColor colorWithHex:0xFFFAF0];
         [_currentContainer addSubview:label];
@@ -139,7 +140,7 @@
         [_currentContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-4-[container]-4-|" options:0 metrics:nil views:views]];
         
         _currentContainer = container;
-    }
+    }];
 }
 
 
