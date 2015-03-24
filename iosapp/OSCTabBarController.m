@@ -32,6 +32,7 @@
 
 @interface OSCTabBarController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
+@property (nonatomic, strong) UIView *dimView;
 @property (nonatomic, strong) UIImageView *blurView;
 @property (nonatomic, assign) BOOL isPressed;
 @property (nonatomic, strong) NSMutableArray *optionButtons;
@@ -113,7 +114,7 @@
         optionButton.frame = CGRectMake((_screenWidth/6 * (i%3*2+1) - (_length+16)/2),
                                         _screenHeight + 150 + i/3*100,
                                         _length + 16,
-                                        _length + [UIFont systemFontOfSize:17].lineHeight + 24);
+                                        _length + [UIFont systemFontOfSize:14].lineHeight + 24);
         [optionButton.button setCornerRadius:_length/2];
         
         optionButton.tag = i;
@@ -179,7 +180,7 @@
             UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:button
                                                                          attachedToAnchor:CGPointMake(_screenWidth/6 * (i%3*2+1),
                                                                                                       _screenHeight + 200 + i/3*100)];
-            attachment.damping = 0.5;
+            attachment.damping = 0.65;
             attachment.frequency = 4;
             attachment.length = 1;
             
@@ -198,7 +199,7 @@
             UIAttachmentBehavior *attachment = [[UIAttachmentBehavior alloc] initWithItem:button
                                                                          attachedToAnchor:CGPointMake(_screenWidth/6 * (i%3*2+1),
                                                                                                       _screenHeight - 200 + i/3*100)];
-            attachment.damping = 0.5;
+            attachment.damping = 0.65;
             attachment.frequency = 4;
             attachment.length = 1;
             
@@ -212,12 +213,25 @@
 - (void)addBlurView
 {
     _centerButton.enabled = NO;
-    _blurView = [[UIImageView alloc] initWithImage:[self.view updateBlur]];
+    
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    CGRect cropRect = CGRectMake(0, screenSize.height - 270, screenSize.width, screenSize.height);
+    
+    UIImage *originalImage = [self.view updateBlur];
+    UIImage *croppedBlurImage = [originalImage cropToRect:cropRect];
+    
+    _blurView = [[UIImageView alloc] initWithImage:croppedBlurImage];
+    _blurView.frame = cropRect;
     _blurView.userInteractionEnabled = YES;
     [self.view addSubview:_blurView];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressed)];
-    [_blurView addGestureRecognizer:tap];
+    _dimView = [[UIView alloc] initWithFrame:self.view.bounds];
+    _dimView.backgroundColor = [UIColor blackColor];
+    _dimView.alpha = 0.4;
+    [self.view insertSubview:_dimView belowSubview:self.tabBar];
+    
+    [_blurView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressed)]];
+    [_dimView  addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressed)]];
     
     [UIView animateWithDuration:0.25f
                      animations:nil
@@ -231,10 +245,14 @@
 {
     _centerButton.enabled = NO;
     
+    self.view.alpha = 1;
     [UIView animateWithDuration:0.25f
                      animations:nil
                      completion:^(BOOL finished) {
                          if(finished) {
+                             [_dimView removeFromSuperview];
+                             _dimView = nil;
+                             
                              [self.blurView removeFromSuperview];
                              self.blurView = nil;
                              _centerButton.enabled = YES;
@@ -253,7 +271,6 @@
             TweetEditingVC *tweetEditingVC = [TweetEditingVC new];
             UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
             [self.selectedViewController presentViewController:tweetEditingNav animated:YES completion:nil];
-            [self buttonPressed];
             break;
         }
         case 1: {
@@ -305,11 +322,12 @@
             PersonSearchViewController *personSearchVC = [PersonSearchViewController new];
             UINavigationController *personSearchNav = [[UINavigationController alloc] initWithRootViewController:personSearchVC];
             [self.selectedViewController presentViewController:personSearchNav animated:YES completion:nil];
-            [self buttonPressed];
             break;
         }
         default: break;
     }
+    
+    [self buttonPressed];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info

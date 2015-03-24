@@ -32,7 +32,7 @@
         
         _titleLabel = [UILabel new];
         _titleLabel.textColor = [UIColor colorWithHex:0x666666];
-        _titleLabel.font = [UIFont systemFontOfSize:16];
+        _titleLabel.font = [UIFont systemFontOfSize:14];
         _titleLabel.text = title;
         
         [self addSubview:_button];
