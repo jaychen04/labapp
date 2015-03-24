@@ -28,6 +28,7 @@
     
     if (self) {
         _objects = [NSMutableArray new];
+        _page = 0;
         _needRefreshAnimation = YES;
     }
     
@@ -127,7 +128,7 @@
     if (_lastCell.status == LastCellStatusFinished || _lastCell.status == LastCellStatusLoading) {return;}
     
     [_lastCell statusLoading];
-    [self fetchObjectsOnPage:(_objects.count + 19)/20 refresh:NO];
+    [self fetchObjectsOnPage:++_page refresh:NO];
 }
 
 
@@ -147,6 +148,7 @@
              NSArray *objectsXML = [self parseXML:responseDocument];
              
              if (refresh) {
+                 _page = 0;
                  [_objects removeAllObjects];
                  if (_didRefreshSucceed) {_didRefreshSucceed();}
              }
@@ -170,7 +172,7 @@
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
-                 else {objectsXML.count < 20? [_lastCell statusFinished] : [_lastCell statusMore];}
+                 else {objectsXML.count == 0? [_lastCell statusFinished] : [_lastCell statusMore];}
                  
                  [self.tableView reloadData];
                  if (refresh) {[self.refreshControl endRefreshing];}

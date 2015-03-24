@@ -31,6 +31,7 @@
 @property (nonatomic, assign) int allCount;
 @property (nonatomic, strong) LastCell *lastCell;
 @property (nonatomic, strong) UILabel *label;
+@property (nonatomic, assign) NSUInteger page;
 
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;
 - (void)fetchMore;
