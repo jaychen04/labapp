@@ -172,7 +172,13 @@
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
-                 else {objectsXML.count == 0? [_lastCell statusFinished] : [_lastCell statusMore];}
+                 else {
+                     if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
+                         [_lastCell statusFinished];
+                     } else {
+                         [_lastCell statusMore];
+                     }
+                 }
                  
                  [self.tableView reloadData];
                  if (refresh) {[self.refreshControl endRefreshing];}
