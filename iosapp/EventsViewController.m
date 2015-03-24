@@ -118,6 +118,7 @@ static NSString * const EventCellID = @"EventCell";
         [cell setContentWithEvent:event];
         
         if (event.hasAnImage) {
+#if 0
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
             
             // 有图就加载，无图则下载并reload tableview
@@ -126,6 +127,9 @@ static NSString * const EventCellID = @"EventCell";
             } else {
                 [cell.thumbnail setImage:image];
             }
+#else
+            [cell.thumbnail sd_setImageWithURL:event.tweetImg placeholderImage:[UIImage imageNamed:@"placeholder"]];
+#endif
         }
         
         cell.portrait.tag = row; cell.thumbnail.tag = row;
@@ -164,9 +168,13 @@ static NSString * const EventCellID = @"EventCell";
         }
         
         if (event.hasAnImage) {
+#if 0
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
             if (!image) {image = [UIImage imageNamed:@"portrait_loading"];}
             height += image.size.height + 5;
+#else
+            height += 85;
+#endif
         }
         
         return height;
