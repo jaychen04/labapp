@@ -161,6 +161,8 @@ static NSString * const kTweetCellID = @"TweetCell";
         
         if (tweet.hasAnImage) {
             cell.thumbnail.hidden = NO;
+            
+#if 0
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
             
             // 有图就加载，无图则下载并reload tableview
@@ -170,6 +172,9 @@ static NSString * const kTweetCellID = @"TweetCell";
             } else {
                 [cell.thumbnail setImage:image];
             }
+#else
+            [cell.thumbnail sd_setImageWithURL:tweet.smallImgURL placeholderImage:[UIImage imageNamed:@"loading"]];
+#endif
         } else {cell.thumbnail.hidden = YES;}
         
         cell.portrait.tag = row; cell.authorLabel.tag = row; cell.thumbnail.tag = row;
@@ -193,11 +198,15 @@ static NSString * const kTweetCellID = @"TweetCell";
         
         [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
         height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
-
+        
         if (tweet.hasAnImage) {
+#if 0
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
             if (!image) {image = [UIImage imageNamed:@"loading"];}
             height += image.size.height + 5;
+#else
+            height += 85;
+#endif
         }
         
         return height + 39;

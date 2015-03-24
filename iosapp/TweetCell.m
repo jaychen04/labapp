@@ -69,6 +69,7 @@
     
     _thumbnail = [UIImageView new];
     _thumbnail.contentMode = UIViewContentModeScaleAspectFill;
+    _thumbnail.clipsToBounds = YES;
     _thumbnail.userInteractionEnabled = YES;
     [self.contentView addSubview:_thumbnail];
 }
@@ -85,9 +86,12 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentLabel]-<=5-[_thumbnail]-6-[_timeLabel]-5-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentLabel]-<=5-[_thumbnail(80)]-6-[_timeLabel]-5-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_thumbnail(80)]"
+                                                                             options:0 metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]->=5-[_commentCount]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
