@@ -254,7 +254,7 @@ static NSString *kCommentCellID = @"CommentCell";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (self.didScroll) {
+    if (scrollView == self.tableView && self.didScroll) {
         self.didScroll();
     }
 }

@@ -584,7 +584,9 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self.editingBar.editView resignFirstResponder];
+    if (scrollView != self.editingBar.editView) {
+        [self.editingBar.editView resignFirstResponder];
+    }
 }
 
 

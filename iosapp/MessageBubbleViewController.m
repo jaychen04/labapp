@@ -97,7 +97,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if (_didScroll) {_didScroll();}
+    if (scrollView == self.tableView && _didScroll) {_didScroll();}
 }
 
 
