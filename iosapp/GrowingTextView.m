@@ -14,7 +14,7 @@
 {
     self = [super initWithPlaceholder:placeholder];
     if (self) {
-        self.font = [UIFont systemFontOfSize:14.0];
+        self.font = [UIFont systemFontOfSize:16];
         self.scrollEnabled = YES;
         self.scrollsToTop = NO;
         self.showsHorizontalScrollIndicator = NO;
