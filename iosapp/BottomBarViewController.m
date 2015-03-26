@@ -109,7 +109,6 @@
         
         [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"toolbar-emoji2"] forState:UIControlStateNormal];
         _editingBar.editView.inputView = nil;
-        _editingBar.editView.font = [UIFont systemFontOfSize:18];
         [_editingBar.editView reloadInputViews];
     } else {
         [_editingBar.editView becomeFirstResponder];

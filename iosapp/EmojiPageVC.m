@@ -31,7 +31,9 @@
             NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
             NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:textView.attributedText];
             [mutableAttributeString replaceCharactersInRange:textView.selectedRange withAttributedString:emojiAttributedString];
-            textView.attributedText = [mutableAttributeString copy];
+            textView.attributedText = mutableAttributeString;
+            [textView insertText:@""];
+            textView.font = [UIFont systemFontOfSize:16];
             [textView checkShouldHidePlaceholder];
             [textView.delegate textViewDidChange:textView];
         };
