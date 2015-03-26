@@ -15,12 +15,14 @@
     self = [super initWithPlaceholder:placeholder];
     if (self) {
         self.font = [UIFont systemFontOfSize:16];
-        self.scrollEnabled = YES;
+        self.scrollEnabled = NO;
         self.scrollsToTop = NO;
         self.showsHorizontalScrollIndicator = NO;
         self.enablesReturnKeyAutomatically = YES;
-        self.textContainerInset = UIEdgeInsetsMake(8.0, 3.5, 8.0, 0.0);
-        self.maxNumberOfLines = 4;
+        self.textContainerInset = UIEdgeInsetsMake(7.5, 3.5, 7.5, 0);
+        //NSLog(@"%@, %f", self.font, self.font.lineHeight);
+        _maxNumberOfLines = 4;
+        _maxHeight = ceilf(self.font.lineHeight * _maxNumberOfLines + 15 + 4 * (_maxNumberOfLines - 1));
     }
     
     return self;
@@ -29,14 +31,15 @@
 // Code from apple developer forum - @Steve Krulewitz, @Mark Marszal, @Eric Silverberg
 - (CGFloat)measureHeight
 {
-    return self.contentSize.height;
+    //[self layoutIfNeeded];
+    //NSLog(@"frameHeight: %f", self.frame.size.height);
+    //NSLog(@"lineHeight: %f", self.font.lineHeight);
+    //NSLog(@"contentSize:(height): %f, (width):%f", self.contentSize.height, self.contentSize.width);
+    //NSLog(@"Height: %f", [self sizeThatFits:self.frame.size].height + 15);
+    
+    
+    return ceilf([self sizeThatFits:self.frame.size].height + 10);
 }
-
-- (NSUInteger)numberOfLines
-{
-    return abs((self.contentSize.height-16)/self.font.lineHeight);
-}
-
 
 
 @end

@@ -207,21 +207,29 @@
 
 - (CGFloat)appropriateInputbarHeight
 {
-    CGFloat height = 0.0;
+    CGFloat height = 0;
     CGFloat minimumHeight = [self minimumInputbarHeight];
-    NSUInteger numberOfLines = self.textView.numberOfLines;
+    CGFloat newSizeHeight = [self.textView measureHeight];
+    CGFloat maxHeight     = self.textView.maxHeight;
+    //NSUInteger numberOfLines = self.textView.numberOfLines;
     
-    if (numberOfLines == 1) {
+    self.textView.scrollEnabled = newSizeHeight >= maxHeight;
+    
+#if 1
+    if (newSizeHeight < minimumHeight) {
         height = minimumHeight;
-    } else if (numberOfLines < self.textView.maxNumberOfLines) {
-        height = [self barHeightForLines:self.textView.numberOfLines];
+    } else if (newSizeHeight < self.textView.maxHeight) {
+        height = newSizeHeight;
     } else {
-        height = [self barHeightForLines:self.textView.maxNumberOfLines];
+        height = self.textView.maxHeight;
     }
-    
-    if (height < minimumHeight) {
+#else
+    if (newSizeHeight < minimumHeight || !self.textView) {
         height = minimumHeight;
+    } else if (maxHeight && newSizeHeight > maxHeight) {
+        height = maxHeight;
     }
+#endif
     
     return roundf(height);
 }
