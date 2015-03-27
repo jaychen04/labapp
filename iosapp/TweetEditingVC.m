@@ -23,8 +23,10 @@
 #import <ReactiveCocoa.h>
 
 
-@interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate>
+@interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UIScrollViewDelegate>
 
+@property (nonatomic, strong) UIScrollView          *scrollView;
+@property (nonatomic, strong) UIView                *contentView;
 @property (nonatomic, strong) PlaceholderTextView   *edittingArea;
 @property (nonatomic, strong) UIImageView           *imageView;
 @property (nonatomic, strong) UILabel               *deleteImageButton;
@@ -46,14 +48,6 @@
     }
     
     return self;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 
 - (void)viewDidLoad
@@ -82,6 +76,18 @@
     }];
 }
 
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [_edittingArea becomeFirstResponder];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -92,6 +98,18 @@
 
 - (void)initSubViews
 {
+    _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    _scrollView.delegate = self;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.showsVerticalScrollIndicator   = NO;
+    _scrollView.scrollEnabled = YES;
+    _scrollView.bounces = YES;
+    [self.view addSubview:_scrollView];
+    
+    _contentView = [[UIView alloc] initWithFrame:_scrollView.bounds];
+    [_scrollView addSubview:_contentView];
+    _scrollView.contentSize = _contentView.bounds.size;
+    
     _edittingArea = [[PlaceholderTextView alloc] initWithPlaceholder:@"今天你动弹了吗？"];
     _edittingArea.delegate = self;
     _edittingArea.placeholderFont = [UIFont systemFontOfSize:17];
@@ -100,8 +118,7 @@
     _edittingArea.scrollEnabled = NO;
     _edittingArea.font = [UIFont systemFontOfSize:18];
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
-    [self.view addSubview:_edittingArea];
-    [_edittingArea becomeFirstResponder];
+    [_contentView addSubview:_edittingArea];
     
     _imageView = [UIImageView new];
     _imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -109,7 +126,7 @@
     _imageView.userInteractionEnabled = YES;
     _imageView.image = _image;
     _image = nil;
-    [self.view addSubview:_imageView];
+    [_contentView addSubview:_imageView];
     
     
     _deleteImageButton = [UILabel new];
@@ -121,8 +138,7 @@
     _deleteImageButton.hidden = _imageView.image == nil;
     [_deleteImageButton setCornerRadius:11];
     [_deleteImageButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteImage)]];
-    [self.view addSubview:_deleteImageButton];
-    //RAC(_deleteImageButton, hidden) =
+    [_contentView addSubview:_deleteImageButton];
     
     
     /****** toolBar ******/
@@ -163,27 +179,31 @@
 
 - (void)setLayout
 {
-    for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = NSDictionaryOfVariableBindings(_edittingArea, _imageView, _toolBar, _deleteImageButton);
+    for (UIView *view in _contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+    _toolBar.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_edittingArea(>=200)]-15-[_imageView(90)]" options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_edittingArea]-8-|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imageView(90)]" options:0 metrics:nil views:views]];
+    NSDictionary *views = NSDictionaryOfVariableBindings(_edittingArea, _imageView, _toolBar, _deleteImageButton, _contentView);
+    
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_edittingArea(>=200)]-15-[_imageView(90)]"
+                                                                         options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_edittingArea]-8-|" options:0 metrics:nil views:views]];
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imageView(90)]" options:0 metrics:nil views:views]];
+    
+    
+    /*** toolBar ***/
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_toolBar]|" options:0 metrics:nil views:views]];
     _keyboardHeight = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
-                                                      toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:216];
-    
-    
+                                                      toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0];
     [self.view addConstraint:_keyboardHeight];
     
     
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
-                                                              toItem:_deleteImageButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:_imageView attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual
-                                                              toItem:_deleteImageButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_imageView         attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+                                                                toItem:_deleteImageButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
+    [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_imageView         attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual
+                                                                toItem:_deleteImageButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_deleteImageButton(22)]" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_deleteImageButton(22)]"   options:0 metrics:nil views:views]];
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_deleteImageButton(22)]" options:0 metrics:nil views:views]];
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_deleteImageButton(22)]"   options:0 metrics:nil views:views]];
 }
 
 - (void)cancelButtonClicked
@@ -443,6 +463,17 @@
     [textView checkShouldHidePlaceholder];
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
 }
+
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    if (scrollView == _scrollView) {
+        [_edittingArea resignFirstResponder];
+    }
+}
+
 
 
 @end
