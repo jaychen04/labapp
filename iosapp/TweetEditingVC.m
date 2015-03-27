@@ -31,7 +31,8 @@
 @property (nonatomic, strong) UIImageView           *imageView;
 @property (nonatomic, strong) UILabel               *deleteImageButton;
 @property (nonatomic, strong) UIToolbar             *toolBar;
-@property (nonatomic, assign) NSLayoutConstraint    *keyboardHeight;
+@property (nonatomic, strong) NSLayoutConstraint    *keyboardHeightConstraint;
+@property (nonatomic, strong) NSLayoutConstraint    *textViewHeightConstraint;
 @property (nonatomic, strong) EmojiPageVC           *emojiPageVC;
 
 @property (nonatomic, strong) UIImage               *image;
@@ -70,10 +71,6 @@
     [self setLayout];
     
     _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_edittingArea];
-    
-    RAC(self.navigationItem.rightBarButtonItem, enabled) = [_edittingArea.rac_textSignal map:^(NSString *text) {
-        return @(text.length > 0);
-    }];
 }
 
 
@@ -181,29 +178,38 @@
 {
     for (UIView *view in _contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     _toolBar.translatesAutoresizingMaskIntoConstraints = NO;
-    
     NSDictionary *views = NSDictionaryOfVariableBindings(_edittingArea, _imageView, _toolBar, _deleteImageButton, _contentView);
     
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_edittingArea(>=200)]-15-[_imageView(90)]"
+    
+    
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_edittingArea]-30-[_imageView(90)]"
                                                                          options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_edittingArea]-8-|" options:0 metrics:nil views:views]];
     [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imageView(90)]" options:0 metrics:nil views:views]];
+    
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_edittingArea]-8-|" options:0 metrics:nil views:views]];
+    _textViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_edittingArea attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
+                                                                toItem:nil           attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:48];
+    [_contentView addConstraint:_textViewHeightConstraint];
+    
     
     
     /*** toolBar ***/
+    
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_toolBar]|" options:0 metrics:nil views:views]];
-    _keyboardHeight = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
-                                                      toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0];
-    [self.view addConstraint:_keyboardHeight];
+    _keyboardHeightConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
+                                                                toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1.0f constant:0];
+    [self.view addConstraint:_keyboardHeightConstraint];
     
     
+    
+    /*** delete button ***/
+    
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_deleteImageButton(22)]" options:0 metrics:nil views:views]];
+    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_deleteImageButton(22)]"   options:0 metrics:nil views:views]];
     [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_imageView         attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
                                                                 toItem:_deleteImageButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
     [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_imageView         attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual
                                                                 toItem:_deleteImageButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_deleteImageButton(22)]" options:0 metrics:nil views:views]];
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_deleteImageButton(22)]"   options:0 metrics:nil views:views]];
 }
 
 - (void)cancelButtonClicked
@@ -217,7 +223,7 @@
 {
     CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     
-    _keyboardHeight.constant = keyboardBounds.size.height;
+    _keyboardHeightConstraint.constant = keyboardBounds.size.height;
     
     NSTimeInterval animationDuration;
     [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey] getValue:&animationDuration];
@@ -237,7 +243,7 @@
 
 - (void)keyboardWillHide:(NSNotification *)notification
 {
-    _keyboardHeight.constant = 0;
+    _keyboardHeightConstraint.constant = 0;
     [self.view setNeedsUpdateConstraints];
     
     NSTimeInterval animationDuration;
@@ -293,7 +299,7 @@
         _edittingArea.font = [UIFont systemFontOfSize:18];
         [_edittingArea reloadInputViews];
     } else {
-        _keyboardHeight.constant = 216;
+        _keyboardHeightConstraint.constant = 216;
         [self.view layoutIfNeeded];
         
         [_toolBar.items[7] setImage:[[UIImage imageNamed:@"toolbar-text"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
@@ -452,9 +458,8 @@
     return YES;
 }
 
-- (void)textViewDidEndEditing:(PlaceholderTextView *)textView
+- (void)textViewDidBeginEditing:(UITextView *)textView
 {
-    [textView checkShouldHidePlaceholder];
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
 }
 
@@ -462,6 +467,12 @@
 {
     [textView checkShouldHidePlaceholder];
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
+    
+    CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 10);
+    if (height != _textViewHeightConstraint.constant) {
+        _textViewHeightConstraint.constant = height;
+        [self.view layoutIfNeeded];
+    }
 }
 
 
