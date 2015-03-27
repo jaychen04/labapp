@@ -19,6 +19,7 @@
 #import "LoginViewController.h"
 #import "SearchViewController.h"
 #import "MyBasicInfoViewController.h"
+#import "TeamMemberViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -300,12 +301,22 @@
             break;
         }
         case 2: {
+#if 1
+            UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
+            CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+            flowLayout.minimumInteritemSpacing = (screenWidth - 40 - 30 * 7) / 7;
+            flowLayout.minimumLineSpacing = 25;
+            flowLayout.sectionInset = UIEdgeInsetsMake(15, 0, 5, 0);
+            
+            TeamMemberViewController *teamMemberVC = [[TeamMemberViewController alloc] initWithCollectionViewLayout:flowLayout];
+            [self.navigationController pushViewController:teamMemberVC animated:YES];
+#else
             MBProgressHUD *HUD = [Utils createHUD];
             HUD.mode = MBProgressHUDModeText;
             HUD.labelText = @"即将推出团队功能，敬请期待";
             [HUD hide:YES afterDelay:1];
             [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
+#endif
             break;
         }
         default: break;

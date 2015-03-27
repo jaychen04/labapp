@@ -240,6 +240,8 @@
 		383BA0041AB7ED8B00C03C47 /* login-password@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 383BA0001AB7ED8B00C03C47 /* login-password@3x.png */; };
 		383BA0071AB7FBFA00C03C47 /* toolbar-text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 383BA0051AB7FBFA00C03C47 /* toolbar-text@2x.png */; };
 		383BA0081AB7FBFA00C03C47 /* toolbar-text@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 383BA0061AB7FBFA00C03C47 /* toolbar-text@3x.png */; };
+		384364201AC5532900743CB0 /* TeamMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3843641F1AC5532900743CB0 /* TeamMemberViewController.m */; };
+		384364251AC566BD00743CB0 /* MemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 384364241AC566BD00743CB0 /* MemberCell.m */; };
 		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1F1A1341BB008E2CFA /* ImageViewerController.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
@@ -689,6 +691,11 @@
 		383BA0001AB7ED8B00C03C47 /* login-password@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login-password@3x.png"; sourceTree = "<group>"; };
 		383BA0051AB7FBFA00C03C47 /* toolbar-text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-text@2x.png"; sourceTree = "<group>"; };
 		383BA0061AB7FBFA00C03C47 /* toolbar-text@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar-text@3x.png"; sourceTree = "<group>"; };
+		3843641E1AC5532900743CB0 /* TeamMemberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamMemberViewController.h; sourceTree = "<group>"; };
+		3843641F1AC5532900743CB0 /* TeamMemberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamMemberViewController.m; sourceTree = "<group>"; };
+		384364211AC5551300743CB0 /* TeamAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TeamAPI.h; sourceTree = "<group>"; };
+		384364231AC566BD00743CB0 /* MemberCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberCell.h; sourceTree = "<group>"; };
+		384364241AC566BD00743CB0 /* MemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberCell.m; sourceTree = "<group>"; };
 		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
 		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		38590C1E1A1341BB008E2CFA /* ImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerController.h; sourceTree = "<group>"; };
@@ -985,39 +992,8 @@
 		00C9A73919EE8536000EA878 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
-				00C9A73B19EE863B000EA878 /* OSCBaseObject.h */,
-				00C9A73C19EE863B000EA878 /* OSCBaseObject.m */,
-				00EDF60719EF77A100A5C842 /* OSCTweet.h */,
-				00EDF60819EF77A100A5C842 /* OSCTweet.m */,
-				38BD7D7319FF8521003ABB80 /* OSCComment.h */,
-				38BD7D7419FF8521003ABB80 /* OSCComment.m */,
-				38A93F9E1A9F8F8F00A515E8 /* OSCReply.h */,
-				38A93F9F1A9F8F8F00A515E8 /* OSCReply.m */,
-				38A93FA11A9F912B00A515E8 /* OSCReference.h */,
-				38A93FA21A9F912B00A515E8 /* OSCReference.m */,
-				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
-				386039601A09C5A1007C9B88 /* OSCUser.m */,
-				382A95BC1A29DC4700AAAFEA /* OSCEvent.h */,
-				382A95BD1A29DC4700AAAFEA /* OSCEvent.m */,
-				38B0BF861A399A1A00A2FDB0 /* OSCFavorite.h */,
-				38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */,
-				38B0BF931A3AE79700A2FDB0 /* OSCMessage.h */,
-				38B0BF941A3AE79700A2FDB0 /* OSCMessage.m */,
-				3838D1A41A6E703F00CC7913 /* OSCRandomMessage.h */,
-				3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */,
-				386825A71A70D5E6008F5706 /* OSCSearchResult.h */,
-				386825A81A70D5E6008F5706 /* OSCSearchResult.m */,
-				380FD2211A74E702003C4021 /* OSCActivity.h */,
-				380FD2221A74E702003C4021 /* OSCActivity.m */,
-				387639FF1A820B46008E6805 /* OSCMyInfo.h */,
-				38763A001A820B46008E6805 /* OSCMyInfo.m */,
-				EE7D33001AA986AB00ABFE58 /* OSCEventPersonInfo.h */,
-				EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */,
-				38BD3D1B1A38345B00682D1F /* News */,
-				38BD3D1A1A38344E00682D1F /* Post */,
-				38BD3D191A38343F00682D1F /* Blog */,
-				38BD3D011A36A3B800682D1F /* Software */,
+				3843641C1AC5527600743CB0 /* Team */,
+				3843641B1AC5525800743CB0 /* 主站 */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1045,6 +1021,7 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
+				3843641D1AC5529C00743CB0 /* Team */,
 				00C9A73919EE8536000EA878 /* API */,
 				00EDF60C19EFC13500A5C842 /* Utils */,
 				3874EC221A08E8EA000D2894 /* 用户 */,
@@ -1530,6 +1507,73 @@
 				383BA0001AB7ED8B00C03C47 /* login-password@3x.png */,
 			);
 			path = login;
+			sourceTree = "<group>";
+		};
+		3843641B1AC5525800743CB0 /* 主站 */ = {
+			isa = PBXGroup;
+			children = (
+				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
+				00C9A73B19EE863B000EA878 /* OSCBaseObject.h */,
+				00C9A73C19EE863B000EA878 /* OSCBaseObject.m */,
+				00EDF60719EF77A100A5C842 /* OSCTweet.h */,
+				00EDF60819EF77A100A5C842 /* OSCTweet.m */,
+				38BD7D7319FF8521003ABB80 /* OSCComment.h */,
+				38BD7D7419FF8521003ABB80 /* OSCComment.m */,
+				38A93F9E1A9F8F8F00A515E8 /* OSCReply.h */,
+				38A93F9F1A9F8F8F00A515E8 /* OSCReply.m */,
+				38A93FA11A9F912B00A515E8 /* OSCReference.h */,
+				38A93FA21A9F912B00A515E8 /* OSCReference.m */,
+				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
+				386039601A09C5A1007C9B88 /* OSCUser.m */,
+				382A95BC1A29DC4700AAAFEA /* OSCEvent.h */,
+				382A95BD1A29DC4700AAAFEA /* OSCEvent.m */,
+				38B0BF861A399A1A00A2FDB0 /* OSCFavorite.h */,
+				38B0BF871A399A1A00A2FDB0 /* OSCFavorite.m */,
+				38B0BF931A3AE79700A2FDB0 /* OSCMessage.h */,
+				38B0BF941A3AE79700A2FDB0 /* OSCMessage.m */,
+				3838D1A41A6E703F00CC7913 /* OSCRandomMessage.h */,
+				3838D1A51A6E703F00CC7913 /* OSCRandomMessage.m */,
+				386825A71A70D5E6008F5706 /* OSCSearchResult.h */,
+				386825A81A70D5E6008F5706 /* OSCSearchResult.m */,
+				380FD2211A74E702003C4021 /* OSCActivity.h */,
+				380FD2221A74E702003C4021 /* OSCActivity.m */,
+				387639FF1A820B46008E6805 /* OSCMyInfo.h */,
+				38763A001A820B46008E6805 /* OSCMyInfo.m */,
+				EE7D33001AA986AB00ABFE58 /* OSCEventPersonInfo.h */,
+				EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */,
+				38BD3D1B1A38345B00682D1F /* News */,
+				38BD3D1A1A38344E00682D1F /* Post */,
+				38BD3D191A38343F00682D1F /* Blog */,
+				38BD3D011A36A3B800682D1F /* Software */,
+			);
+			name = "主站";
+			sourceTree = "<group>";
+		};
+		3843641C1AC5527600743CB0 /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				384364211AC5551300743CB0 /* TeamAPI.h */,
+			);
+			name = Team;
+			sourceTree = "<group>";
+		};
+		3843641D1AC5529C00743CB0 /* Team */ = {
+			isa = PBXGroup;
+			children = (
+				384364221AC5669700743CB0 /* 团队成员 */,
+			);
+			name = Team;
+			sourceTree = "<group>";
+		};
+		384364221AC5669700743CB0 /* 团队成员 */ = {
+			isa = PBXGroup;
+			children = (
+				3843641E1AC5532900743CB0 /* TeamMemberViewController.h */,
+				3843641F1AC5532900743CB0 /* TeamMemberViewController.m */,
+				384364231AC566BD00743CB0 /* MemberCell.h */,
+				384364241AC566BD00743CB0 /* MemberCell.m */,
+			);
+			name = "团队成员";
 			sourceTree = "<group>";
 		};
 		386039661A0A34F5007C9B88 /* Resource */ = {
@@ -2516,6 +2560,7 @@
 				382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */,
 				38763A071A85E591008E6805 /* UserHeaderCell.m in Sources */,
 				380FD22A1A7612E8003C4021 /* ActivityBasicInfoCell.m in Sources */,
+				384364201AC5532900743CB0 /* TeamMemberViewController.m in Sources */,
 				380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
@@ -2557,6 +2602,7 @@
 				38A9EEA01AA5BE66006C95BD /* PlaceholderTextView.m in Sources */,
 				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,
 				EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */,
+				384364251AC566BD00743CB0 /* MemberCell.m in Sources */,
 				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,
 				38B0BF9C1A3E8F9C00A2FDB0 /* OSCTabBarController.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
