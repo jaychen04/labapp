@@ -339,7 +339,6 @@
         TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImage:info[UIImagePickerControllerOriginalImage]];
         UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
         [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:nil];
-        [self buttonPressed];
     }];
 }
 
