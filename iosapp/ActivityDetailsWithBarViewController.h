@@ -12,6 +12,6 @@
 
 @interface ActivityDetailsWithBarViewController : BottomBarViewController
 
-- (instancetype)initWithActivity:(OSCActivity *)activity;
+- (instancetype)initWithActivityID:(int64_t)activityID;
 
 @end

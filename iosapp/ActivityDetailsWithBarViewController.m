@@ -35,14 +35,15 @@
 
 @implementation ActivityDetailsWithBarViewController
 
-- (instancetype)initWithActivity:(OSCActivity *)activity
+- (instancetype)initWithActivityID:(int64_t)activityID
 {
     self = [super initWithModeSwitchButton:YES];
     if (self) {
-        _activityID    = activity.activityID;
-        _activityTitle = activity.title;
-        _URL           = activity.url.absoluteString;
-        _activityDetailsVC = [[ActivityDetailsViewController alloc] initWithActivity:activity];
+        self.hidesBottomBarWhenPushed = YES;
+        self.navigationItem.title     = @"活动详情";
+        
+        _activityID = activityID;
+        _activityDetailsVC = [[ActivityDetailsViewController alloc] initWithActivityID:activityID];
         _activityDetailsVC.bottomBarVC = self;
     }
     
