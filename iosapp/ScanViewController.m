@@ -13,7 +13,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
-
+#import <AFOnoResponseSerializer.h>
+#import <Ono.h>
 
 @interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
 
@@ -22,6 +23,7 @@
 @property (nonatomic, strong) AVCaptureMetadataOutput *output;
 @property (nonatomic, strong) AVCaptureSession *session;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *preview;
+@property (nonatomic, copy) NSString *webURL;
 
 @end
 
@@ -116,7 +118,31 @@
         
         message = metadataObject.stringValue;
         
-        if ([message hasPrefix:@"{"]) {
+        if ([message rangeOfString:@"scan_login"].location != NSNotFound) {
+            if ([Config getOwnID] == 0) {
+                MBProgressHUD *HUD = [Utils createHUD];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                HUD.labelText = @"您还没登录，请先登录再扫描签到";
+                
+                [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
+                [HUD hide:YES afterDelay:1];
+                
+                return;
+            }
+            
+            /*
+            NSArray *array = [message componentsSeparatedByString:@"="];
+            _webURL = [NSString stringWithFormat:@"http://192.168.1.118/action/user/scan_login?uuid=%@", array[1]];
+            */
+            _webURL = message;
+            
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"登录网页" message:message delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alertView show];
+            
+            return;
+            
+        } else if ([message hasPrefix:@"{"]) {
             if ([Config getOwnID] == 0) {
                 MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeCustomView;
@@ -204,6 +230,50 @@
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)loginInWeb:(NSString *)webUrl
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager GET:webUrl
+             parameters:nil
+             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                    ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+        
+                    NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
+                    NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+                 
+                    MBProgressHUD *HUD = [Utils createHUD];
+                    HUD.mode = MBProgressHUDModeCustomView;
+                 
+                    if (errorCode == 1) {
+                        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                    } else {
+                        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                    }
+                    HUD.labelText = [NSString stringWithFormat:@"%@", errorMessage];
+                    [HUD hide:YES afterDelay:1];
+                 
+                    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+                } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                    MBProgressHUD *HUD = [Utils createHUD];
+                    HUD.mode = MBProgressHUDModeCustomView;
+                    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                    HUD.labelText = @"网络异常，登录失败";
+                    
+                    [HUD hide:YES afterDelay:1];
+                    
+                    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    }];
+}
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [alertView cancelButtonIndex]) {
+        return;
+    } else {
+        [self loginInWeb:_webURL];
+    }
+}
 
 @end
