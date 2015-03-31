@@ -7,6 +7,7 @@
 //
 
 #import "OSCTweet.h"
+#import "OSCUser.h"
 
 static NSString * const kID = @"id";
 static NSString * const kPortrait = @"portrait";
@@ -19,6 +20,12 @@ static NSString * const kPubDate = @"pubDate";
 static NSString * const kImgSmall = @"imgSmall";
 static NSString * const kImgBig = @"imgBig";
 static NSString * const kAttach = @"attach";
+
+static NSString * const kLikeCount = @"likeCount";
+static NSString * const kIsLike = @"isLike";
+static NSString * const kLikeList = @"likeList";
+static NSString * const kUser = @"user";
+
 
 @implementation OSCTweet
 
@@ -44,6 +51,17 @@ static NSString * const kAttach = @"attach";
         
         // 语音信息
         _attach = [[xml firstChildWithTag:kAttach] stringValue];
+        
+        // 点赞
+        _likeCount = [[[xml firstChildWithTag:kLikeCount] numberValue] intValue];
+        _isLike = [[[xml firstChildWithTag:kIsLike] numberValue] boolValue];
+        
+        _likeList = [NSMutableArray new];
+        NSArray *likeListXML = [[xml firstChildWithTag:kLikeList] childrenWithTag:kUser];
+        for (ONOXMLElement *userXML in likeListXML) {
+            OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
+            [_likeList addObject:user];
+        }
     }
     
     return self;
@@ -56,6 +74,28 @@ static NSString * const kAttach = @"attach";
     }
     
     return NO;
+}
+
+
+- (NSString *)userLikeList
+{
+    NSMutableString *likeListString = [[NSMutableString alloc] initWithString:@""];
+    
+    if (_likeList.count > 0) {
+        for (int names = 0; names < 3 && names < _likeList.count; names++) {
+            OSCUser *user = _likeList[names];
+            
+            [likeListString appendFormat:@"%@、", user.name];
+        }
+        [likeListString deleteCharactersInRange:NSMakeRange(likeListString.length - 1, 1)];
+        if (_likeList.count > 3) {
+            [likeListString appendFormat:@"等%d人", _likeCount];
+        }
+        
+        return [NSString stringWithFormat:@"👍%@觉得很赞", likeListString];
+    } else {
+        return @"";
+    }
 }
 
 @end

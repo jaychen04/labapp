@@ -177,9 +177,14 @@ static NSString * const kTweetCellID = @"TweetCell";
 #endif
         } else {cell.thumbnail.hidden = YES;}
         
-        cell.portrait.tag = row; cell.authorLabel.tag = row; cell.thumbnail.tag = row;
+        cell.portrait.tag = row;
+        cell.authorLabel.tag = row;
+        cell.thumbnail.tag = row;
+        cell.likeLabel.tag = row;
+        
         [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
         [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
+        [cell.likeLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserPraise:)]];
         
         return cell;
     } else {
@@ -199,6 +204,10 @@ static NSString * const kTweetCellID = @"TweetCell";
         [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
         height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
         
+        [self.label setText:tweet.userLikeList];
+        self.label.font = [UIFont systemFontOfSize:12];
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 5;
+        
         if (tweet.hasAnImage) {
 #if 0
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
@@ -210,6 +219,7 @@ static NSString * const kTweetCellID = @"TweetCell";
         }
         
         return height + 39;
+       
     } else {
         return 60;
     }
@@ -365,7 +375,62 @@ static NSString * const kTweetCellID = @"TweetCell";
     });
 }
 
+#pragma mark - 点赞功能
+- (void)pushUserPraise:(UITapGestureRecognizer *)tapGestureRecog
+{
+    OSCTweet *tweet = self.objects[tapGestureRecog.view.tag];
+    
+    [self toPraise:tweet];
+}
 
+- (void)toPraise:(OSCTweet *)tweet
+{
+    MBProgressHUD *HUD = [Utils createHUD];
+    NSString *postUrl;
+    if (tweet.isLike) {
+        postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_UNLIKE];
+    } else {
+        postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
+    }
+    tweet.isLike = !tweet.isLike;
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    [manager POST:postUrl
+       parameters:@{
+                    @"user": @([Config getOwnID]),
+                    @"tweetid": @(tweet.tweetID),
+                    @"ownerOfTweet": @( tweet.authorID)
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
+              NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
+              
+              HUD.mode = MBProgressHUDModeCustomView;
+              
+              if (errorCode == 1) {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  if (tweet.isLike) {
+                      HUD.labelText = @"点赞成功";
+                  } else {
+                      HUD.labelText = @"取消点赞成功";
+                  }
+                  [self refresh];
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+              }
+              
+              [HUD hide:YES afterDelay:1];
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.labelText = @"网络异常，操作失败";
+              
+              [HUD hide:YES afterDelay:1];
+          }];
+}
 
 
 
