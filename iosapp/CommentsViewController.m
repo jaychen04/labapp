@@ -215,26 +215,23 @@ static NSString *kCommentCellID = @"CommentCell";
                   
                   HUD.mode = MBProgressHUDModeCustomView;
                   
-                  switch (errorCode) {
-                      case 1: {
-                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                          HUD.labelText = @"评论删除成功";
-                          
-                          [self.objects removeObjectAtIndex:indexPath.row];
+                  if (errorCode == 1) {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                      HUD.labelText = @"评论删除成功";
+                      
+                      [self.objects removeObjectAtIndex:indexPath.row];
+                      self.allCount--;
+                      if (self.objects.count > 0) {
                           [self.tableView beginUpdates];
                           [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
                           [self.tableView endUpdates];
-                          
-                          break;
                       }
-                      case 0:
-                      case -2:
-                      case -1: {
-                          HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                          HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                          break;
-                      }
-                      default: break;
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.tableView reloadData];
+                      });
+                  } else {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }
                   
                   [HUD hide:YES afterDelay:1];
