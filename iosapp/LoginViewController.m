@@ -21,12 +21,15 @@
 #import <ReactiveCocoa.h>
 #import <MBProgressHUD.h>
 #import <RESideMenu.h>
+#import <TTTAttributedLabel.h>
+#import <CoreText/CoreText.h>
 
-@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TTTAttributedLabelDelegate>
 
 @property (nonatomic, strong) UITextField *accountField;
 @property (nonatomic, strong) UITextField *passwordField;
 @property (nonatomic, strong) UIButton *loginButton;
+@property (nonatomic, strong) TTTAttributedLabel *registerInfo;
 
 @end
 
@@ -65,13 +68,6 @@
     }];
 }
 
-#if 0
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [_accountField becomeFirstResponder];
-}
-#endif
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -115,6 +111,21 @@
     [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: _loginButton];
     
+    _registerInfo = [TTTAttributedLabel new];
+    _registerInfo.delegate = self;
+    _registerInfo.numberOfLines = 0;
+    _registerInfo.lineBreakMode = NSLineBreakByWordWrapping;
+    _registerInfo.backgroundColor = [UIColor themeColor];
+    _registerInfo.font = [UIFont systemFontOfSize:14];
+    NSString *info = @"您可以在 https://www.oschina.net 上免费注册账号";
+    _registerInfo.text = info;
+    NSRange range = [info rangeOfString:@"https://www.oschina.net"];
+    _registerInfo.linkAttributes = @{
+                                     (NSString *)kCTForegroundColorAttributeName:[UIColor colorWithHex:0x15A230]
+                                     };
+    [_registerInfo addLinkToURL:[NSURL URLWithString:@"https://www.oschina.net/home/reg"] withRange:range];
+    [self.view addSubview:_registerInfo];
+    
     //添加手势，点击屏幕其他区域关闭键盘的操作
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidenKeyboard)];
     gesture.numberOfTapsRequired = 1;
@@ -135,16 +146,19 @@
     
     for (UIView *view in [self.view subviews]) { view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(email, password, _accountField, _passwordField, _loginButton);
+    NSDictionary *views = NSDictionaryOfVariableBindings(email, password, _accountField, _passwordField, _loginButton, _registerInfo);
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view    attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual
                                                              toItem:_loginButton attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
                                                              toItem:_loginButton attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[email(20)]-20-[password(20)]-30-[_loginButton(40)]" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[email(20)]-20-[password(20)]-30-[_loginButton(40)]"
+                                                                      options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_loginButton]-20-|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_loginButton]-20-[_registerInfo(30)]"
+                                                                      options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                      metrics:nil views:views]];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[email(20)]-[_accountField]-30-|"     options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[password(20)]-[_passwordField]-30-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
@@ -218,6 +232,14 @@
               [HUD hide:YES afterDelay:1];
           }
      ];
+}
+
+
+#pragma mark - TTTAttributedLabelDelegate
+
+- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
+{
+    [[UIApplication sharedApplication] openURL:url];
 }
 
 
