@@ -78,7 +78,7 @@ static NSString * const kUser = @"user";
     return NO;
 }
 
-
+/*
 - (NSString *)likersString
 {
     if (_likersString) {
@@ -95,8 +95,6 @@ static NSString * const kUser = @"user";
             [likeListString deleteCharactersInRange:NSMakeRange(likeListString.length - 1, 1)];
             if (_likeCount > 3) {
                 [likeListString appendFormat:@"等%d人", _likeCount];
-            } else {
-                [likeListString appendFormat:@"%d人", _likeCount];
             }
 
             _likersString = [NSString stringWithFormat:@"👍%@觉得很赞", likeListString];
@@ -107,35 +105,69 @@ static NSString * const kUser = @"user";
         }
     }
 }
+*/
 
-- (NSString *)likersDetailString
+- (NSMutableString *)likersDetailString
 {
-    if (_likersString) {
-        return _likersString;
+    if (_likersDetailString) {
+        return _likersDetailString;
     } else {
-        NSMutableString *likeListString = [[NSMutableString alloc] initWithString:@""];
+        _likersDetailString = [NSMutableString new];
         
         if (_likeList.count > 0) {
             for (int names = 0; names < 10 && names < _likeList.count; names++) {
                 OSCUser *user = _likeList[names];   //_likeList[_likeCount - 1 - names];
                 
-                [likeListString appendFormat:@"%@、", user.name];
+                [_likersDetailString appendFormat:@"%@、", user.name];
             }
-            [likeListString deleteCharactersInRange:NSMakeRange(likeListString.length - 1, 1)];
+            [_likersDetailString deleteCharactersInRange:NSMakeRange(_likersDetailString.length - 1, 1)];
+            _likersDetailString = [NSMutableString stringWithFormat:@"<font color=#087221>%@</font>", _likersDetailString];
+            
             if (_likeCount > 10) {
-                [likeListString appendFormat:@"等%d人", _likeCount];
-            } else {
-                [likeListString appendFormat:@"%d人", _likeCount];
+                [_likersDetailString appendFormat:@"等%d人", _likeCount];
             }
             
-            _likersString = [NSString stringWithFormat:@"👍%@觉得很赞", likeListString];
+            [_likersDetailString appendString:@"觉得很赞"];
+            _likersDetailString = [NSMutableString stringWithFormat:@"<font size=2>%@</font>", _likersDetailString];
+            return _likersDetailString;
+        } else {
+            _likersDetailString = [[NSMutableString alloc] initWithString:@""];
+            return _likersDetailString;
+        }
+    }
+    
+}
+ 
+
+- (NSMutableAttributedString *)likersString
+{
+    if (_likersString) {
+        return _likersString;
+    } else {
+        _likersString = [NSMutableAttributedString new];
+        
+        if (_likeList.count > 0) {
+            for (int names = 0; names < 3 && names < _likeList.count; names++) {
+                OSCUser *user = _likeList[names];   //_likeList[_likeCount - 1 - names];
+                
+                [_likersString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@、", user.name]]];
+            }
+            [_likersString deleteCharactersInRange:NSMakeRange(_likersString.length - 1, 1)];
+            //设置颜色
+            [_likersString addAttribute:NSForegroundColorAttributeName value:[UIColor nameColor] range:NSMakeRange(0, _likersString.length)];
+            
+            if (_likeCount > 3) {
+                [_likersString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"等%d人", _likeCount]]];
+            }
+            
+            [_likersString appendAttributedString:[[NSAttributedString alloc] initWithString:@"觉得很赞"]];
             return _likersString;
         } else {
-            _likersString = @"";
+            [_likersString deleteCharactersInRange:NSMakeRange(0, _likersString.length)];
+            [_likersString appendAttributedString:[[NSAttributedString alloc] initWithString:@""]];
             return _likersString;
         }
     }
-
 }
 
 -(NSAttributedString *)attributedTimes

@@ -118,7 +118,7 @@
                                 </a>", _tweet.body, _tweet.bigImgURL, _tweet.bigImgURL];
              }
              
-             _tweet.body = [NSString stringWithFormat:@"%@<font size=\"2\"><p>%@</p></font>",
+             _tweet.body = [NSString stringWithFormat:@"%@%@",
                             _tweet.body, _tweet.likersDetailString];
              
              dispatch_async(dispatch_get_main_queue(), ^{
