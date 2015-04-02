@@ -29,5 +29,7 @@
 @property (nonatomic, copy) NSString *likersString;
 @property (nonatomic, copy) NSString *likersDetailString;
 
+- (NSAttributedString *)attributedTimes;
+- (NSAttributedString *)attributedCommentCount;
 
 @end

@@ -26,19 +26,21 @@
 
 #pragma mark - 处理API返回信息
 
-+ (NSString *)getAppclient:(int)clientType
++ (NSAttributedString *)getAppclient:(int)clientType
 {
-    switch (clientType) {
-        case 0:
-        case 1: return @"";
-        case 2: return @"来自手机";
-        case 3: return @"来自Android";
-        case 4: return @"来自iPhone";
-        case 5: return @"来自Windows Phone";
-        case 6: return @"来自微信";
-            
-        default: return @"";
+    NSMutableAttributedString *clientString = [NSMutableAttributedString new];
+    if (clientType > 1 && clientType <= 6) {
+        NSTextAttachment *textAttachment = [NSTextAttachment new];
+        textAttachment.image = [UIImage imageNamed:@"phone"];
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+        [clientString appendAttributedString:attachmentString];
     }
+    
+    NSArray *clients = @[@"", @"", @"手机", @"Android", @"iPhone", @"Windows Phone", @"微信"];
+    [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:clients[clientType]]];
+    
+    return clientString;
 }
 
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews

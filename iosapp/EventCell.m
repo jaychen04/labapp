@@ -132,9 +132,9 @@
     [_portrait loadPortrait:event.portraitURL];
     [_authorLabel setText:event.author];
     [_timeLabel setText:[Utils intervalSinceNow:event.pubDate]];
-    [_appclientLabel setText:[Utils getAppclient:event.appclient]];
+    [_appclientLabel setAttributedText:[Utils getAppclient:event.appclient]];
     [_actionLabel setAttributedText:event.actionStr];
-    _commentCount.text = event.commentCount? [NSString stringWithFormat:@"评论：%d", event.commentCount] : @"";
+    [_commentCount setAttributedText:event.attributedCommentCount];
     [_contentLabel setAttributedText:[Utils emojiStringFromRawString:event.message]];
     
     if (event.hasReference) {

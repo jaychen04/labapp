@@ -28,7 +28,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 
 @interface Utils : NSObject
 
-+ (NSString *)getAppclient:(int)clientType;
++ (NSAttributedString *)getAppclient:(int)clientType;
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 + (NSString *)GenerateTags:(NSArray *)tags;
 + (void)analysis:(NSString *)url andNavController:(UINavigationController *)navigationController;

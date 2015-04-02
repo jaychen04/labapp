@@ -119,14 +119,16 @@
 {
     [_portrait loadPortrait:tweet.portraitURL];
     [_authorLabel setText:tweet.author];
-    [_timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
-    [_appclientLabel setText:[Utils getAppclient:tweet.appclient]];
+    
+    [_timeLabel setAttributedText:tweet.attributedTimes];
+    [_commentCount setAttributedText:tweet.attributedCommentCount];
+    [_appclientLabel setAttributedText:[Utils getAppclient:tweet.appclient]];
     if (tweet.isLike) {
         [_likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
     } else {
         [_likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
     }
-    [_commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
+
     [_contentLabel setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
     
     [_likeListLabel setText:tweet.likersString];

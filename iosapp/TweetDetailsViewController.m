@@ -57,13 +57,13 @@
                 [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
                 [cell.likeButton addTarget:weakSelf action:@selector(togglePraise) forControlEvents:UIControlEventTouchUpInside];
                 
-                [cell.timeLabel setText:[Utils intervalSinceNow:weakSelf.tweet.pubDate]];
+                [cell.timeLabel setAttributedText:weakSelf.tweet.attributedTimes];
                 if (weakSelf.tweet.isLike) {
                     [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
                 } else {
                     [cell.likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
                 }
-                [cell.appclientLabel setText:[Utils getAppclient:weakSelf.tweet.appclient]];
+                [cell.appclientLabel setAttributedText:[Utils getAppclient:weakSelf.tweet.appclient]];
                 cell.webView.delegate = weakSelf;
                 [cell.webView loadHTMLString:weakSelf.tweet.body baseURL:nil];
             }
