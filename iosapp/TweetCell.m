@@ -63,11 +63,8 @@
     _contentLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.contentView addSubview:_contentLabel];
     
-    _likeLabel = [UILabel new];
-    _likeLabel.font = [UIFont systemFontOfSize:12];
-    _likeLabel.userInteractionEnabled = YES;
-    _likeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
-    [self.contentView addSubview:_likeLabel];
+    _likeButton = [UIButton new];
+    [self.contentView addSubview:_likeButton];
     
     _commentCount = [UILabel new];
     _commentCount.font = [UIFont systemFontOfSize:12];
@@ -82,6 +79,8 @@
     
     //点赞列表
     _likeListLabel = [UILabel new];
+    _likeListLabel.numberOfLines = 0;
+    _likeListLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _likeListLabel.font = [UIFont systemFontOfSize:12];
     _likeListLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:_likeListLabel];
@@ -91,7 +90,7 @@
 {
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _likeLabel, _commentCount, _likeListLabel, _thumbnail);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _likeButton, _commentCount, _likeListLabel, _thumbnail);
     
 
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
@@ -106,7 +105,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_thumbnail(80)]"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]->=5-[_likeLabel]-5-[_commentCount]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]->=5-[_likeButton(30)]-5-[_commentCount]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_likeListLabel]-8-|" options:0 metrics:nil views:views]];
@@ -122,11 +121,15 @@
     [_authorLabel setText:tweet.author];
     [_timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
     [_appclientLabel setText:[Utils getAppclient:tweet.appclient]];
-    [_likeLabel setText:[NSString stringWithFormat:@"👍：%d", tweet.likeCount]];
+    if (tweet.isLike) {
+        [_likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
+    } else {
+        [_likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
+    }
     [_commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
     [_contentLabel setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
     
-    [_likeListLabel setText:tweet.userLikeList];
+    [_likeListLabel setText:tweet.likersString];
     if (tweet.likeList.count > 0) {
         _likeListLabel.hidden = NO;
     } else {

@@ -386,6 +386,8 @@
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 		EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */; };
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
+		EE6B2B631ACCDF6300650985 /* ic_liked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B611ACCDF6300650985 /* ic_liked@2x.png */; };
+		EE6B2B641ACCDF6300650985 /* ic_unlike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE713BA01AB2BBF100D318AF /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
 		EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */; };
@@ -914,6 +916,8 @@
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UMS_facebook_icon.png; sourceTree = "<group>"; };
 		EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UMS_facebook_icon@2x.png"; sourceTree = "<group>"; };
+		EE6B2B611ACCDF6300650985 /* ic_liked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_liked@2x.png"; sourceTree = "<group>"; };
+		EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_unlike@2x.png"; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libNBSAppAgent.framework; sourceTree = "<group>"; };
@@ -1535,6 +1539,8 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				EE6B2B611ACCDF6300650985 /* ic_liked@2x.png */,
+				EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */,
 				38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */,
 				383B9FFC1AB7ED8B00C03C47 /* login */,
 				383B9FE31AB6CC5900C03C47 /* sidemenu */,
@@ -2303,6 +2309,7 @@
 				383B9FD51AB1985A00C03C47 /* toolbar-separatorline@3x.png in Resources */,
 				382A94951A26D27400AAAFEA /* 082@2x.png in Resources */,
 				381293491AB1676100B29221 /* toolbar-mention@2x.png in Resources */,
+				EE6B2B641ACCDF6300650985 /* ic_unlike@2x.png in Resources */,
 				382A946D1A26D27400AAAFEA /* 041@2x.png in Resources */,
 				382A94551A26D27400AAAFEA /* 017@2x.png in Resources */,
 				38BC59B61A5D406300F3C4D2 /* sound@3x.png in Resources */,
@@ -2325,6 +2332,7 @@
 				382A94931A26D27400AAAFEA /* 080@2x.png in Resources */,
 				380FD2C61A7762A8003C4021 /* tabbar-news@3x.png in Resources */,
 				386039691A0A3532007C9B88 /* portrait_loading.png in Resources */,
+				EE6B2B631ACCDF6300650985 /* ic_liked@2x.png in Resources */,
 				381293461AB1676100B29221 /* toolbar-emoji@3x.png in Resources */,
 				38F0A6301AAEC7C7001B531E /* widget_repost@2x.png in Resources */,
 				386F1E401A7A0CDA00B773EE /* UMSShareListController.xib in Resources */,

@@ -52,6 +52,9 @@
     _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:_appclientLabel];
     
+    _likeButton = [UIButton new];
+    [self.contentView addSubview:_likeButton];
+    
     _webView = [UIWebView new];
     _webView.scrollView.bounces = NO;
     _webView.scrollView.scrollEnabled = NO;
@@ -63,7 +66,7 @@
 {
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _webView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _webView, _likeButton);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)][_webView]-8-|"
                                                                              options:0 metrics:nil views:views]];
@@ -76,7 +79,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_authorLabel]-2-[_timeLabel]"
                                                                              options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]->=5-[_likeButton(30)]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 
