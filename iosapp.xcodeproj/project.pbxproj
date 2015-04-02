@@ -388,6 +388,12 @@
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
 		EE6B2B631ACCDF6300650985 /* ic_liked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B611ACCDF6300650985 /* ic_liked@2x.png */; };
 		EE6B2B641ACCDF6300650985 /* ic_unlike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */; };
+		EE6B2B6B1ACCF6D500650985 /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B651ACCF6D500650985 /* comment@2x.png */; };
+		EE6B2B6C1ACCF6D500650985 /* comment@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B661ACCF6D500650985 /* comment@3x.png */; };
+		EE6B2B6D1ACCF6D500650985 /* phone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B671ACCF6D500650985 /* phone@2x.png */; };
+		EE6B2B6E1ACCF6D500650985 /* phone@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B681ACCF6D500650985 /* phone@3x.png */; };
+		EE6B2B6F1ACCF6D500650985 /* time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B691ACCF6D500650985 /* time@2x.png */; };
+		EE6B2B701ACCF6D500650985 /* time@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B6A1ACCF6D500650985 /* time@3x.png */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE713BA01AB2BBF100D318AF /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
 		EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */; };
@@ -918,6 +924,12 @@
 		EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UMS_facebook_icon@2x.png"; sourceTree = "<group>"; };
 		EE6B2B611ACCDF6300650985 /* ic_liked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_liked@2x.png"; sourceTree = "<group>"; };
 		EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_unlike@2x.png"; sourceTree = "<group>"; };
+		EE6B2B651ACCF6D500650985 /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment@2x.png"; sourceTree = "<group>"; };
+		EE6B2B661ACCF6D500650985 /* comment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment@3x.png"; sourceTree = "<group>"; };
+		EE6B2B671ACCF6D500650985 /* phone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone@2x.png"; sourceTree = "<group>"; };
+		EE6B2B681ACCF6D500650985 /* phone@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "phone@3x.png"; sourceTree = "<group>"; };
+		EE6B2B691ACCF6D500650985 /* time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time@2x.png"; sourceTree = "<group>"; };
+		EE6B2B6A1ACCF6D500650985 /* time@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time@3x.png"; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libNBSAppAgent.framework; sourceTree = "<group>"; };
@@ -1539,6 +1551,12 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				EE6B2B651ACCF6D500650985 /* comment@2x.png */,
+				EE6B2B661ACCF6D500650985 /* comment@3x.png */,
+				EE6B2B671ACCF6D500650985 /* phone@2x.png */,
+				EE6B2B681ACCF6D500650985 /* phone@3x.png */,
+				EE6B2B691ACCF6D500650985 /* time@2x.png */,
+				EE6B2B6A1ACCF6D500650985 /* time@3x.png */,
 				EE6B2B611ACCDF6300650985 /* ic_liked@2x.png */,
 				EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */,
 				38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */,
@@ -2209,10 +2227,12 @@
 				3812935E1AB16F8400B29221 /* toolbar-editingComment@3x.png in Resources */,
 				382A94981A26D27400AAAFEA /* 085@2x.png in Resources */,
 				382A944D1A26D27400AAAFEA /* 009@2x.png in Resources */,
+				EE6B2B6F1ACCF6D500650985 /* time@2x.png in Resources */,
 				382A946B1A26D27400AAAFEA /* 039@2x.png in Resources */,
 				383B9FFB1AB7DE0F00C03C47 /* toolbar-emoji2@3x.png in Resources */,
 				38A9A9D01A5FD98E00B28B4F /* tweetEditing@2x.png in Resources */,
 				382A94A51A26D27400AAAFEA /* 098@2x.png in Resources */,
+				EE6B2B6D1ACCF6D500650985 /* phone@2x.png in Resources */,
 				386F1E3D1A7A0CDA00B773EE /* UMShareEditViewControlleriPad.xib in Resources */,
 				3838D1B21A6F4EB100CC7913 /* shake_down.png in Resources */,
 				383BA0021AB7ED8B00C03C47 /* login-email@3x.png in Resources */,
@@ -2249,6 +2269,8 @@
 				38BB27CF1AAC130F0088A15C /* me-message@2x.png in Resources */,
 				382A94781A26D27400AAAFEA /* 052@2x.png in Resources */,
 				38BC59BF1A5E231300F3C4D2 /* search@3x.png in Resources */,
+				EE6B2B701ACCF6D500650985 /* time@3x.png in Resources */,
+				EE6B2B6E1ACCF6D500650985 /* phone@3x.png in Resources */,
 				EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */,
 				382A94491A26D27400AAAFEA /* 005@2x.png in Resources */,
 				383B9FF71AB6CC5900C03C47 /* sidemenu-software@3x.png in Resources */,
@@ -2270,6 +2292,7 @@
 				383B9FEE1AB6CC5900C03C47 /* sidemenu-blog@2x.png in Resources */,
 				382A946F1A26D27400AAAFEA /* 043@2x.png in Resources */,
 				380FD2C71A7762A8003C4021 /* tabbar-tweet-selected.png in Resources */,
+				EE6B2B6B1ACCF6D500650985 /* comment@2x.png in Resources */,
 				EE7D33081AA9A00400ABFE58 /* icon_event_status_over.png in Resources */,
 				382A94711A26D27400AAAFEA /* 045@2x.png in Resources */,
 				382A948A1A26D27400AAAFEA /* 071@2x.png in Resources */,
@@ -2352,6 +2375,7 @@
 				380FD2B91A7762A8003C4021 /* tabbar-me-selected@2x.png in Resources */,
 				382A94921A26D27400AAAFEA /* 079@2x.png in Resources */,
 				38F0A6321AAEC7C7001B531E /* widget_taday@2x.png in Resources */,
+				EE6B2B6C1ACCF6D500650985 /* comment@3x.png in Resources */,
 				383B9FC91AB1955200C03C47 /* toolbar-comments@3x.png in Resources */,
 				38BB27BC1AAC016A0088A15C /* discover-scan@2x.png in Resources */,
 				380FD2B31A7762A8003C4021 /* tabbar-discover-selected@2x.png in Resources */,
