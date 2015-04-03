@@ -34,6 +34,7 @@
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:5.0];
+    _portrait.userInteractionEnabled = YES;
     [self.contentView addSubview:_portrait];
     
     _nameLabel = [UILabel new];
