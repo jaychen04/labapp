@@ -10,6 +10,7 @@
 #import "MessageBubbleCell.h"
 #import "OSCComment.h"
 #import "Config.h"
+#import "UserDetailsViewController.h"
 
 @interface MessageBubbleViewController ()
 
@@ -71,6 +72,9 @@
         
         [cell setContent:message.content andPortrait:message.portraitURL];
         
+        cell.portrait.tag = message.authorID;
+        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
+        
         return cell;
     } else {
         return self.lastCell;
@@ -100,6 +104,11 @@
     if (scrollView == self.tableView && _didScroll) {_didScroll();}
 }
 
+
+- (void)pushUserDetails:(UIGestureRecognizer *)recognizer
+{
+    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:recognizer.view.tag] animated:YES];
+}
 
 
 @end

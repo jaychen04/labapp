@@ -13,6 +13,8 @@ static NSString * const kMessageBubbleMe     = @"MessageBubbleMe";
 
 @interface MessageBubbleCell : UITableViewCell
 
+@property (nonatomic, strong) UIImageView *portrait;
+
 - (void)setContent:(NSString *)content andPortrait:(NSURL *)portraitURL;
 
 @end
