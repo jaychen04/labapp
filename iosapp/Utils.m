@@ -348,6 +348,8 @@
 
 + (NSString *)escapeHTML:(NSString *)originalHTML
 {
+    if (!originalHTML) {return @"";}
+    
     NSMutableString *result = [[NSMutableString alloc] initWithString:originalHTML];
     [result replaceOccurrencesOfString:@"&"  withString:@"&amp;"  options:NSLiteralSearch range:NSMakeRange(0, [result length])];
     [result replaceOccurrencesOfString:@"<"  withString:@"&lt;"   options:NSLiteralSearch range:NSMakeRange(0, [result length])];
