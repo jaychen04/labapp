@@ -63,7 +63,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidUpdate:)    name:UITextViewTextDidChangeNotification object:nil];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didChangeTextViewText:) name:UITextViewTextDidChangeNotification object:nil];
 }
 
 
@@ -204,43 +203,12 @@
 
 #pragma mark - 编辑框相关
 
-- (CGFloat)appropriateInputbarHeight
-{
-    CGFloat height = 0;
-    CGFloat minimumHeight = [self minimumInputbarHeight];
-    CGFloat newSizeHeight = [self.textView measureHeight];
-    CGFloat maxHeight     = self.textView.maxHeight;
-    //NSUInteger numberOfLines = self.textView.numberOfLines;
-    
-    self.textView.scrollEnabled = newSizeHeight >= maxHeight;
-    
-#if 1
-    if (newSizeHeight < minimumHeight) {
-        height = minimumHeight;
-    } else if (newSizeHeight < self.textView.maxHeight) {
-        height = newSizeHeight;
-    } else {
-        height = self.textView.maxHeight;
-    }
-#else
-    if (newSizeHeight < minimumHeight || !self.textView) {
-        height = minimumHeight;
-    } else if (maxHeight && newSizeHeight > maxHeight) {
-        height = maxHeight;
-    }
-#endif
-    
-    return roundf(height);
-}
-
-
-- (void)didchangeTextViewText:(NSNotification *)notification
-{
-    
-}
-
-
 - (void)textDidUpdate:(NSNotification *)notification
+{
+    [self updateInputBarHeight];
+}
+
+- (void)updateInputBarHeight
 {
     CGFloat inputbarHeight = [self appropriateInputbarHeight];
     
@@ -249,6 +217,26 @@
         
         [self.view layoutIfNeeded];
     }
+}
+
+- (CGFloat)appropriateInputbarHeight
+{
+    CGFloat height = 0;
+    CGFloat minimumHeight = [self minimumInputbarHeight];
+    CGFloat newSizeHeight = [self.textView measureHeight];
+    CGFloat maxHeight     = self.textView.maxHeight;
+    
+    self.textView.scrollEnabled = newSizeHeight >= maxHeight;
+    
+    if (newSizeHeight < minimumHeight) {
+        height = minimumHeight;
+    } else if (newSizeHeight < self.textView.maxHeight) {
+        height = newSizeHeight;
+    } else {
+        height = self.textView.maxHeight;
+    }
+    
+    return roundf(height);
 }
 
 

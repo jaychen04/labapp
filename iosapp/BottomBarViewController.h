@@ -23,5 +23,6 @@
 
 - (instancetype)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton;
 - (void)sendContent;
+- (void)updateInputBarHeight;
 
 @end
