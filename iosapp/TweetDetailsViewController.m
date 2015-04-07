@@ -54,7 +54,7 @@
                 [cell.authorLabel setText:weakSelf.tweet.author];
                 
                 [cell.portrait    addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
-                [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
+//                [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
                 [cell.likeButton addTarget:weakSelf action:@selector(togglePraise) forControlEvents:UIControlEventTouchUpInside];
                 
                 [cell.timeLabel setAttributedText:weakSelf.tweet.attributedTimes];
