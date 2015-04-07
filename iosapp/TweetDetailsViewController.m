@@ -14,6 +14,7 @@
 #import "TweetDetailsCell.h"
 #import "UserDetailsViewController.h"
 #import "Config.h"
+#import "TweetsLikeListViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -54,9 +55,15 @@
                 [cell.authorLabel setText:weakSelf.tweet.author];
                 
                 [cell.portrait    addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
-//                [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
                 [cell.likeButton addTarget:weakSelf action:@selector(togglePraise) forControlEvents:UIControlEventTouchUpInside];
+                [cell.likeListLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(PushToLikeList)]];
                 
+                [cell.likeListLabel setAttributedText:weakSelf.tweet.likersDetailString];
+                if (weakSelf.tweet.likeList.count > 0) {
+                    cell.likeListLabel.hidden = NO;
+                } else {
+                    cell.likeListLabel.hidden = YES;
+                }
                 [cell.timeLabel setAttributedText:weakSelf.tweet.attributedTimes];
                 if (weakSelf.tweet.isLike) {
                     [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
@@ -72,7 +79,14 @@
         };
         
         self.heightForOtherSectionCell = ^CGFloat (NSIndexPath *indexPath) {
-            return weakSelf.webViewHeight + 60;
+            
+            [weakSelf.label setAttributedText:weakSelf.tweet.likersDetailString];
+            weakSelf.label.font = [UIFont systemFontOfSize:12];
+            CGFloat height = [weakSelf.label sizeThatFits:CGSizeMake(weakSelf.tableView.frame.size.width - 16, MAXFLOAT)].height + 5;
+            
+            height += weakSelf.webViewHeight;
+            
+            return height + 60;
         };
     }
     
@@ -118,8 +132,6 @@
                                 </a>", _tweet.body, _tweet.bigImgURL, _tweet.bigImgURL];
              }
              
-             _tweet.body = [NSString stringWithFormat:@"%@%@",
-                            _tweet.body, _tweet.likersDetailString];
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
@@ -214,6 +226,14 @@
 {
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+#pragma mark - 跳转到点赞列表
+
+- (void)PushToLikeList
+{
+    TweetsLikeListViewController *likeListCtl = [[TweetsLikeListViewController alloc] initWithtweetID:_tweet.tweetID];
+    [self.navigationController pushViewController:likeListCtl animated:YES];
 }
 
 #pragma mark - 点赞功能

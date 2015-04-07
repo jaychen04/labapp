@@ -27,7 +27,7 @@
 @property (nonatomic, assign) BOOL isLike;
 @property (nonatomic, copy) NSMutableArray *likeList;
 @property (nonatomic, copy) NSMutableAttributedString *likersString;
-@property (nonatomic, copy) NSMutableString *likersDetailString;
+@property (nonatomic, copy) NSMutableAttributedString *likersDetailString;
 
 - (NSAttributedString *)attributedTimes;
 - (NSAttributedString *)attributedCommentCount;
