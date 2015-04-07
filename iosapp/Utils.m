@@ -168,7 +168,7 @@
                         };
                         
                         ((PostsViewController *)viewController).objClass = [OSCPost class];
-                        viewController.title = tag;
+                        viewController.navigationItem.title = [tag stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     }
                 }
             }
