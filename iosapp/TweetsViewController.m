@@ -410,7 +410,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager POST:postUrl
        parameters:@{
-                    @"user": @([Config getOwnID]),
+                    @"uid": @([Config getOwnID]),
                     @"tweetid": @(tweet.tweetID),
                     @"ownerOfTweet": @( tweet.authorID)
                     }
@@ -420,7 +420,7 @@ static NSString * const kTweetCellID = @"TweetCell";
               NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
               
               HUD.mode = MBProgressHUDModeCustomView;
-              
+
               if (errorCode == 1) {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                   if (tweet.isLike) {
