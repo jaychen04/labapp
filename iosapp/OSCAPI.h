@@ -10,7 +10,7 @@
 #define iosapp_OSCAPI_h
 
 //192.168.1.118
-#define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
+#define OSCAPI_PREFIX                   @"http://192.168.1.118/action/api/"
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
 #define OSCAPI_NEWS_LIST                @"news_list"
@@ -28,6 +28,7 @@
 #define OSCAPI_TWEET_PUB                @"tweet_pub"
 #define OSCAPI_TWEET_LIKE               @"tweet_like"
 #define OSCAPI_TWEET_UNLIKE             @"tweet_unlike"
+#define OSCAPI_TWEET_LIKE_LIST          @"tweet_like_list"
 #define OSCAPI_SOFTWARE_TWEET_PUB       @"software_tweet_pub"
 
 #define OSCAPI_ACTIVE_LIST              @"active_list"
