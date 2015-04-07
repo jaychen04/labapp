@@ -117,38 +117,54 @@
         message = metadataObject.stringValue;
         
         if ([message hasPrefix:@"{"]) {
-            if ([Config getOwnID] == 0) {
-                MBProgressHUD *HUD = [Utils createHUD];
-                HUD.mode = MBProgressHUDModeCustomView;
-                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                HUD.labelText = @"您还没登录，请先登录再扫描签到";
-                
-                [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
-                [HUD hide:YES afterDelay:2];
-                
-                return;
-            }
+            [self signInWithJson:message];
+        } else if ([Utils isURL:message]) {
+            [Utils analysis:message andNavController:self.navigationController];
+        } else {
+            MBProgressHUD *HUD = [Utils createHUD];
+            HUD.mode = MBProgressHUDModeText;
+            HUD.detailsLabelText = message;
             
-            NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
-            NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+            [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
+            [HUD hide:YES afterDelay:2];
             
-            NSNumber *requireLogin = json[@"require_login"];
-            NSString *title = json[@"title"];
-            NSNumber *type = json[@"type"];
-            NSString *URL = json[@"url"];
+            [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+        }
+    }
+}
+
+
+
+#pragma mark - 处理扫描结果
+
+- (void)signInWithJson:(NSString *)jsonString
+{
+    if ([Config getOwnID] == 0) {
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+        HUD.labelText = @"您还没登录，请先登录再扫描签到";
+        
+        [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
+        [HUD hide:YES afterDelay:2];
+    } else {
+        NSData *data = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
+        NSNumber *requireLogin = json[@"require_login"];
+        NSString *title = json[@"title"];
+        NSNumber *type = json[@"type"];
+        NSString *URL = json[@"url"];
+        
+        if (!requireLogin || !title || !type || !URL) {
+            MBProgressHUD *HUD = [Utils createHUD];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+            HUD.labelText = @"无效二维码";
             
-            if (!requireLogin || !title || !type || !URL) {
-                MBProgressHUD *HUD = [Utils createHUD];
-                HUD.mode = MBProgressHUDModeCustomView;
-                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                HUD.labelText = @"无效二维码";
-                
-                [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
-                [HUD hide:YES afterDelay:2];
-                
-                return;
-            }
-            
+            [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
+            [HUD hide:YES afterDelay:2];
+        } else {
             if ([type intValue] != 1) {
                 MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeText;
@@ -179,30 +195,23 @@
                          
                          [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
                          [HUD hide:YES afterDelay:2];
-                   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                       MBProgressHUD *HUD = [Utils createHUD];
-                       HUD.mode = MBProgressHUDModeCustomView;
-                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                       HUD.labelText = @"网络连接故障";
-                       
-                       [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
-                       [HUD hide:YES afterDelay:2];
-                }];
+                     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                         MBProgressHUD *HUD = [Utils createHUD];
+                         HUD.mode = MBProgressHUDModeCustomView;
+                         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                         HUD.labelText = @"网络连接故障";
+                         
+                         [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
+                         [HUD hide:YES afterDelay:2];
+                     }];
             }
-        } else if ([Utils isURL:message]) {
-            [Utils analysis:message andNavController:self.navigationController];
-        } else {
-            MBProgressHUD *HUD = [Utils createHUD];
-            HUD.mode = MBProgressHUDModeText;
-            HUD.detailsLabelText = message;
-            
-            [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
-            [HUD hide:YES afterDelay:2];
         }
     }
     
     [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    
 }
+
 
 
 
