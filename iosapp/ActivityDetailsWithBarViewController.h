@@ -12,6 +12,8 @@
 
 @interface ActivityDetailsWithBarViewController : BottomBarViewController
 
+@property (nonatomic, copy) void (^didScroll)();
+
 - (instancetype)initWithActivityID:(int64_t)activityID;
 
 @end

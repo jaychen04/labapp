@@ -55,6 +55,7 @@
     
     _tweetsViewController.didScroll = ^ {
         [weakSelf.editingBar.editView resignFirstResponder];
+        [weakSelf hideEmojiPageView];
     };
 }
 

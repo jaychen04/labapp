@@ -588,6 +588,7 @@
 {
     if (scrollView != self.editingBar.editView) {
         [self.editingBar.editView resignFirstResponder];
+        [self hideEmojiPageView];
     }
 }
 

@@ -62,6 +62,7 @@
     
     _commentsVC.didScroll = ^ {
         [weakSelf.editingBar.editView resignFirstResponder];
+        [weakSelf hideEmojiPageView];
     };
 }
 

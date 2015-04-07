@@ -57,6 +57,7 @@
     
     _messageBubbleVC.didScroll = ^ {
         [weakSelf.editingBar.editView resignFirstResponder];
+        [weakSelf hideEmojiPageView];
     };
 }
 
