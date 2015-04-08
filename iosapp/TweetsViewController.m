@@ -455,8 +455,7 @@ static NSString * const kTweetCellID = @"TweetCell";
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [self.tableView reloadData];
                   });
-//                  [self.tableView reloadData];
-//                  [self refresh];
+
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
