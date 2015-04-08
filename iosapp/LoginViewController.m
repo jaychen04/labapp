@@ -221,6 +221,8 @@
               [Config saveOwnID:user.userID userName:user.name score:user.score favoriteCount:user.favoriteCount fansCount:user.fansCount andFollowerCount:user.followersCount];
               [OSCThread startPollingNotice];
               
+              [self saveCookies];
+              
               [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
               [self.navigationController popViewControllerAnimated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -233,6 +235,20 @@
           }
      ];
 }
+
+
+
+/*** 不知为何有时退出应用后，cookie不保存，所以这里手动保存cookie ***/
+
+- (void)saveCookies
+{
+    NSData *cookiesData = [NSKeyedArchiver archivedDataWithRootObject: [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies]];
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject: cookiesData forKey: @"sessionCookies"];
+    [defaults synchronize];
+    
+}
+
 
 
 #pragma mark - TTTAttributedLabelDelegate
