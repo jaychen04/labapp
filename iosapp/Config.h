@@ -20,6 +20,7 @@
 
 + (NSArray *)getOwnAccountAndPassword;
 + (int64_t)getOwnID;
++ (NSString *)getOwnUserName;
 + (NSArray *)getActivitySignUpInfomation;
 + (NSArray *)getUsersInformation;
 + (UIImage *)getPortrait;

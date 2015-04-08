@@ -16,6 +16,7 @@
 #import "Config.h"
 #import "Utils.h"
 #import "TweetsLikeListViewController.h"
+#import "OSCUser.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
@@ -318,7 +319,7 @@ static NSString * const kTweetCellID = @"TweetCell";
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = error.userInfo[NSLocalizedDescriptionKey];
+                  HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
                   
                   [HUD hide:YES afterDelay:1];
               }];
@@ -404,9 +405,11 @@ static NSString * const kTweetCellID = @"TweetCell";
     } else {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
     }
-    tweet.isLike = !tweet.isLike;
+//    tweet.isLike = !tweet.isLike;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager POST:postUrl
        parameters:@{
@@ -423,12 +426,37 @@ static NSString * const kTweetCellID = @"TweetCell";
 
               if (errorCode == 1) {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  
+                  if (tweet.isLike) {
+                      //取消点赞
+                      for (OSCUser *user in tweet.likeList) {
+                          if ([user.name isEqualToString:[Config getOwnUserName]]) {
+                              [tweet.likeList removeObject:user];
+                              break;
+                          }
+                      }
+                      tweet.likeCount--;
+                  } else {
+                      //点赞
+                      OSCUser *user = [OSCUser new];
+                      user.userID = [Config getOwnID];
+                      user.name = [Config getOwnUserName];
+                      user.portraitURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", [Config getPortrait]]];
+                      [tweet.likeList insertObject:user atIndex:0];
+                      tweet.likeCount++;
+                  }
+                  tweet.isLike = !tweet.isLike;
+                  tweet.likersString = nil;
                   if (tweet.isLike) {
                       HUD.labelText = @"点赞成功";
                   } else {
                       HUD.labelText = @"取消点赞成功";
                   }
-                  [self refresh];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
+//                  [self.tableView reloadData];
+//                  [self refresh];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
@@ -438,7 +466,7 @@ static NSString * const kTweetCellID = @"TweetCell";
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.labelText = error.userInfo[NSLocalizedDescriptionKey];
+              HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
               
               [HUD hide:YES afterDelay:1];
           }];
