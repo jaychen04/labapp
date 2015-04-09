@@ -49,6 +49,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"综合"
                                                                        andSubTitles:@[@"资讯", @"热点", @"博客", @"推荐"]
                                                                      andControllers:@[

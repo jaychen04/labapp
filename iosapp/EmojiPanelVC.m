@@ -28,6 +28,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     flowLayout.minimumInteritemSpacing = (screenWidth - 40 - 30 * 7) / 7;

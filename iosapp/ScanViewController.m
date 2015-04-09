@@ -48,6 +48,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    
     [self setScanRegion];
     [_session startRunning];
 }
