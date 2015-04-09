@@ -82,6 +82,7 @@
         if (![[SDWebImageManager sharedManager] cachedImageExistsForURL:_imageURL]) {
             _HUD = [Utils createHUD];
             _HUD.mode = MBProgressHUDModeAnnularDeterminate;
+            [_HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap)]];
         }
         
         [_imageView sd_setImageWithURL:_imageURL
@@ -141,6 +142,7 @@
 
 - (void)handleSingleTap
 {
+    [_HUD hide:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
