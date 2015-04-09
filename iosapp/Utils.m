@@ -34,11 +34,13 @@
         textAttachment.image = [UIImage imageNamed:@"phone"];
         NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
         [clientString appendAttributedString:attachmentString];
+        
+        NSArray *clients = @[@"", @"", @"手机", @"Android", @"iPhone", @"Windows Phone", @"微信"];
+        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:clients[clientType]]];
+    } else {
+        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@""]];
     }
-    
-    NSArray *clients = @[@"", @"", @"手机", @"Android", @"iPhone", @"Windows Phone", @"微信"];
-    [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-    [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:clients[clientType]]];
     
     return clientString;
 }
