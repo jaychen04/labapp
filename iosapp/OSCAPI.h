@@ -10,9 +10,9 @@
 #define iosapp_OSCAPI_h
 
 //线上
-//#define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
+#define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
 //本地
-#define OSCAPI_PREFIX                   @"http://192.168.1.118/action/api/"
+//#define OSCAPI_PREFIX                   @"http://192.168.1.118/action/api/"
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
 #define OSCAPI_NEWS_LIST                @"news_list"
