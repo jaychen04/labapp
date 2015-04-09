@@ -128,8 +128,8 @@
     _imageView.clipsToBounds = YES;
     _imageView.userInteractionEnabled = YES;
     _imageView.image = _image;
-    [_imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showImagePreview)]];
     _image = nil;
+    [_imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showImagePreview)]];
     [_contentView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_edittingArea action:@selector(becomeFirstResponder)]];
     [_contentView addSubview:_imageView];
     
@@ -238,6 +238,9 @@
 
 - (void)keyboardWillShow:(NSNotification *)notification
 {
+    _emojiPageVC.view.hidden = YES;
+    _isEmojiPageOnScreen = NO;
+    
     CGRect keyboardBounds = [notification.userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
     _keyboardHeightConstraint.constant = keyboardBounds.size.height;
     
