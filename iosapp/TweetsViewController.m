@@ -208,9 +208,11 @@ static NSString * const kTweetCellID = @"TweetCell";
         [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
         height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
         
-        [self.label setAttributedText:tweet.likersString];
-        self.label.font = [UIFont systemFontOfSize:12];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 5;
+        if (tweet.likeCount) {
+            [self.label setAttributedText:tweet.likersString];
+            self.label.font = [UIFont systemFontOfSize:12];
+            height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 6;
+        }
         
         if (tweet.hasAnImage) {
 #if 0
@@ -218,11 +220,11 @@ static NSString * const kTweetCellID = @"TweetCell";
             if (!image) {image = [UIImage imageNamed:@"loading"];}
             height += image.size.height + 5;
 #else
-            height += 85;
+            height += 86;
 #endif
         }
         
-        return height + 41;
+        return height + 39;
        
     } else {
         return 60;
