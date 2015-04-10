@@ -12,6 +12,7 @@
 #import "EventsViewController.h"
 #import "FriendsViewController.h"
 #import "MessagesViewController.h"
+#import "MyTweetLikeListViewController.h"
 
 #import "UIButton+Badge.h"
 #import <AFNetworking.h>
@@ -33,17 +34,18 @@
 - (instancetype)initWithNoticeCounts:(NSArray *)noticeCounts
 {
     self = [super initWithTitle:@"消息中心"
-                   andSubTitles:@[@"@我", @"评论", @"留言", @"粉丝"]
+                   andSubTitles:@[@"@我", @"评论", @"留言", @"粉丝", @"动弹"]
                  andControllers:@[
                                   [[EventsViewController alloc] initWithCatalog:2],
                                   [[EventsViewController alloc] initWithCatalog:3],
                                   [MessagesViewController new],
-                                  [[FriendsViewController alloc] initWithUserID:[Config getOwnID] andFriendsRelation:0]
+                                  [[FriendsViewController alloc] initWithUserID:[Config getOwnID] andFriendsRelation:0],
+                                  [MyTweetLikeListViewController new]
                                   ]];
     
     if (self) {
-        _viewAppeared  = [NSMutableArray arrayWithArray:@[@(NO), @(NO), @(NO), @(NO)]];
-        _viewRefreshed = [NSMutableArray arrayWithArray:@[@(NO), @(NO), @(NO), @(NO)]];
+        _viewAppeared  = [NSMutableArray arrayWithArray:@[@(NO), @(NO), @(NO), @(NO), @(NO)]];
+        _viewRefreshed = [NSMutableArray arrayWithArray:@[@(NO), @(NO), @(NO), @(NO), @(NO)]];
         
         __weak MessageCenter *weakSelf = self;
         [self.viewPager.controllers enumerateObjectsUsingBlock:^(OSCObjsViewController *vc, NSUInteger idx, BOOL *stop) {
@@ -125,11 +127,20 @@
     __block BOOL scrolled = NO;
     __block int sumOfCount = 0;
     
-    [self.titleBar.titleButtons enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL *stop) {
-        [self setBadgeValue:[noticeCounts[idx] stringValue] forButton:button];
-        sumOfCount += [noticeCounts[idx] intValue];
+//    [self.titleBar.titleButtons enumerateObjectsUsingBlock:^(UIButton *button, NSUInteger idx, BOOL *stop) {
+//        [self setBadgeValue:[noticeCounts[idx] stringValue] forButton:button];
+//        sumOfCount += [noticeCounts[idx] intValue];
+//        
+//        if (needAutoScroll && [noticeCounts[idx] intValue] && !scrolled) {
+//            [self scrollToViewAtIndex:idx];
+//            scrolled = YES;
+//        }
+//    }];
+    [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *number, NSUInteger idx, BOOL *stop) {
+        [self setBadgeValue:[number stringValue] forButton:self.titleBar.titleButtons[idx]];
+        sumOfCount += [number intValue];
         
-        if (needAutoScroll && [noticeCounts[idx] intValue] && !scrolled) {
+        if (needAutoScroll && [number intValue] && !scrolled) {
             [self scrollToViewAtIndex:idx];
             scrolled = YES;
         }
@@ -156,7 +167,7 @@
     
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_NOTICE_CLEAR]
        parameters:@{@"uid":@([Config getOwnID]),
-                    @"type":@[@(1), @(3), @(2), @(4)][idx]}
+                    @"type":@[@(1), @(3), @(2), @(4), @(5)][idx]}
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
               ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
               int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
