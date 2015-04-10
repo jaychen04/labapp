@@ -13,6 +13,9 @@
 #import "ImageViewerController.h"
 #import "TweetDetailsCell.h"
 #import "UserDetailsViewController.h"
+#import "Config.h"
+#import "TweetsLikeListViewController.h"
+#import "OSCUser.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -51,10 +54,22 @@
                 [cell.authorLabel setText:weakSelf.tweet.author];
                 
                 [cell.portrait    addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
-                [cell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
+                [cell.likeButton addTarget:weakSelf action:@selector(togglePraise) forControlEvents:UIControlEventTouchUpInside];
+                [cell.likeListLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(PushToLikeList)]];
                 
-                [cell.timeLabel setText:[Utils intervalSinceNow:weakSelf.tweet.pubDate]];
-                [cell.appclientLabel setText:[Utils getAppclient:weakSelf.tweet.appclient]];
+                [cell.likeListLabel setAttributedText:weakSelf.tweet.likersDetailString];
+                if (weakSelf.tweet.likeList.count > 0) {
+                    cell.likeListLabel.hidden = NO;
+                } else {
+                    cell.likeListLabel.hidden = YES;
+                }
+                [cell.timeLabel setAttributedText:weakSelf.tweet.attributedTimes];
+                if (weakSelf.tweet.isLike) {
+                    [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
+                } else {
+                    [cell.likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
+                }
+                [cell.appclientLabel setAttributedText:[Utils getAppclient:weakSelf.tweet.appclient]];
                 cell.webView.delegate = weakSelf;
                 [cell.webView loadHTMLString:weakSelf.tweet.body baseURL:nil];
             }
@@ -63,7 +78,14 @@
         };
         
         self.heightForOtherSectionCell = ^CGFloat (NSIndexPath *indexPath) {
-            return weakSelf.webViewHeight + 60;
+            
+            [weakSelf.label setAttributedText:weakSelf.tweet.likersDetailString];
+            weakSelf.label.font = [UIFont systemFontOfSize:12];
+            CGFloat height = [weakSelf.label sizeThatFits:CGSizeMake(weakSelf.tableView.frame.size.width - 16, MAXFLOAT)].height + 5;
+            
+            height += weakSelf.webViewHeight;
+            
+            return height + 60;
         };
     }
     
@@ -79,6 +101,11 @@
     _HUD.userInteractionEnabled = NO;
     _HUD.dimBackground = YES;
     
+    [self getTweetDetails];
+}
+
+- (void)getTweetDetails
+{
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
@@ -91,23 +118,27 @@
              _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
              self.objectAuthorID = _tweet.authorID;
              _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;}</style>\
-                                                        <font size=\"3\"><strong>%@</strong></font>\
-                                                        <br/>",
-                                                        _tweet.body];
+                            <font size=\"3\"><strong>%@</strong></font>\
+                            <br/>",
+                            _tweet.body];
+             
              if (_tweet.hasAnImage) {
                  _tweet.body = [NSString stringWithFormat:@"%@<a href='%@'>\
-                                                                    <img style='max-width:300px;\
-                                                                                margin-top:10px;\
-                                                                                margin-bottom:15px'\
-                                                                         src='%@'/>\
-                                                            </a>", _tweet.body, _tweet.bigImgURL, _tweet.bigImgURL];
+                                <img style='max-width:300px;\
+                                margin-top:10px;\
+                                margin-bottom:15px'\
+                                src='%@'/>\
+                                </a>", _tweet.body, _tweet.bigImgURL, _tweet.bigImgURL];
              }
+             
+             
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
              });
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [_HUD hide:YES];
          }];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -194,6 +225,98 @@
 {
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+#pragma mark - 跳转到点赞列表
+
+- (void)PushToLikeList
+{
+    TweetsLikeListViewController *likeListCtl = [[TweetsLikeListViewController alloc] initWithtweetID:_tweet.tweetID];
+    [self.navigationController pushViewController:likeListCtl animated:YES];
+}
+
+#pragma mark - 点赞功能
+- (void)togglePraise
+{
+    [self toPraise:_tweet];
+}
+
+- (void)toPraise:(OSCTweet *)tweet
+{
+    MBProgressHUD *HUD = [Utils createHUD];
+    NSString *postUrl;
+    if (tweet.isLike) {
+        postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_UNLIKE];
+    } else {
+        postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
+    }
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    [manager POST:postUrl
+       parameters:@{
+                    @"uid": @([Config getOwnID]),
+                    @"tweetid": @(tweet.tweetID),
+                    @"ownerOfTweet": @(tweet.authorID)
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
+              NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
+              
+              HUD.mode = MBProgressHUDModeCustomView;
+              
+              if (errorCode == 1) {
+                  if (tweet.isLike) {
+                      //取消点赞
+                      for (OSCUser *user in tweet.likeList) {
+                          if ([user.name isEqualToString:[Config getOwnUserName]]) {
+                              [tweet.likeList removeObject:user];
+                              break;
+                          }
+                      }
+                      tweet.likeCount--;
+                  } else {
+                      //点赞
+                      OSCUser *user = [OSCUser new];
+                      user.userID = [Config getOwnID];
+                      user.name = [Config getOwnUserName];
+                      user.portraitURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@", [Config getPortrait]]];
+                      [tweet.likeList insertObject:user atIndex:0];
+                      tweet.likeCount++;
+                  }
+                  tweet.isLike = !tweet.isLike;
+                  tweet.likersDetailString = nil;
+                  
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  if (tweet.isLike) {
+                      HUD.labelText = @"点赞成功";
+                  } else {
+                      HUD.labelText = @"取消点赞成功";
+                  }
+#if 0
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
+#else
+                  [self.tableView beginUpdates];
+                  [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+                  [self.tableView endUpdates];
+#endif
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+              }
+              
+              [HUD hide:YES afterDelay:1];
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              
+              [HUD hide:YES afterDelay:1];
+          }];
 }
 
 

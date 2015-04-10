@@ -66,6 +66,33 @@ static NSString * const kAuthorUID2 = @"authoruid2";
     return attributedTittle;
 }
 
+-(NSAttributedString *)attributedTimes
+{
+    NSMutableAttributedString *attributedTime;
+    
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    textAttachment.image = [UIImage imageNamed:@"time"];
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    attributedTime = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:[Utils intervalSinceNow:_pubDate]]];
+    
+    return attributedTime;
+}
+
+-(NSAttributedString *)attributedCommentCount
+{
+    NSMutableAttributedString *attributedCommentCount;
+    
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    textAttachment.image = [UIImage imageNamed:@"comment"];
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    attributedCommentCount = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d", _commentCount]]];
+    
+    return attributedCommentCount;
+}
 
 - (BOOL)isEqual:(id)object
 {

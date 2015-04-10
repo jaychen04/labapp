@@ -23,4 +23,13 @@
 @property (nonatomic, strong) NSURL *bigImgURL;
 @property (nonatomic, copy) NSString *attach;
 
+@property (nonatomic, assign) int likeCount;
+@property (nonatomic, assign) BOOL isLike;
+@property (nonatomic, copy) NSMutableArray *likeList;
+@property (nonatomic, copy) NSMutableAttributedString *likersString;
+@property (nonatomic, copy) NSMutableAttributedString *likersDetailString;
+
+- (NSAttributedString *)attributedTimes;
+- (NSAttributedString *)attributedCommentCount;
+
 @end
