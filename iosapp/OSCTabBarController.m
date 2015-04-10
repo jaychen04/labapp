@@ -380,10 +380,9 @@
         OSCObjsViewController *objsViewController = (OSCObjsViewController *)swipeableVC.viewPager.childViewControllers[swipeableVC.titleBar.currentIndex];
         
         [objsViewController.refreshControl beginRefreshing];
-        [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)
-                                              animated:NO];
+        [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height-10)];
         
-        [objsViewController performSelectorOnMainThread:@selector(refresh) withObject:nil waitUntilDone:1];
+        [objsViewController refresh];
     }
 }
 
