@@ -32,7 +32,6 @@ typedef NS_ENUM(NSUInteger, NewsType)
 @property (nonatomic, assign) int64_t authorUID2;
 
 - (NSAttributedString *)attributedTittle;
-- (NSAttributedString *)attributedTimes;
 - (NSAttributedString *)attributedCommentCount;
 
 @end

@@ -82,7 +82,7 @@ static NSString *kBlogCellID = @"BlogCell";
         [cell.titleLabel setAttributedText:blog.attributedTittle];
         [cell.bodyLabel setText:blog.body];
         [cell.authorLabel setText:blog.author];
-        [cell.timeLabel setAttributedText:blog.attributedTimes];
+        [cell.timeLabel setAttributedText:[Utils attributedTimeString:blog.pubDate]];
         [cell.commentCount setAttributedText:blog.attributedCommentCount];
         
         return cell;

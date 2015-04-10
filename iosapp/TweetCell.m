@@ -106,7 +106,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_thumbnail(80)]"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]->=5-[_likeButton(50)]-5-[_commentCount]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-10-[_appclientLabel]->=5-[_likeButton(50)]-5-[_commentCount]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_likeListLabel]-8-|" options:0 metrics:nil views:views]];
@@ -121,7 +121,7 @@
     [_portrait loadPortrait:tweet.portraitURL];
     [_authorLabel setText:tweet.author];
     
-    [_timeLabel setAttributedText:tweet.attributedTimes];
+    [_timeLabel setAttributedText:[Utils attributedTimeString:tweet.pubDate]];
     [_commentCount setAttributedText:tweet.attributedCommentCount];
     [_appclientLabel setAttributedText:[Utils getAppclient:tweet.appclient]];
     if (tweet.isLike) {
