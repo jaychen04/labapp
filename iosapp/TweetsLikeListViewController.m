@@ -48,6 +48,7 @@ static NSString * const kTweetLikeUserCellID = @"TweetLikeUserCell";
     
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.tableView registerClass:[TweetLikeUserCell class] forCellReuseIdentifier:kTweetLikeUserCellID];
 }
 

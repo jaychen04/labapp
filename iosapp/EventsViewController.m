@@ -93,6 +93,7 @@ static NSString * const EventCellID = @"EventCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:EventCellID];
 }
 
