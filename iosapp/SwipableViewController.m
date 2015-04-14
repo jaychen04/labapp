@@ -22,20 +22,33 @@
 
 @implementation SwipableViewController
 
+
 - (instancetype)initWithTitle:(NSString *)title andSubTitles:(NSArray *)subTitles andControllers:(NSArray *)controllers
+{
+    return [self initWithTitle:title andSubTitles:subTitles andControllers:controllers underTabbar:NO];
+}
+
+- (instancetype)initWithTitle:(NSString *)title andSubTitles:(NSArray *)subTitles andControllers:(NSArray *)controllers underTabbar:(BOOL)underTabbar
 {
     self = [super init];
     if (self) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        //self.navigationController.navigationBar.translucent = NO;
+        //self.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        
         if (title) {self.title = title;}
         
         CGFloat titleBarHeight = 36;
-        _titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, titleBarHeight) andTitles:subTitles];
+        _titleBar = [[TitleBarView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, titleBarHeight) andTitles:subTitles];
         _titleBar.backgroundColor = [UIColor clearColor];
         [self.view addSubview:_titleBar];
         
         
         _viewPager = [[HorizonalTableViewController alloc] initWithViewControllers:controllers];
-        _viewPager.view.frame = CGRectMake(0,  titleBarHeight, self.view.frame.size.width, self.view.frame.size.height - titleBarHeight);
+        
+        CGFloat height = self.view.bounds.size.height - titleBarHeight - 64 - (underTabbar ? 49 : 0);
+        _viewPager.view.frame = CGRectMake(0, titleBarHeight, self.view.bounds.size.width, height);
+        
         [self addChildViewController:self.viewPager];
         [self.view addSubview:_viewPager.view];
         
@@ -88,7 +101,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor themeColor];
 }
 

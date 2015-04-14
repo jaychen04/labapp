@@ -58,7 +58,8 @@
                                                                                       [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest],
                                                                                       [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
                                                                                       [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
-                                                                                      ]];
+                                                                                      ]
+                                                                        underTabbar:YES];
     
     SwipableViewController *tweetsSVC = [[SwipableViewController alloc] initWithTitle:@"动弹"
                                                                          andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
@@ -66,7 +67,8 @@
                                                                                         [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
                                                                                         [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
                                                                                         [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
-                                                                                        ]];
+                                                                                        ]
+                                                                          underTabbar:YES];
     
     DiscoverTableVC *discoverTableVC = [[DiscoverTableVC alloc] initWithStyle:UITableViewStyleGrouped];
     MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
