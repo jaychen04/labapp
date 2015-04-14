@@ -69,6 +69,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-search"] style:UIBarButtonItemStylePlain target:self action:@selector(pushSearchViewController)];
     self.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"] style:UIBarButtonItemStylePlain target:self action:@selector(onClickMenuButton)];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.tableView.bounces = NO;
     self.navigationItem.title = @"我";
     self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
