@@ -381,8 +381,8 @@
         SwipableViewController *swipeableVC = (SwipableViewController *)((UINavigationController *)self.selectedViewController).viewControllers[0];
         OSCObjsViewController *objsViewController = (OSCObjsViewController *)swipeableVC.viewPager.childViewControllers[swipeableVC.titleBar.currentIndex];
         
-        [objsViewController.refreshControl beginRefreshing];
         [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)];
+        [objsViewController.refreshControl beginRefreshing];
         
         [objsViewController refresh];
     }

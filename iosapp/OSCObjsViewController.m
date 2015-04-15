@@ -180,9 +180,8 @@
                      }
                  }
                  
-                 if (refresh) {
+                 if (self.refreshControl.refreshing) {
                      [self.refreshControl endRefreshing];
-                     //[self.tableView setContentOffset:CGPointZero animated:YES];
                  }
                  [self.tableView reloadData];
              });
@@ -196,9 +195,8 @@
              [HUD hide:YES afterDelay:1];
              
              [_lastCell statusError];
-             if (refresh) {
+             if (self.refreshControl.refreshing) {
                  [self.refreshControl endRefreshing];
-                 //[self.tableView setContentOffset:CGPointZero animated:YES];
              }
              [self.tableView reloadData];
          }
