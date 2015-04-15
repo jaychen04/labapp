@@ -395,6 +395,7 @@
 		EE6B2B6F1ACCF6D500650985 /* time@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B691ACCF6D500650985 /* time@2x.png */; };
 		EE6B2B701ACCF6D500650985 /* time@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B6A1ACCF6D500650985 /* time@3x.png */; };
 		EE6B2B721ACD298D00650985 /* ic_liked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B711ACD298D00650985 /* ic_liked@2x.png */; };
+		EE6C29C01ADE426B00370311 /* picture_download.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6C29BF1ADE426B00370311 /* picture_download.png */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
@@ -938,6 +939,7 @@
 		EE6B2B691ACCF6D500650985 /* time@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time@2x.png"; sourceTree = "<group>"; };
 		EE6B2B6A1ACCF6D500650985 /* time@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time@3x.png"; sourceTree = "<group>"; };
 		EE6B2B711ACD298D00650985 /* ic_liked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_liked@2x.png"; sourceTree = "<group>"; };
+		EE6C29BF1ADE426B00370311 /* picture_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picture_download.png; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE6DB9461AD6633E004FCF3C /* MyTweetLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTweetLikeListViewController.h; sourceTree = "<group>"; };
@@ -1572,6 +1574,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				EE6C29BF1ADE426B00370311 /* picture_download.png */,
 				EE6B2B651ACCF6D500650985 /* comment@2x.png */,
 				EE6B2B661ACCF6D500650985 /* comment@3x.png */,
 				EE6B2B671ACCF6D500650985 /* phone@2x.png */,
@@ -2506,6 +2509,7 @@
 				382A946A1A26D27400AAAFEA /* 038@2x.png in Resources */,
 				382A94561A26D27400AAAFEA /* 018@2x.png in Resources */,
 				38BB27CD1AAC130F0088A15C /* me-blog@3x.png in Resources */,
+				EE6C29C01ADE426B00370311 /* picture_download.png in Resources */,
 				380FD2BA1A7762A8003C4021 /* tabbar-me-selected@3x.png in Resources */,
 				382A94871A26D27400AAAFEA /* 068@2x.png in Resources */,
 				383B9FDF1AB6C95200C03C47 /* menu-background(414x736)@3x.png in Resources */,
