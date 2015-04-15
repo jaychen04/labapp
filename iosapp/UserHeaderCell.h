@@ -12,7 +12,9 @@
 
 @interface UserHeaderCell : UITableViewCell
 
+@property (nonatomic, strong) UIView *imageBackView;
 @property (nonatomic, strong) UIImageView *portrait;
+@property (nonatomic, strong) UIImageView *genderImageView;
 @property (nonatomic, strong) UILabel *nameLabel;
 
 @property (nonatomic, strong) UIButton *creditsButton;
