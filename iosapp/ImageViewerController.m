@@ -16,13 +16,14 @@
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
 
-@interface ImageViewerController () <UIScrollViewDelegate>
+@interface ImageViewerController () <UIScrollViewDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong) UIImage *image;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UIButton *saveButton;
 @property (nonatomic, assign) BOOL zoomOut;
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
@@ -82,6 +83,7 @@
         if (![[SDWebImageManager sharedManager] cachedImageExistsForURL:_imageURL]) {
             _HUD = [Utils createHUD];
             _HUD.mode = MBProgressHUDModeAnnularDeterminate;
+            [_HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap)]];
         }
         
         [_imageView sd_setImageWithURL:_imageURL
@@ -106,6 +108,20 @@
     
     _scrollView.contentSize = _imageView.frame.size;
     [_scrollView addSubview:_imageView];
+    
+    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-50, self.view.frame.size.width, 50)];
+    backView.backgroundColor = [UIColor colorWithHex:0x0A0702];
+    backView.alpha = 0.8;
+    [self.view addSubview:backView];
+    
+    _saveButton = [UIButton new];
+    CGFloat X = self.view.frame.size.width;
+    CGFloat Y = self.view.frame.size.height;
+    _saveButton.frame = CGRectMake(X-60, Y-45, 30, 30);
+    [_saveButton setImage:[UIImage imageNamed:@"picture_download"] forState:UIControlStateNormal];
+    [_saveButton addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_saveButton];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -134,13 +150,11 @@
     return self.imageView;
 }
 
-
-
-
 #pragma mark - handle gesture
 
 - (void)handleSingleTap
 {
+    [_HUD hide:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -165,9 +179,34 @@
     [_scrollView zoomToRect:rectToZoomTo animated:YES];
 }
 
+//下载保存图片
+- (void)downloadPicture
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"下载图片至手机相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    [alertView show];
+}
 
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(imageSavedToPhotosAlbum:didFinishSavingWithError:contextInfo:), nil);
+    }
+}
 
-
+- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    MBProgressHUD *HUD = [Utils createHUD];
+    HUD.mode = MBProgressHUDModeCustomView;
+    
+    if (!error) {
+        HUD.labelText = @"保存成功";
+    } else {
+        HUD.labelText = [NSString stringWithFormat:@"%@", [error description]];
+    }
+    
+    [HUD hide:YES afterDelay:1];
+}
 
 
 @end

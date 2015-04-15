@@ -18,8 +18,11 @@
 
 + (void)saveName:(NSString *)actorName sex:(NSInteger)sex phoneNumber:(NSString *)phoneNumber corporation:(NSString *)corporation andPosition:(NSString *)position;
 
++ (void)clearCookie;
+
 + (NSArray *)getOwnAccountAndPassword;
 + (int64_t)getOwnID;
++ (NSString *)getOwnUserName;
 + (NSArray *)getActivitySignUpInfomation;
 + (NSArray *)getUsersInformation;
 + (UIImage *)getPortrait;

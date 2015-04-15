@@ -8,6 +8,7 @@
 
 #import "OSCBlog.h"
 #import <UIKit/UIKit.h>
+#import "Utils.h"
 
 static NSString * const kID = @"id";
 static NSString * const kAuthor = @"authorname";
@@ -53,6 +54,21 @@ static NSString * const kDocumentType = @"documentType";
     return attributedTittle;
 }
 
+-(NSAttributedString *)attributedCommentCount
+{
+    NSMutableAttributedString *attributedCommentCount;
+    
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    textAttachment.image = [UIImage imageNamed:@"comment"];
+    [textAttachment adjustY:-1];
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    attributedCommentCount = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d", _commentCount]]];
+    
+    return attributedCommentCount;
+}
 
 - (BOOL)isEqual:(id)object
 {

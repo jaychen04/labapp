@@ -93,6 +93,7 @@ static NSString * const EventCellID = @"EventCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:EventCellID];
 }
 
@@ -269,7 +270,8 @@ static NSString * const EventCellID = @"EventCell";
     OSCEvent *event = self.objects[recognizer.view.tag];
     
     NSMutableString *thumbURL = [NSMutableString stringWithString:event.tweetImg.absoluteString];
-    [thumbURL replaceCharactersInRange:NSMakeRange(thumbURL.length - 10, 10) withString:@".jpg"];
+    [thumbURL replaceCharactersInRange:NSMakeRange(thumbURL.length - 10, 10)
+                            withString:[thumbURL substringWithRange:NSMakeRange(thumbURL.length - 4, 4)]];
     NSURL *bigImageURL = [NSURL URLWithString:thumbURL];
     
     ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:bigImageURL];

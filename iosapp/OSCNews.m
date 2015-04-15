@@ -42,6 +42,7 @@ static NSString * const kAuthorUID2 = @"authoruid2";
         _type = [[[newsType firstChildWithTag:kType] numberValue] intValue];
         _attachment = [[newsType firstChildWithTag:kAttachment] stringValue];
         _authorUID2 = [[[newsType firstChildWithTag:kAuthorUID2] numberValue] longLongValue];
+        _eventURL = [NSURL URLWithString:[[newsType firstChildWithTag:@"eventurl"] stringValue]];
     }
     
     return self;
@@ -65,6 +66,21 @@ static NSString * const kAuthorUID2 = @"authoruid2";
     return attributedTittle;
 }
 
+-(NSAttributedString *)attributedCommentCount
+{
+    NSMutableAttributedString *attributedCommentCount;
+    
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    textAttachment.image = [UIImage imageNamed:@"comment"];
+    [textAttachment adjustY:-1];
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    attributedCommentCount = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d", _commentCount]]];
+    
+    return attributedCommentCount;
+}
 
 - (BOOL)isEqual:(id)object
 {

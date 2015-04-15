@@ -17,7 +17,9 @@
 @property (nonatomic, strong) UILabel *timeLabel;
 @property (nonatomic, strong) UILabel *commentCount;
 @property (nonatomic, strong) UILabel *appclientLabel;
+@property (nonatomic, strong) UIButton *likeButton;
 @property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UILabel *likeListLabel;
 @property (nonatomic, strong) UIImageView *thumbnail;
 
 @property (nonatomic, strong) NSArray *thumbnailConstraints;

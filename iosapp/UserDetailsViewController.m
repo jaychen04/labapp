@@ -211,6 +211,8 @@
                       HUD.mode = MBProgressHUDModeCustomView;
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                       HUD.labelText = errorMessage;
+                      
+                      [HUD hide:YES afterDelay:1];
                   }
                 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

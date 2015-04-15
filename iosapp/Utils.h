@@ -11,6 +11,7 @@
 #import "UIColor+Util.h"
 #import "UIImageView+Util.h"
 #import "UIImage+Util.h"
+#import "NSTextAttachment+Util.h"
 
 static NSString * const kKeyYears = @"years";
 static NSString * const kKeyMonths = @"months";
@@ -28,12 +29,13 @@ typedef NS_ENUM(NSUInteger, hudType) {
 
 @interface Utils : NSObject
 
-+ (NSString *)getAppclient:(int)clientType;
++ (NSAttributedString *)getAppclient:(int)clientType;
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 + (NSString *)GenerateTags:(NSArray *)tags;
 + (void)analysis:(NSString *)url andNavController:(UINavigationController *)navigationController;
 
 + (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr;
++ (NSAttributedString *)attributedTimeString:(NSString *)dateStr;
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 + (NSData *)compressImage:(UIImage *)image;

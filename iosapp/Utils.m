@@ -26,19 +26,25 @@
 
 #pragma mark - 处理API返回信息
 
-+ (NSString *)getAppclient:(int)clientType
++ (NSAttributedString *)getAppclient:(int)clientType
 {
-    switch (clientType) {
-        case 0:
-        case 1: return @"";
-        case 2: return @"来自手机";
-        case 3: return @"来自Android";
-        case 4: return @"来自iPhone";
-        case 5: return @"来自Windows Phone";
-        case 6: return @"来自微信";
-            
-        default: return @"";
+    NSMutableAttributedString *clientString = [NSMutableAttributedString new];
+    if (clientType > 1 && clientType <= 6) {
+        NSTextAttachment *textAttachment = [NSTextAttachment new];
+        textAttachment.image = [UIImage imageNamed:@"phone"];
+        [textAttachment adjustY:-2];
+        
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+        [clientString appendAttributedString:attachmentString];
+        
+        NSArray *clients = @[@"", @"", @"手机", @"Android", @"iPhone", @"Windows Phone", @"微信"];
+        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:clients[clientType]]];
+    } else {
+        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@""]];
     }
+    
+    return clientString;
 }
 
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews
@@ -168,7 +174,7 @@
                         };
                         
                         ((PostsViewController *)viewController).objClass = [OSCPost class];
-                        viewController.title = tag;
+                        viewController.navigationItem.title = [tag stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     }
                 }
             }
@@ -221,6 +227,24 @@
              kKeyMinutes:@(minutes)
              };
 }
+
+
++ (NSAttributedString *)attributedTimeString:(NSString *)dateStr
+{
+    NSMutableAttributedString *attributedTime;
+    
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    textAttachment.image = [UIImage imageNamed:@"time"];
+    [textAttachment adjustY:-1];
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    attributedTime = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:[self intervalSinceNow:dateStr]]];
+    
+    return attributedTime;
+}
+
 
 + (NSString *)intervalSinceNow:(NSString *)dateStr
 {
@@ -348,6 +372,8 @@
 
 + (NSString *)escapeHTML:(NSString *)originalHTML
 {
+    if (!originalHTML) {return @"";}
+    
     NSMutableString *result = [[NSMutableString alloc] initWithString:originalHTML];
     [result replaceOccurrencesOfString:@"&"  withString:@"&amp;"  options:NSLiteralSearch range:NSMakeRange(0, [result length])];
     [result replaceOccurrencesOfString:@"<"  withString:@"&lt;"   options:NSLiteralSearch range:NSMakeRange(0, [result length])];
@@ -391,6 +417,7 @@
 {
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithWindow:window];
+    HUD.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
     [window addSubview:HUD];
     [HUD show:YES];
     //[HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];

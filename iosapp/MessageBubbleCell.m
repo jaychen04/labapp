@@ -16,7 +16,6 @@ static const int myBubbleColor     = 0xC7C7C7;
 
 @property (nonatomic, assign) BOOL isMine;
 
-@property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel     *messageLabel;
 
 @property (nonatomic, strong) UIImageView *bubbleImageView;
@@ -57,6 +56,7 @@ static const int myBubbleColor     = 0xC7C7C7;
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:18];
+    _portrait.userInteractionEnabled = YES;
     [self.contentView addSubview:_portrait];
     
     

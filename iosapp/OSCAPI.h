@@ -9,8 +9,10 @@
 #ifndef iosapp_OSCAPI_h
 #define iosapp_OSCAPI_h
 
-
+//线上
 #define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
+//本地
+//#define OSCAPI_PREFIX                   @"http://192.168.1.214/action/api/"
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
 #define OSCAPI_NEWS_LIST                @"news_list"
@@ -26,6 +28,10 @@
 #define OSCAPI_TWEET_DETAIL             @"tweet_detail"
 #define OSCAPI_TWEET_DELETE             @"tweet_delete"
 #define OSCAPI_TWEET_PUB                @"tweet_pub"
+#define OSCAPI_TWEET_LIKE               @"tweet_like"
+#define OSCAPI_TWEET_UNLIKE             @"tweet_unlike"
+#define OSCAPI_TWEET_LIKE_LIST          @"tweet_like_list"
+#define OSCAPI_MY_TWEET_LIKE_LIST       @"my_tweet_like_list"
 #define OSCAPI_SOFTWARE_TWEET_PUB       @"software_tweet_pub"
 
 #define OSCAPI_ACTIVE_LIST              @"active_list"

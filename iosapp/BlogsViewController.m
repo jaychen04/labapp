@@ -82,8 +82,8 @@ static NSString *kBlogCellID = @"BlogCell";
         [cell.titleLabel setAttributedText:blog.attributedTittle];
         [cell.bodyLabel setText:blog.body];
         [cell.authorLabel setText:blog.author];
-        [cell.timeLabel setText:[Utils intervalSinceNow:blog.pubDate]];
-        [cell.commentCount setText:[NSString stringWithFormat:@"%d评", blog.commentCount]];
+        [cell.timeLabel setAttributedText:[Utils attributedTimeString:blog.pubDate]];
+        [cell.commentCount setAttributedText:blog.attributedCommentCount];
         
         return cell;
     } else {

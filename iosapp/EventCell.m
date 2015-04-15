@@ -83,12 +83,12 @@
     [self.contentView addSubview:_referenceText];
     
     _appclientLabel = [UILabel new];
-    _appclientLabel.font = [UIFont systemFontOfSize:14];
+    _appclientLabel.font = [UIFont systemFontOfSize:12];
     _appclientLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_appclientLabel];
     
     _commentCount = [UILabel new];
-    _commentCount.font = [UIFont systemFontOfSize:14];
+    _commentCount.font = [UIFont systemFontOfSize:12];
     _commentCount.textColor = [UIColor grayColor];
     [self.contentView addSubview:_commentCount];
 }
@@ -132,9 +132,9 @@
     [_portrait loadPortrait:event.portraitURL];
     [_authorLabel setText:event.author];
     [_timeLabel setText:[Utils intervalSinceNow:event.pubDate]];
-    [_appclientLabel setText:[Utils getAppclient:event.appclient]];
+    [_appclientLabel setAttributedText:[Utils getAppclient:event.appclient]];
     [_actionLabel setAttributedText:event.actionStr];
-    _commentCount.text = event.commentCount? [NSString stringWithFormat:@"评论：%d", event.commentCount] : @"";
+    [_commentCount setAttributedText:event.attributedCommentCount];
     [_contentLabel setAttributedText:[Utils emojiStringFromRawString:event.message]];
     
     if (event.hasReference) {

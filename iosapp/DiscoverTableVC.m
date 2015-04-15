@@ -25,10 +25,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationItem.title = @"发现";
     self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
     self.clearsSelectionOnViewWillAppear = NO;
-    self.tableView.bounces = NO;
     self.tableView.separatorColor = [UIColor colorWithHex:0xDDDDDD];
     
     //self.tableView.tableHeaderView.backgroundColor = [UIColor colorWithHex:0xF5F5F5];

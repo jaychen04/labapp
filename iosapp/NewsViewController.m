@@ -10,6 +10,7 @@
 #import "NewsCell.h"
 #import "OSCNews.h"
 #import "DetailsViewController.h"
+#import "ActivityDetailsWithBarViewController.h"
 
 static NSString *kNewsCellID = @"NewsCell";
 
@@ -74,8 +75,8 @@ static NSString *kNewsCellID = @"NewsCell";
         [cell.titleLabel setAttributedText:news.attributedTittle];
         [cell.bodyLabel setText:news.body];
         [cell.authorLabel setText:news.author];
-        [cell.timeLabel setText:[Utils intervalSinceNow:news.pubDate]];
-        [cell.commentCount setText:[NSString stringWithFormat:@"%d评", news.commentCount]];
+        [cell.timeLabel setAttributedText:[Utils attributedTimeString:news.pubDate]];
+        [cell.commentCount setAttributedText:news.attributedCommentCount];
         
         return cell;
     } else {
@@ -109,7 +110,10 @@ static NSString *kNewsCellID = @"NewsCell";
     
     if (row < self.objects.count) {
         OSCNews *news = self.objects[row];
-        if (news.url.absoluteString.length > 0) {
+        if (news.eventURL.absoluteString.length > 0) {
+            ActivityDetailsWithBarViewController *activityBVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:[news.attachment longLongValue]];
+            [self.navigationController pushViewController:activityBVC animated:YES];
+        } else if (news.url.absoluteString.length > 0) {
             [Utils analysis:news.url.absoluteString andNavController:self.navigationController];
         } else {
             DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNews:news];

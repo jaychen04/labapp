@@ -37,13 +37,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
 
     _lastCell = [[LastCell alloc] initCell];
     
@@ -180,23 +180,25 @@
                      }
                  }
                  
+                 if (self.refreshControl.refreshing) {
+                     [self.refreshControl endRefreshing];
+                 }
                  [self.tableView reloadData];
-                 if (refresh) {[self.refreshControl endRefreshing];}
              });
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             HUD.labelText = @"网络异常，加载失败";
+             HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
              
              [HUD hide:YES afterDelay:1];
              
              [_lastCell statusError];
-             [self.tableView reloadData];
-             if (refresh) {
+             if (self.refreshControl.refreshing) {
                  [self.refreshControl endRefreshing];
              }
+             [self.tableView reloadData];
          }
      ];
 }

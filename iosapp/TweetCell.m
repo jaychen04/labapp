@@ -8,6 +8,7 @@
 
 #import "TweetCell.h"
 #import "OSCTweet.h"
+#import "OSCUser.h"
 #import "Utils.h"
 
 @implementation TweetCell
@@ -62,6 +63,9 @@
     _contentLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.contentView addSubview:_contentLabel];
     
+    _likeButton = [UIButton new];
+    [self.contentView addSubview:_likeButton];
+    
     _commentCount = [UILabel new];
     _commentCount.font = [UIFont systemFontOfSize:12];
     _commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
@@ -72,13 +76,22 @@
     _thumbnail.clipsToBounds = YES;
     _thumbnail.userInteractionEnabled = YES;
     [self.contentView addSubview:_thumbnail];
+    
+    //点赞列表
+    _likeListLabel = [UILabel new];
+    _likeListLabel.numberOfLines = 0;
+    _likeListLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _likeListLabel.font = [UIFont systemFontOfSize:12];
+    _likeListLabel.userInteractionEnabled = YES;
+    _likeListLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    [self.contentView addSubview:_likeListLabel];
 }
 
 - (void)setLayout
 {
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _commentCount, _thumbnail);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _likeButton, _commentCount, _likeListLabel, _thumbnail);
     
 
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
@@ -86,15 +99,17 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentLabel]-<=5-[_thumbnail(80)]-6-[_timeLabel]-5-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentLabel]-<=6-[_thumbnail(80)]-<=6-[_likeListLabel]-6-[_timeLabel]-5-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_thumbnail(80)]"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]->=5-[_commentCount]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-10-[_appclientLabel]->=5-[_likeButton(50)]-5-[_commentCount]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_likeListLabel]-8-|" options:0 metrics:nil views:views]];
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_authorLabel  attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
                                                                     toItem:_contentLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
@@ -105,10 +120,25 @@
 {
     [_portrait loadPortrait:tweet.portraitURL];
     [_authorLabel setText:tweet.author];
-    [_timeLabel setText:[Utils intervalSinceNow:tweet.pubDate]];
-    [_appclientLabel setText:[Utils getAppclient:tweet.appclient]];
-    [_commentCount setText:[NSString stringWithFormat:@"评论：%d", tweet.commentCount]];
+    
+    [_timeLabel setAttributedText:[Utils attributedTimeString:tweet.pubDate]];
+    [_commentCount setAttributedText:tweet.attributedCommentCount];
+    [_appclientLabel setAttributedText:[Utils getAppclient:tweet.appclient]];
+    if (tweet.isLike) {
+        [_likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
+    } else {
+        [_likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
+    }
+
     [_contentLabel setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
+    
+    [_likeListLabel setAttributedText:tweet.likersString];
+    if (tweet.likeList.count > 0) {
+        _likeListLabel.hidden = NO;
+    } else {
+        _likeListLabel.hidden = YES;
+    }
+    
 }
 
 

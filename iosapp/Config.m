@@ -60,6 +60,12 @@ NSString * const kPosition = @"position";
     [userDefaults synchronize];
 }
 
++ (void)clearCookie
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:@"sessionCookies"];
+}
+
 + (void)savePortrait:(UIImage *)portrait
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -97,6 +103,14 @@ NSString * const kPosition = @"position";
     
     if (userID) {return [userID longLongValue];}
     return 0;
+}
+
++ (NSString *)getOwnUserName
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *userName = [userDefaults objectForKey:kUserName];
+    if (userName) {return userName;}
+    return @"";
 }
 
 + (NSArray *)getActivitySignUpInfomation

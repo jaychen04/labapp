@@ -27,21 +27,23 @@
 @interface ActivityDetailsViewController () <UIWebViewDelegate>
 
 @property (nonatomic, readonly, strong) OSCActivity *activity;
+@property (nonatomic, readonly, assign) int64_t     activityID;
 
 @property (nonatomic, copy)   NSString *HTML;
 @property (nonatomic, assign) BOOL      isLoadingFinished;
 @property (nonatomic, assign) CGFloat   webViewHeight;
 
+@property (nonatomic, strong) MBProgressHUD *HUD;
+
 @end
 
 @implementation ActivityDetailsViewController
 
-- (instancetype)initWithActivity:(OSCActivity *)activity
+- (instancetype)initWithActivityID:(int64_t)activityID
 {
     self = [super init];
-    
     if (self) {
-        _activity = activity;
+        _activityID = activityID;
     }
     
     return self;
@@ -56,15 +58,17 @@
     self.tableView.bounces = NO;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
+    _HUD = [Utils createHUD];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
-    [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, _activity.activityID]
+    [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, _activityID]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              ONOXMLElement *postXML = [responseObject.rootElement firstChildWithTag:@"post"];
              _postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
+             _activity = [[OSCActivity alloc] initWithXML:[postXML firstChildWithTag:@"event"]];
              _HTML = [NSString stringWithFormat:@"%@\n%@", @"<style>img {max-width: 100%;}</style>", [_postDetails.body copy]];
              
              UIBarButtonItem *commentsCountButton = _bottomBarVC.operationBar.items[4];
@@ -77,19 +81,12 @@
                  [self.tableView reloadData];
              });
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             MBProgressHUD *HUD = [Utils createHUD];
-             HUD.mode = MBProgressHUDModeCustomView;
-             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             HUD.labelText = @"网络异常，加载失败";
+             _HUD.mode = MBProgressHUDModeCustomView;
+             _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+             _HUD.labelText = @"网络异常，加载失败";
              
-             [HUD hide:YES afterDelay:1];
+             [_HUD hide:YES afterDelay:1];
          }];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,7 +98,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    return _postDetails? 3 : 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -211,6 +208,7 @@
     if (_HTML == nil) {return;}
     if (_isLoadingFinished) {
         webView.hidden = NO;
+        [_HUD hide:YES];
         return;
     }
     
@@ -227,6 +225,16 @@
 {
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_bottomBarVC.didScroll) {
+        _bottomBarVC.didScroll();
+    }
 }
 
 

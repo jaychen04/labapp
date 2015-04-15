@@ -49,6 +49,8 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"综合"
                                                                        andSubTitles:@[@"资讯", @"热点", @"博客", @"推荐"]
                                                                      andControllers:@[
@@ -56,7 +58,8 @@
                                                                                       [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest],
                                                                                       [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
                                                                                       [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
-                                                                                      ]];
+                                                                                      ]
+                                                                        underTabbar:YES];
     
     SwipableViewController *tweetsSVC = [[SwipableViewController alloc] initWithTitle:@"动弹"
                                                                          andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
@@ -64,7 +67,8 @@
                                                                                         [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
                                                                                         [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
                                                                                         [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
-                                                                                        ]];
+                                                                                        ]
+                                                                          underTabbar:YES];
     
     DiscoverTableVC *discoverTableVC = [[DiscoverTableVC alloc] initWithStyle:UITableViewStyleGrouped];
     MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
@@ -339,7 +343,6 @@
         TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImage:info[UIImagePickerControllerOriginalImage]];
         UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
         [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:nil];
-        [self buttonPressed];
     }];
 }
 
@@ -378,11 +381,10 @@
         SwipableViewController *swipeableVC = (SwipableViewController *)((UINavigationController *)self.selectedViewController).viewControllers[0];
         OSCObjsViewController *objsViewController = (OSCObjsViewController *)swipeableVC.viewPager.childViewControllers[swipeableVC.titleBar.currentIndex];
         
+        [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)];
         [objsViewController.refreshControl beginRefreshing];
-        [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)
-                                              animated:NO];
         
-        [objsViewController performSelectorOnMainThread:@selector(refresh) withObject:nil waitUntilDone:1];
+        [objsViewController refresh];
     }
 }
 

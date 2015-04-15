@@ -48,11 +48,11 @@
     self.window.rootViewController = sideMenuTabBarViewController;
     [self.window makeKeyAndVisible];
     
+    [self loadCookies];
     
     /************ 控件外观设置 **************/
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x15A230]];
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
@@ -104,6 +104,17 @@
     
     
     return YES;
+}
+
+- (void)loadCookies
+{
+    NSArray *cookies = [NSKeyedUnarchiver unarchiveObjectWithData: [[NSUserDefaults standardUserDefaults] objectForKey: @"sessionCookies"]];
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    
+    for (NSHTTPCookie *cookie in cookies){
+        [cookieStorage setCookie: cookie];
+    }
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

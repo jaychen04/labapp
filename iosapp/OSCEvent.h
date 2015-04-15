@@ -38,4 +38,6 @@
 @property (nonatomic, assign) BOOL shouleShowClientOrCommentCount;
 @property (nonatomic, strong, readonly) NSMutableAttributedString *actionStr;
 
+-(NSAttributedString *)attributedCommentCount;
+
 @end

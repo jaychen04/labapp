@@ -38,7 +38,7 @@
     
     _authorLabel = [UILabel new];
     _authorLabel.font = [UIFont boldSystemFontOfSize:14];
-    _authorLabel.userInteractionEnabled = YES;
+//    _authorLabel.userInteractionEnabled = YES;
     _authorLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:_authorLabel];
     
@@ -52,23 +52,38 @@
     _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:_appclientLabel];
     
+    _likeButton = [UIButton new];
+    [self.contentView addSubview:_likeButton];
+    
     _webView = [UIWebView new];
     _webView.scrollView.bounces = NO;
     _webView.scrollView.scrollEnabled = NO;
     _webView.opaque = NO;
     _webView.backgroundColor = [UIColor themeColor];
-    [self.contentView addSubview:_webView];}
+    [self.contentView addSubview:_webView];
+    
+    //点赞列表
+    _likeListLabel = [UILabel new];
+    _likeListLabel.numberOfLines = 0;
+    _likeListLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _likeListLabel.font = [UIFont systemFontOfSize:12];
+    _likeListLabel.userInteractionEnabled = YES;
+    _likeListLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    [self.contentView addSubview:_likeListLabel];
+}
 
 - (void)setLayout
 {
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _webView);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _webView, _likeButton, _likeListLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)][_webView]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)][_webView]-8-[_likeListLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_webView]|" options:0 metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_likeListLabel]-8-|" options:0 metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-5-[_authorLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllTop metrics:nil views:views]];
@@ -76,7 +91,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_authorLabel]-2-[_timeLabel]"
                                                                              options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-5-[_appclientLabel]->=5-[_likeButton(50)]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 

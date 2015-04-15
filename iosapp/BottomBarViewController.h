@@ -16,12 +16,12 @@
 
 @property (nonatomic, strong) EditingBar *editingBar;
 @property (nonatomic, strong) OperationBar *operationBar;
-@property (nonatomic, strong) EmojiPageVC *emojiPanelVC;
-@property (nonatomic, strong) UIView *emojiPanel;
 @property (nonatomic, strong) NSLayoutConstraint *editingBarYConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *editingBarHeightConstraint;
 
 - (instancetype)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton;
 - (void)sendContent;
+- (void)updateInputBarHeight;
+- (void)hideEmojiPageView;
 
 @end
