@@ -294,6 +294,7 @@
 		38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A3F1A8DFB11008E6805 /* UIImage+Util.m */; };
 		38763A441A9048D0008E6805 /* BubbleChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A431A9048D0008E6805 /* BubbleChatViewController.m */; };
 		387794251A0B60C700C41C78 /* Config.m in Sources */ = {isa = PBXBuildFile; fileRef = 387794241A0B60C700C41C78 /* Config.m */; };
+		38963EB61AD7D11D00DE9479 /* NSTextAttachment+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38963EB51AD7D11D00DE9479 /* NSTextAttachment+Util.m */; };
 		38996A521A02642C0025AA52 /* OSCBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A511A02642C0025AA52 /* OSCBlog.m */; };
 		38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A541A0266F10025AA52 /* BlogsViewController.m */; };
 		38996A591A026D6A0025AA52 /* BlogCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38996A581A026D6A0025AA52 /* BlogCell.m */; };
@@ -795,6 +796,8 @@
 		38763A431A9048D0008E6805 /* BubbleChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BubbleChatViewController.m; sourceTree = "<group>"; };
 		387794231A0B60C700C41C78 /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Config.h; sourceTree = "<group>"; };
 		387794241A0B60C700C41C78 /* Config.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Config.m; sourceTree = "<group>"; };
+		38963EB41AD7D11D00DE9479 /* NSTextAttachment+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextAttachment+Util.h"; sourceTree = "<group>"; };
+		38963EB51AD7D11D00DE9479 /* NSTextAttachment+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextAttachment+Util.m"; sourceTree = "<group>"; };
 		38996A501A02642C0025AA52 /* OSCBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlog.h; sourceTree = "<group>"; };
 		38996A511A02642C0025AA52 /* OSCBlog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlog.m; sourceTree = "<group>"; };
 		38996A531A0266F10025AA52 /* BlogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlogsViewController.h; sourceTree = "<group>"; };
@@ -1820,6 +1823,8 @@
 				38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */,
 				38763A3E1A8DFB11008E6805 /* UIImage+Util.h */,
 				38763A3F1A8DFB11008E6805 /* UIImage+Util.m */,
+				38963EB41AD7D11D00DE9479 /* NSTextAttachment+Util.h */,
+				38963EB51AD7D11D00DE9479 /* NSTextAttachment+Util.m */,
 			);
 			name = Catagory;
 			sourceTree = "<group>";
@@ -2610,6 +2615,7 @@
 				38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */,
 				38BD3D0D1A36D19400682D1F /* SoftwareCell.m in Sources */,
 				38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */,
+				38963EB61AD7D11D00DE9479 /* NSTextAttachment+Util.m in Sources */,
 				382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */,
 				EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */,
 				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,

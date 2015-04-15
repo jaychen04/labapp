@@ -33,7 +33,8 @@
     declarationLabel.lineBreakMode = NSLineBreakByWordWrapping;
     declarationLabel.textAlignment = NSTextAlignmentCenter;
     declarationLabel.textColor = [UIColor lightGrayColor];
-    declarationLabel.text = @"3.0\n©2008-2015 oschina.net.\nAll rights reserved.";
+    NSString *version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    declarationLabel.text = [NSString stringWithFormat:@"%@\n©2008-2015 oschina.net.\nAll rights reserved.", version];
     [self.view addSubview:declarationLabel];
     
     UILabel *OSLicenseLabel = [UILabel new];

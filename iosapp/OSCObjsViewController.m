@@ -37,6 +37,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -183,7 +184,11 @@
                  [self.tableView reloadData];
                  if (refresh) {
                      [self.refreshControl endRefreshing];
-                     [self.tableView setContentOffset:CGPointZero animated:YES];
+                     if (_objects.count > 0) {
+                         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                               atScrollPosition:UITableViewScrollPositionTop
+                                                       animated:YES];
+                     }
                  }
              });
          }
@@ -199,7 +204,11 @@
              [self.tableView reloadData];
              if (refresh) {
                  [self.refreshControl endRefreshing];
-                 [self.tableView setContentOffset:CGPointZero animated:YES];
+                 if (_objects.count > 0) {
+                     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
+                                           atScrollPosition:UITableViewScrollPositionTop
+                                                   animated:YES];
+                 }
              }
          }
      ];

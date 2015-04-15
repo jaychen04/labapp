@@ -83,7 +83,7 @@
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-8-[_timeLabel]-8-[_commentAndView]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_authorLabel]-10-[_timeLabel]-10-[_commentAndView]"
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil views:views]];
 }

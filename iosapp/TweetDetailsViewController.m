@@ -63,7 +63,7 @@
                 } else {
                     cell.likeListLabel.hidden = YES;
                 }
-                [cell.timeLabel setAttributedText:weakSelf.tweet.attributedTimes];
+                [cell.timeLabel setAttributedText:[Utils attributedTimeString:weakSelf.tweet.pubDate]];
                 if (weakSelf.tweet.isLike) {
                     [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
                 } else {

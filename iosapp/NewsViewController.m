@@ -75,7 +75,7 @@ static NSString *kNewsCellID = @"NewsCell";
         [cell.titleLabel setAttributedText:news.attributedTittle];
         [cell.bodyLabel setText:news.body];
         [cell.authorLabel setText:news.author];
-        [cell.timeLabel setAttributedText:news.attributedTimes];
+        [cell.timeLabel setAttributedText:[Utils attributedTimeString:news.pubDate]];
         [cell.commentCount setAttributedText:news.attributedCommentCount];
         
         return cell;

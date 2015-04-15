@@ -32,6 +32,8 @@
     if (clientType > 1 && clientType <= 6) {
         NSTextAttachment *textAttachment = [NSTextAttachment new];
         textAttachment.image = [UIImage imageNamed:@"phone"];
+        [textAttachment adjustY:-2];
+        
         NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
         [clientString appendAttributedString:attachmentString];
         
@@ -225,6 +227,24 @@
              kKeyMinutes:@(minutes)
              };
 }
+
+
++ (NSAttributedString *)attributedTimeString:(NSString *)dateStr
+{
+    NSMutableAttributedString *attributedTime;
+    
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    textAttachment.image = [UIImage imageNamed:@"time"];
+    [textAttachment adjustY:-1];
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    attributedTime = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:[self intervalSinceNow:dateStr]]];
+    
+    return attributedTime;
+}
+
 
 + (NSString *)intervalSinceNow:(NSString *)dateStr
 {
