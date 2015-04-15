@@ -44,7 +44,6 @@
     
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:self.refreshControl];
 
     _lastCell = [[LastCell alloc] initCell];
     
@@ -181,11 +180,11 @@
                      }
                  }
                  
-                 [self.tableView reloadData];
                  if (refresh) {
                      [self.refreshControl endRefreshing];
                      //[self.tableView setContentOffset:CGPointZero animated:YES];
                  }
+                 [self.tableView reloadData];
              });
          }
          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -197,11 +196,11 @@
              [HUD hide:YES afterDelay:1];
              
              [_lastCell statusError];
-             [self.tableView reloadData];
              if (refresh) {
                  [self.refreshControl endRefreshing];
                  //[self.tableView setContentOffset:CGPointZero animated:YES];
              }
+             [self.tableView reloadData];
          }
      ];
 }
