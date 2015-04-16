@@ -8,24 +8,48 @@
 
 #import "TeamMemberViewController.h"
 #import "TeamAPI.h"
+#import "TeamMember.h"
+#import "MemberCell.h"
+#import "Utils.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 
+static NSString * const kMemberCellID = @"MemberCell";
+
 @interface TeamMemberViewController ()
+
+@property (nonatomic, strong) NSMutableArray *members;
 
 @end
 
 @implementation TeamMemberViewController
 
-static NSString * const kMemberCellID = @"MemberCell";
+- (instancetype)init
+{
+    UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    flowLayout.minimumInteritemSpacing = (screenWidth - 40 - 30 * 7) / 7;
+    flowLayout.minimumLineSpacing = 25;
+    flowLayout.itemSize = CGSizeMake(100, 100);
+    flowLayout.sectionInset = UIEdgeInsetsMake(15, 0, 5, 0);
+    
+    self = [super initWithCollectionViewLayout:flowLayout];
+    self.hidesBottomBarWhenPushed = YES;
+    
+    if (self) {
+        _members = [NSMutableArray new];
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:kMemberCellID];
-    
+    [self.collectionView registerClass:[MemberCell class] forCellWithReuseIdentifier:kMemberCellID];
+    self.collectionView.backgroundColor = [UIColor themeColor];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
@@ -33,7 +57,16 @@ static NSString * const kMemberCellID = @"MemberCell";
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_MEMBER_LIST]
       parameters:@{@"teamid": @(12375)}
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             //NSLog(@"%@", responseObject);
+             NSArray *membersXML = [[responseObject.rootElement firstChildWithTag:@"members"] childrenWithTag:@"member"];
+             
+             for (ONOXMLElement *memberXML in membersXML) {
+                 TeamMember *teamMember = [[TeamMember alloc] initWithXML:memberXML];
+                 [_members addObject:teamMember];
+             }
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.collectionView reloadData];
+             });
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
          }];
@@ -48,7 +81,7 @@ static NSString * const kMemberCellID = @"MemberCell";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 0;
+    return (_members.count + 2 ) / 3;
 }
 
 
@@ -59,30 +92,26 @@ static NSString * const kMemberCellID = @"MemberCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMemberCellID forIndexPath:indexPath];
+    MemberCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMemberCellID forIndexPath:indexPath];
+    TeamMember *member = _members[indexPath.section * 3 + indexPath.row];
     
+    [cell setContentWithMember:member];
     
     return cell;
 }
 
 #pragma mark <UICollectionViewDelegate>
 
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
 	return YES;
 }
-*/
 
-/*
-// Uncomment this method to specify if the specified item should be selected
+
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     return YES;
 }
-*/
 
-/*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
 	return NO;
 }
@@ -94,6 +123,6 @@ static NSString * const kMemberCellID = @"MemberCell";
 - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
 	
 }
-*/
+
 
 @end

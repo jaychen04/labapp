@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class TeamMember;
+
 @interface MemberCell : UICollectionViewCell
 
 @property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel     *nameLabel;
+
+- (void)setContentWithMember:(TeamMember *)member;
 
 @end

@@ -302,14 +302,8 @@
             break;
         }
         case 2: {
-#if 1
-            UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
-            CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
-            flowLayout.minimumInteritemSpacing = (screenWidth - 40 - 30 * 7) / 7;
-            flowLayout.minimumLineSpacing = 25;
-            flowLayout.sectionInset = UIEdgeInsetsMake(15, 0, 5, 0);
-            
-            TeamMemberViewController *teamMemberVC = [[TeamMemberViewController alloc] initWithCollectionViewLayout:flowLayout];
+#if 1            
+            TeamMemberViewController *teamMemberVC = [TeamMemberViewController new];
             [self.navigationController pushViewController:teamMemberVC animated:YES];
 #else
             MBProgressHUD *HUD = [Utils createHUD];
