@@ -17,5 +17,7 @@
 #define TEAM_MEMBER_LIST                @"team_member_list"
 #define TEAM_ACTIVITY_LIST              @"team_active_list"
 
+#define TEAM_USER_ISSUE_INFORMATION     @"team_user_issue_information"
+
 
 #endif

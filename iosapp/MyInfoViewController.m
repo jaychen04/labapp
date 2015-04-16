@@ -19,6 +19,7 @@
 #import "LoginViewController.h"
 #import "SearchViewController.h"
 #import "MyBasicInfoViewController.h"
+#import "TeamHomePage.h"
 #import "TeamMemberViewController.h"
 
 #import <AFNetworking.h>
@@ -303,8 +304,10 @@
         }
         case 2: {
 #if 1            
-            TeamMemberViewController *teamMemberVC = [TeamMemberViewController new];
-            [self.navigationController pushViewController:teamMemberVC animated:YES];
+            //TeamMemberViewController *teamMemberVC = [TeamMemberViewController new];
+            //[self.navigationController pushViewController:teamMemberVC animated:YES];
+            
+            [self.navigationController pushViewController:[TeamHomePage new] animated:YES];
 #else
             MBProgressHUD *HUD = [Utils createHUD];
             HUD.mode = MBProgressHUDModeText;

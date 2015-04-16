@@ -37,6 +37,8 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr;
 + (NSAttributedString *)attributedTimeString:(NSString *)dateStr;
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
++ (NSString *)getWeekdayFromDateComponents:(NSDateComponents *)dateComps;
++ (NSDateComponents *)getDateComponentsFromDate:(NSDate *)date;
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 + (NSData *)compressImage:(UIImage *)image;
 + (NSString *)convertRichTextToRawText:(UITextView *)textView;

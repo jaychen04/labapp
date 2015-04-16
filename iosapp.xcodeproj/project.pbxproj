@@ -243,6 +243,9 @@
 		384364201AC5532900743CB0 /* TeamMemberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3843641F1AC5532900743CB0 /* TeamMemberViewController.m */; };
 		384364251AC566BD00743CB0 /* MemberCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 384364241AC566BD00743CB0 /* MemberCell.m */; };
 		384A112C1ADE565200856A7C /* TeamMember.m in Sources */ = {isa = PBXBuildFile; fileRef = 384A112B1ADE565200856A7C /* TeamMember.m */; };
+		384A112F1ADF9B5F00856A7C /* TeamHomePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 384A112E1ADF9B5F00856A7C /* TeamHomePage.m */; };
+		384A11331ADFA6BB00856A7C /* TeamUserMainCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 384A11321ADFA6BB00856A7C /* TeamUserMainCell.m */; };
+		384A11361ADFCBD200856A7C /* TeamUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 384A11351ADFCBD200856A7C /* TeamUser.m */; };
 		38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */; };
 		38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38590C1F1A1341BB008E2CFA /* ImageViewerController.m */; };
 		386039611A09C5A1007C9B88 /* OSCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 386039601A09C5A1007C9B88 /* OSCUser.m */; };
@@ -714,6 +717,12 @@
 		384364241AC566BD00743CB0 /* MemberCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberCell.m; sourceTree = "<group>"; };
 		384A112A1ADE565200856A7C /* TeamMember.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamMember.h; sourceTree = "<group>"; };
 		384A112B1ADE565200856A7C /* TeamMember.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamMember.m; sourceTree = "<group>"; };
+		384A112D1ADF9B5F00856A7C /* TeamHomePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamHomePage.h; sourceTree = "<group>"; };
+		384A112E1ADF9B5F00856A7C /* TeamHomePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamHomePage.m; sourceTree = "<group>"; };
+		384A11311ADFA6BB00856A7C /* TeamUserMainCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamUserMainCell.h; sourceTree = "<group>"; };
+		384A11321ADFA6BB00856A7C /* TeamUserMainCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamUserMainCell.m; sourceTree = "<group>"; };
+		384A11341ADFCBD200856A7C /* TeamUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamUser.h; sourceTree = "<group>"; };
+		384A11351ADFCBD200856A7C /* TeamUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamUser.m; sourceTree = "<group>"; };
 		38590C1B1A1240E5008E2CFA /* UIImageView+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+Util.h"; sourceTree = "<group>"; };
 		38590C1C1A1240E5008E2CFA /* UIImageView+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+Util.m"; sourceTree = "<group>"; };
 		38590C1E1A1341BB008E2CFA /* ImageViewerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewerController.h; sourceTree = "<group>"; };
@@ -1597,6 +1606,8 @@
 				384364211AC5551300743CB0 /* TeamAPI.h */,
 				384A112A1ADE565200856A7C /* TeamMember.h */,
 				384A112B1ADE565200856A7C /* TeamMember.m */,
+				384A11341ADFCBD200856A7C /* TeamUser.h */,
+				384A11351ADFCBD200856A7C /* TeamUser.m */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -1605,6 +1616,7 @@
 			isa = PBXGroup;
 			children = (
 				384364221AC5669700743CB0 /* 团队成员 */,
+				384A11301ADFA33300856A7C /* 主页 */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -1618,6 +1630,17 @@
 				384364241AC566BD00743CB0 /* MemberCell.m */,
 			);
 			name = "团队成员";
+			sourceTree = "<group>";
+		};
+		384A11301ADFA33300856A7C /* 主页 */ = {
+			isa = PBXGroup;
+			children = (
+				384A112D1ADF9B5F00856A7C /* TeamHomePage.h */,
+				384A112E1ADF9B5F00856A7C /* TeamHomePage.m */,
+				384A11311ADFA6BB00856A7C /* TeamUserMainCell.h */,
+				384A11321ADFA6BB00856A7C /* TeamUserMainCell.m */,
+			);
+			name = "主页";
 			sourceTree = "<group>";
 		};
 		386039661A0A34F5007C9B88 /* Resource */ = {
@@ -2689,6 +2712,7 @@
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
 				38A9EEA01AA5BE66006C95BD /* PlaceholderTextView.m in Sources */,
+				384A112F1ADF9B5F00856A7C /* TeamHomePage.m in Sources */,
 				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,
 				EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */,
 				384364251AC566BD00743CB0 /* MemberCell.m in Sources */,
@@ -2716,6 +2740,7 @@
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
 				383B9FD91AB416F000C03C47 /* ActivityDetailsWithBarViewController.m in Sources */,
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
+				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
 				EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */,
@@ -2741,6 +2766,7 @@
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
+				384A11331ADFA6BB00856A7C /* TeamUserMainCell.m in Sources */,
 				386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */,
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
 				38BDC5401A4D5F84006080F7 /* PersonSearchViewController.m in Sources */,
