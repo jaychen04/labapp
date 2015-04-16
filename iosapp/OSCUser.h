@@ -19,6 +19,7 @@
 @property (nonatomic, readonly, assign) int favoriteCount;
 @property (nonatomic, assign)           int relationship;
 @property (nonatomic, readwrite, strong) NSURL *portraitURL;
+@property (nonatomic, readonly, copy) NSString *gender;
 @property (nonatomic, readonly, copy) NSString *developPlatform;
 @property (nonatomic, readonly, copy) NSString *expertise;
 @property (nonatomic, readonly, copy) NSString *joinTime;

@@ -45,6 +45,9 @@ static NSString * const kExpertise = @"expertise";
     _relationship = [[[xml firstChildWithTag:@"relation"] numberValue] intValue];
     _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
     _favoriteCount = [[[xml firstChildWithTag:kFavoriteCount] numberValue] intValue];
+    
+    _gender             = [[[xml firstChildWithTag:@"gender"] stringValue] copy];
+    
     _developPlatform    = [[[xml firstChildWithTag:@"devplatform"] stringValue] copy];
     _expertise = [[[xml firstChildWithTag:kExpertise] stringValue] copy];
     _joinTime = [[[xml firstChildWithTag:@"jointime"] stringValue] copy];
