@@ -139,27 +139,27 @@
     /********** 分享设置 ***********/
     
     self.operationBar.share = ^ {
-        NSString *title = weakSelf.activityTitle;
+        NSString *title = weakSelf.activityDetailsVC.postDetails.title;
+        NSString *URL   = weakSelf.activityDetailsVC.postDetails.url.absoluteString;
         
         // 微信相关设置
         [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
-        [UMSocialData defaultData].extConfig.wechatSessionData.url = weakSelf.mURL;
-        [UMSocialData defaultData].extConfig.wechatTimelineData.url = weakSelf.mURL;
+        [UMSocialData defaultData].extConfig.wechatSessionData.url = URL;
+        [UMSocialData defaultData].extConfig.wechatTimelineData.url = URL;
         [UMSocialData defaultData].extConfig.title = title;
         
         // 手机QQ相关设置
         [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
         [UMSocialData defaultData].extConfig.qqData.title = title;
-        //[UMSocialData defaultData].extConfig.qqData.shareText = weakSelf.objectTitle;
-        [UMSocialData defaultData].extConfig.qqData.url = weakSelf.mURL;
+        [UMSocialData defaultData].extConfig.qqData.url = URL;
         
         // 新浪微博相关设置
-        [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:weakSelf.mURL];
+        [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:weakSelf.activityDetailsVC.postDetails.url.absoluteString];
         
         // 复制链接        
         [UMSocialSnsService presentSnsIconSheetView:weakSelf
                                              appKey:@"54c9a412fd98c5779c000752"
-                                          shareText:[NSString stringWithFormat:@"《%@》，分享来自 %@", weakSelf.activityTitle, weakSelf.mURL]
+                                          shareText:[NSString stringWithFormat:@"《%@》，分享来自 %@", title, URL]
                                          shareImage:[UIImage imageNamed:@"logo"]
                                     shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
                                            delegate:nil];
