@@ -158,13 +158,21 @@
     [header addSubview:_portrait];
     
     UIImageView *genderImageView = [UIImageView new];
+    genderImageView.hidden = YES;
     genderImageView.contentMode = UIViewContentModeScaleAspectFit;
-    if (_myInfo.gender == 1) {
-        [genderImageView setImage:[UIImage imageNamed:@"userinfo_icon_male"]];
+    if (_myID == 0) {
+        //
     } else {
-        [genderImageView setImage:[UIImage imageNamed:@"userinfo_icon_female"]];
+        if (_myInfo.gender == 1) {
+            [genderImageView setImage:[UIImage imageNamed:@"userinfo_icon_male"]];
+            genderImageView.hidden = NO;
+        } else if (_myInfo.gender == 2){
+            [genderImageView setImage:[UIImage imageNamed:@"userinfo_icon_female"]];
+            genderImageView.hidden = NO;
+        }
+
     }
-    [header addSubview:genderImageView];
+        [header addSubview:genderImageView];
     
     _nameLabel = [UILabel new];
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
