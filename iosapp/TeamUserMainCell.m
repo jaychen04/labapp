@@ -55,7 +55,7 @@
     [self.contentView addSubview:_greetingLabel];
     
     _timeLabel = [UILabel new];
-    _timeLabel.font = [UIFont systemFontOfSize:17];
+    _timeLabel.font = [UIFont systemFontOfSize:15];
     _timeLabel.textColor = [UIColor lightGrayColor];
     [self.contentView addSubview:_timeLabel];
     
