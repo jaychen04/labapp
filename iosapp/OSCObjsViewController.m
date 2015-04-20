@@ -15,6 +15,7 @@
 @interface OSCObjsViewController ()
 
 @property (nonatomic, assign) BOOL refreshInProgress;
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
 @end
 
@@ -30,6 +31,7 @@
         _objects = [NSMutableArray new];
         _page = 0;
         _needRefreshAnimation = YES;
+        _needCache = YES;
     }
     
     return self;
@@ -60,6 +62,11 @@
                                 animated:YES];
     }
     
+    _manager = [AFHTTPRequestOperationManager manager];
+    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    if (_needCache) {
+        _manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+    }
     [self fetchObjectsOnPage:0 refresh:YES];
 }
 
@@ -104,6 +111,7 @@
         _refreshInProgress = YES;
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
             [self fetchObjectsOnPage:0 refresh:YES];
             _refreshInProgress = NO;
         });
@@ -128,20 +136,16 @@
     if (_lastCell.status == LastCellStatusFinished || _lastCell.status == LastCellStatusLoading) {return;}
     
     [_lastCell statusLoading];
+    _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     [self fetchObjectsOnPage:++_page refresh:NO];
 }
-
-
-
 
 
 #pragma mark - 请求数据
 
 - (void)fetchObjectsOnPage:(NSUInteger)page refresh:(BOOL)refresh
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:self.generateURL(page)
+    [_manager GET:self.generateURL(page)
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
              _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
