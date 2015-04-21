@@ -41,18 +41,6 @@
     return [[xml.rootElement firstChildWithTag:@"comments"] childrenWithTag:@"comment"];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuVisible:YES animated:YES];
-    [menuController setMenuItems:@[
-                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
-                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)]
-                                   ]];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -61,6 +49,13 @@
     [self.tableView registerClass:[MessageBubbleCell class] forCellReuseIdentifier:kMessageBubbleMe];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuVisible:YES animated:YES];
+    [menuController setMenuItems:@[
+                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
+                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)]
+                                   ]];
 }
 
 - (void)didReceiveMemoryWarning

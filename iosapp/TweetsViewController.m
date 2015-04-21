@@ -121,11 +121,6 @@ static NSString * const kTweetCellID = @"TweetCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuVisible:YES animated:YES];
@@ -143,9 +138,6 @@ static NSString * const kTweetCellID = @"TweetCell";
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-
-
 
 #pragma mark - Table view data source
 

@@ -41,19 +41,14 @@ static NSString * const kMessageCellID = @"MessageCell";
     return [[xml.rootElement firstChildWithTag:@"messages"] childrenWithTag:@"message"];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuVisible:YES animated:YES];
-    [menuController setMenuItems:@[[[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)]]];
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView registerClass:[MessageCell class] forCellReuseIdentifier:kMessageCellID];
+    
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuVisible:YES animated:YES];
+    [menuController setMenuItems:@[[[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)]]];
 }
 
 
