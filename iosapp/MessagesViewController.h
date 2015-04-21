@@ -10,4 +10,6 @@
 
 @interface MessagesViewController : OSCObjsViewController
 
+@property (nonatomic, copy) void (^didScroll)();
+
 @end

@@ -16,6 +16,8 @@
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
+#import <MBProgressHUD.h>
+
 static NSString * const kMessageCellID = @"MessageCell";
 
 @implementation MessagesViewController
@@ -39,6 +41,14 @@ static NSString * const kMessageCellID = @"MessageCell";
     return [[xml.rootElement firstChildWithTag:@"messages"] childrenWithTag:@"message"];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    UIMenuController *menuController = [UIMenuController sharedMenuController];
+    [menuController setMenuVisible:YES animated:YES];
+    [menuController setMenuItems:@[[[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)]]];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -54,9 +64,11 @@ static NSString * const kMessageCellID = @"MessageCell";
         
         MessageCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageCellID forIndexPath:indexPath];
         
+        [self setBlockForMessageCell:cell];
+        
         cell.backgroundColor = [UIColor themeColor];
         [cell.portrait loadPortrait:message.portraitURL];
-        cell.portrait.tag = message.friendID;
+        cell.portrait.tag = (int)message.friendID;
         [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
         
         cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", message.senderID == [Config getOwnID] ? @"发给" : @"来自", message.friendName];
@@ -104,11 +116,93 @@ static NSString * const kMessageCellID = @"MessageCell";
     }
 }
 
-
 - (void)pushUserDetails:(UIGestureRecognizer *)recognizer
 {
     [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:recognizer.view.tag] animated:YES];
 }
+#pragma mark - 删除回复
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    return action == @selector(deleteMessage:);
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    // required
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (_didScroll) {_didScroll();}
+}
+
+- (void)setBlockForMessageCell:(MessageCell *)cell
+{
+    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
+        if (action == @selector(deleteMessage:)) {
+            return YES;
+        }
+        return NO;
+    };
+    
+    cell.deleteMessage = ^ (UITableViewCell *cell) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        OSCMessage *message = self.objects[indexPath.row];
+        
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.labelText = @"正在删除回复";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_MESSAGE_DELETE]
+           parameters:@{
+                        @"friendid": @(message.friendID),
+                        @"uid": @([Config getOwnID])
+                        }
+              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                  ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
+                  int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
+                  NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
+                  
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  
+                  if (errorCode == 1) {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                      HUD.labelText = @"回复删除成功";
+                      
+                      [self.objects removeObjectAtIndex:indexPath.row];
+                      self.allCount--;
+                      if (self.objects.count > 0) {
+                          [self.tableView beginUpdates];
+                          [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                          [self.tableView endUpdates];
+                      }
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.tableView reloadData];
+                      });
+                  } else {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  }
+                  
+                  [HUD hide:YES afterDelay:1];
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+                  
+                  [HUD hide:YES afterDelay:1];
+              }];
+    };
+}
+
 
 
 

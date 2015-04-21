@@ -84,4 +84,21 @@
                                                                              metrics:nil views:views]];
 }
 
+#pragma mark - 处理长按操作
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    return _canPerformAction(self, action);
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void)deleteMessage:(id)sender
+{
+    _deleteMessage(self);
+}
+
 @end
