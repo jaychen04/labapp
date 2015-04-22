@@ -60,7 +60,6 @@ static NSString * const kIssueCellID = @"IssueCell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
@@ -87,7 +86,7 @@ static NSString * const kIssueCellID = @"IssueCell";
     
     CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
     
-    return height + 60;
+    return height + 63;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

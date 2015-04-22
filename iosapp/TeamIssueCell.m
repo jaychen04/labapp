@@ -73,7 +73,7 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_titleLabel]-8-|" options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_assignmentLabel]->=0-[_timeLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_assignmentLabel]->=0-[_commentLabel]-8-[_timeLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 
@@ -83,6 +83,7 @@
     _titleLabel.text = issue.title;
     
     _projectNameLabel.text = issue.project.projectName;
+    _commentLabel.attributedText = [Utils attributedCommentCount:issue.replyCount];
     _timeLabel.attributedText = [Utils attributedTimeString:issue.createTime];
     
     if (issue.user.name) {

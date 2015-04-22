@@ -494,6 +494,22 @@
     return image;
 }
 
++ (NSAttributedString *)attributedCommentCount:(int)commentCount
+{
+    NSMutableAttributedString *attributedCommentCount;
+    
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    textAttachment.image = [UIImage imageNamed:@"comment"];
+    [textAttachment adjustY:-2];
+    
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    attributedCommentCount = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d", commentCount]]];
+    
+    return attributedCommentCount;
+}
+
 
 
 @end

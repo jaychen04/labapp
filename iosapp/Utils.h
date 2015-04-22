@@ -52,6 +52,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (MBProgressHUD *)createHUD;
 + (UIImage *)createQRCodeFromString:(NSString *)string;
 
++ (NSAttributedString *)attributedCommentCount:(int)commentCount;
 
 
 @end

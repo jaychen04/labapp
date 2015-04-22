@@ -142,20 +142,13 @@ static NSString * const kUser = @"user";
 }
 
 
--(NSAttributedString *)attributedCommentCount
+- (NSAttributedString *)attributedCommentCount
 {
-    NSMutableAttributedString *attributedCommentCount;
+    if (!_attributedCommentCount) {
+        _attributedCommentCount = [Utils attributedCommentCount:_commentCount];
+    }
     
-    NSTextAttachment *textAttachment = [NSTextAttachment new];
-    textAttachment.image = [UIImage imageNamed:@"comment"];
-    [textAttachment adjustY:-2];
-    
-    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-    attributedCommentCount = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d", _commentCount]]];
-    
-    return attributedCommentCount;
+    return _attributedCommentCount;
 }
 
 @end
