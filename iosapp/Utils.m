@@ -308,11 +308,9 @@
     NSString *path = [bundle pathForResource:@"emoji" ofType:@"plist"];
     NSDictionary *emoji = [[NSDictionary alloc] initWithContentsOfFile:path];
     
-    NSString *pattern = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]";
+    NSString *pattern = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]|:[a-zA-Z0-9\\u4e00-\\u9fa5_]+:";
     NSError *error = nil;
     NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
-    
-    if (!re) {NSLog(@"%@", error.localizedDescription);}
     
     NSArray *resultsArray = [re matchesInString:rawString options:0 range:NSMakeRange(0, rawString.length)];
     
@@ -322,7 +320,7 @@
         NSRange range = [match range];
         NSString *emojiName = [rawString substringWithRange:range];
         
-        if (emoji[emojiName]) {
+        if ([emojiName hasPrefix:@"["] && emoji[emojiName]) {
             NSTextAttachment *textAttachment = [NSTextAttachment new];
             textAttachment.image = [UIImage imageNamed:emoji[emojiName]];
             
@@ -330,13 +328,20 @@
             
             NSDictionary *emojiToReplace = @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]};
             [emojiArray addObject:emojiToReplace];
+        } else if ([emojiName hasPrefix:@":"] && emoji[emojiName]) {
+            NSDictionary *emojiToReplace = @{@"text": emoji[emojiName], @"range": [NSValue valueWithRange:range]};
+            [emojiArray addObject:emojiToReplace];
         }
     }
     
     for (NSInteger i = emojiArray.count -1; i >= 0; i--) {
         NSRange range;
         [emojiArray[i][@"range"] getValue:&range];
-        [emojiString replaceCharactersInRange:range withAttributedString:emojiArray[i][@"image"]];
+        if (emojiArray[i][@"image"]) {
+            [emojiString replaceCharactersInRange:range withAttributedString:emojiArray[i][@"image"]];
+        } else {
+            [emojiString replaceCharactersInRange:range withString:emojiArray[i][@"text"]];
+        }
     }
     
     return emojiString;
@@ -355,6 +360,21 @@
                                                     int emojiNum = [objc_getAssociatedObject(attachment, @"number") intValue];
                                                     [rawText insertString:[NSString stringWithFormat:@"[%d]", emojiNum-1] atIndex:range.location];
                                                 }];
+    
+    NSString *pattern = @"[\ue000-\uf8ff]|[\\x{1f300}-\\x{1f7ff}]|\\x{263A}\\x{FE0F}|☺";
+    NSError *error = nil;
+    NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
+    
+    NSArray *resultsArray = [re matchesInString:textView.text options:0 range:NSMakeRange(0, textView.text.length)];
+    
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *path = [bundle pathForResource:@"emojiToText" ofType:@"plist"];
+    NSDictionary *emojiToText = [[NSDictionary alloc] initWithContentsOfFile:path];
+    
+    for (NSTextCheckingResult *match in [resultsArray reverseObjectEnumerator]) {
+        NSString *emoji = [textView.text substringWithRange:match.range];
+        [rawText replaceCharactersInRange:match.range withString:emojiToText[emoji]];
+    }
     
     return [rawText stringByReplacingOccurrencesOfString:@"\U0000fffc" withString:@""];
 }

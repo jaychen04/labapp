@@ -78,6 +78,9 @@
 {
     [super viewWillAppear:animated];
     
+    _edittingArea.text = [Config getTweetText];
+    [_edittingArea.delegate textViewDidChange:_edittingArea];
+    
     [_edittingArea becomeFirstResponder];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -229,6 +232,24 @@
 
 - (void)cancelButtonClicked
 {
+    if (_edittingArea.text.length > 0) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否保存已编辑的信息" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+    } else {
+        [Config saveTweetText:@"" andId:[Config getOwnID]];
+        [_edittingArea resignFirstResponder];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        //保存已编辑信息
+        [Config saveTweetText:_edittingArea.text andId:[Config getOwnID]];
+    } else {
+        [Config saveTweetText:@"" andId:[Config getOwnID]];
+    }
     [_edittingArea resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
 }

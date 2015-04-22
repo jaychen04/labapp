@@ -378,6 +378,7 @@
 		38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7419FF8521003ABB80 /* OSCComment.m */; };
 		38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7819FFCB79003ABB80 /* TweetDetailsViewController.m */; };
 		38BDC5401A4D5F84006080F7 /* PersonSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BDC53F1A4D5F84006080F7 /* PersonSearchViewController.m */; };
+		38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38CC81EB1AE6517E00CC4F6F /* emojiToText.plist */; };
 		38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */; };
 		38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38DB5E8E1A496FFD0092C966 /* emoji.plist */; };
 		38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E067431A19AC4900D41976 /* GrowingTextView.m */; };
@@ -410,6 +411,8 @@
 		EE6B2B701ACCF6D500650985 /* time@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B6A1ACCF6D500650985 /* time@3x.png */; };
 		EE6B2B721ACD298D00650985 /* ic_liked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B711ACD298D00650985 /* ic_liked@2x.png */; };
 		EE6C29C01ADE426B00370311 /* picture_download.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6C29BF1ADE426B00370311 /* picture_download.png */; };
+		EE6C29C31ADE520E00370311 /* userinfo_icon_female.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6C29C11ADE520E00370311 /* userinfo_icon_female.png */; };
+		EE6C29C41ADE520E00370311 /* userinfo_icon_male.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6C29C21ADE520E00370311 /* userinfo_icon_male.png */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
@@ -939,6 +942,7 @@
 		38BD7D7819FFCB79003ABB80 /* TweetDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsViewController.m; sourceTree = "<group>"; };
 		38BDC53E1A4D5F84006080F7 /* PersonSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonSearchViewController.h; sourceTree = "<group>"; };
 		38BDC53F1A4D5F84006080F7 /* PersonSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonSearchViewController.m; sourceTree = "<group>"; };
+		38CC81EB1AE6517E00CC4F6F /* emojiToText.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emojiToText.plist; sourceTree = "<group>"; };
 		38DB5E8B1A46E0B60092C966 /* EmojiPanelVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiPanelVC.h; sourceTree = "<group>"; };
 		38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiPanelVC.m; sourceTree = "<group>"; };
 		38DB5E8E1A496FFD0092C966 /* emoji.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = emoji.plist; sourceTree = "<group>"; };
@@ -983,6 +987,8 @@
 		EE6B2B6A1ACCF6D500650985 /* time@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "time@3x.png"; sourceTree = "<group>"; };
 		EE6B2B711ACD298D00650985 /* ic_liked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_liked@2x.png"; sourceTree = "<group>"; };
 		EE6C29BF1ADE426B00370311 /* picture_download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = picture_download.png; sourceTree = "<group>"; };
+		EE6C29C11ADE520E00370311 /* userinfo_icon_female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userinfo_icon_female.png; sourceTree = "<group>"; };
+		EE6C29C21ADE520E00370311 /* userinfo_icon_male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userinfo_icon_male.png; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE6DB9461AD6633E004FCF3C /* MyTweetLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTweetLikeListViewController.h; sourceTree = "<group>"; };
@@ -1122,6 +1128,7 @@
 				00D6BCDF19EB673200E8754E /* main.m */,
 				38DB5E8E1A496FFD0092C966 /* emoji.plist */,
 				EE713BA11AB2C12600D318AF /* iosapp-Prefix.pch */,
+				38CC81EB1AE6517E00CC4F6F /* emojiToText.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -1680,6 +1687,8 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				EE6C29C11ADE520E00370311 /* userinfo_icon_female.png */,
+				EE6C29C21ADE520E00370311 /* userinfo_icon_male.png */,
 				EE6C29BF1ADE426B00370311 /* picture_download.png */,
 				EE6B2B651ACCF6D500650985 /* comment@2x.png */,
 				EE6B2B661ACCF6D500650985 /* comment@3x.png */,
@@ -2461,6 +2470,7 @@
 				382A944B1A26D27400AAAFEA /* 007@2x.png in Resources */,
 				380FD2BC1A7762A8003C4021 /* tabbar-me@2x.png in Resources */,
 				381293841AB17C5D00B29221 /* send@3x.png in Resources */,
+				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
 				383B9FE01AB6C95200C03C47 /* menu-background(320x568)@2x.png in Resources */,
 				382A94521A26D27400AAAFEA /* 014@2x.png in Resources */,
 				382A94AA1A26D27400AAAFEA /* 105@2x.png in Resources */,
@@ -2506,6 +2516,7 @@
 				381293481AB1676100B29221 /* toolbar-image@3x.png in Resources */,
 				38BB27D01AAC130F0088A15C /* me-message@3x.png in Resources */,
 				382A945D1A26D27400AAAFEA /* 025@2x.png in Resources */,
+				EE6C29C31ADE520E00370311 /* userinfo_icon_female.png in Resources */,
 				383B9FD51AB1985A00C03C47 /* toolbar-separatorline@3x.png in Resources */,
 				382A94951A26D27400AAAFEA /* 082@2x.png in Resources */,
 				381293491AB1676100B29221 /* toolbar-mention@2x.png in Resources */,
@@ -2598,6 +2609,7 @@
 				382A945B1A26D27400AAAFEA /* 023@2x.png in Resources */,
 				383BA0031AB7ED8B00C03C47 /* login-password@2x.png in Resources */,
 				381293771AB178B600B29221 /* toolbar-starred@2x.png in Resources */,
+				EE6C29C41ADE520E00370311 /* userinfo_icon_male.png in Resources */,
 				3812937F1AB17A5600B29221 /* toolbar-keyboardUp@2x.png in Resources */,
 				380FD2C91A7762A8003C4021 /* tabbar-tweet-selected@3x.png in Resources */,
 				382A94801A26D27400AAAFEA /* 060@2x.png in Resources */,

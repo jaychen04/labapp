@@ -133,6 +133,11 @@
     }
     header.image = [UIImage imageNamed:imageName];
     
+    UIView *imageBackView = [UIView new];
+    imageBackView.backgroundColor = [UIColor colorWithHex:0xEEEEEE];
+    [imageBackView setCornerRadius:27];
+    [header addSubview:imageBackView];
+    
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];
@@ -154,6 +159,23 @@
     _portrait.userInteractionEnabled = YES;
     [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortrait)]];
     [header addSubview:_portrait];
+    
+    UIImageView *genderImageView = [UIImageView new];
+    genderImageView.hidden = YES;
+    genderImageView.contentMode = UIViewContentModeScaleAspectFit;
+    if (_myID == 0) {
+        //
+    } else {
+        if (_myInfo.gender == 1) {
+            [genderImageView setImage:[UIImage imageNamed:@"userinfo_icon_male"]];
+            genderImageView.hidden = NO;
+        } else if (_myInfo.gender == 2){
+            [genderImageView setImage:[UIImage imageNamed:@"userinfo_icon_female"]];
+            genderImageView.hidden = NO;
+        }
+
+    }
+        [header addSubview:genderImageView];
     
     _nameLabel = [UILabel new];
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
@@ -207,19 +229,37 @@
     for (UIView *view in header.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsBtn, _collectionsBtn, _followsBtn, _fansBtn, QRCodeImageView, countView, line);
+    NSDictionary *views = NSDictionaryOfVariableBindings(imageBackView, _portrait, genderImageView, _nameLabel, _creditsBtn, _collectionsBtn, _followsBtn, _fansBtn, QRCodeImageView, countView, line);
     NSDictionary *metrics = @{@"width": @(tableView.frame.size.width / 4)};
+    
     
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portrait(50)]-8-[_nameLabel]-10-[line(1)]-4-[countView(50)]|"
                                                                    options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[line]|" options:0 metrics:nil views:views]];
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_portrait(50)]" options:0 metrics:nil views:views]];
-    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[countView]|" options:0 metrics:nil views:views]];
     
+    ///背景白圈
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[imageBackView(54)]"
+                                                                   options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[imageBackView(54)]" options:0 metrics:nil views:views]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:imageBackView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+                                                          toItem:_portrait attribute:NSLayoutAttributeCenterX multiplier:1 constant:27]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:imageBackView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
+                                                          toItem:_portrait attribute:NSLayoutAttributeCenterY multiplier:1 constant:27]];
+    
+    ////男女区分图标
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[genderImageView(15)]"
+                                                                   options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[genderImageView(15)]" options:0 metrics:nil views:views]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:_portrait attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+                                                          toItem:genderImageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:7.5]];
+    [header addConstraint:[NSLayoutConstraint constraintWithItem:_portrait attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
+                                                          toItem:genderImageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:7.5]];
+
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[countView]|" options:0 metrics:nil views:views]];
     
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[QRCodeImageView]" options:0 metrics:nil views:views]];
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[QRCodeImageView]-15-|" options:0 metrics:nil views:views]];
-    
     
     [countView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_creditsBtn(width)][_collectionsBtn(width)][_followsBtn(width)][_fansBtn(width)]|"
                                                                       options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:metrics views:views]];

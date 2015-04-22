@@ -86,6 +86,17 @@ NSString * const kPosition = @"position";
     [userDefaults synchronize];
 }
 
++ (void)saveTweetText:(NSString *)tweetText andId:(ino64_t)userID
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *IdStr = [NSString stringWithFormat:@"tweetTmp_%lld", userID];
+    [userDefaults setObject:tweetText forKey:IdStr];
+    
+    [userDefaults synchronize];
+}
+
+
 + (NSArray *)getOwnAccountAndPassword
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -150,6 +161,16 @@ NSString * const kPosition = @"position";
     UIImage *portrait = [UIImage imageWithData:[userDefaults objectForKey:kPortrait]];
     
     return portrait;
+}
+
++ (NSString *)getTweetText
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *IdStr = [NSString stringWithFormat:@"tweetTmp_%lld", [Config getOwnID]];
+    NSString *tweetText = [userDefaults objectForKey:IdStr];
+    
+    return tweetText;
 }
 
 @end

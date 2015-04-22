@@ -121,11 +121,6 @@ static NSString * const kTweetCellID = @"TweetCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
     
     UIMenuController *menuController = [UIMenuController sharedMenuController];
     [menuController setMenuVisible:YES animated:YES];
@@ -143,9 +138,6 @@ static NSString * const kTweetCellID = @"TweetCell";
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-
-
 
 #pragma mark - Table view data source
 
@@ -362,6 +354,7 @@ static NSString * const kTweetCellID = @"TweetCell";
 {
     OSCTweet *tweet = self.objects[recognizer.view.tag];
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
+    userDetailsVC.needCache = NO;
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 
@@ -371,6 +364,7 @@ static NSString * const kTweetCellID = @"TweetCell";
 {
     OSCTweet *tweet = self.objects[tap.view.tag];
     TweetsLikeListViewController *likeListCtl = [[TweetsLikeListViewController alloc] initWithtweetID:tweet.tweetID];
+    likeListCtl.needCache = NO;
     [self.navigationController pushViewController:likeListCtl animated:YES];
 }
 

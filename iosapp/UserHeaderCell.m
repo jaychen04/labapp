@@ -36,11 +36,21 @@
     backgroundImage.image = [UIImage imageNamed:imageName];
     self.backgroundView = backgroundImage;
     
+    _imageBackView = [UIView new];
+    _imageBackView.backgroundColor = [UIColor colorWithHex:0xEEEEEE];
+    [_imageBackView setCornerRadius:27];
+    [self.contentView addSubview:_imageBackView];
+    
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];
     _portrait.userInteractionEnabled = YES;
     [self.contentView addSubview:_portrait];
+    
+    _genderImageView = [UIImageView new];
+    _genderImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _genderImageView.hidden = YES;
+    [self.contentView addSubview:_genderImageView];
     
     _nameLabel = [UILabel new];
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
@@ -73,8 +83,26 @@
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _nameLabel, _creditsButton, _followsButton, _fansButton, countView, line);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_imageBackView, _portrait, _genderImageView, _nameLabel, _creditsButton, _followsButton, _fansButton, countView, line);
     NSDictionary *metrics = @{@"width": @([UIScreen mainScreen].bounds.size.width / 3)};
+    
+    ///背景白圈
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_imageBackView(54)]"
+                                                                   options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imageBackView(54)]" options:0 metrics:nil views:views]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_imageBackView attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+                                                          toItem:_portrait attribute:NSLayoutAttributeCenterX multiplier:1 constant:27]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_imageBackView attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
+                                                          toItem:_portrait attribute:NSLayoutAttributeCenterY multiplier:1 constant:27]];
+    
+    ////男女区分图标
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_genderImageView(15)]"
+                                                                   options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_genderImageView(15)]" options:0 metrics:nil views:views]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_portrait attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
+                                                          toItem:_genderImageView attribute:NSLayoutAttributeCenterX multiplier:1 constant:7.5]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_portrait attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
+                                                          toItem:_genderImageView attribute:NSLayoutAttributeCenterY multiplier:1 constant:7.5]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portrait(50)]-8-[_nameLabel]-10-[line(1)]-4-[countView(50)]|"
                                                                    options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
@@ -93,6 +121,14 @@
 {
     [_portrait loadPortrait:user.portraitURL];
     _nameLabel.text = user.name;
+    
+    if ([user.gender isEqualToString:@"男"]) {
+        [_genderImageView setImage:[UIImage imageNamed:@"userinfo_icon_male"]];
+        _genderImageView.hidden = NO;
+    } else if ([user.gender isEqualToString:@"女"]) {
+        [_genderImageView setImage:[UIImage imageNamed:@"userinfo_icon_female"]];
+        _genderImageView.hidden = NO;
+    }
     
     [_creditsButton setTitle:[NSString stringWithFormat:@"积分\n%d", user.score]          forState:UIControlStateNormal];
     [_followsButton setTitle:[NSString stringWithFormat:@"关注\n%d", user.followersCount] forState:UIControlStateNormal];

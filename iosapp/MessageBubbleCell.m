@@ -158,5 +158,28 @@ static const int myBubbleColor     = 0xC7C7C7;
     [self.contentView layoutIfNeeded];
 }
 
+#pragma mark - 处理长按操作
+
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender
+{
+    return _canPerformAction(self, action);
+}
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void)copyText:(id)sender
+{
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:_messageLabel.text];
+}
+
+- (void)deleteMessage:(id)sender
+{
+    _deleteMessage(self);
+}
+
 
 @end
