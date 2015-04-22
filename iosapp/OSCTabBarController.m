@@ -51,23 +51,32 @@
 {
     [super viewDidLoad];
     
+    NewsViewController *newsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews];
+    NewsViewController *hotNewsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest];
+    BlogsViewController *blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
+    BlogsViewController *recommendBlogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended];
+    
+    TweetsViewController *newTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets];
+    TweetsViewController *hotTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets];
+    TweetsViewController *myTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets];
+    
+    newsViewCtl.needCache = YES;
+    hotNewsViewCtl.needCache = YES;
+    blogViewCtl.needCache = YES;
+    recommendBlogViewCtl.needCache = YES;
+    
+    newTweetViewCtl.needCache = YES;
+    hotTweetViewCtl.needCache = YES;
+    myTweetViewCtl.needCache = YES;
+    
     SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"综合"
                                                                        andSubTitles:@[@"资讯", @"热点", @"博客", @"推荐"]
-                                                                     andControllers:@[
-                                                                                      [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews],
-                                                                                      [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest],
-                                                                                      [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest],
-                                                                                      [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended]
-                                                                                      ]
+                                                                     andControllers:@[newsViewCtl, hotNewsViewCtl, blogViewCtl,recommendBlogViewCtl]
                                                                         underTabbar:YES];
     
     SwipableViewController *tweetsSVC = [[SwipableViewController alloc] initWithTitle:@"动弹"
                                                                          andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
-                                                                       andControllers:@[
-                                                                                        [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets],
-                                                                                        [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets],
-                                                                                        [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets]
-                                                                                        ]
+                                                                       andControllers:@[newTweetViewCtl, hotTweetViewCtl, myTweetViewCtl]
                                                                           underTabbar:YES];
     
     DiscoverTableVC *discoverTableVC = [[DiscoverTableVC alloc] initWithStyle:UITableViewStyleGrouped];

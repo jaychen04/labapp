@@ -97,8 +97,12 @@
     
     switch (indexPath.section) {
         case 0:
-            [self.navigationController pushViewController:[EventsViewController new] animated:YES];
+        {
+            EventsViewController *eventsViewCtl = [EventsViewController new];
+            eventsViewCtl.needCache = YES;
+            [self.navigationController pushViewController:eventsViewCtl animated:YES];
             break;
+        }
         case 1:
             if (indexPath.row == 0) {
                 PersonSearchViewController *personSearchVC = [PersonSearchViewController new];
