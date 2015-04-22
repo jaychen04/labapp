@@ -339,7 +339,7 @@
                                                     [rawText insertString:[NSString stringWithFormat:@"[%d]", emojiNum-1] atIndex:range.location];
                                                 }];
     
-    NSString *pattern = @"[\ue000-\uf8ff]|[\\x{1f300}-\\x{1f7ff}]";
+    NSString *pattern = @"[\ue000-\uf8ff]|[\\x{1f300}-\\x{1f7ff}]|\\x{263A}\\x{FE0F}|☺";
     NSError *error = nil;
     NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
     
