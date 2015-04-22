@@ -12,7 +12,7 @@
 //线上
 #define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
 //本地
-//#define OSCAPI_PREFIX                   @"http://192.168.1.214/action/api/"
+//#define OSCAPI_PREFIX                   @"http://192.168.1.115/action/api/"
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
 #define OSCAPI_NEWS_LIST                @"news_list"
