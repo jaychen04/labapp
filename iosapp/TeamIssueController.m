@@ -21,11 +21,23 @@ static NSString * const kIssueCellID = @"IssueCell";
 
 @interface TeamIssueController ()
 
-@property (nonatomic, strong) NSMutableArray *issues;
-
 @end
 
 @implementation TeamIssueController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.generateURL = ^NSString * (NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?teamid=12375&project=-1&pageIndex=%lu", TEAM_PREFIX, TEAM_ISSUE_LIST, (unsigned long)page];
+        };
+        
+        self.objClass = [TeamIssue class];
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad
 {
@@ -33,34 +45,19 @@ static NSString * const kIssueCellID = @"IssueCell";
     
     [self.tableView registerClass:[TeamIssueCell class] forCellReuseIdentifier:kIssueCellID];
     self.tableView.backgroundColor = [UIColor themeColor];
-    
-    _issues = [NSMutableArray new];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_LIST]
-      parameters:@{
-                   @"teamid": @(12375),
-                   @"project": @"-1"
-                   }
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             NSArray *issuesXML = [[responseObject.rootElement firstChildWithTag:@"issues"] childrenWithTag:@"issue"];
-             
-             for (ONOXMLElement *issueXML in issuesXML) {
-                 [_issues addObject:[[TeamIssue alloc] initWithXML:issueXML]];
-             }
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [self.tableView reloadData];
-             });
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             
-         }];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+
+- (NSArray *)parseXML:(ONOXMLDocument *)xml
+{
+    return [[xml.rootElement firstChildWithTag:@"issues"] childrenWithTag:@"issue"];
+}
+
+
 
 #pragma mark - Table view data source
 
@@ -69,34 +66,44 @@ static NSString * const kIssueCellID = @"IssueCell";
     return 1;
 }
 
+/*
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _issues.count;
+    return self.objects.count;
 }
+*/
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UILabel *label = [UILabel new];
-    TeamIssue *issue = _issues[indexPath.row];
-    
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.font = [UIFont boldSystemFontOfSize:14];
-    label.text = issue.title;
-    
-    CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
-    
-    return height + 63;
+    if (indexPath.row < self.objects.count) {
+        UILabel *label = [UILabel new];
+        TeamIssue *issue = self.objects[indexPath.row];
+        
+        label.numberOfLines = 0;
+        label.lineBreakMode = NSLineBreakByWordWrapping;
+        label.font = [UIFont boldSystemFontOfSize:14];
+        label.text = issue.title;
+        
+        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
+        
+        return height + 63;
+    } else {
+        return 50;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TeamIssueCell *cell = [tableView dequeueReusableCellWithIdentifier:kIssueCellID forIndexPath:indexPath];
-    TeamIssue *issue = _issues[indexPath.row];
-    
-    [cell setContentWithissue:issue];
-    
-    return cell;
+    if (indexPath.row < self.objects.count) {
+        TeamIssueCell *cell = [tableView dequeueReusableCellWithIdentifier:kIssueCellID forIndexPath:indexPath];
+        TeamIssue *issue = self.objects[indexPath.row];
+        
+        [cell setContentWithissue:issue];
+        
+        return cell;
+    } else {
+        return self.lastCell;
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

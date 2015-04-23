@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "OSCObjsViewController.h"
 
-@interface TeamIssueController : UITableViewController
+@interface TeamIssueController : OSCObjsViewController
 
 @end
