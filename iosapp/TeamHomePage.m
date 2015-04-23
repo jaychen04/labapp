@@ -2,7 +2,7 @@
 //  TeamHomePage.m
 //  iosapp
 //
-//  Created by ChanAetern on 4/16/15.
+//  Created by chenhaoxiang on 4/16/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 #import "Config.h"
 #import "TeamAPI.h"
 #import "TeamUser.h"
+#import "TeamActivityViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -155,6 +156,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 0) {return;}
+    
+    if (indexPath.row == 0) {
+        [self.navigationController pushViewController:[TeamActivityViewController new] animated:YES];
+    }
 }
 
 

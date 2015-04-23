@@ -9,6 +9,8 @@
 #import "TeamActivity.h"
 #import "TeamMember.h"
 
+#import <UIKit/UIKit.h>
+
 @implementation TeamActivity
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml
@@ -35,6 +37,18 @@
     }
     
     return self;
+}
+
+- (NSAttributedString *)attributedTittle
+{
+    if (!_attributedTittle) {
+        _attributedTittle = [[NSAttributedString alloc] initWithData:[_title dataUsingEncoding:NSUnicodeStringEncoding]
+                                                             options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                                  documentAttributes:nil
+                                                               error:nil];
+    }
+    
+    return _attributedTittle;
 }
 
 @end

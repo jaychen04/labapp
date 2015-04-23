@@ -18,6 +18,6 @@
 @property (nonatomic, strong) UILabel *commentLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
 
-- (void)setContentWithissue:(TeamIssue *)issue;
+- (void)setContentWithIssue:(TeamIssue *)issue;
 
 @end

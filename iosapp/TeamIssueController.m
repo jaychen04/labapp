@@ -44,7 +44,6 @@ static NSString * const kIssueCellID = @"IssueCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TeamIssueCell class] forCellReuseIdentifier:kIssueCellID];
-    self.tableView.backgroundColor = [UIColor themeColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -98,7 +97,7 @@ static NSString * const kIssueCellID = @"IssueCell";
         TeamIssueCell *cell = [tableView dequeueReusableCellWithIdentifier:kIssueCellID forIndexPath:indexPath];
         TeamIssue *issue = self.objects[indexPath.row];
         
-        [cell setContentWithissue:issue];
+        [cell setContentWithIssue:issue];
         
         return cell;
     } else {
