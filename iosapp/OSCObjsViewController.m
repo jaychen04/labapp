@@ -31,7 +31,6 @@
         _objects = [NSMutableArray new];
         _page = 0;
         _needRefreshAnimation = YES;
-        _needCache = YES;
     }
     
     return self;

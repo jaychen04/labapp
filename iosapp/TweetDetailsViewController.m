@@ -131,6 +131,13 @@
                                 </a>", _tweet.body, _tweet.bigImgURL, _tweet.bigImgURL];
              }
              
+             if (_tweet.attach.length) {
+                 //有语音信息
+                 
+                 NSString *attachStr = [NSString stringWithFormat:@"<source src=\"%@?avthumb/mp3\" type=\"audio/mpeg\">", _tweet.attach];
+                 _tweet.body = [NSString stringWithFormat:@"%@<br/><audio controls>%@</audio>", _tweet.body, attachStr];
+             }
+             
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
