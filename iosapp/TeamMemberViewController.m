@@ -87,7 +87,8 @@ static NSString * const kMemberCellID = @"MemberCell";
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 3;
+    NSInteger left = _members.count - section * 3;
+    return left >= 3 ? 3: left;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
