@@ -403,6 +403,8 @@
 		C5FB95851AEA1D51006918CD /* TeamDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95841AEA1D51006918CD /* TeamDiscussionViewController.m */; };
 		C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95871AEA1DA9006918CD /* TeamDiscussion.m */; };
 		C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB958A1AEA24F5006918CD /* TeamDiscussionCell.m */; };
+		C5FB958E1AEA2C8D006918CD /* DiscussionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB958D1AEA2C8D006918CD /* DiscussionDetailsViewController.m */; };
+		C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */; };
 		EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */; };
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
 		EE6B2B641ACCDF6300650985 /* ic_unlike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */; };
@@ -984,6 +986,10 @@
 		C5FB95871AEA1DA9006918CD /* TeamDiscussion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussion.m; sourceTree = "<group>"; };
 		C5FB95891AEA24F5006918CD /* TeamDiscussionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDiscussionCell.h; sourceTree = "<group>"; };
 		C5FB958A1AEA24F5006918CD /* TeamDiscussionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussionCell.m; sourceTree = "<group>"; };
+		C5FB958C1AEA2C8D006918CD /* DiscussionDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscussionDetailsViewController.h; sourceTree = "<group>"; };
+		C5FB958D1AEA2C8D006918CD /* DiscussionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscussionDetailsViewController.m; sourceTree = "<group>"; };
+		C5FB958F1AEA305D006918CD /* TeamDiscussionDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDiscussionDetails.h; sourceTree = "<group>"; };
+		C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussionDetails.m; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UMS_facebook_icon.png; sourceTree = "<group>"; };
 		EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UMS_facebook_icon@2x.png"; sourceTree = "<group>"; };
@@ -1658,6 +1664,8 @@
 				38EAF1C61AE0FCE400397E2A /* TeamProjectAuthority.m */,
 				C5FB95861AEA1DA9006918CD /* TeamDiscussion.h */,
 				C5FB95871AEA1DA9006918CD /* TeamDiscussion.m */,
+				C5FB958F1AEA305D006918CD /* TeamDiscussionDetails.h */,
+				C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -2311,6 +2319,8 @@
 				C5FB95841AEA1D51006918CD /* TeamDiscussionViewController.m */,
 				C5FB95891AEA24F5006918CD /* TeamDiscussionCell.h */,
 				C5FB958A1AEA24F5006918CD /* TeamDiscussionCell.m */,
+				C5FB958C1AEA2C8D006918CD /* DiscussionDetailsViewController.h */,
+				C5FB958D1AEA2C8D006918CD /* DiscussionDetailsViewController.m */,
 			);
 			name = "讨论";
 			sourceTree = "<group>";
@@ -2873,6 +2883,7 @@
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
 				38BDC5401A4D5F84006080F7 /* PersonSearchViewController.m in Sources */,
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
+				C5FB958E1AEA2C8D006918CD /* DiscussionDetailsViewController.m in Sources */,
 				38996A551A0266F10025AA52 /* BlogsViewController.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,
 				386825A91A70D5E6008F5706 /* OSCSearchResult.m in Sources */,
@@ -2880,6 +2891,7 @@
 				381EAB6D19FE7CD600C1937C /* PostsViewController.m in Sources */,
 				387639B11A7CF95D008E6805 /* SideMenuViewController.m in Sources */,
 				00EDF60919EF77A100A5C842 /* OSCTweet.m in Sources */,
+				C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

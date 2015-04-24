@@ -10,6 +10,7 @@
 #import "TeamAPI.h"
 #import "TeamDiscussion.h"
 #import "TeamDiscussionCell.h"
+#import "DiscussionDetailsViewController.h"
 
 static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
 
@@ -88,6 +89,12 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    TeamDiscussion *teamDiscussion = self.objects[indexPath.row];
+    
+    if (indexPath.row < self.objects.count) {
+        [self.navigationController pushViewController:[[DiscussionDetailsViewController alloc] initWithDiscussionID:teamDiscussion.discussionID]
+                                             animated:YES];
+    }
 }
 
 
