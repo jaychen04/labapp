@@ -61,8 +61,6 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
     if (indexPath.row < self.objects.count) {
         TeamActivity *activity = self.objects[indexPath.row];
         
-        self.label.numberOfLines = 0;
-        self.label.lineBreakMode = NSLineBreakByWordWrapping;
         self.label.attributedText = activity.attributedTittle;
         
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;

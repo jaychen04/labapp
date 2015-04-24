@@ -20,4 +20,6 @@
 #define TEAM_USER_ISSUE_INFORMATION     @"team_user_issue_information"
 #define TEAM_ISSUE_LIST                 @"team_issue_list"
 
+#define TEAM_DISCUSS_LIST               @"team_discuss_list"
+
 #endif

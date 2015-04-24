@@ -400,6 +400,9 @@
 		38F0A6331AAEC7C7001B531E /* widget_taday@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F0A62A1AAEC7C7001B531E /* widget_taday@3x.png */; };
 		38F5FA7E1AB9858C00E01A84 /* overlaygraphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
+		C5FB95851AEA1D51006918CD /* TeamDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95841AEA1D51006918CD /* TeamDiscussionViewController.m */; };
+		C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95871AEA1DA9006918CD /* TeamDiscussion.m */; };
+		C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB958A1AEA24F5006918CD /* TeamDiscussionCell.m */; };
 		EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */; };
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
 		EE6B2B641ACCDF6300650985 /* ic_unlike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */; };
@@ -975,6 +978,12 @@
 		38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlaygraphic.png; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		C5FB95831AEA1D51006918CD /* TeamDiscussionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDiscussionViewController.h; sourceTree = "<group>"; };
+		C5FB95841AEA1D51006918CD /* TeamDiscussionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussionViewController.m; sourceTree = "<group>"; };
+		C5FB95861AEA1DA9006918CD /* TeamDiscussion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDiscussion.h; sourceTree = "<group>"; };
+		C5FB95871AEA1DA9006918CD /* TeamDiscussion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussion.m; sourceTree = "<group>"; };
+		C5FB95891AEA24F5006918CD /* TeamDiscussionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDiscussionCell.h; sourceTree = "<group>"; };
+		C5FB958A1AEA24F5006918CD /* TeamDiscussionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussionCell.m; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UMS_facebook_icon.png; sourceTree = "<group>"; };
 		EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UMS_facebook_icon@2x.png"; sourceTree = "<group>"; };
@@ -1647,6 +1656,8 @@
 				38EAF1C31AE0EA6D00397E2A /* TeamProject.m */,
 				38EAF1C51AE0FCE400397E2A /* TeamProjectAuthority.h */,
 				38EAF1C61AE0FCE400397E2A /* TeamProjectAuthority.m */,
+				C5FB95861AEA1DA9006918CD /* TeamDiscussion.h */,
+				C5FB95871AEA1DA9006918CD /* TeamDiscussion.m */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -1680,6 +1691,7 @@
 				384A11311ADFA6BB00856A7C /* TeamUserMainCell.h */,
 				384A11321ADFA6BB00856A7C /* TeamUserMainCell.m */,
 				38EAF1BB1AE0E5DC00397E2A /* 动态 */,
+				C5FB95821AEA1D02006918CD /* 讨论 */,
 			);
 			name = "主页";
 			sourceTree = "<group>";
@@ -2292,6 +2304,17 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		C5FB95821AEA1D02006918CD /* 讨论 */ = {
+			isa = PBXGroup;
+			children = (
+				C5FB95831AEA1D51006918CD /* TeamDiscussionViewController.h */,
+				C5FB95841AEA1D51006918CD /* TeamDiscussionViewController.m */,
+				C5FB95891AEA24F5006918CD /* TeamDiscussionCell.h */,
+				C5FB958A1AEA24F5006918CD /* TeamDiscussionCell.m */,
+			);
+			name = "讨论";
+			sourceTree = "<group>";
+		};
 		EE6DB9451AD6628A004FCF3C /* 点赞列表 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2751,6 +2774,7 @@
 				387639FD1A807918008E6805 /* SoftwareCommentsViewController.m in Sources */,
 				38763A361A8DDF51008E6805 /* MessageBubbleViewController.m in Sources */,
 				3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */,
+				C5FB95851AEA1D51006918CD /* TeamDiscussionViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				3838D1AD1A6F463E00CC7913 /* RandomMessageCell.m in Sources */,
@@ -2763,6 +2787,7 @@
 				382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */,
 				EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */,
 				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,
+				C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */,
 				EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */,
 				38EAF1C41AE0EA6D00397E2A /* TeamProject.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */,
@@ -2815,6 +2840,7 @@
 				383B9FD91AB416F000C03C47 /* ActivityDetailsWithBarViewController.m in Sources */,
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
+				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
 				EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */,

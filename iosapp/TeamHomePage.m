@@ -13,6 +13,7 @@
 #import "TeamAPI.h"
 #import "TeamUser.h"
 #import "TeamActivityViewController.h"
+#import "TeamDiscussionViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -161,6 +162,8 @@
     
     if (indexPath.row == 0) {
         [self.navigationController pushViewController:[TeamActivityViewController new] animated:YES];
+    } else if (indexPath.row == 2) {
+        [self.navigationController pushViewController:[TeamDiscussionViewController new] animated:YES];
     }
 }
 
