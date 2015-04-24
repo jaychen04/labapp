@@ -71,6 +71,8 @@
     
     [self initSubViews];
     [self setLayout];
+    
+    _edittingArea.text = [Config getTweetText];
 }
 
 
@@ -78,7 +80,6 @@
 {
     [super viewWillAppear:animated];
     
-    _edittingArea.text = [Config getTweetText];
     [_edittingArea.delegate textViewDidChange:_edittingArea];
     
     [_edittingArea becomeFirstResponder];
