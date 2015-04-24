@@ -42,10 +42,15 @@
 - (NSAttributedString *)attributedTittle
 {
     if (!_attributedTittle) {
-        _attributedTittle = [[NSAttributedString alloc] initWithData:[_title dataUsingEncoding:NSUnicodeStringEncoding]
-                                                             options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
-                                                  documentAttributes:nil
-                                                               error:nil];
+        _attributedTittle = [[NSMutableAttributedString alloc] initWithData:[_title dataUsingEncoding:NSUnicodeStringEncoding]
+                                                                    options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                                         documentAttributes:nil
+                                                                      error:nil];
+        
+        [_attributedTittle deleteCharactersInRange:NSMakeRange(_attributedTittle.length-1, 1)];
+        
+        [_attributedTittle addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
+                                   range:NSMakeRange(0, _attributedTittle.length)];
     }
     
     return _attributedTittle;

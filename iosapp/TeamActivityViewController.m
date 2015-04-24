@@ -31,6 +31,7 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
         };
         
         self.objClass = [TeamActivity class];
+        self.needCache = YES;
     }
     
     return self;
@@ -40,6 +41,7 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"团队动态";
     [self.tableView registerClass:[TeamActivityCell class] forCellReuseIdentifier:kActivityCellID];
 }
 
