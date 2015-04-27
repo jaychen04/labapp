@@ -27,7 +27,7 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=12375&type=all&pageIndex=%lu", TEAM_PREFIX, TEAM_ACTIVITY_LIST, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?teamid=12378&type=all&pageIndex=%lu", TEAM_PREFIX, TEAM_ACTIVITY_LIST, (unsigned long)page];
         };
         
         self.objClass = [TeamActivity class];

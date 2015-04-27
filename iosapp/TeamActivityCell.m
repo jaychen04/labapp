@@ -40,7 +40,8 @@
     _nameLabel = [UILabel new];
     _nameLabel.numberOfLines = 0;
     _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _nameLabel.font = [UIFont systemFontOfSize:13];
+    _nameLabel.textColor = [UIColor nameColor];
+    _nameLabel.font = [UIFont boldSystemFontOfSize:14];
     [self.contentView addSubview:_nameLabel];
     
     _portrait = [UIImageView new];

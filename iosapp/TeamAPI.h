@@ -22,5 +22,9 @@
 
 #define TEAM_DISCUSS_LIST               @"team_discuss_list"
 #define TEAM_DISCUSS_DETAIL             @"team_discuss_detail"
+#define TEAM_DISCUSS_REPLY              @"team_discuss_reply"
+
+#define TEAM_REPLY_LIST_BY_TYPE         @"team_reply_list_by_type"
+
 
 #endif
