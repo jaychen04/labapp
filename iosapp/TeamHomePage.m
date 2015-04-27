@@ -49,7 +49,7 @@
     
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_USER_ISSUE_INFORMATION]
       parameters:@{
-                   @"teamid": @(12378),
+                   @"teamid": @(12375),
                    @"uid": @([Config getOwnID])
                    }
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {

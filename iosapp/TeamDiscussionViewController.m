@@ -24,7 +24,7 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=12378&pageIndex=%lu", TEAM_PREFIX, TEAM_DISCUSS_LIST, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?teamid=12375&pageIndex=%lu", TEAM_PREFIX, TEAM_DISCUSS_LIST, (unsigned long)page];
         };
         
         self.objClass = [TeamDiscussion class];

@@ -19,9 +19,9 @@
 #import "LoginViewController.h"
 #import "SearchViewController.h"
 #import "MyBasicInfoViewController.h"
-#import "TeamHomePage.h"
-#import "TeamMemberViewController.h"
-#import "TeamIssueController.h"
+#import "TeamAPI.h"
+#import "TeamTeam.h"
+#import "TeamCenter.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -344,17 +344,26 @@
             break;
         }
         case 2: {
-            SwipableViewController *teamSVC = [[SwipableViewController alloc] initWithTitle:@"Team"
-                                                                               andSubTitles:@[@"主页", @"任务", @"成员"]
-                                                                             andControllers:@[
-                                                                                              [TeamHomePage new],
-                                                                                              [TeamIssueController new],
-                                                                                              [TeamMemberViewController new]
-                                                                                              ]];
-            teamSVC.hidesBottomBarWhenPushed = YES;
-            
-            [self.navigationController pushViewController:teamSVC animated:YES];
-            break;
+            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+            manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+            [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_LIST]
+              parameters:@([Config getOwnID])
+                 success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                     NSMutableArray *teams = [NSMutableArray new];
+                     NSArray *teamsXML = [[responseObject.rootElement firstChildWithTag:@"teams"] childrenWithTag:@"team"];
+                     
+                     for (ONOXMLElement *teamXML in teamsXML) {
+                         TeamTeam *team = [[TeamTeam alloc] initWithXML:teamXML];
+                         [teams addObject:team];
+                     }
+                     
+                     TeamCenter *teamCenter = [[TeamCenter alloc] initWithTeams:teams];
+                     teamCenter.hidesBottomBarWhenPushed = YES;
+                     
+                     [self.navigationController pushViewController:teamCenter animated:YES];
+                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                     NSLog(@"failure");
+                 }];
         }
         default: break;
     }
@@ -378,14 +387,14 @@
 - (void)pushFavoriteSVC
 {
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
-                                                                              andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
-                                                                            andControllers:@[
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
-                                                                                             ]];
+                                                                            andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
+                                                                          andControllers:@[
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
+                                                                                           ]];
     favoritesSVC.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:favoritesSVC animated:YES];
@@ -394,11 +403,11 @@
 - (void)pushFriendsSVC:(UIButton *)button
 {
     SwipableViewController *friendsSVC = [[SwipableViewController alloc] initWithTitle:@"关注/粉丝"
-                                                                            andSubTitles:@[@"关注", @"粉丝"]
-                                                                          andControllers:@[
-                                                                                           [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
-                                                                                           [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
-                                                                                           ]];
+                                                                          andSubTitles:@[@"关注", @"粉丝"]
+                                                                        andControllers:@[
+                                                                                         [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
+                                                                                         [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
+                                                                                         ]];
     if (button == _fansBtn) {[friendsSVC scrollToViewAtIndex:1];}
     
     friendsSVC.hidesBottomBarWhenPushed = YES;

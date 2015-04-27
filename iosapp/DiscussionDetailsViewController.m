@@ -113,7 +113,7 @@
     [manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DISCUSS_REPLY]
        parameters:@{
                     @"uid": @([Config getOwnID]),
-                    @"teamid": @(12378),
+                    @"teamid": @(12375),
                     @"discussid": @(_discussionID),
                     @"content": [Utils convertRichTextToRawText:self.editingBar.editView]
                     }
