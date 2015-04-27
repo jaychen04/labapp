@@ -405,6 +405,8 @@
 		C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB958A1AEA24F5006918CD /* TeamDiscussionCell.m */; };
 		C5FB958E1AEA2C8D006918CD /* DiscussionDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB958D1AEA2C8D006918CD /* DiscussionDetailsViewController.m */; };
 		C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */; };
+		C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95931AEE129F006918CD /* TeamCenter.m */; };
+		C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95961AEE14FC006918CD /* TeamTeam.m */; };
 		EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */; };
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
 		EE6B2B641ACCDF6300650985 /* ic_unlike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */; };
@@ -990,6 +992,10 @@
 		C5FB958D1AEA2C8D006918CD /* DiscussionDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscussionDetailsViewController.m; sourceTree = "<group>"; };
 		C5FB958F1AEA305D006918CD /* TeamDiscussionDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDiscussionDetails.h; sourceTree = "<group>"; };
 		C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussionDetails.m; sourceTree = "<group>"; };
+		C5FB95921AEE129F006918CD /* TeamCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamCenter.h; sourceTree = "<group>"; };
+		C5FB95931AEE129F006918CD /* TeamCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCenter.m; sourceTree = "<group>"; };
+		C5FB95951AEE14FC006918CD /* TeamTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamTeam.h; sourceTree = "<group>"; };
+		C5FB95961AEE14FC006918CD /* TeamTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTeam.m; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UMS_facebook_icon.png; sourceTree = "<group>"; };
 		EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UMS_facebook_icon@2x.png"; sourceTree = "<group>"; };
@@ -1666,6 +1672,8 @@
 				C5FB95871AEA1DA9006918CD /* TeamDiscussion.m */,
 				C5FB958F1AEA305D006918CD /* TeamDiscussionDetails.h */,
 				C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */,
+				C5FB95951AEE14FC006918CD /* TeamTeam.h */,
+				C5FB95961AEE14FC006918CD /* TeamTeam.m */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -1676,6 +1684,8 @@
 				384364221AC5669700743CB0 /* 团队成员 */,
 				384A11301ADFA33300856A7C /* 主页 */,
 				38EAF1B71AE0E1DF00397E2A /* 任务 */,
+				C5FB95921AEE129F006918CD /* TeamCenter.h */,
+				C5FB95931AEE129F006918CD /* TeamCenter.m */,
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -2839,6 +2849,7 @@
 				38EAF1B61AE0A85F00397E2A /* TeamActivity.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,
+				C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */,
 				38BD3D101A37F38900682D1F /* MyInfoViewController.m in Sources */,
 				EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */,
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,
@@ -2848,6 +2859,7 @@
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
 				383B9FD91AB416F000C03C47 /* ActivityDetailsWithBarViewController.m in Sources */,
+				C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */,
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
 				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,
