@@ -400,6 +400,7 @@
 		38F0A6331AAEC7C7001B531E /* widget_taday@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F0A62A1AAEC7C7001B531E /* widget_taday@3x.png */; };
 		38F5FA7E1AB9858C00E01A84 /* overlaygraphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
+		C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7721AEFA0140032F775 /* TeamCell.m */; };
 		C5FB95851AEA1D51006918CD /* TeamDiscussionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95841AEA1D51006918CD /* TeamDiscussionViewController.m */; };
 		C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95871AEA1DA9006918CD /* TeamDiscussion.m */; };
 		C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB958A1AEA24F5006918CD /* TeamDiscussionCell.m */; };
@@ -407,7 +408,6 @@
 		C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */; };
 		C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95931AEE129F006918CD /* TeamCenter.m */; };
 		C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95961AEE14FC006918CD /* TeamTeam.m */; };
-		C5FB959B1AEE3912006918CD /* TeamPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB959A1AEE3912006918CD /* TeamPickerViewController.m */; };
 		EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */; };
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
 		EE6B2B641ACCDF6300650985 /* ic_unlike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */; };
@@ -983,6 +983,8 @@
 		38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlaygraphic.png; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		C5F3D7711AEFA0140032F775 /* TeamCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamCell.h; sourceTree = "<group>"; };
+		C5F3D7721AEFA0140032F775 /* TeamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCell.m; sourceTree = "<group>"; };
 		C5FB95831AEA1D51006918CD /* TeamDiscussionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDiscussionViewController.h; sourceTree = "<group>"; };
 		C5FB95841AEA1D51006918CD /* TeamDiscussionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussionViewController.m; sourceTree = "<group>"; };
 		C5FB95861AEA1DA9006918CD /* TeamDiscussion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDiscussion.h; sourceTree = "<group>"; };
@@ -997,8 +999,6 @@
 		C5FB95931AEE129F006918CD /* TeamCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCenter.m; sourceTree = "<group>"; };
 		C5FB95951AEE14FC006918CD /* TeamTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamTeam.h; sourceTree = "<group>"; };
 		C5FB95961AEE14FC006918CD /* TeamTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTeam.m; sourceTree = "<group>"; };
-		C5FB95991AEE3912006918CD /* TeamPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamPickerViewController.h; sourceTree = "<group>"; };
-		C5FB959A1AEE3912006918CD /* TeamPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamPickerViewController.m; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UMS_facebook_icon.png; sourceTree = "<group>"; };
 		EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UMS_facebook_icon@2x.png"; sourceTree = "<group>"; };
@@ -2342,8 +2342,8 @@
 			children = (
 				C5FB95921AEE129F006918CD /* TeamCenter.h */,
 				C5FB95931AEE129F006918CD /* TeamCenter.m */,
-				C5FB95991AEE3912006918CD /* TeamPickerViewController.h */,
-				C5FB959A1AEE3912006918CD /* TeamPickerViewController.m */,
+				C5F3D7711AEFA0140032F775 /* TeamCell.h */,
+				C5F3D7721AEFA0140032F775 /* TeamCell.m */,
 			);
 			name = "Team切换";
 			sourceTree = "<group>";
@@ -2871,7 +2871,6 @@
 				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
-				C5FB959B1AEE3912006918CD /* TeamPickerViewController.m in Sources */,
 				383B9FD91AB416F000C03C47 /* ActivityDetailsWithBarViewController.m in Sources */,
 				C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */,
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
@@ -2883,6 +2882,7 @@
 				380FD2231A74E702003C4021 /* OSCActivity.m in Sources */,
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
+				C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */,
 				38A9EEBC1AA998A7006C95BD /* OSLicensePage.m in Sources */,
 				38EAF1C71AE0FCE400397E2A /* TeamProjectAuthority.m in Sources */,
 				38A93FA61AA2B51100A515E8 /* OSCThread.m in Sources */,
