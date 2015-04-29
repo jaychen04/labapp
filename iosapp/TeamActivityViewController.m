@@ -61,7 +61,7 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
     if (indexPath.row < self.objects.count) {
         TeamActivity *activity = self.objects[indexPath.row];
         
-        self.label.attributedText = activity.attributedTittle;
+        self.label.attributedText = activity.attributedTitle;
         
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
         

@@ -26,5 +26,7 @@
 
 #define TEAM_REPLY_LIST_BY_TYPE         @"team_reply_list_by_type"
 
+#define TEAM_DIARY_LIST                 @"team_diary_list"
+
 
 #endif

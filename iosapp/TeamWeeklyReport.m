@@ -1,36 +1,23 @@
 //
-//  TeamActivity.m
+//  TeamWeeklyReport.m
 //  iosapp
 //
-//  Created by ChanAetern on 4/17/15.
+//  Created by AeternChan on 4/29/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "TeamActivity.h"
-#import "TeamMember.h"
-
+#import "TeamWeeklyReport.h"
 #import <UIKit/UIKit.h>
 
-@implementation TeamActivity
+@implementation TeamWeeklyReport
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml
 {
-    self = [super init];
-    if (self) {
-        _activityID = [[[xml firstChildWithTag:@"id"] numberValue] intValue];
-        _type = [[[xml firstChildWithTag:@"type"] numberValue] intValue];
-        _appID = [[[xml firstChildWithTag:@"appid"] numberValue] intValue];
-        _appName = [[xml firstChildWithTag:@"appName"] stringValue];
+    if (self = [super init]) {
+        _reportID = [[[xml firstChildWithTag:@"id"] numberValue] intValue];
+        _title = [[xml firstChildWithTag:@"title"] stringValue];
         _replyCount = [[[xml firstChildWithTag:@"reply"] numberValue] intValue];
         _createTime = [[xml firstChildWithTag:@"createTime"] stringValue];
-        
-        ONOXMLElement *bodyXML = [xml firstChildWithTag:@"body"];
-        _title = [[bodyXML firstChildWithTag:@"title"] stringValue];
-        _detail = [[bodyXML firstChildWithTag:@"detail"] stringValue];
-        _code = [[bodyXML firstChildWithTag:@"code"] stringValue];
-        _codeType = [[bodyXML firstChildWithTag:@"codeType"] stringValue];
-        _imageURL = [NSURL URLWithString:[[bodyXML firstChildWithTag:@"image"] stringValue]];
-        _originImageURL = [NSURL URLWithString:[[bodyXML firstChildWithTag:@"imageOrigin"] stringValue]];
         
         ONOXMLElement *authorXML = [xml firstChildWithTag:@"author"];
         _author = [[TeamMember alloc] initWithXML:authorXML];
@@ -39,7 +26,7 @@
     return self;
 }
 
-- (NSAttributedString *)attributedTitle
+- (NSMutableAttributedString *)attributedTitle
 {
     if (!_attributedTitle) {
         _attributedTitle = [[NSMutableAttributedString alloc] initWithData:[_title dataUsingEncoding:NSUnicodeStringEncoding]
@@ -49,7 +36,10 @@
         
         [_attributedTitle deleteCharactersInRange:NSMakeRange(_attributedTitle.length-1, 1)];
         
-        [_attributedTitle addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
+        [_attributedTitle addAttributes:@{
+                                          NSFontAttributeName:[UIFont systemFontOfSize:14],
+                                          NSForegroundColorAttributeName:[UIColor grayColor]
+                                          }
                                    range:NSMakeRange(0, _attributedTitle.length)];
     }
     
