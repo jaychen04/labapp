@@ -10,4 +10,6 @@
 
 @interface TeamDiscussionViewController : OSCObjsViewController
 
+- (instancetype)initWithTeamID:(int)teamID;
+
 @end

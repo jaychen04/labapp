@@ -25,6 +25,7 @@
 @interface DiscussionDetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIWebView *detailsView;
+@property (nonatomic, assign) int teamID;
 @property (nonatomic, assign) int discussionID;
 @property (nonatomic, strong) TeamDiscussionDetails *discussionDetails;
 
@@ -32,10 +33,11 @@
 
 @implementation DiscussionDetailsViewController
 
-- (instancetype)initWithDiscussionID:(int)discussionID
+- (instancetype)initWithTeamID:(int)teamID andDiscussionID:(int)discussionID
 {
     self = [super initWithModeSwitchButton:NO];
     if (self) {
+        _teamID = teamID;
         _discussionID = discussionID;
     }
     
@@ -67,7 +69,7 @@
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DISCUSS_DETAIL]
       parameters:@{
-                   @"teamid":@(12378),
+                   @"teamid":@(_teamID),
                    @"discussid": @(_discussionID)
                    }
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
@@ -113,7 +115,7 @@
     [manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DISCUSS_REPLY]
        parameters:@{
                     @"uid": @([Config getOwnID]),
-                    @"teamid": @(12375),
+                    @"teamid": @(_teamID),
                     @"discussid": @(_discussionID),
                     @"content": [Utils convertRichTextToRawText:self.editingBar.editView]
                     }

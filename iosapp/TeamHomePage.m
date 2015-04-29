@@ -148,9 +148,9 @@
     if (indexPath.section == 0) {return;}
     
     if (indexPath.row == 0) {
-        [self.navigationController pushViewController:[TeamActivityViewController new] animated:YES];
+        [self.navigationController pushViewController:[[TeamActivityViewController alloc] initWithTeamID:_teamID] animated:YES];
     } else if (indexPath.row == 2) {
-        [self.navigationController pushViewController:[TeamDiscussionViewController new] animated:YES];
+        [self.navigationController pushViewController:[[TeamDiscussionViewController alloc] initWithTeamID:_teamID] animated:YES];
     }
 }
 
