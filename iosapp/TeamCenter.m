@@ -21,6 +21,10 @@ static NSString * kTeamCellID = @"TeamCell";
 
 @property (nonatomic, strong) NSArray *teams;
 @property (nonatomic, strong) UITableView *teamPicker;
+@property (nonatomic, assign) int currentTeamID;
+
+@property (nonatomic, strong) UIButton *dropdownButton;
+@property (nonatomic, strong) UIView *clearView;
 
 @end
 
@@ -28,34 +32,41 @@ static NSString * kTeamCellID = @"TeamCell";
 
 - (instancetype)initWithTeams:(NSArray *)teams
 {
+    TeamTeam *team = teams[0];
     self = [super initWithTitle:@"Team"
                    andSubTitles:@[@"主页", @"任务", @"成员"]
                  andControllers:@[
-                                  [TeamHomePage new],
-                                  [TeamIssueController new],
-                                  [TeamMemberViewController new]
+                                  [[TeamHomePage alloc] initWithTeamID:team.teamID],
+                                  [[TeamIssueController alloc] initWithTeamID:team.teamID],
+                                  [[TeamMemberViewController alloc] initWithTeamID:team.teamID]
                                   ]];
     
     if (self) {
         _teams = teams;
         
-        UIButton *dropdownButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [dropdownButton setTitle:((TeamTeam *)_teams[0]).name forState:UIControlStateNormal];
-        [dropdownButton addTarget:self action:@selector(navButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-        self.navigationItem.titleView = dropdownButton;
+        _dropdownButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_dropdownButton setTitle:((TeamTeam *)_teams[0]).name forState:UIControlStateNormal];
+        [_dropdownButton addTarget:self action:@selector(toggleTeamPicker) forControlEvents:UIControlEventTouchUpInside];
+        _dropdownButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        self.navigationItem.titleView = _dropdownButton;
         
         CGSize screenSize = [UIScreen mainScreen].bounds.size;
-        _teamPicker = [[UITableView alloc] initWithFrame:CGRectMake((screenSize.width - pickerWidth)/2, 0, pickerWidth, _teams.count * teamCellHeight + 20)];
+        CGFloat pickerHeight = (_teams.count > 5 ? 5 * teamCellHeight : _teams.count * teamCellHeight) + 16;
+        _teamPicker = [[UITableView alloc] initWithFrame:CGRectMake((screenSize.width - pickerWidth)/2, 0, pickerWidth, pickerHeight)];
         [_teamPicker registerClass:[TeamCell class] forCellReuseIdentifier:kTeamCellID];
         _teamPicker.dataSource = self;
         _teamPicker.delegate = self;
-        _teamPicker.hidden = YES;
+        _teamPicker.alpha = 0;
         
         _teamPicker.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_teamPicker setCornerRadius:3];
         _teamPicker.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
         _teamPicker.backgroundColor = [UIColor colorWithHex:0x555555];
         [self.view addSubview:_teamPicker];
+        
+        _clearView = [[UIView alloc] initWithFrame:self.view.bounds];
+        _clearView.backgroundColor = [UIColor clearColor];
+        [_clearView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTeamPicker)]];
     }
     
     return self;
@@ -64,18 +75,6 @@ static NSString * kTeamCellID = @"TeamCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-#if 0
-    UIButton *dropdownButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [dropdownButton setTitle:((TeamTeam *)_teams[0]).name forState:UIControlStateNormal];
-    [dropdownButton addTarget:self action:@selector(navButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.titleView = dropdownButton;
-    
-    _teamPicker = [[TeamPickerViewController alloc] initWithTeams:_teams];
-    [self addChildViewController:_teamPicker];
-    [self.view addSubview:_teamPicker.view];
-    _teamPicker.view.hidden = YES;
-#endif
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -90,13 +89,23 @@ static NSString * kTeamCellID = @"TeamCell";
     [super didReceiveMemoryWarning];
 }
 
-- (void)navButtonTapped
+- (void)toggleTeamPicker
 {
-    _teamPicker.hidden = !_teamPicker.hidden;
+    [UIView animateWithDuration:0.2f animations:^{
+        //_teamPicker.hidden = !_teamPicker.hidden;
+        [_teamPicker setAlpha:1.0f - _teamPicker.alpha];
+    } completion:^(BOOL finished) {
+        if (_teamPicker.alpha <= 0.0f) {
+            [_clearView removeFromSuperview];
+        } else {
+            [self.view addSubview:_clearView];
+            [self.view bringSubviewToFront:_teamPicker];
+        }
+    }];
 }
 
 
-#pragma mark - Table view data source
+#pragma mark - teamPicker
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -119,12 +128,12 @@ static NSString * kTeamCellID = @"TeamCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 10;
+    return 8;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    return 10;
+    return 8;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -135,16 +144,27 @@ static NSString * kTeamCellID = @"TeamCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TeamCell *cell = [tableView dequeueReusableCellWithIdentifier:kTeamCellID forIndexPath:indexPath];
-    [cell setCornerRadius:3];
-    cell.backgroundColor = [UIColor colorWithHex:0x555555];
-    UIView *selectedBackground = [UIView new];
-    selectedBackground.backgroundColor = [UIColor colorWithHex:0x333333];
-    cell.selectedBackgroundView = selectedBackground;
     
     cell.textLabel.text = ((TeamTeam *)_teams[indexPath.row]).name;
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
+    //cell.textLabel.textAlignment = NSTextAlignmentCenter;
     
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TeamTeam *team = _teams[indexPath.row];
+    [_dropdownButton setTitle:team.name forState:UIControlStateNormal];
+    [_dropdownButton sizeToFit];
+    _currentTeamID = team.teamID;
+    
+    [self toggleTeamPicker];
+    
+    for (id vc in self.viewPager.controllers) {
+        [vc switchToTeam:_currentTeamID];
+    }
 }
 
 

@@ -23,16 +23,19 @@
 @interface TeamHomePage ()
 
 @property (nonatomic, strong) TeamUser *user;
+@property (nonatomic, assign) int teamID;
 
 @end
 
 @implementation TeamHomePage
 
-- (instancetype)init
+- (instancetype)initWithTeamID:(int)teamID
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
+        
+        _teamID = teamID;
     }
     return self;
 }
@@ -44,23 +47,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor themeColor];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    
-    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_USER_ISSUE_INFORMATION]
-      parameters:@{
-                   @"teamid": @(12375),
-                   @"uid": @([Config getOwnID])
-                   }
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             _user = [[TeamUser alloc] initWithXML:responseObject.rootElement];
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [self.tableView reloadData];
-             });
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             
-         }];
+    [self refresh];
 }
 
 - (void)didReceiveMemoryWarning
@@ -167,6 +154,35 @@
     }
 }
 
+
+#pragma mark - 更新数据
+
+- (void)switchToTeam:(int)teamID
+{
+    _teamID = teamID;
+    [self refresh];
+}
+
+- (void)refresh
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_USER_ISSUE_INFORMATION]
+      parameters:@{
+                   @"teamid": @(_teamID),
+                   @"uid": @([Config getOwnID])
+                   }
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+             _user = [[TeamUser alloc] initWithXML:responseObject.rootElement];
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.tableView reloadData];
+             });
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             
+         }];
+}
 
 
 @end
