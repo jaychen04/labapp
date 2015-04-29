@@ -19,7 +19,7 @@
 @property (nonatomic, assign) int commentCount;
 @property (nonatomic, assign) int documentType;
 
-- (NSAttributedString *)attributedTittle;
-- (NSAttributedString *)attributedCommentCount;
+@property (nonatomic, strong) NSMutableAttributedString *attributedTittle;
+@property (nonatomic, strong) NSMutableAttributedString *attributedCommentCount;
 
 @end
