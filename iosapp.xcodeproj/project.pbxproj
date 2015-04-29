@@ -404,6 +404,7 @@
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
 		EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */; };
 		EE713BA01AB2BBF100D318AF /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
+		EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */; };
 		EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */; };
 		EE7AC7F21AD38E5C00E850CB /* TweetsLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7F01AD38E5C00E850CB /* TweetsLikeListViewController.m */; };
 		EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */; };
@@ -414,6 +415,14 @@
 		EE7D33061AA9A00400ABFE58 /* icon_event_status_attend.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7D33031AA9A00400ABFE58 /* icon_event_status_attend.png */; };
 		EE7D33071AA9A00400ABFE58 /* icon_event_status_checked.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7D33041AA9A00400ABFE58 /* icon_event_status_checked.png */; };
 		EE7D33081AA9A00400ABFE58 /* icon_event_status_over.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7D33051AA9A00400ABFE58 /* icon_event_status_over.png */; };
+		EE7EE7051AEF38C300FE1CA5 /* voice_record.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE7041AEF38C300FE1CA5 /* voice_record.png */; };
+		EE7EE70E1AEF5B1000FE1CA5 /* voice_3.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE7071AEF5B1000FE1CA5 /* voice_3.png */; };
+		EE7EE70F1AEF5B1000FE1CA5 /* voice_2.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE7081AEF5B1000FE1CA5 /* voice_2.png */; };
+		EE7EE7101AEF5B1000FE1CA5 /* voice_1.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE7091AEF5B1000FE1CA5 /* voice_1.png */; };
+		EE7EE7111AEF5B1000FE1CA5 /* voice_0.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE70A1AEF5B1000FE1CA5 /* voice_0.png */; };
+		EE7EE7121AEF5B1000FE1CA5 /* voice_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE70B1AEF5B1000FE1CA5 /* voice_delete.png */; };
+		EE7EE7131AEF5B1000FE1CA5 /* voice_play.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE70C1AEF5B1000FE1CA5 /* voice_play.png */; };
+		EE7EE7141AEF5B1000FE1CA5 /* voice_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE70D1AEF5B1000FE1CA5 /* voice_pause.png */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 /* End PBXBuildFile section */
@@ -956,6 +965,8 @@
 		EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMyTweetLikeList.m; sourceTree = "<group>"; };
 		EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libNBSAppAgent.framework; sourceTree = "<group>"; };
 		EE713BA11AB2C12600D318AF /* iosapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosapp-Prefix.pch"; sourceTree = "<group>"; };
+		EE7A55571AEDD82C00DF10D3 /* VoiceTweetEditingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceTweetEditingVC.h; sourceTree = "<group>"; };
+		EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceTweetEditingVC.m; sourceTree = "<group>"; };
 		EE7AC7ED1AD38E5C00E850CB /* TweetLikeUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetLikeUserCell.h; sourceTree = "<group>"; };
 		EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetLikeUserCell.m; sourceTree = "<group>"; };
 		EE7AC7EF1AD38E5C00E850CB /* TweetsLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetsLikeListViewController.h; sourceTree = "<group>"; };
@@ -971,6 +982,14 @@
 		EE7D33031AA9A00400ABFE58 /* icon_event_status_attend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_event_status_attend.png; sourceTree = "<group>"; };
 		EE7D33041AA9A00400ABFE58 /* icon_event_status_checked.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_event_status_checked.png; sourceTree = "<group>"; };
 		EE7D33051AA9A00400ABFE58 /* icon_event_status_over.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_event_status_over.png; sourceTree = "<group>"; };
+		EE7EE7041AEF38C300FE1CA5 /* voice_record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = voice_record.png; path = ../voice_record.png; sourceTree = "<group>"; };
+		EE7EE7071AEF5B1000FE1CA5 /* voice_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_3.png; sourceTree = "<group>"; };
+		EE7EE7081AEF5B1000FE1CA5 /* voice_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_2.png; sourceTree = "<group>"; };
+		EE7EE7091AEF5B1000FE1CA5 /* voice_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_1.png; sourceTree = "<group>"; };
+		EE7EE70A1AEF5B1000FE1CA5 /* voice_0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_0.png; sourceTree = "<group>"; };
+		EE7EE70B1AEF5B1000FE1CA5 /* voice_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_delete.png; sourceTree = "<group>"; };
+		EE7EE70C1AEF5B1000FE1CA5 /* voice_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_play.png; sourceTree = "<group>"; };
+		EE7EE70D1AEF5B1000FE1CA5 /* voice_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_pause.png; sourceTree = "<group>"; };
 		EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
@@ -1148,6 +1167,7 @@
 				387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */,
 				00D6BD3319ECFD8E00E8754E /* TweetCell.h */,
 				00D6BD3419ECFD8E00E8754E /* TweetCell.m */,
+				EE7A55561AEDD77000DF10D3 /* 语音动弹 */,
 				EE7AC7F31AD38E6700E850CB /* 动弹点赞列表 */,
 				38BD7D6B19FF7F31003ABB80 /* 动弹详情 */,
 				383B9FD61AB2C7D800C03C47 /* 编辑动弹 */,
@@ -1593,6 +1613,7 @@
 				EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */,
 				EE6B2B711ACD298D00650985 /* ic_liked@2x.png */,
 				38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */,
+				EE7EE7061AEF5AF200FE1CA5 /* AudioTweet */,
 				383B9FFC1AB7ED8B00C03C47 /* login */,
 				383B9FE31AB6CC5900C03C47 /* sidemenu */,
 				383B9FDA1AB6C95200C03C47 /* menu background */,
@@ -2175,6 +2196,15 @@
 			name = "点赞列表";
 			sourceTree = "<group>";
 		};
+		EE7A55561AEDD77000DF10D3 /* 语音动弹 */ = {
+			isa = PBXGroup;
+			children = (
+				EE7A55571AEDD82C00DF10D3 /* VoiceTweetEditingVC.h */,
+				EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */,
+			);
+			name = "语音动弹";
+			sourceTree = "<group>";
+		};
 		EE7AC7F31AD38E6700E850CB /* 动弹点赞列表 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2184,6 +2214,21 @@
 				EE7AC7F01AD38E5C00E850CB /* TweetsLikeListViewController.m */,
 			);
 			name = "动弹点赞列表";
+			sourceTree = "<group>";
+		};
+		EE7EE7061AEF5AF200FE1CA5 /* AudioTweet */ = {
+			isa = PBXGroup;
+			children = (
+				EE7EE7071AEF5B1000FE1CA5 /* voice_3.png */,
+				EE7EE7081AEF5B1000FE1CA5 /* voice_2.png */,
+				EE7EE7091AEF5B1000FE1CA5 /* voice_1.png */,
+				EE7EE70A1AEF5B1000FE1CA5 /* voice_0.png */,
+				EE7EE70B1AEF5B1000FE1CA5 /* voice_delete.png */,
+				EE7EE70C1AEF5B1000FE1CA5 /* voice_play.png */,
+				EE7EE70D1AEF5B1000FE1CA5 /* voice_pause.png */,
+				EE7EE7041AEF38C300FE1CA5 /* voice_record.png */,
+			);
+			name = AudioTweet;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2270,6 +2315,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE7EE70F1AEF5B1000FE1CA5 /* voice_2.png in Resources */,
 				382A94A01A26D27400AAAFEA /* 093@2x.png in Resources */,
 				38BB27C01AAC016A0088A15C /* discover-search@3x.png in Resources */,
 				382A948B1A26D27400AAAFEA /* 072@2x.png in Resources */,
@@ -2305,6 +2351,7 @@
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				38BB27BA1AAC016A0088A15C /* discover-events@3x.png in Resources */,
 				383BA0041AB7ED8B00C03C47 /* login-password@3x.png in Resources */,
+				EE7EE7121AEF5B1000FE1CA5 /* voice_delete.png in Resources */,
 				382A94A61A26D27400AAAFEA /* 100@2x.png in Resources */,
 				386F1E3C1A7A0CDA00B773EE /* UMShareEditViewController.xib in Resources */,
 				382A94581A26D27400AAAFEA /* 020@2x.png in Resources */,
@@ -2321,6 +2368,7 @@
 				38F5FA7E1AB9858C00E01A84 /* overlaygraphic.png in Resources */,
 				380FD2C81A7762A8003C4021 /* tabbar-tweet-selected@2x.png in Resources */,
 				382A94651A26D27400AAAFEA /* 033@2x.png in Resources */,
+				EE7EE7101AEF5B1000FE1CA5 /* voice_1.png in Resources */,
 				38BC59A91A5D406300F3C4D2 /* note@2x.png in Resources */,
 				382A94661A26D27400AAAFEA /* 034@2x.png in Resources */,
 				382A94501A26D27400AAAFEA /* 012@2x.png in Resources */,
@@ -2352,6 +2400,7 @@
 				382A946F1A26D27400AAAFEA /* 043@2x.png in Resources */,
 				380FD2C71A7762A8003C4021 /* tabbar-tweet-selected.png in Resources */,
 				EE6B2B6B1ACCF6D500650985 /* comment@2x.png in Resources */,
+				EE7EE70E1AEF5B1000FE1CA5 /* voice_3.png in Resources */,
 				EE7D33081AA9A00400ABFE58 /* icon_event_status_over.png in Resources */,
 				382A94711A26D27400AAAFEA /* 045@2x.png in Resources */,
 				382A948A1A26D27400AAAFEA /* 071@2x.png in Resources */,
@@ -2373,6 +2422,7 @@
 				38F0A6311AAEC7C7001B531E /* widget_repost@3x.png in Resources */,
 				3812935D1AB16F8400B29221 /* toolbar-editingComment@2x.png in Resources */,
 				382A94A21A26D27400AAAFEA /* 095@2x.png in Resources */,
+				EE7EE7111AEF5B1000FE1CA5 /* voice_0.png in Resources */,
 				381293281AB03F0C00B29221 /* bg03-1080x1920.png in Resources */,
 				380FD2B51A7762A8003C4021 /* tabbar-discover.png in Resources */,
 				382A949A1A26D27400AAAFEA /* 087@2x.png in Resources */,
@@ -2443,7 +2493,9 @@
 				38BB27BD1AAC016A0088A15C /* discover-scan@3x.png in Resources */,
 				383B9FEF1AB6CC5900C03C47 /* sidemenu-blog@3x.png in Resources */,
 				38BC59B01A5D406300F3C4D2 /* scan@3x.png in Resources */,
+				EE7EE7051AEF38C300FE1CA5 /* voice_record.png in Resources */,
 				383B9FE21AB6C95200C03C47 /* menu-background(375x667)@2x.png in Resources */,
+				EE7EE7131AEF5B1000FE1CA5 /* voice_play.png in Resources */,
 				38F0A6131AAEB66B001B531E /* shake@3x.png in Resources */,
 				380FD2BF1A7762A8003C4021 /* tabbar-more@2x.png in Resources */,
 				383B9FD41AB1985A00C03C47 /* toolbar-separatorline@2x.png in Resources */,
@@ -2547,6 +2599,7 @@
 				38A9EEB41AA989CE006C95BD /* logo.png in Resources */,
 				EE7B45E31A834DE5002508C6 /* 066@2x.png in Resources */,
 				38BB27C11AAC016A0088A15C /* discover-shake.png in Resources */,
+				EE7EE7141AEF5B1000FE1CA5 /* voice_pause.png in Resources */,
 				382A94671A26D27400AAAFEA /* 035@2x.png in Resources */,
 				380FD2BE1A7762A8003C4021 /* tabbar-more.png in Resources */,
 			);
@@ -2635,6 +2688,7 @@
 				00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */,
 				38A93FA91AA31DB400A515E8 /* MessageCenter.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
+				EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,
 				3838D1A91A6F455600CC7913 /* ShakingViewController.m in Sources */,

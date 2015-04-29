@@ -54,7 +54,7 @@ static NSString * const kDocumentType = @"documentType";
     return attributedTittle;
 }
 
--(NSAttributedString *)attributedCommentCount
+- (NSAttributedString *)attributedCommentCount
 {
     NSMutableAttributedString *attributedCommentCount;
     

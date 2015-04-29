@@ -24,6 +24,7 @@
 #import "ScanViewController.h"
 #import "ShakingViewController.h"
 #import "SearchViewController.h"
+#import "VoiceTweetEditingVC.h"
 
 #import "UIBarButtonItem+Badge.h"
 
@@ -115,7 +116,7 @@
     _length = 60;        // 圆形按钮的直径
     _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
     
-    NSArray *buttonTitles = @[@"文字", @"相册", @"拍照", @"摇一摇", @"扫一扫", @"找人"];
+    NSArray *buttonTitles = @[@"文字", @"相册", @"拍照", @"语音", @"扫一扫", @"找人"];
     NSArray *buttonImages = @[@"tweetEditing", @"picture", @"shooting", @"shake", @"scan", @"search"];
     int buttonColors[] = {0xe69961, 0x0dac6b, 0x24a0c4, 0xe96360, 0x61b644, 0xf1c50e};
     
@@ -320,9 +321,16 @@
             break;
         }
         case 3: {
+            /*
             ShakingViewController *shakingVC = [ShakingViewController new];
             UINavigationController *shakingNav = [[UINavigationController alloc] initWithRootViewController:shakingVC];
             [self.selectedViewController presentViewController:shakingNav animated:NO completion:nil];
+             */
+            
+            VoiceTweetEditingVC *voiceTweetVC = [VoiceTweetEditingVC new];
+            UINavigationController *voiceTweetNav = [[UINavigationController alloc] initWithRootViewController:voiceTweetVC];
+            [self.selectedViewController presentViewController:voiceTweetNav animated:NO completion:nil];
+            
             break;
         }
         case 4: {
