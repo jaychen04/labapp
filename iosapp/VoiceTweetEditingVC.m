@@ -67,7 +67,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发表"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
-                                                                             action:@selector(pubTweet)];
+                                                                             action:@selector(judgeVoice)];
     self.view.backgroundColor = [UIColor whiteColor];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide)];
@@ -414,6 +414,19 @@
 }
 
 #pragma mark - 发送语音动弹
+
+- (void)judgeVoice
+{
+    if (hasVoice) {
+        [self pubTweet];
+    } else {
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.labelText = @"还没有语音，请录音";
+        [HUD hide:YES afterDelay:1];
+    }
+}
+
 - (void)pubTweet
 {
     if ([Config getOwnID] == 0) {
@@ -479,6 +492,18 @@
         [HUD hide:YES afterDelay:1];
     }];
     
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString: @"\n"]) {
+        [self pubTweet];
+        [textView resignFirstResponder];
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - 取消键盘第一响应者
