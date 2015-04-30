@@ -404,6 +404,8 @@
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
 		EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */; };
 		EE713BA01AB2BBF100D318AF /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
+		EE74BDCD1AF1DEFF00C0D9FC /* audioTweet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE74BDCC1AF1DEFF00C0D9FC /* audioTweet@3x.png */; };
+		EE74BDCF1AF1DF4500C0D9FC /* audioTweet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE74BDCE1AF1DF4500C0D9FC /* audioTweet@2x.png */; };
 		EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */; };
 		EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */; };
 		EE7AC7F21AD38E5C00E850CB /* TweetsLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7F01AD38E5C00E850CB /* TweetsLikeListViewController.m */; };
@@ -965,6 +967,8 @@
 		EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMyTweetLikeList.m; sourceTree = "<group>"; };
 		EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libNBSAppAgent.framework; sourceTree = "<group>"; };
 		EE713BA11AB2C12600D318AF /* iosapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosapp-Prefix.pch"; sourceTree = "<group>"; };
+		EE74BDCC1AF1DEFF00C0D9FC /* audioTweet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audioTweet@3x.png"; sourceTree = "<group>"; };
+		EE74BDCE1AF1DF4500C0D9FC /* audioTweet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audioTweet@2x.png"; sourceTree = "<group>"; };
 		EE7A55571AEDD82C00DF10D3 /* VoiceTweetEditingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceTweetEditingVC.h; sourceTree = "<group>"; };
 		EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceTweetEditingVC.m; sourceTree = "<group>"; };
 		EE7AC7ED1AD38E5C00E850CB /* TweetLikeUserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetLikeUserCell.h; sourceTree = "<group>"; };
@@ -2219,6 +2223,8 @@
 		EE7EE7061AEF5AF200FE1CA5 /* AudioTweet */ = {
 			isa = PBXGroup;
 			children = (
+				EE74BDCE1AF1DF4500C0D9FC /* audioTweet@2x.png */,
+				EE74BDCC1AF1DEFF00C0D9FC /* audioTweet@3x.png */,
 				EE7EE7071AEF5B1000FE1CA5 /* voice_3.png */,
 				EE7EE7081AEF5B1000FE1CA5 /* voice_2.png */,
 				EE7EE7091AEF5B1000FE1CA5 /* voice_1.png */,
@@ -2362,6 +2368,7 @@
 				382A94571A26D27400AAAFEA /* 019@2x.png in Resources */,
 				382A947C1A26D27400AAAFEA /* 056@2x.png in Resources */,
 				382A949C1A26D27400AAAFEA /* 089@2x.png in Resources */,
+				EE74BDCD1AF1DEFF00C0D9FC /* audioTweet@3x.png in Resources */,
 				EE7D33071AA9A00400ABFE58 /* icon_event_status_checked.png in Resources */,
 				380FD2BD1A7762A8003C4021 /* tabbar-me@3x.png in Resources */,
 				382A947A1A26D27400AAAFEA /* 054@2x.png in Resources */,
@@ -2451,6 +2458,7 @@
 				382A944A1A26D27400AAAFEA /* 006@2x.png in Resources */,
 				380FD35A1A77726E003C4021 /* delete@3x.png in Resources */,
 				382A949D1A26D27400AAAFEA /* 090@2x.png in Resources */,
+				EE74BDCF1AF1DF4500C0D9FC /* audioTweet@2x.png in Resources */,
 				382A94691A26D27400AAAFEA /* 037@2x.png in Resources */,
 				382A94511A26D27400AAAFEA /* 013@2x.png in Resources */,
 				386F1E3F1A7A0CDA00B773EE /* UMSnsAccountViewController.xib in Resources */,

@@ -27,6 +27,7 @@ static NSString * const kTweetCellID = @"TweetCell";
 @interface TweetsViewController ()
 
 @property (nonatomic, assign) int64_t uid;
+@property (nonatomic, strong) UIMenuController *menuController;
 
 @end
 
@@ -122,12 +123,13 @@ static NSString * const kTweetCellID = @"TweetCell";
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
     
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuVisible:YES animated:YES];
-    [menuController setMenuItems:@[
-                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
-                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteTweet:)]
-                                   ]];
+    _menuController = [UIMenuController sharedMenuController];
+    
+    [_menuController setMenuVisible:YES animated:YES];
+    [_menuController setMenuItems:@[
+                                    [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
+                                    [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteTweet:)]
+                                    ]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -398,19 +400,18 @@ static NSString * const kTweetCellID = @"TweetCell";
 
 - (void)toPraise:(OSCTweet *)tweet
 {
-    MBProgressHUD *HUD = [Utils createHUD];
+    
     NSString *postUrl;
     if (tweet.isLike) {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_UNLIKE];
     } else {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
     }
-//    tweet.isLike = !tweet.isLike;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
     [manager POST:postUrl
        parameters:@{
                     @"uid": @([Config getOwnID]),
@@ -421,12 +422,8 @@ static NSString * const kTweetCellID = @"TweetCell";
               ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
               int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
               NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
-              
-              HUD.mode = MBProgressHUDModeCustomView;
 
               if (errorCode == 1) {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  
                   if (tweet.isLike) {
                       //取消点赞
                       for (OSCUser *user in tweet.likeList) {
@@ -447,24 +444,25 @@ static NSString * const kTweetCellID = @"TweetCell";
                   }
                   tweet.isLike = !tweet.isLike;
                   tweet.likersString = nil;
-                  if (tweet.isLike) {
-                      HUD.labelText = @"点赞成功";
-                  } else {
-                      HUD.labelText = @"取消点赞成功";
-                  }
-                  
+
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [self.tableView reloadData];
                   });
 
               } else {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  
+                  [HUD hide:YES afterDelay:1];
               }
               
-              [HUD hide:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
+              
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
               
