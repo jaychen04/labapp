@@ -53,6 +53,12 @@
     self.timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:self.timeLabel];
     
+    self.appclientLabel = [UILabel new];
+    self.appclientLabel.font = [UIFont systemFontOfSize:12];
+    self.appclientLabel .textAlignment = NSTextAlignmentLeft;
+    self.appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    [self.contentView addSubview:self.appclientLabel];
+    
     self.contentLabel = [UILabel new];
     self.contentLabel.numberOfLines = 0;
     self.contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -66,15 +72,23 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _contentLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]->=5-[_contentLabel]-8-[_timeLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]->=5-[_contentLabel]"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                             metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-[_timeLabel]-8-|"
+                                                                             options:NSLayoutFormatAlignAllLeft
+                                                                             metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-10-[_appclientLabel]->=8-|"
+                                                                             options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil views:views]];
 }
 
@@ -85,6 +99,7 @@
     [_portrait loadPortrait:comment.portraitURL];
     [_authorLabel setText:comment.author];
     [_timeLabel setText:[Utils intervalSinceNow:comment.pubDate]];
+    [_appclientLabel setAttributedText:[Utils getAppclient:comment.appclient]];
     
     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
     if (comment.replies.count > 0) {

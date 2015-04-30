@@ -15,6 +15,7 @@ static NSString * const kAuthor = @"author";
 static NSString * const kAuthorID = @"authorid";
 static NSString * const kContent = @"content";
 static NSString * const kPubDate = @"pubDate";
+static NSString * const kAppclient = @"appclient";
 static NSString * const kReplies = @"replies";
 static NSString * const kReply = @"reply";
 static NSString * const kRefers = @"refers";
@@ -35,6 +36,7 @@ static NSString * const kRContent = @"rcontent";
         
         _content = [[xml firstChildWithTag:kContent] stringValue];
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _appclient = [[[xml firstChildWithTag:kAppclient] numberValue] intValue];
         
         NSMutableArray *mutableReplies = [NSMutableArray new];
         NSArray *repliesXML = [[xml firstChildWithTag:kReplies] childrenWithTag:kReply];
