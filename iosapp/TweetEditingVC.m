@@ -237,7 +237,7 @@
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否保存已编辑的信息" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         [alertView show];
     } else {
-        [Config saveTweetText:@"" andId:[Config getOwnID]];
+        [Config saveTweetText:@"" forUser:[Config getOwnID]];
         [_edittingArea resignFirstResponder];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
@@ -247,9 +247,9 @@
 {
     if (buttonIndex == 1) {
         //保存已编辑信息
-        [Config saveTweetText:_edittingArea.text andId:[Config getOwnID]];
+        [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
     } else {
-        [Config saveTweetText:@"" andId:[Config getOwnID]];
+        [Config saveTweetText:@"" forUser:[Config getOwnID]];
     }
     [_edittingArea resignFirstResponder];
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -418,9 +418,13 @@
                                   _imageView.image = nil;
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                                   HUD.labelText = @"动弹发表成功";
+                                  
+                                  [Config saveTweetText:@"" forUser:[Config getOwnID]];
                               } else {
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                                  
+                                  [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
                               }
                               
                               [HUD hide:YES afterDelay:1];
@@ -431,6 +435,8 @@
                               HUD.labelText = @"网络异常，动弹发送失败";
                               
                               [HUD hide:YES afterDelay:1];
+                              
+                              [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
                           }];
     });
 }
