@@ -27,6 +27,7 @@ static NSString * const kTweetCellID = @"TweetCell";
 @interface TweetsViewController ()
 
 @property (nonatomic, assign) int64_t uid;
+@property (nonatomic, strong) UIMenuController *menuController;
 
 @end
 
@@ -122,12 +123,13 @@ static NSString * const kTweetCellID = @"TweetCell";
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
     
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuVisible:YES animated:YES];
-    [menuController setMenuItems:@[
-                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
-                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteTweet:)]
-                                   ]];
+    _menuController = [UIMenuController sharedMenuController];
+    
+    [_menuController setMenuVisible:YES animated:YES];
+    [_menuController setMenuItems:@[
+                                    [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
+                                    [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteTweet:)]
+                                    ]];
 }
 
 - (void)didReceiveMemoryWarning {
