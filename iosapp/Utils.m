@@ -403,6 +403,29 @@
     return result;
 }
 
++ (NSString *)deleteHTMLTag:(NSString *)HTML
+{
+    NSMutableString *trimmedHTML = [[NSMutableString alloc] initWithString:HTML];
+    
+    NSString *styleTagPattern = @"<style[^>]*?>[\\s\\S]*?<\\/style>";
+    NSRegularExpression *styleTagRe = [NSRegularExpression regularExpressionWithPattern:styleTagPattern options:NSRegularExpressionCaseInsensitive error:nil];
+    
+    NSArray *resultsArray = [styleTagRe matchesInString:trimmedHTML options:0 range:NSMakeRange(0, trimmedHTML.length)];
+    for (NSTextCheckingResult *match in [resultsArray reverseObjectEnumerator]) {
+        [trimmedHTML replaceCharactersInRange:match.range withString:@""];
+    }
+    
+    NSString *htmlTagPattern = @"<[^>]+>";
+    NSRegularExpression *normalHTMLTagRe = [NSRegularExpression regularExpressionWithPattern:htmlTagPattern options:NSRegularExpressionCaseInsensitive error:nil];
+    
+    resultsArray = [normalHTMLTagRe matchesInString:trimmedHTML options:0 range:NSMakeRange(0, trimmedHTML.length)];
+    for (NSTextCheckingResult *match in [resultsArray reverseObjectEnumerator]) {
+        [trimmedHTML replaceCharactersInRange:match.range withString:@""];
+    }
+    
+    return trimmedHTML;
+}
+
 
 + (BOOL)isURL:(NSString *)string
 {
