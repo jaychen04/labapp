@@ -114,6 +114,11 @@
     _voiceImageView.animationImages = PicArray;
     _voiceImageView.animationDuration = 1;//一次完整动画的时长
     _voiceImageView.hidden = YES;
+    _voiceImageView.userInteractionEnabled = YES;
+    
+    //添加录音图片点击事件
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(PlayVoice)];
+    [_voiceImageView addGestureRecognizer:tapGesture];
     
     _voiceTimes = [UILabel new];
     [_voiceTimes setTextAlignment:NSTextAlignmentLeft];
@@ -218,8 +223,6 @@
 #pragma mark- 长按 开始录音
 - (void)StartRecordingVoice
 {
-    NSLog(@"开始  录音");
-    
     //判断是否是第一次录制
     if (recordNumber > 1) {
         [self recordAgain];
@@ -280,8 +283,6 @@
 #pragma mark- 放开长按 停止录音
 - (void)StopRecordingVoice
 {
-    NSLog(@"停止  录音");
-    
     _audioSession = [AVAudioSession sharedInstance];
     
     if (_audioRecorder.isRecording) {
@@ -307,7 +308,6 @@
         _audioSession = [AVAudioSession sharedInstance];
         
         if (isPlay) {
-            NSLog(@"暂停");
             [_playButton setImage:[UIImage imageNamed:@"voice_play.png"] forState:UIControlStateNormal];
             isPlay = NO;
             
@@ -316,7 +316,6 @@
             [_audioPlayer pause];
             [_audioSession setActive:NO error:nil];
         } else {
-            NSLog(@"播放中");
             _voiceImageView.hidden = NO;
             _voiceTimes.hidden = NO;
             [_voiceImageView startAnimating];
@@ -331,8 +330,6 @@
             if (_recordingUrl != nil) {
                 _audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:_recordingUrl error:&error];
             }
-            
-//            _audioPlayer.delegate = self;
             if (error) {
                 NSLog(@"error:%@", [error description]);
             }
@@ -367,7 +364,6 @@
 {
     //当播放时长等于音频时长时，停止跳动。
     if (playDuration == playTimes) {
-        NSLog(@"已播完");
         
         isPlay = NO;
         [_playButton setImage:[UIImage imageNamed:@"voice_play.png"] forState:UIControlStateNormal];
@@ -385,7 +381,6 @@
         return;
     }
     playTimes += 1;
-    NSLog(@"playDuration:%d playTimes:%d", playDuration, playTimes);
 }
 
 - (void)recordAgain
@@ -404,9 +399,7 @@
 {
     _audioSession = [AVAudioSession sharedInstance];
     
-    NSLog(@"删除");
     hasVoice = NO;
-    //
     [_audioRecorder deleteRecording];
 
     _voiceImageView.hidden = YES;
