@@ -14,6 +14,7 @@
 #import "TeamUser.h"
 #import "TeamActivityViewController.h"
 #import "TeamDiscussionViewController.h"
+#import "ProjectListViewController.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -162,9 +163,14 @@
     
     if (indexPath.row == 0) {
         [self.navigationController pushViewController:[TeamActivityViewController new] animated:YES];
-    } else if (indexPath.row == 2) {
+    } else if (indexPath.row == 1) {
+        ProjectListViewController *teamProjectListVC = [ProjectListViewController new];
+        [self.navigationController pushViewController:teamProjectListVC animated:YES];
+    }else if (indexPath.row == 2) {
         [self.navigationController pushViewController:[TeamDiscussionViewController new] animated:YES];
     }
+    
+    
 }
 
 

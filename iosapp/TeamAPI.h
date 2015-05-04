@@ -26,5 +26,7 @@
 
 #define TEAM_REPLY_LIST_BY_TYPE         @"team_reply_list_by_type"
 
-
+#define TEAM_PROJECT_LIST               @"team_project_list"                //团队项目列表
+#define TEAM_PROJECT_CATALOG_LIST       @"team_project_catalog_list"        //某项目下的任务列表
+#define TEAM_PROJECT_ACTIVE_LIST        @"team_project_active_list"         //团队项目的动态
 #endif
