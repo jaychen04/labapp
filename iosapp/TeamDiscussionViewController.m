@@ -16,19 +16,23 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
 
 @interface TeamDiscussionViewController ()
 
+@property (nonatomic, assign) int teamID;
+
 @end
 
 @implementation TeamDiscussionViewController
 
-- (instancetype)init
+- (instancetype)initWithTeamID:(int)teamID
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=12375&pageIndex=%lu", TEAM_PREFIX, TEAM_DISCUSS_LIST, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?teamid=%d&pageIndex=%lu", TEAM_PREFIX, TEAM_DISCUSS_LIST, teamID, (unsigned long)page];
         };
         
         self.objClass = [TeamDiscussion class];
         self.needCache = YES;
+        
+        _teamID = teamID;
     }
     
     return self;
@@ -92,7 +96,7 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
     TeamDiscussion *teamDiscussion = self.objects[indexPath.row];
     
     if (indexPath.row < self.objects.count) {
-        [self.navigationController pushViewController:[[DiscussionDetailsViewController alloc] initWithDiscussionID:teamDiscussion.discussionID]
+        [self.navigationController pushViewController:[[DiscussionDetailsViewController alloc] initWithTeamID:_teamID andDiscussionID:teamDiscussion.discussionID]
                                              animated:YES];
     }
 }

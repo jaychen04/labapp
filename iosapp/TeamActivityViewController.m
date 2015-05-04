@@ -23,11 +23,11 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 
 @implementation TeamActivityViewController
 
-- (instancetype)init
+- (instancetype)initWithTeamID:(int)teamID
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=12375&type=all&pageIndex=%lu", TEAM_PREFIX, TEAM_ACTIVITY_LIST, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?teamid=%d&type=all&pageIndex=%lu", TEAM_PREFIX, TEAM_ACTIVITY_LIST, teamID, (unsigned long)page];
         };
         
         self.objClass = [TeamActivity class];
@@ -80,7 +80,7 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
     if (indexPath.row < self.objects.count) {
         TeamActivity *activity = self.objects[indexPath.row];
         
-        self.label.attributedText = activity.attributedTittle;
+        self.label.attributedText = activity.attributedTitle;
         
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
         

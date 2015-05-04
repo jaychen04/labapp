@@ -14,7 +14,11 @@
 #import "TeamUser.h"
 #import "TeamActivityViewController.h"
 #import "TeamDiscussionViewController.h"
+
 #import "ProjectListViewController.h"
+
+#import "WeeklyReportTableViewController.h"
+
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -24,16 +28,19 @@
 @interface TeamHomePage ()
 
 @property (nonatomic, strong) TeamUser *user;
+@property (nonatomic, assign) int teamID;
 
 @end
 
 @implementation TeamHomePage
 
-- (instancetype)init
+- (instancetype)initWithTeamID:(int)teamID
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
+        
+        _teamID = teamID;
     }
     return self;
 }
@@ -45,23 +52,7 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor themeColor];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    
-    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_USER_ISSUE_INFORMATION]
-      parameters:@{
-                   @"teamid": @(12375),
-                   @"uid": @([Config getOwnID])
-                   }
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             _user = [[TeamUser alloc] initWithXML:responseObject.rootElement];
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [self.tableView reloadData];
-             });
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             
-         }];
+    [self refresh];
 }
 
 - (void)didReceiveMemoryWarning
@@ -164,15 +155,45 @@
     if (indexPath.row == 0) {
         [self.navigationController pushViewController:[TeamActivityViewController new] animated:YES];
     } else if (indexPath.row == 1) {
-        ProjectListViewController *teamProjectListVC = [ProjectListViewController new];
-        [self.navigationController pushViewController:teamProjectListVC animated:YES];
-    }else if (indexPath.row == 2) {
-        [self.navigationController pushViewController:[TeamDiscussionViewController new] animated:YES];
+        [self.navigationController pushViewController:[[TeamActivityViewController alloc] initWithTeamID:_teamID] animated:YES];
+    } else if (indexPath.row == 2) {
+        [self.navigationController pushViewController:[[TeamDiscussionViewController alloc] initWithTeamID:_teamID] animated:YES];
+    } else if (indexPath.row == 3) {
+        [self.navigationController pushViewController:[[WeeklyReportTableViewController alloc] initWithTeamID:_teamID year:2015 andWeek:16] animated:YES];
     }
     
     
 }
 
+
+#pragma mark - 更新数据
+
+- (void)switchToTeam:(int)teamID
+{
+    _teamID = teamID;
+    [self refresh];
+}
+
+- (void)refresh
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_USER_ISSUE_INFORMATION]
+      parameters:@{
+                   @"teamid": @(_teamID),
+                   @"uid": @([Config getOwnID])
+                   }
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+             _user = [[TeamUser alloc] initWithXML:responseObject.rootElement];
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.tableView reloadData];
+             });
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             
+         }];
+}
 
 
 @end

@@ -1749,6 +1749,7 @@
 		3843641D1AC5529C00743CB0 /* Team */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				31405BE61AF073A6000A487D /* 任务分组列表 */,
 				31EAF9F61AEF266A004DF445 /* 项目 */,
 				384364221AC5669700743CB0 /* 团队成员 */,
@@ -1756,6 +1757,12 @@
 				38EAF1B71AE0E1DF00397E2A /* 任务 */,
 				31C50BBF1AF1FE2900074B72 /* 任务详情 */,
 				C5FB95981AEE33F9006918CD /* Team切换 */,
+=======
+				C5FB95981AEE33F9006918CD /* Team切换 */,
+				384A11301ADFA33300856A7C /* 主页 */,
+				38EAF1B71AE0E1DF00397E2A /* 任务 */,
+				384364221AC5669700743CB0 /* 团队成员 */,
+>>>>>>> 33ba66f4f97c3a08391d5de907458a1cc4d4212a
 			);
 			name = Team;
 			sourceTree = "<group>";

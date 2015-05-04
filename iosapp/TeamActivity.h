@@ -27,6 +27,6 @@
 @property (nonatomic, copy) NSString *createTime;
 @property (nonatomic, strong) TeamMember *author;
 
-@property (nonatomic, strong) NSMutableAttributedString *attributedTittle;
+@property (nonatomic, strong) NSMutableAttributedString *attributedTitle;
 
 @end

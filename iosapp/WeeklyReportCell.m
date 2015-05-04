@@ -1,19 +1,18 @@
 //
-//  TeamActivityCell.m
+//  WeeklyReportCell.m
 //  iosapp
 //
-//  Created by chenhaoxiang on 4/17/15.
+//  Created by AeternChan on 4/29/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "TeamActivityCell.h"
-#import "TeamActivity.h"
-#import "TeamMember.h"
+#import "WeeklyReportCell.h"
 #import "Utils.h"
+#import "TeamWeeklyReport.h"
 
-@implementation TeamActivityCell
+@implementation WeeklyReportCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -33,11 +32,6 @@
 
 - (void)initSubviews
 {
-    _titleLabel = [UILabel new];
-    _titleLabel.numberOfLines = 0;
-    _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [self.contentView addSubview:_titleLabel];
-    
     _nameLabel = [UILabel new];
     _nameLabel.numberOfLines = 0;
     _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -49,6 +43,11 @@
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:5.0];
     [self.contentView addSubview:_portrait];
+    
+    _titleLabel = [UILabel new];
+    _titleLabel.numberOfLines = 0;
+    _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    [self.contentView addSubview:_titleLabel];
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:12];
@@ -84,14 +83,14 @@
 }
 
 
-- (void)setContentWithActivity:(TeamActivity *)activity
+- (void)setContentWithWeeklyReport:(TeamWeeklyReport *)weeklyReport
 {
-    _nameLabel.text = activity.author.name;
-    [_portrait loadPortrait:activity.author.portraitURL];
-    _commentLabel.attributedText = [Utils attributedCommentCount:activity.replyCount];
-    _timeLabel.attributedText = [Utils attributedTimeString:activity.createTime];
-    
-    _titleLabel.attributedText = activity.attributedTitle;
+    _titleLabel.attributedText = weeklyReport.attributedTitle;
+    _nameLabel.text = weeklyReport.author.name;
+    [_portrait loadPortrait:weeklyReport.author.portraitURL];
+    _timeLabel.attributedText = [Utils attributedTimeString:weeklyReport.createTime];
+    _commentLabel.attributedText = [Utils attributedCommentCount:weeklyReport.replyCount];
 }
+
 
 @end

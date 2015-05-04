@@ -10,6 +10,6 @@
 
 @interface DiscussionDetailsViewController : BottomBarViewController
 
-- (instancetype)initWithDiscussionID:(int)discussionID;
+- (instancetype)initWithTeamID:(int)teamID andDiscussionID:(int)discussionID;
 
 @end
