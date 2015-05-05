@@ -116,6 +116,7 @@ static NSString * const EventCellID = @"EventCell";
         OSCEvent *event = self.objects[row];
         EventCell *cell = [tableView dequeueReusableCellWithIdentifier:EventCellID forIndexPath:indexPath];
         
+        [self setBlockForEventCell:cell];
         [cell setContentWithEvent:event];
         
         if (event.hasAnImage) {
@@ -231,9 +232,35 @@ static NSString * const EventCellID = @"EventCell";
     }
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
 
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    return action == @selector(copyText:);
+}
 
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    // required
+}
 
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView == self.tableView && _didScroll) {_didScroll();}
+}
+
+- (void)setBlockForEventCell:(EventCell *)cell
+{
+    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
+        if (action == @selector(copyText:)) {
+            return YES;
+        }        
+        return NO;
+    };
+}
 
 - (void)downloadImageThenReload:(NSURL *)imageURL
 {

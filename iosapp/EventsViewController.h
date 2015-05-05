@@ -10,6 +10,8 @@
 
 @interface EventsViewController : OSCObjsViewController
 
+@property (nonatomic, copy) void (^didScroll)();
+
 - (instancetype)initWithCatalog:(int)catalog;
 - (instancetype)initWithUserID:(int64_t)userID;
 - (instancetype)initWithUserName:(NSString *)userName;
