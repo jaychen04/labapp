@@ -128,7 +128,9 @@
     _edittingArea = [[PlaceholderTextView alloc] initWithPlaceholder:@"今天你动弹了吗？"];
     _edittingArea.delegate = self;
     _edittingArea.placeholderFont = [UIFont systemFontOfSize:17];
-    _edittingArea.text = [NSString stringWithFormat:@"#%@#", _topicName];
+    if (_topicName.length) {
+        _edittingArea.text = [NSString stringWithFormat:@"#%@#", _topicName];
+    }
     _edittingArea.returnKeyType = UIReturnKeySend;
     _edittingArea.enablesReturnKeyAutomatically = YES;
     _edittingArea.scrollEnabled = NO;
