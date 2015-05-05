@@ -59,15 +59,17 @@
 @property (nonatomic, strong) OSCNews *news;
 @property (nonatomic, copy) NSString *detailsURL;
 @property (nonatomic, readonly, assign) int commentCount;
-@property (nonatomic, copy) NSString *URL;
+@property (nonatomic, copy) NSString *webURL;
 @property (nonatomic, copy) NSString *mURL;
 @property (nonatomic, copy) NSString *objectTitle;
 @property (nonatomic, strong) UIWebView *detailsView;
 @property (nonatomic, copy) NSString *tag;
 @property (nonatomic, copy) NSString *softwareName;
+@property (nonatomic, copy) NSString *digest;
 @property (nonatomic, assign) SEL loadMethod;
 @property (nonatomic, assign) Class detailsClass;
 
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 @property (nonatomic, strong) MBProgressHUD *HUD;
 
 @end
@@ -200,6 +202,7 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStyleDone target:self action:@selector(refresh)];
     
     // 资讯和软件详情没有“举报”选项
     if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware) {
@@ -228,40 +231,10 @@
     _HUD = [Utils createHUD];
     _HUD.userInteractionEnabled = NO;
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    
-    [manager GET:_detailsURL
-      parameters:nil
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
-             
-             id details = [[_detailsClass alloc] initWithXML:XML];
-             _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
-             [self performSelector:_loadMethod withObject:details];
-             
-             self.operationBar.isStarred = _isStarred;
-             
-             UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
-             commentsCountButton.shouldHideBadgeAtZero = YES;
-             commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
-             commentsCountButton.badgePadding = 1;
-             commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
-             
-             if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
-             
-             [self setBlockForOperationBar];
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             MBProgressHUD *HUD = [Utils createHUD];
-             HUD.mode = MBProgressHUDModeCustomView;
-             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             HUD.labelText = @"网络异常，加载详情失败";
-             
-             [HUD hide:YES afterDelay:1];
-         }
-     ];
+    _manager = [AFHTTPRequestOperationManager manager];
+    _manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    [self fetchDetails];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -285,7 +258,7 @@
 
 - (void)setBlockForOperationBar
 {
-    __weak DetailsViewController *weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     
     /********* 收藏 **********/
     
@@ -385,7 +358,7 @@
         
         [UMSocialSnsService presentSnsIconSheetView:weakSelf
                                              appKey:@"54c9a412fd98c5779c000752"
-                                          shareText:[NSString stringWithFormat:@"《%@》，分享来自 %@", weakSelf.objectTitle, weakSelf.mURL]
+                                          shareText:[NSString stringWithFormat:@"%@...分享来自 %@", weakSelf.digest, weakSelf.mURL]
                                          shareImage:[UIImage imageNamed:@"logo"]
                                     shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
                                            delegate:nil];
@@ -396,7 +369,7 @@
     
     self.operationBar.report = ^ {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
-                                                            message:[NSString stringWithFormat:@"链接地址：%@", weakSelf.URL]
+                                                            message:[NSString stringWithFormat:@"链接地址：%@", weakSelf.webURL]
                                                            delegate:weakSelf
                                                   cancelButtonTitle:@"取消"
                                                   otherButtonTitles:@"确定", nil];
@@ -411,7 +384,7 @@
     if (_mURL) {
         return _mURL;
     } else {
-        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@", _URL];
+        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@", _webURL];
         if (_commentType == CommentTypeBlog) {
             strUrl = [NSMutableString stringWithFormat:@"http://m.oschina.net/blog/%lld", _objectID];
         } else {
@@ -420,6 +393,47 @@
         _mURL = [strUrl copy];
         return _mURL;
     }
+}
+
+
+- (void)fetchDetails
+{
+    [_manager GET:_detailsURL
+       parameters:nil
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+              ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
+              
+              id details = [[_detailsClass alloc] initWithXML:XML];
+              _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
+              [self performSelector:_loadMethod withObject:details];
+              
+              self.operationBar.isStarred = _isStarred;
+              
+              UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
+              commentsCountButton.shouldHideBadgeAtZero = YES;
+              commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
+              commentsCountButton.badgePadding = 1;
+              commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
+              
+              if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
+              
+              [self setBlockForOperationBar];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              _HUD.mode = MBProgressHUDModeCustomView;
+              _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              _HUD.labelText = @"网络异常，加载详情失败";
+              
+              [_HUD hide:YES afterDelay:1];
+          }
+     ];
+}
+
+
+- (void)refresh
+{
+    _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
+    [self fetchDetails];
 }
 
 
@@ -440,8 +454,12 @@
     
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = newsDetails.isFavorite;
-    _URL = [newsDetails.url absoluteString];
+    _webURL = [newsDetails.url absoluteString];
     _objectTitle = newsDetails.title;
+    
+    NSString *trimmedHTML = [Utils deleteHTMLTag:newsDetails.body];
+    NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
+    _digest = [[Utils deleteHTMLTag:newsDetails.body] substringToIndex:length];
 }
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
@@ -453,8 +471,12 @@
     
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = blogDetails.isFavorite;
-    _URL = [blogDetails.url absoluteString];
+    _webURL = [blogDetails.url absoluteString];
     _objectTitle = blogDetails.title;
+    
+    NSString *trimmedHTML = [Utils deleteHTMLTag:blogDetails.body];
+    NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
+    _digest = [[Utils deleteHTMLTag:blogDetails.body] substringToIndex:length];
 }
 
 - (void)loadPostDetails:(OSCPostDetails *)postDetails
@@ -467,9 +489,13 @@
     
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = postDetails.isFavorite;
-    _URL = [postDetails.url absoluteString];
+    _webURL = [postDetails.url absoluteString];
     _commentCount = postDetails.answerCount;
     _objectTitle = postDetails.title;
+    
+    NSString *trimmedHTML = [Utils deleteHTMLTag:postDetails.body];
+    NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
+    _digest = [[Utils deleteHTMLTag:postDetails.body] substringToIndex:length];
 }
 
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
@@ -484,10 +510,14 @@
     
     [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = softwareDetails.isFavorite;
-    _URL = [softwareDetails.url absoluteString];
+    _webURL = [softwareDetails.url absoluteString];
     
     _commentCount = softwareDetails.tweetCount;
-    _objectTitle = softwareDetails.title;
+    _objectTitle = titleStr;
+    
+    NSString *trimmedHTML = [Utils deleteHTMLTag:softwareDetails.body];
+    NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
+    _digest = [[Utils deleteHTMLTag:softwareDetails.body] substringToIndex:length];
 }
 
 - (NSString *)createButtonsWithHomepageURL:(NSString *)homepageURL andDocumentURL:(NSString *)documentURL andDownloadURL:(NSString *)downloadURL
@@ -621,7 +651,7 @@
                         @"memo":        [alertView textFieldAtIndex:0].text.length == 0? @"其他原因": [alertView textFieldAtIndex:0].text,
                         @"obj_id":      @(_objectID),
                         @"obj_type":    @"4",
-                        @"url":         _URL
+                        @"url":         _webURL
                         }
               success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
                   MBProgressHUD *HUD = [Utils createHUD];

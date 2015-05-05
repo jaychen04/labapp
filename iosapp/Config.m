@@ -86,12 +86,12 @@ NSString * const kPosition = @"position";
     [userDefaults synchronize];
 }
 
-+ (void)saveTweetText:(NSString *)tweetText andId:(ino64_t)userID
++ (void)saveTweetText:(NSString *)tweetText forUser:(ino64_t)userID
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    NSString *IdStr = [NSString stringWithFormat:@"tweetTmp_%lld", userID];
-    [userDefaults setObject:tweetText forKey:IdStr];
+    NSString *key = [NSString stringWithFormat:@"tweetTmp_%lld", userID];
+    [userDefaults setObject:tweetText forKey:key];
     
     [userDefaults synchronize];
 }
