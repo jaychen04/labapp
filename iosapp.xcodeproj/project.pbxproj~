@@ -406,8 +406,6 @@
 		38F0A6331AAEC7C7001B531E /* widget_taday@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F0A62A1AAEC7C7001B531E /* widget_taday@3x.png */; };
 		38F5FA7E1AB9858C00E01A84 /* overlaygraphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
-		C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */; };
-		C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */; };
 		C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7721AEFA0140032F775 /* TeamCell.m */; };
 		C5F3D7761AF0C2A50032F775 /* WeeklyReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7751AF0C2A50032F775 /* WeeklyReportViewController.m */; };
 		C5F3D77A1AF0C40B0032F775 /* WeeklyReportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7791AF0C40B0032F775 /* WeeklyReportTableViewController.m */; };
@@ -1007,10 +1005,6 @@
 		38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlaygraphic.png; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		C5E73DF81AF755A900974EDC /* WeeklyReportTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTitleBar.h; sourceTree = "<group>"; };
-		C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTitleBar.m; sourceTree = "<group>"; };
-		C5E73DFE1AF8A15400974EDC /* WeeklyReportContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportContentViewController.h; sourceTree = "<group>"; };
-		C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportContentViewController.m; sourceTree = "<group>"; };
 		C5F3D7711AEFA0140032F775 /* TeamCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamCell.h; sourceTree = "<group>"; };
 		C5F3D7721AEFA0140032F775 /* TeamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCell.m; sourceTree = "<group>"; };
 		C5F3D7741AF0C2A50032F775 /* WeeklyReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportViewController.h; sourceTree = "<group>"; };
@@ -1755,6 +1749,7 @@
 		3843641D1AC5529C00743CB0 /* Team */ = {
 			isa = PBXGroup;
 			children = (
+<<<<<<< HEAD
 				31405BE61AF073A6000A487D /* 任务分组列表 */,
 				31EAF9F61AEF266A004DF445 /* 项目 */,
 				384364221AC5669700743CB0 /* 团队成员 */,
@@ -1762,6 +1757,12 @@
 				38EAF1B71AE0E1DF00397E2A /* 任务 */,
 				31C50BBF1AF1FE2900074B72 /* 任务详情 */,
 				C5FB95981AEE33F9006918CD /* Team切换 */,
+=======
+				C5FB95981AEE33F9006918CD /* Team切换 */,
+				384A11301ADFA33300856A7C /* 主页 */,
+				38EAF1B71AE0E1DF00397E2A /* 任务 */,
+				384364221AC5669700743CB0 /* 团队成员 */,
+>>>>>>> 33ba66f4f97c3a08391d5de907458a1cc4d4212a
 			);
 			name = Team;
 			sourceTree = "<group>";
@@ -2399,35 +2400,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		C5E73E011AF8A1B100974EDC /* 周报页面组件 */ = {
-			isa = PBXGroup;
-			children = (
-				C5E73DF81AF755A900974EDC /* WeeklyReportTitleBar.h */,
-				C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */,
-				C5E73DFE1AF8A15400974EDC /* WeeklyReportContentViewController.h */,
-				C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */,
-			);
-			name = "周报页面组件";
-			sourceTree = "<group>";
-		};
-		C5E73E021AF8A1DB00974EDC /* 周报列表 */ = {
-			isa = PBXGroup;
-			children = (
-				C5F3D7781AF0C40B0032F775 /* WeeklyReportTableViewController.h */,
-				C5F3D7791AF0C40B0032F775 /* WeeklyReportTableViewController.m */,
-				C5F3D77E1AF0C8BF0032F775 /* WeeklyReportCell.h */,
-				C5F3D77F1AF0C8BF0032F775 /* WeeklyReportCell.m */,
-			);
-			name = "周报列表";
-			sourceTree = "<group>";
-		};
 		C5F3D7771AF0C2AF0032F775 /* 周报 */ = {
 			isa = PBXGroup;
 			children = (
 				C5F3D7741AF0C2A50032F775 /* WeeklyReportViewController.h */,
 				C5F3D7751AF0C2A50032F775 /* WeeklyReportViewController.m */,
-				C5E73E021AF8A1DB00974EDC /* 周报列表 */,
-				C5E73E011AF8A1B100974EDC /* 周报页面组件 */,
+				C5F3D7781AF0C40B0032F775 /* WeeklyReportTableViewController.h */,
+				C5F3D7791AF0C40B0032F775 /* WeeklyReportTableViewController.m */,
+				C5F3D77E1AF0C8BF0032F775 /* WeeklyReportCell.h */,
+				C5F3D77F1AF0C8BF0032F775 /* WeeklyReportCell.m */,
 			);
 			name = "周报";
 			sourceTree = "<group>";
@@ -2991,7 +2972,6 @@
 				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
 				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
-				C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
 				EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */,
 				380FD2231A74E702003C4021 /* OSCActivity.m in Sources */,
@@ -3021,7 +3001,6 @@
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
-				C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */,
 				384A11331ADFA6BB00856A7C /* TeamUserMainCell.m in Sources */,
 				386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */,
 				31405BEC1AF074A4000A487D /* TeamIssueListCell.m in Sources */,

@@ -15,6 +15,8 @@
 #import "TeamActivityViewController.h"
 #import "TeamDiscussionViewController.h"
 #import "WeeklyReportViewController.h"
+#import "ProjectListViewController.h"
+
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -150,11 +152,15 @@
     
     if (indexPath.row == 0) {
         [self.navigationController pushViewController:[[TeamActivityViewController alloc] initWithTeamID:_teamID] animated:YES];
+    } else if (indexPath.row == 1) {
+        
     } else if (indexPath.row == 2) {
         [self.navigationController pushViewController:[[TeamDiscussionViewController alloc] initWithTeamID:_teamID] animated:YES];
     } else if (indexPath.row == 3) {
         [self.navigationController pushViewController:[[WeeklyReportViewController alloc] initWithTeamID:_teamID] animated:YES];
     }
+    
+    
 }
 
 

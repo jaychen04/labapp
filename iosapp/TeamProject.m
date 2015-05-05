@@ -7,7 +7,8 @@
 //
 
 #import "TeamProject.h"
-
+#import <UIKit/UIKit.h>
+#import "Utils.h"
 @implementation TeamProject
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml
@@ -33,6 +34,19 @@
     }
     
     return self;
+}
+
+- (NSAttributedString *)attributedTittle
+{
+    NSTextAttachment *textAttachment = [NSTextAttachment new];
+    textAttachment.image = [UIImage imageNamed:@"widget_repost"];
+
+    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+    NSMutableAttributedString *attributedTittle = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+    [attributedTittle appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+    [attributedTittle appendAttributedString:[[NSAttributedString alloc] initWithString:_projectName]];
+    
+    return attributedTittle;
 }
 
 @end
