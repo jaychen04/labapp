@@ -176,9 +176,9 @@ static const int myBubbleColor     = 0xC7C7C7;
     [pasteBoard setString:_messageLabel.text];
 }
 
-- (void)deleteMessage:(id)sender
+- (void)deleteObject:(id)sender
 {
-    _deleteMessage(self);
+    _deleteObject(self);
 }
 
 

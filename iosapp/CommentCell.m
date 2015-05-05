@@ -184,9 +184,9 @@
     [pasteBoard setString:_contentLabel.text];
 }
 
-- (void)deleteComment:(id)sender
+- (void)deleteObject:(id)sender
 {
-    _deleteComment(self);
+    _deleteObject(self);
 }
 
 

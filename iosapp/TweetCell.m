@@ -172,9 +172,9 @@
     [pasteBoard setString:_contentLabel.text];
 }
 
-- (void)deleteTweet:(id)sender
+- (void)deleteObject:(id)sender
 {
-    _deleteTweet(self);
+    _deleteObject(self);
 }
 
 

@@ -12,4 +12,6 @@
 
 - (instancetype)initWithImage:(UIImage *)image;
 
+- (instancetype)initWithTopic:(NSString *)TopicName;
+
 @end

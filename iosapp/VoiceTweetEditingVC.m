@@ -254,10 +254,10 @@
 #pragma mark - 录音时间
 - (void)recordTimeStart
 {
-    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(recordTime) userInfo:nil repeats:YES];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(recordTimesTick) userInfo:nil repeats:YES];
 }
 
-- (void)recordTime
+- (void)recordTimesTick
 {
     _recordTime += 1;
     if (_recordTime == 30) {

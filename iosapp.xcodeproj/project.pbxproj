@@ -388,6 +388,7 @@
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
 		EE208D781AA439CA006C9A7E /* UMS_facebook_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */; };
 		EE208D791AA439CA006C9A7E /* UMS_facebook_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */; };
+		EE5B10021AF7536C00EF7A4B /* TweetTopicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE5B10011AF7536C00EF7A4B /* TweetTopicViewController.m */; };
 		EE6B2B641ACCDF6300650985 /* ic_unlike@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */; };
 		EE6B2B6B1ACCF6D500650985 /* comment@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B651ACCF6D500650985 /* comment@2x.png */; };
 		EE6B2B6C1ACCF6D500650985 /* comment@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6B2B661ACCF6D500650985 /* comment@3x.png */; };
@@ -946,6 +947,8 @@
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE208D761AA439CA006C9A7E /* UMS_facebook_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UMS_facebook_icon.png; sourceTree = "<group>"; };
 		EE208D771AA439CA006C9A7E /* UMS_facebook_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "UMS_facebook_icon@2x.png"; sourceTree = "<group>"; };
+		EE5B10001AF7536C00EF7A4B /* TweetTopicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetTopicViewController.h; sourceTree = "<group>"; };
+		EE5B10011AF7536C00EF7A4B /* TweetTopicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetTopicViewController.m; sourceTree = "<group>"; };
 		EE6B2B621ACCDF6300650985 /* ic_unlike@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_unlike@2x.png"; sourceTree = "<group>"; };
 		EE6B2B651ACCF6D500650985 /* comment@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment@2x.png"; sourceTree = "<group>"; };
 		EE6B2B661ACCF6D500650985 /* comment@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "comment@3x.png"; sourceTree = "<group>"; };
@@ -1171,6 +1174,7 @@
 				387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */,
 				00D6BD3319ECFD8E00E8754E /* TweetCell.h */,
 				00D6BD3419ECFD8E00E8754E /* TweetCell.m */,
+				EE5B0FFC1AF748CC00EF7A4B /* 话题列表 */,
 				EE7A55561AEDD77000DF10D3 /* 语音动弹 */,
 				EE7AC7F31AD38E6700E850CB /* 动弹点赞列表 */,
 				38BD7D6B19FF7F31003ABB80 /* 动弹详情 */,
@@ -2189,6 +2193,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		EE5B0FFC1AF748CC00EF7A4B /* 话题列表 */ = {
+			isa = PBXGroup;
+			children = (
+				EE5B10001AF7536C00EF7A4B /* TweetTopicViewController.h */,
+				EE5B10011AF7536C00EF7A4B /* TweetTopicViewController.m */,
+			);
+			name = "话题列表";
+			sourceTree = "<group>";
+		};
 		EE6DB9451AD6628A004FCF3C /* 点赞列表 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2740,6 +2753,7 @@
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
+				EE5B10021AF7536C00EF7A4B /* TweetTopicViewController.m in Sources */,
 				EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */,
 				380FD2231A74E702003C4021 /* OSCActivity.m in Sources */,
 				38BD3D001A369B1600682D1F /* SoftwareCatalogVC.m in Sources */,

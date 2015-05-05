@@ -20,6 +20,7 @@
 #import <MBProgressHUD.h>
 #import <objc/runtime.h>
 #import <Reachability.h>
+#import "TweetTopicViewController.h"
 
 @implementation Utils
 
@@ -176,6 +177,13 @@
                         ((PostsViewController *)viewController).objClass = [OSCPost class];
                         viewController.navigationItem.title = [tag stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     }
+                } else if ([type isEqualToString:@"tweet-topic"]) {
+                    //话题
+                    url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                    urlComponents = [url componentsSeparatedByString:@"/"];
+                    
+                    viewController = [[TweetTopicViewController alloc] initWithTopic:urlComponents[2]];
+                    viewController.navigationItem.title = [NSString stringWithFormat:@"#%@#", urlComponents[2]];
                 }
             }
         } else if ([prefix isEqualToString:@"static"]) {
