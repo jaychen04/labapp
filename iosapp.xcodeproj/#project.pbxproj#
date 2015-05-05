@@ -2428,7 +2428,7 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-
+<<<<<<< HEAD
 		C5E73E011AF8A1B100974EDC /* 周报页面组件 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2484,8 +2484,7 @@
 				C5F3D7721AEFA0140032F775 /* TeamCell.m */,
 			);
 			name = "Team切换";
-			sourceTree = "<group>";
-		};
+=======
 		EE5B0FFC1AF748CC00EF7A4B /* 话题列表 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2493,6 +2492,7 @@
 				EE5B10011AF7536C00EF7A4B /* TweetTopicViewController.m */,
 			);
 			name = "话题列表";
+>>>>>>> master
 			sourceTree = "<group>";
 		};
 		EE6DB9451AD6628A004FCF3C /* 点赞列表 */ = {
@@ -2984,7 +2984,12 @@
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
-				38EAF1CA1AE112A200397E2A /* TeamIssueCell.m in Sources */,
+No matching provisioning profiles found: None of the valid provisioning profiles include the devices:
+iPhoneNo matching provisioning profiles found: None of the valid provisioning profiles include the devices:
+iPhoneNo matching provisioning profiles found: None of the valid provisioning profiles include the devices:
+iPhoneNo matching provisioning profiles found: None of the valid provisioning profiles include the devices:
+iPhoneNo matching provisioning profiles found: None of the valid provisioning profiles include the devices:
+iPhone				38EAF1CA1AE112A200397E2A /* TeamIssueCell.m in Sources */,
 				31405BE91AF07453000A487D /* TeamIssueListViewController.m in Sources */,
 				3801789C1A2C1A7300922858 /* EventCell.m in Sources */,
 				38EAF1B31AE0A6B900397E2A /* TeamActivityViewController.m in Sources */,

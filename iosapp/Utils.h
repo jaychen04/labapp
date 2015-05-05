@@ -42,7 +42,10 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 + (NSData *)compressImage:(UIImage *)image;
 + (NSString *)convertRichTextToRawText:(UITextView *)textView;
+
 + (NSString *)escapeHTML:(NSString *)originalHTML;
++ (NSString *)deleteHTMLTag:(NSString *)HTML;
+
 + (BOOL)isURL:(NSString *)string;
 + (NSInteger)networkStatus;
 + (BOOL)isNetworkExist;

@@ -49,13 +49,6 @@
     [self.tableView registerClass:[MessageBubbleCell class] forCellReuseIdentifier:kMessageBubbleMe];
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuVisible:YES animated:YES];
-    [menuController setMenuItems:@[
-                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
-                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteMessage:)]
-                                   ]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -129,7 +122,7 @@
 
 - (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
-    return action == @selector(deleteMessage:);
+    return action == @selector(deleteObject:);
 }
 
 - (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
@@ -143,14 +136,14 @@
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
             return YES;
-        } else if (action == @selector(deleteMessage:)) {
+        } else if (action == @selector(deleteObject:)) {
             return YES;
         }
         
         return NO;
     };
     
-    cell.deleteMessage = ^ (UITableViewCell *cell) {
+    cell.deleteObject = ^ (UITableViewCell *cell) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         OSCComment *comment = self.objects[indexPath.row];
         

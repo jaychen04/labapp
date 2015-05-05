@@ -64,13 +64,6 @@ static NSString *kCommentCellID = @"CommentCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[CommentCell class] forCellReuseIdentifier:kCommentCellID];
-    
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuVisible:YES animated:YES];
-    [menuController setMenuItems:@[
-                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
-                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteComment:)]
-                                   ]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -180,7 +173,7 @@ static NSString *kCommentCellID = @"CommentCell";
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
             return YES;
-        } else if (action == @selector(deleteComment:)) {
+        } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             
             OSCComment *comment = self.objects[indexPath.row];
@@ -192,7 +185,7 @@ static NSString *kCommentCellID = @"CommentCell";
         return NO;
     };
     
-    cell.deleteComment = ^ (UITableViewCell *cell) {
+    cell.deleteObject = ^ (UITableViewCell *cell) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         OSCComment *comment = self.objects[indexPath.row];
         

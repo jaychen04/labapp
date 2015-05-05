@@ -26,11 +26,11 @@
 @property (nonatomic, strong) NSArray *noThumbnailConstraints;
 
 @property (nonatomic, copy) BOOL (^canPerformAction)(UITableViewCell *cell, SEL action);
-@property (nonatomic, copy) void (^deleteTweet)(UITableViewCell *cell);
+@property (nonatomic, copy) void (^deleteObject)(UITableViewCell *cell);
 
 
 - (void)setContentWithTweet:(OSCTweet *)tweet;
 - (void)copyText:(id)sender;
-- (void)deleteTweet:(id)sender;
+- (void)deleteObject:(id)sender;
 
 @end
