@@ -230,7 +230,8 @@
 
 + (NSDateComponents *)getDateComponentsFromDate:(NSDate *)date
 {
-    NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekday | NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute;
+    NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekOfYear | NSCalendarUnitWeekday |
+                           NSCalendarUnitDay  | NSCalendarUnitHour  | NSCalendarUnitMinute;
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     return [calendar components:unitFlags fromDate:date];
 }

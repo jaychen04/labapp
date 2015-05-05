@@ -10,4 +10,6 @@
 
 @interface WeeklyReportViewController : UIViewController
 
+- (instancetype)initWithTeamID:(int)teamID;
+
 @end
