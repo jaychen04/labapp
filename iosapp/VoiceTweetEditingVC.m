@@ -79,6 +79,7 @@
 
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
+    self.navigationController.interactivePopGestureRecognizer.delaysTouchesBegan=YES;
     [self initSubViews];
     [self setLayout];
     
@@ -137,9 +138,12 @@
     
     _recordingButton = [UIButton new];
     [_recordingButton setImage:[UIImage imageNamed:@"voice_record.png"] forState:UIControlStateNormal];
+    [self.view addSubview:_recordingButton];
+    
     [_recordingButton addTarget:self action:@selector(StartRecordingVoice) forControlEvents:UIControlEventTouchDown];
     [_recordingButton addTarget:self action:@selector(StopRecordingVoice) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_recordingButton];
+    [_recordingButton addTarget:self action:@selector(StopRecordingVoice) forControlEvents:UIControlEventTouchUpOutside];
+    
     
     _deleteButton = [UIButton new];
     [_deleteButton setImage:[UIImage imageNamed:@"voice_delete.png"] forState:UIControlStateNormal];
@@ -401,6 +405,17 @@
     
     _hasVoice = NO;
     self.navigationItem.rightBarButtonItem.enabled = _hasVoice;
+    
+    [_audioPlayer stop];
+    _isPlay = NO;
+    [_playButton setImage:[UIImage imageNamed:@"voice_play.png"] forState:UIControlStateNormal];
+    [_voiceImageView stopAnimating];
+    
+    [_audioRecorder stop];
+    
+    [_audioSession setActive:NO error:nil];
+    
+    [_timer invalidate];
     [_audioRecorder deleteRecording];
 
     _voiceImageView.hidden = YES;
