@@ -10,6 +10,7 @@
 #import "TimeLineNodeCell.h"
 #import "TeamAPI.h"
 #import "TeamWeeklyReportDetail.h"
+#import "WeeklyReportContentCell.h"
 #import "Utils.h"
 
 #import <AFNetworking.h>
@@ -43,6 +44,7 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor themeColor];
+    self.navigationItem.title = @"周报内容";
     [self.tableView registerClass:[TimeLineNodeCell class] forCellReuseIdentifier:kTimeLineNodeCellID];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -68,37 +70,56 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _detail.days;
+    return _detail? _detail.days + 1 : 0;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSAttributedString *attributedString = _detail.details[indexPath.row][1];
+    NSInteger row = indexPath.row;
     
     UILabel *label = [UILabel new];
     label.numberOfLines = 0;
     label.lineBreakMode = NSLineBreakByWordWrapping;
     label.font = [UIFont systemFontOfSize:15];
-    label.attributedText = attributedString;
     
-    CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 99, MAXFLOAT)].height;
-    
-    return height + 38;
+    if (row == 0) {
+        label.attributedText = _detail.summary;
+        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
+        
+        return height + 62;
+    } else {
+        row -= 1;
+        NSAttributedString *attributedString = _detail.details[row][1];
+        
+        label.attributedText = attributedString;
+        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 99, MAXFLOAT)].height;
+        
+        return height + 18;
+    }
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TimeLineNodeCell *cell = [tableView dequeueReusableCellWithIdentifier:kTimeLineNodeCellID forIndexPath:indexPath];
-    
-    [cell setContentWithString:_detail.details[indexPath.row][1]];
-    cell.dayLabel.text = _detail.details[indexPath.row][0];
-    
-    cell.upperLine.hidden = indexPath.row == 0;
-    cell.underLine.hidden = indexPath.row == _detail.days-1;
-    
-    return cell;
+    NSInteger row = indexPath.row;
+    if (row == 0 && _detail) {
+        WeeklyReportContentCell *cell = [WeeklyReportContentCell new];
+        [cell setContentWithReportDetail:_detail];
+        
+        return cell;
+    } else {                //if (row < _detail.days - 1) {
+        row -= 1;
+        TimeLineNodeCell *cell = [tableView dequeueReusableCellWithIdentifier:kTimeLineNodeCellID forIndexPath:indexPath];
+        
+        [cell setContentWithString:_detail.details[row][1]];
+        cell.dayLabel.text = _detail.details[row][0];
+        
+        cell.upperLine.hidden = row == 0;
+        cell.underLine.hidden = row == _detail.days-1;
+        
+        return cell;
+    }
 }
 
 

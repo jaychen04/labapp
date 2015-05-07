@@ -17,7 +17,7 @@
 @property (nonatomic, copy) NSString *createTime;
 
 @property (nonatomic, strong) TeamMember *author;
-@property (nonatomic, copy) NSString *summary;
+@property (nonatomic, copy) NSAttributedString *summary;
 @property (nonatomic, strong) NSArray *details;
 @property (nonatomic, assign) int days;
 

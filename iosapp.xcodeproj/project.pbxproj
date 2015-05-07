@@ -409,6 +409,7 @@
 		C52BF4E71AF9AAA000E53508 /* TeamWeeklyReportDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4E61AF9AAA000E53508 /* TeamWeeklyReportDetail.m */; };
 		C52BF4EC1AF9C03700E53508 /* WeeklyReportDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */; };
 		C52BF4F01AF9FE8800E53508 /* TimeLineNodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */; };
+		C52BF4F41AFB50CC00E53508 /* WeeklyReportContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4F31AFB50CC00E53508 /* WeeklyReportContentCell.m */; };
 		C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */; };
 		C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */; };
 		C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7721AEFA0140032F775 /* TeamCell.m */; };
@@ -1028,6 +1029,8 @@
 		C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportDetailViewController.m; sourceTree = "<group>"; };
 		C52BF4EE1AF9FE8800E53508 /* TimeLineNodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeLineNodeCell.h; sourceTree = "<group>"; };
 		C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeLineNodeCell.m; sourceTree = "<group>"; };
+		C52BF4F21AFB50CC00E53508 /* WeeklyReportContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportContentCell.h; sourceTree = "<group>"; };
+		C52BF4F31AFB50CC00E53508 /* WeeklyReportContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportContentCell.m; sourceTree = "<group>"; };
 		C5E73DF81AF755A900974EDC /* WeeklyReportTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTitleBar.h; sourceTree = "<group>"; };
 		C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTitleBar.m; sourceTree = "<group>"; };
 		C5E73DFE1AF8A15400974EDC /* WeeklyReportContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportContentViewController.h; sourceTree = "<group>"; };
@@ -2460,6 +2463,8 @@
 			children = (
 				C52BF4EA1AF9C03700E53508 /* WeeklyReportDetailViewController.h */,
 				C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */,
+				C52BF4F21AFB50CC00E53508 /* WeeklyReportContentCell.h */,
+				C52BF4F31AFB50CC00E53508 /* WeeklyReportContentCell.m */,
 				C52BF4EE1AF9FE8800E53508 /* TimeLineNodeCell.h */,
 				C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */,
 			);
@@ -3066,6 +3071,7 @@
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
+				C52BF4F41AFB50CC00E53508 /* WeeklyReportContentCell.m in Sources */,
 				38A9EEA01AA5BE66006C95BD /* PlaceholderTextView.m in Sources */,
 				384A112F1ADF9B5F00856A7C /* TeamHomePage.m in Sources */,
 				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,

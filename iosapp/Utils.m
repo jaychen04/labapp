@@ -356,6 +356,14 @@
     return emojiString;
 }
 
++ (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML
+{
+    return [[NSMutableAttributedString alloc] initWithData:[HTML dataUsingEncoding:NSUnicodeStringEncoding]
+                                                   options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                        documentAttributes:nil
+                                                     error:nil];
+}
+
 + (NSString *)convertRichTextToRawText:(UITextView *)textView
 {
     NSMutableString *rawText = [[NSMutableString alloc] initWithString:textView.text];

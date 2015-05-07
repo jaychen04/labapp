@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSString *)getWeekdayFromDateComponents:(NSDateComponents *)dateComps;
 + (NSDateComponents *)getDateComponentsFromDate:(NSDate *)date;
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
++ (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML;
 + (NSData *)compressImage:(UIImage *)image;
 + (NSString *)convertRichTextToRawText:(UITextView *)textView;
 

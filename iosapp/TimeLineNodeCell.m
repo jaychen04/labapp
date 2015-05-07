@@ -42,6 +42,7 @@ static const int timelineColor = 0xA5A7A6;
     
     _dayLabel = [UILabel new];
     _dayLabel.font = [UIFont systemFontOfSize:15];
+    _dayLabel.textColor = [UIColor darkGrayColor];
     [self.contentView addSubview:_dayLabel];
     
     _upperLine = [UIView new];
@@ -61,7 +62,7 @@ static const int timelineColor = 0xA5A7A6;
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(node, innerNode, _dayLabel, _upperLine, _underLine, _contentLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_upperLine(30)][node(20)][_underLine]|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_upperLine(10)][node(20)][_underLine]|"
                                                                              options:NSLayoutFormatAlignAllCenterX
                                                                              metrics:nil views:views]];
     
