@@ -10,17 +10,6 @@
 
 @implementation TeamIssueList
 
-//<catalog>
-//<id>1011</id>
-//<title>
-//<![CDATA[ 消息队列 ]]>
-//</title>
-//<archive>0</archive>
-//<openedIssueCount>0</openedIssueCount>
-//<closedIssueCount>0</closedIssueCount>
-//<allIssueCount>0</allIssueCount>
-//</catalog>
-
 - (instancetype)initWithXML:(ONOXMLElement *)xml
 {
     self = [super init];

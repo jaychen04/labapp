@@ -9,7 +9,9 @@
 #import "OSCObjsViewController.h"
 
 @interface TeamActivityViewController : OSCObjsViewController
+
 - (instancetype)initWithTeamId:(int)teamId ProjectId:(int)projectId;
+
 
 - (instancetype)initWithTeamID:(int)teamID;
 

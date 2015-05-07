@@ -137,7 +137,6 @@
     [_lastCell statusLoading];
     _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     [self fetchObjectsOnPage:++_page refresh:NO];
-    NSLog(@"page:%lu",(unsigned long)_page);
 }
 
 

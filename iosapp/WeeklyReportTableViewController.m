@@ -2,7 +2,7 @@
 //  WeeklyReportTableViewController.m
 //  iosapp
 //
-//  Created by AeternChan on 4/29/15.
+//  Created by chenhaoxiang on 4/29/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
@@ -19,11 +19,14 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
 
 @implementation WeeklyReportTableViewController
 
-- (instancetype)initWithTeamID:(int)teamID year:(int)year andWeek:(int)week
+- (instancetype)initWithTeamID:(int)teamID year:(NSInteger)year andWeek:(NSInteger)week
 {
     if (self = [super init]) {
+        _year = year;
+        _week = week;
+        
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=%d&year=%d&week=%d&pageIndex=%lu", TEAM_PREFIX, TEAM_DIARY_LIST, teamID, year, week, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?teamid=%d&year=%ld&week=%ld&pageIndex=%lu", TEAM_PREFIX, TEAM_DIARY_LIST, teamID, year, week, (unsigned long)page];
         };
         
         self.objClass = [TeamWeeklyReport class];
