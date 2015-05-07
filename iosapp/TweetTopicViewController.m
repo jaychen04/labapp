@@ -62,17 +62,37 @@ static NSString * const kTweetTopiccCommentCellID = @"TweetCell";
     self.needRefreshAnimation = NO;
     [super viewDidLoad];
     
+    self.navigationItem.title = [NSString stringWithFormat:@"#%@#", [self limitTopicString]];
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
 
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetTopiccCommentCellID];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(TopicEditing)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonClicked)];
     
     
 }
 
+#pragma mark - 限制标题长度
+- (NSString *)limitTopicString
+{
+    if (_topicName.length < 10) {
+        return _topicName;
+    } else {
+        NSString *string = [NSString stringWithFormat:@"%@...", [_topicName substringWithRange:NSMakeRange(0, 10)]];
+        return string;
+    }
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+#pragma mark - 取消
+- (void)cancelButtonClicked
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 #pragma mark - 编辑
 - (void)TopicEditing
@@ -87,7 +107,6 @@ static NSString * const kTweetTopiccCommentCellID = @"TweetCell";
 {
     NSInteger row = indexPath.row;
     if (row < self.objects.count) {
-        //CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
         TweetCell *cell = [TweetCell new];
         OSCTweet *tweet = self.objects[row];
         
