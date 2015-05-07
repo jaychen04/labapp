@@ -80,7 +80,7 @@ static NSString * const kTweetTopiccCommentCellID = @"TweetCell";
     if (_topicName.length < 10) {
         return _topicName;
     } else {
-        NSString *string = [NSString stringWithFormat:@"%@...", [_topicName substringWithRange:NSMakeRange(0, 10)]];
+        NSString *string = [NSString stringWithFormat:@"%@...", [_topicName substringWithRange:NSMakeRange(0, 5)]];
         return string;
     }
 }
