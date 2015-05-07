@@ -30,27 +30,22 @@
 #pragma mark - Table view data source
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
-    if (indexPath.row == 0) {
-        return 60;
-    }else{
-        return 50;
-    }
+    return 50;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30;
-}
-
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"开源中国";
+    if (section ==1) {
+        return @"开源中国";
+    }else {
+        return nil;
+    }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
     return 12;
 }
 
@@ -61,6 +56,9 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1  reuseIdentifier: kTeamIssueDetailCell];
     }
 
+//    UIView *bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth(cell.frame), CGRectGetHeight(cell.frame))];
+//    bgView.backgroundColor = [UIColor whiteColor];
+//    cell.selectedBackgroundView = bgView;
     
     cell.imageView.image = [UIImage imageNamed:@"me-blog"];
     cell.textLabel.text = @"处理听云上面收集到的奔溃bug";

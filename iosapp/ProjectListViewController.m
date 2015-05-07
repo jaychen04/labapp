@@ -24,17 +24,17 @@ static NSString *kProjectCellID = @"ProjectCell";
 @implementation ProjectListViewController
 
 
-- (instancetype)init
+- (instancetype)initWithTeamId:(int)teamId
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=12375", OSCAPI_PREFIX, TEAM_PROJECT_LIST];
+            NSString *url =[NSString stringWithFormat:@"%@%@?teamid=%d", OSCAPI_PREFIX, TEAM_PROJECT_LIST,teamId];
+            return url;
         };
         
         __weak typeof(self) weakSelf = self;
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             [weakSelf.lastCell statusFinished];
-
         };
         
         self.objClass = [TeamProject class];
@@ -102,21 +102,12 @@ static NSString *kProjectCellID = @"ProjectCell";
     SwipableViewController *teamProjectSVC = [[SwipableViewController alloc]
                                               initWithTitle:@"团队项目"
                                               andSubTitles:@[@"任务分组", @"动态", @"成员"]
-                                              andControllers:@[             [[TeamIssueListViewController alloc] initWithProjectId:project.projectID source:project.source],[[TeamActivityViewController alloc]  initWithProjectId:project.gitID],[[TeamMemberViewController alloc] init]]
+                                              andControllers:@[             [[TeamIssueListViewController alloc] initWithTeamId:project.teamID ProjectId:project.gitID source:project.source],[[TeamActivityViewController alloc]  initWithTeamId:project.teamID ProjectId:project.gitID],[[TeamMemberViewController alloc] initWithTeamID:project.teamID]]
                                               underTabbar:NO];
     
     [self.navigationController pushViewController:teamProjectSVC animated:YES];
 
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    NSInteger row = indexPath.row;
-//    
-//    if (row < self.objects.count) {
-//        OSCBlog *blog = self.objects[row];
-//        DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithBlog:blog];
-//        [self.navigationController pushViewController:detailsViewController animated:YES];
-//    } else {
-//        [self fetchMore];
-//    }
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 

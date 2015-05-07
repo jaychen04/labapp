@@ -15,7 +15,8 @@
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
-
+#import "Config.h"
+#import "TeamMemberDetailViewController.h"
 static NSString * const kMemberCellID = @"MemberCell";
 
 @interface TeamMemberViewController ()
@@ -96,6 +97,14 @@ static NSString * const kMemberCellID = @"MemberCell";
     return YES;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    TeamMember *member = _members[indexPath.section * 3 + indexPath.row];
+    TeamMemberDetailViewController *memberDetailVC = [[TeamMemberDetailViewController alloc]initWithLoginUserId:[Config getOwnID] visitUserId:member.memberID];
+    [self.navigationController pushViewController:memberDetailVC animated:YES];
+    
+//    NSLog(@"row:%ld section:%ld",(long)indexPath.row,(long)indexPath.section);
+}
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
 	return NO;

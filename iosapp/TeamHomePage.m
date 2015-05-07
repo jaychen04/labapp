@@ -153,7 +153,7 @@
     if (indexPath.row == 0) {
         [self.navigationController pushViewController:[[TeamActivityViewController alloc] initWithTeamID:_teamID] animated:YES];
     } else if (indexPath.row == 1) {
-        
+        [self.navigationController pushViewController:[[ProjectListViewController alloc]initWithTeamId:_teamID] animated:YES];
     } else if (indexPath.row == 2) {
         [self.navigationController pushViewController:[[TeamDiscussionViewController alloc] initWithTeamID:_teamID] animated:YES];
     } else if (indexPath.row == 3) {

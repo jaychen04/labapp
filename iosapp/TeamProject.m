@@ -17,7 +17,7 @@
     if (self) {
         _projectID = [[[xml firstChildWithTag:@"id"] numberValue] intValue];
         _source = [[xml firstChildWithTag:@"source"] stringValue];
-        _teamID = [[[xml firstChildWithTag:@"teamid"] numberValue] intValue];
+        _teamID = [[[xml firstChildWithTag:@"team"] numberValue] intValue];
         
         ONOXMLElement *gitXML = [xml firstChildWithTag:@"git"];
         _gitID = [[[gitXML firstChildWithTag:@"id"] numberValue] intValue];

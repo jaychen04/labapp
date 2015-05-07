@@ -15,23 +15,20 @@
 static NSString *kTeamIssueListCellID = @"teamIssueListCell";
 @interface TeamIssueListViewController ()
 @property (nonatomic)int projectId;
+@property (nonatomic)int teamId;
 @property (nonatomic,copy)NSString *source;
 @end
 
 @implementation TeamIssueListViewController
-- (instancetype)initWithProjectId:(int)projectId source:(NSString*)source
+- (instancetype)initWithTeamId:(int)teamId ProjectId:(int)projectId source:(NSString*)source
 {
-    
-//    uid 用户id
-//    teamid 团队id
-//    projectid 项目id :当<=0或不设置时，查询非项目的任务列表
-//    source 项目类型："Git@OSC","GitHub"(只有设置了projectid值，这里才需要设置该值)
-    
     if (self = [super init]) {
         self.projectId = projectId;
+        self.teamId = teamId;
         self.source = source;
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?uid=%lld&teamid=12375&projectid=%d&source=%@", OSCAPI_PREFIX, TEAM_PROJECT_CATALOG_LIST,[Config getOwnID],projectId,source];
+            NSString *url = [NSString stringWithFormat:@"%@%@?uid=%lld&teamid=%d&projectid=%d&source=%@", OSCAPI_PREFIX, TEAM_PROJECT_CATALOG_LIST,[Config getOwnID],teamId,projectId,source];
+            return url;
         };
         
         __weak typeof(self) weakSelf = self;
@@ -84,10 +81,14 @@ static NSString *kTeamIssueListCellID = @"teamIssueListCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    TeamIssueList *list = self.objects[indexPath.row];
-    TeamIssueController * issueVc = [[TeamIssueController alloc]  init];
-//    TeamIssueController * issueVc = [[TeamIssueController alloc]  initWithProjectId:_projectId userId:[Config getOwnID] source:_source catalogId:list.listId];
-    [self.navigationController pushViewController:issueVc animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row < self.objects.count) {
+        TeamIssueList *list = self.objects[indexPath.row];
+        TeamIssueController * issueVc = [[TeamIssueController alloc] initWithTeamId:_teamId ProjectId:_projectId userId:[Config getOwnID] source:_source catalogId:list.teamIssueId];
+        [self.navigationController pushViewController:issueVc animated:YES];
+    }else {
+        [self fetchMore];
+    }
 }
 
 
