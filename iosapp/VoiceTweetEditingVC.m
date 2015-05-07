@@ -401,26 +401,29 @@
 #pragma mark - 删除录音
 - (void)DeleteVoice
 {
-    _audioSession = [AVAudioSession sharedInstance];
+    if (_hasVoice) {
+        _audioSession = [AVAudioSession sharedInstance];
+        
+        _hasVoice = NO;
+        self.navigationItem.rightBarButtonItem.enabled = _hasVoice;
+        
+        [_audioPlayer stop];
+        _isPlay = NO;
+        [_playButton setImage:[UIImage imageNamed:@"voice_play.png"] forState:UIControlStateNormal];
+        [_voiceImageView stopAnimating];
+        
+        [_audioRecorder stop];
+        
+        [_audioSession setActive:NO error:nil];
+        
+        [_timer invalidate];
+        [_audioRecorder deleteRecording];
+        
+        _voiceImageView.hidden = YES;
+        _voiceTimes.hidden = YES;
+        _timesLabel.text = @"00:00";
+    }
     
-    _hasVoice = NO;
-    self.navigationItem.rightBarButtonItem.enabled = _hasVoice;
-    
-    [_audioPlayer stop];
-    _isPlay = NO;
-    [_playButton setImage:[UIImage imageNamed:@"voice_play.png"] forState:UIControlStateNormal];
-    [_voiceImageView stopAnimating];
-    
-    [_audioRecorder stop];
-    
-    [_audioSession setActive:NO error:nil];
-    
-    [_timer invalidate];
-    [_audioRecorder deleteRecording];
-
-    _voiceImageView.hidden = YES;
-    _voiceTimes.hidden = YES;
-    _timesLabel.text = @"00:00";
 }
 
 #pragma mark - 取消发送动弹
