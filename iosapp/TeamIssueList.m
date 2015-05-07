@@ -25,7 +25,7 @@
 {
     self = [super init];
     if (self) {
-        _listId = [[[xml firstChildWithTag:@"id"] numberValue] intValue];
+        _teamIssueId = [[[xml firstChildWithTag:@"id"] numberValue] intValue];
         _listTitle = [[xml firstChildWithTag:@"title"] stringValue];
         _listDescription = [[xml firstChildWithTag:@"description"] stringValue];
         _openedIssueCount = [[[xml firstChildWithTag:@"openedIssueCount"] numberValue] intValue];

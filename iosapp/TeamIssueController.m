@@ -29,12 +29,18 @@ static NSString * const kIssueCellID = @"IssueCell";
 
 @implementation TeamIssueController
 
+
+//uid 用户id
+//teamid 团队id
+//projectid 项目id :当<=0或不设置时，查询非项目的任务列表
+//source 项目类型："Git@OSC","GitHub"(只有设置了projectid值，这里才需要设置该值)
 - (instancetype)initWithTeamID:(int)teamID
 {
     self = [super init];
     if (self) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=%d&project=-1&pageIndex=%lu", TEAM_PREFIX, TEAM_ISSUE_LIST, teamID, (unsigned long)page];
+            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%d&project=-1&pageIndex=%lu", TEAM_PREFIX, TEAM_ISSUE_LIST, teamID, (unsigned long)page];
+            return url;
         };
         
         self.objClass = [TeamIssue class];
@@ -43,12 +49,13 @@ static NSString * const kIssueCellID = @"IssueCell";
     return self;
 }
 
-- (instancetype)initWithProjectId:(int)projectId userId:(int64_t)userId source:(NSString*)source catalogId:(int64_t)catalogId
+- (instancetype)initWithTeamId:(int)teamId ProjectId:(int)projectId userId:(int64_t)userId source:(NSString*)source catalogId:(int64_t)catalogId
 {
     self = [super init];
     if (self) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?uid=%lldll&teamid=12375&projectid=%d&source=%@&catalogid=%llu", TEAM_PREFIX, TEAM_ISSUE_LIST, userId,projectId,source,catalogId];
+            NSString *url = [NSString stringWithFormat:@"%@%@?uid=%lldll&teamid=%d&projectid=%d&source=%@&catalogid=%llu", TEAM_PREFIX, TEAM_ISSUE_LIST,userId,teamId,projectId,source,catalogId];
+            return url;
         };
         
         self.objClass = [TeamIssue class];
@@ -126,10 +133,17 @@ static NSString * const kIssueCellID = @"IssueCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TeamIssueDetailController *teamIssueDetailVC = [TeamIssueDetailController new];
-    [self.navigationController pushViewController:teamIssueDetailVC animated:YES];
+//    TeamIssueDetailController *teamIssueDetailVC = [TeamIssueDetailController new];
+//    [self.navigationController pushViewController:teamIssueDetailVC animated:YES];
+//    
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row < self.objects.count) {
+        
+    }else {
+        [self fetchMore];
+    }
 }
 
 

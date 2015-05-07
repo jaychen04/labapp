@@ -9,7 +9,7 @@
 #import "OSCObjsViewController.h"
 
 @interface TeamIssueController : OSCObjsViewController
-- (instancetype)initWithProjectId:(int)projectId userId:(int64_t)userId source:(NSString*)source catalogId:(int64_t)catalogId;
+- (instancetype)initWithTeamId:(int)teamId ProjectId:(int)projectId userId:(int64_t)userId source:(NSString*)source catalogId:(int64_t)catalogId;
 
 - (instancetype)initWithTeamID:(int)teamID;
 - (void)switchToTeam:(int)teamID;

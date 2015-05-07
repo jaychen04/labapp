@@ -13,12 +13,13 @@
 
 #import <TTTAttributedLabel.h>
 
+#import "TeamActivityDetailViewController.h"
 static NSString * const kActivityCellID = @"TeamActivityCell";
 
 @interface TeamActivityViewController ()
 
 @property (nonatomic, strong) NSMutableArray *activities;
-
+@property (nonatomic,assign)int teamId;
 @end
 
 @implementation TeamActivityViewController
@@ -44,12 +45,13 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 //type "all"(default),"issue","code","other"
 //pageIndex 页数
 //pageSize 每页条数
-- (instancetype)initWithProjectId:(int)projectId
+- (instancetype)initWithTeamId:(int)teamId ProjectId:(int)projectId
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=12375&projectid=%d&source=Git@OSC&type=all&pageIndex=%lu&pageSize=20", TEAM_PREFIX, TEAM_PROJECT_ACTIVE_LIST,projectId, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?teamid=%d&projectid=%d&source=Git@OSC&type=all&pageIndex=%lu&pageSize=20", TEAM_PREFIX, TEAM_PROJECT_ACTIVE_LIST,teamId,projectId, (unsigned long)page];
         };
+        self.teamId = teamId;
         self.objClass = [TeamActivity class];
         self.needCache = YES;
     }
@@ -92,6 +94,8 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+
     if (indexPath.row < self.objects.count) {
         TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kActivityCellID forIndexPath:indexPath];
         TeamActivity *activity = self.objects[indexPath.row];
@@ -107,6 +111,15 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row < self.objects.count) {
+        TeamActivity *selectedActivity = self.objects[indexPath.row];
+        TeamActivityDetailViewController *detailVC = [TeamActivityDetailViewController new];
+        detailVC.activityID = selectedActivity.activityID;
+        detailVC.teamID = _teamId;
+        [self.navigationController pushViewController:detailVC animated:YES];
+    }else {
+        [self fetchMore];
+    }
 }
 
 
