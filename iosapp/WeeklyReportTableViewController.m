@@ -10,10 +10,14 @@
 #import "TeamAPI.h"
 #import "TeamWeeklyReport.h"
 #import "WeeklyReportCell.h"
+#import "TeamWeeklyReportDetail.h"
+#import "WeeklyReportDetailViewController.h"
 
 static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
 
 @interface WeeklyReportTableViewController ()
+
+@property (nonatomic, assign) int teamID;
 
 @end
 
@@ -22,6 +26,7 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
 - (instancetype)initWithTeamID:(int)teamID year:(NSInteger)year andWeek:(NSInteger)week
 {
     if (self = [super init]) {
+        _teamID = teamID;
         _year = year;
         _week = week;
         
@@ -86,6 +91,11 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.row < self.objects.count) {
+        TeamWeeklyReport *report = self.objects[indexPath.row];
+        [self.navigationController pushViewController:[[WeeklyReportDetailViewController alloc] initWithTeamID:_teamID andReportID:report.reportID] animated:YES];
+    }
 }
 
 

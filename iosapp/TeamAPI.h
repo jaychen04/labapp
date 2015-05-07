@@ -31,5 +31,6 @@
 #define TEAM_PROJECT_ACTIVE_LIST        @"team_project_active_list"         //团队项目的动态
 
 #define TEAM_DIARY_LIST                 @"team_diary_list"
+#define TEAM_DIARY_DETAIL               @"team_diary_detail"
 
 #endif

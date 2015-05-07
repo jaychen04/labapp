@@ -57,6 +57,7 @@
                                                                                                  year:firstVC.year
                                                                                               andWeek:firstVC.week - 1];
         [self.controllers insertObject:vc atIndex:0];
+        [self addChildViewController:vc];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];

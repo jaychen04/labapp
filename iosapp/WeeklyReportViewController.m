@@ -50,8 +50,8 @@
         [_weeklyReportHVC scrollToViewAtIndex:1];
         
         
-        [self.view addSubview:_weeklyReportHVC.view];
         [self addChildViewController:_weeklyReportHVC];
+        [self.view addSubview:_weeklyReportHVC.view];
         [self.view addSubview:_titleBar];
     }
     
