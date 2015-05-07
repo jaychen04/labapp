@@ -47,8 +47,6 @@
             [weakSelf.titleBar updateWeek:vc.week];
         };
         
-        [_weeklyReportHVC scrollToViewAtIndex:1];
-        
         
         [self addChildViewController:_weeklyReportHVC];
         [self.view addSubview:_weeklyReportHVC.view];
