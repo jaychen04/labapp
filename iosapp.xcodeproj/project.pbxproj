@@ -2455,6 +2455,17 @@
 			name = "讨论";
 			sourceTree = "<group>";
 		};
+		C52BF4F11AFB185100E53508 /* 周报详情 */ = {
+			isa = PBXGroup;
+			children = (
+				C52BF4EA1AF9C03700E53508 /* WeeklyReportDetailViewController.h */,
+				C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */,
+				C52BF4EE1AF9FE8800E53508 /* TimeLineNodeCell.h */,
+				C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */,
+			);
+			name = "周报详情";
+			sourceTree = "<group>";
+		};
 		C5E73E011AF8A1B100974EDC /* 周报页面组件 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2473,10 +2484,6 @@
 				C5F3D7791AF0C40B0032F775 /* WeeklyReportTableViewController.m */,
 				C5F3D77E1AF0C8BF0032F775 /* WeeklyReportCell.h */,
 				C5F3D77F1AF0C8BF0032F775 /* WeeklyReportCell.m */,
-				C52BF4EA1AF9C03700E53508 /* WeeklyReportDetailViewController.h */,
-				C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */,
-				C52BF4EE1AF9FE8800E53508 /* TimeLineNodeCell.h */,
-				C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */,
 			);
 			name = "周报列表";
 			sourceTree = "<group>";
@@ -2486,8 +2493,9 @@
 			children = (
 				C5F3D7741AF0C2A50032F775 /* WeeklyReportViewController.h */,
 				C5F3D7751AF0C2A50032F775 /* WeeklyReportViewController.m */,
-				C5E73E021AF8A1DB00974EDC /* 周报列表 */,
 				C5E73E011AF8A1B100974EDC /* 周报页面组件 */,
+				C5E73E021AF8A1DB00974EDC /* 周报列表 */,
+				C52BF4F11AFB185100E53508 /* 周报详情 */,
 			);
 			name = "周报";
 			sourceTree = "<group>";

@@ -82,7 +82,7 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
     label.font = [UIFont systemFontOfSize:15];
     label.attributedText = attributedString;
     
-    CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 94, MAXFLOAT)].height;
+    CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 99, MAXFLOAT)].height;
     
     return height + 38;
 }

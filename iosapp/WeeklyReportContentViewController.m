@@ -30,7 +30,7 @@
     for (int i = 1; i >= 0; i--) {
         WeeklyReportTableViewController *vc = [[WeeklyReportTableViewController alloc] initWithTeamID:teamID
                                                                                                  year:dateComps.year
-                                                                                              andWeek:dateComps.weekOfYear - i];
+                                                                                              andWeek:dateComps.weekOfYear - 1 - i];
         [controllers addObject:vc];
     }
     

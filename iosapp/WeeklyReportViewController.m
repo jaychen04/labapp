@@ -35,7 +35,7 @@
         NSDateComponents *dateComps = [Utils getDateComponentsFromDate:date];
         
         CGFloat barHeight = 36;
-        _titleBar = [[WeeklyReportTitleBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, barHeight) andWeek:dateComps.weekOfYear];
+        _titleBar = [[WeeklyReportTitleBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, barHeight) andWeek:dateComps.weekOfYear - 1];
         
         
         _weeklyReportHVC = [[WeeklyReportContentViewController alloc] initWithTeamID:_teamID];

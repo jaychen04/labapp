@@ -9,6 +9,8 @@
 #import "TimeLineNodeCell.h"
 #import "Utils.h"
 
+static const int timelineColor = 0xA5A7A6;
+
 @implementation TimeLineNodeCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -28,20 +30,26 @@
 - (void)setLayout
 {
     UIView *node = [UIView new];
-    node.backgroundColor = [UIColor colorWithHex:0x15A230];
-    [node setCornerRadius:5];
+    node.backgroundColor = [UIColor colorWithHex:0xEEEEEE];
+    [node setBorderWidth:2 andColor:[UIColor colorWithHex:timelineColor]];
+    [node setCornerRadius:10];
     [self.contentView addSubview:node];
+    
+    UIView *innerNode = [UIView new];
+    innerNode.backgroundColor = [UIColor colorWithHex:timelineColor];
+    [innerNode setCornerRadius:5];
+    [self.contentView addSubview:innerNode];
     
     _dayLabel = [UILabel new];
     _dayLabel.font = [UIFont systemFontOfSize:15];
     [self.contentView addSubview:_dayLabel];
     
     _upperLine = [UIView new];
-    _upperLine.backgroundColor = [UIColor colorWithHex:0x15A230];
+    _upperLine.backgroundColor = [UIColor colorWithHex:timelineColor];
     [self.contentView addSubview:_upperLine];
     
     _underLine = [UIView new];
-    _underLine.backgroundColor = [UIColor colorWithHex:0x15A230];
+    _underLine.backgroundColor = [UIColor colorWithHex:timelineColor];
     [self.contentView addSubview:_underLine];
     
     _contentLabel = [UILabel new];
@@ -51,16 +59,16 @@
 
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = NSDictionaryOfVariableBindings(node, _dayLabel, _upperLine, _underLine, _contentLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(node, innerNode, _dayLabel, _upperLine, _underLine, _contentLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_upperLine(30)][node(10)][_underLine]|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_upperLine(30)][node(20)][_underLine]|"
                                                                              options:NSLayoutFormatAlignAllCenterX
                                                                              metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_dayLabel]-8-[node(10)]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_dayLabel(45)]-8-[node(20)]"
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[node]-15-[_contentLabel]->=8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[node]-8-[_contentLabel]-10-|"
                                                                              options:0 metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-|" options:0 metrics:nil views:views]];
@@ -69,6 +77,13 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_upperLine(3)]" options:0 metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_underLine(3)]" options:0 metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[innerNode(10)]" options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[innerNode(10)]" options:0 metrics:nil views:views]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:innerNode attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual
+                                                                    toItem:node      attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:innerNode attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
+                                                                    toItem:node      attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
 }
 
 - (void)setContentWithString:(NSAttributedString *)HTML
