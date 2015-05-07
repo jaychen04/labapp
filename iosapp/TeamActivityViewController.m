@@ -39,12 +39,7 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 }
 
 #pragma mark --某个团队项目的动态
-//teamid 团队id
-//projectid 项目id
-//source "Git@OSC"(default),"GitHub"
-//type "all"(default),"issue","code","other"
-//pageIndex 页数
-//pageSize 每页条数
+
 - (instancetype)initWithTeamId:(int)teamId ProjectId:(int)projectId
 {
     if (self = [super init]) {
@@ -94,8 +89,6 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-
     if (indexPath.row < self.objects.count) {
         TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kActivityCellID forIndexPath:indexPath];
         TeamActivity *activity = self.objects[indexPath.row];
