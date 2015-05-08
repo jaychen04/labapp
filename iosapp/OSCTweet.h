@@ -7,6 +7,7 @@
 //
 
 #import "OSCBaseObject.h"
+#import <UIKit/UIKit.h>
 
 @interface OSCTweet : OSCBaseObject
 
@@ -30,5 +31,6 @@
 @property (nonatomic, copy) NSMutableAttributedString *likersDetailString;
 @property (nonatomic, copy) NSMutableAttributedString *attributedCommentCount;
 
+@property (nonatomic, assign) CGFloat cellHeight;
 
 @end
