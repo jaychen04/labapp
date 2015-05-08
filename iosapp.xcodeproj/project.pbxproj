@@ -24,7 +24,6 @@
 		00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FF954D19F3E5FF002F4737 /* SwipableViewController.m */; };
 		3118F8D31AFB4803001684BC /* TeamMemberDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3118F8D21AFB4803001684BC /* TeamMemberDetailViewController.m */; };
 		3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3118F8D51AFB49CD001684BC /* MemberDetailCell.m */; };
-		313AB5431AF9B375003CC371 /* TeamActivityInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 313AB5421AF9B375003CC371 /* TeamActivityInfoCell.m */; };
 		31405BE91AF07453000A487D /* TeamIssueListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31405BE81AF07453000A487D /* TeamIssueListViewController.m */; };
 		31405BEC1AF074A4000A487D /* TeamIssueListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31405BEB1AF074A4000A487D /* TeamIssueListCell.m */; };
 		31A338F11AF8683E0037B37F /* TeamActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */; };
@@ -414,7 +413,9 @@
 		C52BF4E71AF9AAA000E53508 /* TeamWeeklyReportDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4E61AF9AAA000E53508 /* TeamWeeklyReportDetail.m */; };
 		C52BF4EC1AF9C03700E53508 /* WeeklyReportDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */; };
 		C52BF4F01AF9FE8800E53508 /* TimeLineNodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */; };
-		C52BF4F41AFB50CC00E53508 /* WeeklyReportContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4F31AFB50CC00E53508 /* WeeklyReportContentCell.m */; };
+		C52BF4F41AFB50CC00E53508 /* TeamDetailContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4F31AFB50CC00E53508 /* TeamDetailContentCell.m */; };
+		C52BF4FE1AFCB6EE00E53508 /* TeamReply.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4FD1AFCB6EE00E53508 /* TeamReply.m */; };
+		C52BF5011AFCBF1700E53508 /* TeamReplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF5001AFCBF1700E53508 /* TeamReplyCell.m */; };
 		C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */; };
 		C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */; };
 		C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7721AEFA0140032F775 /* TeamCell.m */; };
@@ -520,8 +521,6 @@
 		3118F8D21AFB4803001684BC /* TeamMemberDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamMemberDetailViewController.m; sourceTree = "<group>"; };
 		3118F8D41AFB49CD001684BC /* MemberDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberDetailCell.h; sourceTree = "<group>"; };
 		3118F8D51AFB49CD001684BC /* MemberDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MemberDetailCell.m; sourceTree = "<group>"; };
-		313AB5411AF9B375003CC371 /* TeamActivityInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamActivityInfoCell.h; sourceTree = "<group>"; };
-		313AB5421AF9B375003CC371 /* TeamActivityInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamActivityInfoCell.m; sourceTree = "<group>"; };
 		31405BE71AF07453000A487D /* TeamIssueListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamIssueListViewController.h; sourceTree = "<group>"; };
 		31405BE81AF07453000A487D /* TeamIssueListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueListViewController.m; sourceTree = "<group>"; };
 		31405BEA1AF074A4000A487D /* TeamIssueListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamIssueListCell.h; sourceTree = "<group>"; };
@@ -1044,8 +1043,12 @@
 		C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportDetailViewController.m; sourceTree = "<group>"; };
 		C52BF4EE1AF9FE8800E53508 /* TimeLineNodeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeLineNodeCell.h; sourceTree = "<group>"; };
 		C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeLineNodeCell.m; sourceTree = "<group>"; };
-		C52BF4F21AFB50CC00E53508 /* WeeklyReportContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportContentCell.h; sourceTree = "<group>"; };
-		C52BF4F31AFB50CC00E53508 /* WeeklyReportContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportContentCell.m; sourceTree = "<group>"; };
+		C52BF4F21AFB50CC00E53508 /* TeamDetailContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamDetailContentCell.h; sourceTree = "<group>"; };
+		C52BF4F31AFB50CC00E53508 /* TeamDetailContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDetailContentCell.m; sourceTree = "<group>"; };
+		C52BF4FC1AFCB6EE00E53508 /* TeamReply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamReply.h; sourceTree = "<group>"; };
+		C52BF4FD1AFCB6EE00E53508 /* TeamReply.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamReply.m; sourceTree = "<group>"; };
+		C52BF4FF1AFCBF1700E53508 /* TeamReplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamReplyCell.h; sourceTree = "<group>"; };
+		C52BF5001AFCBF1700E53508 /* TeamReplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamReplyCell.m; sourceTree = "<group>"; };
 		C5E73DF81AF755A900974EDC /* WeeklyReportTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTitleBar.h; sourceTree = "<group>"; };
 		C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTitleBar.m; sourceTree = "<group>"; };
 		C5E73DFE1AF8A15400974EDC /* WeeklyReportContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportContentViewController.h; sourceTree = "<group>"; };
@@ -1354,8 +1357,8 @@
 			children = (
 				31A338EF1AF8683E0037B37F /* TeamActivityDetailViewController.h */,
 				31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */,
-				313AB5411AF9B375003CC371 /* TeamActivityInfoCell.h */,
-				313AB5421AF9B375003CC371 /* TeamActivityInfoCell.m */,
+				C52BF4FF1AFCBF1700E53508 /* TeamReplyCell.h */,
+				C52BF5001AFCBF1700E53508 /* TeamReplyCell.m */,
 			);
 			name = "动态详情";
 			sourceTree = "<group>";
@@ -1374,7 +1377,6 @@
 		31EAF9F61AEF266A004DF445 /* 项目 */ = {
 			isa = PBXGroup;
 			children = (
-				31405BE61AF073A6000A487D /* 任务分组列表 */,
 				31EAF9F71AEF2685004DF445 /* ProjectListViewController.h */,
 				31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */,
 				31EAF9F91AEF2685004DF445 /* ProjectCell.h */,
@@ -1821,9 +1823,11 @@
 				38EAF1C31AE0EA6D00397E2A /* TeamProject.m */,
 				38EAF1C51AE0FCE400397E2A /* TeamProjectAuthority.h */,
 				38EAF1C61AE0FCE400397E2A /* TeamProjectAuthority.m */,
-				C52BF4E91AF9BABF00E53508 /* 讨论 */,
 				C5FB95951AEE14FC006918CD /* TeamTeam.h */,
 				C5FB95961AEE14FC006918CD /* TeamTeam.m */,
+				C52BF4FC1AFCB6EE00E53508 /* TeamReply.h */,
+				C52BF4FD1AFCB6EE00E53508 /* TeamReply.m */,
+				C52BF4E91AF9BABF00E53508 /* 讨论 */,
 				C52BF4E81AF9AAA900E53508 /* 周报 */,
 			);
 			name = Team;
@@ -2505,8 +2509,8 @@
 			children = (
 				C52BF4EA1AF9C03700E53508 /* WeeklyReportDetailViewController.h */,
 				C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */,
-				C52BF4F21AFB50CC00E53508 /* WeeklyReportContentCell.h */,
-				C52BF4F31AFB50CC00E53508 /* WeeklyReportContentCell.m */,
+				C52BF4F21AFB50CC00E53508 /* TeamDetailContentCell.h */,
+				C52BF4F31AFB50CC00E53508 /* TeamDetailContentCell.m */,
 				C52BF4EE1AF9FE8800E53508 /* TimeLineNodeCell.h */,
 				C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */,
 			);
@@ -3052,6 +3056,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38763A441A9048D0008E6805 /* BubbleChatViewController.m in Sources */,
+				C52BF4FE1AFCB6EE00E53508 /* TeamReply.m in Sources */,
 				38EAF1BA1AE0E20E00397E2A /* TeamActivityCell.m in Sources */,
 				386BEA451A66500400C078A8 /* TweetDetailsCell.m in Sources */,
 				38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */,
@@ -3114,7 +3119,7 @@
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
-				C52BF4F41AFB50CC00E53508 /* WeeklyReportContentCell.m in Sources */,
+				C52BF4F41AFB50CC00E53508 /* TeamDetailContentCell.m in Sources */,
 				38A9EEA01AA5BE66006C95BD /* PlaceholderTextView.m in Sources */,
 				384A112F1ADF9B5F00856A7C /* TeamHomePage.m in Sources */,
 				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,
@@ -3124,6 +3129,7 @@
 				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,
 				38B0BF9C1A3E8F9C00A2FDB0 /* OSCTabBarController.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
+				C52BF5011AFCBF1700E53508 /* TeamReplyCell.m in Sources */,
 				38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */,
 				EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */,
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
@@ -3176,7 +3182,6 @@
 				38A9EEA41AA84BE6006C95BD /* SettingsPage.m in Sources */,
 				3118F8D31AFB4803001684BC /* TeamMemberDetailViewController.m in Sources */,
 				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
-				313AB5431AF9B375003CC371 /* TeamActivityInfoCell.m in Sources */,
 				3838D1A61A6E703F00CC7913 /* OSCRandomMessage.m in Sources */,
 				382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */,
 				381EAB6319FE377700C1937C /* NewsViewController.m in Sources */,

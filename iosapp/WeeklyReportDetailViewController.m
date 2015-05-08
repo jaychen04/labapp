@@ -10,7 +10,7 @@
 #import "TimeLineNodeCell.h"
 #import "TeamAPI.h"
 #import "TeamWeeklyReportDetail.h"
-#import "WeeklyReportContentCell.h"
+#import "TeamDetailContentCell.h"
 #import "Utils.h"
 
 #import <AFNetworking.h>
@@ -104,7 +104,7 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
 {
     NSInteger row = indexPath.row;
     if (row == 0 && _detail) {
-        WeeklyReportContentCell *cell = [WeeklyReportContentCell new];
+        TeamDetailContentCell *cell = [TeamDetailContentCell new];
         [cell setContentWithReportDetail:_detail];
         
         return cell;

@@ -6,11 +6,12 @@
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "WeeklyReportContentCell.h"
+#import "TeamDetailContentCell.h"
 #import "TeamWeeklyReportDetail.h"
+#import "TeamActivity.h"
 #import "Utils.h"
 
-@implementation WeeklyReportContentCell
+@implementation TeamDetailContentCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -68,8 +69,16 @@
 {
     [_portrait loadPortrait:detail.author.portraitURL];
     _authorLabel.text = detail.author.name;
-    _timeLabel.attributedText = [Utils attributedTimeString:detail.createTime];
+    _timeLabel.text = [Utils intervalSinceNow:detail.createTime];
     self.contentLabel.attributedText = detail.summary;
+}
+
+- (void)setContentWithActivity:(TeamActivity *)activity
+{
+    [_portrait loadPortrait:activity.author.portraitURL];
+    _authorLabel.text = activity.author.name;
+    _timeLabel.text = [Utils intervalSinceNow:activity.createTime];
+    _contentLabel.attributedText = activity.attributedDetail;
 }
 
 @end

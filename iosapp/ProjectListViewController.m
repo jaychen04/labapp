@@ -102,7 +102,11 @@ static NSString *kProjectCellID = @"ProjectCell";
     SwipableViewController *teamProjectSVC = [[SwipableViewController alloc]
                                               initWithTitle:@"团队项目"
                                               andSubTitles:@[@"任务分组", @"动态", @"成员"]
-                                              andControllers:@[             [[TeamIssueListViewController alloc] initWithTeamId:project.teamID ProjectId:project.gitID source:project.source],[[TeamActivityViewController alloc]  initWithTeamId:project.teamID ProjectId:project.gitID],[[TeamMemberViewController alloc] initWithTeamID:project.teamID]]
+                                              andControllers:@[
+                                                               [[TeamIssueListViewController alloc] initWithTeamId:project.teamID ProjectId:project.gitID source:project.source],
+                                                               [[TeamActivityViewController alloc]  initWithTeamID:project.teamID ProjectID:project.gitID],
+                                                               [[TeamMemberViewController alloc] initWithTeamID:project.teamID]
+                                                               ]
                                               underTabbar:NO];
     
     [self.navigationController pushViewController:teamProjectSVC animated:YES];

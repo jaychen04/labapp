@@ -8,6 +8,7 @@
 
 #import "TeamActivity.h"
 #import "TeamMember.h"
+#import "Utils.h"
 
 #import <UIKit/UIKit.h>
 
@@ -54,6 +55,25 @@
     }
     
     return _attributedTitle;
+}
+
+- (NSAttributedString *)attributedDetail
+{
+    if (!_attributedDetail) {
+        NSMutableAttributedString *attributedDetail = [[NSMutableAttributedString alloc] initWithAttributedString:_attributedTitle];
+        
+        NSAttributedString *attributedString = [Utils attributedStringFromHTML:_detail];
+        if (![attributedString.string isEqualToString:@"\n"]) {
+            [attributedDetail appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\n"]];
+            [attributedDetail appendAttributedString:attributedString];
+        }
+        [attributedDetail addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+                                  range:NSMakeRange(0, attributedDetail.length)];
+        
+        _attributedDetail = [[NSAttributedString alloc] initWithAttributedString:attributedDetail];
+    }
+    
+    return _attributedDetail;
 }
 
 @end
