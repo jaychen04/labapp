@@ -40,6 +40,7 @@
     
     [self setLayout];
     
+    
     NSArray *activitySignUpInfo = [Config getActivitySignUpInfomation];
     if (activitySignUpInfo.count != 0) {
         _nameTextField.text = activitySignUpInfo[0];
@@ -48,6 +49,15 @@
         _corporationTextField.text = activitySignUpInfo? activitySignUpInfo[3]: @"";
         _positionTextField.text = activitySignUpInfo? activitySignUpInfo[4]: @"";
     }
+    
+    RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal]
+                                         reduce:^(NSString *name, NSString *phoneNumber){
+                                             return @(name.length > 0 && phoneNumber.length > 0);
+                                         }];
+    RAC(_saveButton, enabled) = valid;
+    RAC(_saveButton, alpha) = [valid map:^(NSNumber *b) {
+        return b.boolValue ? @1 : @0.4;
+    }];
 }
 
 - (void)setLayout
@@ -96,14 +106,6 @@
     _saveButton.userInteractionEnabled = YES;
     [_saveButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterActivity)]];
     
-    RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal]
-                                         reduce:^(NSString *name, NSString *phoneNumber){
-                                             return @(name.length > 0 && phoneNumber.length > 0);
-                                         }];
-    RAC(_saveButton, enabled) = valid;
-    RAC(_saveButton, alpha) = [valid map:^(NSNumber *b) {
-        return b.boolValue ? @1 : @0.4;
-    }];
     
     for (UIView *subView in [self.view subviews]) {
         subView.translatesAutoresizingMaskIntoConstraints = NO;
