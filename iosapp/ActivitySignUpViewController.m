@@ -151,10 +151,10 @@
               
               if (errorCode == 1) {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = [NSString stringWithFormat:@"%@", errorMessage];
+                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", errorMessage];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", errorMessage];
               }
               
               [HUD hide:YES afterDelay:1];
@@ -164,6 +164,8 @@
                    phoneNumber:_phoneNumberTextField.text
                    corporation:_corporationTextField.text
                    andPosition:_positionTextField.text];
+              
+              [self.navigationController popViewControllerAnimated:YES];
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
