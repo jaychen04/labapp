@@ -31,24 +31,23 @@
 
 @implementation ActivitySignUpViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    
     self.title = @"活动报名";
     
     [self setLayout];
     
     
     NSArray *activitySignUpInfo = [Config getActivitySignUpInfomation];
-    if (activitySignUpInfo.count != 0) {
-        _nameTextField.text = activitySignUpInfo[0];
-        _sexSegmentCtl.selectedSegmentIndex = [activitySignUpInfo[1] intValue];
-        _phoneNumberTextField.text = activitySignUpInfo[2];
-        _corporationTextField.text = activitySignUpInfo? activitySignUpInfo[3]: @"";
-        _positionTextField.text = activitySignUpInfo? activitySignUpInfo[4]: @"";
-    }
+    
+    _nameTextField.text = activitySignUpInfo[0];
+    _sexSegmentCtl.selectedSegmentIndex = [activitySignUpInfo[1] intValue];
+    _phoneNumberTextField.text = activitySignUpInfo[2];
+    _corporationTextField.text = activitySignUpInfo[3];
+    _positionTextField.text = activitySignUpInfo[4];
     
     RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal]
                                          reduce:^(NSString *name, NSString *phoneNumber){
@@ -124,52 +123,9 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_sexSegmentCtl(100)]" options:0 metrics:nil views:viewDic]];
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    return YES;
-}
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    [_nameTextField resignFirstResponder];
-    [_phoneNumberTextField resignFirstResponder];
-    [_corporationTextField resignFirstResponder];
-    [_positionTextField resignFirstResponder];
-}
 
+#pragma mark - 提交报名信息并保存
 
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
-    if (self.view.frame.size.height < 568) {
-        float y = self.view.frame.origin.y;
-        float width = self.view.frame.size.width;
-        float height = self.view.frame.size.height;
-        
-        if (textField == _corporationTextField || textField == _positionTextField) {
-            CGRect rect = CGRectMake(0.0f, y-100, width, height);
-            self.view.frame = rect;
-        }
-    }
-    return YES;
-}
-
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    if (self.view.frame.size.height < 568) {
-        float y = self.view.frame.origin.y;
-        float width = self.view.frame.size.width;
-        float height = self.view.frame.size.height;
-        
-        if (textField == _corporationTextField || textField == _positionTextField){
-            CGRect rect = CGRectMake(0.0f, y+100, width, height);
-            self.view.frame = rect;
-        }
-    }
-    return YES;
-}
-
-
-//保存报名信息
 - (void)enterActivity
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
@@ -220,6 +176,55 @@
      ];
     
 }
+
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_nameTextField resignFirstResponder];
+    [_phoneNumberTextField resignFirstResponder];
+    [_corporationTextField resignFirstResponder];
+    [_positionTextField resignFirstResponder];
+}
+
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    if (self.view.frame.size.height < 568) {
+        float y = self.view.frame.origin.y;
+        float width = self.view.frame.size.width;
+        float height = self.view.frame.size.height;
+        
+        if (textField == _corporationTextField || textField == _positionTextField) {
+            CGRect rect = CGRectMake(0.0f, y-100, width, height);
+            self.view.frame = rect;
+        }
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    if (self.view.frame.size.height < 568) {
+        float y = self.view.frame.origin.y;
+        float width = self.view.frame.size.width;
+        float height = self.view.frame.size.height;
+        
+        if (textField == _corporationTextField || textField == _positionTextField){
+            CGRect rect = CGRectMake(0.0f, y+100, width, height);
+            self.view.frame = rect;
+        }
+    }
+    return YES;
+}
+
 
 
 @end
