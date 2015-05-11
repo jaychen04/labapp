@@ -32,10 +32,9 @@
 - (void)initSubviews
 {
     _titleLabel = [UILabel new];
-    _titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    _titleLabel.font = [UIFont boldSystemFontOfSize:15];
     _titleLabel.numberOfLines = 0;
     _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    //_titleLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_titleLabel];
     
     _timeLabel = [UILabel new];
@@ -56,7 +55,7 @@
     _projectNameLabel = [UILabel new];
     _projectNameLabel.numberOfLines = 0;
     _projectNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _projectNameLabel.font = [UIFont systemFontOfSize:14];
+    _projectNameLabel.font = [UIFont systemFontOfSize:13];
     _projectNameLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_projectNameLabel];
 }

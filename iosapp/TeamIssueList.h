@@ -9,11 +9,15 @@
 #import "OSCBaseObject.h"
 
 @interface TeamIssueList : OSCBaseObject
-@property (nonatomic) int teamIssueId;
-@property (nonatomic, copy) NSString *listTitle;
+
+@property (nonatomic, assign) int teamIssueID;
+
+@property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *listDescription;
-@property (nonatomic) int64_t archive;
-@property (nonatomic) int  openedIssueCount;
-@property (nonatomic) int  closedIssueCount;
-@property (nonatomic) int  allIssueCount;
+@property (nonatomic, assign) BOOL archive;
+
+@property (nonatomic, assign) int openedIssueCount;
+@property (nonatomic, assign) int closedIssueCount;
+@property (nonatomic, assign) int allIssueCount;
+
 @end

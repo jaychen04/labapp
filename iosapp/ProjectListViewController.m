@@ -79,13 +79,9 @@ static NSString *kProjectCellID = @"ProjectCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.objects.count) {
-
-        
         self.label.font = [UIFont boldSystemFontOfSize:15];
-
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-
-
+        
         self.label.font = [UIFont systemFontOfSize:13];
         height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
         
@@ -103,8 +99,8 @@ static NSString *kProjectCellID = @"ProjectCell";
                                               initWithTitle:@"团队项目"
                                               andSubTitles:@[@"任务分组", @"动态", @"成员"]
                                               andControllers:@[
-                                                               [[TeamIssueListViewController alloc] initWithTeamId:project.teamID ProjectId:project.gitID source:project.source],
-                                                               [[TeamActivityViewController alloc]  initWithTeamID:project.teamID ProjectID:project.gitID],
+                                                               [[TeamIssueListViewController alloc] initWithTeamID:project.teamID projectID:project.gitID andSource:project.source],
+                                                               [[TeamActivityViewController alloc]  initWithTeamID:project.teamID andProjectID:project.gitID],
                                                                [[TeamMemberViewController alloc] initWithTeamID:project.teamID projectID:project.gitID andSource:project.source]
                                                                ]];
     
