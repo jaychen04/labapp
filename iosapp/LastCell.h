@@ -21,7 +21,6 @@ typedef NS_ENUM(NSUInteger, LastCellStatus)
 
 @property (readonly, nonatomic, assign) LastCellStatus status;
 
-- (instancetype)initCell;
 - (void)statusMore;
 - (void)statusLoading;
 - (void)statusFinished;

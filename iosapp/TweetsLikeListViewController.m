@@ -63,46 +63,32 @@ static NSString * const kTweetLikeUserCellID = @"TweetLikeUserCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row = indexPath.row;
-    if (row < self.objects.count) {
-        OSCUser *likesUser = self.objects[row];
-        TweetLikeUserCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetLikeUserCellID forIndexPath:indexPath];
-        
-        [cell.portrait loadPortrait:likesUser.portraitURL];
-        cell.userNameLabel.text = likesUser.name;
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    OSCUser *likesUser = self.objects[indexPath.row];
+    TweetLikeUserCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetLikeUserCellID forIndexPath:indexPath];
+    
+    [cell.portrait loadPortrait:likesUser.portraitURL];
+    cell.userNameLabel.text = likesUser.name;
+    
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCUser *likesUser = self.objects[indexPath.row];
-        self.label.text = likesUser.name;
-        self.label.font = [UIFont systemFontOfSize:16];
-        CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
-        
-        return nameSize.height + 32;
-    } else {
-        return 60;
-    }
+    OSCUser *likesUser = self.objects[indexPath.row];
+    self.label.text = likesUser.name;
+    self.label.font = [UIFont systemFontOfSize:16];
+    CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+    
+    return nameSize.height + 32;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCUser *likesUser = self.objects[row];
-        UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:likesUser.userID];
-        [self.navigationController pushViewController:userDetailsVC animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCUser *likesUser = self.objects[indexPath.row];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:likesUser.userID];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 
 

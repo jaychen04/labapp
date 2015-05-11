@@ -74,47 +74,34 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        SoftwareCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kSoftwareCellID forIndexPath:indexPath];
-        OSCSoftware *software = self.objects[indexPath.row];
-        
-        cell.backgroundColor = [UIColor themeColor];
-        cell.nameLabel.text = software.name;
-        cell.descriptionLabel.text = software.softwareDescription;
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    SoftwareCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kSoftwareCellID forIndexPath:indexPath];
+    OSCSoftware *software = self.objects[indexPath.row];
+    
+    cell.backgroundColor = [UIColor themeColor];
+    cell.nameLabel.text = software.name;
+    cell.descriptionLabel.text = software.softwareDescription;
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCSoftware *software = self.objects[indexPath.row];
-        self.label.text = software.name;
-        
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
-        
-        return size.height + 39;
-    } else {
-        return 60;
-    }
+    OSCSoftware *software = self.objects[indexPath.row];
+    self.label.text = software.name;
+    
+    CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)];
+    
+    return size.height + 39;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCSoftware *software = self.objects[row];
-        DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:software];
-        [self.navigationController pushViewController:detailsViewController animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCSoftware *software = self.objects[indexPath.row];
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:software];
+    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 

@@ -18,7 +18,8 @@
 
 @implementation LastCell
 
-- (instancetype)initCell {
+- (instancetype)init
+{
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor themeColor];
@@ -34,7 +35,7 @@
 {
     self.textLabel.backgroundColor = [UIColor themeColor];
     self.textLabel.textAlignment = NSTextAlignmentCenter;
-    self.textLabel.font = [UIFont boldSystemFontOfSize:18];
+    self.textLabel.font = [UIFont boldSystemFontOfSize:14];
     
     _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _indicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin  | UIViewAutoresizingFlexibleBottomMargin |
@@ -49,7 +50,7 @@
     [_indicator stopAnimating];
     _indicator.hidden = YES;
     
-    self.textLabel.text = @"More...";
+    self.textLabel.text = @"点击加载更多";
     self.userInteractionEnabled = YES;
     self.status = LastCellStatusMore;
 }

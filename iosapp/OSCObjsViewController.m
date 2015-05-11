@@ -41,12 +41,13 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.tableView.backgroundColor = [UIColor themeColor];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    _lastCell = [LastCell new];
+    [_lastCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fetchMore)]];
+    self.tableView.tableFooterView = _lastCell;
     
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-
-    _lastCell = [[LastCell alloc] initCell];
     
     _label = [UILabel new];
     _label.numberOfLines = 0;
@@ -82,8 +83,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_lastCell.status == LastCellStatusNotVisible || _objects.count == 0) return _objects.count;
-    return _objects.count + 1;
+    return _objects.count;
 }
 
 /*

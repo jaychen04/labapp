@@ -59,56 +59,43 @@ static NSString *kPostCellID = @"PostCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kPostCellID forIndexPath:indexPath];
-        OSCPost *post = self.objects[indexPath.row];
-        
-        [cell.portrait loadPortrait:post.portraitURL];
-        [cell.titleLabel setText:post.title];
-        [cell.bodyLabel setText:post.body];
-        [cell.authorLabel setText:post.author];
-        [cell.timeLabel setText:[Utils intervalSinceNow:post.pubDate]];
-        [cell.commentAndView setText:[NSString stringWithFormat:@"%d回 / %d阅", post.replyCount, post.viewCount]];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    PostCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kPostCellID forIndexPath:indexPath];
+    OSCPost *post = self.objects[indexPath.row];
+    
+    [cell.portrait loadPortrait:post.portraitURL];
+    [cell.titleLabel setText:post.title];
+    [cell.bodyLabel setText:post.body];
+    [cell.authorLabel setText:post.author];
+    [cell.timeLabel setText:[Utils intervalSinceNow:post.pubDate]];
+    [cell.commentAndView setText:[NSString stringWithFormat:@"%d回 / %d阅", post.replyCount, post.viewCount]];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCPost *post = self.objects[indexPath.row];
-        
-        self.label.font = [UIFont boldSystemFontOfSize:15];
-        self.label.text = post.title;
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 62, MAXFLOAT)].height;
-        
-        self.label.text = post.body;
-        self.label.font = [UIFont systemFontOfSize:13];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 62, MAXFLOAT)].height;
-        
-        return height + 41;
-    } else {
-        return 60;
-    }
+    OSCPost *post = self.objects[indexPath.row];
+    
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    self.label.text = post.title;
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 62, MAXFLOAT)].height;
+    
+    self.label.text = post.body;
+    self.label.font = [UIFont systemFontOfSize:13];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 62, MAXFLOAT)].height;
+    
+    return height + 41;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCPost *post = self.objects[row];
-        DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
-        [self.navigationController pushViewController:detailsViewController animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCPost *post = self.objects[indexPath.row];
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 

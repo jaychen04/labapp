@@ -89,12 +89,17 @@ static NSString * const kTweetTopiccCommentCellID = @"TweetCell";
     [super didReceiveMemoryWarning];
 }
 
+
 #pragma mark - 取消
+
 - (void)cancelButtonClicked
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+
 #pragma mark - 编辑
+
 - (void)TopicEditing
 {
     TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithTopic:_topicName];
@@ -102,72 +107,62 @@ static NSString * const kTweetTopiccCommentCellID = @"TweetCell";
     [self.navigationController presentViewController:tweetEditingNav animated:NO completion:nil];
     
 }
+
+
 #pragma mark - uitableview delegate
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-    if (row < self.objects.count) {
-        TweetCell *cell = [TweetCell new];
-        OSCTweet *tweet = self.objects[row];
-        
-        [cell setContentWithTweet:tweet];
-        
-        
-        cell.portrait.tag = row; cell.authorLabel.tag = row;
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+
+    TweetCell *cell = [TweetCell new];
+    OSCTweet *tweet = self.objects[row];
+    
+    [cell setContentWithTweet:tweet];
+    
+    
+    cell.portrait.tag = row; cell.authorLabel.tag = row;
+    [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCTweet *tweet = self.objects[indexPath.row];
-        
-        self.label.font = [UIFont boldSystemFontOfSize:14];
-        [self.label setText:tweet.author];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
-        
-        [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
-        
-        if (tweet.likeCount) {
-            [self.label setAttributedText:tweet.likersString];
-            self.label.font = [UIFont systemFontOfSize:12];
-            height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 6;
-        }
-        
-        if (tweet.hasAnImage) {
-#if 0
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
-            if (!image) {image = [UIImage imageNamed:@"loading"];}
-            height += image.size.height + 5;
-#else
-            height += 86;
-#endif
-        }
-        
-        return height + 39;
-    } else {
-        return 60;
+    OSCTweet *tweet = self.objects[indexPath.row];
+    
+    self.label.font = [UIFont boldSystemFontOfSize:14];
+    [self.label setText:tweet.author];
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+    
+    [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+    
+    if (tweet.likeCount) {
+        [self.label setAttributedText:tweet.likersString];
+        self.label.font = [UIFont systemFontOfSize:12];
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 6;
     }
+    
+    if (tweet.hasAnImage) {
+#if 0
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
+        if (!image) {image = [UIImage imageNamed:@"loading"];}
+        height += image.size.height + 5;
+#else
+        height += 86;
+#endif
+    }
+    
+    return height + 39;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row = indexPath.row;
-    
-   if (row < self.objects.count) {
-        OSCTweet *tweet = self.objects[row];
-        TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
-        [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCTweet *tweet = self.objects[indexPath.row];
+    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+    [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
 }
 
 

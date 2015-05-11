@@ -49,40 +49,27 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kFavoriteCellID forIndexPath:indexPath];
-        OSCFavorite *favorite = self.objects[indexPath.row];
-        
-        cell.backgroundColor = [UIColor themeColor];
-        cell.textLabel.text = favorite.title;
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kFavoriteCellID forIndexPath:indexPath];
+    OSCFavorite *favorite = self.objects[indexPath.row];
+    
+    cell.backgroundColor = [UIColor themeColor];
+    cell.textLabel.text = favorite.title;
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        return 50;
-    } else {
-        return 60;
-    }
+    return 50;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCFavorite *favorite = self.objects[indexPath.row];
-        [Utils analysis:[favorite.url absoluteString] andNavController:self.navigationController];
-    } else {
-        [self fetchMore];
-    }
+    OSCFavorite *favorite = self.objects[indexPath.row];
+    [Utils analysis:[favorite.url absoluteString] andNavController:self.navigationController];
 }
 
 
