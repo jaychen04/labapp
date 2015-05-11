@@ -17,11 +17,16 @@
 #import <Ono.h>
 #import "Config.h"
 #import "TeamMemberDetailViewController.h"
+
 static NSString * const kMemberCellID = @"MemberCell";
 
 @interface TeamMemberViewController ()
 
 @property (nonatomic, assign) int teamID;
+@property (nonatomic, assign) int projectID;
+@property (nonatomic, copy) NSString *source;
+
+@property (nonatomic, copy) NSString *URL;
 @property (nonatomic, strong) NSMutableArray *members;
 
 @end
@@ -42,7 +47,23 @@ static NSString * const kMemberCellID = @"MemberCell";
     
     if (self) {
         _teamID = teamID;
+        _URL = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_MEMBER_LIST];
+        
         _members = [NSMutableArray new];
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID andSource:(NSString *)source
+{
+    self = [self initWithTeamID:teamID];
+    
+    if (self) {
+        _projectID = projectID;
+        _source = [source copy];
+        
+        _URL = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_MEMBER_LIST];
     }
     
     return self;
@@ -88,34 +109,11 @@ static NSString * const kMemberCellID = @"MemberCell";
 
 #pragma mark <UICollectionViewDelegate>
 
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-
-
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TeamMember *member = _members[indexPath.section * 3 + indexPath.row];
     TeamMemberDetailViewController *memberDetailVC = [[TeamMemberDetailViewController alloc]initWithLoginUserId:[Config getOwnID] visitUserId:member.memberID];
     [self.navigationController pushViewController:memberDetailVC animated:YES];
-    
-//    NSLog(@"row:%ld section:%ld",(long)indexPath.row,(long)indexPath.section);
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
-
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
 }
 
 
@@ -134,8 +132,12 @@ static NSString * const kMemberCellID = @"MemberCell";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
-    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_MEMBER_LIST]
-      parameters:@{@"teamid": @(_teamID)}
+    [manager GET:_URL
+      parameters:@{
+                   @"teamid": @(_teamID),
+                   @"projectid": @(_projectID),
+                   @"source": _source ?: @""
+                   }
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              NSArray *membersXML = [[responseObject.rootElement firstChildWithTag:@"members"] childrenWithTag:@"member"];
              

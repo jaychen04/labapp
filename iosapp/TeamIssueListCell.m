@@ -61,7 +61,7 @@
                                                                              metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_titleLabel]-5-[_countLabel]-8-|"
-                                                                             options:NSLayoutFormatAlignAllTop
+                                                                             options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_detailLabel]-8-|" options:0 metrics:nil views:views]];
