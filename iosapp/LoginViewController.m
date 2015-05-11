@@ -29,6 +29,8 @@
 @property (nonatomic, strong) UITextField *accountField;
 @property (nonatomic, strong) UITextField *passwordField;
 @property (nonatomic, strong) UIButton *loginButton;
+
+@property (nonatomic, strong) MBProgressHUD *HUD;
 @property (nonatomic, strong) TTTAttributedLabel *registerInfo;
 
 @end
@@ -71,6 +73,11 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [_HUD hide:YES];
 }
 
 
@@ -195,6 +202,10 @@
 
 - (void)login
 {
+    _HUD = [Utils createHUD];
+    _HUD.labelText = @"正在登录";
+    _HUD.userInteractionEnabled = NO;
+    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_LOGIN_VALIDATE]
@@ -207,11 +218,10 @@
               if (!errorCode) {
                   NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
                   
-                  MBProgressHUD *HUD = [Utils createHUD];
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                  [HUD hide:YES afterDelay:1];
+                  _HUD.mode = MBProgressHUDModeCustomView;
+                  _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  _HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  [_HUD hide:YES afterDelay:1];
                   
                   return;
               }
@@ -226,12 +236,11 @@
               [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
               [self.navigationController popViewControllerAnimated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              MBProgressHUD *HUD = [Utils createHUD];
-              HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.labelText = @"网络异常，登录失败";
+              _HUD.mode = MBProgressHUDModeCustomView;
+              _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              _HUD.labelText = @"网络异常，登录失败";
               
-              [HUD hide:YES afterDelay:1];
+              [_HUD hide:YES afterDelay:1];
           }
      ];
 }
