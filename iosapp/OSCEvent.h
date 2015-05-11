@@ -7,6 +7,7 @@
 //
 
 #import "OSCBaseObject.h"
+#import <UIKit/UIKit.h>
 
 @interface OSCEvent : OSCBaseObject
 
@@ -37,7 +38,8 @@
 @property (nonatomic, assign) BOOL hasReference;
 @property (nonatomic, assign) BOOL shouleShowClientOrCommentCount;
 @property (nonatomic, strong, readonly) NSMutableAttributedString *actionStr;
+@property (nonatomic, strong) NSMutableAttributedString *attributedCommentCount;
 
--(NSAttributedString *)attributedCommentCount;
+@property (nonatomic, assign) CGFloat cellHeight;
 
 @end

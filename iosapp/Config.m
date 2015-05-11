@@ -25,7 +25,7 @@ NSString * const kDevelopPlatform = @"devplatform";
 NSString * const kExpertise = @"expertise";
 NSString * const kHometown = @"from";
 
-NSString * const kName = @"name";
+NSString * const kTrueName = @"trueName";
 NSString * const kSex = @"sex";
 NSString * const kPhoneNumber = @"phoneNumber";
 NSString * const kCorporation = @"corporation";
@@ -78,7 +78,7 @@ NSString * const kPosition = @"position";
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    [userDefaults setObject:actorName forKey:kName];
+    [userDefaults setObject:actorName forKey:kTrueName];
     [userDefaults setObject:@(sex) forKey:kSex];
     [userDefaults setObject:phoneNumber forKey:kPhoneNumber];
     [userDefaults setObject:corporation forKey:kCorporation];
@@ -128,15 +128,13 @@ NSString * const kPosition = @"position";
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    NSString *name = [userDefaults objectForKey:kName];
-    NSNumber *sex = [userDefaults objectForKey:kSex];
-    NSString *phoneNumber = [userDefaults objectForKey:kPhoneNumber];
-    NSString *corporation = [userDefaults objectForKey:kCorporation];
-    NSString *position = [userDefaults objectForKey:kPosition];
-    if (name) {
-        return @[name, sex, phoneNumber, corporation, position];
-    }
-    return nil;
+    NSString *name = [userDefaults objectForKey:kTrueName] ?: @"";
+    NSNumber *sex = [userDefaults objectForKey:kSex] ?: @(0);
+    NSString *phoneNumber = [userDefaults objectForKey:kPhoneNumber] ?: @"";
+    NSString *corporation = [userDefaults objectForKey:kCorporation] ?: @"";
+    NSString *position = [userDefaults objectForKey:kPosition] ?: @"";
+    
+    return @[name, sex, phoneNumber, corporation, position];
 }
 
 + (NSArray *)getUsersInformation

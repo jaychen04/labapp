@@ -439,8 +439,11 @@
         if ([Config getOwnID] == 0) {
             [self.navigationController pushViewController:[LoginViewController new] animated:YES];
         } else {
-            [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myInfo]
-                                                 animated:YES];
+            if (_myInfo) {
+                [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myInfo] animated:YES];
+            } else {
+                [self.navigationController pushViewController:[MyBasicInfoViewController new] animated:YES];
+            }
         }
     }
 }
