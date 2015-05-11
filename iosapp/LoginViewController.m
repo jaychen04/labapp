@@ -77,6 +77,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [_HUD hide:YES];
 }
 
