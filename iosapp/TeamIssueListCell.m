@@ -26,25 +26,25 @@
 
 - (void)initSubviews
 {
-    self.titleLabel = [UILabel new];
-    self.titleLabel.numberOfLines = 0;
-    self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-    [self.contentView addSubview:self.titleLabel];
+    _titleLabel = [UILabel new];
+    _titleLabel.numberOfLines = 0;
+    _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _titleLabel.font = [UIFont boldSystemFontOfSize:15];
+    [self.contentView addSubview:_titleLabel];
     
-    self.detailLabel = [UILabel new];
-    self.detailLabel.textColor = [UIColor grayColor];
-    self.detailLabel.numberOfLines = 0;
-    self.detailLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.detailLabel.font = [UIFont boldSystemFontOfSize:12];
-    [self.contentView addSubview:self.detailLabel];
+    _detailLabel = [UILabel new];
+    _detailLabel.textColor = [UIColor grayColor];
+    _detailLabel.numberOfLines = 0;
+    _detailLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _detailLabel.font = [UIFont boldSystemFontOfSize:13];
+    [self.contentView addSubview:_detailLabel];
     
-    self.countLabel = [UILabel new];
-    self.countLabel.numberOfLines = 0;
-    self.countLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.countLabel.font = [UIFont systemFontOfSize:13];
-    self.countLabel.textColor = [UIColor grayColor];
-    [self.contentView addSubview:self.countLabel];
+    _countLabel = [UILabel new];
+    _countLabel.numberOfLines = 0;
+    _countLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _countLabel.font = [UIFont systemFontOfSize:13];
+    _countLabel.textColor = [UIColor grayColor];
+    [self.contentView addSubview:_countLabel];
     
 }
 
@@ -54,26 +54,19 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_titleLabel,_detailLabel,_countLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_titleLabel,_detailLabel,_countLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_titleLabel]-3-[_detailLabel]-8-|" options:NSLayoutFormatAlignAllLeft metrics:nil views:viewsDict]];
-
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_titleLabel]-5-[_countLabel]-20-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_titleLabel]-8-[_detailLabel]-8-|"
+                                                                             options:NSLayoutFormatAlignAllLeft
+                                                                             metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_titleLabel]-5-[_countLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllTop
-                                                                             metrics:nil
-                                                                               views:viewsDict]];
+                                                                             metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_detailLabel]-8-|" options:0 metrics:nil views:views]];
     
 }
 
-
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 @end

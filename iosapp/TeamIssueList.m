@@ -20,7 +20,6 @@
         _openedIssueCount = [[[xml firstChildWithTag:@"openedIssueCount"] numberValue] intValue];
         _closedIssueCount = [[[xml firstChildWithTag:@"closedIssueCount"] numberValue] intValue];
         _allIssueCount = [[[xml firstChildWithTag:@"allIssueCount"] numberValue] intValue];
-
     }
     
     return self;

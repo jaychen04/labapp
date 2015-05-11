@@ -10,8 +10,8 @@
 
 @interface TeamIssueList : OSCBaseObject
 @property (nonatomic) int teamIssueId;
-@property (nonatomic,copy)NSString *listTitle;
-@property (nonatomic,copy)NSString *listDescription;
+@property (nonatomic, copy) NSString *listTitle;
+@property (nonatomic, copy) NSString *listDescription;
 @property (nonatomic) int64_t archive;
 @property (nonatomic) int  openedIssueCount;
 @property (nonatomic) int  closedIssueCount;

@@ -61,7 +61,7 @@ static NSString *kTeamIssueListCellID = @"teamIssueListCell";
         TeamIssueList *list = self.objects[indexPath.row];
         
         [cell.titleLabel setText:list.listTitle];
-        [cell.detailLabel setText:[list.listDescription length]<=0?@"暂无描述":list.listDescription];
+        [cell.detailLabel setText:list.listDescription.length? list.listDescription : @"暂无描述"];
         [cell.countLabel setText:[NSString stringWithFormat:@"%d/%d",list.openedIssueCount,list.allIssueCount]];
         return cell;
     } else {
@@ -73,7 +73,14 @@ static NSString *kTeamIssueListCellID = @"teamIssueListCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.objects.count) {
-        return 52;
+        TeamIssueList *issueList = self.objects[indexPath.row];
+        
+        self.label.font = [UIFont systemFontOfSize:13];
+        self.label.text = issueList.listDescription.length? issueList.listDescription : @"暂无描述";
+        
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
+        
+        return height + 45;
     } else {
         return 60;
     }
