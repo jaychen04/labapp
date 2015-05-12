@@ -80,43 +80,32 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        TeamActivity *activity = self.objects[indexPath.row];
-        
-        self.label.attributedText = activity.attributedTitle;
-        
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
-        
-        return height + 63;
-    } else {
-        return 50;
-    }
+    TeamActivity *activity = self.objects[indexPath.row];
+    
+    self.label.attributedText = activity.attributedTitle;
+    
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
+    
+    return height + 63;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kActivityCellID forIndexPath:indexPath];
-        TeamActivity *activity = self.objects[indexPath.row];
-        
-        [cell setContentWithActivity:activity];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kActivityCellID forIndexPath:indexPath];
+    TeamActivity *activity = self.objects[indexPath.row];
+    
+    [cell setContentWithActivity:activity];
+    
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row < self.objects.count) {
-        TeamActivity *activity = self.objects[indexPath.row];
-        TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamID];
-        [self.navigationController pushViewController:detailVC animated:YES];
-    }else {
-        [self fetchMore];
-    }
+    
+    TeamActivity *activity = self.objects[indexPath.row];
+    TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamID];
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 

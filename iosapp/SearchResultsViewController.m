@@ -41,6 +41,8 @@ static NSString * const kSoftware       = @"software";
     
     self.objClass = [OSCSearchResult class];
     
+    self.shouldFetchDataAfterLoaded = NO;
+    
     return self;
 }
 
@@ -51,8 +53,9 @@ static NSString * const kSoftware       = @"software";
 
 
 - (void)viewDidLoad {
-    self.needRefreshAnimation = NO;
     [super viewDidLoad];
+    
+    self.lastCell.emptyMessage = @"找不到和您的查询相符的信息";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -64,38 +67,24 @@ static NSString * const kSoftware       = @"software";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row = indexPath.row;
-    if (row < self.objects.count) {
-        OSCSearchResult *result = self.objects[row];
-        
-        UITableViewCell *cell = [self createCellWithSearchResult:result];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    OSCSearchResult *result = self.objects[indexPath.row];
+    
+    UITableViewCell *cell = [self createCellWithSearchResult:result];
+    
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        return [self heightForRowAtIndexPath:indexPath];
-    } else {
-        return 60;
-    }
+    return [self heightForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCSearchResult *result = self.objects[indexPath.row];
-        [Utils analysis:result.url andNavController:self.navigationController];
-    } else {
-        [self fetchMore];
-    }
+    OSCSearchResult *result = self.objects[indexPath.row];
+    [Utils analysis:result.url andNavController:self.navigationController];
 }
 
 

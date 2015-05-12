@@ -59,35 +59,27 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        TeamDiscussion *discussion = self.objects[indexPath.row];
-        
-        self.label.font = [UIFont boldSystemFontOfSize:15];
-        self.label.text = discussion.title;
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
-        
-        self.label.text = discussion.body;
-        self.label.font = [UIFont systemFontOfSize:13];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
-        
-        return height + 43;
-    } else {
-        return 50;
-    }
+    TeamDiscussion *discussion = self.objects[indexPath.row];
+    
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    self.label.text = discussion.title;
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
+    
+    self.label.text = discussion.body;
+    self.label.font = [UIFont systemFontOfSize:13];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
+    
+    return height + 43;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        TeamDiscussionCell *cell = [tableView dequeueReusableCellWithIdentifier:kDiscussionCellID forIndexPath:indexPath];
-        TeamDiscussion *discussion = self.objects[indexPath.row];
-        
-        [cell setContentWithDiscussion:discussion];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    TeamDiscussionCell *cell = [tableView dequeueReusableCellWithIdentifier:kDiscussionCellID forIndexPath:indexPath];
+    TeamDiscussion *discussion = self.objects[indexPath.row];
+    
+    [cell setContentWithDiscussion:discussion];
+    
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -95,10 +87,8 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     TeamDiscussion *teamDiscussion = self.objects[indexPath.row];
     
-    if (indexPath.row < self.objects.count) {
-        [self.navigationController pushViewController:[[DiscussionDetailsViewController alloc] initWithTeamID:_teamID andDiscussionID:teamDiscussion.discussionID]
-                                             animated:YES];
-    }
+    [self.navigationController pushViewController:[[DiscussionDetailsViewController alloc] initWithTeamID:_teamID andDiscussionID:teamDiscussion.discussionID]
+                                         animated:YES];
 }
 
 

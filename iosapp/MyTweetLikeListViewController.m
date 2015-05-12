@@ -59,55 +59,42 @@ static NSString * const MyTweetLikeListCellID = @"MyTweetLikeListCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-    if (row < self.objects.count) {
-        OSCMyTweetLikeList *myTweetLikeList = self.objects[row];
-        MyTweetLikeListCell *cell = [tableView dequeueReusableCellWithIdentifier:MyTweetLikeListCellID forIndexPath:indexPath];
-        
-        [cell setContentWithMyTweetLikeList:myTweetLikeList];
-        
-        cell.portrait.tag = row;
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    
+    OSCMyTweetLikeList *myTweetLikeList = self.objects[row];
+    MyTweetLikeListCell *cell = [tableView dequeueReusableCellWithIdentifier:MyTweetLikeListCellID forIndexPath:indexPath];
+    
+    [cell setContentWithMyTweetLikeList:myTweetLikeList];
+    
+    cell.portrait.tag = row;
+    [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
+    
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCMyTweetLikeList *myTweetLikeList = self.objects[indexPath.row];
-        
-        self.label.font = [UIFont boldSystemFontOfSize:14];
-        [self.label setText:myTweetLikeList.name];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
-        
-        [self.label setText:[NSString stringWithFormat:@"赞了我的动弹："]];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 5;
-        
-        [self.label setAttributedText:myTweetLikeList.authorAndBody];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 5;
-        
-        return height + 16;
-    } else {
-        return 60;
-    }
+    OSCMyTweetLikeList *myTweetLikeList = self.objects[indexPath.row];
+    
+    self.label.font = [UIFont boldSystemFontOfSize:14];
+    [self.label setText:myTweetLikeList.name];
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+    
+    [self.label setText:[NSString stringWithFormat:@"赞了我的动弹："]];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 5;
+    
+    [self.label setAttributedText:myTweetLikeList.authorAndBody];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 5;
+    
+    return height + 16;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCMyTweetLikeList *myTweetLikeList = self.objects[row];
-        TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:myTweetLikeList.tweetId];
-        [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
-    } else {
-        [self fetchMore];
-    }
-
+    OSCMyTweetLikeList *myTweetLikeList = self.objects[indexPath.row];
+    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:myTweetLikeList.tweetId];
+    [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
 }
 
 #pragma mark - 跳转到用户详情页

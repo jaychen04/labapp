@@ -61,43 +61,35 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCComment *message = self.objects[indexPath.row];
-        
-        MessageBubbleCell *cell = nil;
-        if (message.authorID == [Config getOwnID]) {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageBubbleMe forIndexPath:indexPath];
-        } else {
-            cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageBubbleOthers forIndexPath:indexPath];
-        }
-        
-        [self setBlockForMessageCell:cell];
-        
-        [cell setContent:message.content andPortrait:message.portraitURL];
-        
-        cell.portrait.tag = message.authorID;
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
-        
-        return cell;
+    OSCComment *message = self.objects[indexPath.row];
+    
+    MessageBubbleCell *cell = nil;
+    if (message.authorID == [Config getOwnID]) {
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageBubbleMe forIndexPath:indexPath];
     } else {
-        return self.lastCell;
+        cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageBubbleOthers forIndexPath:indexPath];
     }
+    
+    [self setBlockForMessageCell:cell];
+    
+    [cell setContent:message.content andPortrait:message.portraitURL];
+    
+    cell.portrait.tag = message.authorID;
+    [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCComment *message = self.objects[indexPath.row];
-        
-        self.label.text = message.content;
-        self.label.font = [UIFont systemFontOfSize:15];
-        CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 85, MAXFLOAT)];
-        
-        return contentSize.height + 36;
-    } else {
-        return 60;
-    }
+    OSCComment *message = self.objects[indexPath.row];
+    
+    self.label.text = message.content;
+    self.label.font = [UIFont systemFontOfSize:15];
+    CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 85, MAXFLOAT)];
+    
+    return contentSize.height + 36;
 }
 
 

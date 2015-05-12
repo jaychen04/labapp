@@ -22,5 +22,6 @@ typedef NS_ENUM(NSUInteger, TweetsType)
 - (instancetype)initWithTweetsType:(TweetsType)type;
 - (instancetype)initWithUserID:(int64_t)userID;
 - (instancetype)initWithSoftwareID:(int64_t)softwareID;
+- (instancetype)initWithTopic:(NSString *)topic;
 
 @end

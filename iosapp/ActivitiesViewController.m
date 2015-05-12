@@ -57,68 +57,56 @@ static NSString * const kActivtyCellID = @"ActivityCell";
 
 #pragma mark - Table view data source
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.objects.count) {
-        ActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kActivtyCellID forIndexPath:indexPath];
-        OSCActivity *activity = self.objects[indexPath.row];
-        
-        cell.titleLabel.text       = activity.title;
-        cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
-        [cell.posterView sd_setImageWithURL:activity.coverURL placeholderImage:nil];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    ActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kActivtyCellID forIndexPath:indexPath];
+    OSCActivity *activity = self.objects[indexPath.row];
+    
+    cell.titleLabel.text       = activity.title;
+    cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
+    [cell.posterView sd_setImageWithURL:activity.coverURL placeholderImage:nil];
 
-        if (activity.status == 1 || activity.status == 3) {
-            [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_over"]];
-            if (activity.applyStatus == 2) {
-                [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
-            }
-        } else {
-            if (activity.applyStatus == 1) {
-                [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_checked"]];
-                cell.tabImageView.hidden = NO;
-            } else if (activity.applyStatus == 2) {
-                [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
-                cell.tabImageView.hidden = NO;
-            } else {
-                cell.tabImageView.hidden = YES;
-            }
+    if (activity.status == 1 || activity.status == 3) {
+        [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_over"]];
+        if (activity.applyStatus == 2) {
+            [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
         }
-        return cell;
     } else {
-        return self.lastCell;
+        if (activity.applyStatus == 1) {
+            [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_checked"]];
+            cell.tabImageView.hidden = NO;
+        } else if (activity.applyStatus == 2) {
+            [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
+            cell.tabImageView.hidden = NO;
+        } else {
+            cell.tabImageView.hidden = YES;
+        }
     }
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCActivity *activity = self.objects[indexPath.row];
-        
-        self.label.text = activity.title;
-        self.label.font = [UIFont boldSystemFontOfSize:14];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 84, MAXFLOAT)].height;
-        
-        self.label.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
-        self.label.font = [UIFont systemFontOfSize:13];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 84, MAXFLOAT)].height;
-        
-        return height + 26;
-    } else {
-        return 60;
-    }
+    OSCActivity *activity = self.objects[indexPath.row];
+    
+    self.label.text = activity.title;
+    self.label.font = [UIFont boldSystemFontOfSize:14];
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 84, MAXFLOAT)].height;
+    
+    self.label.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
+    self.label.font = [UIFont systemFontOfSize:13];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 84, MAXFLOAT)].height;
+    
+    return height + 26;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCActivity *activity = self.objects[indexPath.row];
-        ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:activity.activityID];
-        [self.navigationController pushViewController:activityVC animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCActivity *activity = self.objects[indexPath.row];
+    ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:activity.activityID];
+    [self.navigationController pushViewController:activityVC animated:YES];
 }
 
 

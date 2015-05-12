@@ -17,6 +17,7 @@
 #import "Utils.h"
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
+#import "TweetEditingVC.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
@@ -27,10 +28,9 @@ static NSString * const kTweetCellID = @"TweetCell";
 @interface TweetsViewController ()
 
 @property (nonatomic, assign) int64_t uid;
+@property (nonatomic, copy) NSString *topic;
 
 @end
-
-
 
 
 @implementation TweetsViewController
@@ -89,12 +89,38 @@ static NSString * const kTweetCellID = @"TweetCell";
     return self;
 }
 
+- (instancetype)initWithTopic:(NSString *)topic
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+        
+        _topic = topic;
+        
+        self.generateURL = ^NSString * (NSUInteger page) {
+            NSString *URL = [NSString stringWithFormat:@"%@%@?title=%@&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_TWEET_TOPIC_LIST, topic, (unsigned long)page, OSCAPI_SUFFIX];
+            return [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        };
+        
+        self.objClass = [OSCTweet class];
+        
+        self.navigationItem.title = topic;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(topicEditing)];
+    }
+    
+    return self;
+    
+}
+
+
+
 - (void)setBlockAndClass
 {
     __weak TweetsViewController *weakSelf = self;
     self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-        if (weakSelf.uid == -1) {[weakSelf.lastCell statusFinished];}
-        else {responseObjectsCount < 20? [weakSelf.lastCell statusFinished]: [weakSelf.lastCell statusMore];}
+        if (weakSelf.uid == -1) {weakSelf.lastCell.status = LastCellStatusFinished;}
+        else {responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+                                         (weakSelf.lastCell.status = LastCellStatusMore);}
     };
     
     self.generateURL = ^NSString * (NSUInteger page) {
@@ -139,98 +165,85 @@ static NSString * const kTweetCellID = @"TweetCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-    if (row < self.objects.count) {
-        OSCTweet *tweet = self.objects[row];
-        TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
+    
+    OSCTweet *tweet = self.objects[row];
+    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
+    
+    [self setBlockForCommentCell:cell];
+    [cell setContentWithTweet:tweet];
+    
+    if (tweet.hasAnImage) {
+        cell.thumbnail.hidden = NO;
         
-        [self setBlockForCommentCell:cell];
-        [cell setContentWithTweet:tweet];
-        
-        if (tweet.hasAnImage) {
-            cell.thumbnail.hidden = NO;
-            
 #if 0
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
-            
-            // 有图就加载，无图则下载并reload tableview
-            if (!image) {
-                [cell.thumbnail setImage:[UIImage imageNamed:@"loading"]];
-                [self downloadImageThenReload:tweet.smallImgURL];
-            } else {
-                [cell.thumbnail setImage:image];
-            }
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
+        
+        // 有图就加载，无图则下载并reload tableview
+        if (!image) {
+            [cell.thumbnail setImage:[UIImage imageNamed:@"loading"]];
+            [self downloadImageThenReload:tweet.smallImgURL];
+        } else {
+            [cell.thumbnail setImage:image];
+        }
 #else
-            [cell.thumbnail sd_setImageWithURL:tweet.smallImgURL placeholderImage:[UIImage imageNamed:@"loading"]];
+        [cell.thumbnail sd_setImageWithURL:tweet.smallImgURL placeholderImage:[UIImage imageNamed:@"loading"]];
 #endif
-        } else {cell.thumbnail.hidden = YES;}
-        
-        cell.portrait.tag = row;
-        cell.authorLabel.tag = row;
-        cell.thumbnail.tag = row;
-        cell.likeButton.tag = row;
-        cell.likeListLabel.tag = row;
-        
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
-        [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
-        [cell.likeButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.likeListLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(PushToLikeList:)]];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    } else {cell.thumbnail.hidden = YES;}
+    
+    cell.portrait.tag = row;
+    cell.authorLabel.tag = row;
+    cell.thumbnail.tag = row;
+    cell.likeButton.tag = row;
+    cell.likeListLabel.tag = row;
+    
+    [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
+    [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
+    [cell.likeButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.likeListLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(PushToLikeList:)]];
+    
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    OSCTweet *tweet = self.objects[indexPath.row];
     
-    if (indexPath.row < self.objects.count) {
-        OSCTweet *tweet = self.objects[indexPath.row];
-        
-        if (tweet.cellHeight) {return tweet.cellHeight;}
-        
-        self.label.font = [UIFont boldSystemFontOfSize:14];
-        [self.label setText:tweet.author];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
-        
-        [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
-        
-        if (tweet.likeCount) {
-            [self.label setAttributedText:tweet.likersString];
-            self.label.font = [UIFont systemFontOfSize:12];
-            height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 6;
-        }
-        
-        if (tweet.hasAnImage) {
-#if 0
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
-            if (!image) {image = [UIImage imageNamed:@"loading"];}
-            height += image.size.height + 5;
-#else
-            height += 86;
-#endif
-        }
-        tweet.cellHeight = height + 39;
-        
-        return tweet.cellHeight;
-    } else {
-        return 60;
+    if (tweet.cellHeight) {return tweet.cellHeight;}
+    
+    self.label.font = [UIFont boldSystemFontOfSize:14];
+    [self.label setText:tweet.author];
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+    
+    [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+    
+    if (tweet.likeCount) {
+        [self.label setAttributedText:tweet.likersString];
+        self.label.font = [UIFont systemFontOfSize:12];
+        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height + 6;
     }
+    
+    if (tweet.hasAnImage) {
+#if 0
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
+        if (!image) {image = [UIImage imageNamed:@"loading"];}
+        height += image.size.height + 5;
+#else
+        height += 86;
+#endif
+    }
+    tweet.cellHeight = height + 39;
+    
+    return tweet.cellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCTweet *tweet = self.objects[row];
-        TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
-        [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCTweet *tweet = self.objects[indexPath.row];
+    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+    [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
 }
 
 
@@ -360,6 +373,17 @@ static NSString * const kTweetCellID = @"TweetCell";
     OSCTweet *tweet = self.objects[tap.view.tag];
     TweetsLikeListViewController *likeListCtl = [[TweetsLikeListViewController alloc] initWithtweetID:tweet.tweetID];
     [self.navigationController pushViewController:likeListCtl animated:YES];
+}
+
+
+#pragma mark - 编辑话题动弹
+
+- (void)topicEditing
+{
+    TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithTopic:_topic];
+    UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+    [self.navigationController presentViewController:tweetEditingNav animated:NO completion:nil];
+    
 }
 
 

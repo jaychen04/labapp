@@ -50,61 +50,49 @@ static NSString * const kMessageCellID = @"MessageCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCMessage *message = self.objects[indexPath.row];
-        
-        MessageCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageCellID forIndexPath:indexPath];
-        
-        [self setBlockForMessageCell:cell];
-        
-        cell.backgroundColor = [UIColor themeColor];
-        [cell.portrait loadPortrait:message.portraitURL];
-        cell.portrait.tag = (int)message.friendID;
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
-        
-        cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", message.senderID == [Config getOwnID] ? @"发给" : @"来自", message.friendName];
-        cell.contentLabel.text = message.content;
-        cell.timeLabel.text = [Utils intervalSinceNow:message.pubDate];
-        cell.commentCountLabel.text = [NSString stringWithFormat:@"%d条留言", message.messageCount];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    OSCMessage *message = self.objects[indexPath.row];
+    
+    MessageCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kMessageCellID forIndexPath:indexPath];
+    
+    [self setBlockForMessageCell:cell];
+    
+    cell.backgroundColor = [UIColor themeColor];
+    [cell.portrait loadPortrait:message.portraitURL];
+    cell.portrait.tag = (int)message.friendID;
+    [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
+    
+    cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", message.senderID == [Config getOwnID] ? @"发给" : @"来自", message.friendName];
+    cell.contentLabel.text = message.content;
+    cell.timeLabel.text = [Utils intervalSinceNow:message.pubDate];
+    cell.commentCountLabel.text = [NSString stringWithFormat:@"%d条留言", message.messageCount];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCMessage *message = self.objects[indexPath.row];
-        
-        self.label.text = message.senderName;
-        self.label.font = [UIFont boldSystemFontOfSize:14];
-        CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 70, MAXFLOAT)];
-        
-        self.label.text = message.content;
-        self.label.font = [UIFont boldSystemFontOfSize:15];
-        CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
-        
-        return nameSize.height + contentSize.height + 38;
-    } else {
-        return 60;
-    }
+    OSCMessage *message = self.objects[indexPath.row];
+    
+    self.label.text = message.senderName;
+    self.label.font = [UIFont boldSystemFontOfSize:14];
+    CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 70, MAXFLOAT)];
+    
+    self.label.text = message.content;
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+    
+    return nameSize.height + contentSize.height + 38;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    if (indexPath.row < self.objects.count) {
-        OSCMessage *message = self.objects[indexPath.row];
-        BubbleChatViewController *bubbleChatVC = [[BubbleChatViewController alloc] initWithUserID:message.friendID andUserName:message.friendName];
-        
-        [self.navigationController pushViewController:bubbleChatVC animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCMessage *message = self.objects[indexPath.row];
+    BubbleChatViewController *bubbleChatVC = [[BubbleChatViewController alloc] initWithUserID:message.friendID andUserName:message.friendName];
+    
+    [self.navigationController pushViewController:bubbleChatVC animated:YES];
 }
 
 - (void)pushUserDetails:(UIGestureRecognizer *)recognizer

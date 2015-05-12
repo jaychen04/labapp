@@ -112,80 +112,73 @@ static NSString * const EventCellID = @"EventCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-    if (row < self.objects.count) {
-        OSCEvent *event = self.objects[row];
-        EventCell *cell = [tableView dequeueReusableCellWithIdentifier:EventCellID forIndexPath:indexPath];
-        
-        [self setBlockForEventCell:cell];
-        [cell setContentWithEvent:event];
-        
-        if (event.hasAnImage) {
+
+    OSCEvent *event = self.objects[row];
+    EventCell *cell = [tableView dequeueReusableCellWithIdentifier:EventCellID forIndexPath:indexPath];
+    
+    [self setBlockForEventCell:cell];
+    [cell setContentWithEvent:event];
+    
+    if (event.hasAnImage) {
 #if 0
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
-            
-            // 有图就加载，无图则下载并reload tableview
-            if (!image) {
-                [self downloadImageThenReload:event.tweetImg];
-            } else {
-                [cell.thumbnail setImage:image];
-            }
-#else
-            [cell.thumbnail sd_setImageWithURL:event.tweetImg placeholderImage:[UIImage imageNamed:@"placeholder"]];
-#endif
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
+        
+        // 有图就加载，无图则下载并reload tableview
+        if (!image) {
+            [self downloadImageThenReload:event.tweetImg];
+        } else {
+            [cell.thumbnail setImage:image];
         }
-        
-        cell.portrait.tag = row; cell.thumbnail.tag = row;
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
-        [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
-        
-        return cell;
-    } else {
-        return self.lastCell;
+#else
+        [cell.thumbnail sd_setImageWithURL:event.tweetImg placeholderImage:[UIImage imageNamed:@"placeholder"]];
+#endif
     }
+    
+    cell.portrait.tag = row; cell.thumbnail.tag = row;
+    [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
+    [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
+    
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCEvent *event = self.objects[indexPath.row];
-        
-        if (event.cellHeight) {return event.cellHeight;}
-        
-        self.label.font = [UIFont boldSystemFontOfSize:15];
-        [self.label setAttributedText:[Utils emojiStringFromRawString:event.message]];
-        CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
-        CGFloat height = size.height + 24 + [UIFont systemFontOfSize:14].lineHeight;
-        
-        [self.label setAttributedText:event.actionStr];
-        size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
-        height += size.height;
-        
-        if (event.hasReference) {
-            UITextView *textView = [UITextView new];
-            textView.text = [NSString stringWithFormat:@"%@: %@", event.objectReply[0], event.objectReply[1]];
-            size = [textView sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
-            height += size.height + 5;
-        }
-        
-        if (event.shouleShowClientOrCommentCount) {
-            height += [UIFont systemFontOfSize:14].lineHeight + 5;
-        }
-        
-        if (event.hasAnImage) {
-#if 0
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
-            if (!image) {image = [UIImage imageNamed:@"portrait_loading"];}
-            height += image.size.height + 5;
-#else
-            height += 85;
-#endif
-        }
-        event.cellHeight = height;
-        
-        return event.cellHeight;
-    } else {
-        return 60;
+    OSCEvent *event = self.objects[indexPath.row];
+    
+    if (event.cellHeight) {return event.cellHeight;}
+    
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    [self.label setAttributedText:[Utils emojiStringFromRawString:event.message]];
+    CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
+    CGFloat height = size.height + 24 + [UIFont systemFontOfSize:14].lineHeight;
+    
+    [self.label setAttributedText:event.actionStr];
+    size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
+    height += size.height;
+    
+    if (event.hasReference) {
+        UITextView *textView = [UITextView new];
+        textView.text = [NSString stringWithFormat:@"%@: %@", event.objectReply[0], event.objectReply[1]];
+        size = [textView sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
+        height += size.height + 5;
     }
+    
+    if (event.shouleShowClientOrCommentCount) {
+        height += [UIFont systemFontOfSize:14].lineHeight + 5;
+    }
+    
+    if (event.hasAnImage) {
+#if 0
+        UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
+        if (!image) {image = [UIImage imageNamed:@"portrait_loading"];}
+        height += image.size.height + 5;
+#else
+        height += 85;
+#endif
+    }
+    event.cellHeight = height;
+    
+    return event.cellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -193,45 +186,41 @@ static NSString * const EventCellID = @"EventCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCEvent *event = self.objects[row];
-        switch (event.catalog) {
-            case 1: {
-                OSCNews *news = [OSCNews new];
-                news.newsID = event.objectID;
-                news.type = event.objectCatalog;
-                DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithNews:news];
-                [self.navigationController pushViewController:detailsVC animated:YES];
-                break;
-            }
-            case 2: {
-                OSCPost *post = [OSCPost new];
-                post.postID = event.objectID;
-                DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithPost:post];
-                [self.navigationController pushViewController:detailsVC animated:YES];
-                break;
-            }
-            case 3: {
-                OSCTweet *tweet = [OSCTweet new];
-                tweet.tweetID = event.objectID;
-                
-                TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
-                [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
-                
-                break;
-            }
-            case 4: {
-                OSCBlog *blog = [OSCBlog new];
-                blog.blogID = event.objectID;
-                DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithBlog:blog];
-                [self.navigationController pushViewController:detailsVC animated:YES];
-                break;
-            }
-            default:
-                break;
+    OSCEvent *event = self.objects[row];
+    switch (event.catalog) {
+        case 1: {
+            OSCNews *news = [OSCNews new];
+            news.newsID = event.objectID;
+            news.type = event.objectCatalog;
+            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithNews:news];
+            [self.navigationController pushViewController:detailsVC animated:YES];
+            break;
         }
-    } else {
-        [self fetchMore];
+        case 2: {
+            OSCPost *post = [OSCPost new];
+            post.postID = event.objectID;
+            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithPost:post];
+            [self.navigationController pushViewController:detailsVC animated:YES];
+            break;
+        }
+        case 3: {
+            OSCTweet *tweet = [OSCTweet new];
+            tweet.tweetID = event.objectID;
+            
+            TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+            [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
+            
+            break;
+        }
+        case 4: {
+            OSCBlog *blog = [OSCBlog new];
+            blog.blogID = event.objectID;
+            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithBlog:blog];
+            [self.navigationController pushViewController:detailsVC animated:YES];
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -258,10 +247,7 @@ static NSString * const EventCellID = @"EventCell";
 - (void)setBlockForEventCell:(EventCell *)cell
 {
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
-        if (action == @selector(copyText:)) {
-            return YES;
-        }        
-        return NO;
+        return action == @selector(copyText:);
     };
 }
 

@@ -6,7 +6,6 @@
 //  Copyright (c) 2014年 oschina. All rights reserved.
 //
 
-#import <SDWebImage/UIImageView+WebCache.h>
 #import "Utils.h"
 #import "OSCTweet.h"
 #import "OSCNews.h"
@@ -17,10 +16,12 @@
 #import "PostsViewController.h"
 #import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
+#import "TweetsViewController.h"
+
 #import <MBProgressHUD.h>
 #import <objc/runtime.h>
 #import <Reachability.h>
-#import "TweetTopicViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation Utils
 
@@ -182,7 +183,7 @@
                     url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     urlComponents = [url componentsSeparatedByString:@"/"];
                     
-                    viewController = [[TweetTopicViewController alloc] initWithTopic:urlComponents[2]];
+                    viewController = [[TweetsViewController alloc] initWithTopic:urlComponents[2]];
                 }
             }
         } else if ([prefix isEqualToString:@"static"]) {

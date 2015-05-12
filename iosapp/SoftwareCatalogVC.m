@@ -35,7 +35,7 @@ static NSString * const kSoftwareCatalogCellID = @"SoftwareCatalogCell";
     
     __weak SoftwareCatalogVC *weakSelf = self;
     self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-        [weakSelf.lastCell statusFinished];
+        weakSelf.lastCell.status = LastCellStatusFinished;
     };
     
     self.objClass = [OSCSoftwareCatalog class];
@@ -62,45 +62,32 @@ static NSString * const kSoftwareCatalogCellID = @"SoftwareCatalogCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kSoftwareCatalogCellID forIndexPath:indexPath];
-        OSCSoftwareCatalog *softwareCatalog = self.objects[indexPath.row];
-        
-        cell.backgroundColor = [UIColor themeColor];
-        cell.textLabel.text = softwareCatalog.name;
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kSoftwareCatalogCellID forIndexPath:indexPath];
+    OSCSoftwareCatalog *softwareCatalog = self.objects[indexPath.row];
+    
+    cell.backgroundColor = [UIColor themeColor];
+    cell.textLabel.text = softwareCatalog.name;
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        return 48;
-    } else {
-        return 60;
-    }
+    return 48;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCSoftwareCatalog *softwareCatalog = self.objects[indexPath.row];
-        if (_tag == 0) {
-            SoftwareCatalogVC *softwareCatalogVC = [[SoftwareCatalogVC alloc] initWithTag:softwareCatalog.tag];
-            [self.navigationController pushViewController:softwareCatalogVC animated:YES];
-        } else {
-            SoftwareListVC *softwareListVC = [[SoftwareListVC alloc] initWIthSearchTag:softwareCatalog.tag];
-            [self.navigationController pushViewController:softwareListVC animated:YES];
-        }
+    OSCSoftwareCatalog *softwareCatalog = self.objects[indexPath.row];
+    if (_tag == 0) {
+        SoftwareCatalogVC *softwareCatalogVC = [[SoftwareCatalogVC alloc] initWithTag:softwareCatalog.tag];
+        [self.navigationController pushViewController:softwareCatalogVC animated:YES];
     } else {
-        [self fetchMore];
+        SoftwareListVC *softwareListVC = [[SoftwareListVC alloc] initWIthSearchTag:softwareCatalog.tag];
+        [self.navigationController pushViewController:softwareListVC animated:YES];
     }
 }
 

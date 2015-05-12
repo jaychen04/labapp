@@ -87,11 +87,12 @@ static NSString *kCommentCellID = @"CommentCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
+    
     if (indexPath.section == 0 && self.otherSectionCell) {
         UITableViewCell *cell = self.otherSectionCell(indexPath);
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-    } else if (row < self.objects.count) {
+    } else {
         //CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
         CommentCell *cell = [CommentCell new];
         OSCComment *comment = self.objects[row];
@@ -103,8 +104,6 @@ static NSString *kCommentCellID = @"CommentCell";
         [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
         
         return cell;
-    } else {
-        return self.lastCell;
     }
 }
 
@@ -113,7 +112,7 @@ static NSString *kCommentCellID = @"CommentCell";
 {
     if (indexPath.section == 0 && self.otherSectionCell) {
         return self.heightForOtherSectionCell(indexPath);
-    } else if (indexPath.row < self.objects.count) {
+    } else {
         OSCComment *comment = self.objects[indexPath.row];
         
         if (comment.cellHeight) {return comment.cellHeight;}
@@ -140,8 +139,6 @@ static NSString *kCommentCellID = @"CommentCell";
         comment.cellHeight = height + 61;
         
         return comment.cellHeight;
-    } else {
-        return 60;
     }
 }
 
@@ -149,14 +146,12 @@ static NSString *kCommentCellID = @"CommentCell";
 {
     if (indexPath.section == 0 && self.otherSectionCell) {
         /* 不响应点击 */
-    } else if (indexPath.row < self.objects.count) {
+    } else {
         OSCComment *comment = self.objects[indexPath.row];
         
         if (self.didCommentSelected) {
             self.didCommentSelected(comment);
         }
-    } else {
-        [self fetchMore];
     }
 }
 
