@@ -12,7 +12,6 @@
 @interface LastCell ()
 
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
-@property (readwrite, nonatomic, assign) LastCellStatus status;
 
 @end
 
@@ -23,13 +22,15 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor themeColor];
-        self.status = LastCellStatusNotVisible;
+        
+        _status = LastCellStatusNotVisible;
         
         [self setLayout];
     }
     
     return self;
 }
+
 
 - (void)setLayout
 {
@@ -45,45 +46,32 @@
     [self.contentView addSubview:_indicator];
 }
 
-- (void)statusMore
+
+- (BOOL)shouldResponseToTouch
 {
-    [_indicator stopAnimating];
-    _indicator.hidden = YES;
-    
-    self.textLabel.text = @"点击加载更多";
-    self.userInteractionEnabled = YES;
-    self.status = LastCellStatusMore;
+    return _status == LastCellStatusMore || _status == LastCellStatusError;
 }
 
-- (void)statusLoading
+- (void)setStatus:(LastCellStatus)status
 {
-    [_indicator startAnimating];
-    _indicator.hidden = NO;
+    if (status == LastCellStatusLoading) {
+        [_indicator startAnimating];
+        _indicator.hidden = NO;
+    } else {
+        [_indicator stopAnimating];
+        _indicator.hidden = YES;
+    }
     
-    self.textLabel.text = @"";
-    self.userInteractionEnabled = YES;
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.status = LastCellStatusLoading;
-}
-
-- (void)statusFinished
-{
-    [_indicator stopAnimating];
-    _indicator.hidden = YES;
+    self.textLabel.text = @[
+                            @"",
+                            @"点击加载更多",
+                            @"",
+                            @"加载数据出错",
+                            @"全部加载完毕",
+                            _emptyMessage ?: @"",
+                            ][status];
     
-    self.textLabel.text = @"全部加载完毕";
-    self.selectionStyle = UITableViewCellSelectionStyleNone;
-    self.status = LastCellStatusFinished;
-}
-
-- (void)statusError
-{
-    [_indicator stopAnimating];
-    _indicator.hidden = YES;
-    
-    self.textLabel.text = @"加载数据出错";
-    self.userInteractionEnabled = YES;
-    self.status = LastCellStatusError;
+    _status = status;
 }
 
 

@@ -35,7 +35,7 @@ static NSString * const kSoftwareCatalogCellID = @"SoftwareCatalogCell";
     
     __weak SoftwareCatalogVC *weakSelf = self;
     self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-        [weakSelf.lastCell statusFinished];
+        weakSelf.lastCell.status = LastCellStatusFinished;
     };
     
     self.objClass = [OSCSoftwareCatalog class];

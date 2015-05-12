@@ -31,6 +31,7 @@
         _objects = [NSMutableArray new];
         _page = 0;
         _needRefreshAnimation = YES;
+        _shouldFetchDataAfterLoaded = YES;
     }
     
     return self;
@@ -55,7 +56,9 @@
     _label.font = [UIFont boldSystemFontOfSize:14];
     
     
-    // 自动刷新
+    if (!_shouldFetchDataAfterLoaded) {return;}
+    
+    
     if (_needRefreshAnimation) {
         [self.refreshControl beginRefreshing];
         [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
@@ -132,9 +135,9 @@
 
 - (void)fetchMore
 {
-    if (_lastCell.status == LastCellStatusFinished || _lastCell.status == LastCellStatusLoading) {return;}
+    if (!_lastCell.shouldResponseToTouch) {return;}
     
-    [_lastCell statusLoading];
+    _lastCell.status = LastCellStatusLoading;
     _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     [self fetchObjectsOnPage:++_page refresh:NO];
 }
@@ -177,9 +180,9 @@
                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
                  else {
                      if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
-                         [_lastCell statusFinished];
+                         _lastCell.status = LastCellStatusFinished;
                      } else {
-                         [_lastCell statusMore];
+                         _lastCell.status = LastCellStatusMore;
                      }
                  }
                  
@@ -197,7 +200,7 @@
              
              [HUD hide:YES afterDelay:1];
              
-             [_lastCell statusError];
+             _lastCell.status = LastCellStatusError;
              if (self.refreshControl.refreshing) {
                  [self.refreshControl endRefreshing];
              }

@@ -38,8 +38,9 @@ static NSString *kNewsCellID = @"NewsCell";
         };
         
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-            if (type >= 4) {[weakSelf.lastCell statusFinished];}
-            else {responseObjectsCount < 20? [weakSelf.lastCell statusFinished]: [weakSelf.lastCell statusMore];}
+            if (type >= 4) {weakSelf.lastCell.status = LastCellStatusFinished;}
+            else {responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+                                             (weakSelf.lastCell.status = LastCellStatusMore);}
         };
         
         self.objClass = [OSCNews class];

@@ -93,8 +93,9 @@ static NSString * const kTweetCellID = @"TweetCell";
 {
     __weak TweetsViewController *weakSelf = self;
     self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-        if (weakSelf.uid == -1) {[weakSelf.lastCell statusFinished];}
-        else {responseObjectsCount < 20? [weakSelf.lastCell statusFinished]: [weakSelf.lastCell statusMore];}
+        if (weakSelf.uid == -1) {weakSelf.lastCell.status = LastCellStatusFinished;}
+        else {responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+                                         (weakSelf.lastCell.status = LastCellStatusMore);}
     };
     
     self.generateURL = ^NSString * (NSUInteger page) {

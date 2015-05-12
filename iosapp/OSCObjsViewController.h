@@ -26,6 +26,8 @@
 @property (nonatomic, copy) void (^didRefreshSucceed)();
 
 @property Class objClass;
+
+@property (nonatomic, assign) BOOL shouldFetchDataAfterLoaded;
 @property (nonatomic, assign) BOOL needRefreshAnimation;
 @property (nonatomic, assign) BOOL needCache;
 @property (nonatomic, strong) NSMutableArray *objects;

@@ -15,15 +15,14 @@ typedef NS_ENUM(NSUInteger, LastCellStatus)
     LastCellStatusLoading,
     LastCellStatusError,
     LastCellStatusFinished,
+    LastCellStatusEmpty,
 };
 
 @interface LastCell : UITableViewCell
 
-@property (readonly, nonatomic, assign) LastCellStatus status;
+@property (nonatomic, assign) LastCellStatus status;
+@property (readonly, nonatomic, assign) BOOL shouldResponseToTouch;
+@property (nonatomic, copy) NSString *emptyMessage;
 
-- (void)statusMore;
-- (void)statusLoading;
-- (void)statusFinished;
-- (void)statusError;
 
 @end
