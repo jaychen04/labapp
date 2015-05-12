@@ -61,41 +61,31 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        TeamWeeklyReport *weeklyReport = self.objects[indexPath.row];
-        
-        self.label.attributedText = weeklyReport.attributedTitle;
-        
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
-        
-        return height + 63;
-    } else {
-        return 50;
-    }
+    TeamWeeklyReport *weeklyReport = self.objects[indexPath.row];
+    
+    self.label.attributedText = weeklyReport.attributedTitle;
+    
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
+    
+    return height + 63;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        WeeklyReportCell *cell = [tableView dequeueReusableCellWithIdentifier:kWeeklyReportCellID forIndexPath:indexPath];
-        TeamWeeklyReport *weeklyReport = self.objects[indexPath.row];
-        
-        [cell setContentWithWeeklyReport:weeklyReport];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    WeeklyReportCell *cell = [tableView dequeueReusableCellWithIdentifier:kWeeklyReportCellID forIndexPath:indexPath];
+    TeamWeeklyReport *weeklyReport = self.objects[indexPath.row];
+    
+    [cell setContentWithWeeklyReport:weeklyReport];
+    
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row < self.objects.count) {
-        TeamWeeklyReport *report = self.objects[indexPath.row];
-        [self.navigationController pushViewController:[[WeeklyReportDetailViewController alloc] initWithTeamID:_teamID andReportID:report.reportID] animated:YES];
-    }
+    TeamWeeklyReport *report = self.objects[indexPath.row];
+    [self.navigationController pushViewController:[[WeeklyReportDetailViewController alloc] initWithTeamID:_teamID andReportID:report.reportID] animated:YES];
 }
 
 

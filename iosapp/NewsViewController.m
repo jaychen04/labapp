@@ -38,8 +38,9 @@ static NSString *kNewsCellID = @"NewsCell";
         };
         
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-            if (type >= 4) {[weakSelf.lastCell statusFinished];}
-            else {responseObjectsCount < 20? [weakSelf.lastCell statusFinished]: [weakSelf.lastCell statusMore];}
+            if (type >= 4) {weakSelf.lastCell.status = LastCellStatusFinished;}
+            else {responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+                                             (weakSelf.lastCell.status = LastCellStatusMore);}
         };
         
         self.objClass = [OSCNews class];
@@ -67,60 +68,48 @@ static NSString *kNewsCellID = @"NewsCell";
 
 #pragma mark - Table view data source
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row < self.objects.count) {
-        NewsCell *cell = [tableView dequeueReusableCellWithIdentifier:kNewsCellID forIndexPath:indexPath];
-        OSCNews *news = self.objects[indexPath.row];
-        
-        [cell.titleLabel setAttributedText:news.attributedTittle];
-        [cell.bodyLabel setText:news.body];
-        [cell.authorLabel setText:news.author];
-        [cell.timeLabel setAttributedText:[Utils attributedTimeString:news.pubDate]];
-        [cell.commentCount setAttributedText:news.attributedCommentCount];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NewsCell *cell = [tableView dequeueReusableCellWithIdentifier:kNewsCellID forIndexPath:indexPath];
+    OSCNews *news = self.objects[indexPath.row];
+    
+    [cell.titleLabel setAttributedText:news.attributedTittle];
+    [cell.bodyLabel setText:news.body];
+    [cell.authorLabel setText:news.author];
+    [cell.timeLabel setAttributedText:[Utils attributedTimeString:news.pubDate]];
+    [cell.commentCount setAttributedText:news.attributedCommentCount];
+    
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCNews *news = self.objects[indexPath.row];
-        
-        self.label.font = [UIFont boldSystemFontOfSize:15];
-        [self.label setAttributedText:news.attributedTittle];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-        
-        self.label.text = news.body;
-        self.label.font = [UIFont systemFontOfSize:13];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-        
-        return height + 42;
-    } else {
-        return 60;
-    }
+    OSCNews *news = self.objects[indexPath.row];
+    
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    [self.label setAttributedText:news.attributedTittle];
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    
+    self.label.text = news.body;
+    self.label.font = [UIFont systemFontOfSize:13];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    
+    return height + 42;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCNews *news = self.objects[row];
-        if (news.eventURL.absoluteString.length > 0) {
-            ActivityDetailsWithBarViewController *activityBVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:[news.attachment longLongValue]];
-            [self.navigationController pushViewController:activityBVC animated:YES];
-        } else if (news.url.absoluteString.length > 0) {
-            [Utils analysis:news.url.absoluteString andNavController:self.navigationController];
-        } else {
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNews:news];
-            [self.navigationController pushViewController:detailsViewController animated:YES];
-        }
+    OSCNews *news = self.objects[indexPath.row];
+    if (news.eventURL.absoluteString.length > 0) {
+        ActivityDetailsWithBarViewController *activityBVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:[news.attachment longLongValue]];
+        [self.navigationController pushViewController:activityBVC animated:YES];
+    } else if (news.url.absoluteString.length > 0) {
+        [Utils analysis:news.url.absoluteString andNavController:self.navigationController];
     } else {
-        [self fetchMore];
+        DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNews:news];
+        [self.navigationController pushViewController:detailsViewController animated:YES];
     }
 }
 

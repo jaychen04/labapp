@@ -75,54 +75,41 @@ static NSString *kBlogCellID = @"BlogCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        BlogCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBlogCellID forIndexPath:indexPath];
-        OSCBlog *blog = self.objects[indexPath.row];
-        
-        [cell.titleLabel setAttributedText:blog.attributedTittle];
-        [cell.bodyLabel setText:blog.body];
-        [cell.authorLabel setText:blog.author];
-        [cell.timeLabel setAttributedText:[Utils attributedTimeString:blog.pubDate]];
-        [cell.commentCount setAttributedText:blog.attributedCommentCount];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    BlogCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBlogCellID forIndexPath:indexPath];
+    OSCBlog *blog = self.objects[indexPath.row];
+    
+    [cell.titleLabel setAttributedText:blog.attributedTittle];
+    [cell.bodyLabel setText:blog.body];
+    [cell.authorLabel setText:blog.author];
+    [cell.timeLabel setAttributedText:[Utils attributedTimeString:blog.pubDate]];
+    [cell.commentCount setAttributedText:blog.attributedCommentCount];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCBlog *blog = self.objects[indexPath.row];
-        
-        self.label.font = [UIFont boldSystemFontOfSize:15];
-        [self.label setAttributedText:blog.attributedTittle];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-        
-        self.label.text = blog.body;
-        self.label.font = [UIFont systemFontOfSize:13];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-        
-        return height + 42;
-    } else {
-        return 60;
-    }
+    OSCBlog *blog = self.objects[indexPath.row];
+    
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    [self.label setAttributedText:blog.attributedTittle];
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    
+    self.label.text = blog.body;
+    self.label.font = [UIFont systemFontOfSize:13];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    
+    return height + 42;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCBlog *blog = self.objects[row];
-        DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithBlog:blog];
-        [self.navigationController pushViewController:detailsViewController animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCBlog *blog = self.objects[indexPath.row];
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithBlog:blog];
+    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 

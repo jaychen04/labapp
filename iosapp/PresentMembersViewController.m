@@ -61,49 +61,35 @@ static NSString * const kPersonCellID = @"PersonCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSInteger row = indexPath.row;
-    if (row < self.objects.count) {
-        OSCEventPersonInfo *person = self.objects[row];
-        PersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kPersonCellID forIndexPath:indexPath];
-        
-        [cell.portrait loadPortrait:person.portraitURL];
-        cell.nameLabel.text = person.userName;
-        cell.infoLabel.text = [NSString stringWithFormat:@"%@ %@",person.company, person.job];
-        
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    OSCEventPersonInfo *person = self.objects[indexPath.row];
+    PersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kPersonCellID forIndexPath:indexPath];
+    
+    [cell.portrait loadPortrait:person.portraitURL];
+    cell.nameLabel.text = person.userName;
+    cell.infoLabel.text = [NSString stringWithFormat:@"%@ %@",person.company, person.job];
+    
+    return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        OSCEventPersonInfo *person = self.objects[indexPath.row];
-        self.label.text = person.userName;
-        self.label.font = [UIFont systemFontOfSize:16];
-        CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
-        
-        self.label.text = [NSString stringWithFormat:@"%@ %@",person.company, person.job];
-        self.label.font = [UIFont systemFontOfSize:12];
-        CGSize infoLabelSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
-        return nameSize.height + infoLabelSize.height + 21;
-    } else {
-        return 60;
-    }
+    OSCEventPersonInfo *person = self.objects[indexPath.row];
+    self.label.text = person.userName;
+    self.label.font = [UIFont systemFontOfSize:16];
+    CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+    
+    self.label.text = [NSString stringWithFormat:@"%@ %@",person.company, person.job];
+    self.label.font = [UIFont systemFontOfSize:12];
+    CGSize infoLabelSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+    return nameSize.height + infoLabelSize.height + 21;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSInteger row = indexPath.row;
     
-    if (row < self.objects.count) {
-        OSCEventPersonInfo *person = self.objects[row];
-        UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:person.userID];
-        [self.navigationController pushViewController:userDetailsVC animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    OSCEventPersonInfo *person = self.objects[indexPath.row];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:person.userID];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 @end

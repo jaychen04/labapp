@@ -31,6 +31,7 @@
         _objects = [NSMutableArray new];
         _page = 0;
         _needRefreshAnimation = YES;
+        _shouldFetchDataAfterLoaded = YES;
     }
     
     return self;
@@ -41,12 +42,13 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.tableView.backgroundColor = [UIColor themeColor];
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    _lastCell = [LastCell new];
+    [_lastCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fetchMore)]];
+    self.tableView.tableFooterView = _lastCell;
     
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-
-    _lastCell = [[LastCell alloc] initCell];
     
     _label = [UILabel new];
     _label.numberOfLines = 0;
@@ -54,15 +56,16 @@
     _label.font = [UIFont boldSystemFontOfSize:14];
     
     
-    // 自动刷新
+    _manager = [AFHTTPRequestOperationManager manager];
+    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    if (!_shouldFetchDataAfterLoaded) {return;}
     if (_needRefreshAnimation) {
         [self.refreshControl beginRefreshing];
         [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
                                 animated:YES];
     }
     
-    _manager = [AFHTTPRequestOperationManager manager];
-    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     if (_needCache) {
         _manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     }
@@ -82,8 +85,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_lastCell.status == LastCellStatusNotVisible || _objects.count == 0) return _objects.count;
-    return _objects.count + 1;
+    return _objects.count;
 }
 
 /*
@@ -143,9 +145,9 @@
 
 - (void)fetchMore
 {
-    if (_lastCell.status == LastCellStatusFinished || _lastCell.status == LastCellStatusLoading) {return;}
+    if (!_lastCell.shouldResponseToTouch) {return;}
     
-    [_lastCell statusLoading];
+    _lastCell.status = LastCellStatusLoading;
     _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     [self fetchObjectsOnPage:++_page refresh:NO];
 }
@@ -187,10 +189,12 @@
              dispatch_async(dispatch_get_main_queue(), ^{
                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
                  else {
-                     if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
-                         [_lastCell statusFinished];
+                     if (_page == 0 && objectsXML.count == 0) {
+                         _lastCell.status = LastCellStatusEmpty;
+                     } else if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
+                         _lastCell.status = LastCellStatusFinished;
                      } else {
-                         [_lastCell statusMore];
+                         _lastCell.status = LastCellStatusMore;
                      }
                  }
                  
@@ -208,7 +212,7 @@
              
              [HUD hide:YES afterDelay:1];
              
-             [_lastCell statusError];
+             _lastCell.status = LastCellStatusError;
              if (self.refreshControl.refreshing) {
                  [self.refreshControl endRefreshing];
              }

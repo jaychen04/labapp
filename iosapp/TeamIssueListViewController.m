@@ -38,7 +38,7 @@ static NSString *kTeamIssueListCellID = @"teamIssueListCell";
         
         __weak typeof(self) weakSelf = self;
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-            [weakSelf.lastCell statusFinished];
+            weakSelf.lastCell.status = LastCellStatusFinished;
         };
         
         self.objClass = [TeamIssueList class];
@@ -67,34 +67,27 @@ static NSString *kTeamIssueListCellID = @"teamIssueListCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        TeamIssueListCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kTeamIssueListCellID forIndexPath:indexPath];
-        TeamIssueList *list = self.objects[indexPath.row];
-        
-        [cell.titleLabel setText:list.title];
-        [cell.detailLabel setText:list.listDescription.length? list.listDescription : @"暂无描述"];
-        [cell.countLabel setText:[NSString stringWithFormat:@"%d/%d",list.openedIssueCount,list.allIssueCount]];
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    TeamIssueListCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kTeamIssueListCellID forIndexPath:indexPath];
+    TeamIssueList *list = self.objects[indexPath.row];
+    
+    [cell.titleLabel setText:list.title];
+    [cell.detailLabel setText:list.listDescription.length? list.listDescription : @"暂无描述"];
+    [cell.countLabel setText:[NSString stringWithFormat:@"%d/%d",list.openedIssueCount,list.allIssueCount]];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        TeamIssueList *issueList = self.objects[indexPath.row];
-        
-        self.label.font = [UIFont systemFontOfSize:13];
-        self.label.text = issueList.listDescription.length? issueList.listDescription : @"暂无描述";
-        
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
-        
-        return height + 45;
-    } else {
-        return 60;
-    }
+    TeamIssueList *issueList = self.objects[indexPath.row];
+    
+    self.label.font = [UIFont systemFontOfSize:13];
+    self.label.text = issueList.listDescription.length? issueList.listDescription : @"暂无描述";
+    
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
+    
+    return height + 45;
 }
 
 
@@ -102,15 +95,11 @@ static NSString *kTeamIssueListCellID = @"teamIssueListCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row < self.objects.count) {
-        TeamIssueList *list = self.objects[indexPath.row];
-        TeamIssueController * issueVc = [[TeamIssueController alloc] initWithTeamID:_teamID projectID:_projectID userID:[Config getOwnID]
-                                                                             source:_source andCatalogID:list.teamIssueID];
-        
-        [self.navigationController pushViewController:issueVc animated:YES];
-    } else {
-        [self fetchMore];
-    }
+    TeamIssueList *list = self.objects[indexPath.row];
+    TeamIssueController * issueVc = [[TeamIssueController alloc] initWithTeamID:_teamID projectID:_projectID userID:[Config getOwnID]
+                                                                         source:_source andCatalogID:list.teamIssueID];
+    
+    [self.navigationController pushViewController:issueVc animated:YES];
 }
 
 

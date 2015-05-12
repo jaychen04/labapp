@@ -34,7 +34,7 @@ static NSString *kProjectCellID = @"ProjectCell";
         
         __weak typeof(self) weakSelf = self;
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-            [weakSelf.lastCell statusFinished];
+            weakSelf.lastCell.status = LastCellStatusFinished;
         };
         
         self.objClass = [TeamProject class];
@@ -62,37 +62,31 @@ static NSString *kProjectCellID = @"ProjectCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ProjectCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kProjectCellID forIndexPath:indexPath];
+    TeamProject *project = self.objects[indexPath.row];
     
-    if (indexPath.row < self.objects.count) {
-        ProjectCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kProjectCellID forIndexPath:indexPath];
-        TeamProject *project = self.objects[indexPath.row];
-        
-        [cell.titleLabel setAttributedText:project.attributedTittle];
-        [cell.countLabel setText:[NSString stringWithFormat:@"%d/%d",project.openedIssueCount,project.allIssueCount]];
-        return cell;
-    } else {
-        return self.lastCell;
-    }
+    [cell.titleLabel setAttributedText:project.attributedTittle];
+    [cell.countLabel setText:[NSString stringWithFormat:@"%d/%d",project.openedIssueCount,project.allIssueCount]];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        self.label.font = [UIFont boldSystemFontOfSize:15];
-        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-        
-        self.label.font = [UIFont systemFontOfSize:13];
-        height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-        
-        return height + 42;
-    } else {
-        return 60;
-    }
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    
+    self.label.font = [UIFont systemFontOfSize:13];
+    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    
+    return height + 42;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     TeamProject *project = self.objects[indexPath.row];
     
     SwipableViewController *teamProjectSVC = [[SwipableViewController alloc]
@@ -105,8 +99,6 @@ static NSString *kProjectCellID = @"ProjectCell";
                                                                ]];
     
     [self.navigationController pushViewController:teamProjectSVC animated:YES];
-
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 
