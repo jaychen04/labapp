@@ -29,6 +29,8 @@ static NSString * const kPersonCellID = @"PersonCell";
     
     self.objClass = [OSCUser class];
     
+    self.shouldFetchDataAfterLoaded = NO;
+    
     return self;
 }
 
@@ -46,10 +48,11 @@ static NSString * const kPersonCellID = @"PersonCell";
 #pragma mark - life cycle
 
 - (void)viewDidLoad {
-    self.needRefreshAnimation = NO;
     [super viewDidLoad];
     
     [self.tableView registerClass:[PersonCell class] forCellReuseIdentifier:kPersonCellID];
+    
+    self.lastCell.emptyMessage = @"找不到和您的查询相符的用户";
 }
 
 - (void)didReceiveMemoryWarning {

@@ -41,6 +41,8 @@ static NSString * const kSoftware       = @"software";
     
     self.objClass = [OSCSearchResult class];
     
+    self.shouldFetchDataAfterLoaded = NO;
+    
     return self;
 }
 
@@ -51,8 +53,9 @@ static NSString * const kSoftware       = @"software";
 
 
 - (void)viewDidLoad {
-    self.needRefreshAnimation = NO;
     [super viewDidLoad];
+    
+    self.lastCell.emptyMessage = @"找不到和您的查询相符的信息";
 }
 
 - (void)didReceiveMemoryWarning {

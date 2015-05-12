@@ -56,17 +56,16 @@
     _label.font = [UIFont boldSystemFontOfSize:14];
     
     
+    _manager = [AFHTTPRequestOperationManager manager];
+    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
     if (!_shouldFetchDataAfterLoaded) {return;}
-    
-    
     if (_needRefreshAnimation) {
         [self.refreshControl beginRefreshing];
         [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
                                 animated:YES];
     }
     
-    _manager = [AFHTTPRequestOperationManager manager];
-    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     if (_needCache) {
         _manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     }
@@ -179,7 +178,9 @@
              dispatch_async(dispatch_get_main_queue(), ^{
                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
                  else {
-                     if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
+                     if (_page == 0 && objectsXML.count == 0) {
+                         _lastCell.status = LastCellStatusEmpty;
+                     } else if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
                          _lastCell.status = LastCellStatusFinished;
                      } else {
                          _lastCell.status = LastCellStatusMore;
