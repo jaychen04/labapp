@@ -79,13 +79,9 @@ static NSString *kProjectCellID = @"ProjectCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row < self.objects.count) {
-
-        
         self.label.font = [UIFont boldSystemFontOfSize:15];
-
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-
-
+        
         self.label.font = [UIFont systemFontOfSize:13];
         height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
         
@@ -102,8 +98,11 @@ static NSString *kProjectCellID = @"ProjectCell";
     SwipableViewController *teamProjectSVC = [[SwipableViewController alloc]
                                               initWithTitle:@"团队项目"
                                               andSubTitles:@[@"任务分组", @"动态", @"成员"]
-                                              andControllers:@[             [[TeamIssueListViewController alloc] initWithTeamId:project.teamID ProjectId:project.gitID source:project.source],[[TeamActivityViewController alloc]  initWithTeamId:project.teamID ProjectId:project.gitID],[[TeamMemberViewController alloc] initWithTeamID:project.teamID]]
-                                              underTabbar:NO];
+                                              andControllers:@[
+                                                               [[TeamIssueListViewController alloc] initWithTeamID:project.teamID projectID:project.gitID andSource:project.source],
+                                                               [[TeamActivityViewController alloc]  initWithTeamID:project.teamID andProjectID:project.gitID],
+                                                               [[TeamMemberViewController alloc] initWithTeamID:project.teamID projectID:project.gitID andSource:project.source]
+                                                               ]];
     
     [self.navigationController pushViewController:teamProjectSVC animated:YES];
 
@@ -113,17 +112,7 @@ static NSString *kProjectCellID = @"ProjectCell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

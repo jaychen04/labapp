@@ -28,6 +28,10 @@ static NSString * const kEventWithoutExtraInfoCellID = @"EventCellWithoutExtraIn
 @property (nonatomic, strong) UILabel *commentCount;
 @property (nonatomic, strong) UIView *extraInfoView;
 
+@property (nonatomic, copy) BOOL (^canPerformAction)(UITableViewCell *cell, SEL action);
+
 - (void)setContentWithEvent:(OSCEvent *)event;
+
+- (void)copyText:(id)sender;
 
 @end

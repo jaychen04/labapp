@@ -96,12 +96,16 @@
               _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
               _HUD.labelText = @"感谢您的反馈";
               [_HUD hide:YES afterDelay:1.0];
+              
+              [self.navigationController popViewControllerAnimated:YES];
+              
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _HUD.mode = MBProgressHUDModeCustomView;
               _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               _HUD.labelText = @"网络异常，发送失败";
               [_HUD hide:YES afterDelay:1.0];
           }];
+    
 }
 
 

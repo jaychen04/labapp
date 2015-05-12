@@ -106,7 +106,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_thumbnail(80)]"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-10-[_appclientLabel]->=5-[_likeButton(50)]-5-[_commentCount]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-10-[_appclientLabel]->=5-[_likeButton(30)]-5-[_commentCount]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_likeListLabel]-8-|" options:0 metrics:nil views:views]];
@@ -114,7 +114,6 @@
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_authorLabel  attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
                                                                     toItem:_contentLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
 }
-
 
 - (void)setContentWithTweet:(OSCTweet *)tweet
 {
@@ -129,8 +128,21 @@
     } else {
         [_likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
     }
-
-    [_contentLabel setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
+    
+    // 添加语音图片
+    if (tweet.attach.length) {
+        //有语音
+        NSTextAttachment *textAttachment = [NSTextAttachment new];
+        textAttachment.image = [UIImage imageNamed:@"audioTweet"];
+        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+        NSMutableAttributedString *attributedTweetBody = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
+        [attributedTweetBody appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+        [attributedTweetBody appendAttributedString:[Utils emojiStringFromRawString:tweet.body]];
+        
+        [_contentLabel setAttributedText:attributedTweetBody];
+    } else {
+        [_contentLabel setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
+    }
     
     [_likeListLabel setAttributedText:tweet.likersString];
     if (tweet.likeList.count > 0) {
@@ -160,9 +172,9 @@
     [pasteBoard setString:_contentLabel.text];
 }
 
-- (void)deleteTweet:(id)sender
+- (void)deleteObject:(id)sender
 {
-    _deleteTweet(self);
+    _deleteObject(self);
 }
 
 

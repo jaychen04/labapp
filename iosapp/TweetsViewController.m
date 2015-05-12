@@ -121,13 +121,6 @@ static NSString * const kTweetCellID = @"TweetCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
-    
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuVisible:YES animated:YES];
-    [menuController setMenuItems:@[
-                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
-                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteTweet:)]
-                                   ]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -190,8 +183,11 @@ static NSString * const kTweetCellID = @"TweetCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if (indexPath.row < self.objects.count) {
         OSCTweet *tweet = self.objects[indexPath.row];
+        
+        if (tweet.cellHeight) {return tweet.cellHeight;}
         
         self.label.font = [UIFont boldSystemFontOfSize:14];
         [self.label setText:tweet.author];
@@ -215,9 +211,9 @@ static NSString * const kTweetCellID = @"TweetCell";
             height += 86;
 #endif
         }
+        tweet.cellHeight = height + 39;
         
-        return height + 39;
-       
+        return tweet.cellHeight;
     } else {
         return 60;
     }
@@ -264,7 +260,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
             return YES;
-        } else if (action == @selector(deleteTweet:)) {
+        } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             
             OSCTweet *tweet = self.objects[indexPath.row];
@@ -275,7 +271,7 @@ static NSString * const kTweetCellID = @"TweetCell";
         return NO;
     };
     
-    cell.deleteTweet = ^ (UITableViewCell *cell) {
+    cell.deleteObject = ^ (UITableViewCell *cell) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         OSCTweet *tweet = self.objects[indexPath.row];
         
@@ -392,25 +388,23 @@ static NSString * const kTweetCellID = @"TweetCell";
 - (void)togglePraise:(UIButton *)button
 {
     OSCTweet *tweet = self.objects[button.tag];
-    
     [self toPraise:tweet];
 }
 
 - (void)toPraise:(OSCTweet *)tweet
 {
-    MBProgressHUD *HUD = [Utils createHUD];
+    
     NSString *postUrl;
     if (tweet.isLike) {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_UNLIKE];
     } else {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
     }
-//    tweet.isLike = !tweet.isLike;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-//    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
     [manager POST:postUrl
        parameters:@{
                     @"uid": @([Config getOwnID]),
@@ -421,12 +415,8 @@ static NSString * const kTweetCellID = @"TweetCell";
               ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
               int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
               NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
-              
-              HUD.mode = MBProgressHUDModeCustomView;
 
               if (errorCode == 1) {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  
                   if (tweet.isLike) {
                       //取消点赞
                       for (OSCUser *user in tweet.likeList) {
@@ -447,24 +437,26 @@ static NSString * const kTweetCellID = @"TweetCell";
                   }
                   tweet.isLike = !tweet.isLike;
                   tweet.likersString = nil;
-                  if (tweet.isLike) {
-                      HUD.labelText = @"点赞成功";
-                  } else {
-                      HUD.labelText = @"取消点赞成功";
-                  }
-                  
+                  tweet.cellHeight = 0;
+
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [self.tableView reloadData];
                   });
 
               } else {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  
+                  [HUD hide:YES afterDelay:1];
               }
               
-              [HUD hide:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
+              
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
               

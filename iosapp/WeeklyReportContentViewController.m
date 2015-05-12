@@ -26,15 +26,9 @@
     NSDate *date = [NSDate date];
     NSDateComponents *dateComps = [Utils getDateComponentsFromDate:date];
     
-    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:2];
-    for (int i = 1; i >= 0; i--) {
-        WeeklyReportTableViewController *vc = [[WeeklyReportTableViewController alloc] initWithTeamID:teamID
-                                                                                                 year:dateComps.year
-                                                                                              andWeek:dateComps.weekOfYear - i];
-        [controllers addObject:vc];
-    }
-    
-    return [super initWithViewControllers:controllers];
+    return [super initWithViewControllers:@[[[WeeklyReportTableViewController alloc] initWithTeamID:teamID
+                                                                                               year:dateComps.year
+                                                                                            andWeek:dateComps.weekOfYear - 1]]];
 }
 
 - (void)viewDidLoad
@@ -57,6 +51,7 @@
                                                                                                  year:firstVC.year
                                                                                               andWeek:firstVC.week - 1];
         [self.controllers insertObject:vc atIndex:0];
+        [self addChildViewController:vc];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];

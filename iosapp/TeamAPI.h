@@ -29,12 +29,17 @@
 #define TEAM_PROJECT_LIST               @"team_project_list"                //团队项目列表
 #define TEAM_PROJECT_CATALOG_LIST       @"team_project_catalog_list"        //某项目下的任务列表
 #define TEAM_PROJECT_ACTIVE_LIST        @"team_project_active_list"         //团队项目的动态
+#define TEAM_PROJECT_MEMBER_LIST        @"team_project_member_list"
+
 #define TEAM_ACTIVE_DETAIL              @"team_active_detail"               //动态详情
+#define TEAM_REPLY_LIST_BY_ACTIVEID     @"team_reply_list_by_activeid"
 
 #define TEAM_DIARY_LIST                 @"team_diary_list"
+#define TEAM_DIARY_DETAIL               @"team_diary_detail"
 
-//#define USER_INFORMATION                @"user_information"                 //用户个人信息(含动态)
 #define TEAM_USER_INFORMATION            @"team_user_information"            //成员信息
 #define TEAM_ACTIVE_LIST                  @"team_active_list"                 //动态列表
+
+#define USER_INFORMATION                @"user_information"                 //用户个人信息(含动态)
 
 #endif

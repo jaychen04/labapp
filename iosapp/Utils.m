@@ -20,6 +20,7 @@
 #import <MBProgressHUD.h>
 #import <objc/runtime.h>
 #import <Reachability.h>
+#import "TweetTopicViewController.h"
 
 @implementation Utils
 
@@ -176,6 +177,12 @@
                         ((PostsViewController *)viewController).objClass = [OSCPost class];
                         viewController.navigationItem.title = [tag stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     }
+                } else if ([type isEqualToString:@"tweet-topic"]) {
+                    //话题
+                    url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                    urlComponents = [url componentsSeparatedByString:@"/"];
+                    
+                    viewController = [[TweetTopicViewController alloc] initWithTopic:urlComponents[2]];
                 }
             }
         } else if ([prefix isEqualToString:@"static"]) {
@@ -348,6 +355,14 @@
     return emojiString;
 }
 
++ (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML
+{
+    return [[NSMutableAttributedString alloc] initWithData:[HTML dataUsingEncoding:NSUnicodeStringEncoding]
+                                                   options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                        documentAttributes:nil
+                                                     error:nil];
+}
+
 + (NSString *)convertRichTextToRawText:(UITextView *)textView
 {
     NSMutableString *rawText = [[NSMutableString alloc] initWithString:textView.text];
@@ -424,6 +439,29 @@
     [result replaceOccurrencesOfString:@"\"" withString:@"&quot;" options:NSLiteralSearch range:NSMakeRange(0, [result length])];
     [result replaceOccurrencesOfString:@"'"  withString:@"&#39;"  options:NSLiteralSearch range:NSMakeRange(0, [result length])];
     return result;
+}
+
++ (NSString *)deleteHTMLTag:(NSString *)HTML
+{
+    NSMutableString *trimmedHTML = [[NSMutableString alloc] initWithString:HTML];
+    
+    NSString *styleTagPattern = @"<style[^>]*?>[\\s\\S]*?<\\/style>";
+    NSRegularExpression *styleTagRe = [NSRegularExpression regularExpressionWithPattern:styleTagPattern options:NSRegularExpressionCaseInsensitive error:nil];
+    
+    NSArray *resultsArray = [styleTagRe matchesInString:trimmedHTML options:0 range:NSMakeRange(0, trimmedHTML.length)];
+    for (NSTextCheckingResult *match in [resultsArray reverseObjectEnumerator]) {
+        [trimmedHTML replaceCharactersInRange:match.range withString:@""];
+    }
+    
+    NSString *htmlTagPattern = @"<[^>]+>";
+    NSRegularExpression *normalHTMLTagRe = [NSRegularExpression regularExpressionWithPattern:htmlTagPattern options:NSRegularExpressionCaseInsensitive error:nil];
+    
+    resultsArray = [normalHTMLTagRe matchesInString:trimmedHTML options:0 range:NSMakeRange(0, trimmedHTML.length)];
+    for (NSTextCheckingResult *match in [resultsArray reverseObjectEnumerator]) {
+        [trimmedHTML replaceCharactersInRange:match.range withString:@""];
+    }
+    
+    return trimmedHTML;
 }
 
 

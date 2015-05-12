@@ -110,7 +110,7 @@
     [_scrollView addSubview:_imageView];
     
     UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-50, self.view.frame.size.width, 50)];
-    backView.backgroundColor = [UIColor colorWithHex:0x0A0702];
+    backView.backgroundColor = [UIColor clearColor];
     backView.alpha = 0.8;
     [self.view addSubview:backView];
     

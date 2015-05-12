@@ -27,13 +27,9 @@ static NSString * const kIssueCellID = @"IssueCell";
 
 @end
 
+
 @implementation TeamIssueController
 
-
-//uid 用户id
-//teamid 团队id
-//projectid 项目id :当<=0或不设置时，查询非项目的任务列表
-//source 项目类型："Git@OSC","GitHub"(只有设置了projectid值，这里才需要设置该值)
 - (instancetype)initWithTeamID:(int)teamID
 {
     self = [super init];
@@ -49,13 +45,12 @@ static NSString * const kIssueCellID = @"IssueCell";
     return self;
 }
 
-- (instancetype)initWithTeamId:(int)teamId ProjectId:(int)projectId userId:(int64_t)userId source:(NSString*)source catalogId:(int64_t)catalogId
+- (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID userID:(int64_t)userID source:(NSString*)source andCatalogID:(int64_t)catalogID
 {
     self = [super init];
     if (self) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            NSString *url = [NSString stringWithFormat:@"%@%@?uid=%lldll&teamid=%d&projectid=%d&source=%@&catalogid=%llu", TEAM_PREFIX, TEAM_ISSUE_LIST,userId,teamId,projectId,source,catalogId];
-            return url;
+            return [NSString stringWithFormat:@"%@%@?uid=%lldll&teamid=%d&projectid=%d&source=%@&catalogid=%llu", TEAM_PREFIX, TEAM_ISSUE_LIST, userID, teamID, projectID, source, catalogID];
         };
         
         self.objClass = [TeamIssue class];
@@ -90,13 +85,6 @@ static NSString * const kIssueCellID = @"IssueCell";
     return 1;
 }
 
-/*
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return self.objects.count;
-}
-*/
-
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 
@@ -106,12 +94,12 @@ static NSString * const kIssueCellID = @"IssueCell";
         
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
-        label.font = [UIFont boldSystemFontOfSize:14];
+        label.font = [UIFont boldSystemFontOfSize:15];
         label.text = issue.title;
         
         CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
         
-        return height + 63;
+        return height + 60;
     } else {
         return 50;
     }
@@ -133,15 +121,11 @@ static NSString * const kIssueCellID = @"IssueCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    TeamIssueDetailController *teamIssueDetailVC = [TeamIssueDetailController new];
-//    [self.navigationController pushViewController:teamIssueDetailVC animated:YES];
-//    
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.row < self.objects.count) {
         
-    }else {
+    } else {
         [self fetchMore];
     }
 }

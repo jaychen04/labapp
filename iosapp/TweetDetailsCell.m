@@ -38,7 +38,6 @@
     
     _authorLabel = [UILabel new];
     _authorLabel.font = [UIFont boldSystemFontOfSize:14];
-//    _authorLabel.userInteractionEnabled = YES;
     _authorLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:_authorLabel];
     

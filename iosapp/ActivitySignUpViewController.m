@@ -31,23 +31,32 @@
 
 @implementation ActivitySignUpViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    
     self.title = @"活动报名";
     
     [self setLayout];
     
+    
     NSArray *activitySignUpInfo = [Config getActivitySignUpInfomation];
-    if (activitySignUpInfo.count != 0) {
-        _nameTextField.text = activitySignUpInfo[0];
-        _sexSegmentCtl.selectedSegmentIndex = [activitySignUpInfo[1] intValue];
-        _phoneNumberTextField.text = activitySignUpInfo[2];
-        _corporationTextField.text = activitySignUpInfo? activitySignUpInfo[3]: @"";
-        _positionTextField.text = activitySignUpInfo? activitySignUpInfo[4]: @"";
-    }
+    
+    _nameTextField.text = activitySignUpInfo[0];
+    _sexSegmentCtl.selectedSegmentIndex = [activitySignUpInfo[1] intValue];
+    _phoneNumberTextField.text = activitySignUpInfo[2];
+    _corporationTextField.text = activitySignUpInfo[3];
+    _positionTextField.text = activitySignUpInfo[4];
+    
+    RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal]
+                                         reduce:^(NSString *name, NSString *phoneNumber){
+                                             return @(name.length > 0 && phoneNumber.length > 0);
+                                         }];
+    RAC(_saveButton, enabled) = valid;
+    RAC(_saveButton, alpha) = [valid map:^(NSNumber *b) {
+        return b.boolValue ? @1 : @0.4;
+    }];
 }
 
 - (void)setLayout
@@ -96,14 +105,6 @@
     _saveButton.userInteractionEnabled = YES;
     [_saveButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(enterActivity)]];
     
-    RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal]
-                                         reduce:^(NSString *name, NSString *phoneNumber){
-                                             return @(name.length > 0 && phoneNumber.length > 0);
-                                         }];
-    RAC(_saveButton, enabled) = valid;
-    RAC(_saveButton, alpha) = [valid map:^(NSNumber *b) {
-        return b.boolValue ? @1 : @0.4;
-    }];
     
     for (UIView *subView in [self.view subviews]) {
         subView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -122,11 +123,71 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_sexSegmentCtl(100)]" options:0 metrics:nil views:viewDic]];
 }
 
+
+#pragma mark - 提交报名信息并保存
+
+- (void)enterActivity
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_EVENT_APPLY]
+       parameters:@{
+                    @"event":   @(_eventId),
+                    @"user":    @([Config getOwnID]),
+                    @"name":    _nameTextField.text,
+                    @"gender":  @(_sexSegmentCtl.selectedSegmentIndex) ,
+                    @"mobile":  _phoneNumberTextField.text,
+                    @"company": _corporationTextField.text,
+                    @"job":     _positionTextField.text
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              
+              NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
+              NSString *errorMessage = [[result firstChildWithTag:@"errormessage"] stringValue];
+              
+              MBProgressHUD *HUD = [Utils createHUD];
+              HUD.mode = MBProgressHUDModeCustomView;
+              
+              if (errorCode == 1) {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", errorMessage];
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", errorMessage];
+              }
+              
+              [HUD hide:YES afterDelay:1];
+              
+              [Config saveName:_nameTextField.text
+                           sex:_sexSegmentCtl.selectedSegmentIndex
+                   phoneNumber:_phoneNumberTextField.text
+                   corporation:_corporationTextField.text
+                   andPosition:_positionTextField.text];
+              
+              [self.navigationController popViewControllerAnimated:YES];
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *HUD = [Utils createHUD];
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.labelText = @"网络异常，报名失败";
+              
+              [HUD hide:YES afterDelay:1];
+          }
+     ];
+    
+}
+
+
+#pragma mark - UITextFieldDelegate
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
 }
+
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [_nameTextField resignFirstResponder];
@@ -166,58 +227,6 @@
     return YES;
 }
 
-
-//保存报名信息
-- (void)enterActivity
-{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_EVENT_APPLY]
-       parameters:@{
-                    @"event":   @(_eventId),
-                    @"user":    @([Config getOwnID]),
-                    @"name":    _nameTextField.text,
-                    @"gender":  @(_sexSegmentCtl.selectedSegmentIndex) ,
-                    @"mobile":  _phoneNumberTextField.text,
-                    @"company": _corporationTextField.text,
-                    @"job":     _positionTextField.text
-                    }
-          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
-              
-              NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
-              NSString *errorMessage = [[result firstChildWithTag:@"errormessage"] stringValue];
-              
-              MBProgressHUD *HUD = [Utils createHUD];
-              HUD.mode = MBProgressHUDModeCustomView;
-              
-              if (errorCode == 1) {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = [NSString stringWithFormat:@"%@", errorMessage];
-              } else {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-              }
-              
-              [HUD hide:YES afterDelay:1];
-              
-              [Config saveName:_nameTextField.text
-                           sex:_sexSegmentCtl.selectedSegmentIndex
-                   phoneNumber:_phoneNumberTextField.text
-                   corporation:_corporationTextField.text
-                   andPosition:_positionTextField.text];
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              MBProgressHUD *HUD = [Utils createHUD];
-              HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.labelText = @"网络异常，报名失败";
-              
-              [HUD hide:YES afterDelay:1];
-          }
-     ];
-    
-}
 
 
 @end

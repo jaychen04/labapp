@@ -12,11 +12,13 @@
 #import "TeamActivity.h"
 #import "MemberDetailCell.h"
 #import "TeamActivityCell.h"
+#import "TeamActivityDetailViewController.h"
 
 static NSString * const kUserActivityCellID = @"userActivityCell";
 static NSString * const kMemberDetailCellID = @"memberDetailCell";
 @interface TeamMemberDetailViewController ()
-@property (nonatomic)ino64_t teamId;
+//<anotherNetWorkingDelegate>
+@property (nonatomic)int teamId;
 @property (nonatomic)int uId;
 @property (nonatomic,strong)TeamMember *member;
 @end
@@ -29,17 +31,24 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 //pageSize 每页条数
 //type （是否需要区分动态的类别，如：所有/动弹/git/分享/讨论/周报，"all","tweet","git","share","discuss","report"）
 //uid 要查询动态的用户id
-- (instancetype)initWithTeamId:(int64_t)teamId uId:(int)uId
+- (instancetype)initWithTeamId:(int)teamId uId:(int)uId
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%lld&uid=%d&pageIndex=%ld&pageSize=20*type=all", TEAM_PREFIX, TEAM_ACTIVE_LIST, teamId, uId,page];
+            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%d&uid=%d&pageIndex=%ld&pageSize=20*type=all", TEAM_PREFIX, TEAM_ACTIVE_LIST, teamId, uId,page];
             return url;
         };
         self.teamId = teamId;
         self.uId = uId;
         self.objClass = [TeamActivity class];
         self.needCache = YES;
+        
+//        self.delegate = self;
+        
+        __weak typeof(self) weakSelf = self;
+        self.anotherNetWorking = ^{
+            [weakSelf getMemberDetailInfo];
+        };
     }
     
     return self;
@@ -49,13 +58,18 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
     return [[xml.rootElement firstChildWithTag:@"actives"] childrenWithTag:@"active"];
 }
 
+//#pragma mark --anotherNetWorkingDelegate
+//-(void)getAnotherDataFromNetWorking
+//{
+//    [self getMemberDetailInfo];
+//}
+
 -(void)getMemberDetailInfo
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    NSString *url = [NSString stringWithFormat:@"%@%@?uid=%d&teamid=%llu", TEAM_PREFIX, TEAM_USER_INFORMATION,_uId,_teamId];
-//    __weak TeamMemberDetailViewController *weakSelf = self;
+    NSString *url = [NSString stringWithFormat:@"%@%@?uid=%d&teamid=%d", TEAM_PREFIX, TEAM_USER_INFORMATION,_uId,_teamId];
     [manager GET:url
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
@@ -86,35 +100,35 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        if (indexPath.row ==0) {
-            return 103;
-        }else{
-            TeamActivity *activity = self.objects[indexPath.row];
-            self.label.attributedText = activity.attributedTitle;
-            CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
-            return height + 63;
-        }
+    if (indexPath.row == 0) {
+        return 103;
+    }else if (indexPath.row > 0 && indexPath.row < self.objects.count+1){
+        TeamActivity *activity = self.objects[indexPath.row-1];
+        self.label.attributedText = activity.attributedTitle;
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
+        return height + 63;
     } else {
         return 50;
     }
 }
-
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.objects.count+2;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row < self.objects.count) {
-        if (indexPath.row == 0) {
-            MemberDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:kMemberDetailCellID forIndexPath:indexPath];
-            if (_member) {
-                [cell setContentWithTeamMember:_member];
-            }
-            return cell;
-        }else {
-            TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kUserActivityCellID forIndexPath:indexPath];
-            TeamActivity *activity = self.objects[indexPath.row];
-            [cell setContentWithActivity:activity];
-            return cell;
+    if (indexPath.row == 0) {
+        MemberDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:kMemberDetailCellID forIndexPath:indexPath];
+        if (_member) {
+            [cell setContentWithTeamMember:_member];
         }
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        return cell;
+    }else if (indexPath.row > 0 && indexPath.row < self.objects.count+1){
+        TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kUserActivityCellID forIndexPath:indexPath];
+        TeamActivity *activity = self.objects[indexPath.row-1];
+        [cell setContentWithActivity:activity];
+        return cell;
     } else {
         return self.lastCell;
     }
@@ -122,16 +136,20 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    if (indexPath.row < self.objects.count) {
-//        TeamActivity *selectedActivity = self.objects[indexPath.row];
-//        TeamActivityDetailViewController *detailVC = [TeamActivityDetailViewController new];
-//        detailVC.activityID = selectedActivity.activityID;
-//        detailVC.teamID = _teamId;
-//        [self.navigationController pushViewController:detailVC animated:YES];
-//    }else {
-//        [self fetchMore];
-//    }
+    
+    if (indexPath.row != 0) {
+        if (indexPath.row < self.objects.count) {
+            TeamActivity *activity = self.objects[indexPath.row];
+            TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamId];
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }else {
+            [self fetchMore];
+        }
+    }
+    
+    
 }
 
 

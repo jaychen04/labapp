@@ -8,7 +8,10 @@
 
 #import "BottomBarViewController.h"
 
+@class TeamActivity;
+
 @interface TeamActivityDetailViewController : BottomBarViewController
-@property (nonatomic, assign) int activityID;
-@property (nonatomic, assign) int teamID;
+
+- (instancetype)initWithActivity:(TeamActivity *)activity andTeamID:(int)teamID;
+
 @end

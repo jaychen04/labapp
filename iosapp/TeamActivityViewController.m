@@ -10,16 +10,18 @@
 #import "TeamAPI.h"
 #import "TeamActivity.h"
 #import "TeamActivityCell.h"
+#import "TeamActivityDetailViewController.h"
 
 #import <TTTAttributedLabel.h>
 
-#import "TeamActivityDetailViewController.h"
+
 static NSString * const kActivityCellID = @"TeamActivityCell";
 
 @interface TeamActivityViewController ()
 
 @property (nonatomic, strong) NSMutableArray *activities;
-@property (nonatomic,assign)int teamId;
+@property (nonatomic,assign) int teamID;
+
 @end
 
 @implementation TeamActivityViewController
@@ -27,6 +29,8 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 - (instancetype)initWithTeamID:(int)teamID
 {
     if (self = [super init]) {
+        _teamID = teamID;
+        
         self.generateURL = ^NSString * (NSUInteger page) {
             return [NSString stringWithFormat:@"%@%@?teamid=%d&type=all&pageIndex=%lu", TEAM_PREFIX, TEAM_ACTIVITY_LIST, teamID, (unsigned long)page];
         };
@@ -40,19 +44,21 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 
 #pragma mark --某个团队项目的动态
 
-- (instancetype)initWithTeamId:(int)teamId ProjectId:(int)projectId
+- (instancetype)initWithTeamID:(int)teamID andProjectID:(int)projectID
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=%d&projectid=%d&source=Git@OSC&type=all&pageIndex=%lu&pageSize=20", TEAM_PREFIX, TEAM_PROJECT_ACTIVE_LIST,teamId,projectId, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?teamid=%d&projectid=%d&source=Git@OSC&type=all&pageIndex=%lu", TEAM_PREFIX, TEAM_PROJECT_ACTIVE_LIST, teamID, projectID, (unsigned long)page];
         };
-        self.teamId = teamId;
+        
+        _teamID = teamID;
         self.objClass = [TeamActivity class];
         self.needCache = YES;
     }
     
     return self;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -105,10 +111,8 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.row < self.objects.count) {
-        TeamActivity *selectedActivity = self.objects[indexPath.row];
-        TeamActivityDetailViewController *detailVC = [TeamActivityDetailViewController new];
-        detailVC.activityID = selectedActivity.activityID;
-        detailVC.teamID = _teamId;
+        TeamActivity *activity = self.objects[indexPath.row];
+        TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamID];
         [self.navigationController pushViewController:detailVC animated:YES];
     }else {
         [self fetchMore];

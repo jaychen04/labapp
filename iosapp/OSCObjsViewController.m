@@ -114,6 +114,17 @@
             [self fetchObjectsOnPage:0 refresh:YES];
             _refreshInProgress = NO;
         });
+        
+        //刷新时，增加另外的网络请求功能
+        if (self.anotherNetWorking) {
+//            NSLog(@"blockDelegate");
+            self.anotherNetWorking();
+        }
+        
+//        if ([self conformsToProtocol:@protocol(anotherNetWorkingDelegate)]) {
+//            NSLog(@"anotherNetWorkingDelegate");
+//            [self.delegate getAnotherDataFromNetWorking];
+//        }
     }
 }
 

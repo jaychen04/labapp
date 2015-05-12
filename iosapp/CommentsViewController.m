@@ -64,13 +64,6 @@ static NSString *kCommentCellID = @"CommentCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[CommentCell class] forCellReuseIdentifier:kCommentCellID];
-    
-    UIMenuController *menuController = [UIMenuController sharedMenuController];
-    [menuController setMenuVisible:YES animated:YES];
-    [menuController setMenuItems:@[
-                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:@selector(copyText:)],
-                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:@selector(deleteComment:)]
-                                   ]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -123,6 +116,8 @@ static NSString *kCommentCellID = @"CommentCell";
     } else if (indexPath.row < self.objects.count) {
         OSCComment *comment = self.objects[indexPath.row];
         
+        if (comment.cellHeight) {return comment.cellHeight;}
+        
         self.label.font = [UIFont boldSystemFontOfSize:14];
         NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
         if (comment.replies.count > 0) {
@@ -142,7 +137,9 @@ static NSString *kCommentCellID = @"CommentCell";
             height += [self.label sizeThatFits:CGSizeMake(width - (references.count-idx)*8, MAXFLOAT)].height + 13;
         }];
         
-        return height + 61;
+        comment.cellHeight = height + 61;
+        
+        return comment.cellHeight;
     } else {
         return 60;
     }
@@ -180,7 +177,7 @@ static NSString *kCommentCellID = @"CommentCell";
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
             return YES;
-        } else if (action == @selector(deleteComment:)) {
+        } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             
             OSCComment *comment = self.objects[indexPath.row];
@@ -192,7 +189,7 @@ static NSString *kCommentCellID = @"CommentCell";
         return NO;
     };
     
-    cell.deleteComment = ^ (UITableViewCell *cell) {
+    cell.deleteObject = ^ (UITableViewCell *cell) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         OSCComment *comment = self.objects[indexPath.row];
         

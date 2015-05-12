@@ -35,9 +35,21 @@
 
 @property (nonatomic, strong) UIImage *image;
 
+@property (nonatomic, strong) MBProgressHUD *HUD;
+
 @end
 
 @implementation MyBasicInfoViewController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _myID = [Config getOwnID];
+    }
+    
+    return self;
+}
 
 - (instancetype)initWithMyInformation:(OSCMyInfo *)myInfo
 {
@@ -46,6 +58,7 @@
         self.hidesBottomBarWhenPushed = YES;
         
         _myInfo = myInfo;
+        _myID = [Config getOwnID];
     }
     
     return self;
@@ -58,10 +71,40 @@
     self.tableView.bounces = NO;
     self.navigationItem.title = @"我的资料";
     self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
+    self.tableView.tableFooterView = [UIView new];
     
-    UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.tableFooterView = footer;
+    if (!_myInfo) {
+        _HUD = [Utils createHUD];
+        _HUD.userInteractionEnabled = NO;
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID]
+          parameters:nil
+             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+                 ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
+                 _myInfo = [[OSCMyInfo alloc] initWithXML:userXML];
+                 [_HUD hide:YES];
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadData];
+                 });
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 _HUD.mode = MBProgressHUDModeCustomView;
+                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                 _HUD.labelText = @"网络异常，加载失败";
+                 
+                 [_HUD hide:YES afterDelay:1];
+             }];
+    }
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [_HUD hide:YES];
+}
+
 
 
 #pragma mark - Table view data source
@@ -127,11 +170,11 @@
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:title[indexPath.row]
                                                                                        attributes:titleAttributes];
     [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@[
-                                                                                       joinTime,
-                                                                                       _myInfo.hometown,
-                                                                                       _myInfo.developPlatform,
-                                                                                       _myInfo.expertise
-                                                                                       ][indexPath.row]]];
+                                                                                        joinTime ?: @"",
+                                                                                        _myInfo.hometown ?: @"",
+                                                                                        _myInfo.developPlatform ?: @"",
+                                                                                        _myInfo.expertise ?: @""
+                                                                                        ][indexPath.row]]];
     
     cell.textLabel.attributedText = [attributedText copy];
     
