@@ -95,6 +95,8 @@ static NSString * const EventCellID = @"EventCell";
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:EventCellID];
+    
+    self.lastCell.emptyMessage = @"没有动态信息";
 }
 
 - (void)didReceiveMemoryWarning {
