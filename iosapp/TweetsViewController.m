@@ -17,6 +17,7 @@
 #import "Utils.h"
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
+#import "TweetEditingVC.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
@@ -27,10 +28,9 @@ static NSString * const kTweetCellID = @"TweetCell";
 @interface TweetsViewController ()
 
 @property (nonatomic, assign) int64_t uid;
+@property (nonatomic, copy) NSString *topic;
 
 @end
-
-
 
 
 @implementation TweetsViewController
@@ -88,6 +88,31 @@ static NSString * const kTweetCellID = @"TweetCell";
     
     return self;
 }
+
+- (instancetype)initWithTopic:(NSString *)topic
+{
+    self = [super init];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+        
+        _topic = topic;
+        
+        self.generateURL = ^NSString * (NSUInteger page) {
+            NSString *URL = [NSString stringWithFormat:@"%@%@?title=%@&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_TWEET_TOPIC_LIST, topic, (unsigned long)page, OSCAPI_SUFFIX];
+            return [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        };
+        
+        self.objClass = [OSCTweet class];
+        
+        self.navigationItem.title = topic;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(topicEditing)];
+    }
+    
+    return self;
+    
+}
+
+
 
 - (void)setBlockAndClass
 {
@@ -348,6 +373,17 @@ static NSString * const kTweetCellID = @"TweetCell";
     OSCTweet *tweet = self.objects[tap.view.tag];
     TweetsLikeListViewController *likeListCtl = [[TweetsLikeListViewController alloc] initWithtweetID:tweet.tweetID];
     [self.navigationController pushViewController:likeListCtl animated:YES];
+}
+
+
+#pragma mark - 编辑话题动弹
+
+- (void)topicEditing
+{
+    TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithTopic:_topic];
+    UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+    [self.navigationController presentViewController:tweetEditingNav animated:NO completion:nil];
+    
 }
 
 

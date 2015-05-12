@@ -16,7 +16,7 @@
 #import "PostsViewController.h"
 #import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
-#import "TweetTopicViewController.h"
+#import "TweetsViewController.h"
 
 #import <MBProgressHUD.h>
 #import <objc/runtime.h>
@@ -183,7 +183,7 @@
                     url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     urlComponents = [url componentsSeparatedByString:@"/"];
                     
-                    viewController = [[TweetTopicViewController alloc] initWithTopic:urlComponents[2]];
+                    viewController = [[TweetsViewController alloc] initWithTopic:urlComponents[2]];
                 }
             }
         } else if ([prefix isEqualToString:@"static"]) {
