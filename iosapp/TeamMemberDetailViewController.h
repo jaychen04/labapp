@@ -9,5 +9,5 @@
 #import "OSCObjsViewController.h"
 
 @interface TeamMemberDetailViewController : OSCObjsViewController
-- (instancetype)initWithLoginUserId:(int64_t)loginUserId visitUserId:(int)visitUserId;
+- (instancetype)initWithTeamId:(int64_t)teamId uId:(int)uId;
 @end

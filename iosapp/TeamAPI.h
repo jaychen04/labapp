@@ -33,7 +33,8 @@
 
 #define TEAM_DIARY_LIST                 @"team_diary_list"
 
-#define USER_INFORMATION                @"user_information"                 //用户个人信息(含动态)
-#define TEAM_USER_INFOMATION                @"team_user_information"                 //某用户的动态数据列表
+//#define USER_INFORMATION                @"user_information"                 //用户个人信息(含动态)
+#define TEAM_USER_INFORMATION            @"team_user_information"            //成员信息
+#define TEAM_ACTIVE_LIST                  @"team_active_list"                 //动态列表
 
 #endif

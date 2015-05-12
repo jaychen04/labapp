@@ -100,7 +100,7 @@ static NSString * const kMemberCellID = @"MemberCell";
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TeamMember *member = _members[indexPath.section * 3 + indexPath.row];
-    TeamMemberDetailViewController *memberDetailVC = [[TeamMemberDetailViewController alloc]initWithLoginUserId:[Config getOwnID] visitUserId:member.memberID];
+    TeamMemberDetailViewController *memberDetailVC = [[TeamMemberDetailViewController alloc]initWithTeamId:_teamID uId:member.memberID];
     [self.navigationController pushViewController:memberDetailVC animated:YES];
     
 //    NSLog(@"row:%ld section:%ld",(long)indexPath.row,(long)indexPath.section);

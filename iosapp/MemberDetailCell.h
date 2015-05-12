@@ -7,7 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "TeamMember.h"
 @interface MemberDetailCell : UITableViewCell
 
+@property (nonatomic, strong) UIImageView *portraitIv;
+@property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *eMailLabel;
+@property (nonatomic, strong) UILabel *phoneLabel;
+@property (nonatomic, strong) UILabel *addressLabel;
+@property (nonatomic, strong) UIImageView *phoneIconIv;
+
+- (void)setContentWithTeamMember:(TeamMember *)teamMember;
 @end
