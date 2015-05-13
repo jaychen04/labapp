@@ -92,13 +92,15 @@
                     @"msg": _feedbackTextView.text
                     }
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              _HUD.mode = MBProgressHUDModeCustomView;
-              _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-              _HUD.labelText = @"感谢您的反馈";
-              [_HUD hide:YES afterDelay:1.0];
+              [_HUD hide:YES];
+              MBProgressHUD *HUD = [Utils createHUD];
+              
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+              HUD.labelText = @"发送成功，感谢您的反馈";
+              [HUD hide:YES afterDelay:2];
               
               [self.navigationController popViewControllerAnimated:YES];
-              
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _HUD.mode = MBProgressHUDModeCustomView;
               _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
