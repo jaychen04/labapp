@@ -233,7 +233,7 @@
     
     _manager = [AFHTTPRequestOperationManager manager];
     [_manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    _manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+    //_manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [self fetchDetails];
 }
