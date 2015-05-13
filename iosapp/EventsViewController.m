@@ -288,8 +288,7 @@ static NSString * const EventCellID = @"EventCell";
     OSCEvent *event = self.objects[recognizer.view.tag];
     
     NSMutableString *thumbURL = [NSMutableString stringWithString:event.tweetImg.absoluteString];
-    [thumbURL replaceCharactersInRange:NSMakeRange(thumbURL.length - 10, 10)
-                            withString:[thumbURL substringWithRange:NSMakeRange(thumbURL.length - 4, 4)]];
+    [thumbURL replaceOccurrencesOfString:@"_thumb" withString:@"" options:0 range:NSMakeRange(0, thumbURL.length)];
     NSURL *bigImageURL = [NSURL URLWithString:thumbURL];
     
     ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:bigImageURL];
