@@ -504,5 +504,18 @@
 }
 
 
++ (NSString *)generateUserAgent
+{
+    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSString *IDFV = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    return [NSString stringWithFormat:@"OSChina.NET/%@/%@/%@/%@/%@", appVersion,
+                                                                     [UIDevice currentDevice].systemName,
+                                                                     [UIDevice currentDevice].systemVersion,
+                                                                     [UIDevice currentDevice].model,
+                                                                     IDFV];
+}
+
+
 
 @end

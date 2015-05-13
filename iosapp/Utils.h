@@ -53,6 +53,8 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (MBProgressHUD *)createHUD;
 + (UIImage *)createQRCodeFromString:(NSString *)string;
 
++ (NSString *)generateUserAgent;
+
 
 
 @end
