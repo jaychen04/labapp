@@ -309,6 +309,7 @@
         if ([emojiName hasPrefix:@"["] && emoji[emojiName]) {
             NSTextAttachment *textAttachment = [NSTextAttachment new];
             textAttachment.image = [UIImage imageNamed:emoji[emojiName]];
+            [textAttachment adjustY:-3];
             
             NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
             
