@@ -326,11 +326,20 @@
             
             NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
             
-            NSDictionary *emojiToReplace = @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]};
-            [emojiArray addObject:emojiToReplace];
-        } else if ([emojiName hasPrefix:@":"] && emoji[emojiName]) {
-            NSDictionary *emojiToReplace = @{@"text": emoji[emojiName], @"range": [NSValue valueWithRange:range]};
-            [emojiArray addObject:emojiToReplace];
+            [emojiArray addObject: @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]}];
+        } else if ([emojiName hasPrefix:@":"]) {
+            if (emoji[emojiName]) {
+                [emojiArray addObject:@{@"text": emoji[emojiName], @"range": [NSValue valueWithRange:range]}];
+            } else {
+                UIImage *emojiImage = [UIImage imageNamed:[emojiName stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]]];
+                NSTextAttachment *textAttachment = [NSTextAttachment new];
+                textAttachment.image = emojiImage;
+                [textAttachment adjustY:-3];
+                
+                NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+                
+                [emojiArray addObject: @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]}];
+            }
         }
     }
     
