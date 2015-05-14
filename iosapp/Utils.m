@@ -208,6 +208,22 @@
 
 #pragma mark - 通用
 
+#pragma mark - emoji Dictionary
+
++ (NSDictionary *)emojiDict
+{
+    static dispatch_once_t once;
+    static NSDictionary *emojiDict;
+    
+    dispatch_once(&once, ^ {
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSString *path = [bundle pathForResource:@"emoji" ofType:@"plist"];
+        emojiDict = [[NSDictionary alloc] initWithContentsOfFile:path];
+    });
+    
+    return emojiDict;
+}
+
 #pragma mark 信息处理
 
 + (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr
@@ -289,10 +305,7 @@
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString
 {
     NSMutableAttributedString *emojiString = [[NSMutableAttributedString alloc] initWithString:rawString];
-    
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *path = [bundle pathForResource:@"emoji" ofType:@"plist"];
-    NSDictionary *emoji = [[NSDictionary alloc] initWithContentsOfFile:path];
+    NSDictionary *emoji = self.emojiDict;
     
     NSString *pattern = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]|:[a-zA-Z0-9\\u4e00-\\u9fa5_]+:";
     NSError *error = nil;
