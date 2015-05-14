@@ -212,6 +212,42 @@
 	<string>104</string>
 	<key>[右太极]</key>
 	<string>105</string>
+    <key>106</key>
+    <string>:trollface:</string>
+    <key>107</key>
+    <string>:octocat:</string>
+    <key>108</key>
+    <string>:bowtie:</string>
+    <key>109</key>
+    <string>:neckbeard:</string>
+    <key>110</key>
+    <string>:squirrel:</string>
+    <key>111</key>
+    <string>:dancer:</string>
+    <key>112</key>
+    <string>:+1:</string>
+    <key>113</key>
+    <string>:-1:</string>
+    <key>114</key>
+    <string>:fu:</string>
+    <key>115</key>
+    <string>:finnadie:</string>
+    <key>116</key>
+    <string>:goberserk:</string>
+    <key>117</key>
+    <string>:rage1:</string>
+    <key>118</key>
+    <string>:rage2:</string>
+    <key>119</key>
+    <string>:rage3:</string>
+    <key>120</key>
+    <string>:rage4:</string>
+    <key>121</key>
+    <string>:godmode:</string>
+    <key>122</key>
+    <string>:suspect:</string>
+    <key>123</key>
+    <string>:feelsgood:</string>
     
     
     <key>:copyright:</key>

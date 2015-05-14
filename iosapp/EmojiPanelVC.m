@@ -7,7 +7,7 @@
 //
 
 #import "EmojiPanelVC.h"
-#import "NSTextAttachment+Util.h"
+#import "Utils.h"
 
 #import <objc/runtime.h>
 
@@ -57,12 +57,14 @@
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 3;
+    NSInteger left = 123 - _pageIndex * 20;
+    return left >= 20 ? 3 : (left + 7) / 7;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return 7;
+    NSInteger left = 123 - _pageIndex * 20 - section * 7;
+    return left >= 7? 7 : left + 1;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
@@ -76,11 +78,17 @@
     NSInteger section = indexPath.section;
     NSInteger row     = indexPath.row;
     
-    if (section == 2 && row == 6) {
+    if (section == [self numberOfSectionsInCollectionView:collectionView] - 1&&
+            row == [self collectionView:collectionView numberOfItemsInSection:section] - 1) {
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"delete"]]];
     } else {
         NSInteger emojiNum = _pageIndex * 20 + section * 7 + row + 1;
-        NSString *emojiImageName = [NSString stringWithFormat:@"%03ld", (long)emojiNum];
+        NSString *emojiImageName;
+        if (emojiNum >= 106) {
+            emojiImageName = [Utils.emojiDict[@(emojiNum).stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
+        } else {
+            emojiImageName = [NSString stringWithFormat:@"%03ld", (long)emojiNum];
+        }
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:emojiImageName]]];
     }
     
@@ -96,7 +104,12 @@
         _deleteEmoji();
     } else {
         NSInteger emojiNum = _pageIndex * 20 + section * 7 + row + 1;
-        NSString *emojiImageName = [NSString stringWithFormat:@"%03ld", (long)emojiNum];
+        NSString *emojiImageName;
+        if (emojiNum >= 106) {
+            emojiImageName = [Utils.emojiDict[@(emojiNum).stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
+        } else {
+            emojiImageName = [NSString stringWithFormat:@"%03ld", (long)emojiNum];
+        }
         
         NSTextAttachment *textAttachment = [NSTextAttachment new];
         textAttachment.image = [UIImage imageNamed:emojiImageName];
