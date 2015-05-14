@@ -35,7 +35,7 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%d&uid=%d&pageIndex=%ld&pageSize=20*type=all", TEAM_PREFIX, TEAM_ACTIVE_LIST, teamId, uId,page];
+            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%d&uid=%d&pageIndex=%lu&pageSize=20&type=all", TEAM_PREFIX, TEAM_ACTIVE_LIST, teamId, uId,(unsigned long)page];
             return url;
         };
         self.teamId = teamId;
@@ -101,19 +101,17 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        return 103;
-    }else if (indexPath.row > 0 && indexPath.row < self.objects.count+1){
+        return 120;
+    } else {
         TeamActivity *activity = self.objects[indexPath.row-1];
         self.label.attributedText = activity.attributedTitle;
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
         return height + 63;
-    } else {
-        return 50;
     }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.objects.count+2;
+    return self.objects.count + 1;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -124,19 +122,16 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
         }
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         return cell;
-    }else if (indexPath.row > 0 && indexPath.row < self.objects.count+1){
+    } else {
         TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kUserActivityCellID forIndexPath:indexPath];
         TeamActivity *activity = self.objects[indexPath.row-1];
         [cell setContentWithActivity:activity];
         return cell;
-    } else {
-        return self.lastCell;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row != 0) {
@@ -144,12 +139,10 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
             TeamActivity *activity = self.objects[indexPath.row];
             TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamId];
             [self.navigationController pushViewController:detailVC animated:YES];
-        }else {
+        } else {
             [self fetchMore];
         }
     }
-    
-    
 }
 
 

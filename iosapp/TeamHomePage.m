@@ -22,6 +22,8 @@
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 
+#import "SwipableViewController.h"
+#import "TeamIssueController.h"
 
 @interface TeamHomePage ()
 
@@ -58,6 +60,22 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark -- selecteIssueType
+-(void)selecteIssueType:(UIButton*)btn
+{
+    TeamIssueController *openedIssueVC = [[TeamIssueController alloc]initWithTeamID:_teamID userID:[Config getOwnID] andIssueState:IssueStateOpened];
+    TeamIssueController *underwayIssueVC = [[TeamIssueController alloc]initWithTeamID:_teamID userID:[Config getOwnID] andIssueState:IssueStateUnderway];
+    TeamIssueController *closedIssueVC = [[TeamIssueController alloc]initWithTeamID:_teamID userID:[Config getOwnID] andIssueState:IssueStateClosed];
+    TeamIssueController *acceptedIssueVC = [[TeamIssueController alloc]initWithTeamID:_teamID userID:[Config getOwnID] andIssueState:IssueStateAccepted];
+    
+    SwipableViewController *myIssueVC = [[SwipableViewController alloc]
+                                              initWithTitle:@"我的任务"
+                                              andSubTitles:@[@"待办中", @"进行中", @"已完成", @"已验收"]
+                                              andControllers:@[openedIssueVC,underwayIssueVC,closedIssueVC,acceptedIssueVC]];
+    [myIssueVC scrollToViewAtIndex:btn.tag];
+    [self.navigationController pushViewController:myIssueVC animated:YES];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -89,7 +107,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         if (_user) {
-            [cell setContentWithUser:_user];
+            [cell setContentWithUser:_user withTarget:self];
         }
         
         return cell;
@@ -100,7 +118,6 @@
         cell.textLabel.textColor = [UIColor grayColor];
         cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
         cell.textLabel.text = @[@"团队动态", @"团队项目", @"团队讨论", @"团队周报"][indexPath.row];
-        
         return cell;
     }
 }

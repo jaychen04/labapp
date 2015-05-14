@@ -69,6 +69,8 @@
     _underwayButton   = [UIButton buttonWithType:UIButtonTypeCustom];
     _finishedButton   = [UIButton buttonWithType:UIButtonTypeCustom];
     
+    
+    
     NSArray *titles = @[@"待完成", @"过期的", @"进行中", @"已完成"];
     NSArray *colors = @[@(0xF9AA47), @(0xED6732), @(0x7FB86E), @(0x999999)];
     
@@ -82,6 +84,7 @@
         [_buttonsBG addSubview:button];
     }];
 }
+
 
 - (void)setLayout
 {
@@ -149,7 +152,7 @@
                                                               toItem:horizonalLine attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
 }
 
-- (void)setContentWithUser:(TeamUser *)user
+- (void)setContentWithUser:(TeamUser *)user withTarget:(UIViewController*)targetVC
 {
     [_portrait setImage:[Config getPortrait]];
     
@@ -172,6 +175,20 @@
     [_overdueButton setTitle:[NSString stringWithFormat:@"%d\n过期的", user.outdateTaskCount] forState:UIControlStateNormal];
     [_underwayButton setTitle:[NSString stringWithFormat:@"%d\n进行中", user.underwayTaskCount] forState:UIControlStateNormal];
     [_finishedButton setTitle:[NSString stringWithFormat:@"%d\n已完成", user.finishedTaskCount] forState:UIControlStateNormal];
+    
+    _unfinishedButton.tag = 0;
+    _underwayButton.tag = 1;
+    _finishedButton.tag = 2;
+    _overdueButton.tag = 0;
+    
+    [_unfinishedButton addTarget:targetVC action:@selector(selecteIssueType:) forControlEvents:UIControlEventTouchUpInside];
+    [_overdueButton addTarget:targetVC action:@selector(selecteIssueType:) forControlEvents:UIControlEventTouchUpInside];
+    [_underwayButton addTarget:targetVC action:@selector(selecteIssueType:) forControlEvents:UIControlEventTouchUpInside];
+    [_finishedButton addTarget:targetVC action:@selector(selecteIssueType:) forControlEvents:UIControlEventTouchUpInside];
 }
 
+#pragma mark -- 取消警告的作用，这里的方法不会被执行
+-(void)selecteIssueType:(UIButton*)btn
+{
+}
 @end

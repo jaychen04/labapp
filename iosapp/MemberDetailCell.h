@@ -15,7 +15,7 @@
 @property (nonatomic, strong) UILabel *eMailLabel;
 @property (nonatomic, strong) UILabel *phoneLabel;
 @property (nonatomic, strong) UILabel *addressLabel;
-@property (nonatomic, strong) UIImageView *phoneIconIv;
+@property (nonatomic, strong) UILabel *phoneIconLabel;
 
 - (void)setContentWithTeamMember:(TeamMember *)teamMember;
 @end

@@ -45,12 +45,14 @@ static NSString * const kIssueCellID = @"IssueCell";
     return self;
 }
 
-- (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID userID:(int64_t)userID source:(NSString*)source andCatalogID:(int64_t)catalogID
+- (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID userID:(int64_t)userID source:(NSString*)source catalogID:(int64_t)catalogID
 {
     self = [super init];
     if (self) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?uid=%lldll&teamid=%d&projectid=%d&source=%@&catalogid=%llu", TEAM_PREFIX, TEAM_ISSUE_LIST, userID, teamID, projectID, source, catalogID];
+            NSString *url = [NSString stringWithFormat:@"%@%@?uid=%lldll&teamid=%d&projectid=%d&source=%@&catalogid=%llu&pageIndex=%lu", TEAM_PREFIX, TEAM_ISSUE_LIST, userID, teamID, projectID, source, catalogID,(unsigned long)page];
+            return url;
+
         };
         
         self.objClass = [TeamIssue class];
@@ -58,7 +60,21 @@ static NSString * const kIssueCellID = @"IssueCell";
     
     return self;
 }
-
+#pragma mark --我的任务
+- (instancetype)initWithTeamID:(int)teamID userID:(int64_t)userID andIssueState:(IssueState)issueState
+{
+    self = [super init];
+    if (self) {
+        self.generateURL = ^NSString * (NSUInteger page) {
+            NSString *url = [NSString stringWithFormat:@"%@%@?uid=%lld&teamid=%d&pageIndex=%lu&state=%@", TEAM_PREFIX, TEAM_ISSUE_LIST, userID, teamID,(unsigned long)page,kIssueStatesString(issueState)];
+            return url;
+        };
+        
+        self.objClass = [TeamIssue class];
+    }
+    
+    return self;
+}
 
 - (void)viewDidLoad
 {

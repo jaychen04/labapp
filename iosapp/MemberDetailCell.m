@@ -8,6 +8,7 @@
 
 #import "MemberDetailCell.h"
 #import "Utils.h"
+#import "NSString+FontAwesome.h"
 @implementation MemberDetailCell
 
 
@@ -45,7 +46,6 @@
     
     _eMailLabel = [UILabel new];
     _eMailLabel.numberOfLines = 0;
-    _eMailLabel.adjustsFontSizeToFitWidth = YES;
     _eMailLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _eMailLabel.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:_eMailLabel];
@@ -62,18 +62,26 @@
     _addressLabel.font = [UIFont systemFontOfSize:14];
     [self.contentView addSubview:_addressLabel];
     
-    _phoneIconIv = [UIImageView new];
-    _phoneIconIv.contentMode = UIViewContentModeScaleAspectFit;
-    [self.contentView addSubview:_phoneIconIv];
+    _phoneIconLabel = [UILabel new];
+    _phoneIconLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:40];
+    _phoneIconLabel.textColor = [UIColor colorWithHex:0x15A230];
+    [self.contentView addSubview:_phoneIconLabel];
     
-    _phoneIconIv.userInteractionEnabled = YES;
+    
+    _phoneIconLabel.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(makeACall)];
-    [_phoneIconIv addGestureRecognizer:tap];
+    [_phoneIconLabel addGestureRecognizer:tap];
 }
 -(void)makeACall
 {
     if ([_phoneLabel.text length]>=2) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_phoneLabel.text]]];
+        UIWebView*callWebview =[[UIWebView alloc] init];
+        NSString *telUrl = [NSString stringWithFormat:@"tel://%@",_phoneLabel.text];
+        NSURL *telURL =[NSURL URLWithString:telUrl];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
+        [self.contentView addSubview:callWebview];
+        
+//        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel://%@",_phoneLabel.text]]];
     }
 }
 - (void)setLayout
@@ -83,7 +91,7 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portraitIv, _nameLabel, _eMailLabel, _phoneLabel, _addressLabel,_phoneIconIv);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portraitIv, _nameLabel, _eMailLabel, _phoneLabel, _addressLabel,_phoneIconLabel);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_portraitIv(60)]"
                                                                               options:0
@@ -99,22 +107,18 @@
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil
                                                                                views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_eMailLabel]-75-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_eMailLabel]-5-[_phoneIconLabel(40)]-10-|"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_phoneIconIv(50)]-20-|"
-                                                                             options:0
-                                                                             metrics:nil
-                                                                               views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_phoneIconIv(50)]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_phoneIconLabel(40)]"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
-                                                             toItem:_phoneIconIv    attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+                                                             toItem:_phoneIconLabel    attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
 }
 
 
@@ -125,11 +129,15 @@
     _eMailLabel.text = [teamMember.email length]>0?teamMember.email:@"未填写邮箱";
     _phoneLabel.text = [teamMember.telephone length]>0?teamMember.telephone:@"未填写电话";
     _addressLabel.text = [teamMember.location length]>0?teamMember.location:@"未填写地址";
-    [_phoneIconIv loadPortrait:teamMember.portraitURL];
+    
     
     if ([teamMember.telephone length]<=0) {
-        _phoneIconIv.hidden = YES;
+        _phoneIconLabel.hidden = YES;
+    }else {
+        [_phoneIconLabel setText:[NSString fontAwesomeIconStringForEnum:FAIconPhone]];
     }
+    
+//    NSLog(@"_eMailLabel:%f,_phoneLabel:%f",CGRectGetHeight(_eMailLabel.frame),CGRectGetHeight(_phoneLabel.frame));
 }
 
 

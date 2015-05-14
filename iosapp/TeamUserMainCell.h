@@ -20,6 +20,6 @@
 @property (nonatomic, strong) UIButton *underwayButton;
 @property (nonatomic, strong) UIButton *finishedButton;
 
-- (void)setContentWithUser:(TeamUser *)user;
+- (void)setContentWithUser:(TeamUser *)user withTarget:(UIViewController*)targetVC;
 
 @end
