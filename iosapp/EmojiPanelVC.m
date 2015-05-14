@@ -104,10 +104,12 @@
         _deleteEmoji();
     } else {
         NSInteger emojiNum = _pageIndex * 20 + section * 7 + row + 1;
-        NSString *emojiImageName;
+        NSString *emojiImageName, *emojiStr;
         if (emojiNum >= 106) {
-            emojiImageName = [Utils.emojiDict[@(emojiNum).stringValue] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
+            emojiStr = Utils.emojiDict[@(emojiNum).stringValue];
+            emojiImageName = [emojiStr stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
         } else {
+            emojiStr = [NSString stringWithFormat:@"[%ld]", emojiNum - 1];
             emojiImageName = [NSString stringWithFormat:@"%03ld", (long)emojiNum];
         }
         
@@ -115,7 +117,7 @@
         textAttachment.image = [UIImage imageNamed:emojiImageName];
         [textAttachment adjustY:-3];
         
-        objc_setAssociatedObject(textAttachment, @"number", @(emojiNum), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(textAttachment, @"emoji", emojiStr, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
         _didSelectEmoji(textAttachment);
     }

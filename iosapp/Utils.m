@@ -357,8 +357,8 @@
                                      usingBlock:^(NSTextAttachment *attachment, NSRange range, BOOL *stop) {
                                                     if (!attachment) {return;}
                                         
-                                                    int emojiNum = [objc_getAssociatedObject(attachment, @"number") intValue];
-                                                    [rawText insertString:[NSString stringWithFormat:@"[%d]", emojiNum-1] atIndex:range.location];
+                                                    NSString *emojiStr = objc_getAssociatedObject(attachment, @"emoji");
+                                                    [rawText insertString:emojiStr atIndex:range.location];
                                                 }];
     
     NSString *pattern = @"[\ue000-\uf8ff]|[\\x{1f300}-\\x{1f7ff}]|\\x{263A}\\x{FE0F}|☺";
