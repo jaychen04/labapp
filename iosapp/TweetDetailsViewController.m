@@ -107,6 +107,7 @@
 - (void)getTweetDetails
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
@@ -258,6 +259,7 @@
     }
 
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager POST:postUrl
