@@ -27,7 +27,6 @@
 @property (nonatomic, strong) OSCTweet *tweet;
 @property (nonatomic, assign) int64_t tweetID;
 
-@property (nonatomic, assign) BOOL isLoadingFinished;
 @property (nonatomic, assign) CGFloat webViewHeight;
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
@@ -58,11 +57,7 @@
                 [cell.likeListLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(PushToLikeList)]];
                 
                 [cell.likeListLabel setAttributedText:weakSelf.tweet.likersDetailString];
-                if (weakSelf.tweet.likeList.count > 0) {
-                    cell.likeListLabel.hidden = NO;
-                } else {
-                    cell.likeListLabel.hidden = YES;
-                }
+                cell.likeListLabel.hidden = !weakSelf.tweet.likeList.count;
                 [cell.timeLabel setAttributedText:[Utils attributedTimeString:weakSelf.tweet.pubDate]];
                 if (weakSelf.tweet.isLike) {
                     [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
@@ -78,14 +73,13 @@
         };
         
         self.heightForOtherSectionCell = ^CGFloat (NSIndexPath *indexPath) {
-            
             [weakSelf.label setAttributedText:weakSelf.tweet.likersDetailString];
             weakSelf.label.font = [UIFont systemFontOfSize:12];
             CGFloat height = [weakSelf.label sizeThatFits:CGSizeMake(weakSelf.tableView.frame.size.width - 16, MAXFLOAT)].height + 5;
             
             height += weakSelf.webViewHeight;
             
-            return height + 60;
+            return height + 63;
         };
     }
     
@@ -108,7 +102,7 @@
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+//    manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_TWEET_DETAIL, _tweetID]
@@ -138,7 +132,6 @@
                  NSString *attachStr = [NSString stringWithFormat:@"<source src=\"%@?avthumb/mp3\" type=\"audio/mpeg\">", _tweet.attach];
                  _tweet.body = [NSString stringWithFormat:@"%@<br/><audio controls>%@</audio>", _tweet.body, attachStr];
              }
-             
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
@@ -213,18 +206,15 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if (_isLoadingFinished) {
-        [_HUD hide:YES];
-        return;
-    }
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    if (_webViewHeight == webViewHeight) {return;}
     
-    _webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    _webViewHeight = webViewHeight;
+    //_webViewHeight = webView.scrollView.contentSize.height;
+    [_HUD hide:YES];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
-        
-        //设置为已经加载完成
-        _isLoadingFinished = YES;
     });
 }
 
