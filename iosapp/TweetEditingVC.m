@@ -336,7 +336,7 @@
 }
 
 
-#pragma mark 插入字符串操作（@人和引用软件）
+#pragma mark 插入字符串操作（@人，引用软件或发表话题）
 
 - (void)mentionSomenone
 {
@@ -345,7 +345,7 @@
 
 - (void)referSoftware
 {
-    [self insertEditingString:@"#请输入软件名#"];
+    [self insertEditingString:@"#请输入软件名或话题#"];
 }
 
 - (void)insertEditingString:(NSString *)string
