@@ -147,17 +147,12 @@
     
     CGPoint origin = [self.view convertPoint:self.tabBar.center toView:self.tabBar];
     CGSize buttonSize = CGSizeMake(self.tabBar.frame.size.width / 5 - 6, self.tabBar.frame.size.height - 4);
-#if 0
-    _centerButton.frame = CGRectMake(origin.x - buttonSize.width/2, origin.y - buttonSize.height/2, buttonSize.width, buttonSize.height);
-    [_centerButton setCornerRadius:5.0];
-#else
+    
     _centerButton.frame = CGRectMake(origin.x - buttonSize.height/2, origin.y - buttonSize.height/2, buttonSize.height, buttonSize.height);
+    
     [_centerButton setCornerRadius:buttonSize.height/2];
-#endif
     [_centerButton setBackgroundColor:[UIColor colorWithHex:0x24a83d]];
-    
     [_centerButton setImage:buttonImage forState:UIControlStateNormal];
-    
     [_centerButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     [self.tabBar addSubview:_centerButton];
@@ -398,10 +393,15 @@
         SwipableViewController *swipeableVC = (SwipableViewController *)((UINavigationController *)self.selectedViewController).viewControllers[0];
         OSCObjsViewController *objsViewController = (OSCObjsViewController *)swipeableVC.viewPager.childViewControllers[swipeableVC.titleBar.currentIndex];
         
-        [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)];
-        [objsViewController.refreshControl beginRefreshing];
+        [UIView animateWithDuration:0.1 animations:^{
+            [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)];
+        } completion:^(BOOL finished) {
+            [objsViewController.refreshControl beginRefreshing];
+        }];
         
-        [objsViewController refresh];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [objsViewController refresh];
+        });
     }
 }
 
