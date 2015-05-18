@@ -12,6 +12,9 @@
 #import "TeamProjectAuthority.h"
 #import "TeamMember.h"
 
+#import <UIKit/UIKit.h>
+#import "NSString+FontAwesome.h"
+
 @implementation TeamIssue
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml
@@ -61,6 +64,58 @@
             [_childIssues addObject:obj];
         }
     }
+    
     return [self initWithXML:xml];
 }
+
+
+- (NSMutableAttributedString *)attributedProjectName
+{
+    if (!_attributedProjectName) {
+        NSString *stateString;
+        NSString *sourceString;
+        
+        if ([_state isEqualToString:@"opened"]) {
+            stateString = [NSString fontAwesomeIconStringForEnum:FACircleO];
+        } else if ([_state isEqualToString:@"underway"]) {
+            stateString = [NSString fontAwesomeIconStringForEnum:FADotCircleO];
+        } else if ([_state isEqualToString:@"closed"]) {
+            stateString = [NSString fontAwesomeIconStringForEnum:FACheckCircleO];
+        } else if ([_state isEqualToString:@"accepted"]) {
+            stateString = [NSString fontAwesomeIconStringForEnum:FALock];
+        } else if ([_state isEqualToString:@"outdate"]) {
+            stateString = [NSString fontAwesomeIconStringForEnum:FATimesCircleO];
+        } else {
+            stateString = @"";
+        }
+        
+        if ([_source isEqualToString:@"Git@OSC"]) {
+            sourceString = [NSString fontAwesomeIconStringForEnum:FAgitSquare];
+        } else if ([_source isEqualToString:@"Github"]) {
+            sourceString = [NSString fontAwesomeIconStringForEnum:FAGithubSquare];
+        } else {
+            sourceString = [NSString fontAwesomeIconStringForEnum:FAInfoCircle];
+        }
+        
+        
+        _attributedProjectName = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", stateString]
+                                                                        attributes:@{
+                                                                                     NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:16],
+                                                                                     NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                                     }];
+        [_attributedProjectName appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", sourceString]
+                                                                                       attributes:@{
+                                                                                                    NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:16],
+                                                                                                    NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                                                    }]];
+        [_attributedProjectName appendAttributedString:[[NSAttributedString alloc] initWithString:_title]];
+    }
+    
+    return _attributedProjectName;
+}
+
+
+
+
+
 @end
