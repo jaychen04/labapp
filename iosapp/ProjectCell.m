@@ -13,7 +13,6 @@
 
 @interface ProjectCell ()
 
-@property (nonatomic, strong) UILabel *iconLabel;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *countLabel;
 
@@ -36,11 +35,6 @@
 
 - (void)initSubviews
 {
-    _iconLabel = [UILabel new];
-    _iconLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:16];
-    _iconLabel.textColor = [UIColor grayColor];
-    [self.contentView addSubview:_iconLabel];
-    
     _titleLabel = [UILabel new];
     _titleLabel.numberOfLines = 0;
     _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -59,11 +53,11 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_iconLabel, _titleLabel, _countLabel);
+    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_titleLabel, _countLabel);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_titleLabel]-15-|" options:0 metrics:nil views:viewsDict]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_iconLabel]-8-[_titleLabel]-8-[_countLabel]-15-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_titleLabel]-8-[_countLabel]-15-|"
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil
                                                                                views:viewsDict]];
@@ -73,16 +67,8 @@
 
 - (void)setContentWithTeamProject:(TeamProject *)project
 {
-    _titleLabel.text = [NSString stringWithFormat:@"%@ / %@", project.ownerName, project.projectName];
     _countLabel.text = [NSString stringWithFormat:@"%d/%d", project.openedIssueCount, project.allIssueCount];
-    
-    if ([project.source isEqualToString:@"Git@OSC"]) {
-        _iconLabel.text = [NSString fontAwesomeIconStringForEnum:FAgitSquare];
-    } else if ([project.source isEqualToString:@"Github"]) {
-        _iconLabel.text = [NSString fontAwesomeIconStringForEnum:FAGithubSquare];
-    } else {
-        _iconLabel.text = @"";
-    }
+    _titleLabel.attributedText = project.attributedTitle;
 }
 
 

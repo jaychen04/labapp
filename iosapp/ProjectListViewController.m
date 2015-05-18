@@ -83,10 +83,8 @@ static NSString *kProjectCellID = @"ProjectCell";
 #endif
     
     self.label.font = [UIFont boldSystemFontOfSize:16];
-    self.label.numberOfLines = 0;
-    self.label.lineBreakMode = NSLineBreakByWordWrapping;
-    self.label.text = [NSString stringWithFormat:@"%@ / %@", project.ownerName, project.projectName];
-    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 85, MAXFLOAT)].height;
+    self.label.attributedText = project.attributedTitle;
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 80, MAXFLOAT)].height;
     
     return height + 30;
 }

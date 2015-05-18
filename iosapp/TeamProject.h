@@ -24,5 +24,7 @@
 @property (nonatomic, assign) int allIssueCount;
 @property (nonatomic, assign) BOOL gitPush;
 
+@property (nonatomic, strong) NSMutableAttributedString *attributedTitle;
+
 
 @end
