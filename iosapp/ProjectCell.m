@@ -76,8 +76,10 @@
     _titleLabel.text = [NSString stringWithFormat:@"%@ / %@", project.ownerName, project.projectName];
     _countLabel.text = [NSString stringWithFormat:@"%d/%d", project.openedIssueCount, project.allIssueCount];
     
-    if ([project.source containsString:@"Git"]) {
+    if ([project.source isEqualToString:@"Git@OSC"]) {
         _iconLabel.text = [NSString fontAwesomeIconStringForEnum:FAgitSquare];
+    } else if ([project.source isEqualToString:@"Github"]) {
+        _iconLabel.text = [NSString fontAwesomeIconStringForEnum:FAGithubSquare];
     } else {
         _iconLabel.text = @"";
     }
