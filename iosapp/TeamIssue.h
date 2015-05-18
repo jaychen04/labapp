@@ -40,4 +40,7 @@
 @property (nonatomic, assign) int attachmentsCount;
 @property (nonatomic, assign) int relationIssueCount;
 
+@property (nonatomic,strong)NSMutableArray *childIssues;       //任务详情的子任务
+
+- (instancetype)initWithDetailIssueXML:(ONOXMLElement *)xml;
 @end

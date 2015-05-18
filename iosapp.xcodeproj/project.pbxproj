@@ -27,8 +27,6 @@
 		31405BE91AF07453000A487D /* TeamIssueListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31405BE81AF07453000A487D /* TeamIssueListViewController.m */; };
 		31405BEC1AF074A4000A487D /* TeamIssueListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31405BEB1AF074A4000A487D /* TeamIssueListCell.m */; };
 		318B98CB1B02F25800246BC4 /* NSString+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B98CA1B02F25800246BC4 /* NSString+FontAwesome.m */; };
-		318B98CE1B02FCF900246BC4 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 318B98CD1B02FA8700246BC4 /* FontAwesome.ttf */; };
-		318B98D11B034D0F00246BC4 /* TeamMyIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 318B98D01B034D0F00246BC4 /* TeamMyIssueViewController.m */; };
 		31A338F11AF8683E0037B37F /* TeamActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */; };
 		31B6F1921AF78A8B00DC28FE /* TeamIssueDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F1911AF78A8B00DC28FE /* TeamIssueDetailCell.m */; };
 		31C50BC21AF1FE7F00074B72 /* TeamIssueDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C50BC11AF1FE7F00074B72 /* TeamIssueDetailController.m */; };
@@ -529,15 +527,13 @@
 		31405BEB1AF074A4000A487D /* TeamIssueListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueListCell.m; sourceTree = "<group>"; };
 		318B98C91B02F25800246BC4 /* NSString+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+FontAwesome.h"; sourceTree = "<group>"; };
 		318B98CA1B02F25800246BC4 /* NSString+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FontAwesome.m"; sourceTree = "<group>"; };
-		318B98CD1B02FA8700246BC4 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		318B98CF1B034D0F00246BC4 /* TeamMyIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamMyIssueViewController.h; sourceTree = "<group>"; };
-		318B98D01B034D0F00246BC4 /* TeamMyIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamMyIssueViewController.m; sourceTree = "<group>"; };
 		31A338EF1AF8683E0037B37F /* TeamActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamActivityDetailViewController.h; sourceTree = "<group>"; };
 		31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamActivityDetailViewController.m; sourceTree = "<group>"; };
 		31B6F1901AF78A8B00DC28FE /* TeamIssueDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamIssueDetailCell.h; sourceTree = "<group>"; };
 		31B6F1911AF78A8B00DC28FE /* TeamIssueDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueDetailCell.m; sourceTree = "<group>"; };
 		31C50BC01AF1FE7F00074B72 /* TeamIssueDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamIssueDetailController.h; sourceTree = "<group>"; };
 		31C50BC11AF1FE7F00074B72 /* TeamIssueDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueDetailController.m; sourceTree = "<group>"; };
+		31EA06AC1B05E28600565CD7 /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
 		31EAF9F71AEF2685004DF445 /* ProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectListViewController.h; sourceTree = "<group>"; };
 		31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectListViewController.m; sourceTree = "<group>"; };
 		31EAF9F91AEF2685004DF445 /* ProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectCell.h; sourceTree = "<group>"; };
@@ -1878,7 +1874,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				318B98CD1B02FA8700246BC4 /* FontAwesome.ttf */,
+				31EA06AC1B05E28600565CD7 /* FontAwesome.ttf */,
 				EE6C29C11ADE520E00370311 /* userinfo_icon_female.png */,
 				EE6C29C21ADE520E00370311 /* userinfo_icon_male.png */,
 				EE6C29BF1ADE426B00370311 /* picture_download.png */,
@@ -2450,8 +2446,6 @@
 				38EAF1BD1AE0E68B00397E2A /* TeamIssueController.m */,
 				38EAF1C81AE112A200397E2A /* TeamIssueCell.h */,
 				38EAF1C91AE112A200397E2A /* TeamIssueCell.m */,
-				318B98CF1B034D0F00246BC4 /* TeamMyIssueViewController.h */,
-				318B98D01B034D0F00246BC4 /* TeamMyIssueViewController.m */,
 				31C50BBF1AF1FE2900074B72 /* 任务详情 */,
 			);
 			name = "任务";
@@ -2716,7 +2710,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				318B98CE1B02FCF900246BC4 /* FontAwesome.ttf in Resources */,
 				EE7EE70F1AEF5B1000FE1CA5 /* voice_2.png in Resources */,
 				382A94A01A26D27400AAAFEA /* 093@2x.png in Resources */,
 				38BB27C01AAC016A0088A15C /* discover-search@3x.png in Resources */,
@@ -3195,7 +3188,6 @@
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				381EAB6619FE379C00C1937C /* NewsCell.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
-				318B98D11B034D0F00246BC4 /* TeamMyIssueViewController.m in Sources */,
 				C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */,
 				384A11331ADFA6BB00856A7C /* TeamUserMainCell.m in Sources */,
 				386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */,

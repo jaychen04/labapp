@@ -48,4 +48,19 @@
     return self;
 }
 
+- (instancetype)initWithDetailIssueXML:(ONOXMLElement *)xml
+{
+    self = [super init];
+    if (self) {
+        _authority = [[TeamProjectAuthority alloc] initWithXML:[xml firstChildWithTag:@"authority"]];
+        NSArray *xmlArr = [[xml firstChildWithTag:@"childIssues"] childrenWithTag:@"issue"];
+        _childIssues = [NSMutableArray new];
+        
+        for (ONOXMLElement *xmlObject in xmlArr) {
+            id obj = [[TeamIssue alloc] initWithXML:xmlObject];
+            [_childIssues addObject:obj];
+        }
+    }
+    return [self initWithXML:xml];
+}
 @end

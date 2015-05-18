@@ -35,17 +35,17 @@ static NSString * const kIssueCellID = @"IssueCell";
     self = [super init];
     if (self) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%d&project=-1&pageIndex=%lu", TEAM_PREFIX, TEAM_ISSUE_LIST, teamID, (unsigned long)page];
+            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%d&project=-1&pageIndex=%lu&state=opened", TEAM_PREFIX, TEAM_ISSUE_LIST, teamID, (unsigned long)page];
             return url;
         };
-        
+        _teamID = teamID;
         self.objClass = [TeamIssue class];
     }
     
     return self;
 }
 
-- (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID userID:(int64_t)userID source:(NSString*)source catalogID:(int64_t)catalogID
+- (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID userID:(int64_t)userID source:(NSString*)source andCatalogID:(int64_t)catalogID
 {
     self = [super init];
     if (self) {
@@ -54,7 +54,7 @@ static NSString * const kIssueCellID = @"IssueCell";
             return url;
 
         };
-        
+        _teamID = teamID;
         self.objClass = [TeamIssue class];
     }
     
@@ -69,7 +69,7 @@ static NSString * const kIssueCellID = @"IssueCell";
             NSString *url = [NSString stringWithFormat:@"%@%@?uid=%lld&teamid=%d&pageIndex=%lu&state=%@", TEAM_PREFIX, TEAM_ISSUE_LIST, userID, teamID,(unsigned long)page,kIssueStatesString(issueState)];
             return url;
         };
-        
+        _teamID = teamID;
         self.objClass = [TeamIssue class];
     }
     
@@ -129,6 +129,10 @@ static NSString * const kIssueCellID = @"IssueCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    TeamIssue *issue = self.objects[indexPath.row];
+    TeamIssueDetailController *tidc = [[TeamIssueDetailController alloc]initWithTeamId:_teamID andIssueId:issue.issueID];
+    
+    [self.navigationController pushViewController:tidc animated:YES];
 }
 
 

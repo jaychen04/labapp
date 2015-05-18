@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TeamIssueDetailCell : UITableViewCell
+static NSString *kteamIssueDetailCellNomal = @"teamIssueDetailCellNomal";
+static NSString *kTeamIssueDetailCellRemark = @"teamIssueDetailCellRemark";
+static NSString *kTeamIssueDetailCellSubChild = @"teamIssueDetailCellSubChild";
 
+@interface TeamIssueDetailCell : UITableViewCell
+@property (nonatomic,strong)UILabel *iconLabel;
+@property (nonatomic,strong)UILabel *titleLabel;
+@property (nonatomic,strong)UILabel *descriptionLabel;
+@property (nonatomic,strong)UIScrollView *remarkSv;
 @end

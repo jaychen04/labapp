@@ -6,8 +6,8 @@
 //  Copyright (c) 2015年 oschina. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 
-@interface TeamIssueDetailController : UITableViewController
-
+#import "BottomBarViewController.h"
+@interface TeamIssueDetailController : BottomBarViewController
+- (instancetype)initWithTeamId:(int)teamId andIssueId:(int)issueId;
 @end
