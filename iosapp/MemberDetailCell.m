@@ -131,13 +131,11 @@
     _addressLabel.text = [teamMember.location length]>0?teamMember.location:@"未填写地址";
     
     
-    if ([teamMember.telephone length]<=0) {
+    if ([teamMember.telephone length] <= 0) {
         _phoneIconLabel.hidden = YES;
     }else {
-        [_phoneIconLabel setText:[NSString fontAwesomeIconStringForEnum:FAIconPhone]];
+        [_phoneIconLabel setText:[NSString fontAwesomeIconStringForEnum:FAPhone]];
     }
-    
-//    NSLog(@"_eMailLabel:%f,_phoneLabel:%f",CGRectGetHeight(_eMailLabel.frame),CGRectGetHeight(_phoneLabel.frame));
 }
 
 

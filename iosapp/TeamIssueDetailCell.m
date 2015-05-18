@@ -52,7 +52,7 @@
         _descriptionLabel.font = [UIFont systemFontOfSize:13];
         _descriptionLabel.textColor = [UIColor grayColor];
         [self.contentView addSubview:_descriptionLabel];
-    }else if ([reuseIdentifier isEqualToString:kTeamIssueDetailCellRemark]) {
+    } else if ([reuseIdentifier isEqualToString:kTeamIssueDetailCellRemark]) {
         _remarkSv = [UIScrollView new];
         [self.contentView addSubview:_remarkSv];
     }
@@ -101,16 +101,5 @@
 //    }
 //}
 
-
-
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 @end
