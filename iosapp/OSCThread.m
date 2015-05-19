@@ -9,6 +9,7 @@
 #import "OSCThread.h"
 #import "OSCAPI.h"
 #import "Config.h"
+#import "Utils.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -41,6 +42,7 @@ static Reachability *reachability;
     if (reachability.currentReachabilityStatus == 0) {return;}
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_NOTICE]

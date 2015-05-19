@@ -180,6 +180,7 @@
                 [HUD hide:YES afterDelay:2];
             } else {
                 AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
                 manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
                 
                 [manager GET:URL
@@ -241,6 +242,7 @@
 - (void)loginInWeb:(NSString *)webUrl
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     [manager GET:webUrl

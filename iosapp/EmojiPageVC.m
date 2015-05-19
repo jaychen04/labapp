@@ -88,7 +88,7 @@
 {
     int index = vc.pageIndex;
     
-    if (index == 5) {
+    if (index == 6) {
         return nil;
     } else {
         EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:index+1];
@@ -100,7 +100,7 @@
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
-    return 6;
+    return 7;
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController

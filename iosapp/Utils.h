@@ -29,6 +29,8 @@ typedef NS_ENUM(NSUInteger, hudType) {
 
 @interface Utils : NSObject
 
++ (NSDictionary *)emojiDict;
+
 + (NSAttributedString *)getAppclient:(int)clientType;
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 + (NSString *)GenerateTags:(NSArray *)tags;
@@ -57,6 +59,10 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (UIImage *)createQRCodeFromString:(NSString *)string;
 
 + (NSAttributedString *)attributedCommentCount:(int)commentCount;
+
++ (NSString *)generateUserAgent;
+
+
 
 
 @end
