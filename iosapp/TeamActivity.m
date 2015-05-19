@@ -50,8 +50,8 @@
         
         [_attributedTitle deleteCharactersInRange:NSMakeRange(_attributedTitle.length-1, 1)];
         
-        [_attributedTitle addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
-                                   range:NSMakeRange(0, _attributedTitle.length)];
+        [_attributedTitle addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+                                  range:NSMakeRange(0, _attributedTitle.length)];
     }
     
     return _attributedTitle;

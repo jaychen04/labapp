@@ -49,7 +49,7 @@
         } else if ([_source isEqualToString:@"Github"]) {
             iconString = [NSString fontAwesomeIconStringForEnum:FAGithubSquare];
         } else {
-            iconString = @"";
+            iconString = [NSString fontAwesomeIconStringForEnum:FAInfoCircle];
         }
         
         _attributedTitle = [[NSMutableAttributedString alloc] initWithString:iconString
