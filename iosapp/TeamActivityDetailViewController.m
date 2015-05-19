@@ -69,27 +69,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                       metrics:nil views:views]];
     
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_REPLY_LIST_BY_ACTIVEID]
-      parameters:@{
-                   @"teamid": @(_teamID),
-                   @"id": @(_activity.activityID)
-                   }
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             NSArray *repliesXML = [[responseObject.rootElement firstChildWithTag:@"replies"] childrenWithTag:@"reply"];
-             for (ONOXMLElement *replyXML in repliesXML) {
-                 TeamReply *reply = [[TeamReply alloc] initWithXML:replyXML];
-                 [_replies addObject:reply];
-             }
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [_tableView reloadData];
-             });
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             
-         }];
+    [self getReplies];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -173,6 +153,39 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
         
         return cell;
     }
+}
+
+
+
+- (void)getReplies
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    NSString *API = _activity.type == 110? TEAM_REPLY_LIST_BY_ACTIVEID :
+                                           TEAM_REPLY_LIST_BY_TYPE;
+    NSString *type = @{@(118): @"diary", @(114): @"discuss", @(112): @"issue"}[@(_activity.type)] ?: @"";
+    
+    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, API]
+      parameters:@{
+                   @"teamid": @(_teamID),
+                   @"id": @(_activity.activityID),
+                   @"type": type
+                   }
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+             NSArray *repliesXML = [[responseObject.rootElement firstChildWithTag:@"replies"] childrenWithTag:@"reply"];
+             for (ONOXMLElement *replyXML in repliesXML) {
+                 TeamReply *reply = [[TeamReply alloc] initWithXML:replyXML];
+                 [_replies addObject:reply];
+             }
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [_tableView reloadData];
+             });
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             
+         }];
 }
 
 
