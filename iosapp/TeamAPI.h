@@ -42,5 +42,5 @@
 
 #define USER_INFORMATION                @"user_information"                 //用户个人信息(含动态)
 #define TEAM_ISSUE_DETAIL               @"team_issue_detail"                //任务详情
-
+#define TEAM_REPLY_LIST_BY_TYPE         @"team_reply_list_by_type"          //评论列表
 #endif
