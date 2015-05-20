@@ -69,7 +69,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                       metrics:nil views:views]];
     
-    [self getReplies];
+    [self fetchReplies];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -78,6 +78,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 
 
 #pragma mark - Table view data source
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UILabel *label = [UILabel new];
@@ -155,9 +156,60 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
     }
 }
 
+#pragma 发表评论
+
+- (void)sendContent
+{
+    MBProgressHUD *HUD = [Utils createHUD];
+    HUD.labelText = @"评论发送中";
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_TWEET_REPLY]
+       parameters:@{
+                    @"teamid": @(_teamID),
+                    @"uid": @([Config getOwnID]),
+                    @"type": @(_activity.type),
+                    @"tweetid": @(_activity.activityID),
+                    @"content": [Utils convertRichTextToRawText:self.editingBar.editView]
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+              NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+              
+              HUD.mode = MBProgressHUDModeCustomView;
+             
+              if (errorCode == 1) {
+                  self.editingBar.editView.text = @"";
+                  [self updateInputBarHeight];
+                 
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.labelText = @"评论发表成功";
+                 
+                  [_tableView setContentOffset:CGPointZero animated:NO];
+                  [self fetchReplies];
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+              }
+              
+              [HUD hide:YES afterDelay:1];
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.detailsLabelText = error.localizedFailureReason;
+             
+              [HUD hide:YES afterDelay:1];
+          }];
+}
 
 
-- (void)getReplies
+#pragma mark - 获取评论列表
+
+- (void)fetchReplies
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
@@ -171,7 +223,8 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
       parameters:@{
                    @"teamid": @(_teamID),
                    @"id": @(_activity.activityID),
-                   @"type": type
+                   @"type": type,
+                   @"pageIndex":@((_replies.count + 19) / 20)
                    }
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              NSArray *repliesXML = [[responseObject.rootElement firstChildWithTag:@"replies"] childrenWithTag:@"reply"];

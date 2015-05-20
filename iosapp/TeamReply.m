@@ -28,4 +28,15 @@
     return self;
 }
 
+
+- (BOOL)isEqual:(id)object
+{
+    if ([self class] == [object class]) {
+        return _replyID == ((TeamReply *)object).replyID;
+    }
+    
+    return NO;
+}
+
+
 @end

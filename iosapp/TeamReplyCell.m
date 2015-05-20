@@ -47,6 +47,11 @@
     _timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
     [self.contentView addSubview:_timeLabel];
     
+    _appclientLabel = [UILabel new];
+    _appclientLabel.font = [UIFont systemFontOfSize:12];
+    _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    [self.contentView addSubview:_appclientLabel];
+    
     _contentLabel = [UILabel new];
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -60,7 +65,7 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _contentLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _contentLabel, _timeLabel, _appclientLabel);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
     
@@ -74,6 +79,10 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_contentLabel]-8-[_timeLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-10-[_appclientLabel]->=8-|"
+                                                                             options:NSLayoutFormatAlignAllCenterY
+                                                                             metrics:nil views:views]];
 }
 
 
@@ -83,6 +92,7 @@
     _authorLabel.text = reply.author.name;
     _contentLabel.attributedText = [Utils emojiStringFromRawString:reply.content];
     _timeLabel.attributedText = [Utils attributedTimeString:reply.createTime];
+    _appclientLabel.attributedText = [Utils getAppclient:reply.appclient];
 }
 
 

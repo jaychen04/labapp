@@ -48,10 +48,12 @@
                                                          documentAttributes:nil
                                                                       error:nil];
         
-        [_attributedTitle deleteCharactersInRange:NSMakeRange(_attributedTitle.length-1, 1)];
-        
-        [_attributedTitle addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
-                                  range:NSMakeRange(0, _attributedTitle.length)];
+        if (_attributedTitle.length) {      // 防止单一emoji导致崩溃
+            [_attributedTitle deleteCharactersInRange:NSMakeRange(_attributedTitle.length-1, 1)];
+            
+            [_attributedTitle addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+                                      range:NSMakeRange(0, _attributedTitle.length)];
+        }
     }
     
     return _attributedTitle;

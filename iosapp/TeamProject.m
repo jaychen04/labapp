@@ -46,7 +46,7 @@
         
         if ([_source isEqualToString:@"Git@OSC"]) {
             iconString = [NSString fontAwesomeIconStringForEnum:FAgitSquare];
-        } else if ([_source isEqualToString:@"Github"]) {
+        } else if ([_source isEqualToString:@"GitHub"]) {
             iconString = [NSString fontAwesomeIconStringForEnum:FAGithubSquare];
         } else {
             iconString = [NSString fontAwesomeIconStringForEnum:FAListAlt];
