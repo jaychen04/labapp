@@ -10,6 +10,7 @@
 #import "Utils.h"
 #import "Config.h"
 #import "TeamAPI.h"
+#import "TeamReply.h"
 #import "TeamActivity.h"
 #import "TeamCommentsViewController.h"
 
@@ -34,9 +35,23 @@
     if (self) {
         _teamID = teamID;
         _activity = activity;
+        
         _commentsVC = [[TeamCommentsViewController alloc] initWithActivity:activity andTeamID:teamID];
         
         [self addChildViewController:_commentsVC];
+        
+        __weak typeof(self) weakSelf = self;
+        _commentsVC.didScroll = ^ {
+            [weakSelf.editingBar.editView resignFirstResponder];
+            [weakSelf hideEmojiPageView];
+        };
+        _commentsVC.didReplySelected = ^(TeamReply *reply) {
+            NSString *authorString = [NSString stringWithFormat:@"@%@", reply.author.name];
+            if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {
+                [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:authorString];
+                [weakSelf.editingBar.editView becomeFirstResponder];
+            }
+        };
     }
     
     return self;

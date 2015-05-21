@@ -157,6 +157,29 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        /* 不响应点击 */
+    } else {
+        TeamReply *reply = self.objects[indexPath.row];
+        
+        if (self.didReplySelected) {
+            self.didReplySelected(reply);
+        }
+    }
+}
+
+
+#pragma mark - UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView == self.tableView && self.didScroll) {
+        self.didScroll();
+    }
+}
+
 
 
 
