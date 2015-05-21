@@ -22,12 +22,10 @@
 
 static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 
-@interface TeamActivityDetailViewController () <UITableViewDataSource,UITableViewDelegate>
+@interface TeamActivityDetailViewController ()
 
-@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, assign) int teamID;
 @property (nonatomic, strong) TeamActivity *activity;
-@property (nonatomic, strong) NSMutableArray *replies;
 
 @end
 
@@ -35,11 +33,10 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 
 - (instancetype)initWithActivity:(TeamActivity *)activity andTeamID:(int)teamID
 {
-    self = [super initWithModeSwitchButton:NO];
+    self = [super initWIthActivity:activity andTeamID:teamID];
     if (self) {
         _activity = activity;
         _teamID = teamID;
-        _replies = [NSMutableArray new];
     }
     
     return self;
@@ -51,25 +48,6 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
     [super viewDidLoad];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationItem.title = @"动态详情";
-    
-    _tableView = [UITableView new];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor themeColor];
-    _tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    [_tableView registerClass:[TeamReplyCell class] forCellReuseIdentifier:kTeamReplyCellID];
-    _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    [self.view addSubview:_tableView];
-    
-    [self.view bringSubviewToFront:(UIView *)self.editingBar];
-    
-    NSDictionary *views = @{@"detailTableView": _tableView, @"bottomBar": self.editingBar};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[detailTableView]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailTableView][bottomBar]"
-                                                                      options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                      metrics:nil views:views]];
-    
-    [self fetchReplies];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -92,51 +70,34 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
         
         return height + 62;
     } else {
-        TeamReply *reply = _replies[indexPath.row];
-        
-        label.font = [UIFont systemFontOfSize:14];
-        label.text = reply.content;
-        
-        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
-        
-        return height + 66;
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
 }
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (!_activity) {
-        return 0;
-    } else {
-        return _replies.count? 2 : 1;
-    }
+    return 2;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return section == 0? 0 : 35;
-}
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
         return nil;
     } else {
-        NSString *title;
-        if (_activity.replyCount) {
-            title = [NSString stringWithFormat:@"%d 条评论", _activity.replyCount];
-        } else {
-            title = @"没有评论";
-        }
-        return title;
+        return [super tableView:tableView titleForHeaderInSection:section];
     }
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return section == 0? 1 : _replies.count;
+    if (section == 0) {
+        return 1;
+    } else {
+        return [super tableView:tableView numberOfRowsInSection:section];
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -147,12 +108,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
         
         return cell;
     } else {
-        TeamReply *reply = _replies[indexPath.row];
-        
-        TeamReplyCell *cell = [tableView dequeueReusableCellWithIdentifier:kTeamReplyCellID forIndexPath:indexPath];
-        [cell setContentWithReply:reply];
-        
-        return cell;
+        return [super tableView:tableView cellForRowAtIndexPath:indexPath];
     }
 }
 
@@ -189,8 +145,8 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                   HUD.labelText = @"评论发表成功";
                  
-                  [_tableView setContentOffset:CGPointZero animated:NO];
-                  [self fetchReplies];
+                  [self.tableView setContentOffset:CGPointZero animated:NO];
+                  [self fetchRepliesOnPage:0];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
@@ -204,41 +160,6 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
              
               [HUD hide:YES afterDelay:1];
           }];
-}
-
-
-#pragma mark - 获取评论列表
-
-- (void)fetchReplies
-{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    
-    NSString *API = _activity.type == 110? TEAM_REPLY_LIST_BY_ACTIVEID :
-                                           TEAM_REPLY_LIST_BY_TYPE;
-    NSString *type = @{@(118): @"diary", @(114): @"discuss", @(112): @"issue"}[@(_activity.type)] ?: @"";
-    
-    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, API]
-      parameters:@{
-                   @"teamid": @(_teamID),
-                   @"id": @(_activity.activityID),
-                   @"type": type,
-                   @"pageIndex":@((_replies.count + 19) / 20)
-                   }
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             NSArray *repliesXML = [[responseObject.rootElement firstChildWithTag:@"replies"] childrenWithTag:@"reply"];
-             for (ONOXMLElement *replyXML in repliesXML) {
-                 TeamReply *reply = [[TeamReply alloc] initWithXML:replyXML];
-                 [_replies addObject:reply];
-             }
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [_tableView reloadData];
-             });
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             
-         }];
 }
 
 

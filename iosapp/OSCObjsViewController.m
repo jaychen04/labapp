@@ -32,7 +32,6 @@
         _page = 0;
         _needRefreshAnimation = YES;
         _shouldFetchDataAfterLoaded = YES;
-        _allCountKey = @"allCount";
     }
     
     return self;
@@ -162,7 +161,7 @@
     [_manager GET:self.generateURL(page)
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             _allCount = [[[responseDocument.rootElement firstChildWithTag:_allCountKey] numberValue] intValue];
+             _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
              NSArray *objectsXML = [self parseXML:responseDocument];
              
              if (refresh) {

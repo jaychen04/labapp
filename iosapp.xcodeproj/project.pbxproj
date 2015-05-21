@@ -421,8 +421,6 @@
 		C5A89C391B09C34B00798B1C /* UIFont+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A89C341B09C34B00798B1C /* UIFont+FontAwesome.m */; };
 		C5A89C3A1B09C34B00798B1C /* UIImage+FontAwesome.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A89C361B09C34B00798B1C /* UIImage+FontAwesome.m */; };
 		C5A89C3C1B09C59400798B1C /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C5A89C3B1B09C59400798B1C /* FontAwesome.ttf */; };
-		C5A89C3F1B0B4A7E00798B1C /* TeamCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A89C3E1B0B4A7E00798B1C /* TeamCommentsViewController.m */; };
-		C5C001D01B0C75FC00EBD2D8 /* TeamCommentsBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C001CF1B0C75FC00EBD2D8 /* TeamCommentsBVC.m */; };
 		C5D5504A1B04764000CCA308 /* -1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D550381B04764000CCA308 /* -1@2x.png */; };
 		C5D5504B1B04764000CCA308 /* bowtie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D550391B04764000CCA308 /* bowtie@2x.png */; };
 		C5D5504C1B04764000CCA308 /* dancer@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D5503A1B04764000CCA308 /* dancer@2x.png */; };
@@ -441,6 +439,7 @@
 		C5D5505A1B04764000CCA308 /* suspect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D550481B04764000CCA308 /* suspect@2x.png */; };
 		C5D5505B1B04764000CCA308 /* trollface@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D550491B04764000CCA308 /* trollface@2x.png */; };
 		C5D5505D1B04816700CCA308 /* +1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D5505C1B04816700CCA308 /* +1@2x.png */; };
+		C5D7F6561B0DDCC900AB01CC /* TeamRepliesBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */; };
 		C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */; };
 		C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */; };
 		C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7721AEFA0140032F775 /* TeamCell.m */; };
@@ -1082,10 +1081,6 @@
 		C5A89C351B09C34B00798B1C /* UIImage+FontAwesome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FontAwesome.h"; sourceTree = "<group>"; };
 		C5A89C361B09C34B00798B1C /* UIImage+FontAwesome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FontAwesome.m"; sourceTree = "<group>"; };
 		C5A89C3B1B09C59400798B1C /* FontAwesome.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.ttf; sourceTree = "<group>"; };
-		C5A89C3D1B0B4A7E00798B1C /* TeamCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamCommentsViewController.h; sourceTree = "<group>"; };
-		C5A89C3E1B0B4A7E00798B1C /* TeamCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCommentsViewController.m; sourceTree = "<group>"; };
-		C5C001CE1B0C75FC00EBD2D8 /* TeamCommentsBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamCommentsBVC.h; sourceTree = "<group>"; };
-		C5C001CF1B0C75FC00EBD2D8 /* TeamCommentsBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCommentsBVC.m; sourceTree = "<group>"; };
 		C5D550381B04764000CCA308 /* -1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-1@2x.png"; sourceTree = "<group>"; };
 		C5D550391B04764000CCA308 /* bowtie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bowtie@2x.png"; sourceTree = "<group>"; };
 		C5D5503A1B04764000CCA308 /* dancer@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dancer@2x.png"; sourceTree = "<group>"; };
@@ -1104,6 +1099,8 @@
 		C5D550481B04764000CCA308 /* suspect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "suspect@2x.png"; sourceTree = "<group>"; };
 		C5D550491B04764000CCA308 /* trollface@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trollface@2x.png"; sourceTree = "<group>"; };
 		C5D5505C1B04816700CCA308 /* +1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "+1@2x.png"; sourceTree = "<group>"; };
+		C5D7F6541B0DDCC900AB01CC /* TeamRepliesBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamRepliesBVC.h; sourceTree = "<group>"; };
+		C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamRepliesBVC.m; sourceTree = "<group>"; };
 		C5E73DF81AF755A900974EDC /* WeeklyReportTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTitleBar.h; sourceTree = "<group>"; };
 		C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTitleBar.m; sourceTree = "<group>"; };
 		C5E73DFE1AF8A15400974EDC /* WeeklyReportContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportContentViewController.h; sourceTree = "<group>"; };
@@ -1411,10 +1408,8 @@
 				31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */,
 				C52BF4FF1AFCBF1700E53508 /* TeamReplyCell.h */,
 				C52BF5001AFCBF1700E53508 /* TeamReplyCell.m */,
-				C5A89C3D1B0B4A7E00798B1C /* TeamCommentsViewController.h */,
-				C5A89C3E1B0B4A7E00798B1C /* TeamCommentsViewController.m */,
-				C5C001CE1B0C75FC00EBD2D8 /* TeamCommentsBVC.h */,
-				C5C001CF1B0C75FC00EBD2D8 /* TeamCommentsBVC.m */,
+				C5D7F6541B0DDCC900AB01CC /* TeamRepliesBVC.h */,
+				C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */,
 			);
 			name = "动态详情";
 			sourceTree = "<group>";
@@ -3169,7 +3164,6 @@
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				3838D15C1A6C9D0900CC7913 /* OperationBar.m in Sources */,
 				382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */,
-				C5C001D01B0C75FC00EBD2D8 /* TeamCommentsBVC.m in Sources */,
 				38763A071A85E591008E6805 /* UserHeaderCell.m in Sources */,
 				380FD22A1A7612E8003C4021 /* ActivityBasicInfoCell.m in Sources */,
 				384364201AC5532900743CB0 /* TeamMemberViewController.m in Sources */,
@@ -3186,7 +3180,6 @@
 				387639FD1A807918008E6805 /* SoftwareCommentsViewController.m in Sources */,
 				38763A361A8DDF51008E6805 /* MessageBubbleViewController.m in Sources */,
 				3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */,
-				C5A89C3F1B0B4A7E00798B1C /* TeamCommentsViewController.m in Sources */,
 				C5FB95851AEA1D51006918CD /* TeamDiscussionViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
@@ -3277,6 +3270,7 @@
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */,
 				C5F3D77D1AF0C6D70032F775 /* TeamWeeklyReport.m in Sources */,
+				C5D7F6561B0DDCC900AB01CC /* TeamRepliesBVC.m in Sources */,
 				38A9EEBC1AA998A7006C95BD /* OSLicensePage.m in Sources */,
 				38EAF1C71AE0FCE400397E2A /* TeamProjectAuthority.m in Sources */,
 				38A93FA61AA2B51100A515E8 /* OSCThread.m in Sources */,

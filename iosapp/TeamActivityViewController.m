@@ -12,10 +12,6 @@
 #import "TeamActivityCell.h"
 #import "TeamActivityDetailViewController.h"
 
-#import "TeamCommentsBVC.h"
-
-#import <TTTAttributedLabel.h>
-
 
 static NSString * const kActivityCellID = @"TeamActivityCell";
 
@@ -106,8 +102,8 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     TeamActivity *activity = self.objects[indexPath.row];
-    //TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamID];
-    TeamCommentsBVC *detailVC = [[TeamCommentsBVC alloc] initWithActivity:activity andTeamID:_teamID];
+    TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamID];
+    
     [self.navigationController pushViewController:detailVC animated:YES];
 }
 

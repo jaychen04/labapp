@@ -7,10 +7,11 @@
 //
 
 #import "BottomBarViewController.h"
+#import "TeamRepliesBVC.h"
 
 @class TeamActivity;
 
-@interface TeamActivityDetailViewController : BottomBarViewController
+@interface TeamActivityDetailViewController : TeamRepliesBVC
 
 - (instancetype)initWithActivity:(TeamActivity *)activity andTeamID:(int)teamID;
 

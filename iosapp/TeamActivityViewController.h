@@ -12,7 +12,6 @@
 
 - (instancetype)initWithTeamID:(int)teamID andProjectID:(int)projectID;
 
-
 - (instancetype)initWithTeamID:(int)teamID;
 
 @end

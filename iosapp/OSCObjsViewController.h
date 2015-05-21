@@ -40,7 +40,6 @@
 @property (nonatomic, strong) LastCell *lastCell;
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, assign) NSUInteger page;
-@property (nonatomic, copy) NSString *allCountKey;
 
 //@property(assign,nonatomic)id<anotherNetWorkingDelegate> delegate;
 @property (nonatomic, copy) void (^anotherNetWorking)();
