@@ -8,9 +8,17 @@
 
 #import "ProjectCell.h"
 #import "UIColor+Util.h"
+#import "TeamProject.h"
+#import "NSString+FontAwesome.h"
+
+@interface ProjectCell ()
+
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *countLabel;
+
+@end
+
 @implementation ProjectCell
-
-
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -27,20 +35,16 @@
 
 - (void)initSubviews
 {
+    _titleLabel = [UILabel new];
+    _titleLabel.numberOfLines = 0;
+    _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _titleLabel.font = [UIFont boldSystemFontOfSize:16];
+    [self.contentView addSubview:_titleLabel];
     
-    self.titleLabel = [UILabel new];
-    self.titleLabel.numberOfLines = 0;
-    self.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.titleLabel.font = [UIFont boldSystemFontOfSize:15];
-    [self.contentView addSubview:self.titleLabel];
-    
-    self.countLabel = [UILabel new];
-    self.countLabel.numberOfLines = 0;
-    self.countLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.countLabel.font = [UIFont systemFontOfSize:13];
-    self.countLabel.textColor = [UIColor grayColor];
-    [self.contentView addSubview:self.countLabel];
-    
+    _countLabel = [UILabel new];
+    _countLabel.font = [UIFont systemFontOfSize:13];
+    _countLabel.textColor = [UIColor grayColor];
+    [self.contentView addSubview:_countLabel];
 }
 
 - (void)setLayout
@@ -49,30 +53,26 @@
         view.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_titleLabel,_countLabel);
+    NSDictionary *viewsDict = NSDictionaryOfVariableBindings(_titleLabel, _countLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_titleLabel]-8-|" options:0 metrics:nil views:viewsDict]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_titleLabel]-15-|" options:0 metrics:nil views:viewsDict]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_titleLabel]-5-[_countLabel]-20-|"
-                                                                             options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllCenterY
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_titleLabel]-8-[_countLabel]-15-|"
+                                                                             options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil
                                                                                views:viewsDict]];
     
 }
 
 
-
-
-
-
-- (void)awakeFromNib {
-    // Initialization code
+- (void)setContentWithTeamProject:(TeamProject *)project
+{
+    _countLabel.text = [NSString stringWithFormat:@"%d/%d", project.openedIssueCount, project.allIssueCount];
+    _titleLabel.attributedText = project.attributedTitle;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
-}
+
+
 
 @end

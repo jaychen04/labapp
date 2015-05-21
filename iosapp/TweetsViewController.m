@@ -292,6 +292,7 @@ static NSString * const kTweetCellID = @"TweetCell";
         HUD.labelText = @"正在删除动弹";
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
         manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_DELETE]
            parameters:@{
@@ -426,6 +427,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     }
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     

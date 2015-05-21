@@ -13,7 +13,7 @@
 
 @interface TeamActivityCell : UITableViewCell
 
-@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) TTTAttributedLabel *titleLabel;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel *commentLabel;

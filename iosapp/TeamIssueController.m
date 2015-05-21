@@ -103,15 +103,12 @@ static NSString * const kIssueCellID = @"IssueCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UILabel *label = [UILabel new];
     TeamIssue *issue = self.objects[indexPath.row];
     
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    label.font = [UIFont boldSystemFontOfSize:15];
-    label.text = issue.title;
+    self.label.font = [UIFont boldSystemFontOfSize:15];
+    self.label.attributedText = issue.attributedProjectName;
     
-    CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
     
     return height + 60;
 }

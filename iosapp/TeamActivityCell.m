@@ -11,6 +11,8 @@
 #import "TeamMember.h"
 #import "Utils.h"
 
+#import <TTTAttributedLabel.h>
+
 @implementation TeamActivityCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -33,9 +35,14 @@
 
 - (void)initSubviews
 {
-    _titleLabel = [UILabel new];
+    _titleLabel = [TTTAttributedLabel new];
     _titleLabel.numberOfLines = 0;
     _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _titleLabel.userInteractionEnabled = NO;
+    _titleLabel.linkAttributes = @{
+                                   NSForegroundColorAttributeName: [UIColor nameColor],
+                                   NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
+                                   };
     [self.contentView addSubview:_titleLabel];
     
     _nameLabel = [UILabel new];
@@ -91,7 +98,7 @@
     _commentLabel.attributedText = [Utils attributedCommentCount:activity.replyCount];
     _timeLabel.attributedText = [Utils attributedTimeString:activity.createTime];
     
-    _titleLabel.attributedText = activity.attributedTitle;
+    _titleLabel.text = activity.attributedTitle;
 }
 
 @end

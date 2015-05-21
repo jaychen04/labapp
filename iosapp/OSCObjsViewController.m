@@ -57,6 +57,7 @@
     
     
     _manager = [AFHTTPRequestOperationManager manager];
+    [_manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     if (!_shouldFetchDataAfterLoaded) {return;}
@@ -201,6 +202,7 @@
                  if (self.refreshControl.refreshing) {
                      [self.refreshControl endRefreshing];
                  }
+                 
                  [self.tableView reloadData];
              });
          }

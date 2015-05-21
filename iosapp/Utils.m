@@ -208,6 +208,22 @@
 
 #pragma mark - 通用
 
+#pragma mark - emoji Dictionary
+
++ (NSDictionary *)emojiDict
+{
+    static dispatch_once_t once;
+    static NSDictionary *emojiDict;
+    
+    dispatch_once(&once, ^ {
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSString *path = [bundle pathForResource:@"emoji" ofType:@"plist"];
+        emojiDict = [[NSDictionary alloc] initWithContentsOfFile:path];
+    });
+    
+    return emojiDict;
+}
+
 #pragma mark 信息处理
 
 + (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr
@@ -312,10 +328,7 @@
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString
 {
     NSMutableAttributedString *emojiString = [[NSMutableAttributedString alloc] initWithString:rawString];
-    
-    NSBundle *bundle = [NSBundle mainBundle];
-    NSString *path = [bundle pathForResource:@"emoji" ofType:@"plist"];
-    NSDictionary *emoji = [[NSDictionary alloc] initWithContentsOfFile:path];
+    NSDictionary *emoji = self.emojiDict;
     
     NSString *pattern = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]|:[a-zA-Z0-9\\u4e00-\\u9fa5_]+:";
     NSError *error = nil;
@@ -332,14 +345,24 @@
         if ([emojiName hasPrefix:@"["] && emoji[emojiName]) {
             NSTextAttachment *textAttachment = [NSTextAttachment new];
             textAttachment.image = [UIImage imageNamed:emoji[emojiName]];
+            [textAttachment adjustY:-3];
             
             NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
             
-            NSDictionary *emojiToReplace = @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]};
-            [emojiArray addObject:emojiToReplace];
-        } else if ([emojiName hasPrefix:@":"] && emoji[emojiName]) {
-            NSDictionary *emojiToReplace = @{@"text": emoji[emojiName], @"range": [NSValue valueWithRange:range]};
-            [emojiArray addObject:emojiToReplace];
+            [emojiArray addObject: @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]}];
+        } else if ([emojiName hasPrefix:@":"]) {
+            if (emoji[emojiName]) {
+                [emojiArray addObject:@{@"text": emoji[emojiName], @"range": [NSValue valueWithRange:range]}];
+            } else {
+                UIImage *emojiImage = [UIImage imageNamed:[emojiName stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]]];
+                NSTextAttachment *textAttachment = [NSTextAttachment new];
+                textAttachment.image = emojiImage;
+                [textAttachment adjustY:-3];
+                
+                NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
+                
+                [emojiArray addObject: @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]}];
+            }
         }
     }
     
@@ -374,8 +397,8 @@
                                      usingBlock:^(NSTextAttachment *attachment, NSRange range, BOOL *stop) {
                                                     if (!attachment) {return;}
                                         
-                                                    int emojiNum = [objc_getAssociatedObject(attachment, @"number") intValue];
-                                                    [rawText insertString:[NSString stringWithFormat:@"[%d]", emojiNum-1] atIndex:range.location];
+                                                    NSString *emojiStr = objc_getAssociatedObject(attachment, @"emoji");
+                                                    [rawText insertString:emojiStr atIndex:range.location];
                                                 }];
     
     NSString *pattern = @"[\ue000-\uf8ff]|[\\x{1f300}-\\x{1f7ff}]|\\x{263A}\\x{FE0F}|☺";
@@ -548,6 +571,19 @@
     [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d", commentCount]]];
     
     return attributedCommentCount;
+}
+
+
++ (NSString *)generateUserAgent
+{
+    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSString *IDFV = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    
+    return [NSString stringWithFormat:@"OSChina.NET/%@/%@/%@/%@/%@", appVersion,
+                                                                     [UIDevice currentDevice].systemName,
+                                                                     [UIDevice currentDevice].systemVersion,
+                                                                     [UIDevice currentDevice].model,
+                                                                     IDFV];
 }
 
 

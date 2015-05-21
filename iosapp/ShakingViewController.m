@@ -234,6 +234,7 @@ static const double accelerationThreshold = 2.0f;
 - (void)getRandomMessage
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_RANDOM_MESSAGE]
@@ -254,6 +255,7 @@ static const double accelerationThreshold = 2.0f;
              [HUD hide:YES afterDelay:2];
              
              [self startAccelerometer];
+             _isShaking = NO;
          }];
 }
 

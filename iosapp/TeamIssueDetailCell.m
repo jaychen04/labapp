@@ -46,6 +46,7 @@
     _iconLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_iconLabel];
     
+
     _titleLabel = [UILabel new];
     _titleLabel.font = [UIFont boldSystemFontOfSize:15];
     _titleLabel.textColor = [UIColor grayColor];
@@ -59,6 +60,7 @@
     _descriptionLabel.font = [UIFont systemFontOfSize:13];
     _descriptionLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_descriptionLabel];
+
 }
 
 - (void)setNomalStyleLayout
@@ -191,16 +193,5 @@
 }
 
 
-
-
-- (void)awakeFromNib {
-    // Initialization code
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
-}
 
 @end

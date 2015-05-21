@@ -10,6 +10,8 @@
 #import "Utils.h"
 #import "TeamIssue.h"
 
+#import "NSString+FontAwesome.h"
+
 @implementation TeamIssueCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -67,19 +69,22 @@
     NSDictionary *views = NSDictionaryOfVariableBindings(_titleLabel, _projectNameLabel, _assignmentLabel, _timeLabel, _commentLabel);
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_titleLabel]-8-[_projectNameLabel]-8-[_assignmentLabel]-8-|"
-                                                                             options:NSLayoutFormatAlignAllLeft
-                                                                             metrics:nil views:views]];
+                                                                             options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_titleLabel]-8-|" options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_titleLabel]-8-|"
+                                                                             options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_assignmentLabel]->=0-[_commentLabel]-8-[_timeLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_projectNameLabel]-8-|"
+                                                                             options:0 metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_assignmentLabel]->=0-[_commentLabel]-8-[_timeLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 
 
 - (void)setContentWithIssue:(TeamIssue *)issue
 {
-    _titleLabel.text = issue.title;
+    _titleLabel.attributedText = issue.attributedProjectName;
     
     _projectNameLabel.text = issue.project.projectName;
     _commentLabel.attributedText = [Utils attributedCommentCount:issue.replyCount];

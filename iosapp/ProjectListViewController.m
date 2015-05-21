@@ -17,6 +17,7 @@
 #import "TeamActivityViewController.h"
 
 static NSString *kProjectCellID = @"ProjectCell";
+
 @interface ProjectListViewController ()
 
 @end
@@ -65,8 +66,7 @@ static NSString *kProjectCellID = @"ProjectCell";
     ProjectCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kProjectCellID forIndexPath:indexPath];
     TeamProject *project = self.objects[indexPath.row];
     
-    [cell.titleLabel setAttributedText:project.attributedTittle];
-    [cell.countLabel setText:[NSString stringWithFormat:@"%d/%d",project.openedIssueCount,project.allIssueCount]];
+    [cell setContentWithTeamProject:project];
     
     return cell;
 }
@@ -74,13 +74,19 @@ static NSString *kProjectCellID = @"ProjectCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    self.label.font = [UIFont boldSystemFontOfSize:15];
-    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    TeamProject *project = self.objects[indexPath.row];
     
+#if 0
     self.label.font = [UIFont systemFontOfSize:13];
-    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    self.label.text = [NSString stringWithFormat:@"%d/%d", project.openedIssueCount, project.allIssueCount];
+    CGFloat width = [self.label sizeThatFits:CGSizeMake(MAXFLOAT, MAXFLOAT)].width;
+#endif
     
-    return height + 42;
+    self.label.font = [UIFont boldSystemFontOfSize:16];
+    self.label.attributedText = project.attributedTitle;
+    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 80, MAXFLOAT)].height;
+    
+    return height + 30;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

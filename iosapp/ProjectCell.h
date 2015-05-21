@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class TeamProject;
+
 @interface ProjectCell : UITableViewCell
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *countLabel;
+
+- (void)setContentWithTeamProject:(TeamProject *)project;
+
 @end

@@ -9,6 +9,8 @@
 #import "TeamProject.h"
 #import <UIKit/UIKit.h>
 #import "Utils.h"
+#import "NSString+FontAwesome.h"
+
 @implementation TeamProject
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml
@@ -36,17 +38,31 @@
     return self;
 }
 
-- (NSAttributedString *)attributedTittle
+- (NSAttributedString *)attributedTitle
 {
-    NSTextAttachment *textAttachment = [NSTextAttachment new];
-    textAttachment.image = [UIImage imageNamed:@"widget_repost"];
-
-    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-    NSMutableAttributedString *attributedTittle = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-    [attributedTittle appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-    [attributedTittle appendAttributedString:[[NSAttributedString alloc] initWithString:_projectName]];
+    if (!_attributedTitle) {
+        NSString *title = [NSString stringWithFormat:@"%@ / %@", _ownerName, _projectName];
+        NSString *iconString;
+        
+        if ([_source isEqualToString:@"Git@OSC"]) {
+            iconString = [NSString fontAwesomeIconStringForEnum:FAgitSquare];
+        } else if ([_source isEqualToString:@"Github"]) {
+            iconString = [NSString fontAwesomeIconStringForEnum:FAGithubSquare];
+        } else {
+            iconString = [NSString fontAwesomeIconStringForEnum:FAInfoCircle];
+        }
+        
+        _attributedTitle = [[NSMutableAttributedString alloc] initWithString:iconString
+                                                                 attributes:@{
+                                                                              NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:16],
+                                                                              NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                              }];
+        
+        [_attributedTitle appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", title]]];
+    }
     
-    return attributedTittle;
+    return _attributedTitle;
 }
+
 
 @end
