@@ -75,83 +75,59 @@ static NSString *kCommentCellID = @"CommentCell";
 
 #pragma mark - tableView
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    if (section == 0 && self.otherSectionCell) {
-        return 1;
-    } else {
-        return [super tableView:tableView numberOfRowsInSection:section];
-    }
-}
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
     
-    if (indexPath.section == 0 && self.otherSectionCell) {
-        UITableViewCell *cell = self.otherSectionCell(indexPath);
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return cell;
-    } else {
-        //CommentCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kCommentCellID forIndexPath:indexPath];
-        CommentCell *cell = [CommentCell new];
-        OSCComment *comment = self.objects[row];
-        
-        [self setBlockForCommentCell:cell];
-        [cell setContentWithComment:comment];
-        
-        cell.portrait.tag = row; cell.authorLabel.tag = row;
-        [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
-        
-        return cell;
-    }
+    CommentCell *cell = [CommentCell new];
+    OSCComment *comment = self.objects[row];
+    
+    [self setBlockForCommentCell:cell];
+    [cell setContentWithComment:comment];
+    
+    cell.portrait.tag = row; cell.authorLabel.tag = row;
+    [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+    
+    return cell;
 }
 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 && self.otherSectionCell) {
-        return self.heightForOtherSectionCell(indexPath);
-    } else {
-        OSCComment *comment = self.objects[indexPath.row];
-        
-        if (comment.cellHeight) {return comment.cellHeight;}
-        
-        self.label.font = [UIFont boldSystemFontOfSize:14];
-        NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
-        if (comment.replies.count > 0) {
-            [contentString appendAttributedString:[OSCComment attributedTextFromReplies:comment.replies]];
-        }
-        [self.label setAttributedText:contentString];
-        __block CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
-        
-        
-        CGFloat width = self.tableView.frame.size.width - 60;
-        NSArray *references = comment.references;
-        if (references.count > 0) {height += 3;}
-        
-        self.label.font = [UIFont systemFontOfSize:13];
-        [references enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(OSCReference *reference, NSUInteger idx, BOOL *stop) {
-            self.label.text = [NSString stringWithFormat:@"%@\n%@", reference.title, reference.body];
-            height += [self.label sizeThatFits:CGSizeMake(width - (references.count-idx)*8, MAXFLOAT)].height + 13;
-        }];
-        
-        comment.cellHeight = height + 61;
-        
-        return comment.cellHeight;
+    OSCComment *comment = self.objects[indexPath.row];
+    
+    if (comment.cellHeight) {return comment.cellHeight;}
+    
+    self.label.font = [UIFont boldSystemFontOfSize:14];
+    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
+    if (comment.replies.count > 0) {
+        [contentString appendAttributedString:[OSCComment attributedTextFromReplies:comment.replies]];
     }
+    [self.label setAttributedText:contentString];
+    __block CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+    
+    
+    CGFloat width = self.tableView.frame.size.width - 60;
+    NSArray *references = comment.references;
+    if (references.count > 0) {height += 3;}
+    
+    self.label.font = [UIFont systemFontOfSize:13];
+    [references enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(OSCReference *reference, NSUInteger idx, BOOL *stop) {
+        self.label.text = [NSString stringWithFormat:@"%@\n%@", reference.title, reference.body];
+        height += [self.label sizeThatFits:CGSizeMake(width - (references.count-idx)*8, MAXFLOAT)].height + 13;
+    }];
+    
+    comment.cellHeight = height + 61;
+    
+    return comment.cellHeight;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0 && self.otherSectionCell) {
-        /* 不响应点击 */
-    } else {
-        OSCComment *comment = self.objects[indexPath.row];
-        
-        if (self.didCommentSelected) {
-            self.didCommentSelected(comment);
-        }
+    OSCComment *comment = self.objects[indexPath.row];
+    
+    if (self.didCommentSelected) {
+        self.didCommentSelected(comment);
     }
 }
 
