@@ -12,33 +12,34 @@
 #import "TeamWeeklyReportDetail.h"
 #import "TeamDetailContentCell.h"
 #import "Utils.h"
+#import "Config.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
+#import <MBProgressHUD.h>
 
 static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
 
 @interface WeeklyReportDetailViewController ()
 
 @property (nonatomic, strong) TeamWeeklyReportDetail *detail;
-@property (nonatomic, assign) int teamID;
 @property (nonatomic, assign) int reportID;
 
 @end
 
 @implementation WeeklyReportDetailViewController
 
-- (instancetype)initWithTeamID:(int)teamID andReportID:(int)reportID
+- (instancetype)initWithReportID:(int)reportID
 {
-    self = [super init];
+    self = [super initWithObjectID:reportID andType:TeamReplyTypeDiary];
     if (self) {
-        _teamID = teamID;
         _reportID = reportID;
     }
     
     return self;
 }
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,8 +51,11 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    [manager GET:[NSString stringWithFormat:@"%@%@?teamid=%d&diaryid=%d", TEAM_PREFIX, TEAM_DIARY_DETAIL, _teamID, _reportID]
-      parameters:nil
+    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DIARY_DETAIL]
+      parameters:@{
+                   @"teamid":  @([Config teamID]),
+                   @"diaryid": @(_reportID),
+                   }
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              _detail = [[TeamWeeklyReportDetail alloc] initWithXML:[responseObject.rootElement firstChildWithTag:@"diary"]];
              
@@ -67,10 +71,32 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
     [super didReceiveMemoryWarning];
 }
 
+
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _detail? _detail.days + 1 : 0;
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return nil;
+    } else {
+        return [super tableView:tableView titleForHeaderInSection:section];
+    }
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return _detail? _detail.days + 1 : 0;
+    } else {
+        return [super tableView:tableView numberOfRowsInSection:section];
+    }
 }
 
 
@@ -83,19 +109,22 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
     label.lineBreakMode = NSLineBreakByWordWrapping;
     label.font = [UIFont systemFontOfSize:15];
     
-    if (row == 0) {
-        label.attributedText = _detail.summary;
-        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
-        
-        return height + 62;
+    if (indexPath.section == 0) {
+        if (row == 0) {
+            label.attributedText = _detail.summary;
+            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
+            
+            return height + 62;
+        } else {
+            NSAttributedString *attributedString = _detail.details[row-1][1];
+            
+            label.attributedText = attributedString;
+            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 99, MAXFLOAT)].height;
+            
+            return height + 18;
+        }
     } else {
-        row -= 1;
-        NSAttributedString *attributedString = _detail.details[row][1];
-        
-        label.attributedText = attributedString;
-        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 99, MAXFLOAT)].height;
-        
-        return height + 18;
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
 }
 
@@ -103,23 +132,79 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSInteger row = indexPath.row;
-    if (row == 0 && _detail) {
-        TeamDetailContentCell *cell = [TeamDetailContentCell new];
-        [cell setContentWithReportDetail:_detail];
-        
-        return cell;
-    } else {                //if (row < _detail.days - 1) {
-        row -= 1;
-        TimeLineNodeCell *cell = [tableView dequeueReusableCellWithIdentifier:kTimeLineNodeCellID forIndexPath:indexPath];
-        
-        [cell setContentWithString:_detail.details[row][1]];
-        cell.dayLabel.text = _detail.details[row][0];
-        
-        cell.upperLine.hidden = row == 0;
-        cell.underLine.hidden = row == _detail.days-1;
-        
-        return cell;
+    
+    if (indexPath.section == 0) {
+        if (row == 0 && _detail) {
+            TeamDetailContentCell *cell = [TeamDetailContentCell new];
+            [cell setContentWithReportDetail:_detail];
+            
+            return cell;
+        } else {                //if (row < _detail.days - 1) {
+            row -= 1;
+            TimeLineNodeCell *cell = [tableView dequeueReusableCellWithIdentifier:kTimeLineNodeCellID forIndexPath:indexPath];
+            
+            [cell setContentWithString:_detail.details[row][1]];
+            cell.dayLabel.text = _detail.details[row][0];
+            
+            cell.upperLine.hidden = row == 0;
+            cell.underLine.hidden = row == _detail.days-1;
+            
+            return cell;
+        }
+    } else {
+        return [super tableView:tableView cellForRowAtIndexPath:indexPath];
     }
+}
+
+
+#pragma 发表评论
+
+- (void)sendContent
+{
+    MBProgressHUD *HUD = [Utils createHUD];
+    HUD.labelText = @"评论发送中";
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_TWEET_REPLY]
+       parameters:@{
+                    @"teamid": @([Config teamID]),
+                    @"uid": @([Config getOwnID]),
+                    @"type": @(118),
+                    @"tweetid": @(_reportID),
+                    @"content": [Utils convertRichTextToRawText:self.editingBar.editView]
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+              NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+              
+              HUD.mode = MBProgressHUDModeCustomView;
+              
+              if (errorCode == 1) {
+                  self.editingBar.editView.text = @"";
+                  [self updateInputBarHeight];
+                  
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.labelText = @"评论发表成功";
+                  
+                  [self.tableView setContentOffset:CGPointZero animated:NO];
+                  [self fetchRepliesOnPage:0];
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+              }
+              
+              [HUD hide:YES afterDelay:1];
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.detailsLabelText = error.localizedFailureReason;
+              
+              [HUD hide:YES afterDelay:1];
+          }];
 }
 
 

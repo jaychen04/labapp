@@ -49,7 +49,6 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"帖子详情";
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];

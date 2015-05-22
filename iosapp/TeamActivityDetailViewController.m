@@ -46,7 +46,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     self.navigationItem.title = @"动态详情";
 }
 

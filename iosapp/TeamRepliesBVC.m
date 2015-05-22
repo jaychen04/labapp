@@ -61,6 +61,8 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     _tableView = [UITableView new];
     _tableView.delegate = self;
     _tableView.dataSource = self;
