@@ -2,7 +2,7 @@
 //  TeamReplyCell.h
 //  iosapp
 //
-//  Created by AeternChan on 5/8/15.
+//  Created by chenhaoxiang on 5/8/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UILabel *authorLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *appclientLabel;
 
 - (void)setContentWithReply:(TeamReply *)reply;
 

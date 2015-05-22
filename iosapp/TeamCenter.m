@@ -7,6 +7,7 @@
 //
 
 #import "TeamCenter.h"
+#import "Config.h"
 #import "TeamTeam.h"
 #import "TeamHomePage.h"
 #import "TeamIssueController.h"
@@ -33,6 +34,8 @@ static NSString * kTeamCellID = @"TeamCell";
 - (instancetype)initWithTeams:(NSArray *)teams
 {
     TeamTeam *team = teams[0];
+    [Config setTeamID:team.teamID];
+    
     self = [super initWithTitle:@"Team"
                    andSubTitles:@[@"主页", @"任务", @"成员"]
                  andControllers:@[
@@ -161,6 +164,7 @@ static NSString * kTeamCellID = @"TeamCell";
     _currentTeamID = team.teamID;
     
     [self toggleTeamPicker];
+    [Config setTeamID:_currentTeamID];
     
     for (id vc in self.viewPager.controllers) {
         [vc switchToTeam:_currentTeamID];

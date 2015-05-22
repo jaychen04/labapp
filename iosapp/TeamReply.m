@@ -28,6 +28,17 @@
     return self;
 }
 
+
+- (BOOL)isEqual:(id)object
+{
+    if ([self class] == [object class]) {
+        return _replyID == ((TeamReply *)object).replyID;
+    }
+    
+    return NO;
+}
+
+
 - (NSAttributedString *)attributedContent
 {
     if (!_attributedContent) {
@@ -44,5 +55,6 @@
     
     return _attributedContent;
 }
+
 
 @end

@@ -441,6 +441,7 @@
 		C5D5505A1B04764000CCA308 /* suspect@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D550481B04764000CCA308 /* suspect@2x.png */; };
 		C5D5505B1B04764000CCA308 /* trollface@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D550491B04764000CCA308 /* trollface@2x.png */; };
 		C5D5505D1B04816700CCA308 /* +1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D5505C1B04816700CCA308 /* +1@2x.png */; };
+		C5D7F6561B0DDCC900AB01CC /* TeamRepliesBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */; };
 		C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */; };
 		C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */; };
 		C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7721AEFA0140032F775 /* TeamCell.m */; };
@@ -1104,6 +1105,8 @@
 		C5D550481B04764000CCA308 /* suspect@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "suspect@2x.png"; sourceTree = "<group>"; };
 		C5D550491B04764000CCA308 /* trollface@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "trollface@2x.png"; sourceTree = "<group>"; };
 		C5D5505C1B04816700CCA308 /* +1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "+1@2x.png"; sourceTree = "<group>"; };
+		C5D7F6541B0DDCC900AB01CC /* TeamRepliesBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamRepliesBVC.h; sourceTree = "<group>"; };
+		C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamRepliesBVC.m; sourceTree = "<group>"; };
 		C5E73DF81AF755A900974EDC /* WeeklyReportTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTitleBar.h; sourceTree = "<group>"; };
 		C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTitleBar.m; sourceTree = "<group>"; };
 		C5E73DFE1AF8A15400974EDC /* WeeklyReportContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportContentViewController.h; sourceTree = "<group>"; };
@@ -1413,6 +1416,8 @@
 				31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */,
 				C52BF4FF1AFCBF1700E53508 /* TeamReplyCell.h */,
 				C52BF5001AFCBF1700E53508 /* TeamReplyCell.m */,
+				C5D7F6541B0DDCC900AB01CC /* TeamRepliesBVC.h */,
+				C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */,
 			);
 			name = "动态详情";
 			sourceTree = "<group>";
@@ -3276,6 +3281,7 @@
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */,
 				C5F3D77D1AF0C6D70032F775 /* TeamWeeklyReport.m in Sources */,
+				C5D7F6561B0DDCC900AB01CC /* TeamRepliesBVC.m in Sources */,
 				38A9EEBC1AA998A7006C95BD /* OSLicensePage.m in Sources */,
 				38EAF1C71AE0FCE400397E2A /* TeamProjectAuthority.m in Sources */,
 				38A93FA61AA2B51100A515E8 /* OSCThread.m in Sources */,

@@ -85,9 +85,9 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    TeamDiscussion *teamDiscussion = self.objects[indexPath.row];
+    TeamDiscussion *discussion = self.objects[indexPath.row];
     
-    [self.navigationController pushViewController:[[DiscussionDetailsViewController alloc] initWithTeamID:_teamID andDiscussionID:teamDiscussion.discussionID]
+    [self.navigationController pushViewController:[[DiscussionDetailsViewController alloc] initWithDiscussionID:discussion.discussionID]
                                          animated:YES];
 }
 

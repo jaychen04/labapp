@@ -2,7 +2,7 @@
 //  DiscussionDetailsViewController.m
 //  iosapp
 //
-//  Created by AeternChan on 4/24/15.
+//  Created by chenhaoxiang on 4/24/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
@@ -20,24 +20,25 @@
 #define HTML_STYLE @"<style>\
                         #oschina_title {color: #000000; margin-bottom: 6px; font-weight:bold;}\
                         #oschina_outline {color: #707070; font-size: 12px;}\
+                        img {width:95%;}\
                      </style>"
 
 @interface DiscussionDetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate>
 
-@property (nonatomic, strong) UIWebView *detailsView;
 @property (nonatomic, assign) int teamID;
 @property (nonatomic, assign) int discussionID;
 @property (nonatomic, strong) TeamDiscussionDetails *discussionDetails;
+@property (nonatomic, copy) NSString *HTML;
+@property (nonatomic, assign) CGFloat webViewHeight;
 
 @end
 
 @implementation DiscussionDetailsViewController
 
-- (instancetype)initWithTeamID:(int)teamID andDiscussionID:(int)discussionID
+- (instancetype)initWithDiscussionID:(int)discussionID
 {
-    self = [super initWithModeSwitchButton:NO];
+    self = [super initWithObjectID:discussionID andType:TeamReplyTypeDiscuss];
     if (self) {
-        _teamID = teamID;
         _discussionID = discussionID;
     }
     
@@ -48,28 +49,12 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"帖子详情";
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    _detailsView = [UIWebView new];
-    _detailsView.delegate = self;
-    _detailsView.scrollView.delegate = self;
-    _detailsView.scrollView.bounces = NO;
-    _detailsView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:_detailsView];
-    
-    [self.view bringSubviewToFront:self.editingBar];
-    
-    NSDictionary *views = @{@"detailsView": _detailsView, @"bottomBar": self.editingBar};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[detailsView]|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailsView][bottomBar]"
-                                                                      options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                      metrics:nil views:views]];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DISCUSS_DETAIL]
       parameters:@{
-                   @"teamid":@(_teamID),
+                   @"teamid":@([Config teamID]),
                    @"discussid": @(_discussionID)
                    }
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
@@ -78,9 +63,8 @@
              NSString *titleHTML = [NSString stringWithFormat:@"<p><font size=1>%@发表于%@ %d赞 / %d回</font></p>", _discussionDetails.author.name,
                                                                                               [Utils intervalSinceNow:_discussionDetails.createTime],
                                                                                               _discussionDetails.voteUpCount, _discussionDetails.answerCount];
-             NSString *HTML = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr>%@<div style='margin-bottom:60px'/></body>",
+             _HTML = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr>%@<div style='margin-bottom:60px'/></body>",
                                HTML_STYLE, _discussionDetails.title, titleHTML, _discussionDetails.body];
-             [_detailsView loadHTMLString:HTML baseURL:nil];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
          }];
@@ -91,12 +75,83 @@
 }
 
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+#pragma mark - tableview datasource and delegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (scrollView != self.editingBar.editView) {
-        [self.editingBar.editView resignFirstResponder];
-        [self hideEmojiPageView];
+    if (indexPath.section == 0) {
+        return _webViewHeight + 15;
+    } else {
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
+}
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return nil;
+    } else {
+        return [super tableView:tableView titleForHeaderInSection:section];
+    }
+}
+
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 1;
+    } else {
+        return [super tableView:tableView numberOfRowsInSection:section];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        UITableViewCell *cell = [UITableViewCell new];
+        cell.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        cell.backgroundColor = [UIColor themeColor];
+        
+        UIWebView *webView = [UIWebView new];
+        webView.scrollView.bounces = NO;
+        webView.scrollView.scrollEnabled = NO;
+        webView.backgroundColor = [UIColor themeColor];
+        [cell.contentView addSubview:webView];
+        
+        NSDictionary *views = NSDictionaryOfVariableBindings(webView);
+        webView.translatesAutoresizingMaskIntoConstraints = NO;
+        [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[webView]|" options:0 metrics:nil views:views]];
+        [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[webView]|" options:0 metrics:nil views:views]];
+        
+        webView.delegate = self;
+        [webView loadHTMLString:_HTML baseURL:nil];
+        
+        return cell;
+    } else {
+        return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    }
+}
+
+
+#pragma mark - UIWebViewDelegate
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    if (_webViewHeight == webViewHeight) {return;}
+    
+    _webViewHeight = webViewHeight;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 
@@ -132,6 +187,9 @@
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                   HUD.labelText = @"评论发表成功";
+                  
+                  [self.tableView setContentOffset:CGPointZero animated:NO];
+                  [self fetchRepliesOnPage:0];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
@@ -139,7 +197,11 @@
               
               [HUD hide:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"%@", error);
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.detailsLabelText = error.localizedFailureReason;
+              
+              [HUD hide:YES afterDelay:1];
           }];
 }
 

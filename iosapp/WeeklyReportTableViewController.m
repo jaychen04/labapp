@@ -85,7 +85,7 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     TeamWeeklyReport *report = self.objects[indexPath.row];
-    [self.navigationController pushViewController:[[WeeklyReportDetailViewController alloc] initWithTeamID:_teamID andReportID:report.reportID] animated:YES];
+    [self.navigationController pushViewController:[[WeeklyReportDetailViewController alloc] initWithReportID:report.reportID] animated:YES];
 }
 
 

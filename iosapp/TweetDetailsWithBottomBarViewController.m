@@ -54,10 +54,9 @@
     
     _tweetDetailsVC.didCommentSelected = ^(OSCComment *comment) {
         NSString *authorString = [NSString stringWithFormat:@"@%@", comment.author];
+        
         if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {
-            NSString *stringToInsert = [NSString stringWithFormat:@"@%@ ", comment.author];
-            
-            [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:stringToInsert];
+            [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:authorString];
             [weakSelf.editingBar.editView becomeFirstResponder];
         }
     };
