@@ -81,6 +81,12 @@
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil
                                                                                views:views]];
+//    CGFloat cellHeight =CGRectGetHeight(self.frame);
+//    NSDictionary *heightDic = @{@"heightKey":[NSNumber numberWithFloat:cellHeight]};
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_titleLabel(heightKey)]"
+//                                                                             options:0
+//                                                                             metrics:heightDic
+//                                                                               views:views]];
 }
 #pragma mark --标签cell
 - (void)initRemarkStyleSubviews

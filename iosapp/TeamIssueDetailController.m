@@ -9,6 +9,7 @@
 #import "TeamIssueDetailController.h"
 #import "TeamIssueDetailCell.h"
 #import "Utils.h"
+#import "Config.h"
 #import "TeamAPI.h"
 #import "TeamIssue.h"
 
@@ -20,6 +21,8 @@
 
 #import "TeamReplyCell.h"
 #import "TeamReply.h"
+
+#import "NewTeamIssueViewController.h"
 
 @interface TeamIssueDetailController ()<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UITableView *tableView;
@@ -235,7 +238,19 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 55;
+        if ([_originDatas[indexPath.row][@"title"] isEqualToString:@""]) {
+            UILabel *label = [UILabel new];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.font = [UIFont systemFontOfSize:18];
+            label.text = _issueTitle;
+            
+            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
+
+            return height > 55 ? height : 55;
+        }else{
+            return 55;
+        }
     }else {
         UILabel *label = [UILabel new];
         label.numberOfLines = 0;
@@ -285,14 +300,23 @@
                     cell.descriptionLabel.text = _descriptions[indexPath.row] ?: @"";
                 }
                 if ([tempDic[@"title"] isEqualToString:@""]) {
+                    cell.iconLabel.text = [self getIconStringWithState:_detailIssue.state];
                     cell.titleLabel.text =  _issueTitle;
                     cell.titleLabel.font =[UIFont systemFontOfSize:18];
                     cell.titleLabel.textColor = [UIColor blackColor];
                     
-                    //                UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(30, CGRectGetHeight(cell.bounds), [UIScreen mainScreen].bounds.size.width-60, 1)];
-                    //                lineView.backgroundColor = [UIColor redColor];
-                    //                [cell addSubview:lineView];
+//                    if (_descriptions.count > 0) {
+//                        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(30, CGRectGetHeight(cell.bounds), [UIScreen mainScreen].bounds.size.width-60, 1)];
+//                        lineView.tag = 57;
+//                        lineView.backgroundColor = [UIColor redColor];
+//                        [cell addSubview:lineView];
+//                    }
                 }else {
+//                    if ([cell viewWithTag:57]) {
+//                        [[cell viewWithTag:57] removeFromSuperview];
+//                    }
+                    cell.titleLabel.font =[UIFont systemFontOfSize:15];
+                    cell.titleLabel.textColor = [UIColor grayColor];
                     cell.titleLabel.text = tempDic[@"title"];
                 }
             }else if ([tempDic[@"cellLevel"] intValue] == 2) {   //cellLevel=2 子任务的cell
@@ -321,20 +345,37 @@
         }else {
             return [UITableViewCell new];
         }
-        
     }
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NewTeamIssueViewController *newVc = [NewTeamIssueViewController new];
+    [self.navigationController pushViewController:newVc animated:YES];
+    return;
+    
+    
     [_tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row > _originDatas.count) {
+    
+    //更改主任务状态
+    if (indexPath.row == 0 && indexPath.section == 0) {
+        [self changeIssueStateWithNewState:@"underway"];
+        return;
+        UIAlertView *alett = [[UIAlertView alloc]initWithTitle:@"更改状态" message:@"当前状态：待办中" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"进行中",@"已验收",@"已完成", nil];
+        [alett show];
+        return;
+    }
+
+    
+    
+    
+    if (indexPath.row > _originDatas.count || indexPath.section == 1) {
         return;
     }
     NSDictionary *selectedIssue = [_originDatas objectAtIndex:indexPath.row];
     if ([selectedIssue[@"title"] isEqualToString:@"子任务"]) {
         if (_isOpeningSubIssue) {   //关闭子任务
+
             NSIndexSet *sets = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row+1, _subIssueInfos.count)];
             [_originDatas removeObjectsAtIndexes:sets];
             [_descriptions removeObjectsAtIndexes:sets];
@@ -367,11 +408,6 @@
 
 -(NSMutableArray*)setupSubIssueCellData
 {
-    //    待办中：f10c
-    //    进行中：f192
-    //    已完成：f05d
-    //    已验收：f023
-    
     NSMutableArray *subArray = [NSMutableArray new];
     for (TeamIssue *issue in _subIssueInfos) {
         NSString *iconString = [self getIconStringWithState:issue.state];
@@ -403,6 +439,47 @@
     }
     return iconString;
 }
+#pragma mark -- 更改任务状态
+-(void)changeIssueStateWithNewState:(NSString*)state
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    NSString *url = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_UPDATE_STATE];
+//    uid 当前登录用户id
+//    teamid 团队id
+//    issueid 任务的id
+//    state 修改到的新状态，可取值："opened","underway","closed","accepted"。
+//    content (optional)关闭时的评论，道理上来说，这里只有关闭任务时，才会用该值。
+    NSDictionary *parameters = @{
+                                 @"teamid": @(_teamId),
+                                 @"issueid": @(_issueId),
+                                 @"uid":@([Config getOwnID]),
+                                 @"state":state
+                                 };
+    [manager POST:url
+      parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+//             <oschina><result><errorCode>1</errorCode><errorMessage>更新成功</errorMessage></result><notice><atmeCount>0</atmeCount><msgCount>0</msgCount><reviewCount>0</reviewCount><newFansCount>0</newFansCount><newLikeCount>0</newLikeCount></notice></oschina>
+             
+             
+             NSString *alertMsg = [[[responseObject.rootElement firstChildWithTag:@"result"] firstChildWithTag:@"errorMessage"] stringValue];
+             
+             MBProgressHUD *HUD = [Utils createHUD];
+             HUD.mode = MBProgressHUDModeCustomView;
+//             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+             HUD.labelText = alertMsg;
+             
+             [HUD hide:YES afterDelay:1];
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             
+         }];
+}
+
+
+
+
+
+
 /*
  // Override to support conditional editing of the table view.
  - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
