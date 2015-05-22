@@ -16,5 +16,8 @@ static NSString *kTeamIssueDetailCellSubChild = @"teamIssueDetailCellSubChild";
 @property (nonatomic,strong)UILabel *iconLabel;
 @property (nonatomic,strong)UILabel *titleLabel;
 @property (nonatomic,strong)UILabel *descriptionLabel;
-@property (nonatomic,strong)UIScrollView *remarkSv;
+@property (nonatomic,strong)UIScrollView *remarkSv;     //标签
+@property (nonatomic,strong)UIImageView *portraitIv;    //子任务
+
+-(void)setupRemarkLabelsWithtexts:(NSArray*)texts;
 @end

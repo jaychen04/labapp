@@ -7,7 +7,7 @@
 //
 
 #import "TeamReply.h"
-
+#import "Utils.h"
 @implementation TeamReply
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml
@@ -36,6 +36,24 @@
     }
     
     return NO;
+}
+
+
+- (NSAttributedString *)attributedContent
+{
+    if (!_attributedContent) {
+        _attributedContent = [[NSMutableAttributedString alloc] initWithData:[_content dataUsingEncoding:NSUnicodeStringEncoding]
+                                                                   options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                                        documentAttributes:nil
+                                                                     error:nil];
+        
+        [_attributedContent deleteCharactersInRange:NSMakeRange(_attributedContent.length-1, 1)];
+        
+        [_attributedContent addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
+                                  range:NSMakeRange(0, _attributedContent.length)];
+    }
+    
+    return _attributedContent;
 }
 
 

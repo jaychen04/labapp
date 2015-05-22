@@ -23,4 +23,5 @@
 @property (nonatomic, copy) NSString *joinTime;
 @property (nonatomic, copy) NSString *location;
 
+- (instancetype)initWithCollaboratorXML:(ONOXMLElement *)xml;   //协助者
 @end

@@ -9,6 +9,7 @@
 #import "OSCBaseObject.h"
 #import "OSCReference.h"
 #import "OSCReply.h"
+#import "TeamMember.h"
 #import <UIKit/UIKit.h>
 
 @interface OSCComment : OSCBaseObject
@@ -24,6 +25,9 @@
 @property (nonatomic, strong) NSArray *replies;
 
 @property (nonatomic, assign) CGFloat cellHeight;
+
+@property (nonatomic, strong) TeamMember *teamMember;
+- (instancetype)initWithReplyXML:(ONOXMLElement *)xml;
 
 + (NSAttributedString *)attributedTextFromReplies:(NSArray *)replies;
 

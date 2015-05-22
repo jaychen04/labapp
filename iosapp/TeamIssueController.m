@@ -128,7 +128,7 @@ static NSString * const kIssueCellID = @"IssueCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     TeamIssue *issue = self.objects[indexPath.row];
     TeamIssueDetailController *tidc = [[TeamIssueDetailController alloc]initWithTeamId:_teamID andIssueId:issue.issueID];
-    
+    tidc.projectName = issue.project.projectName;
     [self.navigationController pushViewController:tidc animated:YES];
 }
 

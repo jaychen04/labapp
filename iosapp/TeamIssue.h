@@ -40,9 +40,14 @@
 @property (nonatomic, assign) int attachmentsCount;
 @property (nonatomic, assign) int relationIssueCount;
 
+
+@property (nonatomic,strong)NSMutableArray *childIssues;       //任务详情的子任务
+@property (nonatomic,strong)NSMutableArray *issueLabels;       //任务标签
+@property (nonatomic,strong)NSMutableArray *collaborators;     //协助者
+
+
 @property (nonatomic, strong) NSMutableAttributedString *attributedProjectName;
 
-@property (nonatomic,strong) NSMutableArray *childIssues;
 
 - (instancetype)initWithDetailIssueXML:(ONOXMLElement *)xml;
 

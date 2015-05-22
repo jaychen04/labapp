@@ -9,5 +9,6 @@
 
 #import "BottomBarViewController.h"
 @interface TeamIssueDetailController : BottomBarViewController
+@property (nonatomic,copy)NSString *projectName;
 - (instancetype)initWithTeamId:(int)teamId andIssueId:(int)issueId;
 @end

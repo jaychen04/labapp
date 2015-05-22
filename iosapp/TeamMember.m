@@ -30,4 +30,20 @@
     return self;
 }
 
+- (instancetype)initWithCollaboratorXML:(ONOXMLElement *)xml
+{
+//    <collaborator>
+//    <id>3229</id>
+//    <user>2351247</user>
+//    <name><![CDATA[Ho1den]]></name>
+//    <portrait>http://static.oschina.net/uploads/user/1175/2351247_100.png?t=1429676731000</portrait>
+//				</collaborator>
+
+    if (self = [super init]) {
+        _memberID    = [[[xml firstChildWithTag:@"user"] numberValue] intValue];
+        _name        = [[xml firstChildWithTag:@"name"] stringValue];
+        _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:@"portrait"] stringValue]];
+    }
+    return self;
+}
 @end

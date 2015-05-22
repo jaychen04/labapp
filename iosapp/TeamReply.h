@@ -20,4 +20,5 @@
 
 @property (nonatomic, strong) TeamMember *author;
 
+@property (nonatomic, strong) NSMutableAttributedString *attributedContent;
 @end
