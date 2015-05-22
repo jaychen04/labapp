@@ -2,20 +2,27 @@
 //  TeamRepliesBVC.h
 //  iosapp
 //
-//  Created by AeternChan on 5/21/15.
+//  Created by chenhaoxiang on 5/21/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
 #import "BottomBarViewController.h"
 
+typedef NS_ENUM(NSInteger, TeamReplyType)
+{
+    TeamReplyTypeDiary,
+    TeamReplyTypeDiscuss,
+    TeamReplyTypeIssue,
+    TeamReplyTypeActivity,
+};
+
 @class TeamReply;
-@class TeamActivity;
 
 @interface TeamRepliesBVC : BottomBarViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 
-- (instancetype)initWIthActivity:(TeamActivity *)activity andTeamID:(int)teamID;
+- (instancetype)initWithObjectID:(int)ID andType:(TeamReplyType)type;
 
 - (void)fetchRepliesOnPage:(NSUInteger)page;
 

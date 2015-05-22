@@ -31,6 +31,8 @@ NSString * const kPhoneNumber = @"phoneNumber";
 NSString * const kCorporation = @"corporation";
 NSString * const kPosition = @"position";
 
+NSString * const kTeamID = @"teamID";
+
 @implementation Config
 
 + (void)saveOwnAccount:(NSString *)account andPassword:(NSString *)password
@@ -170,5 +172,22 @@ NSString * const kPosition = @"position";
     
     return tweetText;
 }
+
++ (int)teamID
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    return [[userDefaults objectForKey:kTeamID] intValue];
+}
+
++ (void)setTeamID:(int)teamID
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setValue:@(teamID) forKey:kTeamID];
+    [userDefaults synchronize];
+}
+
+
 
 @end

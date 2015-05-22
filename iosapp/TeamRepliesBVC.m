@@ -2,7 +2,7 @@
 //  TeamRepliesBVC.m
 //  iosapp
 //
-//  Created by AeternChan on 5/21/15.
+//  Created by chenhaoxiang on 5/21/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
@@ -12,6 +12,7 @@
 #import "TeamActivity.h"
 #import "TeamReplyCell.h"
 #import "Utils.h"
+#import "Config.h"
 #import "LastCell.h"
 
 #import <AFNetworking.h>
@@ -29,35 +30,24 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 @property (nonatomic, strong) UILabel *label;
 
 @property (nonatomic, assign) int repliesCount;
-@property (nonatomic, assign) int teamID;
-@property (nonatomic, strong) TeamActivity *activity;
+@property (nonatomic, assign) int objectID;
+@property (nonatomic, copy)   NSString *API;
+@property (nonatomic, copy)   NSString *type;
 
 @end
 
 @implementation TeamRepliesBVC
 
-- (instancetype)init
+
+- (instancetype)initWithObjectID:(int)ID andType:(TeamReplyType)type
 {
     self = [super initWithModeSwitchButton:NO];
     if (self) {
         _replies = [NSMutableArray new];
         
-        _label = [UILabel new];
-        _label.numberOfLines = 0;
-        _label.lineBreakMode = NSLineBreakByWordWrapping;
-    }
-    
-    return self;
-}
-
-
-- (instancetype)initWIthActivity:(TeamActivity *)activity andTeamID:(int)teamID
-{
-    self = [super initWithModeSwitchButton:NO];
-    if (self) {
-        _replies = [NSMutableArray new];
-        _activity = activity;
-        _teamID = teamID;
+        _objectID = ID;
+        _type = @[@"diary", @"discuss", @"issue", @""][type];
+        _API = type == TeamReplyTypeActivity? TEAM_REPLY_LIST_BY_ACTIVEID : TEAM_REPLY_LIST_BY_TYPE;
         
         _label = [UILabel new];
         _label.numberOfLines = 0;
@@ -172,6 +162,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 {
     if (scrollView == _tableView) {
         [self.editingBar.editView resignFirstResponder];
+        [self hideEmojiPageView];
     }
 }
 
@@ -208,15 +199,15 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
     [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
-    NSString *API = _activity.type == 110? TEAM_REPLY_LIST_BY_ACTIVEID :
-                                           TEAM_REPLY_LIST_BY_TYPE;
-    NSString *type = @{@(118): @"diary", @(114): @"discuss", @(112): @"issue"}[@(_activity.type)] ?: @"";
+//    NSString *API = _activity.type == 110? TEAM_REPLY_LIST_BY_ACTIVEID :
+//                                           TEAM_REPLY_LIST_BY_TYPE;
+//    NSString *type = @{@(118): @"diary", @(114): @"discuss", @(112): @"issue"}[@(_activity.type)] ?: @"";
     
-    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, API]
+    [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, _API]
       parameters:@{
-                   @"teamid": @(_teamID),
-                   @"id": @(_activity.activityID),
-                   @"type": type,
+                   @"teamid": @([Config teamID]),
+                   @"id": @(_objectID),
+                   @"type": _type,
                    @"pageIndex":@(page)
                    }
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {

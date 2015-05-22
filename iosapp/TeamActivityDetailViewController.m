@@ -33,7 +33,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 
 - (instancetype)initWithActivity:(TeamActivity *)activity andTeamID:(int)teamID
 {
-    self = [super initWIthActivity:activity andTeamID:teamID];
+    self = [super initWithObjectID:activity.activityID andType:TeamReplyTypeActivity];
     if (self) {
         _activity = activity;
         _teamID = teamID;

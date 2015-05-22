@@ -2,7 +2,7 @@
 //  TeamReplyCell.h
 //  iosapp
 //
-//  Created by AeternChan on 5/8/15.
+//  Created by chenhaoxiang on 5/8/15.
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
