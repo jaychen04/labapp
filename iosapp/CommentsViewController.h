@@ -25,9 +25,6 @@ typedef NS_ENUM(int, CommentType)
 
 @property (nonatomic, readwrite, assign) int64_t objectAuthorID;
 
-@property (nonatomic, copy) UITableViewCell * (^otherSectionCell)(NSIndexPath *indexPath);
-@property (nonatomic, copy) CGFloat (^heightForOtherSectionCell)(NSIndexPath *indexPath);
-
 @property (nonatomic, copy) void (^didCommentSelected)(OSCComment *comment);
 @property (nonatomic, copy) void (^didScroll)();
 

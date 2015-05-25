@@ -16,6 +16,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         self.backgroundColor = [UIColor themeColor];
         
         [self initSubviews];
@@ -38,7 +39,6 @@
     
     _authorLabel = [UILabel new];
     _authorLabel.font = [UIFont boldSystemFontOfSize:14];
-//    _authorLabel.userInteractionEnabled = YES;
     _authorLabel.textColor = [UIColor nameColor];
     [self.contentView addSubview:_authorLabel];
     

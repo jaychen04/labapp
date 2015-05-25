@@ -191,6 +191,7 @@
                  if (self.refreshControl.refreshing) {
                      [self.refreshControl endRefreshing];
                  }
+                 
                  [self.tableView reloadData];
              });
          }

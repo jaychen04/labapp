@@ -255,6 +255,7 @@ static const double accelerationThreshold = 2.0f;
              [HUD hide:YES afterDelay:2];
              
              [self startAccelerometer];
+             _isShaking = NO;
          }];
 }
 

@@ -43,44 +43,6 @@
         self.hidesBottomBarWhenPushed = YES;
         
         _tweetID = tweetID;
-        
-        __weak TweetDetailsViewController *weakSelf = self;
-        self.otherSectionCell = ^UITableViewCell * (NSIndexPath *indexPath) {
-            TweetDetailsCell *cell = [TweetDetailsCell new];
-            
-            if (weakSelf.tweet) {
-                [cell.portrait loadPortrait:weakSelf.tweet.portraitURL];
-                [cell.authorLabel setText:weakSelf.tweet.author];
-                
-                [cell.portrait    addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(pushUserDetails)]];
-                [cell.likeButton addTarget:weakSelf action:@selector(togglePraise) forControlEvents:UIControlEventTouchUpInside];
-                [cell.likeListLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:weakSelf action:@selector(PushToLikeList)]];
-                
-                [cell.likeListLabel setAttributedText:weakSelf.tweet.likersDetailString];
-                cell.likeListLabel.hidden = !weakSelf.tweet.likeList.count;
-                [cell.timeLabel setAttributedText:[Utils attributedTimeString:weakSelf.tweet.pubDate]];
-                if (weakSelf.tweet.isLike) {
-                    [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
-                } else {
-                    [cell.likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
-                }
-                [cell.appclientLabel setAttributedText:[Utils getAppclient:weakSelf.tweet.appclient]];
-                cell.webView.delegate = weakSelf;
-                [cell.webView loadHTMLString:weakSelf.tweet.body baseURL:nil];
-            }
-            
-            return cell;
-        };
-        
-        self.heightForOtherSectionCell = ^CGFloat (NSIndexPath *indexPath) {
-            [weakSelf.label setAttributedText:weakSelf.tweet.likersDetailString];
-            weakSelf.label.font = [UIFont systemFontOfSize:12];
-            CGFloat height = [weakSelf.label sizeThatFits:CGSizeMake(weakSelf.tableView.frame.size.width - 16, MAXFLOAT)].height + 5;
-            
-            height += weakSelf.webViewHeight;
-            
-            return height + 63;
-        };
     }
     
     return self;
@@ -180,6 +142,69 @@
             title = @"没有评论";
         }
         return title;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return 1;
+    } else {
+        return [super tableView:tableView numberOfRowsInSection:section];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        [self.label setAttributedText:_tweet.likersDetailString];
+        self.label.font = [UIFont systemFontOfSize:12];
+        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height + 5;
+        
+        height += _webViewHeight;
+        
+        return height + 63;
+    } else {
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        TweetDetailsCell *cell = [TweetDetailsCell new];
+        
+        if (_tweet) {
+            [cell.portrait loadPortrait:_tweet.portraitURL];
+            [cell.authorLabel setText:_tweet.author];
+            
+            [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails)]];
+            [cell.likeButton addTarget:self action:@selector(togglePraise) forControlEvents:UIControlEventTouchUpInside];
+            [cell.likeListLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(PushToLikeList)]];
+            
+            [cell.likeListLabel setAttributedText:_tweet.likersDetailString];
+            cell.likeListLabel.hidden = !_tweet.likeList.count;
+            [cell.timeLabel setAttributedText:[Utils attributedTimeString:_tweet.pubDate]];
+            if (_tweet.isLike) {
+                [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
+            } else {
+                [cell.likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
+            }
+            [cell.appclientLabel setAttributedText:[Utils getAppclient:_tweet.appclient]];
+            cell.webView.delegate = self;
+            [cell.webView loadHTMLString:_tweet.body baseURL:nil];
+        }
+        
+        return cell;
+    } else {
+        return [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section != 0) {
+        [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }
 }
 
