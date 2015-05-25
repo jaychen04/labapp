@@ -65,23 +65,15 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     cell.titleLabel.text       = activity.title;
     cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
     [cell.posterView sd_setImageWithURL:activity.coverURL placeholderImage:nil];
-
-    if (activity.status == 1 || activity.status == 3) {
+    
+    if (activity.status == ActivityStatusSignUpClosing && activity.applyStatus == ActivityApplyStatusAttended) {
+        [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
+    } else if (activity.status == ActivityStatusGoing  && activity.applyStatus == ActivityApplyStatusDetermined){
+        [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_checked"]];
+    } else if (activity.status == ActivityStatusSignUpClosing && activity.applyStatus == ActivityApplyStatusDetermined) {
         [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_over"]];
-        if (activity.applyStatus == 2) {
-            [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
-        }
-    } else {
-        if (activity.applyStatus == 1) {
-            [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_checked"]];
-            cell.tabImageView.hidden = NO;
-        } else if (activity.applyStatus == 2) {
-            [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
-            cell.tabImageView.hidden = NO;
-        } else {
-            cell.tabImageView.hidden = YES;
-        }
     }
+
     return cell;
 }
 
