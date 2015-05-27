@@ -63,8 +63,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         cell.descriptionLabel.text = [_valueArray objectAtIndex:indexPath.row-1];
         return cell;
     }
-    
-    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

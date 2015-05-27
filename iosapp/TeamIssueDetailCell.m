@@ -153,7 +153,7 @@
         issueTV.text = labelText;
         issueTV.textColor= [UIColor blackColor];
         [self.remarkSv addSubview:issueTV];
-        offsetX = CGRectGetMaxX(issueTV.frame)+10;
+        offsetX = CGRectGetMaxX(issueTV.frame)+7;
         [issueTV sizeToFit];
     }
     [self.remarkSv setContentSize:CGSizeMake(offsetX, self.remarkSv.frame.size.height)];

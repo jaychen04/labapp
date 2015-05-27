@@ -337,7 +337,7 @@
                       [changedChildIssue removeObjectForKey:@"childIssueState"];
                       [changedChildIssue setObject:newState forKey:@"childIssueState"];
                   }
-                  NSLog(@"newState:%@",newState);
+
                   //画中线
                   BOOL isStateClosed = [newState isEqualToString:@"closed"];
                   [self editTextAtLabel:selectedCell.descriptionLabel isStateClosed:isStateClosed];
