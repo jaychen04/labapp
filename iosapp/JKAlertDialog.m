@@ -28,18 +28,15 @@
     }
     return self;
 }
+
 -(void)buildViews{
     self.frame = [self screenBounds];
      _coverView = [[UIView alloc]initWithFrame:[self topView].bounds];
     _coverView.backgroundColor = [UIColor blackColor];
     _coverView.alpha = 0;
     _coverView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-    [[self topView] addSubview:_coverView];
     
-//    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismiss)];
-//    self.userInteractionEnabled = YES;
-//    _coverView.userInteractionEnabled = YES;
-//    [_coverView addGestureRecognizer:tap];
+    [[self topView] addSubview:_coverView];
     
     _alertView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, AlertWidth, AlertHeight)];
     _alertView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
@@ -190,6 +187,7 @@
 #pragma mark - show and dismiss
 -(UIView*)topView{
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+
     return  window.subviews[0];
 }
 - (void)show {

@@ -8,7 +8,9 @@
 
 
 #import "BottomBarViewController.h"
-@interface TeamIssueDetailController : BottomBarViewController
+#import "TeamRepliesBVC.h"
+
+@interface TeamIssueDetailController : TeamRepliesBVC
 @property (nonatomic,copy)NSString *projectName;
-- (instancetype)initWithTeamId:(int)teamId andIssueId:(int)issueId;
+- (instancetype)initWithIssueId:(int)issueId;
 @end

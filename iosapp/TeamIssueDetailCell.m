@@ -135,21 +135,26 @@
         NSString *colorStr = [[labelInfo valueForKey:@"color"] stringByReplacingOccurrencesOfString:@"#" withString:@"0x"];
         unsigned colorInt = 0;
         [[NSScanner scannerWithString:colorStr] scanHexInt:&colorInt];
-        UIFont *textFont = [UIFont systemFontOfSize:13];
+        
+        UIFont *textFont = [UIFont systemFontOfSize:11];
         NSDictionary *attribute = @{NSFontAttributeName: textFont};
         CGSize size = [labelText boundingRectWithSize:CGSizeMake(999, 99) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
         CGFloat labelWidth = ceilf(size.width);
-        
-        UILabel *issueLabel = [[UILabel alloc]initWithFrame:CGRectMake(offsetX, 0, labelWidth, CGRectGetHeight(self.frame)/2.5)];
-        UIColor *textColor = [UIColor colorWithHex:colorInt];
-        issueLabel.center = CGPointMake(issueLabel.center.x, self.contentView.center.y);
-        [issueLabel setCornerRadius:5];
-        [issueLabel setBorderWidth:.5 andColor:textColor];
-        issueLabel.font = textFont;
-        issueLabel.text = labelText;
-        issueLabel.textColor=textColor;
-        [self.remarkSv addSubview:issueLabel];
-        offsetX = CGRectGetMaxX(issueLabel.frame)+10;
+        labelWidth += 20;
+        UITextView *issueTV = [[UITextView alloc]initWithFrame:CGRectMake(offsetX, 0, labelWidth, CGRectGetHeight(self.contentView.frame)/2)];
+        issueTV.backgroundColor = [UIColor colorWithHex:colorInt];
+        issueTV.scrollEnabled = NO;
+        issueTV.editable = NO;
+        issueTV.selectable = NO;
+        issueTV.textAlignment = NSTextAlignmentCenter;
+        issueTV.center = CGPointMake(issueTV.center.x, self.contentView.center.y);
+        [issueTV setCornerRadius:5];
+        issueTV.font = textFont;
+        issueTV.text = labelText;
+        issueTV.textColor= [UIColor blackColor];
+        [self.remarkSv addSubview:issueTV];
+        offsetX = CGRectGetMaxX(issueTV.frame)+10;
+        [issueTV sizeToFit];
     }
     [self.remarkSv setContentSize:CGSizeMake(offsetX, self.remarkSv.frame.size.height)];
 }
