@@ -12,6 +12,7 @@
 #import "TeamIssue.h"
 #import "TeamIssueCell.h"
 #import "Utils.h"
+#import "Config.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -127,7 +128,7 @@ static NSString * const kIssueCellID = @"IssueCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     TeamIssue *issue = self.objects[indexPath.row];
-    TeamIssueDetailController *tidc = [[TeamIssueDetailController alloc]initWithTeamId:_teamID andIssueId:issue.issueID];
+    TeamIssueDetailController *tidc = [[TeamIssueDetailController alloc]initWithIssueId:issue.issueID];
     tidc.projectName = issue.project.projectName;
     [self.navigationController pushViewController:tidc animated:YES];
 }

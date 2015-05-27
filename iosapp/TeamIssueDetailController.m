@@ -25,80 +25,36 @@
 #import "NewTeamIssueViewController.h"
 
 @interface TeamIssueDetailController ()<UITableViewDataSource,UITableViewDelegate>
-@property (nonatomic, strong) UITableView *tableView;
+//@property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic)int teamId;
 @property (nonatomic)int issueId;
 
 @property (nonatomic,copy)NSString *issueTitle;
 @property (nonatomic,strong)TeamIssue *detailIssue;
-
+@property (nonatomic,strong)NSString *issueState;
+//@property (nonatomic,strong)TeamIssueDetailCell *issueTitleCell;
+//@property (nonatomic,strong)TeamIssueDetailCell *issueStageCell;
 @property (nonatomic,strong)NSMutableArray *originDatas;
-//@property (nonatomic,strong)NSMutableArray *iconTexts;
-//@property (nonatomic,strong)NSMutableArray *titles;
 @property (nonatomic,strong)NSMutableArray *descriptions;
-
-@property (nonatomic,strong)NSMutableArray *replies;
 @property (nonatomic,strong)NSMutableArray *subIssueInfos;
+@property (nonatomic,strong)NSMutableArray *handledSubIssueInfos;
 
 @property (nonatomic)BOOL isOpeningSubIssue;
 @end
 
 @implementation TeamIssueDetailController
 
-- (instancetype)initWithTeamId:(int)teamId andIssueId:(int)issueId
+
+- (instancetype)initWithIssueId:(int)issueId
 {
-    self = [super initWithModeSwitchButton:NO];
+    self = [super initWithObjectID:issueId andType:TeamReplyTypeIssue];
     if (self) {
-        _teamId = teamId;
         _issueId = issueId;
+        _teamId = [Config teamID];
     }
     
     return self;
 }
-
-#pragma mark --评论列表
--(void)getIssueCommentList
-{
-    //    teamid 团队id
-    //    type 实体的类型，例如：(diary|discuss|issue)
-    //    id 对应类型实体的id
-    //    pageIndex 页数
-    //    pageSize 每页条数
-    //    [manager GET:url
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    NSString *url = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_REPLY_LIST_BY_TYPE];
-    NSDictionary *dic = @{
-                          @"teamid": @(_teamId),
-                          @"id": @(_issueId),
-                          @"type":@"issue",
-                          @"pageIndex":@0,
-                          @"pageSize":@20
-                          };
-    [manager GET:url
-      parameters:dic
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             NSArray *tempArr = [[responseObject.rootElement firstChildWithTag:@"replies"] childrenWithTag:@"reply"];
-             if (tempArr.count > 0) {
-                 _replies = [NSMutableArray new];
-                 for (int j = 0; j < tempArr.count; j++) {
-                     ONOXMLElement *element = [tempArr objectAtIndex:j];
-                     TeamReply *reply = [[TeamReply alloc]initWithXML:element];
-                     [_replies addObject:reply];
-                 }
-             }
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [_tableView reloadData];
-             });
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             
-         }];
-}
-
-
-
 
 #pragma mark --任务详情信息
 -(void)getIssueDetailNetWorkingInfo
@@ -114,13 +70,13 @@
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              _detailIssue = [[TeamIssue alloc]initWithDetailIssueXML:[responseObject.rootElement firstChildWithTag:@"issue"]];
              _subIssueInfos = _detailIssue.childIssues;
-             
+             [self setupSubIssueCellData];
              _issueTitle = _detailIssue.title;
-             
+             _issueState = _detailIssue.state;
              NSString *subIssueCount = _detailIssue.childIssues.count >0 ?[NSString stringWithFormat:@"%d个子任务，%d个已完成",_detailIssue.childIssuesCount,_detailIssue.closedChildIssuesCount] : @"暂无子任务";
              NSString *toUser = [_detailIssue.user.name length] > 0 ? _detailIssue.user.name : @"未指派";
              NSString *deadLineTime = _detailIssue.deadline ?:@"未指定截止日期";
-             NSString *state = [self translateState:_detailIssue.state];
+             NSString *state = [self getChineseNameWithState:_issueState];
              NSString *attachmentsCount = _detailIssue.attachmentsCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.attachmentsCount] : @"暂无附件";
              NSString *relationIssueCount = _detailIssue.relationIssueCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.relationIssueCount] : @"暂无关联";
              NSString *allCollaborator = [self getCollaboratorsStringWithcollabortorsArray:_detailIssue.collaborators];
@@ -128,7 +84,7 @@
              _descriptions = [NSMutableArray arrayWithArray:@[@"",subIssueCount, toUser, deadLineTime, allCollaborator, state, @"", attachmentsCount, relationIssueCount]];
              
              dispatch_async(dispatch_get_main_queue(), ^{
-                 [_tableView reloadData];
+                 [self.tableView reloadData];
              });
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
@@ -154,58 +110,16 @@
     
     [self setMainCellData];
     
-    //    _iconTexts = [NSMutableArray arrayWithArray:@[@"\uf10c", @"\uf067", @"\uf007", @"\uf073", @"\uf0c0", @"\uf080", @"\uf02c", @"\uf0c6", @"\uf0c1"]];
-    //    _titles = [NSMutableArray arrayWithArray:@[@"", @"子任务", @"指派给", @"截止日期", @"协作者", @"阶段", @"", @"附件", @"关联"]];
-    //    _descriptions = [NSMutableArray arrayWithArray:@[@"",@"暂无子任务", @"未指派", @"未指定截止日期", @"暂无协作者", @"待办中", @"", @"暂无附件", @"暂无关联"]];
-    
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    _tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
-    _tableView.delegate = self;
-    _tableView.dataSource = self;
-    _tableView.backgroundColor = [UIColor themeColor];
-    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    _tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    //    _tableView.allowsSelection = NO;
     //registerCell
     NSArray *identifiers = @[kteamIssueDetailCellNomal,kTeamIssueDetailCellRemark,kTeamIssueDetailCellSubChild];
     for (int i=0; i<3; i++) {
-        [_tableView registerClass:[TeamIssueDetailCell class] forCellReuseIdentifier:[identifiers objectAtIndex:i]];
+        [self.tableView registerClass:[TeamIssueDetailCell class] forCellReuseIdentifier:[identifiers objectAtIndex:i]];
     }
-    [self.view addSubview:_tableView];
-    
-    [self.view bringSubviewToFront:(UIView *)self.editingBar];
-    
-    NSDictionary *views = @{@"detailTableView": _tableView, @"bottomBar": self.editingBar};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[detailTableView]|"
-                                                                      options:0
-                                                                      metrics:nil
-                                                                        views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[detailTableView][bottomBar]"
-                                                                      options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                      metrics:nil
-                                                                        views:views]];
-    
-    [self getIssueCommentList];
+
     [self getIssueDetailNetWorkingInfo];
 }
 
-//任务状态显示
--(NSString*)translateState:(NSString*)state
-{
-    NSString *translatedState;
-    if ([state isEqualToString:@"opened"]) {
-        translatedState = @"待办中";
-    }else if ([state isEqualToString:@"underway"]) {
-        translatedState = @"进行中";
-    }else if ([state isEqualToString:@"closed"]) {
-        translatedState = @"已完成";
-    }else if ([state isEqualToString:@"accepted"]) {
-        translatedState = @"已验收";
-    }else {
-        translatedState = @"待办中";
-    }
-    return translatedState;
-}
+
 //协助者显示
 -(NSString*)getCollaboratorsStringWithcollabortorsArray:(NSArray*)collaborators {
     NSString *allCollaborators = @"";
@@ -222,13 +136,11 @@
                 break;
             }
         }
-        
     }else {
         allCollaborators = @"暂无协作者";
     }
     return allCollaborators;
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -238,53 +150,50 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        if ([_originDatas[indexPath.row][@"title"] isEqualToString:@""]) {
+        NSDictionary *cellDic = _originDatas[indexPath.row];
+        if ([cellDic[@"cellLevel"] intValue] == 1) {
+            if ([cellDic[@"title"] isEqualToString:@""]) {
+                UILabel *label = [UILabel new];
+                label.numberOfLines = 0;
+                label.lineBreakMode = NSLineBreakByWordWrapping;
+                label.font = [UIFont systemFontOfSize:18];
+                label.text = _issueTitle;
+                CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
+                return height > 55 ? height+10 : 55;
+            }else {
+                return 55;
+            }
+        }else {     //子任务
             UILabel *label = [UILabel new];
             label.numberOfLines = 0;
             label.lineBreakMode = NSLineBreakByWordWrapping;
-            label.font = [UIFont systemFontOfSize:18];
-            label.text = _issueTitle;
-            
+            label.font = [UIFont systemFontOfSize:15];
+            label.text = cellDic[@"title"];
             CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
-
             return height > 55 ? height : 55;
-        }else{
-            return 55;
         }
     }else {
-        UILabel *label = [UILabel new];
-        label.numberOfLines = 0;
-        label.lineBreakMode = NSLineBreakByWordWrapping;
-        TeamReply *reply = _replies[indexPath.row];
-        label.font = [UIFont systemFontOfSize:14];
-        label.text = reply.content;
-        
-        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
-        
-        return height + 66;
+        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if (section ==0) {
+    if (section == 0) {
         return _projectName ?: @"";
     }else {
-        return @"评论";
+        return [super tableView:tableView titleForHeaderInSection:section];
     }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
         return _originDatas.count;
     }else {
-        return _replies.count;
+        return [super tableView:tableView numberOfRowsInSection:section];
     }
 }
-
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section == 0)
     {
@@ -300,21 +209,11 @@
                     cell.descriptionLabel.text = _descriptions[indexPath.row] ?: @"";
                 }
                 if ([tempDic[@"title"] isEqualToString:@""]) {
-                    cell.iconLabel.text = [self getIconStringWithState:_detailIssue.state];
+                    cell.iconLabel.text = [self getIconStringWithState:_issueState];
                     cell.titleLabel.text =  _issueTitle;
-                    cell.titleLabel.font =[UIFont systemFontOfSize:18];
+                    cell.titleLabel.font =[UIFont systemFontOfSize:17];
                     cell.titleLabel.textColor = [UIColor blackColor];
-                    
-//                    if (_descriptions.count > 0) {
-//                        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(30, CGRectGetHeight(cell.bounds), [UIScreen mainScreen].bounds.size.width-60, 1)];
-//                        lineView.tag = 57;
-//                        lineView.backgroundColor = [UIColor redColor];
-//                        [cell addSubview:lineView];
-//                    }
                 }else {
-//                    if ([cell viewWithTag:57]) {
-//                        [[cell viewWithTag:57] removeFromSuperview];
-//                    }
                     cell.titleLabel.font =[UIFont systemFontOfSize:15];
                     cell.titleLabel.textColor = [UIColor grayColor];
                     cell.titleLabel.text = tempDic[@"title"];
@@ -326,6 +225,9 @@
                 [cell.portraitIv loadPortrait:tempDic[@"portraitUrl"]];
                 cell.descriptionLabel.text = tempDic[@"title"];
                 cell.iconLabel.text = tempDic[@"icon"];
+                
+                BOOL isStateClosed = [tempDic[@"childIssueState"] isEqualToString:@"closed"];
+                [self editTextAtLabel:cell.descriptionLabel isStateClosed:isStateClosed];
             }
         }else {
             cell = [tableView dequeueReusableCellWithIdentifier:kTeamIssueDetailCellRemark];
@@ -333,95 +235,192 @@
             if (_detailIssue.issueLabels.count > 0) {
                 [cell setupRemarkLabelsWithtexts:_detailIssue.issueLabels];
             }
-            
         }
         return cell;
     }else {
-        if (_replies.count > 0) {
-            TeamReplyCell *cell = [TeamReplyCell new];
-            TeamReply *reply = _replies[indexPath.row];
-            [cell setContentWithReply:reply];
-            return cell;
-        }else {
-            return [UITableViewCell new];
-        }
+        UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+        return cell;
     }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NewTeamIssueViewController *newVc = [NewTeamIssueViewController new];
-    [self.navigationController pushViewController:newVc animated:YES];
-    return;
-    
-    
-    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    //更改主任务状态
-    if (indexPath.row == 0 && indexPath.section == 0) {
-        [self changeIssueStateWithNewState:@"underway"];
-        return;
-        UIAlertView *alett = [[UIAlertView alloc]initWithTitle:@"更改状态" message:@"当前状态：待办中" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"进行中",@"已验收",@"已完成", nil];
-        [alett show];
-        return;
-    }
-
-    
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (indexPath.row > _originDatas.count || indexPath.section == 1) {
         return;
     }
-    NSDictionary *selectedIssue = [_originDatas objectAtIndex:indexPath.row];
-    if ([selectedIssue[@"title"] isEqualToString:@"子任务"]) {
-        if (_isOpeningSubIssue) {   //关闭子任务
-
-            NSIndexSet *sets = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row+1, _subIssueInfos.count)];
-            [_originDatas removeObjectsAtIndexes:sets];
-            [_descriptions removeObjectsAtIndexes:sets];
-            NSMutableArray *pathArray = [NSMutableArray new];
-            for (int k=1; k<=_subIssueInfos.count; k++) {
-                NSIndexPath *path = [NSIndexPath indexPathForItem:(indexPath.row+k) inSection:indexPath.section];
-                [pathArray addObject:path];
-            }
-            [tableView beginUpdates];
-            [tableView deleteRowsAtIndexPaths:pathArray withRowAnimation:UITableViewRowAnimationFade];
-            [tableView endUpdates];
-        }else {     //展开子任务
-            NSArray *subIssueInfo = [self setupSubIssueCellData];
-            NSMutableArray *pathArray = [NSMutableArray new];
-            for (int k=1; k<=subIssueInfo.count; k++) {
-                NSIndexPath *path = [NSIndexPath indexPathForItem:(indexPath.row+k) inSection:indexPath.section];
-                [pathArray addObject:path];
-            }
-            NSIndexSet *sets = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row+1, subIssueInfo.count)];
-            [_originDatas insertObjects:subIssueInfo atIndexes:sets];
-            [_descriptions insertObjects:subIssueInfo atIndexes:sets];
-            
-            [tableView beginUpdates];
-            [tableView insertRowsAtIndexPaths:pathArray withRowAnimation:UITableViewRowAnimationFade];
-            [tableView endUpdates];
+     NSDictionary *selectedIssue = [_originDatas objectAtIndex:indexPath.row];
+    //更改主任务状态
+    if ((indexPath.row == 0 && indexPath.section == 0) || [selectedIssue[@"icon"] isEqualToString:@"\uf080"]) {
+        if (_detailIssue.authority.authUpdateState) {
+            [self showIssueState];
+        }else {
+            MBProgressHUD *HUD = [Utils createHUD];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.labelText = @"对不起，您无权更改任务状态";
+            [HUD hide:YES afterDelay:1];
         }
-        _isOpeningSubIssue = !_isOpeningSubIssue;
+        return;
+    }
+    
+   
+    if ([selectedIssue[@"cellLevel"] intValue] == 1) {
+        
+        if ([selectedIssue[@"title"] isEqualToString:@"子任务"]) {
+            if (_isOpeningSubIssue) {   //关闭子任务
+                NSIndexSet *sets = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row+1, _subIssueInfos.count)];
+                [_originDatas removeObjectsAtIndexes:sets];
+                [_descriptions removeObjectsAtIndexes:sets];
+                NSMutableArray *pathArray = [NSMutableArray new];
+                for (int k=1; k<=_subIssueInfos.count; k++) {
+                    NSIndexPath *path = [NSIndexPath indexPathForItem:(indexPath.row+k) inSection:indexPath.section];
+                    [pathArray addObject:path];
+                }
+                [tableView beginUpdates];
+                [tableView deleteRowsAtIndexPaths:pathArray withRowAnimation:UITableViewRowAnimationFade];
+                [tableView endUpdates];
+            }else {     //展开子任务
+                if (_handledSubIssueInfos.count <= 0) {
+                    return;
+                }
+//                NSArray *subIssueInfo = [self setupSubIssueCellData];
+                NSMutableArray *pathArray = [NSMutableArray new];
+                for (int k=1; k<=_handledSubIssueInfos.count; k++) {
+                    NSIndexPath *path = [NSIndexPath indexPathForItem:(indexPath.row+k) inSection:indexPath.section];
+                    [pathArray addObject:path];
+                }
+                NSIndexSet *sets = [NSIndexSet indexSetWithIndexesInRange:NSMakeRange(indexPath.row+1, _handledSubIssueInfos.count)];
+                [_originDatas insertObjects:_handledSubIssueInfos atIndexes:sets];
+                [_descriptions insertObjects:_handledSubIssueInfos atIndexes:sets];
+
+                [tableView beginUpdates];
+                [tableView insertRowsAtIndexPaths:pathArray withRowAnimation:UITableViewRowAnimationFade];
+                [tableView endUpdates];
+            }
+            _isOpeningSubIssue = !_isOpeningSubIssue;
+        }
+    }else {
+        NSString *selectedIssueId = [selectedIssue objectForKey:@"childIssueId"];
+        NSString *selectedIssueState = [selectedIssue objectForKey:@"childIssueState"];
+        int arrayIndex = [[selectedIssue objectForKey:@"arrayIndex"] intValue];
+        TeamIssueDetailCell *selectedCell = (TeamIssueDetailCell*)[tableView cellForRowAtIndexPath:indexPath];
+        selectedIssueState = [selectedIssue[@"childIssueState"] isEqualToString:@"opened"] ? @"closed":@"opened";      //当前状态是否为关闭状态
+        [self changeChildIssueStateWithIssueId:selectedIssueId newState:selectedIssueState arrayIndex:arrayIndex selectedCell:selectedCell];
     }
 }
-
--(NSMutableArray*)setupSubIssueCellData
+#pragma mark -- 更改子任务状态
+-(void)changeChildIssueStateWithIssueId:(NSString*)issueId newState:(NSString*)newState arrayIndex:(int)arrayIndex selectedCell:(TeamIssueDetailCell*)selectedCell
 {
-    NSMutableArray *subArray = [NSMutableArray new];
-    for (TeamIssue *issue in _subIssueInfos) {
-        NSString *iconString = [self getIconStringWithState:issue.state];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    NSString *url = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_UPDATE_CHILD_ISSUE];
+    NSDictionary *parameters = @{
+                                 @"teamid": @(_teamId),
+                                 @"issueid": @(_issueId),
+                                 @"uid":@([Config getOwnID]),
+                                 @"childissueid":issueId,
+                                 @"state":newState,
+                                 @"target":@"state"
+                                 };
+    [manager POST:url
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              int errorCode = [[[[responseObject.rootElement firstChildWithTag:@"result"] firstChildWithTag:@"errorCode"] numberValue] intValue];
+              if (errorCode == 1) {
+                  selectedCell.iconLabel.text = [selectedCell.iconLabel.text isEqualToString:@"\uf192"]?@"\uf10c":@"\uf192";
+                  //更改本地存储的子任务状态
+                  if (arrayIndex < _handledSubIssueInfos.count) {
+                      NSMutableDictionary *changedChildIssue = [_handledSubIssueInfos objectAtIndex:arrayIndex];
+                      [changedChildIssue removeObjectForKey:@"icon"];
+                      [changedChildIssue setObject:selectedCell.iconLabel.text forKey:@"icon"];
+                      [changedChildIssue removeObjectForKey:@"childIssueState"];
+                      [changedChildIssue setObject:newState forKey:@"childIssueState"];
+                  }
+                  NSLog(@"newState:%@",newState);
+                  //画中线
+                  BOOL isStateClosed = [newState isEqualToString:@"closed"];
+                  [self editTextAtLabel:selectedCell.descriptionLabel isStateClosed:isStateClosed];
+              }
+              NSString *alertMsg = [[[responseObject.rootElement firstChildWithTag:@"result"] firstChildWithTag:@"errorMessage"] stringValue];
+              MBProgressHUD *HUD = [Utils createHUD];
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.labelText = alertMsg;
+              [HUD hide:YES afterDelay:1];
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              
+          }];
+}
+#pragma mark -- 设置子任务状态数据
+-(void)setupSubIssueCellData
+{
+    _handledSubIssueInfos = [NSMutableArray new];
+    for (int index=0; index<_subIssueInfos.count; index++) {
+        TeamIssue *issue = [_subIssueInfos objectAtIndex:index];
+        NSString *iconString = [issue.state isEqualToString:@"opened"]?@"\uf10c":@"\uf192";
         NSURL *portraitUrl = issue.author.portraitURL ?: [NSURL URLWithString:@""];
         NSString *subIssueTitle = issue.title ?: @"";
-        NSDictionary *subIssueDic = @{@"icon":iconString,
+        NSString *issueId = [NSString stringWithFormat:@"%d",issue.issueID] ?: @"";
+        NSString *arrayIndex = [NSString stringWithFormat:@"%d",index];
+        NSMutableDictionary *subIssueDic = [NSMutableDictionary dictionaryWithDictionary:@{@"icon":iconString,
                                       @"title":subIssueTitle,
                                       @"portraitUrl":portraitUrl,
-                                      @"cellLevel":@2
-                                      };
-        [subArray addObject:subIssueDic];
+                                      @"cellLevel":@2,
+                                      @"childIssueId":issueId,
+                                      @"childIssueState":issue.state,
+                                      @"arrayIndex":arrayIndex
+                                      }];
+        [_handledSubIssueInfos addObject:subIssueDic];
     }
-    return subArray;
+    
+//    return subArray;
 }
+#pragma mark -- util
+-(void)editTextAtLabel:(UILabel*)label isStateClosed:(BOOL)isStateClosed
+{
+    NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:label.text];
+    if (isStateClosed) {    //添加中线
+        [content addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, [label.text length])];
+    }else {     //去掉中线
+        [content addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleNone] range:NSMakeRange(0, [label.text length])];
+        
+    }
+    label.attributedText = content;
+}
+
+-(NSString*)getChineseNameWithState:(NSString*)state
+{
+    NSString *translatedState;
+    if ([state isEqualToString:@"opened"]) {
+        translatedState = @"待办中";
+    }else if ([state isEqualToString:@"underway"]) {
+        translatedState = @"进行中";
+    }else if ([state isEqualToString:@"closed"]) {
+        translatedState = @"已完成";
+    }else if ([state isEqualToString:@"accepted"]) {
+        translatedState = @"已验收";
+    }else {
+        translatedState = @"";
+    }
+    return translatedState;
+}
+-(NSString*)getStateWithChineseName:(NSString*)state
+{
+    NSString *translatedState;
+    if ([state isEqualToString:@"待办中"]) {
+        translatedState = @"opened";
+    }else if ([state isEqualToString:@"进行中"]) {
+        translatedState = @"underway";
+    }else if ([state isEqualToString:@"已完成"]) {
+        translatedState = @"closed";
+    }else if ([state isEqualToString:@"已验收"]) {
+        translatedState = @"accepted";
+    }else {
+        translatedState = @"";
+    }
+    return translatedState;
+}
+
 -(NSString*)getIconStringWithState:(NSString*)state
 {
     NSString *iconString;
@@ -439,42 +438,120 @@
     }
     return iconString;
 }
+#pragma mark -- 显示任务状态
+-(void)showIssueState
+{
+    NSString * stateString = [self getChineseNameWithState:_issueState];
+    NSString * showString = [NSString stringWithFormat:@"当前状态：%@",stateString];
+    
+    NSMutableDictionary *allState = [NSMutableDictionary dictionaryWithDictionary:@{@"opened":@"待办中",@"underway":@"进行中",@"closed":@"已完成",@"accepted":@"已验收"}];
+    [allState removeObjectForKey:_issueState];
+    
+    UIAlertView *stateAlertView = [[UIAlertView alloc]initWithTitle:@"选择任务状态" message:showString delegate:self cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+    for (NSString *stateString in [allState allValues]) {
+        [stateAlertView addButtonWithTitle:stateString];
+    }
+    [stateAlertView show];
+}
+#pragma mark -- UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSString *selectedState = [alertView buttonTitleAtIndex:buttonIndex];
+    if (![selectedState isEqualToString:@"取消"]) {
+        NSString *newState = [self getStateWithChineseName:selectedState];
+        [self changeIssueStateWithNewState:newState];
+    }
+}
 #pragma mark -- 更改任务状态
--(void)changeIssueStateWithNewState:(NSString*)state
+-(void)changeIssueStateWithNewState:(NSString*)newState
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     NSString *url = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_UPDATE_STATE];
-//    uid 当前登录用户id
-//    teamid 团队id
-//    issueid 任务的id
-//    state 修改到的新状态，可取值："opened","underway","closed","accepted"。
-//    content (optional)关闭时的评论，道理上来说，这里只有关闭任务时，才会用该值。
     NSDictionary *parameters = @{
                                  @"teamid": @(_teamId),
                                  @"issueid": @(_issueId),
                                  @"uid":@([Config getOwnID]),
-                                 @"state":state
+                                 @"state":newState
                                  };
     [manager POST:url
       parameters:parameters
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-//             <oschina><result><errorCode>1</errorCode><errorMessage>更新成功</errorMessage></result><notice><atmeCount>0</atmeCount><msgCount>0</msgCount><reviewCount>0</reviewCount><newFansCount>0</newFansCount><newLikeCount>0</newLikeCount></notice></oschina>
+             int errorCode = [[[[responseObject.rootElement firstChildWithTag:@"result"] firstChildWithTag:@"errorCode"] numberValue] intValue];
+             if (errorCode == 1) {
+                 _issueState = newState;
+                 //更改标题cell状态
+                 NSIndexPath *titleCellPath = [NSIndexPath indexPathForItem:0 inSection:0];
+                 TeamIssueDetailCell *issueTitleCell = (TeamIssueDetailCell*)[self.tableView cellForRowAtIndexPath:titleCellPath];
+                 issueTitleCell.iconLabel.text = [self getIconStringWithState:newState];
+                 //更改阶段cell状态
+                 //5:在原始数组_originDatas中，阶段cell与标题cell中间隔5个元素。
+                 NSInteger itemIndex = _isOpeningSubIssue ? 5+_subIssueInfos.count : 5;
+                 NSIndexPath *stageCellPath = [NSIndexPath indexPathForItem:itemIndex inSection:0];
+                 //更新任务信息数据
+                 NSString *newStateInChinese = [self getChineseNameWithState:newState];
+                 [_descriptions removeObjectAtIndex:itemIndex];
+                 [_descriptions insertObject:newStateInChinese atIndex:itemIndex];
+                 
+                 TeamIssueDetailCell *issueStageCell = (TeamIssueDetailCell*)[self.tableView cellForRowAtIndexPath:stageCellPath];
+                 issueStageCell.descriptionLabel.text = newStateInChinese;
+             }
              
              
              NSString *alertMsg = [[[responseObject.rootElement firstChildWithTag:@"result"] firstChildWithTag:@"errorMessage"] stringValue];
-             
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
-//             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
              HUD.labelText = alertMsg;
-             
              [HUD hide:YES afterDelay:1];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
          }];
 }
 
+#pragma 发表评论
+
+- (void)sendContent
+{
+    MBProgressHUD *HUD = [Utils createHUD];
+    HUD.labelText = @"评论发送中";
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    NSDictionary *parameter = @{
+                                @"teamid": @(_teamId),
+                                @"uid": @([Config getOwnID]),
+                                @"issueid": @(_issueId),
+                                @"content": [Utils convertRichTextToRawText:self.editingBar.editView]
+                                };
+    [manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_REPLY]
+       parameters:parameter
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"reply"];
+              HUD.mode = MBProgressHUDModeCustomView;
+              if (result != nil) {
+                  self.editingBar.editView.text = @"";
+                  [self updateInputBarHeight];
+                  
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.labelText = @"评论发表成功";
+                  
+                  [self.tableView setContentOffset:CGPointZero animated:NO];
+                  [self fetchRepliesOnPage:0];
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = @"评论失败";;
+              }
+              
+              [HUD hide:YES afterDelay:1];
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.detailsLabelText = error.localizedFailureReason;
+              
+              [HUD hide:YES afterDelay:1];
+          }];
+}
 
 
 
