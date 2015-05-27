@@ -90,7 +90,7 @@
 {
     [_portrait loadPortrait:reply.author.portraitURL];
     _authorLabel.text = reply.author.name;
-    _contentLabel.attributedText = [Utils emojiStringFromRawString:reply.content];
+    _contentLabel.attributedText = reply.content;
     //_contentLabel.attributedText = reply.attributedContent;
     _timeLabel.attributedText = [Utils attributedTimeString:reply.createTime];
     _appclientLabel.attributedText = [Utils getAppclient:reply.appclient];

@@ -15,10 +15,10 @@
 @property (nonatomic, assign) int type;
 @property (nonatomic, assign) int appclient;
 @property (nonatomic, copy) NSString *appName;
-@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy) NSAttributedString *content;
 @property (nonatomic, copy) NSString *createTime;
 
 @property (nonatomic, strong) TeamMember *author;
+//@property (nonatomic, strong) NSMutableAttributedString *attributedContent;
 
-@property (nonatomic, strong) NSMutableAttributedString *attributedContent;
 @end

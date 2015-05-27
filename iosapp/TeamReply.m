@@ -18,7 +18,8 @@
         _type = [[[xml firstChildWithTag:@"type"] numberValue] intValue];
         _appclient = [[[xml firstChildWithTag:@"appclient"] numberValue] intValue];
         _appName = [[xml firstChildWithTag:@"appName"] stringValue];
-        _content = [[xml firstChildWithTag:@"content"] stringValue];
+        NSString *rawString = [Utils deleteHTMLTag:[[xml firstChildWithTag:@"content"] stringValue]];
+        _content = [Utils emojiStringFromRawString:rawString];
         _createTime = [[xml firstChildWithTag:@"createTime"] stringValue];
         
         ONOXMLElement *authorXML = [xml firstChildWithTag:@"author"];
@@ -39,22 +40,22 @@
 }
 
 
-- (NSAttributedString *)attributedContent
-{
-    if (!_attributedContent) {
-        _attributedContent = [[NSMutableAttributedString alloc] initWithData:[_content dataUsingEncoding:NSUnicodeStringEncoding]
-                                                                   options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
-                                                        documentAttributes:nil
-                                                                     error:nil];
-        
-        [_attributedContent deleteCharactersInRange:NSMakeRange(_attributedContent.length-1, 1)];
-        
-        [_attributedContent addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
-                                  range:NSMakeRange(0, _attributedContent.length)];
-    }
-    
-    return _attributedContent;
-}
+//- (NSAttributedString *)attributedContent
+//{
+//    if (!_attributedContent) {
+//        _attributedContent = [[NSMutableAttributedString alloc] initWithData:[_content dataUsingEncoding:NSUnicodeStringEncoding]
+//                                                                   options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+//                                                        documentAttributes:nil
+//                                                                     error:nil];
+//        
+//        [_attributedContent deleteCharactersInRange:NSMakeRange(_attributedContent.length-1, 1)];
+//        
+//        [_attributedContent addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:14]}
+//                                  range:NSMakeRange(0, _attributedContent.length)];
+//    }
+//    
+//    return _attributedContent;
+//}
 
 
 @end

@@ -126,7 +126,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
     TeamReply *reply = _replies[indexPath.row];
     
     _label.font = [UIFont systemFontOfSize:14];
-    _label.text = reply.content;
+    _label.attributedText = reply.content;
     
     CGFloat height = [_label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
     
@@ -200,10 +200,6 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    
-//    NSString *API = _activity.type == 110? TEAM_REPLY_LIST_BY_ACTIVEID :
-//                                           TEAM_REPLY_LIST_BY_TYPE;
-//    NSString *type = @{@(118): @"diary", @(114): @"discuss", @(112): @"issue"}[@(_activity.type)] ?: @"";
     
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, _API]
       parameters:@{
