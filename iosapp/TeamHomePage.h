@@ -13,5 +13,4 @@
 - (instancetype)initWithTeamID:(int)teamID;
 - (void)switchToTeam:(int)teamID;
 
--(void)unfinishedAction;
 @end

@@ -14,6 +14,8 @@
 #import "TeamMemberViewController.h"
 #import "TeamCell.h"
 
+#import "NewTeamIssueViewController.h"
+
 static CGFloat teamCellHeight = 35;
 static CGFloat pickerWidth = 140;
 static NSString * kTeamCellID = @"TeamCell";
@@ -78,6 +80,10 @@ static NSString * kTeamCellID = @"TeamCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"team-create"]
+                                                                              style:UIBarButtonItemStylePlain
+                                                                             target:self action:@selector(createIssue)];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -169,6 +175,14 @@ static NSString * kTeamCellID = @"TeamCell";
     for (id vc in self.viewPager.controllers) {
         [vc switchToTeam:_currentTeamID];
     }
+}
+
+
+#pragma mark - create
+
+- (void)createIssue
+{
+    [self.navigationController pushViewController:[NewTeamIssueViewController new] animated:YES];
 }
 
 
