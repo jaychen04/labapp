@@ -92,9 +92,8 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
                           atScrollPosition:UITableViewScrollPositionNone
                                   animated:NO];
     
-    if (_viewDidAppear) {
-        _viewDidAppear(index);
-    }
+    _currentIndex = index;
+    if (_viewDidAppear) {_viewDidAppear(index);}
 }
 
 - (void)scrollStop:(BOOL)didScrollStop
@@ -120,6 +119,7 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
             }
         }];
          */
+        _currentIndex = focusIndex;
         
         if (_changeIndex) {_changeIndex(focusIndex);}
     }

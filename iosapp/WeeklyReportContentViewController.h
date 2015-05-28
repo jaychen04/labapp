@@ -7,9 +7,13 @@
 //
 
 #import "HorizonalTableViewController.h"
+#import "WeeklyReportTitleBar.h"
 
 @interface WeeklyReportContentViewController : HorizonalTableViewController
 
+@property (nonatomic, strong) WeeklyReportTitleBar *titleBar;
+
 - (instancetype)initWithTeamID:(int)teamID;
+- (void)fetchPreviousReportTable;
 
 @end

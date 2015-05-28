@@ -31,21 +31,17 @@
         
         _teamID = teamID;
         
-        NSDate *date = [NSDate date];
-        NSDateComponents *dateComps = [Utils getDateComponentsFromDate:date];
+        NSDateComponents *dateComps = [Utils getDateComponentsFromDate:[NSDate date]];
         
         CGFloat barHeight = 36;
         _titleBar = [[WeeklyReportTitleBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, barHeight) andWeek:dateComps.weekOfYear - 1];
+        [_titleBar.previousWeekBtn addTarget:self action:@selector(scrollToPreWeek)  forControlEvents:UIControlEventTouchUpInside];
+        [_titleBar.nextWeekBtn     addTarget:self action:@selector(scrollToNextWeek) forControlEvents:UIControlEventTouchUpInside];
         
         
         _weeklyReportHVC = [[WeeklyReportContentViewController alloc] initWithTeamID:_teamID];
         _weeklyReportHVC.view.frame = CGRectMake(0, barHeight, self.view.bounds.size.width, self.view.bounds.size.height - barHeight - 64);
-        
-        __weak typeof(self) weakSelf = self;
-        _weeklyReportHVC.changeIndex = ^ (NSUInteger index) {
-            WeeklyReportTableViewController *vc = weakSelf.weeklyReportHVC.controllers[index];
-            [weakSelf.titleBar updateWeek:vc.week];
-        };
+        _weeklyReportHVC.titleBar = _titleBar;
         
         
         [self addChildViewController:_weeklyReportHVC];
@@ -62,6 +58,28 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)scrollToPreWeek
+{
+    if (_weeklyReportHVC.currentIndex == 0) {
+        [_weeklyReportHVC fetchPreviousReportTable];
+    } else {
+        NSInteger toIndex = _weeklyReportHVC.currentIndex - 1;
+        [_weeklyReportHVC scrollToViewAtIndex:toIndex];
+        
+        WeeklyReportTableViewController *weeklyReportVC = _weeklyReportHVC.controllers[toIndex];
+        [_titleBar updateWeek:weeklyReportVC.week];
+    }
+}
+
+- (void)scrollToNextWeek
+{
+    NSInteger toIndex = _weeklyReportHVC.currentIndex + 1;
+    [_weeklyReportHVC scrollToViewAtIndex:toIndex];
+    
+    WeeklyReportTableViewController *weeklyReportVC = _weeklyReportHVC.controllers[toIndex];
+    [_titleBar updateWeek:weeklyReportVC.week];
 }
 
 

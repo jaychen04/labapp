@@ -10,6 +10,9 @@
 
 @interface WeeklyReportTitleBar : UIView
 
+@property (nonatomic, strong) UIButton *previousWeekBtn;
+@property (nonatomic, strong) UIButton *nextWeekBtn;
+
 - (instancetype)initWithFrame:(CGRect)frame andWeek:(NSInteger)week;
 - (void)updateWeek:(NSInteger)week;
 
