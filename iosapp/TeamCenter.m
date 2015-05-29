@@ -182,9 +182,19 @@ static NSString * kTeamCellID = @"TeamCell";
     [self toggleTeamPicker];
     [Config setTeamID:_currentTeam.teamID];
     
-    for (id vc in self.viewPager.controllers) {
-        [vc switchToTeam:_currentTeam.teamID];
+    int teamID = [Config teamID];
+    
+    [self.viewPager.controllers removeAllObjects];
+    [self.viewPager.controllers addObjectsFromArray:@[
+                                                      [[TeamHomePage alloc] initWithTeamID:teamID],
+                                                      [[TeamIssueController alloc] initWithTeamID:teamID],
+                                                      [[TeamMemberViewController alloc] initWithTeamID:teamID]
+                                                      ]];
+    for (UIViewController *vc in self.viewPager.controllers) {
+        [self.viewPager addChildViewController:vc];
     }
+    
+    [self.viewPager.tableView reloadData];
 }
 
 

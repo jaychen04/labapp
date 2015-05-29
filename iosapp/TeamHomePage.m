@@ -190,12 +190,6 @@
 
 #pragma mark - 更新数据
 
-- (void)switchToTeam:(int)teamID
-{
-    _teamID = teamID;
-    [self refresh];
-}
-
 - (void)refresh
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];

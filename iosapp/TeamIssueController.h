@@ -29,5 +29,4 @@ const NSArray *___kIssueStates;
 
 - (instancetype)initWithTeamID:(int)teamID userID:(int64_t)userID andIssueState:(IssueState)issueState;
 
-- (void)switchToTeam:(int)teamID;
 @end

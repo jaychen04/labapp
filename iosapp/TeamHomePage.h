@@ -11,6 +11,5 @@
 @interface TeamHomePage : UITableViewController
 
 - (instancetype)initWithTeamID:(int)teamID;
-- (void)switchToTeam:(int)teamID;
 
 @end

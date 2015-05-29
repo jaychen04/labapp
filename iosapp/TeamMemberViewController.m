@@ -119,12 +119,6 @@ static NSString * const kMemberCellID = @"MemberCell";
 
 #pragma mark - 更新数据
 
-- (void)switchToTeam:(int)teamID
-{
-    _teamID = teamID;
-    [self refresh];
-}
-
 - (void)refresh
 {
     [_members removeAllObjects];
