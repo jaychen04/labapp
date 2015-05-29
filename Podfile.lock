@@ -27,12 +27,12 @@ PODS:
   - MBProgressHUD (0.9.1)
   - Ono (1.2.2)
   - Reachability (3.2)
-  - ReactiveCocoa (2.4.7):
-    - ReactiveCocoa/UI (= 2.4.7)
-  - ReactiveCocoa/Core (2.4.7):
+  - ReactiveCocoa (2.5):
+    - ReactiveCocoa/UI (= 2.5)
+  - ReactiveCocoa/Core (2.5):
     - ReactiveCocoa/no-arc
-  - ReactiveCocoa/no-arc (2.4.7)
-  - ReactiveCocoa/UI (2.4.7):
+  - ReactiveCocoa/no-arc (2.5)
+  - ReactiveCocoa/UI (2.5):
     - ReactiveCocoa/Core
   - RESideMenu (4.0.7)
   - SDWebImage (3.7.2):
@@ -42,13 +42,13 @@ PODS:
   - TTTAttributedLabel (1.13.3)
 
 DEPENDENCIES:
-  - AFOnoResponseSerializer (~> 1.0.0)
-  - GPUImage (~> 0.1.6)
-  - MBProgressHUD (~> 0.8)
+  - AFOnoResponseSerializer
+  - GPUImage
+  - MBProgressHUD
   - Reachability
-  - ReactiveCocoa (~> 2.4.7)
-  - RESideMenu (~> 4.0.7)
-  - SDWebImage (~> 3.7.1)
+  - ReactiveCocoa
+  - RESideMenu
+  - SDWebImage
   - SSKeychain
   - TTTAttributedLabel
 
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   Ono: 80b1c686777d3f6d5d5ce6fcac8a74afef4ca197
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  ReactiveCocoa: eb38dee0a0e698f73a9b25e5c1faea2bb4c79240
+  ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
