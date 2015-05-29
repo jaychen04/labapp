@@ -79,6 +79,18 @@ static NSString * kTeamCellID = @"TeamCell";
         [_clearView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTeamPicker)]];
         
         [self updateTitle];
+        
+        __block NSInteger row = 0;
+        int teamID = [Config teamID];
+        [_teams enumerateObjectsUsingBlock:^(TeamTeam *team, NSUInteger idx, BOOL *stop) {
+            if (team.teamID == teamID) {
+                row = idx;
+                *stop = YES;
+            }
+        }];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        [_teamPicker selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
     
     return self;
@@ -93,13 +105,6 @@ static NSString * kTeamCellID = @"TeamCell";
                                                                              target:self action:@selector(createIssue)];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    [_teamPicker selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -110,7 +115,6 @@ static NSString * kTeamCellID = @"TeamCell";
     [self updateTitle];
     
     [UIView animateWithDuration:0.15f animations:^{
-        //_teamPicker.hidden = !_teamPicker.hidden;
         [_teamPicker setAlpha:1.0f - _teamPicker.alpha];
     } completion:^(BOOL finished) {
         if (_teamPicker.alpha <= 0.0f) {
