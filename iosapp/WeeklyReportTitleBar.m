@@ -9,11 +9,14 @@
 #import "WeeklyReportTitleBar.h"
 #import "Utils.h"
 
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
+
 @interface WeeklyReportTitleBar ()
 
 @property (nonatomic, strong) UILabel *weekLabel;
-@property (nonatomic, strong) UIButton *previousWeekBtn;
-@property (nonatomic, strong) UIButton *nextWeekBtn;
+
+@property (nonatomic, assign) NSInteger currentWeek;
 
 @end
 
@@ -29,6 +32,9 @@
         
         [self setLayout];
         _weekLabel.text = [NSString stringWithFormat:@"第%ld周周报总览", week];
+        
+        _currentWeek = [Utils getDateComponentsFromDate:[NSDate date]].weekOfYear - 1;
+        if (_currentWeek == week) {_nextWeekBtn.enabled = NO;}
     }
     
     return self;
@@ -41,11 +47,19 @@
     [self addSubview:_weekLabel];
     
     _previousWeekBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_previousWeekBtn setTitle:@"P" forState:UIControlStateNormal];
+    _previousWeekBtn.titleLabel.font = [UIFont fontAwesomeFontOfSize:16];
+    [_previousWeekBtn setTitleColor:[UIColor colorWithHex:0x1B9E36] forState:UIControlStateNormal];
+    [_previousWeekBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
+    [_previousWeekBtn setTitle:[NSString fontAwesomeIconStringForEnum:FAChevronLeft]
+                      forState:UIControlStateNormal];
     [self addSubview:_previousWeekBtn];
     
     _nextWeekBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_nextWeekBtn setTitle:@"N" forState:UIControlStateNormal];
+    _nextWeekBtn.titleLabel.font = [UIFont fontAwesomeFontOfSize:16];
+    [_nextWeekBtn setTitleColor:[UIColor colorWithHex:0x1B9E36] forState:UIControlStateNormal];
+    [_nextWeekBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateDisabled];
+    [_nextWeekBtn setTitle:[NSString fontAwesomeIconStringForEnum:FAChevronRight]
+                  forState:UIControlStateNormal];
     [self addSubview:_nextWeekBtn];
     
     for (UIView *view in self.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
@@ -64,6 +78,15 @@
 - (void)updateWeek:(NSInteger)week
 {
     _weekLabel.text = [NSString stringWithFormat:@"第%ld周周报总览", week];
+    
+    _nextWeekBtn.enabled = YES;
+    _previousWeekBtn.enabled = YES;
+    
+    if (week == _currentWeek) {
+        _nextWeekBtn.enabled = NO;
+    } else if (week == 1) {
+        _previousWeekBtn.enabled = NO;
+    }
 }
 
 @end

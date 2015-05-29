@@ -46,19 +46,28 @@
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
     if (scrollView.contentOffset.y < 0) {
-        WeeklyReportTableViewController *firstVC = self.controllers[0];
-        WeeklyReportTableViewController *vc = [[WeeklyReportTableViewController alloc] initWithTeamID:_teamID
-                                                                                                 year:firstVC.year
-                                                                                              andWeek:firstVC.week - 1];
-        [self.controllers insertObject:vc atIndex:0];
-        [self addChildViewController:vc];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            
-            [self scrollToViewAtIndex:0];
-        });
+        [self fetchPreviousReportTable];
     }
 }
+
+- (void)fetchPreviousReportTable
+{
+    WeeklyReportTableViewController *firstVC = self.controllers[0];
+    if (firstVC.week <= 1) {return;}
+    WeeklyReportTableViewController *vc = [[WeeklyReportTableViewController alloc] initWithTeamID:_teamID
+                                                                                             year:firstVC.year
+                                                                                          andWeek:firstVC.week - 1];
+    [self.controllers insertObject:vc atIndex:0];
+    [self addChildViewController:vc];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        
+        [self scrollToViewAtIndex:0];
+        
+        [_titleBar updateWeek:vc.week];
+    });
+}
+
 
 @end

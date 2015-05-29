@@ -34,7 +34,6 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
         };
         
         self.objClass = [TeamActivity class];
-        self.needCache = YES;
     }
     
     return self;
@@ -51,7 +50,6 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
         
         _teamID = teamID;
         self.objClass = [TeamActivity class];
-        self.needCache = YES;
     }
     
     return self;

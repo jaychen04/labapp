@@ -41,7 +41,6 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
         self.teamId = teamId;
         self.uId = uId;
         self.objClass = [TeamActivity class];
-        self.needCache = YES;
         
 //        self.delegate = self;
         

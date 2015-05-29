@@ -30,7 +30,6 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
         };
         
         self.objClass = [TeamDiscussion class];
-        self.needCache = YES;
         
         _teamID = teamID;
     }

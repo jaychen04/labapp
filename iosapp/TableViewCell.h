@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, DataSourceType)
+{
+    DataSourceTypeProject,
+    DataSourceTypeIssueGroup,
+    DataSourceTypeMember,
+};
+
 @interface TableViewCell : UITableViewCell
 
-- (void)setContentWithDataSource:(NSArray *)dataSource;
+- (void)setContentWithDataSource:(NSArray *)dataSource ofType:(DataSourceType)type;
+
 
 @end

@@ -35,7 +35,6 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
         };
         
         self.objClass = [TeamWeeklyReport class];
-        self.needCache = YES;
     }
     
     return self;
@@ -45,6 +44,8 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[WeeklyReportCell class] forCellReuseIdentifier:kWeeklyReportCellID];
+    
+    self.lastCell.emptyMessage = @"本周没有人提交周报";
 }
 
 - (void)didReceiveMemoryWarning {

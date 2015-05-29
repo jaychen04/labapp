@@ -13,6 +13,10 @@
 #import "TeamIssueController.h"
 #import "TeamMemberViewController.h"
 #import "TeamCell.h"
+#import "NewTeamIssueViewController.h"
+
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
 
 #import "NewTeamIssueViewController.h"
 
@@ -23,11 +27,14 @@ static NSString * kTeamCellID = @"TeamCell";
 @interface TeamCenter () <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) NSArray *teams;
+@property (nonatomic, strong) TeamTeam *currentTeam;
 @property (nonatomic, strong) UITableView *teamPicker;
 @property (nonatomic, assign) int currentTeamID;
 
 @property (nonatomic, strong) UIButton *dropdownButton;
 @property (nonatomic, strong) UIView *clearView;
+
+@property (nonatomic, assign) BOOL arrowUp;
 
 @end
 
@@ -48,9 +55,10 @@ static NSString * kTeamCellID = @"TeamCell";
     
     if (self) {
         _teams = teams;
+        _currentTeam = _teams[0];
         
         _dropdownButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_dropdownButton setTitle:((TeamTeam *)_teams[0]).name forState:UIControlStateNormal];
+        _dropdownButton.titleLabel.textColor = [UIColor whiteColor];
         [_dropdownButton addTarget:self action:@selector(toggleTeamPicker) forControlEvents:UIControlEventTouchUpInside];
         _dropdownButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.navigationItem.titleView = _dropdownButton;
@@ -62,7 +70,6 @@ static NSString * kTeamCellID = @"TeamCell";
         _teamPicker.dataSource = self;
         _teamPicker.delegate = self;
         _teamPicker.alpha = 0;
-        
         _teamPicker.separatorStyle = UITableViewCellSeparatorStyleNone;
         [_teamPicker setCornerRadius:3];
         _teamPicker.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
@@ -72,6 +79,8 @@ static NSString * kTeamCellID = @"TeamCell";
         _clearView = [[UIView alloc] initWithFrame:self.view.bounds];
         _clearView.backgroundColor = [UIColor clearColor];
         [_clearView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTeamPicker)]];
+        
+        [self updateTitle];
     }
     
     return self;
@@ -100,7 +109,9 @@ static NSString * kTeamCellID = @"TeamCell";
 
 - (void)toggleTeamPicker
 {
-    [UIView animateWithDuration:0.2f animations:^{
+    [self updateTitle];
+    
+    [UIView animateWithDuration:0.15f animations:^{
         //_teamPicker.hidden = !_teamPicker.hidden;
         [_teamPicker setAlpha:1.0f - _teamPicker.alpha];
     } completion:^(BOOL finished) {
@@ -125,7 +136,7 @@ static NSString * kTeamCellID = @"TeamCell";
 {
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor colorWithHex:0x555555];
-    return view;
+    return view;NSLog(@"..........");
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
@@ -164,17 +175,37 @@ static NSString * kTeamCellID = @"TeamCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TeamTeam *team = _teams[indexPath.row];
-    [_dropdownButton setTitle:team.name forState:UIControlStateNormal];
-    [_dropdownButton sizeToFit];
-    _currentTeamID = team.teamID;
+    _currentTeam = _teams[indexPath.row];
     
     [self toggleTeamPicker];
-    [Config setTeamID:_currentTeamID];
+    [Config setTeamID:_currentTeam.teamID];
     
     for (id vc in self.viewPager.controllers) {
-        [vc switchToTeam:_currentTeamID];
+        [vc switchToTeam:_currentTeam.teamID];
     }
+}
+
+
+
+#pragma mark - change title
+
+- (void)updateTitle
+{
+    NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", _currentTeam.name]];
+    
+    if (_teams.count > 1) {
+        NSString *arrow = [NSString fontAwesomeIconStringForEnum:_arrowUp? FAAngleUp : FAAngleDown];
+        _arrowUp = !_arrowUp;
+        
+        [attributedTitle appendAttributedString:[[NSMutableAttributedString alloc] initWithString:arrow
+                                                                                       attributes:@{
+                                                                                                    NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:16],
+                                                                                                    NSForegroundColorAttributeName: [UIColor whiteColor]
+                                                                                                    }]];
+    }
+    
+    [_dropdownButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
+    [_dropdownButton sizeToFit];
 }
 
 
