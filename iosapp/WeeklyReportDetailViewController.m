@@ -156,6 +156,15 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return;
+    } else {
+        [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    }
+}
+
 
 #pragma 发表评论
 

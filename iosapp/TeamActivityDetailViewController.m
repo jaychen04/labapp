@@ -112,6 +112,15 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        return;
+    } else {
+        [super tableView:tableView didSelectRowAtIndexPath:indexPath];
+    }
+}
+
 #pragma 发表评论
 
 - (void)sendContent

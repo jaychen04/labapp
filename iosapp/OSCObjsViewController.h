@@ -18,11 +18,6 @@
 
 @class ONOXMLDocument;
 
-
-//@protocol anotherNetWorkingDelegate
-//-(void)getAnotherDataFromNetWorking;
-//@end
-
 @interface OSCObjsViewController : UITableViewController
 
 @property (nonatomic, copy) void (^parseExtraInfo)(ONOXMLDocument *);
