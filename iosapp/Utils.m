@@ -237,9 +237,13 @@
     NSDateComponents *compsPast = [calendar components:unitFlags fromDate:date];
     NSDateComponents *compsNow = [calendar components:unitFlags fromDate:[NSDate date]];
     
+    NSInteger daysInLastMonth = [calendar rangeOfUnit:NSDayCalendarUnit
+                                               inUnit:NSMonthCalendarUnit
+                                              forDate:date].length;
+    
     NSInteger years = [compsNow year] - [compsPast year];
     NSInteger months = [compsNow month] - [compsPast month] + years * 12;
-    NSInteger days = [compsNow day] - [compsPast day] + months * 30;
+    NSInteger days = [compsNow day] - [compsPast day] + months * daysInLastMonth;
     NSInteger hours = [compsNow hour] - [compsPast hour] + days * 24;
     NSInteger minutes = [compsNow minute] - [compsPast minute] + hours * 60;
     
