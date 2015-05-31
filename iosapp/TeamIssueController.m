@@ -111,6 +111,8 @@ static NSString * const kIssueCellID = @"IssueCell";
     
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
     
+    if (issue.hasExtraInfo) {height += 22;}
+    
     return height + 60;
 }
 

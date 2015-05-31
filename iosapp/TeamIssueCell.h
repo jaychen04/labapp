@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UILabel *assignmentLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
+@property (nonatomic, strong) UILabel *extraInfoLabel;
 
 - (void)setContentWithIssue:(TeamIssue *)issue;
 

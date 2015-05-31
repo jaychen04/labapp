@@ -54,6 +54,11 @@
     _assignmentLabel.textColor = [UIColor lightGrayColor];
     [self.contentView addSubview:_assignmentLabel];
     
+    _extraInfoLabel = [UILabel new];
+    _extraInfoLabel.font = [UIFont systemFontOfSize:12];
+    _extraInfoLabel.textColor = [UIColor grayColor];
+    [self.contentView addSubview:_extraInfoLabel];
+    
     _projectNameLabel = [UILabel new];
     _projectNameLabel.numberOfLines = 0;
     _projectNameLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -66,9 +71,9 @@
 {
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_titleLabel, _projectNameLabel, _assignmentLabel, _timeLabel, _commentLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_titleLabel, _projectNameLabel, _extraInfoLabel, _assignmentLabel, _timeLabel, _commentLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_titleLabel]-8-[_projectNameLabel]-8-[_assignmentLabel]-8-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_titleLabel]-8-[_projectNameLabel]-<=8-[_extraInfoLabel]-8-[_assignmentLabel]-8-|"
                                                                              options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_titleLabel]-8-|"
@@ -89,6 +94,30 @@
     _projectNameLabel.text = issue.project.projectName;
     _commentLabel.attributedText = [Utils attributedCommentCount:issue.replyCount];
     _timeLabel.attributedText = [Utils attributedTimeString:issue.createTime];
+    
+    if (issue.hasExtraInfo) {
+        NSMutableString *extraInfo = [NSMutableString new];
+        
+        if (issue.deadline.length) {
+            [extraInfo appendString:[NSString stringWithFormat:@"%@个附件 ", issue.deadline]];
+        }
+        
+        if (issue.attachmentsCount) {
+            [extraInfo appendString:[NSString stringWithFormat:@"%d ", issue.attachmentsCount]];
+        }
+        
+        if (issue.childIssuesCount) {
+            [extraInfo appendString:[NSString stringWithFormat:@"子任务(%d/%d)", issue.childIssuesCount - issue.closedChildIssuesCount, issue.childIssuesCount]];
+        }
+        
+        if (issue.relatedIssuesCount) {
+            [extraInfo appendString:[NSString stringWithFormat:@"%d个关联任务", issue.attachmentsCount]];
+        }
+        
+        _extraInfoLabel.text = extraInfo;
+    } else {
+        _extraInfoLabel.text = @"";
+    }
     
     if (issue.user.name) {
         _assignmentLabel.text = [NSString stringWithFormat:@"%@ 指派给 %@", issue.author.name, issue.user.name];
