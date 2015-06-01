@@ -7,10 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MZDayPicker.h"
-@interface TeamCalendarView : UIView <MZDayPickerDelegate, MZDayPickerDataSource>
-@property (nonatomic,strong)MZDayPicker *dayPicker;
-@property (nonatomic,strong) NSDateFormatter *dateFormatter;
 
--(instancetype)initTeamCalendarViewWithFrame:(CGRect)frame;
+@class TeamCalendarView;
+@protocol DatePickViewDelegate <NSObject>
+@optional
+-(void)removeCalendarView;
+-(void)didSelectDate:(NSDate*)date;
+-(void)clearSelectedDate;
+@end
+
+@interface TeamCalendarView : UIView
+@property(nonatomic,strong)UIToolbar *toolbar;
+@property(nonatomic,strong)UIDatePicker *datePickView;
+@property (nonatomic,strong)NSDate *selectedDate;
+@property (nonatomic) id<DatePickViewDelegate> delegate;
+
+-(instancetype)initWithSelectedDate:(NSDate*)date;
 @end

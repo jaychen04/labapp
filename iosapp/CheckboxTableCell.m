@@ -16,8 +16,7 @@ static NSString * const kReuseID = @"reuseID";
 
 @interface CheckboxTableCell ()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (nonatomic, strong) UILabel *descriptionLabel;
+
 
 @end
 

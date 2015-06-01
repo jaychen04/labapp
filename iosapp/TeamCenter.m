@@ -136,7 +136,7 @@ static NSString * kTeamCellID = @"TeamCell";
 {
     UIView *view = [UIView new];
     view.backgroundColor = [UIColor colorWithHex:0x555555];
-    return view;NSLog(@"..........");
+    return view;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

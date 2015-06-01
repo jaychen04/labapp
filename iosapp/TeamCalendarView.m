@@ -7,99 +7,78 @@
 //
 
 #import "TeamCalendarView.h"
-#import "UIColor+Util.h"
-#import "MZDayPickerCell.h"
+
+#define GDeviceScreenWidth                     ([UIScreen mainScreen].bounds.size.width)
 @implementation TeamCalendarView
 
--(instancetype)initTeamCalendarViewWithFrame:(CGRect)frame{
+-(instancetype)initWithSelectedDate:(NSDate*)date{
     
-    self=[super initWithFrame:frame];
+    self=[super init];
     if (self) {
-        [self setUpView];
+        if (date) {
+            _selectedDate = date;
+        } else {
+            _selectedDate = [NSDate date];
+        }
+        [self setUpSubViews];
     }
     return self;
 }
 
--(void)setUpView{
+-(void)setUpSubViews{
     
-    self.dayPicker = [[MZDayPicker alloc]initWithFrame:self.bounds dayCellSize:CGSizeMake(CGRectGetHeight(self.bounds)*3/5, CGRectGetHeight(self.bounds)*2/3) dayCellFooterHeight:CGRectGetHeight(self.bounds)*1/3];
+    UIToolbar *toolbar=[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, GDeviceScreenWidth,40)];
+    
+    UIBarButtonItem *leftItem = [self setToolBarWithText:@"取消" action:@selector(remove)];
+    UIBarButtonItem *centerLeftSpace=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *midleItem = [self setToolBarWithText:@"清除" action:@selector(clearText)];
+    UIBarButtonItem *centerRightSpace=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *rightItem = [self setToolBarWithText:@"确定" action:@selector(didSelectDate)];
+    toolbar.items=@[leftItem,centerLeftSpace,midleItem,centerRightSpace,rightItem];
+    [self addSubview:toolbar];
+    
+    UIDatePicker *datePickView = [[UIDatePicker alloc] init];
+    datePickView.datePickerMode = UIDatePickerModeDate;
+    [datePickView setDate:_selectedDate animated:YES];
+    datePickView.backgroundColor=[UIColor lightGrayColor];
+    _datePickView=datePickView;
+    datePickView.frame=CGRectMake(0, CGRectGetMaxY(toolbar.frame), GDeviceScreenWidth, CGRectGetHeight(datePickView.frame));
+    [self addSubview:datePickView];
+    
+    self.frame = CGRectMake(0, 0, GDeviceScreenWidth, CGRectGetHeight(toolbar.frame)+CGRectGetHeight(_datePickView.frame));
 
-    self.dayPicker.delegate = self;
-    self.dayPicker.dataSource = self;
-    
-    self.dayPicker.dayNameLabelFontSize = 12.0f;
-    self.dayPicker.dayLabelFontSize = 18.0f;
-    
-    self.dateFormatter = [[NSDateFormatter alloc] init];
-    [self.dateFormatter setDateFormat:@"yyyy-M"];
-    [self.dayPicker setStartDate:[NSDate date] endDate:[NSDate dateFromDay:28 month:10 year:2113]];
-    [self.dayPicker setCurrentDate:[NSDate date] animated:NO];
-    
-    [self addSubview:self.dayPicker];
-    
-    
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapGestureRecognizer:)];
-    [self.dayPicker addGestureRecognizer:tapGesture];
-    
 }
-#pragma mark - UITapGestureRecognizer
-
-- (void)tapGestureRecognizer:(UITapGestureRecognizer *)tapGesture
+-(UIBarButtonItem*)setToolBarWithText:(NSString*)text action:(SEL)action
 {
-    
-    CGPoint location = [tapGesture locationInView:tapGesture.view];
-    MZDayPickerCell *cell = (MZDayPickerCell*)[self.dayPicker.tableView cellForRowAtIndexPath:self.dayPicker.currentIndex];
-//    cell.containerView.backgroundColor = [UIColor redColor];
-
-    NSLog(@"%f,%f,%f,%f",cell.containerView.frame.origin.x,cell.containerView.frame.origin.x,cell.containerView.frame.size.width,cell.containerView.frame.size.height);
-    NSLog(@"point:%f,%f",location.x,location.y);
-    
-    if(CGRectContainsPoint(cell.containerView.frame,location)) {
-        NSLog(@"..........");
-    }
-    
-    if (tapGesture.state == UIGestureRecognizerStateEnded) {
-        
-//        CGPoint location = [tapGesture locationInView:tapGesture.view];
-//        NSIndexPath *indexPath = [self indexPathForRowAtPoint:location];
-//        
-//        if (NSRangeContainsRow(self.activeDays, indexPath.row - kDefaultInitialInactiveDays + 1))
-//        {
-//            if (indexPath.row != self.currentIndex.row) {
-//                
-//                if ([self.delegate respondsToSelector:@selector(dayPicker:willSelectDay:)])
-//                    [self.delegate dayPicker:self willSelectDay:self.tableDaysData[indexPath.row]];
-//                
-//                _currentDay = indexPath.row-1;
-//                _currentDate = [(MZDay *)self.tableDaysData[indexPath.row] date];
-//                [self setCurrentIndex:indexPath];
-//            }
-//        }
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    button.frame = CGRectMake(0, 0, 60, 40);
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitle:text forState:UIControlStateNormal];
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *bbi = [[UIBarButtonItem alloc]initWithCustomView:button];
+    return bbi;
+}
+#pragma mark --DatePickerViewDelegate
+-(void)didSelectDate
+{
+    if ([self.delegate respondsToSelector:@selector(didSelectDate:)]) {
+        [self.delegate didSelectDate:_datePickView.date];
     }
 }
-
-
-#pragma mark --MZDayPickerDataSource
-- (NSString *)dayPicker:(MZDayPicker *)dayPicker titleForCellDayNameLabelInDay:(MZDay *)day
+-(void)clearText
 {
-    return [self.dateFormatter stringFromDate:day.date];
+    if ([self.delegate respondsToSelector:@selector(clearSelectedDate)]) {
+        [self.delegate clearSelectedDate];
+    }
 }
-
-#pragma mark --MZDayPickerDelegate
-- (void)dayPicker:(MZDayPicker *)dayPicker didSelectDay:(MZDay *)day
+-(void)remove
 {
-    NSLog(@"Did select day %@",day.day);
-}
+    if ([self.delegate respondsToSelector:@selector(removeCalendarView)]) {
+        [self.delegate removeCalendarView];
+    }
 
-- (void)dayPicker:(MZDayPicker *)dayPicker willSelectDay:(MZDay *)day
-{
-    NSLog(@"Will select day %@",day.day);
-}
 
-- (void)viewDidUnload {
-    [self setDayPicker:nil];
 }
-
 
 
 /*

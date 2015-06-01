@@ -17,6 +17,8 @@ typedef NS_ENUM(NSInteger, CellType)
 };
 
 @interface CheckboxTableCell : UITableViewCell
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *descriptionLabel;
 
 - (id)initWithCellType:(CellType)type;
 

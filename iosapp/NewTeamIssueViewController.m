@@ -13,23 +13,19 @@
 #import "Utils.h"
 #import "CheckboxTableCell.h"
 #import "TeamMember.h"
-
 #import "TeamProject.h"
 #import "TeamIssueList.h"
-
 #import "TableViewCell.h"
+
+#import "TeamCalendarView.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 
-
-//#import "MZDayPicker.h"
-#import "TeamCalendarView.h"
-
 static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 
-@interface NewTeamIssueViewController ()
+@interface NewTeamIssueViewController ()<DatePickViewDelegate>
 
 @property (nonatomic, strong) NSArray *iconArray;
 @property (nonatomic, strong) NSArray *titlteArray;
@@ -41,11 +37,10 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 @property (nonatomic, strong) NSMutableArray *members;
 @property (nonatomic, strong) NSMutableArray *projects;
-
 @property (nonatomic, strong) TeamProject *selectedProject;
-
 @property (nonatomic, strong) NSMutableArray *issueGroups;
 
+@property (nonatomic,strong) CheckboxTableCell *calendarCell;
 @end
 
 @implementation NewTeamIssueViewController
@@ -68,7 +63,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     
     self.navigationItem.title = @"新团队任务";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建" style:UIBarButtonItemStylePlain target:self action:nil];
@@ -94,12 +88,12 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == _selectedRow + 1) {
-        
         if (_selectedRow == 1) {return _projects.count > 4? 200 : _projects.count * 40;}
         if (_selectedRow == 2) {return _issueGroups.count > 4? 200 : _issueGroups.count * 40;}
         if (_selectedRow == 3) {return _members.count > 4? 200 : _members.count * 40;}
-        
+        if (_selectedRow == 4) {return 256;}
         return 200;
+
     } else {
         return 60;
     }
@@ -118,10 +112,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     
     if (row == 0) {
         UITableViewCell *cell = [UITableViewCell new];
-        
-        
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
         cell.backgroundColor = [UIColor themeColor];
         _titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 5, CGRectGetWidth([[UIScreen mainScreen] bounds])-40, CGRectGetHeight(cell.frame)-10)];
         _titleTextField.placeholder = @"任务标题";
@@ -135,10 +126,14 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
             [cell setContentWithDataSource:_projects ofType:DataSourceTypeProject];
         } else if (_selectedRow == 2) {
             [cell setContentWithDataSource:_issueGroups ofType:DataSourceTypeIssueGroup];
-        } else {
+        } else if (_selectedRow == 3) {
             [cell setContentWithDataSource:_members ofType:DataSourceTypeMember];
+        }else if (_selectedRow == 4) {
+            TeamCalendarView *calendarView = [[TeamCalendarView alloc] initWithSelectedDate:[self getDateWithString:_calendarCell.descriptionLabel.text]];
+            calendarView.delegate = self;
+            [cell.contentView addSubview:calendarView];
+            return cell;
         }
-        
         
         return cell;
     } else {
@@ -153,12 +148,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [_titleTextField resignFirstResponder];
     
-    
-    //    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    //    TeamCalendarView *cv = [[TeamCalendarView alloc]initTeamCalendarViewWithFrame:CGRectMake(0, CGRectGetMaxY(cell.frame), CGRectGetWidth([UIScreen mainScreen].bounds), 90)];
-    //    dispatch_async(dispatch_get_main_queue(), ^{
-    //        [self.view addSubview:cv];
-    //    });
     
     if (indexPath.row != 0) {
         if (_selectedRow > 0) {
@@ -175,124 +164,157 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
             _selectedRow = indexPath.row;
         }
         
-        
-        if (_members.count) {
-            [tableView beginUpdates];
-            [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            [tableView endUpdates];
-        } else {
-            [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_MEMBER_LIST]
-               parameters:@{@"teamid": @([Config teamID])}
-                  success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-                      NSArray *membersXML = [[responseObject.rootElement firstChildWithTag:@"members"] childrenWithTag:@"member"];
-                      
-                      for (ONOXMLElement *memberXML in membersXML) {
-                          TeamMember *teamMember = [[TeamMember alloc] initWithXML:memberXML];
-                          [_members addObject:teamMember];
-                      }
-                      
-                      [tableView beginUpdates];
-                      [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
-                                       withRowAnimation:UITableViewRowAnimationFade];
-                      [tableView endUpdates];
-                  } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                      
-                  }];
-            
-            switch (indexPath.row) {
-                case 1: {
-                    if (_projects.count) {
-                        [tableView beginUpdates];
-                        [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
-                                         withRowAnimation:UITableViewRowAnimationFade];
-                        [tableView endUpdates];
-                    } else {
-                        [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_LIST]
-                           parameters:@{@"teamid": @([Config teamID])}
-                              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-                                  NSArray *projectsXML = [[responseObject.rootElement firstChildWithTag:@"projects"] childrenWithTag:@"project"];
-                                  
-                                  for (ONOXMLElement *projectXML in projectsXML) {
-                                      TeamProject *teamProject = [[TeamProject alloc] initWithXML:projectXML];
-                                      [_projects addObject:teamProject];
-                                  }
-                                  
-                                  [tableView beginUpdates];
-                                  [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
-                                                   withRowAnimation:UITableViewRowAnimationFade];
-                                  [tableView endUpdates];
-                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  
-                              }];
-                    }
+        switch (indexPath.row) {
+            case 1: {
+                if (_projects.count) {
+                    [tableView beginUpdates];
+                    [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
+                                     withRowAnimation:UITableViewRowAnimationFade];
+                    [tableView endUpdates];
+                } else {
+                    [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_LIST]
+                       parameters:@{@"teamid": @([Config teamID])}
+                          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                              NSArray *projectsXML = [[responseObject.rootElement firstChildWithTag:@"projects"] childrenWithTag:@"project"];
+                              
+                              for (ONOXMLElement *projectXML in projectsXML) {
+                                  TeamProject *teamProject = [[TeamProject alloc] initWithXML:projectXML];
+                                  [_projects addObject:teamProject];
+                              }
+                              
+                              [tableView beginUpdates];
+                              [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
+                                               withRowAnimation:UITableViewRowAnimationFade];
+                              [tableView endUpdates];
+                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              
+                          }];
                 }
-                    break;
-                case 2: {
-                    if (_issueGroups.count) {
-                        [tableView beginUpdates];
-                        [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
-                                         withRowAnimation:UITableViewRowAnimationFade];
-                        [tableView endUpdates];
-                    } else {
-                        [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_CATALOG_LIST]
-                           parameters:@{
-                                        @"uid": @([Config getOwnID]),
-                                        @"teamid": @([Config teamID]),
-                                        @"projectid": @(0)
-                                        }
-                              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-                                  NSArray *issueGroupsXML = [[responseObject.rootElement firstChildWithTag:@"catalogs"] childrenWithTag:@"catalog"];
-                                  
-                                  for (ONOXMLElement *issueGroupXMl in issueGroupsXML) {
-                                      TeamIssueList *issueGroup = [[TeamIssueList alloc] initWithXML:issueGroupXMl];
-                                      [_issueGroups addObject:issueGroup];
-                                  }
-                                  
-                                  [tableView beginUpdates];
-                                  [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
-                                                   withRowAnimation:UITableViewRowAnimationFade];
-                                  [tableView endUpdates];
-                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  
-                              }];
-                    }
-                }
-                    break;
-                case 3: {
-                    if (_members.count) {
-                        [tableView beginUpdates];
-                        [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
-                                         withRowAnimation:UITableViewRowAnimationFade];
-                        [tableView endUpdates];
-                    } else {
-                        [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_MEMBER_LIST]
-                           parameters:@{
-                                        @"uid": @([Config getOwnID]),
-                                        @"teamid": @([Config teamID])
-                                        }
-                              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-                                  NSArray *membersXML = [[responseObject.rootElement firstChildWithTag:@"members"] childrenWithTag:@"member"];
-                                  
-                                  for (ONOXMLElement *memberXML in membersXML) {
-                                      TeamMember *teamMember = [[TeamMember alloc] initWithXML:memberXML];
-                                      [_members addObject:teamMember];
-                                  }
-                                  
-                                  [tableView beginUpdates];
-                                  [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
-                                                   withRowAnimation:UITableViewRowAnimationFade];
-                                  [tableView endUpdates];
-                              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                  
-                              }];
-                    }
-                }
-                    break;
-                default: break;
-                    
             }
+                break;
+            case 2: {
+                if (_issueGroups.count) {
+                    [tableView beginUpdates];
+                    [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
+                                     withRowAnimation:UITableViewRowAnimationFade];
+                    [tableView endUpdates];
+                } else {
+                    [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_CATALOG_LIST]
+                       parameters:@{
+                                    @"uid": @([Config getOwnID]),
+                                    @"teamid": @([Config teamID]),
+                                    @"projectid": @(0)
+                                    }
+                          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                              NSArray *issueGroupsXML = [[responseObject.rootElement firstChildWithTag:@"catalogs"] childrenWithTag:@"catalog"];
+                              
+                              for (ONOXMLElement *issueGroupXMl in issueGroupsXML) {
+                                  TeamIssueList *issueGroup = [[TeamIssueList alloc] initWithXML:issueGroupXMl];
+                                  [_issueGroups addObject:issueGroup];
+                              }
+                              
+                              [tableView beginUpdates];
+                              [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
+                                               withRowAnimation:UITableViewRowAnimationFade];
+                              [tableView endUpdates];
+                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              
+                          }];
+                }
+            }
+                break;
+            case 3: {
+                if (_members.count) {
+                    [tableView beginUpdates];
+                    [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
+                                     withRowAnimation:UITableViewRowAnimationFade];
+                    [tableView endUpdates];
+                } else {
+                    [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_MEMBER_LIST]
+                       parameters:@{
+                                    @"uid": @([Config getOwnID]),
+                                    @"teamid": @([Config teamID])
+                                    }
+                          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                              NSArray *membersXML = [[responseObject.rootElement firstChildWithTag:@"members"] childrenWithTag:@"member"];
+                              
+                              for (ONOXMLElement *memberXML in membersXML) {
+                                  TeamMember *teamMember = [[TeamMember alloc] initWithXML:memberXML];
+                                  [_members addObject:teamMember];
+                              }
+                              
+                              [tableView beginUpdates];
+                              [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
+                                               withRowAnimation:UITableViewRowAnimationFade];
+                              [tableView endUpdates];
+                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              
+                          }];
+                }
+                break;
+            }
+            case 4: {
+                [tableView beginUpdates];
+                [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
+                                 withRowAnimation:UITableViewRowAnimationFade];
+                [tableView endUpdates];
+                
+                _calendarCell =  (CheckboxTableCell*)[tableView cellForRowAtIndexPath:indexPath];
+                
+            }
+                break;
+                
+            default: break;
         }
+    }
+}
+#pragma mark -- NSString<---->NSDate
+-(NSDate*)getDateWithString:(NSString*)dateStr
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date=[formatter dateFromString:dateStr];
+    return date;
+}
+-(NSString*)getDateStringWithDate:(NSDate*)date
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *destDateString = [dateFormatter stringFromDate:date];
+    return destDateString;
+}
+#pragma mark -- DatePickerViewDelegate
+-(void)didSelectDate:(NSDate *)date
+{
+    _calendarCell.descriptionLabel.text = [self getDateStringWithDate:date];
+    
+    [self removeCalendarViewCell];
+}
+-(void)clearSelectedDate
+{
+    _calendarCell.descriptionLabel.text = @"";
+
+    [self removeCalendarViewCell];
+}
+-(void)removeCalendarView
+{
+    [self removeCalendarViewCell];
+}
+#pragma mark -- 移除日历cell
+-(void)removeCalendarViewCell
+{
+    if (_selectedRow > 0) {
+        NSInteger preRow = _selectedRow;
+        _selectedRow = -2;
+        
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:preRow + 1 inSection:0]]
+                         withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+        
+        return;
+    } else {
+        _selectedRow = [self.tableView indexPathForCell:_calendarCell].row;
     }
 }
 @end
