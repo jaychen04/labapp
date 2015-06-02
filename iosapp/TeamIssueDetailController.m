@@ -213,6 +213,11 @@
                     cell.titleLabel.text =  _issueTitle;
                     cell.titleLabel.font =[UIFont systemFontOfSize:17];
                     cell.titleLabel.textColor = [UIColor blackColor];
+                    
+                    if ([_issueTitle length] > 0) {
+                        BOOL isFinish = [_issueState isEqualToString:@"accepted"] || [_issueState isEqualToString:@"closed"];
+                        [self editTextAtLabel:cell.titleLabel isStateClosed:isFinish];
+                    }
                 }else {
                     cell.titleLabel.font =[UIFont systemFontOfSize:15];
                     cell.titleLabel.textColor = [UIColor grayColor];
@@ -337,7 +342,7 @@
                       [changedChildIssue removeObjectForKey:@"childIssueState"];
                       [changedChildIssue setObject:newState forKey:@"childIssueState"];
                   }
-                  NSLog(@"newState:%@",newState);
+
                   //画中线
                   BOOL isStateClosed = [newState isEqualToString:@"closed"];
                   [self editTextAtLabel:selectedCell.descriptionLabel isStateClosed:isStateClosed];
@@ -381,9 +386,10 @@
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:label.text];
     if (isStateClosed) {    //添加中线
         [content addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, [label.text length])];
+        label.textColor = [UIColor grayColor];
     }else {     //去掉中线
         [content addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleNone] range:NSMakeRange(0, [label.text length])];
-        
+        label.textColor = [UIColor blackColor];
     }
     label.attributedText = content;
 }
@@ -483,7 +489,12 @@
                  //更改标题cell状态
                  NSIndexPath *titleCellPath = [NSIndexPath indexPathForItem:0 inSection:0];
                  TeamIssueDetailCell *issueTitleCell = (TeamIssueDetailCell*)[self.tableView cellForRowAtIndexPath:titleCellPath];
-                 issueTitleCell.iconLabel.text = [self getIconStringWithState:newState];
+                 if (issueTitleCell) {
+                     issueTitleCell.iconLabel.text = [self getIconStringWithState:newState];
+                     BOOL isFinish = [newState isEqualToString:@"accepted"] || [newState isEqualToString:@"closed"];
+                     [self editTextAtLabel:issueTitleCell.titleLabel isStateClosed:isFinish];
+                     
+                 }
                  //更改阶段cell状态
                  //5:在原始数组_originDatas中，阶段cell与标题cell中间隔5个元素。
                  NSInteger itemIndex = _isOpeningSubIssue ? 5+_subIssueInfos.count : 5;

@@ -18,6 +18,8 @@
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
 
+#import "NewTeamIssueViewController.h"
+
 static CGFloat teamCellHeight = 35;
 static CGFloat pickerWidth = 140;
 static NSString * kTeamCellID = @"TeamCell";
@@ -198,6 +200,7 @@ static NSString * kTeamCellID = @"TeamCell";
 }
 
 
+
 #pragma mark - change title
 
 - (void)updateTitle
@@ -218,6 +221,7 @@ static NSString * kTeamCellID = @"TeamCell";
     [_dropdownButton setAttributedTitle:attributedTitle forState:UIControlStateNormal];
     [_dropdownButton sizeToFit];
 }
+
 
 #pragma mark - create
 

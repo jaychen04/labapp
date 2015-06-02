@@ -17,6 +17,8 @@
 #import "TeamIssueList.h"
 #import "TableViewCell.h"
 
+#import "TeamCalendarView.h"
+
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
@@ -24,7 +26,7 @@
 
 static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 
-@interface NewTeamIssueViewController ()
+@interface NewTeamIssueViewController ()<DatePickViewDelegate>
 
 @property (nonatomic, strong) UITextField *titleTextField;
 @property (nonatomic, assign) NSInteger selectedRow;
@@ -49,6 +51,8 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 @property (nonatomic, strong) TeamMember *member;
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
+
+@property (nonatomic,strong) CheckboxTableCell *calendarCell;
 
 @end
 
@@ -122,6 +126,8 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         if (_selectedRow == 1) {return _projects.count > 4? 200 : (_projects.count + 1) * 40;}
         if (_selectedRow == 2) {return _issueGroups.count > 4? 200 : _issueGroups.count * 40;}
         if (_selectedRow == 3) {return _members.count > 4? 200 : (_members.count + 1) * 40;}
+        if (_selectedRow == 4) {return 256;}
+        
         return 200;
     } else {
         return 60;
@@ -190,7 +196,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                 };
             }
             return _issueGroupTableViewCell;
-        } else {
+        } else if (_selectedRow == 3) {
             if (!_memberTableViewCell.dataSourceSet) {
                 [_memberTableViewCell setContentWithDataSource:_members ofType:DataSourceTypeMember];
                 
@@ -207,6 +213,13 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                 };
             }
             return _memberTableViewCell;
+        } else {
+            UITableViewCell *cell = [UITableViewCell new];
+            TeamCalendarView *calendarView = [[TeamCalendarView alloc] initWithSelectedDate:[self getDateWithString:_calendarCell.descriptionLabel.text]];
+            calendarView.delegate = self;
+            [cell.contentView addSubview:calendarView];
+            
+            return cell;
         }
     } else {
         return @[_projectCell, _issueGroupCell, _memberCell, _deadlineCell][row-1];
@@ -218,7 +231,8 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [_titleTextField resignFirstResponder];
     
-    if (indexPath.row != 0) {        
+    
+    if (indexPath.row != 0) {
         if (_selectedRow > 0) {
             [self collapseExpandedCell];
             return;
@@ -332,13 +346,23 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                               [_HUD hide:YES];
                           }];
                 }
+                break;
+            }
+            case 4: {
+                [tableView beginUpdates];
+                [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
+                                 withRowAnimation:UITableViewRowAnimationFade];
+                [tableView endUpdates];
+                
+                _calendarCell =  (CheckboxTableCell*)[tableView cellForRowAtIndexPath:indexPath];
+                
             }
                 break;
+                
             default: break;
         }
     }
 }
-
 
 - (void)collapseExpandedCell
 {
@@ -349,11 +373,69 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     
     [self.tableView beginUpdates];
     [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:preRow + 1 inSection:0]]
-                     withRowAnimation:UITableViewRowAnimationFade];
+                          withRowAnimation:UITableViewRowAnimationFade];
     [self.tableView endUpdates];
 }
 
 
+#pragma mark -- NSString<---->NSDate
 
+- (NSDate*)getDateWithString:(NSString*)dateStr
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate *date=[formatter dateFromString:dateStr];
+    return date;
+}
+- (NSString*)getDateStringWithDate:(NSDate*)date
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *destDateString = [dateFormatter stringFromDate:date];
+    return destDateString;
+}
+
+
+#pragma mark -- DatePickerViewDelegate
+
+- (void)didSelectDate:(NSDate *)date
+{
+    _calendarCell.descriptionLabel.text = [self getDateStringWithDate:date];
+    
+    [self removeCalendarViewCell];
+}
+
+
+- (void)clearSelectedDate
+{
+    _calendarCell.descriptionLabel.text = @"";
+    
+    [self removeCalendarViewCell];
+}
+
+-(void)removeCalendarView
+{
+    [self removeCalendarViewCell];
+}
+
+
+#pragma mark -- 移除日历cell
+
+- (void)removeCalendarViewCell
+{
+    if (_selectedRow > 0) {
+        NSInteger preRow = _selectedRow;
+        _selectedRow = -2;
+        
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:preRow + 1 inSection:0]]
+                         withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
+        
+        return;
+    } else {
+        _selectedRow = [self.tableView indexPathForCell:_calendarCell].row;
+    }
+}
 
 @end
