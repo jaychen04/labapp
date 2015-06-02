@@ -17,6 +17,7 @@
 #import "TeamIssueList.h"
 #import "TableViewCell.h"
 
+#import "NSString+FontAwesome.h"
 #import "TeamCalendarView.h"
 
 #import <AFNetworking.h>
@@ -69,17 +70,62 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor themeColor];
     
-    self.tableView.tableFooterView = [UIView new];
+
     self.tableView.bounces = NO;
     [self.tableView registerClass:[TeamIssueDetailCell class] forCellReuseIdentifier:kteamIssueDetailCellNomal];
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
+//是否同步到gitHub或gitOsc
+-(void)selectSyncOption:(UITapGestureRecognizer*)tap
+{
+    UIView *syncView = tap.view;
+    UILabel *flagLabel = (UILabel*)[syncView viewWithTag:108];
+    flagLabel.text = [flagLabel.text isEqualToString:@"\uf046"]?@"\uf096":@"\uf046";
+}
+//footerView
+-(UIView*)setupSyncView
+{
+    UIView *syncView = [[UIView alloc]initWithFrame:CGRectMake(0, 30, CGRectGetWidth([[UIScreen mainScreen] bounds]), 60)];
+    [syncView setBackgroundColor:[UIColor themeColor]];
+    
+    UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(15, 0, CGRectGetWidth(syncView.frame), .5)];
+    topLineView.backgroundColor = [UIColor lightGrayColor];
+    [syncView addSubview:topLineView];
+    
+    syncView.userInteractionEnabled = YES;
+    [syncView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectSyncOption:)]];
+    
+    UILabel *syncTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 150, CGRectGetHeight(syncView.frame))];
+    syncTitleLabel.textColor = [UIColor colorWithHex:0x555555];
+    syncTitleLabel.font = [UIFont boldSystemFontOfSize:15];
+    syncTitleLabel.text = @"同步到GitHub";
+    [syncView addSubview:syncTitleLabel];
+    
+    UILabel *syncFlagLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetWidth([[UIScreen mainScreen] bounds])-35, 0, 25, 25)];
+    syncFlagLabel.center = CGPointMake(syncFlagLabel.center.x, syncTitleLabel.center.y);
+    syncFlagLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:16];
+    syncFlagLabel.textColor = [UIColor grayColor];
+    syncFlagLabel.tag = 108;
+    syncFlagLabel.text = @"\uf096";
+    [syncView addSubview:syncFlagLabel];
+    
+    UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(15, CGRectGetHeight(syncView.frame)-.5, CGRectGetWidth(syncView.frame), .5)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [syncView addSubview:bottomLineView];
+    
+    return syncView;
+}
 #pragma mark - Table view data source
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (5<=indexPath.row || indexPath.row<=6) {
+        self.tableView.tableFooterView = [self setupSyncView];
+    }
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _selectedRow < 0? 5 : 6;
@@ -147,7 +193,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [_titleTextField resignFirstResponder];
-    
     
     if (indexPath.row != 0) {
         if (_selectedRow > 0) {
