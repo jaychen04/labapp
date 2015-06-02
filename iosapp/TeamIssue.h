@@ -38,7 +38,9 @@
 @property (nonatomic, assign) int childIssuesCount;
 @property (nonatomic, assign) int closedChildIssuesCount;
 @property (nonatomic, assign) int attachmentsCount;
-@property (nonatomic, assign) int relationIssueCount;
+@property (nonatomic, assign) int relatedIssuesCount;
+
+@property (nonatomic, assign) BOOL hasExtraInfo;
 
 
 @property (nonatomic,strong)NSMutableArray *childIssues;       //任务详情的子任务

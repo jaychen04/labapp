@@ -16,7 +16,7 @@ static NSString * const kReuseID = @"reuseID";
 
 @interface CheckboxTableCell ()
 
-
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 
@@ -45,7 +45,7 @@ static NSString * const kReuseID = @"reuseID";
         
         _titleLabel.attributedText = attributedTitle;
         
-        _descriptionLabel.text = @[@"不指定项目", @"未指定分组", @"未指派", @""][type];
+        _descriptionLabel.text = @[@"不指定项目", @"未指定列表", @"未指派", @""][type];
     }
     
     return self;

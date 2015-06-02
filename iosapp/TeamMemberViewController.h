@@ -13,6 +13,4 @@
 - (instancetype)initWithTeamID:(int)teamID;
 - (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID andSource:(NSString *)source;
 
-- (void)switchToTeam:(int)teamID;
-
 @end

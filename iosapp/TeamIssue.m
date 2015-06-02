@@ -51,9 +51,15 @@
     _childIssuesCount = [[[childIssuesXML firstChildWithTag:@"totalCount"] numberValue] intValue];
     _closedChildIssuesCount = [[[childIssuesXML firstChildWithTag:@"closedCount"] numberValue] intValue];
     
+    _attachmentsCount = [[xml firstChildWithTag:@"attachments"] firstChildWithTag:@"totalCount"].numberValue.intValue;
+    _relatedIssuesCount = [[xml firstChildWithTag:@"relations"] firstChildWithTag:@"totalCount"].numberValue.intValue;
+    
+    _hasExtraInfo = _childIssuesCount || _deadline.length || _attachmentsCount || _relatedIssuesCount;
+    
     _author = [[TeamMember alloc] initWithXML:[xml firstChildWithTag:@"author"]];
     _user = [[TeamMember alloc] initWithXML:[xml firstChildWithTag:@"toUser"]];
 }
+
 - (instancetype)initWithDetailIssueXML:(ONOXMLElement *)xml
 {
     self = [super init];
@@ -89,8 +95,6 @@
             }
         }
     }
-    _attachmentsCount = [[xml firstChildWithTag:@"attachments"] firstChildWithTag:@"totalCount"].numberValue.intValue;
-    _relationIssueCount = [[xml firstChildWithTag:@"relations"] firstChildWithTag:@"totalCount"].numberValue.intValue;
     
     [self setUpPropertiesWithXML:xml];
     

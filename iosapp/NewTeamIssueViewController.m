@@ -23,14 +23,11 @@
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
+#import <MBProgressHUD.h>
 
 static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 
 @interface NewTeamIssueViewController ()<DatePickViewDelegate>
-
-@property (nonatomic, strong) NSArray *iconArray;
-@property (nonatomic, strong) NSArray *titlteArray;
-@property (nonatomic, strong) NSArray *valueArray;
 
 @property (nonatomic, strong) UITextField *titleTextField;
 @property (nonatomic, assign) NSInteger selectedRow;
@@ -41,7 +38,23 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 @property (nonatomic, strong) TeamProject *selectedProject;
 @property (nonatomic, strong) NSMutableArray *issueGroups;
 
+@property (nonatomic, strong) CheckboxTableCell *projectCell;
+@property (nonatomic, strong) CheckboxTableCell *issueGroupCell;
+@property (nonatomic, strong) CheckboxTableCell *memberCell;
+@property (nonatomic, strong) CheckboxTableCell *deadlineCell;
+
+@property (nonatomic, strong) TableViewCell *projectTableViewCell;
+@property (nonatomic, strong) TableViewCell *issueGroupTableViewCell;
+@property (nonatomic, strong) TableViewCell *memberTableViewCell;
+
+@property (nonatomic, strong) TeamProject *project;
+@property (nonatomic, strong) TeamIssueList *issueGroup;
+@property (nonatomic, strong) TeamMember *member;
+
+@property (nonatomic, strong) MBProgressHUD *HUD;
+
 @property (nonatomic,strong) CheckboxTableCell *calendarCell;
+
 @end
 
 @implementation NewTeamIssueViewController
@@ -57,6 +70,15 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         
         _manager = [AFHTTPRequestOperationManager manager];
         _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        
+        _projectCell = [[CheckboxTableCell alloc] initWithCellType:CellTypeProject];
+        _issueGroupCell = [[CheckboxTableCell alloc] initWithCellType:CellTypeIssue];
+        _memberCell = [[CheckboxTableCell alloc] initWithCellType:CellTypeMember];
+        _deadlineCell = [[CheckboxTableCell alloc] initWithCellType:CellTypeTime];
+        
+        _projectTableViewCell = [TableViewCell new];
+        _issueGroupTableViewCell = [TableViewCell new];
+        _memberTableViewCell = [TableViewCell new];
     }
     
     return self;
@@ -73,11 +95,18 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 
     self.tableView.bounces = NO;
     [self.tableView registerClass:[TeamIssueDetailCell class] forCellReuseIdentifier:kteamIssueDetailCellNomal];
+    
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    _HUD = [[MBProgressHUD alloc] initWithWindow:window];
+    _HUD.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    _HUD.userInteractionEnabled = NO;
+    [window addSubview:_HUD];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
 //是否同步到gitHub或gitOsc
 -(void)selectSyncOption:(UITapGestureRecognizer*)tap
 {
@@ -118,6 +147,16 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     
     return syncView;
 }
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    [_HUD hide:YES];
+}
+
+
 #pragma mark - Table view data source
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -134,12 +173,12 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == _selectedRow + 1) {
-        if (_selectedRow == 1) {return _projects.count > 4? 200 : _projects.count * 40;}
+        if (_selectedRow == 1) {return _projects.count > 4? 200 : (_projects.count + 1) * 40;}
         if (_selectedRow == 2) {return _issueGroups.count > 4? 200 : _issueGroups.count * 40;}
-        if (_selectedRow == 3) {return _members.count > 4? 200 : _members.count * 40;}
+        if (_selectedRow == 3) {return _members.count > 4? 200 : (_members.count + 1) * 40;}
         if (_selectedRow == 4) {return 256;}
+        
         return 200;
-
     } else {
         return 60;
     }
@@ -166,26 +205,74 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         
         return cell;
     } else if (row == _selectedRow + 1) {
-        TableViewCell *cell = [TableViewCell new];
+        __weak typeof(self) weakSelf = self;
         
         if (_selectedRow == 1) {
-            [cell setContentWithDataSource:_projects ofType:DataSourceTypeProject];
+            if (!_projectTableViewCell.dataSourceSet) {
+                [_projectTableViewCell setContentWithDataSource:_projects ofType:DataSourceTypeProject];
+                
+                _projectTableViewCell.selectRow = ^ (NSInteger row) {
+                    weakSelf.projectCell.descriptionLabel.text = weakSelf.projectTableViewCell.title;
+                    
+                    if (row == 0) {
+                        weakSelf.project = nil;
+                    } else {
+                        TeamProject *project = weakSelf.projects[row-1];
+                        if (project.projectID != weakSelf.project.projectID) {
+                            weakSelf.project = project;
+                            weakSelf.issueGroup = nil;
+                            weakSelf.member = nil;
+                            [weakSelf.issueGroups removeAllObjects];
+                            [weakSelf.members removeAllObjects];
+                            
+                            weakSelf.issueGroupCell.descriptionLabel.text = @"未指定列表";
+                            weakSelf.memberCell.descriptionLabel.text = @"未指派";
+                        }
+                    }
+                    
+                    [weakSelf collapseExpandedCell];
+                };
+            }
+            return _projectTableViewCell;
         } else if (_selectedRow == 2) {
-            [cell setContentWithDataSource:_issueGroups ofType:DataSourceTypeIssueGroup];
+            if (!_issueGroupTableViewCell.dataSourceSet) {
+                [_issueGroupTableViewCell setContentWithDataSource:_issueGroups ofType:DataSourceTypeIssueGroup];
+                
+                _issueGroupTableViewCell.selectRow = ^ (NSInteger row) {
+                    weakSelf.issueGroupCell.descriptionLabel.text = weakSelf.issueGroupTableViewCell.title;
+                    weakSelf.issueGroup = weakSelf.issueGroups[row];
+                    
+                    [weakSelf collapseExpandedCell];
+                };
+            }
+            return _issueGroupTableViewCell;
         } else if (_selectedRow == 3) {
-            [cell setContentWithDataSource:_members ofType:DataSourceTypeMember];
-        }else if (_selectedRow == 4) {
+            if (!_memberTableViewCell.dataSourceSet) {
+                [_memberTableViewCell setContentWithDataSource:_members ofType:DataSourceTypeMember];
+                
+                _memberTableViewCell.selectRow = ^ (NSInteger row) {
+                    weakSelf.memberCell.descriptionLabel.text = weakSelf.memberTableViewCell.title;
+                    
+                    if (row == 0) {
+                        weakSelf.member = nil;
+                    } else {
+                        weakSelf.member = weakSelf.members[row-1];
+                    }
+                    
+                    [weakSelf collapseExpandedCell];
+                };
+            }
+            return _memberTableViewCell;
+        } else {
+            UITableViewCell *cell = [UITableViewCell new];
             TeamCalendarView *calendarView = [[TeamCalendarView alloc] initWithSelectedDate:[self getDateWithString:_calendarCell.descriptionLabel.text]];
             calendarView.delegate = self;
             [cell.contentView addSubview:calendarView];
+            
             return cell;
         }
-        
-        return cell;
     } else {
-        CheckboxTableCell *cell = [[CheckboxTableCell alloc] initWithCellType:row - 1];
-        
-        return cell;
+        return @[_projectCell, _issueGroupCell, _memberCell, _deadlineCell][row-1];
     }
 }
 
@@ -196,14 +283,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     
     if (indexPath.row != 0) {
         if (_selectedRow > 0) {
-            NSInteger preRow = _selectedRow;
-            _selectedRow = -2;
-            
-            [tableView beginUpdates];
-            [tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:preRow + 1 inSection:0]]
-                             withRowAnimation:UITableViewRowAnimationFade];
-            [tableView endUpdates];
-            
+            [self collapseExpandedCell];
             return;
         } else {
             _selectedRow = indexPath.row;
@@ -217,6 +297,8 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                      withRowAnimation:UITableViewRowAnimationFade];
                     [tableView endUpdates];
                 } else {
+                    [_HUD show:YES];
+                    
                     [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_LIST]
                        parameters:@{@"teamid": @([Config teamID])}
                           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
@@ -231,8 +313,10 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                               [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
                                                withRowAnimation:UITableViewRowAnimationFade];
                               [tableView endUpdates];
-                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               
+                              [_HUD hide:YES];
+                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              [_HUD hide:YES];
                           }];
                 }
             }
@@ -244,11 +328,14 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                      withRowAnimation:UITableViewRowAnimationFade];
                     [tableView endUpdates];
                 } else {
+                    [_HUD show:YES];
+                    
                     [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_CATALOG_LIST]
                        parameters:@{
                                     @"uid": @([Config getOwnID]),
                                     @"teamid": @([Config teamID]),
-                                    @"projectid": @(0)
+                                    @"projectid": @(_project.gitID),
+                                    @"source": _project.source ?: @"Team@OSC"
                                     }
                           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
                               NSArray *issueGroupsXML = [[responseObject.rootElement firstChildWithTag:@"catalogs"] childrenWithTag:@"catalog"];
@@ -258,12 +345,16 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                   [_issueGroups addObject:issueGroup];
                               }
                               
+                              _issueGroupTableViewCell.dataSourceSet = NO;
+                              
                               [tableView beginUpdates];
                               [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
                                                withRowAnimation:UITableViewRowAnimationFade];
                               [tableView endUpdates];
-                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               
+                              [_HUD hide:YES];
+                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              [_HUD hide:YES];
                           }];
                 }
             }
@@ -275,10 +366,14 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                      withRowAnimation:UITableViewRowAnimationFade];
                     [tableView endUpdates];
                 } else {
+                    [_HUD show:YES];
+                    
                     [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_MEMBER_LIST]
                        parameters:@{
                                     @"uid": @([Config getOwnID]),
-                                    @"teamid": @([Config teamID])
+                                    @"teamid": @([Config teamID]),
+                                    @"projectid": @(_project.gitID),
+                                    @"source": _project.source ?: @"Team@OSC"
                                     }
                           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
                               NSArray *membersXML = [[responseObject.rootElement firstChildWithTag:@"members"] childrenWithTag:@"member"];
@@ -288,12 +383,16 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                   [_members addObject:teamMember];
                               }
                               
+                              _memberTableViewCell.dataSourceSet = NO;
+                              
                               [tableView beginUpdates];
                               [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row + 1 inSection:0]]
                                                withRowAnimation:UITableViewRowAnimationFade];
                               [tableView endUpdates];
-                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               
+                              [_HUD hide:YES];
+                          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                              [_HUD hide:YES];
                           }];
                 }
                 break;
@@ -313,40 +412,65 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         }
     }
 }
+
+- (void)collapseExpandedCell
+{
+    if (_selectedRow < 0) {return;}
+    
+    NSInteger preRow = _selectedRow;
+    _selectedRow = -2;
+    
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:preRow + 1 inSection:0]]
+                          withRowAnimation:UITableViewRowAnimationFade];
+    [self.tableView endUpdates];
+}
+
+
 #pragma mark -- NSString<---->NSDate
--(NSDate*)getDateWithString:(NSString*)dateStr
+
+- (NSDate*)getDateWithString:(NSString*)dateStr
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSDate *date=[formatter dateFromString:dateStr];
     return date;
 }
--(NSString*)getDateStringWithDate:(NSDate*)date
+- (NSString*)getDateStringWithDate:(NSDate*)date
 {
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     NSString *destDateString = [dateFormatter stringFromDate:date];
     return destDateString;
 }
+
+
 #pragma mark -- DatePickerViewDelegate
--(void)didSelectDate:(NSDate *)date
+
+- (void)didSelectDate:(NSDate *)date
 {
     _calendarCell.descriptionLabel.text = [self getDateStringWithDate:date];
     
     [self removeCalendarViewCell];
 }
--(void)clearSelectedDate
+
+
+- (void)clearSelectedDate
 {
     _calendarCell.descriptionLabel.text = @"";
-
+    
     [self removeCalendarViewCell];
 }
+
 -(void)removeCalendarView
 {
     [self removeCalendarViewCell];
 }
+
+
 #pragma mark -- 移除日历cell
--(void)removeCalendarViewCell
+
+- (void)removeCalendarViewCell
 {
     if (_selectedRow > 0) {
         NSInteger preRow = _selectedRow;
@@ -362,4 +486,5 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         _selectedRow = [self.tableView indexPathForCell:_calendarCell].row;
     }
 }
+
 @end

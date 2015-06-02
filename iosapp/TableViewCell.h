@@ -17,6 +17,12 @@ typedef NS_ENUM(NSInteger, DataSourceType)
 
 @interface TableViewCell : UITableViewCell
 
+@property (nonatomic, assign) int projectID;
+@property (nonatomic, assign) BOOL dataSourceSet;
+@property (nonatomic, assign) NSInteger selectedRow;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) void (^selectRow)(NSInteger);
+
 - (void)setContentWithDataSource:(NSArray *)dataSource ofType:(DataSourceType)type;
 
 

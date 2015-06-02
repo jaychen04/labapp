@@ -78,7 +78,7 @@
              NSString *deadLineTime = _detailIssue.deadline ?:@"未指定截止日期";
              NSString *state = [self getChineseNameWithState:_issueState];
              NSString *attachmentsCount = _detailIssue.attachmentsCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.attachmentsCount] : @"暂无附件";
-             NSString *relationIssueCount = _detailIssue.relationIssueCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.relationIssueCount] : @"暂无关联";
+             NSString *relationIssueCount = _detailIssue.relatedIssuesCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.relatedIssuesCount] : @"暂无关联";
              NSString *allCollaborator = [self getCollaboratorsStringWithcollabortorsArray:_detailIssue.collaborators];
              
              _descriptions = [NSMutableArray arrayWithArray:@[@"",subIssueCount, toUser, deadLineTime, allCollaborator, state, @"", attachmentsCount, relationIssueCount]];

@@ -111,6 +111,8 @@ static NSString * const kIssueCellID = @"IssueCell";
     
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
     
+    if (issue.hasExtraInfo) {height += 22;}
+    
     return height + 60;
 }
 
@@ -131,18 +133,6 @@ static NSString * const kIssueCellID = @"IssueCell";
     TeamIssueDetailController *tidc = [[TeamIssueDetailController alloc]initWithIssueId:issue.issueID];
     tidc.projectName = issue.project.projectName;
     [self.navigationController pushViewController:tidc animated:YES];
-}
-
-
-#pragma mark - 切换团队
-
-- (void)switchToTeam:(int)teamID
-{
-    self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?teamid=%d&project=-1&pageIndex=%lu", TEAM_PREFIX, TEAM_ISSUE_LIST, teamID, (unsigned long)page];
-    };
-    
-    [self refresh];
 }
 
 

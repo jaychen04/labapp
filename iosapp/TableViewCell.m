@@ -77,6 +77,7 @@ static NSString * const kReuseID = @"reuseID";
 {
     _dataSource = dataSource;
     _type = type;
+    _dataSourceSet = YES;
     
     if (_dataSource.count < 5) {
         _tableView.scrollEnabled = NO;
@@ -93,7 +94,13 @@ static NSString * const kReuseID = @"reuseID";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _dataSource? _dataSource.count : 0;
+    if (!_dataSource) {
+        return 0;
+    } else if (_type == DataSourceTypeIssueGroup) {
+        return _dataSource.count;
+    } else {
+        return _dataSource.count + 1;
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,10 +115,14 @@ static NSString * const kReuseID = @"reuseID";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kReuseID forIndexPath:indexPath];
     cell.backgroundColor = [UIColor themeColor];
     
-
+    if (indexPath.row == 0 && _type != DataSourceTypeIssueGroup) {
+        cell.textLabel.text = @[@"不指定项目", @"未指定列表", @"未指派"][_type];
+        return cell;
+    }
+    
     switch (_type) {
         case DataSourceTypeProject: {
-            TeamProject *project = _dataSource[indexPath.row];
+            TeamProject *project = _dataSource[indexPath.row - 1];
             cell.textLabel.text = project.projectName;
             break;
         }
@@ -121,7 +132,7 @@ static NSString * const kReuseID = @"reuseID";
             break;
         }
         case DataSourceTypeMember: {
-            TeamMember *member = _dataSource[indexPath.row];
+            TeamMember *member = _dataSource[indexPath.row - 1];
             cell.textLabel.text = member.name;
             break;
         }
@@ -135,7 +146,10 @@ static NSString * const kReuseID = @"reuseID";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    _selectedRow = indexPath.row;
+    _title = [tableView cellForRowAtIndexPath:indexPath].textLabel.text;
     
+    if (_selectRow) {_selectRow(indexPath.row);}
 }
 
 
