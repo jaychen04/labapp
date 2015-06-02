@@ -43,6 +43,11 @@
         _weeklyReportHVC.view.frame = CGRectMake(0, barHeight, self.view.bounds.size.width, self.view.bounds.size.height - barHeight - 64);
         _weeklyReportHVC.titleBar = _titleBar;
         
+        __weak typeof(self) weakSelf = self;
+        _weeklyReportHVC.changeIndex = ^ (NSUInteger index) {
+            WeeklyReportTableViewController *weeklyReportVC = weakSelf.weeklyReportHVC.controllers[index];
+            [weakSelf.titleBar updateWeek:weeklyReportVC.week];
+        };
         
         [self addChildViewController:_weeklyReportHVC];
         [self.view addSubview:_weeklyReportHVC.view];
