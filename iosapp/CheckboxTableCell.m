@@ -80,6 +80,14 @@ static NSString * const kReuseID = @"reuseID";
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil views:views]];
 }
-
-
+//显示最后cell的分割线(在添加footerView后，发现最后cell的最后分割不显示，通过这个设置可以让它显示)
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    for (UIView *subview in self.contentView.superview.subviews) {
+        if ([NSStringFromClass(subview.class) hasSuffix:@"SeparatorView"]) {
+            subview.hidden = NO;
+        }
+    }
+}
 @end
