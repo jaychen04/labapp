@@ -50,4 +50,6 @@
 #define TEAM_ISSUE_UPDATE_CHILD_ISSUE   @"team_issue_update_child_issue"    //编辑子任务
 #define TEAM_ISSUE_REPLY                @"team_issue_reply"                 //评论任务
 
+#define TEAM_TWEET_PUB                  @"team_tweet_pub"
+
 #endif

@@ -18,6 +18,7 @@
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
 
+#import "TweetEditingVC.h"
 #import "NewTeamIssueViewController.h"
 
 static CGFloat teamCellHeight = 35;
@@ -104,7 +105,7 @@ static NSString * kTeamCellID = @"TeamCell";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"team-create"]
                                                                               style:UIBarButtonItemStylePlain
-                                                                             target:self action:@selector(createIssue)];
+                                                                             target:self action:@selector(editTweet)];
 }
 
 
@@ -228,6 +229,11 @@ static NSString * kTeamCellID = @"TeamCell";
 - (void)createIssue
 {
     [self.navigationController pushViewController:[NewTeamIssueViewController new] animated:YES];
+}
+
+- (void)editTweet
+{
+    [self.navigationController pushViewController:[[TweetEditingVC alloc] initWithTeamID:[Config teamID]] animated:YES];
 }
 
 
