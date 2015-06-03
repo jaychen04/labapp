@@ -8,6 +8,7 @@
 
 #import "TeamMemberDetailViewController.h"
 #import "TeamAPI.h"
+#import "Config.h"
 #import "TeamMember.h"
 #import "TeamActivity.h"
 #import "MemberDetailCell.h"
@@ -31,14 +32,14 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 //pageSize 每页条数
 //type （是否需要区分动态的类别，如：所有/动弹/git/分享/讨论/周报，"all","tweet","git","share","discuss","report"）
 //uid 要查询动态的用户id
-- (instancetype)initWithTeamId:(int)teamId uId:(int)uId
+- (instancetype)initWithUId:(int)uId
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%d&uid=%d&pageIndex=%lu&pageSize=20&type=all", TEAM_PREFIX, TEAM_ACTIVE_LIST, teamId, uId,(unsigned long)page];
+            NSString *url = [NSString stringWithFormat:@"%@%@?teamid=%d&uid=%d&pageIndex=%lu&pageSize=20&type=all", TEAM_PREFIX, TEAM_ACTIVE_LIST, [Config teamID], uId,(unsigned long)page];
             return url;
         };
-        self.teamId = teamId;
+        self.teamId = [Config teamID];
         self.uId = uId;
         self.objClass = [TeamActivity class];
         
@@ -135,7 +136,7 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
     
     if (indexPath.row != 0) {
         if (indexPath.row < self.objects.count) {
-            TeamActivity *activity = self.objects[indexPath.row];
+            TeamActivity *activity = self.objects[indexPath.row - 1];
             TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamId];
             [self.navigationController pushViewController:detailVC animated:YES];
         } else {
