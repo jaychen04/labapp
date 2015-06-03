@@ -108,6 +108,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"任务详情";
+    
     [self setMainCellData];
     
     //registerCell

@@ -54,9 +54,8 @@ static NSString *kProjectCellID = @"ProjectCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"团队项目";
     [self.tableView registerClass:[ProjectCell class] forCellReuseIdentifier:kProjectCellID];
-    
-    
 }
 
 #pragma mark - tableView things
