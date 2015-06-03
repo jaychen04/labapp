@@ -8,6 +8,7 @@
 
 #import "TeamCenter.h"
 #import "Config.h"
+#import "TeamAPI.h"
 #import "TeamTeam.h"
 #import "TeamHomePage.h"
 #import "TeamIssueController.h"
@@ -21,79 +22,54 @@
 #import "TweetEditingVC.h"
 #import "NewTeamIssueViewController.h"
 
+#import <MBProgressHUD.h>
+
 static CGFloat teamCellHeight = 35;
 static CGFloat pickerWidth = 140;
 static NSString * kTeamCellID = @"TeamCell";
 
 @interface TeamCenter () <UITableViewDataSource, UITableViewDelegate>
 
-@property (nonatomic, strong) NSArray *teams;
+@property (nonatomic, strong) NSMutableArray *teams;
 @property (nonatomic, strong) TeamTeam *currentTeam;
 @property (nonatomic, strong) UITableView *teamPicker;
-@property (nonatomic, assign) int currentTeamID;
 
 @property (nonatomic, strong) UIButton *dropdownButton;
 @property (nonatomic, strong) UIView *clearView;
 
 @property (nonatomic, assign) BOOL arrowUp;
 
+@property (nonatomic, strong) MBProgressHUD *HUD;
+
 @end
 
 @implementation TeamCenter
 
-- (instancetype)initWithTeams:(NSArray *)teams
+- (instancetype)init
 {
-    TeamTeam *team = teams[0];
-    [Config setTeamID:team.teamID];
+    int teamID = [Config teamID];
+    NSArray *controllers;
+    if (teamID) {
+        controllers = @[
+                        [[TeamHomePage alloc] initWithTeamID:teamID],
+                        [[TeamIssueController alloc] initWithTeamID:teamID],
+                        [[TeamMemberViewController alloc] initWithTeamID:teamID]
+                        ];
+    } else {
+        controllers = @[
+                        [UIViewController new],
+                        [UIViewController new],
+                        [UIViewController new]
+                        ];
+    }
     
     self = [super initWithTitle:@"Team"
                    andSubTitles:@[@"主页", @"任务", @"成员"]
-                 andControllers:@[
-                                  [[TeamHomePage alloc] initWithTeamID:team.teamID],
-                                  [[TeamIssueController alloc] initWithTeamID:team.teamID],
-                                  [[TeamMemberViewController alloc] initWithTeamID:team.teamID]
-                                  ]];
+                 andControllers:controllers];
+    
     
     if (self) {
-        _teams = teams;
-        _currentTeam = _teams[0];
         
-        _dropdownButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        _dropdownButton.titleLabel.textColor = [UIColor whiteColor];
-        [_dropdownButton addTarget:self action:@selector(toggleTeamPicker) forControlEvents:UIControlEventTouchUpInside];
-        _dropdownButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        self.navigationItem.titleView = _dropdownButton;
-        
-        CGSize screenSize = [UIScreen mainScreen].bounds.size;
-        CGFloat pickerHeight = (_teams.count > 5 ? 5 * teamCellHeight : _teams.count * teamCellHeight) + 16;
-        _teamPicker = [[UITableView alloc] initWithFrame:CGRectMake((screenSize.width - pickerWidth)/2, 0, pickerWidth, pickerHeight)];
-        [_teamPicker registerClass:[TeamCell class] forCellReuseIdentifier:kTeamCellID];
-        _teamPicker.dataSource = self;
-        _teamPicker.delegate = self;
-        _teamPicker.alpha = 0;
-        _teamPicker.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_teamPicker setCornerRadius:3];
-        _teamPicker.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-        _teamPicker.backgroundColor = [UIColor colorWithHex:0x555555];
-        [self.view addSubview:_teamPicker];
-        
-        _clearView = [[UIView alloc] initWithFrame:self.view.bounds];
-        _clearView.backgroundColor = [UIColor clearColor];
-        [_clearView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTeamPicker)]];
-        
-        [self updateTitle];
-        
-        __block NSInteger row = 0;
-        int teamID = [Config teamID];
-        [_teams enumerateObjectsUsingBlock:^(TeamTeam *team, NSUInteger idx, BOOL *stop) {
-            if (team.teamID == teamID) {
-                row = idx;
-                *stop = YES;
-            }
-        }];
-        
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-        [_teamPicker selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
     
     return self;
@@ -106,6 +82,76 @@ static NSString * kTeamCellID = @"TeamCell";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"team-create"]
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self action:@selector(editTweet)];
+    
+    _dropdownButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _dropdownButton.titleLabel.textColor = [UIColor whiteColor];
+    [_dropdownButton addTarget:self action:@selector(toggleTeamPicker) forControlEvents:UIControlEventTouchUpInside];
+    _dropdownButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    [_dropdownButton setTitle:@"" forState:UIControlStateNormal];
+    self.navigationItem.titleView = _dropdownButton;
+    
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    CGFloat pickerHeight = (_teams.count > 5 ? 5 * teamCellHeight : _teams.count * teamCellHeight) + 16;
+    _teamPicker = [[UITableView alloc] initWithFrame:CGRectMake((screenSize.width - pickerWidth)/2, 0, pickerWidth, pickerHeight)];
+    [_teamPicker registerClass:[TeamCell class] forCellReuseIdentifier:kTeamCellID];
+    _teamPicker.dataSource = self;
+    _teamPicker.delegate = self;
+    _teamPicker.alpha = 0;
+    _teamPicker.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [_teamPicker setCornerRadius:3];
+    _teamPicker.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    _teamPicker.backgroundColor = [UIColor colorWithHex:0x555555];
+    [self.view addSubview:_teamPicker];
+    
+    _clearView = [[UIView alloc] initWithFrame:self.view.bounds];
+    _clearView.backgroundColor = [UIColor clearColor];
+    [_clearView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTeamPicker)]];
+    
+    if (![Config teamID]) {
+        _HUD = [Utils createHUD];
+        _HUD.userInteractionEnabled = NO;
+        _HUD.labelText = @"正在获取团队信息";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_LIST]
+          parameters:@{@"uid": @([Config getOwnID])}
+             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                 NSArray *teamsXML = [[responseObject.rootElement firstChildWithTag:@"teams"] childrenWithTag:@"team"];
+                 _teams = [NSMutableArray new];
+                 
+                 for (ONOXMLElement *teamXML in teamsXML) {
+                     TeamTeam *team = [[TeamTeam alloc] initWithXML:teamXML];
+                     [_teams addObject:team];
+                 }
+                 
+                 [Config saveTeams:_teams];
+                 
+                 _currentTeam = _teams[0];
+                 [Config setTeamID:_currentTeam.teamID];
+                 
+                 [self updateTeam];
+                 [self updateTitle];
+                 [self updateTeamPicker];
+                 
+                 [_HUD hide:YES];
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"failure");
+             }];
+    } else {
+        _teams = [Config teams];
+        
+        int currentTeamID = [Config teamID];
+        for (TeamTeam *team in _teams) {
+            if (team.teamID == currentTeamID) {
+                _currentTeam = team;
+                break;
+            }
+        }
+        
+        [self updateTitle];
+        [self updateTeamPicker];
+    }
 }
 
 
@@ -127,6 +173,30 @@ static NSString * kTeamCellID = @"TeamCell";
             [self.view bringSubviewToFront:_teamPicker];
         }
     }];
+}
+
+
+- (void)updateTeamPicker
+{
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    CGFloat pickerHeight = (_teams.count > 5 ? 5 * teamCellHeight : _teams.count * teamCellHeight) + 16;
+    _teamPicker.frame = CGRectMake((screenSize.width - pickerWidth)/2, 0, pickerWidth, pickerHeight);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_teamPicker reloadData];
+        
+        __block NSInteger row = 0;
+        int teamID = [Config teamID];
+        [_teams enumerateObjectsUsingBlock:^(TeamTeam *team, NSUInteger idx, BOOL *stop) {
+            if (team.teamID == teamID) {
+                row = idx;
+                *stop = YES;
+            }
+        }];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        [_teamPicker selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+    });
 }
 
 
@@ -169,8 +239,9 @@ static NSString * kTeamCellID = @"TeamCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     TeamCell *cell = [tableView dequeueReusableCellWithIdentifier:kTeamCellID forIndexPath:indexPath];
+    TeamTeam *team = _teams[indexPath.row];
     
-    cell.textLabel.text = ((TeamTeam *)_teams[indexPath.row]).name;
+    cell.textLabel.text = team.name;
     cell.textLabel.font = [UIFont systemFontOfSize:16];
     cell.textLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     //cell.textLabel.textAlignment = NSTextAlignmentCenter;
@@ -181,10 +252,16 @@ static NSString * kTeamCellID = @"TeamCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     _currentTeam = _teams[indexPath.row];
-    
-    [self toggleTeamPicker];
     [Config setTeamID:_currentTeam.teamID];
     
+    [self toggleTeamPicker];
+    
+    [self updateTeam];
+}
+
+
+- (void)updateTeam
+{
     int teamID = [Config teamID];
     
     [self.viewPager.controllers removeAllObjects];
@@ -199,7 +276,6 @@ static NSString * kTeamCellID = @"TeamCell";
     
     [self.viewPager.tableView reloadData];
 }
-
 
 
 #pragma mark - change title

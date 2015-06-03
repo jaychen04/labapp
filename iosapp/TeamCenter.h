@@ -10,6 +10,4 @@
 
 @interface TeamCenter : SwipableViewController
 
-- (instancetype)initWithTeams:(NSArray *)teams;
-
 @end

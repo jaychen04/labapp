@@ -32,5 +32,7 @@
 
 + (int)teamID;
 + (void)setTeamID:(int)teamID;
++ (void)saveTeams:(NSArray *)teams;
++ (NSMutableArray *)teams;
 
 @end
