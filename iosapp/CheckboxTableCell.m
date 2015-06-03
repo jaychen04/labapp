@@ -80,7 +80,7 @@ static NSString * const kReuseID = @"reuseID";
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil views:views]];
 }
-//显示最后cell的分割线(在添加footerView后，发现最后cell的最后分割不显示，通过这个设置可以让它显示)
+//显示最后一个cell的分割线(在添加footerView后，发现最后cell的最后分割不显示，通过这个可以设置让它显示)
 - (void)layoutSubviews {
     [super layoutSubviews];
     
