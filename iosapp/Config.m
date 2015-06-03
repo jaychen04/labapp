@@ -226,4 +226,12 @@ NSString * const kTeamsArray = @"teams";
 }
 
 
++ (void)removeTeamInfo
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults removeObjectForKey:kTeamID];
+    [userDefaults removeObjectForKey:kTeamsArray];
+}
+
 @end

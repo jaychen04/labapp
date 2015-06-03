@@ -120,6 +120,20 @@ static NSString * kTeamCellID = @"TeamCell";
                  NSArray *teamsXML = [[responseObject.rootElement firstChildWithTag:@"teams"] childrenWithTag:@"team"];
                  _teams = [NSMutableArray new];
                  
+                 if (teamsXML.count == 0) {
+                     self.titleBar.hidden = YES;
+                     self.navigationItem.rightBarButtonItem = nil;
+                     self.navigationItem.titleView = nil;
+                     _HUD.color = [UIColor themeColor];
+                     _HUD.mode = MBProgressHUDModeCustomView;
+                     _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page_icon_empty"]];
+                     _HUD.labelText = @" ";
+                     _HUD.detailsLabelColor = [UIColor colorWithHex:0x888888];
+                     _HUD.detailsLabelText = @"你还没有加入任何团队";
+                     
+                     return;
+                 }
+                 
                  for (ONOXMLElement *teamXML in teamsXML) {
                      TeamTeam *team = [[TeamTeam alloc] initWithXML:teamXML];
                      [_teams addObject:team];
@@ -136,7 +150,9 @@ static NSString * kTeamCellID = @"TeamCell";
                  
                  [_HUD hide:YES];
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 NSLog(@"failure");
+                 _HUD.mode = MBProgressHUDModeCustomView;
+                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                 _HUD.detailsLabelText = @"加载团队信息失败";
              }];
     } else {
         _teams = [Config teams];
@@ -151,7 +167,40 @@ static NSString * kTeamCellID = @"TeamCell";
         
         [self updateTitle];
         [self updateTeamPicker];
+        
+        
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_LIST]
+          parameters:@{@"uid": @([Config getOwnID])}
+             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                 NSArray *teamsXML = [[responseObject.rootElement firstChildWithTag:@"teams"] childrenWithTag:@"team"];
+                 [_teams removeAllObjects];
+                 
+                 for (ONOXMLElement *teamXML in teamsXML) {
+                     TeamTeam *team = [[TeamTeam alloc] initWithXML:teamXML];
+                     [_teams addObject:team];
+                 }
+                 
+                 [Config saveTeams:_teams];
+                 
+                 [self updateTeamPicker];
+                 
+                 [_HUD hide:YES];
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 _HUD.mode = MBProgressHUDModeCustomView;
+                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                 _HUD.detailsLabelText = @"加载团队信息失败";
+             }];
     }
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [_HUD hide:NO];
+    [super viewWillDisappear:animated];
 }
 
 
