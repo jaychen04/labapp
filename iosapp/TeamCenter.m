@@ -41,6 +41,7 @@ static NSString * kTeamCellID = @"TeamCell";
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
 
+
 @end
 
 @implementation TeamCenter
@@ -81,7 +82,7 @@ static NSString * kTeamCellID = @"TeamCell";
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"team-create"]
                                                                               style:UIBarButtonItemStylePlain
-                                                                             target:self action:@selector(editTweet)];
+                                                                             target:self action:@selector(createIssue)];
     
     _dropdownButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _dropdownButton.titleLabel.textColor = [UIColor whiteColor];
@@ -353,12 +354,46 @@ static NSString * kTeamCellID = @"TeamCell";
 
 - (void)createIssue
 {
-    [self.navigationController pushViewController:[NewTeamIssueViewController new] animated:YES];
+    if ([self.view viewWithTag:1023]) {
+        [[self.view viewWithTag:1023] removeFromSuperview];
+    } else {
+        [self addNewView];
+    }
 }
 
-- (void)editTweet
+
+-(void)addNewView
 {
-    [self.navigationController pushViewController:[[TweetEditingVC alloc] initWithTeamID:[Config teamID]] animated:YES];
+    UIView *newView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetWidth([[UIScreen mainScreen] bounds])-110, 0, 110, 81)];
+    [newView setCornerRadius:3];
+    newView.backgroundColor = [UIColor colorWithHex:0x555555];
+    newView.tag = 1023;
+    for (int j=0; j<2; j++) {
+        UIButton *newButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        newButton.frame = CGRectMake(0, j*(CGRectGetHeight(newView.frame)/2+1), CGRectGetWidth(newView.frame), CGRectGetHeight(newView.frame)/2);
+        newButton.titleLabel.font = [UIFont systemFontOfSize:16];
+        [newButton setTitle:j==0?@"新建团队动弹":@"新建团队任务" forState:UIControlStateNormal];
+        [newButton addTarget:self action:@selector(newAction:) forControlEvents:UIControlEventTouchUpInside];
+        newButton.tag = j;
+        [newView addSubview:newButton];
+        if(j == 0) {
+            UIView *separationLine = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(newButton.frame), CGRectGetWidth(newView.frame), 1)];
+            separationLine.backgroundColor = [UIColor blackColor];
+            [newView addSubview:separationLine];
+        }
+    }
+    [self.view addSubview:newView];
+}
+
+-(void)newAction:(UIButton*)btn
+{
+    if (btn.tag == 0) {
+        [self.navigationController pushViewController:[[TweetEditingVC alloc] initWithTeamID:[Config teamID]] animated:YES];
+    } else {
+        [self.navigationController pushViewController:[NewTeamIssueViewController new] animated:YES];
+    }
+    
+    [btn.superview removeFromSuperview];
 }
 
 

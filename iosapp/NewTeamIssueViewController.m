@@ -17,6 +17,7 @@
 #import "TeamIssueList.h"
 #import "TableViewCell.h"
 
+#import "NSString+FontAwesome.h"
 #import "TeamCalendarView.h"
 
 #import <AFNetworking.h>
@@ -53,7 +54,9 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 @property (nonatomic, strong) MBProgressHUD *HUD;
 
 @property (nonatomic,strong) CheckboxTableCell *calendarCell;
-
+@property (nonatomic,copy) NSString *deadlineTime;
+@property (nonatomic)int isSynchronous;      //1:同步，0:不同步
+@property (nonatomic,strong)UILabel *syncLabel;
 @end
 
 @implementation NewTeamIssueViewController
@@ -87,11 +90,10 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     [super viewDidLoad];
     
     self.navigationItem.title = @"新团队任务";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"创建" style:UIBarButtonItemStylePlain target:self action:@selector(pubNewIssue)];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.view.backgroundColor = [UIColor themeColor];
     
-    self.tableView.tableFooterView = [UIView new];
     self.tableView.bounces = NO;
     [self.tableView registerClass:[TeamIssueDetailCell class] forCellReuseIdentifier:kteamIssueDetailCellNomal];
     
@@ -106,6 +108,102 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+#pragma mark -- 发布新任务
+-(void)pubNewIssue
+{
+    if ([_titleTextField.text length] <= 0) {
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+        HUD.labelText = @"请先输入任务标题";
+        [HUD hide:YES afterDelay:1];
+        return;
+    }
+    
+
+    [_HUD show:YES];
+    NSDictionary *parameters = @{
+                                 @"teamid": @([Config teamID]),
+                                 @"uid": @([Config getOwnID]),
+                                 @"title": _titleTextField.text?:@"",
+                                 @"project": @(_project.gitID),
+                                 @"catalogid":@(_issueGroup.teamIssueID),
+                                 @"source": _project.source?:@"Git@OSC",
+                                 @"gitpush": @(_isSynchronous),    //是否同步,推送：1；不推送：0
+                                 @"to_user": @(_member.memberID),    //指派给的人的id
+                                 @"deadline_time": _deadlineTime?:@""    //完成时间
+                                 };
+    [_manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_PUB]
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              [_HUD hide:YES];
+              
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+              NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+
+              MBProgressHUD *HUD = [Utils createHUD];
+              HUD.mode = MBProgressHUDModeCustomView;
+              if (errorCode == 1) {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.labelText = errorMessage;
+              } else {
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  if ([errorMessage length] < 10) {
+                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  }else {
+                      HUD.detailsLabelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  }
+              }
+              [HUD hide:YES afterDelay:1];
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              [_HUD hide:YES];
+          }];
+    
+}
+//是否同步到gitHub或gitOsc
+-(void)selectSyncOption:(UITapGestureRecognizer*)tap
+{
+    UIView *syncView = tap.view;
+    UILabel *flagLabel = (UILabel*)[syncView viewWithTag:108];
+    flagLabel.text = [flagLabel.text isEqualToString:@"\uf046"]?@"\uf096":@"\uf046";
+    _isSynchronous = [flagLabel.text isEqualToString:@"\uf046"]?1:0;
+}
+//footerView
+-(UIView*)setupSyncView
+{
+    UIView *syncView = [[UIView alloc]initWithFrame:CGRectMake(0, 30, CGRectGetWidth([[UIScreen mainScreen] bounds]), 60)];
+    [syncView setBackgroundColor:[UIColor themeColor]];
+    
+//    UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(15, 0, CGRectGetWidth(syncView.frame), .5)];
+//    topLineView.backgroundColor = [UIColor lightGrayColor];
+//    [syncView addSubview:topLineView];
+    
+    syncView.userInteractionEnabled = YES;
+    [syncView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectSyncOption:)]];
+    
+    UILabel *syncTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 0, 150, CGRectGetHeight(syncView.frame))];
+    syncTitleLabel.textColor = [UIColor colorWithHex:0x555555];
+    syncTitleLabel.font = [UIFont boldSystemFontOfSize:15];
+    syncTitleLabel.text = @"同步到Git@OSC";    //默认
+    _syncLabel = syncTitleLabel;
+    [syncView addSubview:syncTitleLabel];
+    
+    UILabel *syncFlagLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetWidth([[UIScreen mainScreen] bounds])-35, 0, 25, 25)];
+    syncFlagLabel.center = CGPointMake(syncFlagLabel.center.x, syncTitleLabel.center.y);
+    syncFlagLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:16];
+    syncFlagLabel.textColor = [UIColor grayColor];
+    syncFlagLabel.tag = 108;
+    syncFlagLabel.text = @"\uf096";
+    [syncView addSubview:syncFlagLabel];
+    
+    UIView *bottomLineView = [[UIView alloc]initWithFrame:CGRectMake(0, CGRectGetHeight(syncView.frame)-.5, CGRectGetWidth(syncView.frame), .5)];
+    bottomLineView.backgroundColor = [UIColor lightGrayColor];
+    [syncView addSubview:bottomLineView];
+    
+    return syncView;
+}
+
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -114,7 +212,21 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     [_HUD hide:YES];
 }
 
+
 #pragma mark - Table view data source
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(self.tableView.tableFooterView == nil)
+    {
+        self.tableView.tableFooterView = [self setupSyncView];
+    }
+    
+    if(!_project.gitPush)
+        self.tableView.tableFooterView.hidden = YES;
+    else
+        self.tableView.tableFooterView.hidden = NO;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return _selectedRow < 0? 5 : 6;
@@ -178,6 +290,11 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                             weakSelf.issueGroupCell.descriptionLabel.text = @"未指定列表";
                             weakSelf.memberCell.descriptionLabel.text = @"未指派";
                         }
+                        weakSelf.syncLabel.text = [NSString stringWithFormat:@"同步到%@",project.source];
+                        if(!weakSelf.project.gitPush)
+                            weakSelf.tableView.tableFooterView.hidden = YES;
+                        else
+                            weakSelf.tableView.tableFooterView.hidden = NO;
                     }
                     
                     [weakSelf collapseExpandedCell];
@@ -230,7 +347,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [_titleTextField resignFirstResponder];
-    
     
     if (indexPath.row != 0) {
         if (_selectedRow > 0) {
@@ -401,7 +517,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 - (void)didSelectDate:(NSDate *)date
 {
     _calendarCell.descriptionLabel.text = [self getDateStringWithDate:date];
-    
+    _deadlineTime = _calendarCell.descriptionLabel.text;
     [self removeCalendarViewCell];
 }
 
@@ -409,7 +525,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 - (void)clearSelectedDate
 {
     _calendarCell.descriptionLabel.text = @"";
-    
+    _deadlineTime = _calendarCell.descriptionLabel.text;
     [self removeCalendarViewCell];
 }
 

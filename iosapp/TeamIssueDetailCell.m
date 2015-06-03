@@ -58,6 +58,7 @@
     _descriptionLabel.numberOfLines = 0;
     _descriptionLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _descriptionLabel.font = [UIFont systemFontOfSize:13];
+    _descriptionLabel.textAlignment = NSTextAlignmentRight;
     _descriptionLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_descriptionLabel];
 
@@ -81,12 +82,7 @@
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil
                                                                                views:views]];
-//    CGFloat cellHeight =CGRectGetHeight(self.frame);
-//    NSDictionary *heightDic = @{@"heightKey":[NSNumber numberWithFloat:cellHeight]};
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_titleLabel(heightKey)]"
-//                                                                             options:0
-//                                                                             metrics:heightDic
-//                                                                               views:views]];
+
 }
 #pragma mark --标签cell
 - (void)initRemarkStyleSubviews
@@ -151,7 +147,7 @@
         [issueTV setCornerRadius:5];
         issueTV.font = textFont;
         issueTV.text = labelText;
-        issueTV.textColor= [UIColor blackColor];
+        issueTV.textColor= [UIColor colorWithWhite:0 alpha:.5];
         [self.remarkSv addSubview:issueTV];
         offsetX = CGRectGetMaxX(issueTV.frame)+7;
         [issueTV sizeToFit];
