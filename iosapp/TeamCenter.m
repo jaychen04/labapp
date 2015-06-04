@@ -114,7 +114,7 @@ static NSString * kTeamCellID = @"TeamCell";
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         button.frame = CGRectMake(0, CGRectGetHeight(_actionPicker.frame)/2 * j, CGRectGetWidth(_actionPicker.frame), CGRectGetHeight(_actionPicker.frame)/2);
         button.titleLabel.font = [UIFont systemFontOfSize:16];
-        [button setTitle:@[@"弹一弹", @"新建任务"][j]
+        [button setTitle:@[@"新团队动弹", @"新团队任务"][j]
                 forState:UIControlStateNormal];
         [button addTarget:self action:@selector(create:) forControlEvents:UIControlEventTouchUpInside];
         button.tag = j;
