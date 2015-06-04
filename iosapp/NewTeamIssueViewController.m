@@ -120,7 +120,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         return;
     }
     
-
     [_HUD show:YES];
     NSDictionary *parameters = @{
                                  @"teamid": @([Config teamID]),
@@ -147,6 +146,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
               if (errorCode == 1) {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                   HUD.labelText = errorMessage;
+                  [self.navigationController popViewControllerAnimated:YES];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   if ([errorMessage length] < 10) {
@@ -174,10 +174,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 {
     UIView *syncView = [[UIView alloc]initWithFrame:CGRectMake(0, 30, CGRectGetWidth([[UIScreen mainScreen] bounds]), 60)];
     [syncView setBackgroundColor:[UIColor themeColor]];
-    
-//    UIView *topLineView = [[UIView alloc]initWithFrame:CGRectMake(15, 0, CGRectGetWidth(syncView.frame), .5)];
-//    topLineView.backgroundColor = [UIColor lightGrayColor];
-//    [syncView addSubview:topLineView];
     
     syncView.userInteractionEnabled = YES;
     [syncView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectSyncOption:)]];
@@ -494,8 +490,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 }
 
 
-#pragma mark -- NSString<---->NSDate
-
+#pragma mark -- NSString<---->NSDate 
 - (NSDate*)getDateWithString:(NSString*)dateStr
 {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init] ;

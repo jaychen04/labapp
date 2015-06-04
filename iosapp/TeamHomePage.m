@@ -117,15 +117,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         cell.textLabel.textColor = [UIColor grayColor];
-//        cell.textLabel.font = [UIFont boldSystemFontOfSize:18];
         cell.textLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:18];
 
-//        cell.textLabel.text = @[[NSString stringWithFormat:@"%@    团队动态",[NSString fontAwesomeIconStringForEnum:FAHome]], @"团队项目", @"团队讨论", @"团队周报"][indexPath.row];
-        
-//        fa-home fa-inbox fa-comments fa-file-text-o
-        
-//        cell.textLabel.text = [NSString fontAwesomeIconStringForEnum:FAHome];
-        
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:
                                                       @[[NSString fontAwesomeIconStringForEnum:FAHome],[NSString fontAwesomeIconStringForEnum:FAInbox],[NSString fontAwesomeIconStringForEnum:FAComments],[NSString fontAwesomeIconStringForEnum:FAFileTextO]][indexPath.row]
                                                                                             attributes:@{NSForegroundColorAttributeName: [UIColor colorWithHex:0x15A230]
