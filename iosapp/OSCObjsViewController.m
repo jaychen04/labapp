@@ -43,7 +43,7 @@
     
     self.tableView.backgroundColor = [UIColor themeColor];
     
-    _lastCell = [LastCell new];
+    _lastCell = [[LastCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 44)];
     [_lastCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fetchMore)]];
     self.tableView.tableFooterView = _lastCell;
     
