@@ -61,7 +61,9 @@ static NSString * const kIssueCellID = @"IssueCell";
     
     return self;
 }
+
 #pragma mark --我的任务
+
 - (instancetype)initWithTeamID:(int)teamID userID:(int64_t)userID andIssueState:(IssueState)issueState
 {
     self = [super init];
@@ -82,6 +84,8 @@ static NSString * const kIssueCellID = @"IssueCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TeamIssueCell class] forCellReuseIdentifier:kIssueCellID];
+    
+    self.lastCell.emptyMessage = @"暂无任务";
 }
 
 - (void)didReceiveMemoryWarning {
