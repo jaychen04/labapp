@@ -48,7 +48,7 @@
 @property (nonatomic,strong)NSMutableArray *collaborators;     //协助者
 
 
-@property (nonatomic, strong) NSMutableAttributedString *attributedProjectName;
+@property (nonatomic, strong) NSMutableAttributedString *attributedIssueTitle;
 
 
 - (instancetype)initWithDetailIssueXML:(ONOXMLElement *)xml;

@@ -111,7 +111,7 @@ static NSString * const kIssueCellID = @"IssueCell";
     TeamIssue *issue = self.objects[indexPath.row];
     
     self.label.font = [UIFont boldSystemFontOfSize:15];
-    self.label.attributedText = issue.attributedProjectName;
+    self.label.attributedText = issue.attributedIssueTitle;
     
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
     

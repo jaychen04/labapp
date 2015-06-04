@@ -89,16 +89,7 @@
 
 - (void)setContentWithIssue:(TeamIssue *)issue
 {
-    NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:issue.title ];
-    if ([issue.state isEqualToString:@"closed"] || [issue.state isEqualToString:@"accepted"]) {
-        [content setAttributes:@{NSForegroundColorAttributeName: [UIColor grayColor]} range:NSMakeRange(0, [issue.title length])];
-        [content addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, [issue.title length])];
-    } else {
-        [content setAttributes:@{NSForegroundColorAttributeName: [UIColor blackColor]} range:NSMakeRange(0, [issue.title length])];
-        [content addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleNone] range:NSMakeRange(0, [issue.title length])];
-    }
-    [issue.attributedProjectName appendAttributedString:content];
-    _titleLabel.attributedText = issue.attributedProjectName;
+    _titleLabel.attributedText = issue.attributedIssueTitle;
     
     _projectNameLabel.text = issue.project.projectName;
     _commentLabel.attributedText = [Utils attributedCommentCount:issue.replyCount];
