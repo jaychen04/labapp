@@ -13,11 +13,11 @@ static NSString *kTeamIssueDetailCellRemark = @"teamIssueDetailCellRemark";
 static NSString *kTeamIssueDetailCellSubChild = @"teamIssueDetailCellSubChild";
 
 @interface TeamIssueDetailCell : UITableViewCell
-@property (nonatomic,strong)UILabel *iconLabel;
-@property (nonatomic,strong)UILabel *titleLabel;
-@property (nonatomic,strong)UILabel *descriptionLabel;
-@property (nonatomic,strong)UIScrollView *remarkSv;     //标签
-@property (nonatomic,strong)UIImageView *portraitIv;    //子任务
+@property (nonatomic, strong) UILabel *iconLabel;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *descriptionLabel;
+@property (nonatomic, strong) UIScrollView *remarkSv;     //标签
+@property (nonatomic, strong) UIImageView *portraitIv;    //子任务
 
 -(void)setupRemarkLabelsWithtexts:(NSArray*)texts;
 @end

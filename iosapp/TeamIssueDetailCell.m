@@ -118,15 +118,14 @@
 }
 
 #pragma mark -- 设置标签cell
--(void)setupRemarkLabelsWithtexts:(NSArray*)texts
+-(void)setupRemarkLabelsWithtexts:(NSArray *)texts
 {
     CGFloat offsetX = 0;
     while (self.remarkSv.subviews.lastObject != nil) {
         [self.remarkSv.subviews.lastObject removeFromSuperview];
     }
     
-    for (int j = 0; j<texts.count; j++) {
-        NSDictionary *labelInfo = [texts objectAtIndex:j];
+    for (NSDictionary *labelInfo in texts) {
         NSString *labelText = [labelInfo valueForKey:@"name"];
         NSString *colorStr = [[labelInfo valueForKey:@"color"] stringByReplacingOccurrencesOfString:@"#" withString:@"0x"];
         unsigned colorInt = 0;
@@ -137,7 +136,7 @@
         CGSize size = [labelText boundingRectWithSize:CGSizeMake(999, 99) options: NSStringDrawingTruncatesLastVisibleLine | NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading attributes:attribute context:nil].size;
         CGFloat labelWidth = ceilf(size.width);
         labelWidth += 20;
-        UITextView *issueTV = [[UITextView alloc]initWithFrame:CGRectMake(offsetX, 0, labelWidth, CGRectGetHeight(self.contentView.frame)/2)];
+        UITextView *issueTV = [[UITextView alloc] initWithFrame:CGRectMake(offsetX, 0, labelWidth, CGRectGetHeight(self.contentView.frame)/2)];
         issueTV.backgroundColor = [UIColor colorWithHex:colorInt];
         issueTV.scrollEnabled = NO;
         issueTV.editable = NO;
@@ -147,9 +146,9 @@
         [issueTV setCornerRadius:5];
         issueTV.font = textFont;
         issueTV.text = labelText;
-        issueTV.textColor= [UIColor colorWithWhite:0 alpha:.5];
+        issueTV.textColor = [UIColor colorWithHex:0xEEEEEE];
         [self.remarkSv addSubview:issueTV];
-        offsetX = CGRectGetMaxX(issueTV.frame)+7;
+        offsetX = CGRectGetMaxX(issueTV.frame) + 7;
         [issueTV sizeToFit];
     }
     [self.remarkSv setContentSize:CGSizeMake(offsetX, self.remarkSv.frame.size.height)];

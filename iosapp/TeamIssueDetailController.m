@@ -74,12 +74,12 @@
              [self setupSubIssueCellData];
              _issueTitle = _detailIssue.title;
              _issueState = _detailIssue.state;
-             NSString *subIssueCount = _detailIssue.childIssues.count >0 ?[NSString stringWithFormat:@"%d个子任务，%d个已完成",_detailIssue.childIssuesCount,_detailIssue.closedChildIssuesCount] : @"暂无子任务";
-             NSString *toUser = [_detailIssue.user.name length] > 0 ? _detailIssue.user.name : @"未指派";
-             NSString *deadLineTime = _detailIssue.deadline ?[[_detailIssue.deadline componentsSeparatedByString:@" "] objectAtIndex:0]?:@"未指定截止日期":@"未指定截止日期";
+             NSString *subIssueCount = _detailIssue.childIssues.count ? [NSString stringWithFormat:@"%d个子任务，%d个已完成", _detailIssue.childIssuesCount, _detailIssue.closedChildIssuesCount] : @"暂无子任务";
+             NSString *toUser = _detailIssue.user.name.length ? _detailIssue.user.name : @"未指派";
+             NSString *deadLineTime = _detailIssue.deadline.length ? [[_detailIssue.deadline componentsSeparatedByString:@" "] objectAtIndex:0]          : @"未指定截止日期";
              NSString *state = [self getChineseNameWithState:_issueState];
-             NSString *attachmentsCount = _detailIssue.attachmentsCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.attachmentsCount] : @"暂无附件";
-             NSString *relationIssueCount = _detailIssue.relatedIssuesCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.relatedIssuesCount] : @"暂无关联";
+             NSString *attachmentsCount = _detailIssue.attachmentsCount ?[NSString stringWithFormat:@"%d",_detailIssue.attachmentsCount] : @"暂无附件";
+             NSString *relationIssueCount = _detailIssue.relatedIssuesCount ?[NSString stringWithFormat:@"%d",_detailIssue.relatedIssuesCount] : @"暂无关联";
              NSString *allCollaborator = [self getCollaboratorsStringWithcollabortorsArray:_detailIssue.collaborators];
              
              _descriptions = [NSMutableArray arrayWithArray:@[@"",subIssueCount, toUser, deadLineTime, allCollaborator, state, @"", attachmentsCount, relationIssueCount]];
@@ -565,52 +565,6 @@
 }
 
 
-
-
-
-/*
- // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the specified item to be editable.
- return YES;
- }
- */
-
-/*
- // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
- if (editingStyle == UITableViewCellEditingStyleDelete) {
- // Delete the row from the data source
- [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
- } else if (editingStyle == UITableViewCellEditingStyleInsert) {
- // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
- }
- }
- */
-
-/*
- // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
- }
- */
-
-/*
- // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
- // Return NO if you do not want the item to be ;.
- return YES;
- }
- */
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 
 @end
