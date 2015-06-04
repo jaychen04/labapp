@@ -90,7 +90,7 @@
 - (void)setContentWithIssue:(TeamIssue *)issue
 {
     NSMutableAttributedString *content = [[NSMutableAttributedString alloc]initWithString:issue.title ];
-    if ([issue.state isEqualToString:@"closed"]) {
+    if ([issue.state isEqualToString:@"closed"] || [issue.state isEqualToString:@"accepted"]) {
         [content setAttributes:@{NSForegroundColorAttributeName: [UIColor grayColor]} range:NSMakeRange(0, [issue.title length])];
         [content addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, [issue.title length])];
     } else {
