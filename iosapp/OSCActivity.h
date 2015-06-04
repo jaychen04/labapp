@@ -8,6 +8,22 @@
 
 #import "OSCBaseObject.h"
 
+typedef NS_ENUM(NSUInteger, ActivityStatus)
+{
+    ActivityStatusActivityFinished = 1,
+    ActivityStatusGoing,
+    ActivityStatusSignUpClosing,
+};
+
+typedef NS_ENUM(NSUInteger, ActivityApplyStatus)
+{
+    ActivityApplyStatusAudited,
+    ActivityApplyStatusDetermined,
+    ActivityApplyStatusAttended,
+    ActivityApplyStatusCanceled,
+    ActivityApplyStatusRejected,
+};
+
 @interface OSCActivity : OSCBaseObject
 
 @property (nonatomic, readonly, assign)   int64_t     activityID;
@@ -19,7 +35,7 @@
 @property (nonatomic, readonly, copy)     NSString   *createTime;
 @property (nonatomic, readonly, copy)     NSString   *location;
 @property (nonatomic, readonly, copy)     NSString   *city;
-@property (nonatomic, readonly, assign)   int         status;
-@property (nonatomic, readonly, assign)   int         applyStatus;
+@property (nonatomic, readonly, assign)   ActivityStatus status;
+@property (nonatomic, readonly, assign)   ActivityApplyStatus applyStatus;
 
 @end

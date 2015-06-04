@@ -41,7 +41,7 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
 {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"团队动态";
+    self.navigationItem.title = @"团队讨论";
     [self.tableView registerClass:[TeamDiscussionCell class] forCellReuseIdentifier:kDiscussionCellID];
 }
 

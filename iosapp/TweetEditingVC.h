@@ -11,7 +11,10 @@
 @interface TweetEditingVC : UIViewController
 
 - (instancetype)initWithImage:(UIImage *)image;
-
 - (instancetype)initWithTopic:(NSString *)TopicName;
+
+- (instancetype)initWithTeamID:(int)teamID;
+
+- (void)insertString:(NSString *)string andSelect:(BOOL)shouldSelect;
 
 @end

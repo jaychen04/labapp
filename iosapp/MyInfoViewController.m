@@ -345,26 +345,10 @@
             break;
         }
         case 2: {
-            AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-            manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-            [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_LIST]
-              parameters:@([Config getOwnID])
-                 success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-                     NSMutableArray *teams = [NSMutableArray new];
-                     NSArray *teamsXML = [[responseObject.rootElement firstChildWithTag:@"teams"] childrenWithTag:@"team"];
-                     
-                     for (ONOXMLElement *teamXML in teamsXML) {
-                         TeamTeam *team = [[TeamTeam alloc] initWithXML:teamXML];
-                         [teams addObject:team];
-                     }
-                     
-                     TeamCenter *teamCenter = [[TeamCenter alloc] initWithTeams:teams];
-                     teamCenter.hidesBottomBarWhenPushed = YES;
-                     
-                     [self.navigationController pushViewController:teamCenter animated:YES];
-                 } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                     NSLog(@"failure");
-                 }];
+            TeamCenter *teamCenter = [TeamCenter new];
+            teamCenter.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:teamCenter animated:YES];
+            break;
         }
         default: break;
     }

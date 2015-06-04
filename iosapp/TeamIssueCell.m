@@ -99,11 +99,11 @@
         NSMutableString *extraInfo = [NSMutableString new];
         
         if (issue.deadline.length) {
-            [extraInfo appendString:[NSString stringWithFormat:@"%@个附件 ", issue.deadline]];
+            [extraInfo appendString:[NSString stringWithFormat:@"%@ ", [issue.deadline componentsSeparatedByString:@" "][0]]];
         }
         
         if (issue.attachmentsCount) {
-            [extraInfo appendString:[NSString stringWithFormat:@"%d ", issue.attachmentsCount]];
+            [extraInfo appendString:[NSString stringWithFormat:@"%d个附件 ", issue.attachmentsCount]];
         }
         
         if (issue.childIssuesCount) {

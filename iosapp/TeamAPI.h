@@ -51,4 +51,6 @@
 #define TEAM_ISSUE_REPLY                @"team_issue_reply"                 //评论任务
 #define TEAM_ISSUE_PUB                @"team_issue_pub"                 //发布新任务
 
+#define TEAM_TWEET_PUB                  @"team_tweet_pub"
+
 #endif
