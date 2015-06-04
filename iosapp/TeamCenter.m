@@ -231,6 +231,10 @@ static NSString * kTeamCellID = @"TeamCell";
 {
     [self updateTitle];
     
+    if (_actionPicker.alpha > 0) {
+        [self toggleActionPicker];
+    }
+    
     [UIView animateWithDuration:0.15f animations:^{
         [_teamPicker setAlpha:1.0f - _teamPicker.alpha];
     } completion:^(BOOL finished) {
@@ -372,6 +376,10 @@ static NSString * kTeamCellID = @"TeamCell";
 
 - (void)toggleActionPicker
 {
+    if (_teamPicker.alpha > 0) {
+        [self toggleTeamPicker];
+    }
+    
     [UIView animateWithDuration:0.15f animations:^{
         [_actionPicker setAlpha:1.0f - _actionPicker.alpha];
     } completion:^(BOOL finished) {
