@@ -37,11 +37,11 @@ static NSString * const kReuseID = @"reuseID";
         NSMutableAttributedString *attributedTitle = [[NSMutableAttributedString alloc] initWithString:
                                                       [NSString fontAwesomeIconStringForIconIdentifier:@[@"fa-inbox", @"fa-list", @"fa-user", @"fa-clock-o"][type]]
                                                                                             attributes:@{
-                                                                                                         NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:20],
+                                                                                                         NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:18],
                                                                                                          NSForegroundColorAttributeName: [UIColor grayColor]
                                                                                                          }];
         
-        [attributedTitle appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"   %@", [@[@"项目", @"任务分组", @"指派人员", @"完成时间"] objectAtIndex:type]]]];
+        [attributedTitle appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"   %@", [@[@"项目", @"任务分组", @"指派人员", @"完成时间"] objectAtIndex:type]] attributes:@{                                                                                                                                        NSFontAttributeName: [UIFont systemFontOfSize:18]}]];
         
         _titleLabel.attributedText = attributedTitle;
         

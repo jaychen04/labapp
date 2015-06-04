@@ -107,7 +107,7 @@
     if (!_attributedProjectName) {
         NSString *stateString;
         NSString *sourceString;
-        
+//        fa-circle-o
         if ([_state isEqualToString:@"opened"]) {
             stateString = [NSString fontAwesomeIconStringForEnum:FACircleO];
         } else if ([_state isEqualToString:@"underway"]) {
@@ -141,7 +141,7 @@
                                                                                                     NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:16],
                                                                                                     NSForegroundColorAttributeName: [UIColor grayColor]
                                                                                                     }]];
-        [_attributedProjectName appendAttributedString:[[NSAttributedString alloc] initWithString:_title]];
+//        [_attributedProjectName appendAttributedString:[[NSAttributedString alloc] initWithString:_title]];
     }
     
     return _attributedProjectName;

@@ -56,6 +56,7 @@
     return self;
 }
 
+
 #pragma mark --任务详情信息
 -(void)getIssueDetailNetWorkingInfo
 {
@@ -75,7 +76,7 @@
              _issueState = _detailIssue.state;
              NSString *subIssueCount = _detailIssue.childIssues.count >0 ?[NSString stringWithFormat:@"%d个子任务，%d个已完成",_detailIssue.childIssuesCount,_detailIssue.closedChildIssuesCount] : @"暂无子任务";
              NSString *toUser = [_detailIssue.user.name length] > 0 ? _detailIssue.user.name : @"未指派";
-             NSString *deadLineTime = _detailIssue.deadline ?:@"未指定截止日期";
+             NSString *deadLineTime = _detailIssue.deadline ?[[_detailIssue.deadline componentsSeparatedByString:@" "] objectAtIndex:0]?:@"未指定截止日期":@"未指定截止日期";
              NSString *state = [self getChineseNameWithState:_issueState];
              NSString *attachmentsCount = _detailIssue.attachmentsCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.attachmentsCount] : @"暂无附件";
              NSString *relationIssueCount = _detailIssue.relatedIssuesCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.relatedIssuesCount] : @"暂无关联";
@@ -291,7 +292,6 @@
                 if (_handledSubIssueInfos.count <= 0) {
                     return;
                 }
-//                NSArray *subIssueInfo = [self setupSubIssueCellData];
                 NSMutableArray *pathArray = [NSMutableArray new];
                 for (int k=1; k<=_handledSubIssueInfos.count; k++) {
                     NSIndexPath *path = [NSIndexPath indexPathForItem:(indexPath.row+k) inSection:indexPath.section];
@@ -379,8 +379,6 @@
                                       }];
         [_handledSubIssueInfos addObject:subIssueDic];
     }
-    
-//    return subArray;
 }
 #pragma mark -- util
 -(void)editTextAtLabel:(UILabel*)label isStateClosed:(BOOL)isStateClosed
