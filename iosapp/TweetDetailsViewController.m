@@ -17,6 +17,8 @@
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
 
+#import "NSString+FontAwesome.h"
+
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
@@ -186,9 +188,11 @@
             cell.likeListLabel.hidden = !_tweet.likeList.count;
             [cell.timeLabel setAttributedText:[Utils attributedTimeString:_tweet.pubDate]];
             if (_tweet.isLike) {
-                [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
+                [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             } else {
-                [cell.likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
+                [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsOUp] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
             }
             [cell.appclientLabel setAttributedText:[Utils getAppclient:_tweet.appclient]];
             cell.webView.delegate = self;

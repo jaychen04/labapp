@@ -68,7 +68,6 @@
     
     _likeButton = [UIButton new];
     _likeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:12];
-    [_likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.contentView addSubview:_likeButton];
     
     _commentCount = [UILabel new];
@@ -88,7 +87,7 @@
     _likeListLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _likeListLabel.font = [UIFont systemFontOfSize:12];
     _likeListLabel.userInteractionEnabled = YES;
-    _likeListLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _likeListLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_likeListLabel];
 }
 
@@ -130,8 +129,10 @@
     [_appclientLabel setAttributedText:[Utils getAppclient:tweet.appclient]];
     if (tweet.isLike) {
         [_likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] forState:UIControlStateNormal];
+        [_likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
     } else {
         [_likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsOUp] forState:UIControlStateNormal];
+        [_likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     }
     
     // 添加语音图片

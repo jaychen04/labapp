@@ -50,7 +50,7 @@
     
     self.timeLabel = [UILabel new];
     self.timeLabel.font = [UIFont systemFontOfSize:12];
-    self.timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    self.timeLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:self.timeLabel];
     
     self.appclientLabel = [UILabel new];

@@ -322,7 +322,7 @@
     } else if (months < 12) {
         return [NSString stringWithFormat:@"%ld个月前", (long)months];
     } else {
-        NSArray *arr = [dateStr componentsSeparatedByString:@"T"];
+        NSArray *arr = [dateStr componentsSeparatedByString:@" "];
         return arr[0];
     }
 }
