@@ -76,7 +76,7 @@
              _issueState = _detailIssue.state;
              NSString *subIssueCount = _detailIssue.childIssues.count >0 ?[NSString stringWithFormat:@"%d个子任务，%d个已完成",_detailIssue.childIssuesCount,_detailIssue.closedChildIssuesCount] : @"暂无子任务";
              NSString *toUser = [_detailIssue.user.name length] > 0 ? _detailIssue.user.name : @"未指派";
-             NSString *deadLineTime = _detailIssue.deadline ?[[_detailIssue.deadline componentsSeparatedByString:@" "] objectAtIndex:0]?:@"未指定截止日期":@"未指定截止日期";
+             NSString *deadLineTime = _detailIssue.deadline ?[[_detailIssue.deadline componentsSeparatedByString:@" "] objectAtIndex:0]?:_detailIssue.deadline:@"未指定截止日期";
              NSString *state = [self getChineseNameWithState:_issueState];
              NSString *attachmentsCount = _detailIssue.attachmentsCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.attachmentsCount] : @"暂无附件";
              NSString *relationIssueCount = _detailIssue.relatedIssuesCount > 0 ?[NSString stringWithFormat:@"%d",_detailIssue.relatedIssuesCount] : @"暂无关联";
@@ -121,7 +121,6 @@
 
     [self getIssueDetailNetWorkingInfo];
 }
-
 
 //协助者显示
 -(NSString*)getCollaboratorsStringWithcollabortorsArray:(NSArray*)collaborators {
@@ -271,7 +270,6 @@
         }
         return;
     }
-    
    
     if ([selectedIssue[@"cellLevel"] intValue] == 1) {
         

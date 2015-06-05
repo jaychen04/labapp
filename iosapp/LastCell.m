@@ -31,7 +31,6 @@
     return self;
 }
 
-
 - (void)setLayout
 {
     self.textLabel.backgroundColor = [UIColor themeColor];

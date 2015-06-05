@@ -513,6 +513,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 {
     _calendarCell.descriptionLabel.text = [self getDateStringWithDate:date];
     _deadlineTime = _calendarCell.descriptionLabel.text;
+    [_calendarCell layoutSubviews];
     [self removeCalendarViewCell];
 }
 
@@ -521,6 +522,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 {
     _calendarCell.descriptionLabel.text = @"";
     _deadlineTime = _calendarCell.descriptionLabel.text;
+    [_calendarCell layoutSubviews];
     [self removeCalendarViewCell];
 }
 

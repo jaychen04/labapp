@@ -62,6 +62,7 @@ static NSString * const kReuseID = @"reuseID";
     
     _descriptionLabel = [UILabel new];
     _descriptionLabel.font = [UIFont systemFontOfSize:13];
+    _descriptionLabel.textAlignment = NSTextAlignmentRight;
     _descriptionLabel.textColor = [UIColor grayColor];
     _descriptionLabel.text = @"不指定项目";
     [self.contentView addSubview:_descriptionLabel];
@@ -83,7 +84,6 @@ static NSString * const kReuseID = @"reuseID";
 //显示最后一个cell的分割线(在添加footerView后，发现最后cell的最后分割不显示，通过这个可以设置让它显示)
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
     for (UIView *subview in self.contentView.superview.subviews) {
         if ([NSStringFromClass(subview.class) hasSuffix:@"SeparatorView"]) {
             subview.hidden = NO;
