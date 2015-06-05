@@ -347,6 +347,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     if (indexPath.row != 0) {
         if (_selectedRow > 0) {
             [self collapseExpandedCell];
+            [_calendarCell layoutSubviews];
             return;
         } else {
             _selectedRow = indexPath.row;
@@ -467,7 +468,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                 [tableView endUpdates];
                 
                 _calendarCell =  (CheckboxTableCell*)[tableView cellForRowAtIndexPath:indexPath];
-                
             }
                 break;
                 
@@ -517,7 +517,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     [_calendarCell layoutSubviews];
 }
 
-
 - (void)clearSelectedDate
 {
     _calendarCell.descriptionLabel.text = @"";
@@ -525,6 +524,14 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     [self removeCalendarViewCell];
     [_calendarCell layoutSubviews];
 }
+
+-(void)removeCalendarView
+{
+    [self removeCalendarViewCell];
+    [_calendarCell layoutSubviews];
+}
+
+
 #pragma mark -- 移除日历cell
 
 - (void)removeCalendarViewCell
