@@ -10,7 +10,7 @@
 
 @interface TeamActivityViewController : OSCObjsViewController
 
-- (instancetype)initWithTeamID:(int)teamID andProjectID:(int)projectID;
+- (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID andSource:(NSString*)source;
 
 - (instancetype)initWithTeamID:(int)teamID;
 

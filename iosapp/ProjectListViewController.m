@@ -99,7 +99,7 @@ static NSString *kProjectCellID = @"ProjectCell";
                                               andSubTitles:@[@"任务分组", @"动态", @"成员"]
                                               andControllers:@[
                                                                [[TeamIssueListViewController alloc] initWithTeamID:project.teamID projectID:project.gitID andSource:project.source],
-                                                               [[TeamActivityViewController alloc]  initWithTeamID:project.teamID andProjectID:project.gitID],
+                                                               [[TeamActivityViewController alloc]  initWithTeamID:project.teamID projectID:project.gitID andSource:project.source],
                                                                [[TeamMemberViewController alloc] initWithTeamID:project.teamID projectID:project.gitID andSource:project.source]
                                                                ]];
     

@@ -32,7 +32,6 @@
     return self;
 }
 
-
 - (void)setLayout
 {
     _textLabel = [[UILabel alloc] initWithFrame:self.bounds];

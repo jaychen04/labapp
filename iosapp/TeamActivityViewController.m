@@ -41,11 +41,12 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 
 #pragma mark --某个团队项目的动态
 
-- (instancetype)initWithTeamID:(int)teamID andProjectID:(int)projectID
+- (instancetype)initWithTeamID:(int)teamID projectID:(int)projectID andSource:(NSString*)source
 {
     if (self = [super init]) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=%d&projectid=%d&source=Git@OSC&type=all&pageIndex=%lu", TEAM_PREFIX, TEAM_PROJECT_ACTIVE_LIST, teamID, projectID, (unsigned long)page];
+            NSString *urlString = [NSString stringWithFormat:@"%@%@?teamid=%d&projectid=%d&source=%@&type=all&pageIndex=%lu", TEAM_PREFIX, TEAM_PROJECT_ACTIVE_LIST, teamID, projectID, source,(unsigned long)page];
+            return urlString;
         };
         
         _teamID = teamID;
