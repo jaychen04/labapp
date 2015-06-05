@@ -1940,11 +1940,11 @@
 			children = (
 				3843641E1AC5532900743CB0 /* TeamMemberViewController.h */,
 				3843641F1AC5532900743CB0 /* TeamMemberViewController.m */,
+				C5344E8D1B1DA2970024F110 /* TeamMemberListViewController.h */,
+				C5344E8E1B1DA2970024F110 /* TeamMemberListViewController.m */,
 				384364231AC566BD00743CB0 /* MemberCell.h */,
 				384364241AC566BD00743CB0 /* MemberCell.m */,
 				3118F8D01AFB4771001684BC /* 团队成员详情 */,
-				C5344E8D1B1DA2970024F110 /* TeamMemberListViewController.h */,
-				C5344E8E1B1DA2970024F110 /* TeamMemberListViewController.m */,
 			);
 			name = "团队成员";
 			sourceTree = "<group>";

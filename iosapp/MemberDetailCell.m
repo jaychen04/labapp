@@ -34,14 +34,13 @@
 {
     _portraitIv = [UIImageView new];
     _portraitIv.contentMode = UIViewContentModeScaleAspectFit;
-//    [_portraitIv setCornerRadius:5.0];
-    [_portraitIv setCornerRadius:30];
+    [_portraitIv setCornerRadius:5];
     [self.contentView addSubview:_portraitIv];
     
     _nameLabel = [UILabel new];
     _nameLabel.numberOfLines = 0;
     _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _nameLabel.font = [UIFont systemFontOfSize:14];
+    _nameLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.contentView addSubview:_nameLabel];
     
     _eMailLabel = [UILabel new];
@@ -75,7 +74,7 @@
 -(void)makeACall
 {
     if ([_phoneLabel.text length]>=2) {
-        UIWebView*callWebview =[[UIWebView alloc] init];
+        UIWebView *callWebview =[[UIWebView alloc] init];
         NSString *telUrl = [NSString stringWithFormat:@"tel://%@",_phoneLabel.text];
         NSURL *telURL =[NSURL URLWithString:telUrl];
         [callWebview loadRequest:[NSURLRequest requestWithURL:telURL]];
@@ -93,32 +92,25 @@
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_portraitIv, _nameLabel, _eMailLabel, _phoneLabel, _addressLabel,_phoneIconLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-20-[_portraitIv(60)]"
-                                                                              options:0
-                                                                             metrics:nil
-                                                                               views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portraitIv(60)]"
+                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_portraitIv(60)]-20-[_nameLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_portraitIv(60)]-20-[_nameLabel]-20-|"
                                                                              options:NSLayoutFormatAlignAllTop
-                                                                             metrics:nil
-                                                                               views:views]];
+                                                                             metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_nameLabel]-7-[_eMailLabel]-7-[_phoneLabel]-7-[_addressLabel]-7-|"
-                                                                             options:NSLayoutFormatAlignAllLeft
-                                                                             metrics:nil
-                                                                               views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_eMailLabel]-5-[_phoneIconLabel(40)]-10-|"
-                                                                             options:0
-                                                                             metrics:nil
-                                                                               views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nameLabel]-7-[_eMailLabel]-7-[_phoneLabel]-7-[_addressLabel]-7-|"
+                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+                                                                             metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_phoneIconLabel(40)]-10-|"
+                                                                             options:0 metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_phoneIconLabel(40)]"
-                                                                             options:0
-                                                                             metrics:nil
-                                                                               views:views]];
+                                                                             options:0 metrics:nil views:views]];
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
-                                                             toItem:_phoneIconLabel    attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+                                                                    toItem:_phoneIconLabel  attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
 }
 
 

@@ -17,11 +17,13 @@
 
 static NSString * const kUserActivityCellID = @"userActivityCell";
 static NSString * const kMemberDetailCellID = @"memberDetailCell";
+
 @interface TeamMemberDetailViewController ()
-//<anotherNetWorkingDelegate>
+
 @property (nonatomic)int teamId;
 @property (nonatomic)int uId;
 @property (nonatomic,strong)TeamMember *member;
+
 @end
 
 
@@ -43,8 +45,6 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
         self.uId = uId;
         self.objClass = [TeamActivity class];
         
-//        self.delegate = self;
-        
         __weak typeof(self) weakSelf = self;
         self.anotherNetWorking = ^{
             [weakSelf getMemberDetailInfo];
@@ -57,12 +57,6 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 {
     return [[xml.rootElement firstChildWithTag:@"actives"] childrenWithTag:@"active"];
 }
-
-//#pragma mark --anotherNetWorkingDelegate
-//-(void)getAnotherDataFromNetWorking
-//{
-//    [self getMemberDetailInfo];
-//}
 
 -(void)getMemberDetailInfo
 {
@@ -87,7 +81,10 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.navigationItem.title = @"用户主页";
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     [self.tableView registerClass:[TeamActivityCell class] forCellReuseIdentifier:kUserActivityCellID];
     [self.tableView registerClass:[MemberDetailCell class] forCellReuseIdentifier:kMemberDetailCellID];
     
@@ -98,24 +95,45 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 
 #pragma mark - Table view data source
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return section == 0? 0 : 35;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return nil;
+    } else {
+        return @"最近动态";
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 120;
+    if (indexPath.section == 0) {
+        return 113;
     } else {
-        TeamActivity *activity = self.objects[indexPath.row-1];
+        TeamActivity *activity = self.objects[indexPath.row];
         self.label.attributedText = activity.attributedTitle;
         CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 60, MAXFLOAT)].height;
         return height + 63;
     }
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return self.objects.count + 1;
+    return section == 0? 1 : self.objects.count;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
+    if (indexPath.section == 0) {
         MemberDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:kMemberDetailCellID forIndexPath:indexPath];
         if (_member) {
             [cell setContentWithTeamMember:_member];
@@ -124,7 +142,7 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
         return cell;
     } else {
         TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kUserActivityCellID forIndexPath:indexPath];
-        TeamActivity *activity = self.objects[indexPath.row-1];
+        TeamActivity *activity = self.objects[indexPath.row];
         [cell setContentWithActivity:activity];
         return cell;
     }
@@ -134,14 +152,10 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row != 0) {
-        if (indexPath.row < self.objects.count) {
-            TeamActivity *activity = self.objects[indexPath.row - 1];
-            TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamId];
-            [self.navigationController pushViewController:detailVC animated:YES];
-        } else {
-            [self fetchMore];
-        }
+    if (indexPath.section != 0) {
+        TeamActivity *activity = self.objects[indexPath.row];
+        TeamActivityDetailViewController *detailVC = [[TeamActivityDetailViewController alloc] initWithActivity:activity andTeamID:_teamId];
+        [self.navigationController pushViewController:detailVC animated:YES];
     }
 }
 
@@ -150,14 +164,5 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
     [super didReceiveMemoryWarning];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end
