@@ -92,7 +92,7 @@ static NSString * const kReuseID = @"reuseID";
     
     TweetEditingVC *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
     if (indexPath.row == 0) {
-        [vc insertString:@"all" andSelect:NO];
+        [vc insertString:@"全部成员(all)" andSelect:NO];
     } else {
         [vc insertString:member.name andSelect:NO];
     }
