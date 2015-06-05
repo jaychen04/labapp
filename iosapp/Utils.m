@@ -18,6 +18,9 @@
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "TweetsViewController.h"
 
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
+
 #import <MBProgressHUD.h>
 #import <objc/runtime.h>
 #import <Reachability.h>
@@ -30,23 +33,25 @@
 
 + (NSAttributedString *)getAppclient:(int)clientType
 {
-    NSMutableAttributedString *clientString = [NSMutableAttributedString new];
+    NSMutableAttributedString *attributedClientString;
     if (clientType > 1 && clientType <= 6) {
-        NSTextAttachment *textAttachment = [NSTextAttachment new];
-        textAttachment.image = [UIImage imageNamed:@"phone"];
-        [textAttachment adjustY:-2];
-        
-        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-        [clientString appendAttributedString:attachmentString];
-        
         NSArray *clients = @[@"", @"", @"手机", @"Android", @"iPhone", @"Windows Phone", @"微信"];
-        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:clients[clientType]]];
+        
+        attributedClientString = [[NSMutableAttributedString alloc] initWithString:[NSString fontAwesomeIconStringForEnum:FAMobile]
+                                                                        attributes:@{
+                                                                                     NSFontAttributeName: [UIFont fontAwesomeFontOfSize:13],
+                                                                                     NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                                     }];
+        
+        [attributedClientString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", clients[clientType]]
+                                                                                       attributes:@{
+                                                                                                    NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                                                    }]];
     } else {
-        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@""]];
+        attributedClientString = [[NSMutableAttributedString alloc] initWithString:@""];
     }
     
-    return clientString;
+    return attributedClientString;
 }
 
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews
@@ -282,16 +287,12 @@
 
 + (NSAttributedString *)attributedTimeString:(NSString *)dateStr
 {
-    NSMutableAttributedString *attributedTime;
-    
-    NSTextAttachment *textAttachment = [NSTextAttachment new];
-    textAttachment.image = [UIImage imageNamed:@"time"];
-    [textAttachment adjustY:-1];
-    
-    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-    attributedTime = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:[self intervalSinceNow:dateStr]]];
+    NSString *rawString = [NSString stringWithFormat:@"%@ %@", [NSString fontAwesomeIconStringForEnum:FAClockO], [self intervalSinceNow:dateStr]];
+    NSAttributedString *attributedTime = [[NSAttributedString alloc] initWithString:rawString
+                                                                         attributes:@{
+                                                                                      NSFontAttributeName: [UIFont fontAwesomeFontOfSize:12],
+                                                                                      NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                                      }];
     
     return attributedTime;
 }
@@ -563,16 +564,12 @@
 
 + (NSAttributedString *)attributedCommentCount:(int)commentCount
 {
-    NSMutableAttributedString *attributedCommentCount;
-    
-    NSTextAttachment *textAttachment = [NSTextAttachment new];
-    textAttachment.image = [UIImage imageNamed:@"comment"];
-    [textAttachment adjustY:-2];
-    
-    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-    attributedCommentCount = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-    [attributedCommentCount appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%d", commentCount]]];
+    NSString *rawString = [NSString stringWithFormat:@"%@ %d", [NSString fontAwesomeIconStringForEnum:FACommentsO], commentCount];
+    NSAttributedString *attributedCommentCount = [[NSAttributedString alloc] initWithString:rawString
+                                                                                 attributes:@{
+                                                                                              NSFontAttributeName: [UIFont fontAwesomeFontOfSize:12],
+                                                                                              NSForegroundColorAttributeName: [UIColor grayColor]
+                                                                                              }];
     
     return attributedCommentCount;
 }

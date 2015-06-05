@@ -11,6 +11,9 @@
 #import "OSCUser.h"
 #import "Utils.h"
 
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
+
 @implementation TweetCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -64,6 +67,8 @@
     [self.contentView addSubview:_contentLabel];
     
     _likeButton = [UIButton new];
+    _likeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:12];
+    [_likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     [self.contentView addSubview:_likeButton];
     
     _commentCount = [UILabel new];
@@ -124,9 +129,9 @@
     [_commentCount setAttributedText:tweet.attributedCommentCount];
     [_appclientLabel setAttributedText:[Utils getAppclient:tweet.appclient]];
     if (tweet.isLike) {
-        [_likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
+        [_likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] forState:UIControlStateNormal];
     } else {
-        [_likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
+        [_likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsOUp] forState:UIControlStateNormal];
     }
     
     // 添加语音图片
