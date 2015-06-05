@@ -102,12 +102,12 @@
 }
 
 
-- (NSMutableAttributedString *)attributedProjectName
+- (NSMutableAttributedString *)attributedIssueTitle
 {
-    if (!_attributedProjectName) {
+    if (!_attributedIssueTitle) {
         NSString *stateString;
         NSString *sourceString;
-//        fa-circle-o
+        
         if ([_state isEqualToString:@"opened"]) {
             stateString = [NSString fontAwesomeIconStringForEnum:FACircleO];
         } else if ([_state isEqualToString:@"underway"]) {
@@ -131,20 +131,29 @@
         }
         
         
-        _attributedProjectName = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", stateString]
+        _attributedIssueTitle = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", stateString]
                                                                         attributes:@{
                                                                                      NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:16],
                                                                                      NSForegroundColorAttributeName: [UIColor grayColor]
                                                                                      }];
-        [_attributedProjectName appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", sourceString]
+        [_attributedIssueTitle appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@ ", sourceString]
                                                                                        attributes:@{
                                                                                                     NSFontAttributeName: [UIFont fontWithName:kFontAwesomeFamilyName size:16],
                                                                                                     NSForegroundColorAttributeName: [UIColor grayColor]
                                                                                                     }]];
-//        [_attributedProjectName appendAttributedString:[[NSAttributedString alloc] initWithString:_title]];
+        
+        NSDictionary *titleAttributes = @{};
+        if ([_state isEqualToString:@"closed"] || [_state isEqualToString:@"accepted"]) {
+            titleAttributes = @{
+                                NSForegroundColorAttributeName: [UIColor grayColor],
+                                NSStrikethroughStyleAttributeName: @(NSUnderlineStyleSingle)
+                                };
+        }
+        
+        [_attributedIssueTitle appendAttributedString:[[NSAttributedString alloc] initWithString:_title attributes:titleAttributes]];
     }
     
-    return _attributedProjectName;
+    return _attributedIssueTitle;
 }
 
 

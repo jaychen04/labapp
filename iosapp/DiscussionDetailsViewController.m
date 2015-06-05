@@ -122,6 +122,7 @@
         UIWebView *webView = [UIWebView new];
         webView.scrollView.bounces = NO;
         webView.scrollView.scrollEnabled = NO;
+        webView.opaque = NO;
         webView.backgroundColor = [UIColor themeColor];
         [cell.contentView addSubview:webView];
         

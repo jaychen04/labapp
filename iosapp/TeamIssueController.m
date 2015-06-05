@@ -61,7 +61,9 @@ static NSString * const kIssueCellID = @"IssueCell";
     
     return self;
 }
+
 #pragma mark --我的任务
+
 - (instancetype)initWithTeamID:(int)teamID userID:(int64_t)userID andIssueState:(IssueState)issueState
 {
     self = [super init];
@@ -82,6 +84,8 @@ static NSString * const kIssueCellID = @"IssueCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TeamIssueCell class] forCellReuseIdentifier:kIssueCellID];
+    
+    self.lastCell.emptyMessage = @"暂无任务";
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,7 +111,7 @@ static NSString * const kIssueCellID = @"IssueCell";
     TeamIssue *issue = self.objects[indexPath.row];
     
     self.label.font = [UIFont boldSystemFontOfSize:15];
-    self.label.attributedText = issue.attributedProjectName;
+    self.label.attributedText = issue.attributedIssueTitle;
     
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.bounds.size.width - 16, MAXFLOAT)].height;
     

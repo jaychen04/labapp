@@ -49,6 +49,7 @@ static NSString * const kReuseID = @"reuseID";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"团队成员";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kReuseID];
 }
 
@@ -57,6 +58,10 @@ static NSString * const kReuseID = @"reuseID";
 }
 
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.objects.count + 1;
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -64,11 +69,12 @@ static NSString * const kReuseID = @"reuseID";
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = [UIColor themeColor];
     
-    TeamMember *member = self.objects[indexPath.row];
-    
-    [cell.imageView setCornerRadius:5.0];
-    [cell.imageView loadPortrait:member.portraitURL];
-    cell.textLabel.text = member.name;
+    if (indexPath.row == 0) {
+        cell.textLabel.text = @"全体成员(all)";
+    } else {
+        TeamMember *member = self.objects[indexPath.row - 1];
+        cell.textLabel.text = member.name;
+    }
     
     return cell;
 }
@@ -85,7 +91,11 @@ static NSString * const kReuseID = @"reuseID";
     TeamMember *member = self.objects[indexPath.row];
     
     TweetEditingVC *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-    [vc insertString:member.name andSelect:NO];
+    if (indexPath.row == 0) {
+        [vc insertString:@"all" andSelect:NO];
+    } else {
+        [vc insertString:member.name andSelect:NO];
+    }
     
     [self.navigationController popViewControllerAnimated:YES];
 }

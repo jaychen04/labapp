@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, LastCellStatus)
     LastCellStatusEmpty,
 };
 
-@interface LastCell : UITableViewCell
+@interface LastCell : UIView
 
 @property (nonatomic, assign) LastCellStatus status;
 @property (readonly, nonatomic, assign) BOOL shouldResponseToTouch;

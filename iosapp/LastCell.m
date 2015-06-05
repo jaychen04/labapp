@@ -11,15 +11,16 @@
 
 @interface LastCell ()
 
+@property (nonatomic, strong) UILabel *textLabel;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
 
 @end
 
 @implementation LastCell
 
-- (instancetype)init
+- (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super init];
+    self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor themeColor];
         
@@ -33,16 +34,18 @@
 
 - (void)setLayout
 {
-    self.textLabel.backgroundColor = [UIColor themeColor];
-    self.textLabel.textAlignment = NSTextAlignmentCenter;
-    self.textLabel.font = [UIFont boldSystemFontOfSize:14];
+    _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
+    _textLabel.backgroundColor = [UIColor themeColor];
+    _textLabel.textAlignment = NSTextAlignmentCenter;
+    _textLabel.font = [UIFont boldSystemFontOfSize:14];
+    [self addSubview:_textLabel];
     
     _indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _indicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin  | UIViewAutoresizingFlexibleBottomMargin |
                                   UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     _indicator.color = [UIColor colorWithRed:54/255 green:54/255 blue:54/255 alpha:1.0];
     _indicator.center = self.center;
-    [self.contentView addSubview:_indicator];
+    [self addSubview:_indicator];
 }
 
 
@@ -61,14 +64,14 @@
         _indicator.hidden = YES;
     }
     
-    self.textLabel.text = @[
-                            @"",
-                            @"点击加载更多",
-                            @"",
-                            @"加载数据出错",
-                            @"全部加载完毕",
-                            _emptyMessage ?: @"",
-                            ][status];
+    _textLabel.text = @[
+                        @"",
+                        @"点击加载更多",
+                        @"",
+                        @"加载数据出错",
+                        @"全部加载完毕",
+                        _emptyMessage ?: @"",
+                        ][status];
     
     _status = status;
 }
