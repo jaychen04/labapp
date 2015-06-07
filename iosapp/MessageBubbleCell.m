@@ -94,16 +94,13 @@ static const int myBubbleColor     = 0xC7C7C7;
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _bubbleImageView);
     
-    if (_isMine) {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_bubbleImageView]-8-[_portrait(36)]-8-|"
-                                                                                 options:NSLayoutFormatAlignAllBottom metrics:nil views:views]];
-    } else {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_bubbleImageView]"
-                                                                                 options:NSLayoutFormatAlignAllBottom metrics:nil views:views]];
-    }
+    NSLayoutFormatOptions option = _isMine? NSLayoutFormatDirectionRightToLeft : 0;
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_portrait(36)]" options:0 metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_bubbleImageView]-8-|" options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_bubbleImageView]"
+                                                                             options:NSLayoutFormatAlignAllBottom | option
+                                                                             metrics:nil views:views]];
     
     
     CGFloat constantLeft, constantRight;
