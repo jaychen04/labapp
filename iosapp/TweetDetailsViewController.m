@@ -76,7 +76,7 @@
              
              _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
              self.objectAuthorID = _tweet.authorID;
-             _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;}</style>\
+             _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;} audio { width: 90%%; display: block; }</style>\
                             <font size=\"3\"><strong>%@</strong></font>\
                             <br/>",
                             _tweet.body];
