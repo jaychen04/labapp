@@ -49,6 +49,7 @@ static NSString * const kActivtyCellID = @"ActivityCell";
 {
     [super viewDidLoad];
     [self.tableView registerClass:[ActivityCell class] forCellReuseIdentifier:kActivtyCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,6 +64,7 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     OSCActivity *activity = self.objects[indexPath.row];
     
     cell.titleLabel.text       = activity.title;
+    cell.titleLabel.textColor = [UIColor titleColor];
     cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
     [cell.posterView sd_setImageWithURL:activity.coverURL placeholderImage:nil];
     

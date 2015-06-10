@@ -28,7 +28,7 @@
         
         [titles enumerateObjectsUsingBlock:^(NSString *title, NSUInteger idx, BOOL *stop) {
             UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-            button.backgroundColor = [UIColor colorWithHex:0xE1E1E1];
+            button.backgroundColor = [UIColor titleBarColor];
             button.titleLabel.font = [UIFont systemFontOfSize:15];
             [button setTitleColor:[UIColor colorWithHex:0x909090] forState:UIControlStateNormal];
             [button setTitle:title forState:UIControlStateNormal];
@@ -69,6 +69,11 @@
     }
 }
 
-
+- (void)setTitleButtonsColor
+{
+    for (UIButton *button in self.subviews) {
+        button.backgroundColor = [UIColor titleBarColor];
+    }
+}
 
 @end

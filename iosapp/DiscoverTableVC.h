@@ -10,4 +10,6 @@
 
 @interface DiscoverTableVC : UITableViewController
 
+- (void)dawnAndNightMode;
+
 @end

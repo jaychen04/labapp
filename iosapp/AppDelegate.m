@@ -60,6 +60,7 @@
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
     
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
     [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];
     [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHex:0x15A230]} forState:UIControlStateSelected];

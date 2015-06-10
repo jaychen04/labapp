@@ -50,6 +50,7 @@ static NSString * const kTweetLikeUserCellID = @"TweetLikeUserCell";
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.tableView registerClass:[TweetLikeUserCell class] forCellReuseIdentifier:kTweetLikeUserCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -47,6 +47,8 @@
     [_lastCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fetchMore)]];
     self.tableView.tableFooterView = _lastCell;
     
+    _lastCell.backgroundColor = [UIColor themeColor];
+    
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
@@ -54,7 +56,7 @@
     _label.numberOfLines = 0;
     _label.lineBreakMode = NSLineBreakByWordWrapping;
     _label.font = [UIFont boldSystemFontOfSize:14];
-    
+    _lastCell.textLabel.textColor = [UIColor titleColor];
     
     _manager = [AFHTTPRequestOperationManager manager];
     [_manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];

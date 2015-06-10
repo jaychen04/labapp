@@ -62,6 +62,16 @@
     return self;
 }
 
+- (void)dawnAndNightMode
+{
+    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.separatorColor = [UIColor separatorColor];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -287,9 +297,12 @@
     selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
     [cell setSelectedBackgroundView:selectedBackground];
     
-    cell.backgroundColor = [UIColor colorWithHex:0xF9F9F9];
+    cell.backgroundColor = [UIColor cellsColor];//colorWithHex:0xF9F9F9
+    
     cell.textLabel.text = @[@"消息", @"博客", @"团队"][indexPath.row];
     cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team"][indexPath.row]];
+    
+    cell.textLabel.textColor = [UIColor titleColor];
     
     if (indexPath.row == 0) {
         if (_badgeValue == 0) {
