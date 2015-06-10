@@ -16,13 +16,13 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
-        self.backgroundColor = [UIColor themeColor];
         
         [self initSubviews];
         [self setLayout];
     }
     return self;
 }
+
 
 - (void)initSubviews
 {

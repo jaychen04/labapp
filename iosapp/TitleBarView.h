@@ -16,4 +16,6 @@
 
 - (instancetype)initWithFrame:(CGRect)frame andTitles:(NSArray*)titles;
 
+- (void)setTitleButtonsColor;
+
 @end

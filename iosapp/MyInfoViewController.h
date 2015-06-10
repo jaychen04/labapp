@@ -11,5 +11,6 @@
 @interface MyInfoViewController : UITableViewController
 
 - (void)refreshView;
+- (void)dawnAndNightMode;
 
 @end

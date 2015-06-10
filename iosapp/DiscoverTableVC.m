@@ -22,6 +22,16 @@
 
 @implementation DiscoverTableVC
 
+- (void)dawnAndNightMode
+{
+    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.separatorColor = [UIColor separatorColor];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -70,6 +80,9 @@
 {
     UITableViewCell *cell = [UITableViewCell new];
     cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
+    
+    cell.backgroundColor = [UIColor cellsColor];
+    cell.textLabel.textColor = [UIColor titleColor];
     
     switch (indexPath.section) {
         case 0:

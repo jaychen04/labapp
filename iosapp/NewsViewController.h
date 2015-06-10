@@ -21,5 +21,6 @@ typedef NS_ENUM(int, NewsListType)
 @interface NewsViewController : OSCObjsViewController
 
 - (instancetype)initWithNewsListType:(NewsListType)type;
+- (void)dawnAndNightMode;
 
 @end

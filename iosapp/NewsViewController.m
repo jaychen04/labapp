@@ -55,6 +55,11 @@ static NSString *kNewsCellID = @"NewsCell";
     return [[xml.rootElement firstChildWithTag:@"newslist"] childrenWithTag:@"news"];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.tableView.separatorColor = [UIColor separatorColor];
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad
 {
@@ -73,12 +78,15 @@ static NSString *kNewsCellID = @"NewsCell";
     NewsCell *cell = [tableView dequeueReusableCellWithIdentifier:kNewsCellID forIndexPath:indexPath];
     OSCNews *news = self.objects[indexPath.row];
     
+    cell.backgroundColor = [UIColor themeColor];
+    
     [cell.titleLabel setAttributedText:news.attributedTittle];
     [cell.bodyLabel setText:news.body];
     [cell.authorLabel setText:news.author];
+    cell.titleLabel.textColor = [UIColor titleColor];
     [cell.timeLabel setAttributedText:[Utils attributedTimeString:news.pubDate]];
     [cell.commentCount setAttributedText:news.attributedCommentCount];
-    
+
     return cell;
 }
 

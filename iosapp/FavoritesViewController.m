@@ -44,6 +44,7 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kFavoriteCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 
@@ -54,6 +55,7 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     
     cell.backgroundColor = [UIColor themeColor];
     cell.textLabel.text = favorite.title;
+    cell.textLabel.textColor = [UIColor titleColor];
     
     return cell;
 }
