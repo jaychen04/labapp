@@ -50,7 +50,9 @@ static BOOL isNight;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.separatorColor = [UIColor separatorColor];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
+
 }
 
 - (void)dawnAndNightMode:(NSNotification *)center
@@ -141,12 +143,12 @@ static BOOL isNight;
     [cell setSelectedBackgroundView:selectedBackground];
     cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"sidemenu-settings", @"sidemenu-settings"][indexPath.row]];
     cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"夜间模式", @"注销"][indexPath.row];
+
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
         cell.textLabel.textColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     } else {
         cell.textLabel.textColor = [UIColor colorWithHex:0x555555];
     }
-    
     cell.textLabel.font = [UIFont systemFontOfSize:19];
     
     return cell;
