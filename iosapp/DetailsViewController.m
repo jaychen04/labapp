@@ -624,11 +624,13 @@
 
 #pragma mark - 浏览器链接处理
 
-//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-//{
-//    [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
-//    return [request.URL.absoluteString isEqualToString:@"about:blank"];
-//}
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
+    [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
+    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
