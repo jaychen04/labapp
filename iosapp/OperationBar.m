@@ -7,6 +7,8 @@
 //
 
 #import "OperationBar.h"
+#import "AppDelegate.h"
+
 #import <ReactiveCocoa.h>
 
 @implementation OperationBar
@@ -40,6 +42,15 @@
             [button setBackgroundImage:image forState:UIControlStateNormal];
             
             UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+            
+            if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+                self.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+                barButton.tintColor = [UIColor clearColor];
+            } else {
+                self.barTintColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
+                barButton.tintColor = [UIColor clearColor];
+            }
+            
             [items addObject:barButton];
         } else {
             UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
@@ -56,7 +67,6 @@
         }
 
     }];
-
     
     [self setItems:items];
 }
