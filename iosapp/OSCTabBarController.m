@@ -101,9 +101,13 @@
 //            [tweetVc.viewPager.tableView reloadData];
         } else if (idx == 3) {
             DiscoverTableVC *dvc = nav.viewControllers[0];
+            [dvc.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+            [dvc.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
             [dvc dawnAndNightMode];
         } else if (idx == 4) {
             MyInfoViewController *myInfo = nav.viewControllers[0];
+            [myInfo.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+            [myInfo.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
             [myInfo dawnAndNightMode];
         }
     }];
