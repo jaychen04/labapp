@@ -82,6 +82,10 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
     cell.nameLabel.text = software.name;
     cell.descriptionLabel.text = software.softwareDescription;
     cell.nameLabel.textColor = [UIColor titleColor];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

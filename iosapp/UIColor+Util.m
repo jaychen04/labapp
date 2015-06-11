@@ -94,5 +94,13 @@
     return [UIColor colorWithHex:0x009000];
 }
 
++ (UIColor *)selectCellSColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithRed:23.0/255 green:23.0/255 blue:23.0/255 alpha:1.0];
+    }
+    return [UIColor colorWithRed:203.0/255 green:203.0/255 blue:203.0/255 alpha:1.0];
+}
+
 
 @end

@@ -70,6 +70,9 @@ static NSString * const kSoftwareCatalogCellID = @"SoftwareCatalogCell";
     cell.textLabel.text = softwareCatalog.name;
     cell.textLabel.textColor = [UIColor titleColor];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

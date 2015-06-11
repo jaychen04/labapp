@@ -69,6 +69,9 @@ static NSString * const kMessageCellID = @"MessageCell";
     
     cell.contentLabel.textColor = [UIColor titleColor];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

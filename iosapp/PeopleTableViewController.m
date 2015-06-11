@@ -74,6 +74,10 @@ static NSString * const kPersonCellID = @"PersonCell";
     cell.nameLabel.text = user.name;
     cell.infoLabel.text = user.location;
     cell.infoLabel.textColor = [UIColor titleColor];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

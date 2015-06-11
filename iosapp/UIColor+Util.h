@@ -21,5 +21,6 @@
 + (UIColor *)titleBarColor;
 + (UIColor *)selectTitleBarColor;
 + (UIColor *)navigationbarColor;
++ (UIColor *)selectCellSColor;
 
 @end

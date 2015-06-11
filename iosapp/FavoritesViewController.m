@@ -57,6 +57,9 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     cell.textLabel.text = favorite.title;
     cell.textLabel.textColor = [UIColor titleColor];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

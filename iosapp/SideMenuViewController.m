@@ -151,6 +151,9 @@ static BOOL isNight;
     }
     cell.textLabel.font = [UIFont systemFontOfSize:19];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

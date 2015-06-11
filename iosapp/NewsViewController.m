@@ -85,6 +85,9 @@ static NSString *kNewsCellID = @"NewsCell";
     cell.titleLabel.textColor = [UIColor titleColor];
     [cell.timeLabel setAttributedText:[Utils attributedTimeString:news.pubDate]];
     [cell.commentCount setAttributedText:news.attributedCommentCount];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
 
     return cell;
 }

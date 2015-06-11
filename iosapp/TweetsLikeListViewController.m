@@ -70,6 +70,9 @@ static NSString * const kTweetLikeUserCellID = @"TweetLikeUserCell";
     [cell.portrait loadPortrait:likesUser.portraitURL];
     cell.userNameLabel.text = likesUser.name;
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

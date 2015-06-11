@@ -89,6 +89,9 @@ static NSString *kBlogCellID = @"BlogCell";
     [cell.timeLabel setAttributedText:[Utils attributedTimeString:blog.pubDate]];
     [cell.commentCount setAttributedText:blog.attributedCommentCount];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

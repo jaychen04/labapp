@@ -75,6 +75,9 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     } else if (activity.status == ActivityStatusActivityFinished && activity.applyStatus == ActivityApplyStatusDetermined) {
         [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_over"]];
     }
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
 
     return cell;
 }

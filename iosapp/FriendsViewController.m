@@ -75,6 +75,9 @@ static NSString * const kPersonCellID = @"PersonCell";
     cell.infoLabel.text = friend.expertise;
     cell.infoLabel.textColor = [UIColor titleColor];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 
