@@ -18,6 +18,5 @@ typedef NS_ENUM(NSUInteger, BlogsType)
 
 - (instancetype)initWithBlogsType:(BlogsType)type;
 - (instancetype)initWithUserID:(int64_t)userID;
-- (void)dawnAndNightMode;
 
 @end
