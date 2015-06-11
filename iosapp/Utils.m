@@ -64,7 +64,7 @@
     for (NSArray *news in relativeNews) {
         middle = [NSString stringWithFormat:@"%@<a href=%@ style='text-decoration:none'>%@</a><p/>", middle, news[1], news[0]];
     }
-    return [NSString stringWithFormat:@"<hr/>相关文章<div style='font-size:14px'><p/>%@</div>", middle];
+    return [NSString stringWithFormat:@"相关文章<div style='font-size:14px'><p/>%@</div>", middle];
 }
 
 + (NSString *)GenerateTags:(NSArray *)tags

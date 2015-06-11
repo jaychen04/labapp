@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="css/detail.css" />
+    </head>
+    
+    <body>
+        <div>
+            <img id="software_logo" src="{{logoURL}}" />
+            <b>{{title}}</b>
+        </div>
+        
+        <hr />
+        
+        <main>
+            {{{content}}}
+            
+            <br />
+            
+            <table id="software_information">
+                {{#authorID}}
+                    <tr>
+                        <th>软件作者</th>
+                        <td class="author">
+                            <a href="http://my.oschina.net/u/{{authorID}}">{{author}}</a>
+                        </td>
+                    </tr>
+                {{/}}
+                <tr>
+                    <th>授权协议</th>
+                    <td>{{license}}</th>
+                </tr>
+                <tr>
+                    <th>开发语言</th>
+                    <td>{{language}}</td>
+                </tr>
+                <tr>
+                    <th>操作系统</th>
+                    <td>{{os}}</td>
+                </tr>
+                <tr>
+                    <th>收录时间</th>
+                    <td>{{recordTime}}</td>
+                </tr>
+            </table>
+            
+            <br />
+            
+            <div id="software_buttons">
+                {{#homepageURL}}
+<!--                <form action="{{homepageURL}}">-->
+<!--                    <input type="button" value="软件首页">-->
+<!--                </form>-->
+                <div>
+                    <button onclick="location.href='{{homepageURL}}'">软件首页</button>
+                </div>
+                {{/}}
+                {{#documentURL}}
+<!--                <form action="{{documentURL}}">-->
+<!--                    <input type="button" value="软件文档">-->
+<!--                </form>-->
+                <div>
+                    <button onclick="location.href='{{documentURL}}'">软件文档</button>
+                </div>
+                {{/}}
+                {{#downloadURL}}
+<!--                <form action="{{downloadURL}}">-->
+<!--                    <input type="button" value="软件下载">-->
+<!--                </form>-->
+                <div>
+                    <button onclick="location.href='{{downloadURL}}'">软件下载</button>
+                </div>
+                {{/}}
+            </div>
+            
+            
+            <div style='margin-bottom:60px'/>
+        </main>
+    </body>
+</html>

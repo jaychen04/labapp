@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" type="text/css" href="css/detail.css" />
+    </head>
+    
+    <body>
+        <b>{{title}}</b>
+        <div>
+            <a href='http://my.oschina.net/u/{{authorID}}'>{{authorName}}</a> 发布于 {{timeInterval}}
+        </div>
+        
+        <hr />
+        
+        <div>{{{content}}}</div>
+        
+        {{#softwareName}}
+            <div id='oschina_software'>更多关于:&nbsp;<a href='{{softwareLink}}'>{{softwareName}}</a>&nbsp;的详细信息</div>
+        {{/}}
+        
+        {{#tags}}
+            {{{tags}}}
+        {{/}}
+        
+        {{#relatedInfo}}
+            <hr />
+            <div>{{{relatedInfo}}}</div>
+        {{/}}
+        
+        <div style='margin-bottom:60px'/>
+    </body>
+</html>
