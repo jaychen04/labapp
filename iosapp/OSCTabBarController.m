@@ -88,7 +88,7 @@
                 [table.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
                 [table.tableView reloadData];
             }];
-//            [newsVc.viewPager.tableView reloadData];
+
         } else if (idx == 1) {
             SwipableViewController *tweetVc = nav.viewControllers[0];
             [tweetVc.titleBar setTitleButtonsColor];
@@ -98,7 +98,7 @@
                 [table.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
                 [table.tableView reloadData];
             }];
-//            [tweetVc.viewPager.tableView reloadData];
+
         } else if (idx == 3) {
             DiscoverTableVC *dvc = nav.viewControllers[0];
             [dvc.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];

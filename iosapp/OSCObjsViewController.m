@@ -36,9 +36,19 @@
     
     return self;
 }
-
+- (void)dawnAndNightMode:(NSNotification *)center
+{
+    _lastCell.backgroundColor = [UIColor themeColor];
+    _lastCell.textLabel.textColor = [UIColor titleColor];
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dawnAndNight" object:nil];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.tableView.backgroundColor = [UIColor themeColor];
