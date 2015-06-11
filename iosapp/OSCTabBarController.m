@@ -62,7 +62,6 @@
     [super viewWillAppear:animated];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
-    
 }
 
 - (void)dawnAndNightMode:(NSNotification *)center
@@ -75,7 +74,7 @@
     newTweetViewCtl.view.backgroundColor = [UIColor themeColor];
     hotTweetViewCtl.view.backgroundColor = [UIColor themeColor];
     myTweetViewCtl.view.backgroundColor = [UIColor themeColor];
-    
+
     [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
     [[UITabBar appearance] setBarTintColor:[UIColor titleBarColor]];
     
@@ -83,12 +82,23 @@
         if (idx == 0) {
             SwipableViewController *newsVc = nav.viewControllers[0];
             [newsVc.titleBar setTitleButtonsColor];
-            [newsVc.viewPager.tableView reloadData];
-            
+            [newsVc.viewPager.controllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                UITableViewController *table = obj;
+                [table.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+                [table.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
+                [table.tableView reloadData];
+            }];
+//            [newsVc.viewPager.tableView reloadData];
         } else if (idx == 1) {
             SwipableViewController *tweetVc = nav.viewControllers[0];
             [tweetVc.titleBar setTitleButtonsColor];
-            [tweetVc.viewPager.tableView reloadData];
+            [tweetVc.viewPager.controllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                UITableViewController *table = obj;
+                [table.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+                [table.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
+                [table.tableView reloadData];
+            }];
+//            [tweetVc.viewPager.tableView reloadData];
         } else if (idx == 3) {
             DiscoverTableVC *dvc = nav.viewControllers[0];
             [dvc dawnAndNightMode];

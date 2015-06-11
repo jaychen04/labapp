@@ -24,7 +24,7 @@ static NSString *kNewsCellID = @"NewsCell";
 - (instancetype)initWithNewsListType:(NewsListType)type
 {
     self = [super init];
-    
+
     if (self) {
         __weak NewsViewController *weakSelf = self;
         self.generateURL = ^NSString * (NSUInteger page) {
@@ -58,7 +58,6 @@ static NSString *kNewsCellID = @"NewsCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     self.tableView.separatorColor = [UIColor separatorColor];
-    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad

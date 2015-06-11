@@ -61,7 +61,7 @@ static NSString *kBlogCellID = @"BlogCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     self.tableView.separatorColor = [UIColor separatorColor];
-    [self.tableView reloadData];
+//    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad {
