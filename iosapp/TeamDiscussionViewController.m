@@ -78,6 +78,9 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
     
     [cell setContentWithDiscussion:discussion];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 
