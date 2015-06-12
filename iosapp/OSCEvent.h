@@ -38,7 +38,7 @@
 @property (nonatomic, assign) BOOL hasReference;
 @property (nonatomic, assign) BOOL shouleShowClientOrCommentCount;
 @property (nonatomic, strong, readonly) NSMutableAttributedString *actionStr;
-@property (nonatomic, strong) NSMutableAttributedString *attributedCommentCount;
+@property (nonatomic, strong) NSAttributedString *attributedCommentCount;
 
 @property (nonatomic, assign) CGFloat cellHeight;
 
