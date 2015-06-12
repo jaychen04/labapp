@@ -9,6 +9,7 @@
 #import "CommentCell.h"
 #import "OSCComment.h"
 #import "Utils.h"
+#import "AppDelegate.h"
 
 @interface CommentCell ()
 
@@ -132,16 +133,26 @@
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
         label.font = [UIFont systemFontOfSize:13];
+        label.textColor = [UIColor titleColor];
         
         NSMutableAttributedString *referenceText = [[NSMutableAttributedString alloc] initWithString:reference.title
                                                                                           attributes:@{NSForegroundColorAttributeName:[UIColor nameColor]}];
         [referenceText appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\n%@", reference.body]]];
         label.attributedText = referenceText;
-        label.backgroundColor = [UIColor colorWithHex:0xFFFAF0];
+        
         [_currentContainer addSubview:label];
         
         UIView *container = [UIView new];
         [_currentContainer addSubview:container];
+        
+        if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+            _currentContainer.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1.0];
+            label.backgroundColor = [UIColor clearColor];
+        }
+        else {
+            _currentContainer.backgroundColor = [UIColor colorWithHex:0xFFFAF0];
+            label.backgroundColor = [UIColor colorWithHex:0xFFFAF0];
+        }
         
         for (UIView *view in _currentContainer.subviews) {
             view.translatesAutoresizingMaskIntoConstraints = NO;

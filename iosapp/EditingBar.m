@@ -49,7 +49,7 @@
     
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         self.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
-    
+        [_editView setBorderWidth:1.0f andColor:[UIColor colorWithRed:106.0/255 green:106.0/255 blue:106.0/255 alpha:1.0]];
         _modeSwitchButton.backgroundColor = [UIColor clearColor];
         _inputViewButton.backgroundColor = [UIColor clearColor];
         _editView.backgroundColor = [UIColor colorWithRed:0.17 green:0.17 blue:0.17 alpha:1.0];
