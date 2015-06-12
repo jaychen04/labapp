@@ -48,6 +48,7 @@
     _contentLabel = [UILabel new];
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _contentLabel.textColor = [UIColor titleColor];
     [self.contentView addSubview:_contentLabel];
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
