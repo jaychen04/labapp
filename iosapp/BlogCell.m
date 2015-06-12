@@ -47,12 +47,12 @@
     
     self.timeLabel = [UILabel new];
     self.timeLabel.font = [UIFont systemFontOfSize:12];
-    self.timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    self.timeLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:self.timeLabel];
     
     self.commentCount = [UILabel new];
     self.commentCount.font = [UIFont systemFontOfSize:12];
-    self.commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
+    self.commentCount.textColor = [UIColor grayColor];
     [self.contentView addSubview:self.commentCount];
 }
 

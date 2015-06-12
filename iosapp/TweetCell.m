@@ -52,12 +52,12 @@
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:12];
-    _timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _timeLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_timeLabel];
     
     _appclientLabel = [UILabel new];
     _appclientLabel.font = [UIFont systemFontOfSize:12];
-    _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _appclientLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_appclientLabel];
     
     _contentLabel = [UILabel new];
@@ -72,7 +72,7 @@
     
     _commentCount = [UILabel new];
     _commentCount.font = [UIFont systemFontOfSize:12];
-    _commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _commentCount.textColor = [UIColor grayColor];
     [self.contentView addSubview:_commentCount];
     
     _thumbnail = [UIImageView new];

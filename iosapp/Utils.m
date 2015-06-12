@@ -40,13 +40,9 @@
         attributedClientString = [[NSMutableAttributedString alloc] initWithString:[NSString fontAwesomeIconStringForEnum:FAMobile]
                                                                         attributes:@{
                                                                                      NSFontAttributeName: [UIFont fontAwesomeFontOfSize:13],
-                                                                                     NSForegroundColorAttributeName: [UIColor grayColor]
                                                                                      }];
         
-        [attributedClientString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", clients[clientType]]
-                                                                                       attributes:@{
-                                                                                                    NSForegroundColorAttributeName: [UIColor grayColor]
-                                                                                                    }]];
+        [attributedClientString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", clients[clientType]]]];
     } else {
         attributedClientString = [[NSMutableAttributedString alloc] initWithString:@""];
     }
@@ -291,7 +287,6 @@
     NSAttributedString *attributedTime = [[NSAttributedString alloc] initWithString:rawString
                                                                          attributes:@{
                                                                                       NSFontAttributeName: [UIFont fontAwesomeFontOfSize:12],
-                                                                                      NSForegroundColorAttributeName: [UIColor grayColor]
                                                                                       }];
     
     return attributedTime;
@@ -568,7 +563,6 @@
     NSAttributedString *attributedCommentCount = [[NSAttributedString alloc] initWithString:rawString
                                                                                  attributes:@{
                                                                                               NSFontAttributeName: [UIFont fontAwesomeFontOfSize:12],
-                                                                                              NSForegroundColorAttributeName: [UIColor grayColor]
                                                                                               }];
     
     return attributedCommentCount;
