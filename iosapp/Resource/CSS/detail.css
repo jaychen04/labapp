@@ -3,7 +3,7 @@ body {
     line-height: 1.5em;
     background-color: #EBEBF3;
     word-break: break-all;
-/*    font-family: Arial;*/
+    font-family: Arial;
 }
 
 span {
@@ -48,8 +48,14 @@ body.night .original {
 }
 
 
+#title {
+    font-size: 20px;
+    word-break: normal;
+}
+
+
 #pub_info {
-    font-size: 13px;
+    font-size: 14px;
     color: #707070;
 }
 
@@ -65,11 +71,6 @@ body.night .original {
 .more_about a {
     font-weight: bold;
 }
-
-#bottom_gap {
-    margin-bottom: 60px;
-}
-
 
 /*** software ***/
 

@@ -42,12 +42,12 @@
     </head>
     
     <body>
-        <b>{{title}}</b>
+        <b id="title">{{title}}</b>
         <div id="pub_info">
             <a href="http://my.oschina.net/u/{{authorID}}" class="author">{{authorName}}</a> 发布于 {{timeInterval}}
         </div>
         
-        <hr />
+        <div style='margin-bottom:30px'/>
         
         <div>{{{content}}}</div>
         
@@ -64,6 +64,6 @@
             <div>{{{relatedInfo}}}</div>
         {{/}}
         
-        <div id="bottom_gap" />
+        <div style='margin-bottom:60px'/>
     </body>
 </html>
