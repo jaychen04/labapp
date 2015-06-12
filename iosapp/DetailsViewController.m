@@ -28,6 +28,7 @@
 #import "SoftwareCommentsViewController.h"
 #import "UMSocial.h"
 #import "UIBarButtonItem+Badge.h"
+#import "AppDelegate.h"
 
 #import <MBProgressHUD.h>
 
@@ -377,6 +378,9 @@
                                                   otherButtonTitles:@"确定", nil];
         alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
         [alertView textFieldAtIndex:0].placeholder = @"举报原因";
+        if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
+            [alertView textFieldAtIndex:0].keyboardAppearance = UIKeyboardAppearanceDark;
+        }
         [alertView show];
     };
 }
