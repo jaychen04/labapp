@@ -46,12 +46,12 @@
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:14];
-    _timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _timeLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_timeLabel];
     
     _appclientLabel = [UILabel new];
     _appclientLabel.font = [UIFont systemFontOfSize:14];
-    _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _appclientLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_appclientLabel];
     
     _likeButton = [UIButton new];
@@ -71,7 +71,7 @@
     _likeListLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _likeListLabel.font = [UIFont systemFontOfSize:12];
     _likeListLabel.userInteractionEnabled = YES;
-    _likeListLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _likeListLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_likeListLabel];
 }
 

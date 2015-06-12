@@ -506,6 +506,7 @@
                            @"title": titleStr,
                            @"authorID": @(softwareDetails.authorID),
                            @"author": softwareDetails.author,
+                           @"recommended": @(softwareDetails.isRecommended),
                            @"logoURL": softwareDetails.logoURL,
                            @"content": softwareDetails.body,
                            @"license": softwareDetails.license,

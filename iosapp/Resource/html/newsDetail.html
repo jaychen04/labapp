@@ -42,17 +42,17 @@
     </head>
     
     <body>
-        <b>{{title}}</b>
-        <div>
-            <a href='http://my.oschina.net/u/{{authorID}}'>{{authorName}}</a> 发布于 {{timeInterval}}
+        <div id="title_div">
+            <b>{{title}}</b>
+            <div id="pub_info">
+                <a href="http://my.oschina.net/u/{{authorID}}" class="author">{{authorName}}</a> 发布于 {{timeInterval}}
+            </div>
         </div>
-        
-        <hr />
         
         <div>{{{content}}}</div>
         
         {{#softwareName}}
-            <div id='oschina_software'>更多关于:&nbsp;<a href='{{softwareLink}}'>{{softwareName}}</a>&nbsp;的详细信息</div>
+            <div class="more_about">更多关于: <a href="{{softwareLink}}">{{softwareName}}</a> 的详细信息</div>
         {{/}}
         
         {{#tags}}
@@ -63,7 +63,5 @@
             <hr />
             <div>{{{relatedInfo}}}</div>
         {{/}}
-        
-        <div style='margin-bottom:60px'/>
     </body>
 </html>

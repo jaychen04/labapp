@@ -42,12 +42,11 @@
     </head>
     
     <body>
-        <div>
+        <div id="title_div">
             <img id="software_logo" src="{{logoURL}}" />
             <b>{{title}}</b>
+            {{#recommended}}<img id="recommend_tag" src="recommend_tag.png" />{{/}}
         </div>
-        
-        <hr />
         
         <main>
             {{{content}}}
@@ -59,7 +58,7 @@
                     <tr>
                         <th>软件作者</th>
                         <td class="author">
-                            <a href="http://my.oschina.net/u/{{authorID}}">{{author}}</a>
+                            <a href="http://my.oschina.net/u/{{authorID}}" class="author">{{author}}</a>
                         </td>
                     </tr>
                 {{/}}
@@ -93,25 +92,16 @@
                 </div>
                 {{/}}
                 {{#documentURL}}
-<!--                <form action="{{documentURL}}">-->
-<!--                    <input type="button" value="软件文档">-->
-<!--                </form>-->
                 <div>
                     <button onclick="location.href='{{documentURL}}'">软件文档</button>
                 </div>
                 {{/}}
                 {{#downloadURL}}
-<!--                <form action="{{downloadURL}}">-->
-<!--                    <input type="button" value="软件下载">-->
-<!--                </form>-->
                 <div>
                     <button onclick="location.href='{{downloadURL}}'">软件下载</button>
                 </div>
                 {{/}}
             </div>
-            
-            
-            <div style='margin-bottom:60px'/>
         </main>
     </body>
 </html>
