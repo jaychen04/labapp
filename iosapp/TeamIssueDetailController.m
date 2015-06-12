@@ -203,6 +203,9 @@
     {
         TeamIssueDetailCell *cell;
         
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+        
         NSDictionary *tempDic = _originDatas[indexPath.row];
         if (![tempDic[@"title"] isEqualToString:@"-"]) {    //根据原始设定数据判断当前cell的风格
             if ([tempDic[@"cellLevel"] intValue] == 1) {
@@ -216,7 +219,10 @@
                     cell.iconLabel.text = [self getIconStringWithState:_issueState];
                     cell.titleLabel.text =  _issueTitle;
                     cell.titleLabel.font =[UIFont systemFontOfSize:17];
-                    cell.titleLabel.textColor = [UIColor blackColor];
+                    cell.titleLabel.textColor = [UIColor titleColor];
+                    
+                    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+                    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
                     
                     if ([_issueTitle length] > 0) {
                         BOOL isFinish = [_issueState isEqualToString:@"accepted"] || [_issueState isEqualToString:@"closed"];
@@ -248,6 +254,8 @@
         return cell;
     }else {
         UITableViewCell *cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
         return cell;
     }
 }
@@ -389,7 +397,7 @@
         label.textColor = [UIColor grayColor];
     }else {     //去掉中线
         [content addAttribute:NSStrikethroughStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleNone] range:NSMakeRange(0, [label.text length])];
-        label.textColor = [UIColor blackColor];
+        label.textColor = [UIColor titleColor];
     }
     label.attributedText = content;
 }
