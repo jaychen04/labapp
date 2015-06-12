@@ -2,6 +2,7 @@ body {
     font-size: 1em;
     line-height: 1.5em;
     background-color: #EBEBF3;
+    word-break: break-all;
 /*    font-family: Arial;*/
 }
 
@@ -10,7 +11,6 @@ span {
 }
 
 a {
-    color: #5091d2;
     text-decoration: none;
     word-break: break-all;
 }
@@ -24,12 +24,51 @@ table {
     max-width: 100%;
 }
 
+pre {
+    font-size: 9pt;
+    font-family: Courier New, Arial;
+    border: 1px solid #ddd;
+    border-left: 5px solid #6CE26C;
+    background: #f6f6f6;
+    padding: 5px;
+}
+
+.more_about {
+    color: red;
+}
+
+.more_about a {
+    font-weight: bold;
+}
+
 
 body.night .original {
     color: #125289;
     border-color: #363636;
 }
 
+
+#pub_info {
+    font-size: 13px;
+    color: #707070;
+}
+
+.author {
+    color: #087221;
+    font-weight: bold;
+}
+
+.more_about {
+    color: red;
+}
+
+.more_about a {
+    font-weight: bold;
+}
+
+#bottom_gap {
+    margin-bottom: 60px;
+}
 
 
 /*** software ***/
