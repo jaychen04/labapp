@@ -56,7 +56,7 @@
     self.appclientLabel = [UILabel new];
     self.appclientLabel.font = [UIFont systemFontOfSize:12];
     self.appclientLabel .textAlignment = NSTextAlignmentLeft;
-    self.appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    self.appclientLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:self.appclientLabel];
     
     self.contentLabel = [UILabel new];
@@ -97,9 +97,9 @@
 - (void)setContentWithComment:(OSCComment *)comment
 {
     [_portrait loadPortrait:comment.portraitURL];
-    [_authorLabel setText:comment.author];
-    [_timeLabel setText:[Utils intervalSinceNow:comment.pubDate]];
-    [_appclientLabel setAttributedText:[Utils getAppclient:comment.appclient]];
+    _authorLabel.text = comment.author;
+    _timeLabel.attributedText = [Utils attributedTimeString:comment.pubDate];
+    _appclientLabel.attributedText = [Utils getAppclient:comment.appclient];
     
     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
     if (comment.replies.count > 0) {
