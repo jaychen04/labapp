@@ -74,6 +74,9 @@ static NSString *kTeamIssueListCellID = @"teamIssueListCell";
     [cell.detailLabel setText:list.listDescription.length? list.listDescription : @"暂无描述"];
     [cell.countLabel setText:[NSString stringWithFormat:@"%d/%d",list.openedIssueCount,list.allIssueCount]];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 
