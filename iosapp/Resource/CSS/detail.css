@@ -18,12 +18,16 @@ a {
 }
 
 
-img {
+img,table {
     max-width: 100%;
 }
 
-table {
-    max-width: 100%;
+ul {
+    padding-left: 20px;
+}
+
+ol {
+    padding-left: 25px;
 }
 
 pre {
@@ -70,13 +74,6 @@ body.night .original {
     font-weight: bold;
 }
 
-.more_about {
-    color: red;
-}
-
-.more_about a {
-    font-weight: bold;
-}
 
 /*** software ***/
 
