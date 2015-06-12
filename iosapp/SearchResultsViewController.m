@@ -101,7 +101,7 @@ static NSString * const kSoftware       = @"software";
         cell.titleLabel.text  = result.title;
         cell.authorLabel.text = result.author;
         cell.bodyLabel.text   = result.objectDescription;
-        cell.timeLabel.text   = [Utils intervalSinceNow:result.pubDate];
+        cell.timeLabel.attributedText = [Utils attributedTimeString:result.pubDate];
         
         return cell;
     }
