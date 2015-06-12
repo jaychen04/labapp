@@ -44,10 +44,11 @@
     <body>
         <div>
             <img id="software_logo" src="{{logoURL}}" />
-            <b>{{title}}</b>
+            <b id="title">{{title}}</b>
+            {{#recommended}}<img id="recommend_tag" src="recommend_tag.png" />{{/}}
         </div>
         
-        <hr />
+        <div style='margin-bottom:30px'/>
         
         <main>
             {{{content}}}

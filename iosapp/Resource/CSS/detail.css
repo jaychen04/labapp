@@ -80,6 +80,12 @@ body.night .original {
     vertical-align: middle;
 }
 
+#recommend_tag {
+    width: 25px;
+    height: 25px;
+    vertical-align: middle;
+}
+
 #software_buttons {
     width: 100%;
     float: left;
