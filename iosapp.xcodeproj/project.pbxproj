@@ -443,6 +443,7 @@
 		C5D7C10E1B12F8A8003EFE9B /* CheckboxTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7C10D1B12F8A8003EFE9B /* CheckboxTableCell.m */; };
 		C5D7C1111B14508E003EFE9B /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7C1101B14508E003EFE9B /* TableViewCell.m */; };
 		C5D7F6561B0DDCC900AB01CC /* TeamRepliesBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */; };
+		C5DD1E831B298281008DC978 /* js in Resources */ = {isa = PBXBuildFile; fileRef = C5DD1E821B298281008DC978 /* js */; };
 		C5DD2F791B26C2F70099DCD1 /* html in Resources */ = {isa = PBXBuildFile; fileRef = C5DD2F771B26C2F70099DCD1 /* html */; };
 		C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */; };
 		C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */; };
@@ -1109,6 +1110,7 @@
 		C5D7C1101B14508E003EFE9B /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		C5D7F6541B0DDCC900AB01CC /* TeamRepliesBVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamRepliesBVC.h; sourceTree = "<group>"; };
 		C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamRepliesBVC.m; sourceTree = "<group>"; };
+		C5DD1E821B298281008DC978 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		C5DD2F771B26C2F70099DCD1 /* html */ = {isa = PBXFileReference; lastKnownFileType = folder; path = html; sourceTree = "<group>"; };
 		C5E73DF81AF755A900974EDC /* WeeklyReportTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTitleBar.h; sourceTree = "<group>"; };
 		C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTitleBar.m; sourceTree = "<group>"; };
@@ -1953,6 +1955,7 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				C5DD1E821B298281008DC978 /* js */,
 				C56EA12D1B26DC3300A4CDFC /* css */,
 				C5DD2F771B26C2F70099DCD1 /* html */,
 				C5344E901B1EEFE80024F110 /* page_icon_empty@2x.png */,
@@ -2947,6 +2950,7 @@
 				382A94911A26D27400AAAFEA /* 078@2x.png in Resources */,
 				382A94591A26D27400AAAFEA /* 021@2x.png in Resources */,
 				C5D5504B1B04764000CCA308 /* bowtie@2x.png in Resources */,
+				C5DD1E831B298281008DC978 /* js in Resources */,
 				38763A3A1A8DDF86008E6805 /* bubble.png in Resources */,
 				382A94531A26D27400AAAFEA /* 015@2x.png in Resources */,
 				38BB27C31AAC016A0088A15C /* discover-shake@3x.png in Resources */,

@@ -15,16 +15,6 @@ a {
     word-break: break-all;
 }
 
-/*code {*/
-/*    font-size: 12px;*/
-/*    font-style: normal;*/
-/*    font-weight: normal;*/
-/*    line-height: 15px;*/
-/*}*/
-/*code {*/
-/*    font-family: Monaco,Consolas,"Lucida Console",monospace;*/
-/*}*/
-
 
 img {
     max-width: 100%;
@@ -34,14 +24,6 @@ table {
     max-width: 100%;
 }
 
-pre {
-    font-size: 9pt;
-    font-family: Courier New, Arial;
-    border: 1px solid #DDD;
-    border-left:5px solid #6CE26C;
-    Background: #F6F6F6;
-    padding: 5px;
-}
 
 body.night .original {
     color: #125289;
