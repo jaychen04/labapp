@@ -70,7 +70,8 @@
     
     self.tableView.bounces = NO;
     self.navigationItem.title = @"我的资料";
-    self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
+    self.view.backgroundColor = [UIColor themeColor];
+    self.tableView.separatorColor = [UIColor separatorColor];
     self.tableView.tableFooterView = [UIView new];
     
     if (!_myInfo) {
@@ -178,6 +179,8 @@
                                                                                         ][indexPath.row]]];
     
     cell.textLabel.attributedText = [attributedText copy];
+    cell.textLabel.textColor = [UIColor titleColor];
+    cell.backgroundColor = [UIColor cellsColor];
     
     return cell;
 }
