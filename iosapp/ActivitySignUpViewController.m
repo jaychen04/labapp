@@ -12,6 +12,7 @@
 #import "Config.h"
 #import "OSCAPI.h"
 #import "Utils.h"
+#import "AppDelegate.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -35,7 +36,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor themeColor];
     self.title = @"活动报名";
     
     [self setLayout];
@@ -63,6 +64,7 @@
 {
     UILabel *sexLabel = [UILabel new];
     sexLabel.text = @"性       别：";
+    sexLabel.textColor = [UIColor titleColor];
     [self.view addSubview:sexLabel];
     
     _sexSegmentCtl = [[UISegmentedControl alloc] initWithItems:@[@"男", @"女"]];
@@ -74,13 +76,16 @@
     _nameTextField.placeholder = @" 请输入姓名（必填）";
     _nameTextField.borderStyle = UITextBorderStyleRoundedRect;
     //_nameTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    
+    _nameTextField.backgroundColor = [UIColor labelTextColor];
+    _nameTextField.textColor = [UIColor titleColor];
     [self.view addSubview:_nameTextField];
     
     _phoneNumberTextField = [UITextField new];
     _phoneNumberTextField.placeholder = @"请输入电话号码（必填）";
     _phoneNumberTextField.borderStyle = UITextBorderStyleRoundedRect;
     //_phoneNumberTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _phoneNumberTextField.backgroundColor = [UIColor labelTextColor];
+    _phoneNumberTextField.textColor = [UIColor titleColor];
     [self.view addSubview:_phoneNumberTextField];
     
     _corporationTextField = [UITextField new];
@@ -88,6 +93,8 @@
     _corporationTextField.delegate = self;
     _corporationTextField.borderStyle = UITextBorderStyleRoundedRect;
     _corporationTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _corporationTextField.backgroundColor = [UIColor labelTextColor];
+    _corporationTextField.textColor = [UIColor titleColor];
     [self.view addSubview:_corporationTextField];
     
     _positionTextField = [UITextField new];
@@ -95,7 +102,16 @@
     _positionTextField.delegate = self;
     _positionTextField.borderStyle = UITextBorderStyleRoundedRect;
     _positionTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+    _positionTextField.backgroundColor = [UIColor labelTextColor];
+    _positionTextField.textColor = [UIColor titleColor];
     [self.view addSubview:_positionTextField];
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        _nameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+        _phoneNumberTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+        _corporationTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+        _positionTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+    }
     
     _saveButton = [UIButton new];
     _saveButton.backgroundColor = [UIColor redColor];

@@ -102,5 +102,12 @@
     return [UIColor colorWithRed:203.0/255 green:203.0/255 blue:203.0/255 alpha:1.0];
 }
 
++ (UIColor *)labelTextColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
+    }
+    return [UIColor whiteColor];
+}
 
 @end
