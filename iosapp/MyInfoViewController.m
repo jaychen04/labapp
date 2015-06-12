@@ -19,6 +19,9 @@
 #import "LoginViewController.h"
 #import "SearchViewController.h"
 #import "MyBasicInfoViewController.h"
+#import "TeamAPI.h"
+#import "TeamTeam.h"
+#import "TeamCenter.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -358,12 +361,9 @@
             break;
         }
         case 2: {
-            MBProgressHUD *HUD = [Utils createHUD];
-            HUD.mode = MBProgressHUDModeText;
-            HUD.labelText = @"即将推出团队功能，敬请期待";
-            [HUD hide:YES afterDelay:1];
-            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            
+            TeamCenter *teamCenter = [TeamCenter new];
+            teamCenter.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:teamCenter animated:YES];
             break;
         }
         default: break;
@@ -388,14 +388,14 @@
 - (void)pushFavoriteSVC
 {
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
-                                                                              andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
-                                                                            andControllers:@[
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
-                                                                                             [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
-                                                                                             ]];
+                                                                            andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
+                                                                          andControllers:@[
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
+                                                                                           ]];
     favoritesSVC.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:favoritesSVC animated:YES];
@@ -404,11 +404,11 @@
 - (void)pushFriendsSVC:(UIButton *)button
 {
     SwipableViewController *friendsSVC = [[SwipableViewController alloc] initWithTitle:@"关注/粉丝"
-                                                                            andSubTitles:@[@"关注", @"粉丝"]
-                                                                          andControllers:@[
-                                                                                           [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
-                                                                                           [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
-                                                                                           ]];
+                                                                          andSubTitles:@[@"关注", @"粉丝"]
+                                                                        andControllers:@[
+                                                                                         [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
+                                                                                         [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
+                                                                                         ]];
     if (button == _fansBtn) {[friendsSVC scrollToViewAtIndex:1];}
     
     friendsSVC.hidesBottomBarWhenPushed = YES;

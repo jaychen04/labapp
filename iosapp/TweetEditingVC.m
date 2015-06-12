@@ -9,12 +9,14 @@
 #import "TweetEditingVC.h"
 #import "EmojiPageVC.h"
 #import "OSCAPI.h"
+#import "TeamAPI.h"
 #import "Config.h"
 #import "Utils.h"
 #import "PlaceholderTextView.h"
 #import "LoginViewController.h"
 #import "ImageViewerController.h"
 #import "AppDelegate.h"
+#import "TeamMemberListViewController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <objc/runtime.h>
@@ -40,6 +42,7 @@
 
 @property (nonatomic, strong) UIImage               *image;
 @property (nonatomic, strong) NSString              *topicName;
+@property (nonatomic, assign) int                   teamID;
 
 @end
 
@@ -60,6 +63,16 @@
     self = [super init];
     if (self) {
         _topicName = topic;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithTeamID:(int)teamID
+{
+    self = [super init];
+    if (self) {
+        _teamID = teamID;
     }
     
     return self;
@@ -264,25 +277,39 @@
 - (void)cancelButtonClicked
 {
     if (_edittingArea.text.length > 0) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"是否保存已编辑的信息" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        NSString *alertString = _teamID? @"是否取消编辑动弹" : @"是否保存已编辑的信息";
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:alertString message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        
         [alertView show];
     } else {
         [Config saveTweetText:@"" forUser:[Config getOwnID]];
         [_edittingArea resignFirstResponder];
-        [self dismissViewControllerAnimated:YES completion:nil];
+        
+        if (_teamID) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
     }
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
-        //保存已编辑信息
-        [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
+    if (_teamID) {
+        if (buttonIndex == alertView.cancelButtonIndex) {
+            return;
+        }
     } else {
-        [Config saveTweetText:@"" forUser:[Config getOwnID]];
+        [Config saveTweetText:buttonIndex == alertView.cancelButtonIndex? @"" : _edittingArea.text
+                      forUser:[Config getOwnID]];
     }
     [_edittingArea resignFirstResponder];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    if (_teamID) {
+        [self.navigationController popViewControllerAnimated:YES];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 
@@ -354,27 +381,34 @@
 
 - (void)mentionSomenone
 {
-    [self insertEditingString:@"@请输入用户名 "];
+    [self insertString:@"@请输入用户名 " andSelect:YES];
+    
+    if (_teamID) {
+        [self.navigationController pushViewController:[TeamMemberListViewController new]
+                                             animated:YES];
+    }
 }
 
 - (void)referSoftware
 {
-    [self insertEditingString:@"#请输入软件名或话题#"];
+    [self insertString:@"#请输入软件名或话题#" andSelect:YES];
 }
 
-- (void)insertEditingString:(NSString *)string
+- (void)insertString:(NSString *)string andSelect:(BOOL)shouldSelect
 {
     [_edittingArea becomeFirstResponder];
     
     NSUInteger cursorLocation = _edittingArea.selectedRange.location;
     [_edittingArea replaceRange:_edittingArea.selectedTextRange withText:string];
     
-    UITextPosition *selectedStartPos = [_edittingArea positionFromPosition:_edittingArea.beginningOfDocument offset:cursorLocation + 1];
-    UITextPosition *selectedEndPos   = [_edittingArea positionFromPosition:_edittingArea.beginningOfDocument offset:cursorLocation + string.length - 1];
-    
-    UITextRange *newRange = [_edittingArea textRangeFromPosition:selectedStartPos toPosition:selectedEndPos];
-    
-    [_edittingArea setSelectedTextRange:newRange];
+    if (shouldSelect) {
+        UITextPosition *selectedStartPos = [_edittingArea positionFromPosition:_edittingArea.beginningOfDocument offset:cursorLocation + 1];
+        UITextPosition *selectedEndPos   = [_edittingArea positionFromPosition:_edittingArea.beginningOfDocument offset:cursorLocation + string.length - 1];
+        
+        UITextRange *newRange = [_edittingArea textRangeFromPosition:selectedStartPos toPosition:selectedEndPos];
+        
+        [_edittingArea setSelectedTextRange:newRange];
+    }
 }
 
 
@@ -421,10 +455,12 @@
         [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
         manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
         
-        [manager             POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_PUB]
+        NSString *API = _teamID? TEAM_TWEET_PUB : OSCAPI_TWEET_PUB;
+        [manager             POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
                        parameters:@{
                                     @"uid": @([Config getOwnID]),
-                                    @"msg": [Utils convertRichTextToRawText:_edittingArea]
+                                    @"msg": [Utils convertRichTextToRawText:_edittingArea],
+                                    @"teamid": @(_teamID)
                                     }
          
         constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
@@ -447,6 +483,8 @@
                               if (errorCode == 1) {
                                   _edittingArea.text = @"";
                                   _imageView.image = nil;
+                                  _deleteImageButton.hidden = YES;
+                                  
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                                   HUD.labelText = @"动弹发表成功";
                                   
@@ -533,6 +571,12 @@
         [textView resignFirstResponder];
         return NO;
     }
+    
+    if (_teamID && [text isEqualToString: @"@"]) {
+        [self mentionSomenone];
+        return NO;
+    }
+    
     return YES;
 }
 

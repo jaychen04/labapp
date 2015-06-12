@@ -11,6 +11,9 @@
 @interface OSCSoftwareDetails : OSCBaseObject
 
 @property (nonatomic, assign) int64_t softwareID;
+@property (nonatomic, assign) NSInteger authorID;
+@property (nonatomic, copy) NSString *author;
+@property (nonatomic, assign) BOOL isRecommended;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *extensionTitle;
 @property (nonatomic, copy) NSString *license;

@@ -10,6 +10,7 @@
 #import "OSCUser.h"
 #import "PersonCell.h"
 #import "UserDetailsViewController.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const kPersonCellID = @"PersonCell";

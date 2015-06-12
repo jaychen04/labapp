@@ -17,6 +17,8 @@
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
 
+#import "NSString+FontAwesome.h"
+
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
@@ -74,7 +76,7 @@
              
              _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
              self.objectAuthorID = _tweet.authorID;
-             _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;}</style>\
+             _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;} audio { width: 90%%; display: block; }</style>\
                             <font size=\"3\"><strong>%@</strong></font>\
                             <br/>",
                             _tweet.body];
@@ -186,9 +188,11 @@
             cell.likeListLabel.hidden = !_tweet.likeList.count;
             [cell.timeLabel setAttributedText:[Utils attributedTimeString:_tweet.pubDate]];
             if (_tweet.isLike) {
-                [cell.likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
+                [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             } else {
-                [cell.likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
+                [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsOUp] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
             }
             [cell.appclientLabel setAttributedText:[Utils getAppclient:_tweet.appclient]];
             cell.webView.delegate = self;
@@ -235,7 +239,6 @@
     if (_webViewHeight == webViewHeight) {return;}
     
     _webViewHeight = webViewHeight;
-    //_webViewHeight = webView.scrollView.contentSize.height;
     [_HUD hide:YES];
     
     dispatch_async(dispatch_get_main_queue(), ^{

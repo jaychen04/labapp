@@ -11,6 +11,9 @@
 #import "OSCUser.h"
 #import "Utils.h"
 
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
+
 @implementation TweetCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -49,12 +52,12 @@
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:12];
-    _timeLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _timeLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_timeLabel];
     
     _appclientLabel = [UILabel new];
     _appclientLabel.font = [UIFont systemFontOfSize:12];
-    _appclientLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _appclientLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_appclientLabel];
     
     _contentLabel = [UILabel new];
@@ -64,11 +67,12 @@
     [self.contentView addSubview:_contentLabel];
     
     _likeButton = [UIButton new];
+    _likeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:12];
     [self.contentView addSubview:_likeButton];
     
     _commentCount = [UILabel new];
     _commentCount.font = [UIFont systemFontOfSize:12];
-    _commentCount.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _commentCount.textColor = [UIColor grayColor];
     [self.contentView addSubview:_commentCount];
     
     _thumbnail = [UIImageView new];
@@ -83,7 +87,7 @@
     _likeListLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _likeListLabel.font = [UIFont systemFontOfSize:12];
     _likeListLabel.userInteractionEnabled = YES;
-    _likeListLabel.textColor = [UIColor colorWithHex:0xA0A3A7];
+    _likeListLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_likeListLabel];
 }
 
@@ -124,9 +128,11 @@
     [_commentCount setAttributedText:tweet.attributedCommentCount];
     [_appclientLabel setAttributedText:[Utils getAppclient:tweet.appclient]];
     if (tweet.isLike) {
-        [_likeButton setImage:[UIImage imageNamed:@"ic_liked"] forState:UIControlStateNormal];
+        [_likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] forState:UIControlStateNormal];
+        [_likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
     } else {
-        [_likeButton setImage:[UIImage imageNamed:@"ic_unlike"] forState:UIControlStateNormal];
+        [_likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsOUp] forState:UIControlStateNormal];
+        [_likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
     }
     
     // 添加语音图片

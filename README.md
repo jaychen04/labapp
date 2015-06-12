@@ -32,4 +32,4 @@ Xcode 6＋
 
 
 ## 开源协议
-OSChina iOS app is under the GPL license. See the LICENSE file for more info.
+OSChina iOS app is under the GPL license. See the LICENSE file for more details.

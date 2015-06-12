@@ -9,6 +9,8 @@
 #import "TweetDetailsCell.h"
 #import "Utils.h"
 
+#import "UIFont+FontAwesome.h"
+
 @implementation TweetDetailsCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -53,6 +55,7 @@
     [self.contentView addSubview:_appclientLabel];
     
     _likeButton = [UIButton new];
+    _likeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:14];
     [self.contentView addSubview:_likeButton];
     
     _webView = [UIWebView new];

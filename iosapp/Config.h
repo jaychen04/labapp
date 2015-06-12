@@ -30,4 +30,10 @@
 + (void)saveTweetText:(NSString *)tweetText forUser:(ino64_t)userID;
 + (NSString *)getTweetText;
 
++ (int)teamID;
++ (void)setTeamID:(int)teamID;
++ (void)saveTeams:(NSArray *)teams;
++ (NSMutableArray *)teams;
++ (void)removeTeamInfo;
+
 @end

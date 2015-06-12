@@ -36,6 +36,9 @@
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, assign) NSUInteger page;
 
+//@property(assign,nonatomic)id<anotherNetWorkingDelegate> delegate;
+@property (nonatomic, copy) void (^anotherNetWorking)();
+
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;
 - (void)fetchMore;
 - (void)refresh;

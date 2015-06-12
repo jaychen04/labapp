@@ -38,7 +38,7 @@
 }
 - (void)dawnAndNightMode:(NSNotification *)center
 {
-    _lastCell.backgroundColor = [UIColor themeColor];
+    _lastCell.textLabel.backgroundColor = [UIColor themeColor];
     _lastCell.textLabel.textColor = [UIColor titleColor];
 }
 - (void)dealloc
@@ -53,11 +53,9 @@
     
     self.tableView.backgroundColor = [UIColor themeColor];
     
-    _lastCell = [LastCell new];
+    _lastCell = [[LastCell alloc] initWithFrame:CGRectMake(0, 0, self.tableView.bounds.size.width, 44)];
     [_lastCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fetchMore)]];
     self.tableView.tableFooterView = _lastCell;
-    
-    _lastCell.backgroundColor = [UIColor themeColor];
     
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
@@ -129,6 +127,11 @@
             [self fetchObjectsOnPage:0 refresh:YES];
             _refreshInProgress = NO;
         });
+        
+        //刷新时，增加另外的网络请求功能
+        if (self.anotherNetWorking) {
+            self.anotherNetWorking();
+        }
     }
 }
 

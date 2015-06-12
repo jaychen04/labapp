@@ -31,7 +31,10 @@ static NSString * const kTweetCount = @"tweetCount";
     self = [super init];
     
     if (self) {
+        _authorID = [xml firstChildWithTag:@"authorid"].numberValue.integerValue;
+        _author = [xml firstChildWithTag:@"author"].stringValue ?: @"";
         _softwareID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+        _isRecommended = [xml firstChildWithTag:@"recommended"].numberValue.boolValue;
         _title = [[xml firstChildWithTag:kTitle] stringValue];
         _extensionTitle = [[xml firstChildWithTag:kExtensionTitle] stringValue];
         _license = [[xml firstChildWithTag:kLicense] stringValue];

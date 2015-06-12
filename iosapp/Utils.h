@@ -39,7 +39,10 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr;
 + (NSAttributedString *)attributedTimeString:(NSString *)dateStr;
 + (NSString *)intervalSinceNow:(NSString *)dateStr;
++ (NSString *)getWeekdayFromDateComponents:(NSDateComponents *)dateComps;
++ (NSDateComponents *)getDateComponentsFromDate:(NSDate *)date;
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
++ (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML;
 + (NSData *)compressImage:(UIImage *)image;
 + (NSString *)convertRichTextToRawText:(UITextView *)textView;
 
@@ -55,7 +58,10 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (MBProgressHUD *)createHUD;
 + (UIImage *)createQRCodeFromString:(NSString *)string;
 
++ (NSAttributedString *)attributedCommentCount:(int)commentCount;
+
 + (NSString *)generateUserAgent;
+
 
 
 

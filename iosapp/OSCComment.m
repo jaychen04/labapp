@@ -9,6 +9,8 @@
 #import "OSCComment.h"
 #import "Utils.h"
 
+
+
 static NSString * const kID = @"id";
 static NSString * const kPortrait = @"portrait";
 static NSString * const kAuthor = @"author";
@@ -57,6 +59,34 @@ static NSString * const kRContent = @"rcontent";
     
     return self;
 }
+
+- (instancetype)initWithReplyXML:(ONOXMLElement *)xml
+{
+    if (self = [super init]) {
+        _commentID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
+
+        
+        _teamMember = [[TeamMember alloc]initWithXML:[xml firstChildWithTag:kAuthor]];
+        _pubDate = [[xml firstChildWithTag:@"createTime"] stringValue];
+        _content = [[xml firstChildWithTag:kContent] stringValue];
+        
+    }
+    
+    return self;
+}
+//<reply>
+//<id>63818</id>
+//<appclient>0</appclient>
+//<appName/>
+//<content><![CDATA[<p>body1</p>]]></content>
+//<createTime>2015-03-24 18:04:45</createTime>
+//<author>
+//<id>253900</id>
+//<name><![CDATA[火蚁]]></name>
+//<portrait>http://static.oschina.net/uploads/user/126/253900_100.jpeg?t=1422505979000</portrait>
+//</author>
+//</reply>
+
 
 + (NSAttributedString *)attributedTextFromReplies:(NSArray *)replies
 {

@@ -31,23 +31,7 @@
 #import "AppDelegate.h"
 
 #import <MBProgressHUD.h>
-
-
-#define HTML_STYLE @"<style>\
-                    #oschina_title {color: #000000; margin-bottom: 6px; font-weight:bold;}\
-                    #oschina_title a {color:#0D6DA8;}\
-                    #oschina_title img {vertical-align:middle; margin-right:6px;}\
-                    #oschina_outline {color: #707070; font-size: 12px;}\
-                    #oschina_outline a {color:#0D6DA8; text-decoration:none;}\
-                    #oschina_software {color:#808080;font-size:12px}\
-                    #oschina_body {font-size:16px; line-height:24px;}\
-                    #oschina_body img {max-width: 100%;}\
-                    #oschina_body table {max-width:100%;}\
-                    #oschina_body pre {font-size:9pt; font-family:Courier New, Arial; border:1px solid #ddd; border-left:5px solid #6CE26C; background:#f6f6f6; padding:5px;}\
-                    </style>"
-
-#define HTML_BOTTOM @"<div style='margin-bottom:60px'/>"
-
+#import <GRMustache.h>
 
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
@@ -205,15 +189,15 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStyleDone target:self action:@selector(refresh)];
     
-    // 资讯和软件详情没有“举报”选项
-    if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware) {
+    // 资讯、博客和软件详情没有“举报”选项
+    if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware || _commentType == CommentTypeBlog) {
         self.operationBar.items = [self.operationBar.items subarrayWithRange:NSMakeRange(0, 12)];
     }
     
     _detailsView = [UIWebView new];
     _detailsView.delegate = self;
     _detailsView.scrollView.delegate = self;
-    _detailsView.scrollView.bounces = NO;
+    _detailsView.backgroundColor = [UIColor themeColor];
     _detailsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_detailsView];
     
@@ -447,19 +431,21 @@
 
 - (void)loadNewsDetails:(OSCNewsDetails *)newsDetails
 {
-    newsDetails.title = [Utils escapeHTML:newsDetails.title];
+    NSDictionary *data = @{
+                           @"title": [Utils escapeHTML:newsDetails.title],
+                           @"authorID": @(newsDetails.authorID),
+                           @"authorName": newsDetails.author,
+                           @"timeInterval": [Utils intervalSinceNow:newsDetails.pubDate],
+                           @"content": newsDetails.body,
+                           @"softwareLink": newsDetails.softwareLink,
+                           @"softwareName": newsDetails.softwareName,
+                           @"relatedInfo": [Utils generateRelativeNewsString:newsDetails.relatives]
+                           };
     
-    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", newsDetails.authorID, newsDetails.author, [Utils intervalSinceNow:newsDetails.pubDate]];
+    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
     
-    NSString *software = @"";
-    if ([newsDetails.softwareName isEqualToString:@""] == NO) {
-        software = [NSString stringWithFormat:@"<div id='oschina_software' style='margin-top:8px;color:#FF0000;font-size:14px;font-weight:bold'>更多关于:&nbsp;<a href='%@'>%@</a>&nbsp;的详细信息</div>", newsDetails.softwareLink, newsDetails.softwareName];
-    }
-    
-    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@%@</body>", HTML_STYLE, newsDetails.title, authorStr, newsDetails.body, software, [Utils generateRelativeNewsString:newsDetails.relatives], HTML_BOTTOM];
-    
-    [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = newsDetails.isFavorite;
+    
     _webURL = [newsDetails.url absoluteString];
     _objectTitle = newsDetails.title;
     
@@ -470,12 +456,16 @@
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
 {
-    blogDetails.title = [Utils escapeHTML:blogDetails.title];
+    NSDictionary *data = @{
+                           @"title": [Utils escapeHTML:blogDetails.title],
+                           @"authorID": @(blogDetails.authorID),
+                           @"authorName": blogDetails.author,
+                           @"timeInterval": [Utils intervalSinceNow:blogDetails.pubDate],
+                           @"content": blogDetails.body,
+                           };
     
-    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a>&nbsp;发表于&nbsp;%@", blogDetails.authorID, blogDetails.author,  [Utils intervalSinceNow:blogDetails.pubDate]];
-    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@</body>",HTML_STYLE, blogDetails.title, authorStr, blogDetails.body, HTML_BOTTOM];
+    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
     
-    [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = blogDetails.isFavorite;
     _webURL = [blogDetails.url absoluteString];
     _objectTitle = blogDetails.title;
@@ -487,13 +477,17 @@
 
 - (void)loadPostDetails:(OSCPostDetails *)postDetails
 {
-    postDetails.title = [Utils escapeHTML:postDetails.title];
+    NSDictionary *data = @{
+                           @"title": [Utils escapeHTML:postDetails.title],
+                           @"authorID": @(postDetails.authorID),
+                           @"authorName": postDetails.author,
+                           @"timeInterval": [Utils intervalSinceNow:postDetails.pubDate],
+                           @"content": postDetails.body,
+                           @"tags": [Utils GenerateTags:postDetails.tags]
+                           };
     
-    NSString *authorStr = [NSString stringWithFormat:@"<a href='http://my.oschina.net/u/%lld'>%@</a> 发布于 %@", postDetails.authorID, postDetails.author, [Utils intervalSinceNow:postDetails.pubDate]];
+    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
     
-    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3;'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr/><div id='oschina_body'>%@</div>%@%@</body>",HTML_STYLE, postDetails.title, authorStr, postDetails.body, [Utils GenerateTags:postDetails.tags], HTML_BOTTOM];
-    
-    [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = postDetails.isFavorite;
     _webURL = [postDetails.url absoluteString];
     _commentCount = postDetails.answerCount;
@@ -506,15 +500,25 @@
 
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
 {
-    softwareDetails.title = [Utils escapeHTML:softwareDetails.title];
-    
     NSString *titleStr = [NSString stringWithFormat:@"%@ %@", softwareDetails.extensionTitle, softwareDetails.title];
     
-    NSString *tail = [NSString stringWithFormat:@"<div><table><tr><td style='font-weight:bold'>授权协议:&nbsp;</td><td>%@</td></tr><tr><td style='font-weight:bold'>开发语言:</td><td>%@</td></tr><tr><td style='font-weight:bold'>操作系统:</td><td>%@</td></tr><tr><td style='font-weight:bold'>收录时间:</td><td>%@</td></tr></table></div>", softwareDetails.license, softwareDetails.language, softwareDetails.os, softwareDetails.recordTime];
+    NSDictionary *data = @{
+                           @"title": titleStr,
+                           @"authorID": @(softwareDetails.authorID),
+                           @"author": softwareDetails.author,
+                           @"logoURL": softwareDetails.logoURL,
+                           @"content": softwareDetails.body,
+                           @"license": softwareDetails.license,
+                           @"language": softwareDetails.language,
+                           @"os": softwareDetails.os,
+                           @"recordTime": softwareDetails.recordTime,
+                           @"homepageURL": softwareDetails.homepageURL,
+                           @"documentURL": softwareDetails.documentURL,
+                           @"downloadURL": softwareDetails.downloadURL
+                           };
     
-    NSString *html = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'><img src='%@' width='34' height='34'/>%@</div><hr/><div id='oschina_body'>%@</div><div>%@</div>%@%@</body>", HTML_STYLE, softwareDetails.logoURL, titleStr, softwareDetails.body, tail, [self createButtonsWithHomepageURL:softwareDetails.homepageURL andDocumentURL:softwareDetails.documentURL andDownloadURL:softwareDetails.downloadURL], HTML_BOTTOM];
+    [self loadHTMLWithData:data usingTemplate:@"softwareDetail"];
     
-    [self.detailsView loadHTMLString:html baseURL:nil];
     _isStarred = softwareDetails.isFavorite;
     _webURL = [softwareDetails.url absoluteString];
     
@@ -526,25 +530,16 @@
     _digest = [[Utils deleteHTMLTag:softwareDetails.body] substringToIndex:length];
 }
 
-- (NSString *)createButtonsWithHomepageURL:(NSString *)homepageURL andDocumentURL:(NSString *)documentURL andDownloadURL:(NSString *)downloadURL
-{
-    NSString *strHomePage = @"";
-    NSString *strDocument = @"";
-    NSString *strDownload = @"";
-    
-    if ([homepageURL isEqualToString:@""] == NO) {
-        strHomePage = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件首页' style='font-size:14px;'/></a>", homepageURL];
-    }
-    if ([documentURL isEqualToString:@""] == NO) {
-        strDocument = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件文档' style='font-size:14px;'/></a>", documentURL];
-    }
-    if ([downloadURL isEqualToString:@""] == NO) {
-        strDownload = [NSString stringWithFormat:@"<a href=%@><input type='button' value='软件下载' style='font-size:14px;'/></a>", downloadURL];
-    }
-    
-    return [NSString stringWithFormat:@"<p>%@&nbsp;&nbsp;%@&nbsp;&nbsp;%@</p>", strHomePage, strDocument, strDownload];
-}
 
+- (void)loadHTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName
+{
+    NSString *templatePath = [[NSBundle mainBundle] pathForResource:templateName ofType:@"html" inDirectory:@"html"];
+    NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
+    
+    NSString *html = [GRMustacheTemplate renderObject:data fromString:template error:nil];
+    
+    [self.detailsView loadHTMLString:html baseURL:[[NSBundle mainBundle] bundleURL]];
+}
 
 
 #pragma mark - 发表评论
@@ -635,6 +630,8 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }

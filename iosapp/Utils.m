@@ -18,6 +18,9 @@
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "TweetsViewController.h"
 
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
+
 #import <MBProgressHUD.h>
 #import <objc/runtime.h>
 #import <Reachability.h>
@@ -30,23 +33,21 @@
 
 + (NSAttributedString *)getAppclient:(int)clientType
 {
-    NSMutableAttributedString *clientString = [NSMutableAttributedString new];
+    NSMutableAttributedString *attributedClientString;
     if (clientType > 1 && clientType <= 6) {
-        NSTextAttachment *textAttachment = [NSTextAttachment new];
-        textAttachment.image = [UIImage imageNamed:@"phone"];
-        [textAttachment adjustY:-2];
-        
-        NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-        [clientString appendAttributedString:attachmentString];
-        
         NSArray *clients = @[@"", @"", @"手机", @"Android", @"iPhone", @"Windows Phone", @"微信"];
-        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:clients[clientType]]];
+        
+        attributedClientString = [[NSMutableAttributedString alloc] initWithString:[NSString fontAwesomeIconStringForEnum:FAMobile]
+                                                                        attributes:@{
+                                                                                     NSFontAttributeName: [UIFont fontAwesomeFontOfSize:13],
+                                                                                     }];
+        
+        [attributedClientString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", clients[clientType]]]];
     } else {
-        [clientString appendAttributedString:[[NSAttributedString alloc] initWithString:@""]];
+        attributedClientString = [[NSMutableAttributedString alloc] initWithString:@""];
     }
     
-    return clientString;
+    return attributedClientString;
 }
 
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews
@@ -59,7 +60,7 @@
     for (NSArray *news in relativeNews) {
         middle = [NSString stringWithFormat:@"%@<a href=%@ style='text-decoration:none'>%@</a><p/>", middle, news[1], news[0]];
     }
-    return [NSString stringWithFormat:@"<hr/>相关文章<div style='font-size:14px'><p/>%@</div>", middle];
+    return [NSString stringWithFormat:@"相关文章<div style='font-size:14px'><p/>%@</div>", middle];
 }
 
 + (NSString *)GenerateTags:(NSArray *)tags
@@ -237,9 +238,13 @@
     NSDateComponents *compsPast = [calendar components:unitFlags fromDate:date];
     NSDateComponents *compsNow = [calendar components:unitFlags fromDate:[NSDate date]];
     
+    NSInteger daysInLastMonth = [calendar rangeOfUnit:NSDayCalendarUnit
+                                               inUnit:NSMonthCalendarUnit
+                                              forDate:date].length;
+    
     NSInteger years = [compsNow year] - [compsPast year];
     NSInteger months = [compsNow month] - [compsPast month] + years * 12;
-    NSInteger days = [compsNow day] - [compsPast day] + months * 30;
+    NSInteger days = [compsNow day] - [compsPast day] + months * daysInLastMonth;
     NSInteger hours = [compsNow hour] - [compsPast hour] + days * 24;
     NSInteger minutes = [compsNow minute] - [compsPast minute] + hours * 60;
     
@@ -252,19 +257,37 @@
              };
 }
 
++ (NSDateComponents *)getDateComponentsFromDate:(NSDate *)date
+{
+    NSUInteger unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekOfYear | NSCalendarUnitWeekday |
+                           NSCalendarUnitDay  | NSCalendarUnitHour  | NSCalendarUnitMinute;
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    return [calendar components:unitFlags fromDate:date];
+}
+
+
++ (NSString *)getWeekdayFromDateComponents:(NSDateComponents *)dateComps
+{
+    switch (dateComps.weekday) {
+        case 1: return @"星期天";
+        case 2: return @"星期一";
+        case 3: return @"星期二";
+        case 4: return @"星期三";
+        case 5: return @"星期四";
+        case 6: return @"星期五";
+        case 7: return @"星期六";
+        default: return @"";
+    }
+}
+
 
 + (NSAttributedString *)attributedTimeString:(NSString *)dateStr
 {
-    NSMutableAttributedString *attributedTime;
-    
-    NSTextAttachment *textAttachment = [NSTextAttachment new];
-    textAttachment.image = [UIImage imageNamed:@"time"];
-    [textAttachment adjustY:-1];
-    
-    NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-    attributedTime = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-    [attributedTime appendAttributedString:[[NSAttributedString alloc] initWithString:[self intervalSinceNow:dateStr]]];
+    NSString *rawString = [NSString stringWithFormat:@"%@ %@", [NSString fontAwesomeIconStringForEnum:FAClockO], [self intervalSinceNow:dateStr]];
+    NSAttributedString *attributedTime = [[NSAttributedString alloc] initWithString:rawString
+                                                                         attributes:@{
+                                                                                      NSFontAttributeName: [UIFont fontAwesomeFontOfSize:12],
+                                                                                      }];
     
     return attributedTime;
 }
@@ -294,7 +317,7 @@
     } else if (months < 12) {
         return [NSString stringWithFormat:@"%ld个月前", (long)months];
     } else {
-        NSArray *arr = [dateStr componentsSeparatedByString:@"T"];
+        NSArray *arr = [dateStr componentsSeparatedByString:@" "];
         return arr[0];
     }
 }
@@ -354,6 +377,14 @@
     }
     
     return emojiString;
+}
+
++ (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML
+{
+    return [[NSMutableAttributedString alloc] initWithData:[HTML dataUsingEncoding:NSUnicodeStringEncoding]
+                                                   options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
+                                        documentAttributes:nil
+                                                     error:nil];
 }
 
 + (NSString *)convertRichTextToRawText:(UITextView *)textView
@@ -524,6 +555,17 @@
     CGImageRelease(cgImage);
     
     return image;
+}
+
++ (NSAttributedString *)attributedCommentCount:(int)commentCount
+{
+    NSString *rawString = [NSString stringWithFormat:@"%@ %d", [NSString fontAwesomeIconStringForEnum:FACommentsO], commentCount];
+    NSAttributedString *attributedCommentCount = [[NSAttributedString alloc] initWithString:rawString
+                                                                                 attributes:@{
+                                                                                              NSFontAttributeName: [UIFont fontAwesomeFontOfSize:12],
+                                                                                              }];
+    
+    return attributedCommentCount;
 }
 
 

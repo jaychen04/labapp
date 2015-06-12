@@ -7,6 +7,8 @@
 //
 
 #import "Config.h"
+#import "TeamTeam.h"
+
 #import <SSKeychain.h>
 
 NSString * const kService = @"OSChina";
@@ -30,6 +32,10 @@ NSString * const kSex = @"sex";
 NSString * const kPhoneNumber = @"phoneNumber";
 NSString * const kCorporation = @"corporation";
 NSString * const kPosition = @"position";
+
+NSString * const kTeamID = @"teamID";
+NSString * const kTeamsArray = @"teams";
+
 
 @implementation Config
 
@@ -169,6 +175,63 @@ NSString * const kPosition = @"position";
     NSString *tweetText = [userDefaults objectForKey:IdStr];
     
     return tweetText;
+}
+
+
+#pragma mark - Team
+
++ (int)teamID
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    return [[userDefaults objectForKey:kTeamID] intValue];
+}
+
++ (void)setTeamID:(int)teamID
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setValue:@(teamID) forKey:kTeamID];
+    [userDefaults synchronize];
+}
+
++ (void)saveTeams:(NSArray *)teams
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *rawTeams = [NSMutableArray new];
+    
+    for (TeamTeam *team in teams) {
+        [rawTeams addObject:@[@(team.teamID), team.name]];
+    }
+    [userDefaults setObject:rawTeams forKey:kTeamsArray];
+    
+    [userDefaults synchronize];
+}
+
++ (NSMutableArray *)teams
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    NSArray *rawTeams = [userDefaults objectForKey:kTeamsArray];
+    NSMutableArray *teams = [NSMutableArray new];
+    
+    for (NSArray *rawTeam in rawTeams) {
+        TeamTeam *team = [TeamTeam new];
+        team.teamID = [((NSNumber *)rawTeam[0]) intValue];
+        team.name = rawTeam[1];
+        [teams addObject:team];
+    }
+    
+    return teams;
+}
+
+
++ (void)removeTeamInfo
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults removeObjectForKey:kTeamID];
+    [userDefaults removeObjectForKey:kTeamsArray];
 }
 
 @end

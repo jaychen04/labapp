@@ -1,0 +1,67 @@
+body {
+    font-size: 1em;
+    line-height: 1.5em;
+    background-color: #EBEBF3;
+/*    font-family: Arial;*/
+}
+
+span {
+    background-color: #EBEBF3 !important;
+}
+
+a {
+    color: #5091d2;
+    text-decoration: none;
+    word-break: break-all;
+}
+
+
+img {
+    max-width: 100%;
+}
+
+table {
+    max-width: 100%;
+}
+
+
+body.night .original {
+    color: #125289;
+    border-color: #363636;
+}
+
+
+
+/*** software ***/
+
+#software_logo {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+#software_buttons {
+    width: 100%;
+    float: left;
+}
+
+#software_buttons>div {
+    width: 33%;
+    float: left;
+    text-align: center;
+}
+
+#software_buttons button {
+    width: 80%;
+}
+
+
+#software_information tr th {
+    white-space: nowrap;
+    vertical-align: top;
+}
+
+#software_information tr td {
+    word-break: break-all;
+}
+
