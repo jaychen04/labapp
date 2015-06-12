@@ -42,13 +42,11 @@
     </head>
     
     <body>
-        <div>
+        <div id="title_div">
             <img id="software_logo" src="{{logoURL}}" />
-            <b id="title">{{title}}</b>
+            <b>{{title}}</b>
             {{#recommended}}<img id="recommend_tag" src="recommend_tag.png" />{{/}}
         </div>
-        
-        <div style='margin-bottom:30px'/>
         
         <main>
             {{{content}}}
@@ -94,25 +92,16 @@
                 </div>
                 {{/}}
                 {{#documentURL}}
-<!--                <form action="{{documentURL}}">-->
-<!--                    <input type="button" value="软件文档">-->
-<!--                </form>-->
                 <div>
                     <button onclick="location.href='{{documentURL}}'">软件文档</button>
                 </div>
                 {{/}}
                 {{#downloadURL}}
-<!--                <form action="{{downloadURL}}">-->
-<!--                    <input type="button" value="软件下载">-->
-<!--                </form>-->
                 <div>
                     <button onclick="location.href='{{downloadURL}}'">软件下载</button>
                 </div>
                 {{/}}
             </div>
-            
-            
-            <div id="bottom_gap" />
         </main>
     </body>
 </html>

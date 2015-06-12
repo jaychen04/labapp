@@ -4,6 +4,8 @@ body {
     background-color: #EBEBF3;
     word-break: break-all;
     font-family: Arial;
+    
+    margin-bottom: 60px;
 }
 
 span {
@@ -48,7 +50,11 @@ body.night .original {
 }
 
 
-#title {
+#title_div {
+    margin-bottom: 30px;
+}
+
+#title_div b {
     font-size: 20px;
     word-break: normal;
 }
