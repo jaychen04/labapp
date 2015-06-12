@@ -11,7 +11,7 @@
 
 @interface LastCell ()
 
-@property (nonatomic, strong) UILabel *textLabel;
+//@property (nonatomic, strong) UILabel *textLabel;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
 
 @end
@@ -34,6 +34,7 @@
 
 - (void)setLayout
 {
+    _textLabel.textColor = [UIColor titleColor];
     _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
     _textLabel.backgroundColor = [UIColor themeColor];
     _textLabel.textAlignment = NSTextAlignmentCenter;

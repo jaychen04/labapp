@@ -78,6 +78,9 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
     
     [cell setContentWithWeeklyReport:weeklyReport];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

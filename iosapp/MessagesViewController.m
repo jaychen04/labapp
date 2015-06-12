@@ -45,6 +45,7 @@ static NSString * const kMessageCellID = @"MessageCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[MessageCell class] forCellReuseIdentifier:kMessageCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 
@@ -65,6 +66,11 @@ static NSString * const kMessageCellID = @"MessageCell";
     cell.contentLabel.text = message.content;
     cell.timeLabel.text = [Utils intervalSinceNow:message.pubDate];
     cell.commentCountLabel.text = [NSString stringWithFormat:@"%d条留言", message.messageCount];
+    
+    cell.contentLabel.textColor = [UIColor titleColor];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

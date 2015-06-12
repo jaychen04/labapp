@@ -40,6 +40,9 @@
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+
+    self.tableView.separatorColor = [UIColor separatorColor];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,7 +85,12 @@
                         @[@"注销登录"],
                         ];
     cell.textLabel.text = titles[indexPath.section][indexPath.row];
-    cell.backgroundColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor cellsColor];
+    cell.textLabel.textColor = [UIColor titleColor];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     
     return cell;
 }

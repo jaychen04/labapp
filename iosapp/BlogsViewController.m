@@ -58,6 +58,12 @@ static NSString *kBlogCellID = @"BlogCell";
 
 #pragma mark - life cycle
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.tableView.separatorColor = [UIColor separatorColor];
+//    [self.tableView reloadData];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[BlogCell class] forCellReuseIdentifier:kBlogCellID];
@@ -67,10 +73,6 @@ static NSString *kBlogCellID = @"BlogCell";
     [super didReceiveMemoryWarning];
 }
 
-
-
-
-
 #pragma mark - tableView things
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -78,11 +80,17 @@ static NSString *kBlogCellID = @"BlogCell";
     BlogCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBlogCellID forIndexPath:indexPath];
     OSCBlog *blog = self.objects[indexPath.row];
     
+    cell.backgroundColor = [UIColor themeColor];
+    
     [cell.titleLabel setAttributedText:blog.attributedTittle];
     [cell.bodyLabel setText:blog.body];
     [cell.authorLabel setText:blog.author];
+    cell.titleLabel.textColor = [UIColor titleColor];
     [cell.timeLabel setAttributedText:[Utils attributedTimeString:blog.pubDate]];
     [cell.commentCount setAttributedText:blog.attributedCommentCount];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

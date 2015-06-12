@@ -9,7 +9,7 @@
 #import "EmojiPageVC.h"
 #import "EmojiPanelVC.h"
 #import "PlaceholderTextView.h"
-
+#import "Utils.h"
 
 @interface EmojiPageVC () <UIPageViewControllerDataSource>
 
@@ -50,7 +50,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor themeColor];
     
     EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:0];
     emojiPanelVC.didSelectEmoji = _didSelectEmoji;

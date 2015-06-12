@@ -45,6 +45,7 @@ static NSString *kPostCellID = @"PostCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[PostCell class] forCellReuseIdentifier:kPostCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,6 +69,11 @@ static NSString *kPostCellID = @"PostCell";
     [cell.authorLabel setText:post.author];
     [cell.timeLabel setText:[Utils intervalSinceNow:post.pubDate]];
     [cell.commentAndView setText:[NSString stringWithFormat:@"%d回 / %d阅", post.replyCount, post.viewCount]];
+    
+    cell.titleLabel.textColor = [UIColor titleColor];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

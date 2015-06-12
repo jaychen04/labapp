@@ -95,6 +95,7 @@ static NSString * const EventCellID = @"EventCell";
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:EventCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     self.lastCell.emptyMessage = @"没有动态信息";
 }
@@ -118,6 +119,8 @@ static NSString * const EventCellID = @"EventCell";
     OSCEvent *event = self.objects[row];
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:EventCellID forIndexPath:indexPath];
     
+    cell.contentLabel.textColor = [UIColor titleColor];
+    
     [self setBlockForEventCell:cell];
     [cell setContentWithEvent:event];
     
@@ -139,6 +142,9 @@ static NSString * const EventCellID = @"EventCell";
     cell.portrait.tag = row; cell.thumbnail.tag = row;
     [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
     [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

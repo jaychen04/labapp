@@ -44,6 +44,16 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.bounces = NO;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kHorizonalCellID];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
+}
+
+- (void)dawnAndNightMode:(NSNotification *)center
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

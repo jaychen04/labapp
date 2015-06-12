@@ -15,5 +15,13 @@
 
 + (UIColor *)themeColor;
 + (UIColor *)nameColor;
++ (UIColor *)titleColor;
++ (UIColor *)separatorColor;
++ (UIColor *)cellsColor;
++ (UIColor *)titleBarColor;
++ (UIColor *)selectTitleBarColor;
++ (UIColor *)navigationbarColor;
++ (UIColor *)selectCellSColor;
++ (UIColor *)labelTextColor;
 
 @end

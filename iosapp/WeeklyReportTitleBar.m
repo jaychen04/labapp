@@ -28,7 +28,7 @@
     
     if (self) {
         self.frame = frame;
-        self.backgroundColor = [UIColor colorWithHex:0xE1E1E1];
+        self.backgroundColor = [UIColor titleBarColor];
         
         [self setLayout];
         _weekLabel.text = [NSString stringWithFormat:@"第%ld周周报总览", week];

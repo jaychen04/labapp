@@ -36,9 +36,19 @@
     
     return self;
 }
-
+- (void)dawnAndNightMode:(NSNotification *)center
+{
+    _lastCell.textLabel.backgroundColor = [UIColor themeColor];
+    _lastCell.textLabel.textColor = [UIColor titleColor];
+}
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dawnAndNight" object:nil];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.tableView.backgroundColor = [UIColor themeColor];
@@ -54,7 +64,7 @@
     _label.numberOfLines = 0;
     _label.lineBreakMode = NSLineBreakByWordWrapping;
     _label.font = [UIFont boldSystemFontOfSize:14];
-    
+    _lastCell.textLabel.textColor = [UIColor titleColor];
     
     _manager = [AFHTTPRequestOperationManager manager];
     [_manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];

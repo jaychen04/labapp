@@ -45,6 +45,7 @@ static NSString * const MyTweetLikeListCellID = @"MyTweetLikeListCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[MyTweetLikeListCell class] forCellReuseIdentifier:MyTweetLikeListCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,10 +64,15 @@ static NSString * const MyTweetLikeListCellID = @"MyTweetLikeListCell";
     OSCMyTweetLikeList *myTweetLikeList = self.objects[row];
     MyTweetLikeListCell *cell = [tableView dequeueReusableCellWithIdentifier:MyTweetLikeListCellID forIndexPath:indexPath];
     
+    cell.authorTweetLabel.textColor = [UIColor titleColor];
+    
     [cell setContentWithMyTweetLikeList:myTweetLikeList];
     
     cell.portrait.tag = row;
     [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

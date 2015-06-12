@@ -136,11 +136,13 @@ static NSString * const kTweetCellID = @"TweetCell";
     return [[xml.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
 }
 
-
-
-
-
 #pragma mark - life cycle
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    self.tableView.separatorColor = [UIColor separatorColor];
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad
 {
@@ -169,6 +171,8 @@ static NSString * const kTweetCellID = @"TweetCell";
     OSCTweet *tweet = self.objects[row];
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
     
+    cell.backgroundColor = [UIColor themeColor];
+    
     [self setBlockForCommentCell:cell];
     [cell setContentWithTweet:tweet];
     
@@ -195,11 +199,16 @@ static NSString * const kTweetCellID = @"TweetCell";
     cell.thumbnail.tag = row;
     cell.likeButton.tag = row;
     cell.likeListLabel.tag = row;
+    cell.contentLabel.textColor = [UIColor titleColor];
+    cell.authorLabel.textColor = [UIColor nameColor];
     
     [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
     [cell.thumbnail addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
     [cell.likeButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
     [cell.likeListLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(PushToLikeList:)]];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

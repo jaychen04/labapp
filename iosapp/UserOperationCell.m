@@ -62,6 +62,11 @@
     setButtonStyle2(_blogsButton, @"博客");
     setButtonStyle2(_informationButton, @"资料");
     
+    _messageButton.backgroundColor = [UIColor navigationbarColor];
+    _followButton.backgroundColor = [UIColor navigationbarColor];
+    _blogsButton.backgroundColor = [UIColor titleBarColor];
+    _informationButton.backgroundColor = [UIColor titleBarColor];
+    
     [self.contentView addSubview:buttonsView2];
     
     
@@ -91,7 +96,7 @@
 - (void)setFollowButtonByRelationship:(int)relationship
 {
     if (relationship >= 3) {
-        [_followButton setBackgroundColor:[UIColor colorWithHex:0x00CD66]];
+//        [_followButton setBackgroundColor:[UIColor colorWithHex:0x00CD66]];
         [_followButton setTitleColor:[UIColor colorWithHex:0xEEEEEE] forState:UIControlStateNormal];
         [_followButton setTitle:@"关注" forState:UIControlStateNormal];
     } else {

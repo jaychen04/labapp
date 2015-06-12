@@ -67,6 +67,7 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
     [super viewDidLoad];
 
     [self.tableView registerClass:[SoftwareCell class] forCellReuseIdentifier:kSoftwareCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 
@@ -80,6 +81,10 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
     cell.backgroundColor = [UIColor themeColor];
     cell.nameLabel.text = software.name;
     cell.descriptionLabel.text = software.softwareDescription;
+    cell.nameLabel.textColor = [UIColor titleColor];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

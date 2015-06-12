@@ -41,29 +41,33 @@
     _nameLabel.numberOfLines = 0;
     _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _nameLabel.font = [UIFont boldSystemFontOfSize:15];
+    _nameLabel.textColor = [UIColor titleColor];
     [self.contentView addSubview:_nameLabel];
     
     _eMailLabel = [UILabel new];
     _eMailLabel.numberOfLines = 0;
     _eMailLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _eMailLabel.font = [UIFont systemFontOfSize:14];
+    _eMailLabel.textColor = [UIColor titleColor];
     [self.contentView addSubview:_eMailLabel];
     
     _phoneLabel = [UILabel new];
     _phoneLabel.numberOfLines = 0;
     _phoneLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _phoneLabel.font = [UIFont systemFontOfSize:14];
+    _phoneLabel.textColor = [UIColor titleColor];
     [self.contentView addSubview:_phoneLabel];
     
     _addressLabel = [UILabel new];
     _addressLabel.numberOfLines = 0;
     _addressLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _addressLabel.font = [UIFont systemFontOfSize:14];
+    _addressLabel.textColor = [UIColor titleColor];
     [self.contentView addSubview:_addressLabel];
     
     _phoneIconLabel = [UILabel new];
     _phoneIconLabel.font = [UIFont fontWithName:kFontAwesomeFamilyName size:40];
-    _phoneIconLabel.textColor = [UIColor colorWithHex:0x15A230];
+    _phoneIconLabel.textColor = [UIColor nameColor];//colorWithHex:0x15A230
     [self.contentView addSubview:_phoneIconLabel];
     
     

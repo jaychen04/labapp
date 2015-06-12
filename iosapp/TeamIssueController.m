@@ -127,6 +127,9 @@ static NSString * const kIssueCellID = @"IssueCell";
     
     [cell setContentWithIssue:issue];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

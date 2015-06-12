@@ -24,5 +24,5 @@ typedef NS_ENUM(NSUInteger, LastCellStatus)
 @property (readonly, nonatomic, assign) BOOL shouldResponseToTouch;
 @property (nonatomic, copy) NSString *emptyMessage;
 
-
+@property (nonatomic, strong) UILabel *textLabel;
 @end

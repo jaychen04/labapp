@@ -64,6 +64,7 @@ static NSString *kCommentCellID = @"CommentCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[CommentCell class] forCellReuseIdentifier:kCommentCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,9 +85,12 @@ static NSString *kCommentCellID = @"CommentCell";
     
     [self setBlockForCommentCell:cell];
     [cell setContentWithComment:comment];
-    
+    cell.contentLabel.textColor = [UIColor titleColor];
     cell.portrait.tag = row; cell.authorLabel.tag = row;
     [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

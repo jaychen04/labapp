@@ -51,6 +51,7 @@ static NSString * const kPersonCellID = @"PersonCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[PersonCell class] forCellReuseIdentifier:kPersonCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     self.lastCell.emptyMessage = @"找不到和您的查询相符的用户";
 }
@@ -72,6 +73,10 @@ static NSString * const kPersonCellID = @"PersonCell";
     [cell.portrait loadPortrait:user.portraitURL];
     cell.nameLabel.text = user.name;
     cell.infoLabel.text = user.location;
+    cell.infoLabel.textColor = [UIColor titleColor];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

@@ -15,6 +15,7 @@
 #import "PlaceholderTextView.h"
 #import "LoginViewController.h"
 #import "ImageViewerController.h"
+#import "AppDelegate.h"
 #import "TeamMemberListViewController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -106,6 +107,7 @@
 {
     [super viewWillAppear:animated];
     
+    self.view.backgroundColor = [UIColor themeColor];
     [_edittingArea.delegate textViewDidChange:_edittingArea];
     
     [_edittingArea becomeFirstResponder];
@@ -151,6 +153,9 @@
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
     [_contentView addSubview:_edittingArea];
     
+    _edittingArea.backgroundColor = [UIColor themeColor];
+    _edittingArea.textColor = [UIColor titleColor];
+    
     _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_edittingArea];
     _emojiPageVC.view.hidden = YES;
     _emojiPageVC.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -194,6 +199,13 @@
                                                                   target:self
                                                                   action:NSSelectorFromString(action[i])];
         //button.tintColor = [UIColor grayColor];
+        if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+            _toolBar.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+            button.tintColor = [UIColor clearColor];
+        } else {
+            _toolBar.barTintColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
+            button.tintColor = [UIColor clearColor];
+        }
         [barButtonItems addObject:button];
         if (i < 3) {[barButtonItems addObject:flexibleSpace];}
     }
@@ -213,6 +225,8 @@
     [_toolBar addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[bottomBorder(0.5)]|" options:0 metrics:nil views:views]];
     
     [self.view addSubview:_toolBar];
+    
+    _toolBar.backgroundColor = [UIColor themeColor];
 }
 
 - (void)setLayout

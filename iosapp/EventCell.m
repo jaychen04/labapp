@@ -9,6 +9,7 @@
 #import "EventCell.h"
 #import "OSCEvent.h"
 #import "Utils.h"
+#import "AppDelegate.h"
 
 @interface EventCell()
 
@@ -76,11 +77,17 @@
     [self.contentView addSubview:_thumbnail];
     
     _referenceText = [UITextView new];
-    _referenceText.backgroundColor = [UIColor colorWithHex:0xDEDEDE];
     _referenceText.scrollEnabled = NO;
     _referenceText.editable = NO;
     _referenceText.userInteractionEnabled = NO;
     [self.contentView addSubview:_referenceText];
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        _referenceText.backgroundColor = [UIColor colorWithRed:75.0/255 green:75.0/255 blue:75.0/255 alpha:1.0];
+        _referenceText.textColor = [UIColor whiteColor];
+    } else {
+        _referenceText.backgroundColor = [UIColor colorWithHex:0xDEDEDE];
+    }
     
     _appclientLabel = [UILabel new];
     _appclientLabel.font = [UIFont systemFontOfSize:12];

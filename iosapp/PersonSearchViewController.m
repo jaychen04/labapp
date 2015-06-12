@@ -8,6 +8,7 @@
 
 #import "PersonSearchViewController.h"
 #import "PeopleTableViewController.h"
+#import "AppDelegate.h"
 
 @interface PersonSearchViewController () <UISearchBarDelegate>
 
@@ -78,6 +79,13 @@
     _resultsTableVC = [PeopleTableViewController new];
     [self addChildViewController:_resultsTableVC];
     [self.view addSubview:_resultsTableVC.tableView];
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        _searchBar.keyboardAppearance = UIKeyboardAppearanceDark;
+        _searchBar.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+    } else {
+        _searchBar.keyboardAppearance = UIKeyboardAppearanceLight;
+    }
 }
 
 - (void)setAutoLayout

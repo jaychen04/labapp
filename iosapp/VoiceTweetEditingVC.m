@@ -70,7 +70,7 @@
                                                                              target:self
                                                                              action:@selector(judgeVoice)];
     self.navigationItem.rightBarButtonItem.enabled = _hasVoice;
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor themeColor];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyboardHide)];
     tap.cancelsTouchesInView = NO;
@@ -101,6 +101,9 @@
     _edittingArea.layer.borderColor = UIColor.grayColor.CGColor;
     _edittingArea.layer.borderWidth = 2;
     [self.view addSubview:_edittingArea];
+    
+    _edittingArea.backgroundColor = [UIColor themeColor];
+    _edittingArea.textColor = [UIColor titleColor];
     
     _voiceImageView = [UIImageView new];
     _voiceImageView.image = [UIImage imageNamed:@"voice_0.png"];
@@ -154,6 +157,7 @@
     _textLabel.textAlignment = NSTextAlignmentCenter;
     _textLabel.text = @"长按  录音";
     [self.view addSubview:_textLabel];
+    _textLabel.textColor = [UIColor titleColor];
 }
 
 - (void)setLayout

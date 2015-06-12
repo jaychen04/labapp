@@ -49,7 +49,7 @@
     
     _applicationButton = [UIButton new];
     [_applicationButton setTitle:@"我要报名" forState:UIControlStateNormal];
-    [_applicationButton setBackgroundColor:[UIColor colorWithHex:0x15A230]];
+    [_applicationButton setBackgroundColor:[UIColor navigationbarColor]];//colorWithHex:0x15A230
     [_applicationButton setCornerRadius:5.0];
     [self.contentView addSubview:_applicationButton];
 }

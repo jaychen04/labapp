@@ -37,6 +37,7 @@
 {
     _titleLabel = [TTTAttributedLabel new];
     _titleLabel.numberOfLines = 0;
+    _titleLabel.textColor = [UIColor titleColor];
     _titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _titleLabel.userInteractionEnabled = NO;
     _titleLabel.linkAttributes = @{

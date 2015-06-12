@@ -50,6 +50,7 @@ static NSString * const kTweetLikeUserCellID = @"TweetLikeUserCell";
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.tableView registerClass:[TweetLikeUserCell class] forCellReuseIdentifier:kTweetLikeUserCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -68,6 +69,9 @@ static NSString * const kTweetLikeUserCellID = @"TweetLikeUserCell";
     
     [cell.portrait loadPortrait:likesUser.portraitURL];
     cell.userNameLabel.text = likesUser.name;
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

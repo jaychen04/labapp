@@ -54,6 +54,7 @@ static NSString * const kPersonCellID = @"PersonCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[PersonCell class] forCellReuseIdentifier:kPersonCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -73,6 +74,10 @@ static NSString * const kPersonCellID = @"PersonCell";
     [cell.portrait loadPortrait:friend.portraitURL];
     cell.nameLabel.text = friend.name;
     cell.infoLabel.text = friend.expertise;
+    cell.infoLabel.textColor = [UIColor titleColor];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

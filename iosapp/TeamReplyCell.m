@@ -56,6 +56,7 @@
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _contentLabel.font = [UIFont systemFontOfSize:14];
+    _contentLabel.textColor = [UIColor titleColor];
     [self.contentView addSubview:_contentLabel];
 }
 

@@ -90,8 +90,10 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
 {
     TeamActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kActivityCellID forIndexPath:indexPath];
     TeamActivity *activity = self.objects[indexPath.row];
-    
     [cell setContentWithActivity:activity];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }

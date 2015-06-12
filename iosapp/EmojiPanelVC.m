@@ -32,6 +32,8 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor themeColor];
+    
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     flowLayout.minimumInteritemSpacing = (screenWidth - 40 - 30 * 7) / 7;
@@ -40,7 +42,7 @@
     
     _emojiCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
     [_emojiCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"EmojiCell"];
-    _emojiCollectionView.backgroundColor = [UIColor whiteColor];
+    _emojiCollectionView.backgroundColor = [UIColor themeColor];
     _emojiCollectionView.scrollEnabled = NO;
     _emojiCollectionView.dataSource = self;
     _emojiCollectionView.delegate = self;

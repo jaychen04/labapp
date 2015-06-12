@@ -32,6 +32,16 @@
 
 
 @interface OSCTabBarController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+{
+    NewsViewController *newsViewCtl;
+    NewsViewController *hotNewsViewCtl;
+    BlogsViewController *blogViewCtl;
+    BlogsViewController *recommendBlogViewCtl;
+    
+    TweetsViewController *newTweetViewCtl;
+    TweetsViewController *hotTweetViewCtl;
+    TweetsViewController *myTweetViewCtl;
+}
 
 @property (nonatomic, strong) UIView *dimView;
 @property (nonatomic, strong) UIImageView *blurView;
@@ -47,19 +57,81 @@
 
 @implementation OSCTabBarController
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
+}
+
+- (void)dawnAndNightMode:(NSNotification *)center
+{
+    newsViewCtl.view.backgroundColor = [UIColor themeColor];
+    hotNewsViewCtl.view.backgroundColor = [UIColor themeColor];
+    blogViewCtl.view.backgroundColor = [UIColor themeColor];
+    recommendBlogViewCtl.view.backgroundColor = [UIColor themeColor];
+    
+    newTweetViewCtl.view.backgroundColor = [UIColor themeColor];
+    hotTweetViewCtl.view.backgroundColor = [UIColor themeColor];
+    myTweetViewCtl.view.backgroundColor = [UIColor themeColor];
+
+    [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor titleBarColor]];
+    
+    [self.viewControllers enumerateObjectsUsingBlock:^(UINavigationController *nav, NSUInteger idx, BOOL *stop) {
+        if (idx == 0) {
+            SwipableViewController *newsVc = nav.viewControllers[0];
+            [newsVc.titleBar setTitleButtonsColor];
+            [newsVc.viewPager.controllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                UITableViewController *table = obj;
+                [table.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+                [table.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
+                [table.tableView reloadData];
+            }];
+
+        } else if (idx == 1) {
+            SwipableViewController *tweetVc = nav.viewControllers[0];
+            [tweetVc.titleBar setTitleButtonsColor];
+            [tweetVc.viewPager.controllers enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                UITableViewController *table = obj;
+                [table.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+                [table.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
+                [table.tableView reloadData];
+            }];
+
+        } else if (idx == 3) {
+            DiscoverTableVC *dvc = nav.viewControllers[0];
+            [dvc.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+            [dvc.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
+            [dvc dawnAndNightMode];
+        } else if (idx == 4) {
+            MyInfoViewController *myInfo = nav.viewControllers[0];
+            [myInfo.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+            [myInfo.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
+            [myInfo dawnAndNightMode];
+        }
+    }];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dawnAndNight" object:nil];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    NewsViewController *newsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews];
-    NewsViewController *hotNewsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest];
-    BlogsViewController *blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
-    BlogsViewController *recommendBlogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended];
+    newsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews];
+    hotNewsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest];
+    blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
+    recommendBlogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended];
     
-    TweetsViewController *newTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets];
-    TweetsViewController *hotTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets];
-    TweetsViewController *myTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets];
+    newTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets];
+    hotTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets];
+    myTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets];
     
     newsViewCtl.needCache = YES;
     hotNewsViewCtl.needCache = YES;

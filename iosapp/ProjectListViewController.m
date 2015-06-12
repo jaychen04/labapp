@@ -67,6 +67,9 @@ static NSString *kProjectCellID = @"ProjectCell";
     
     [cell setContentWithTeamProject:project];
     
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 

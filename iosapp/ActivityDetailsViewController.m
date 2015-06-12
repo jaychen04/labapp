@@ -146,6 +146,7 @@
         case 0: {
             ActivityBasicInfoCell *cell = [ActivityBasicInfoCell new];
             cell.titleLabel.text = _activity.title;
+            cell.titleLabel.textColor = [UIColor titleColor];
             cell.timeLabel.text = [NSString stringWithFormat:@"开始：%@\n结束：%@", _activity.startTime, _activity.endTime];
             cell.locationLabel.text = [NSString stringWithFormat:@"地点：%@ %@", _activity.city, _activity.location];
             

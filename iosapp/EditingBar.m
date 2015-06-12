@@ -9,6 +9,8 @@
 #import "EditingBar.h"
 #import "GrowingTextView.h"
 #import "Utils.h"
+#import "AppDelegate.h"
+
 #import <ReactiveCocoa.h>
 
 @interface EditingBar ()
@@ -44,7 +46,20 @@
     _editView.returnKeyType = UIReturnKeySend;
     [_editView setCornerRadius:5.0];
     [_editView setBorderWidth:1.0f andColor:[UIColor colorWithHex:0xC8C8CD]];
-    _editView.backgroundColor = [UIColor colorWithHex:0xF5FAFA];
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        self.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+        [_editView setBorderWidth:1.0f andColor:[UIColor colorWithRed:106.0/255 green:106.0/255 blue:106.0/255 alpha:1.0]];
+        _modeSwitchButton.backgroundColor = [UIColor clearColor];
+        _inputViewButton.backgroundColor = [UIColor clearColor];
+        _editView.backgroundColor = [UIColor colorWithRed:0.17 green:0.17 blue:0.17 alpha:1.0];
+    } else {
+        self.barTintColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
+        _modeSwitchButton.backgroundColor = [UIColor clearColor];
+        _inputViewButton.backgroundColor = [UIColor clearColor];
+        _editView.backgroundColor = [UIColor colorWithHex:0xF5FAFA];
+    }
+    _editView.textColor = [UIColor titleColor];
     
     [self addSubview:_editView];
     [self addSubview:_modeSwitchButton];
