@@ -51,7 +51,10 @@
         if (_attributedTitle.length) {      // 防止单一emoji导致崩溃
             [_attributedTitle deleteCharactersInRange:NSMakeRange(_attributedTitle.length-1, 1)];
             
-            [_attributedTitle addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+            [_attributedTitle addAttributes:@{
+                                              NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                              NSForegroundColorAttributeName: [UIColor titleColor]
+                                              }
                                       range:NSMakeRange(0, _attributedTitle.length)];
         }
     }
