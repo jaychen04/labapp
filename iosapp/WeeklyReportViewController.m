@@ -29,6 +29,7 @@
         self.edgesForExtendedLayout = UIRectEdgeNone;
         self.navigationItem.title = @"团队周报";
         
+        
         _teamID = teamID;
         
         NSDateComponents *dateComps = [Utils getDateComponentsFromDate:[NSDate date]];

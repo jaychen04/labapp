@@ -84,7 +84,7 @@ static NSString * const kIssueCellID = @"IssueCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TeamIssueCell class] forCellReuseIdentifier:kIssueCellID];
-    
+    self.tableView.separatorColor = [UIColor separatorColor];
     self.lastCell.emptyMessage = @"暂无任务";
 }
 
