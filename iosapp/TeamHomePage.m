@@ -165,8 +165,7 @@
         }
         layer.path = pathRef;
         CFRelease(pathRef);
-        layer.fillColor = [UIColor colorWithWhite:1.f alpha:0.8f].CGColor;
-        //
+        
         layer.fillColor = [UIColor teamButtonColor].CGColor;
         
         if (addLine == YES) {
