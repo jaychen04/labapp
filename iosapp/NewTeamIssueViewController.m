@@ -16,6 +16,7 @@
 #import "TeamProject.h"
 #import "TeamIssueList.h"
 #import "TableViewCell.h"
+#import "AppDelegate.h"
 
 #import "NSString+FontAwesome.h"
 #import "TeamCalendarView.h"
@@ -259,6 +260,11 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         cell.backgroundColor = [UIColor themeColor];
         _titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 5, CGRectGetWidth([[UIScreen mainScreen] bounds])-40, CGRectGetHeight(cell.frame)-10)];
         _titleTextField.placeholder = @"任务标题";
+        _titleTextField.textColor = [UIColor titleColor];
+        if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+            _titleTextField.keyboardAppearance = UIKeyboardAppearanceDark;
+            [_titleTextField setValue:[UIColor lightGrayColor] forKeyPath:@"_placeholderLabel.textColor"];
+        }
         [cell addSubview:_titleTextField];
         
         return cell;
