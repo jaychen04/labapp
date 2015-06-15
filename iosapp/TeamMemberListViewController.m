@@ -88,12 +88,12 @@ static NSString * const kReuseID = @"reuseID";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    TeamMember *member = self.objects[indexPath.row];
     
     TweetEditingVC *vc = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
     if (indexPath.row == 0) {
         [vc insertString:@"全部成员(all)" andSelect:NO];
     } else {
+        TeamMember *member = self.objects[indexPath.row - 1];
         [vc insertString:member.name andSelect:NO];
     }
     
