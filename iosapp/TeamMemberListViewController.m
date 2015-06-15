@@ -75,7 +75,7 @@ static NSString * const kReuseID = @"reuseID";
         TeamMember *member = self.objects[indexPath.row - 1];
         cell.textLabel.text = member.name;
     }
-    
+    cell.textLabel.textColor = [UIColor titleColor];
     return cell;
 }
 
