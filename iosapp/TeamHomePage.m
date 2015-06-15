@@ -52,6 +52,7 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     [self refresh];
 }
@@ -128,6 +129,9 @@
                       attributes:@{                                                                                                                                         NSFontAttributeName: [UIFont boldSystemFontOfSize:18],
                                                                                                                                                                                                          NSForegroundColorAttributeName: [UIColor grayColor]              }]];
         cell.textLabel.attributedText = attributedTitle;
+
+        
+
         return cell;
     }
 }
@@ -137,6 +141,7 @@
     if ([cell respondsToSelector:@selector(tintColor)]) {
         CGFloat cornerRadius = 5.f;
         cell.backgroundColor = UIColor.clearColor;
+        
         CAShapeLayer *layer = [[CAShapeLayer alloc] init];
         CGMutablePathRef pathRef = CGPathCreateMutable();
         CGRect bounds = CGRectInset(cell.bounds, 10, 0);
@@ -161,6 +166,8 @@
         layer.path = pathRef;
         CFRelease(pathRef);
         layer.fillColor = [UIColor colorWithWhite:1.f alpha:0.8f].CGColor;
+        //
+        layer.fillColor = [UIColor teamButtonColor].CGColor;
         
         if (addLine == YES) {
             CALayer *lineLayer = [[CALayer alloc] init];
