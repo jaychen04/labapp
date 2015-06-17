@@ -45,10 +45,9 @@
     [self.contentView addSubview:_nameLabel];
     
     _eMailLabel = [UILabel new];
-    _eMailLabel.numberOfLines = 0;
-    _eMailLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _eMailLabel.font = [UIFont systemFontOfSize:14];
     _eMailLabel.textColor = [UIColor titleColor];
+    _eMailLabel.adjustsFontSizeToFitWidth = YES;
     [self.contentView addSubview:_eMailLabel];
     
     _phoneLabel = [UILabel new];
@@ -95,26 +94,24 @@
     }
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_portraitIv, _nameLabel, _eMailLabel, _phoneLabel, _addressLabel,_phoneIconLabel);
-    
+
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_portraitIv(60)]"
-                                                                              options:0 metrics:nil views:views]];
+                                                                             options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_portraitIv(60)]-20-[_nameLabel]-20-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_portraitIv(60)]-20-[_nameLabel]-10-|"
                                                                              options:NSLayoutFormatAlignAllTop
                                                                              metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nameLabel]-7-[_eMailLabel]-7-[_phoneLabel]-7-[_addressLabel]-7-|"
-                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                             metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nameLabel]" options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_phoneIconLabel(40)]-10-|"
-                                                                             options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nameLabel]-7-[_eMailLabel]" options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_phoneIconLabel(40)]"
-                                                                             options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_eMailLabel]-7-[_phoneLabel]-7-[_addressLabel]-7-|" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
     
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:self.contentView attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_phoneIconLabel  attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_nameLabel]-7-[_phoneIconLabel(40)]" options:NSLayoutFormatAlignAllRight metrics:nil views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_eMailLabel]-7-[_phoneIconLabel(40)]-10-|" options:0 metrics:nil views:views]];
+    
 }
 
 
