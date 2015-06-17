@@ -85,7 +85,9 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.tableView.bounces = NO;
     self.navigationItem.title = @"我";
-    self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
+//    self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
+    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.tableFooterView = footer;

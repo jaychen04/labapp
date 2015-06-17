@@ -31,7 +31,7 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
         _week = week;
         
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?teamid=%d&year=%ld&week=%ld&pageIndex=%lu", TEAM_PREFIX, TEAM_DIARY_LIST, teamID, year, week, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?teamid=%d&year=%ld&week=%ld&pageIndex=%lu", TEAM_PREFIX, TEAM_DIARY_LIST, teamID, (long)year, (long)week, (unsigned long)page];
         };
         
         self.objClass = [TeamWeeklyReport class];

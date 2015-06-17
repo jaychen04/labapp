@@ -9,6 +9,7 @@
 #import "CommentCell.h"
 #import "OSCComment.h"
 #import "Utils.h"
+#import "Config.h"
 #import "AppDelegate.h"
 
 @interface CommentCell ()
@@ -145,6 +146,7 @@
         UIView *container = [UIView new];
         [_currentContainer addSubview:container];
         
+        ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
         if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
             _currentContainer.backgroundColor = [UIColor colorWithRed:51.0/255 green:51.0/255 blue:51.0/255 alpha:1.0];
             label.backgroundColor = [UIColor clearColor];

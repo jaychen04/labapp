@@ -8,7 +8,7 @@
 
 #import "PlaceholderTextView.h"
 #import "AppDelegate.h"
-
+#import "Config.h"
 #import <ReactiveCocoa.h>
 
 @interface PlaceholderTextView ()
@@ -24,6 +24,7 @@
     self = [super init];
     if (self) {
         [self setUpPlaceholderLabel:placeholder];
+        ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
         if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
             self.keyboardAppearance = UIKeyboardAppearanceDark;
         } else {
