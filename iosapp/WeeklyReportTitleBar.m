@@ -31,7 +31,7 @@
         self.backgroundColor = [UIColor titleBarColor];
         
         [self setLayout];
-        _weekLabel.text = [NSString stringWithFormat:@"第%ld周周报总览", week];
+        _weekLabel.text = [NSString stringWithFormat:@"第%ld周周报总览", (long)week];
         
         _currentWeek = [Utils getDateComponentsFromDate:[NSDate date]].weekOfYear - 1;
         if (_currentWeek == week) {_nextWeekBtn.enabled = NO;}
@@ -77,7 +77,7 @@
 
 - (void)updateWeek:(NSInteger)week
 {
-    _weekLabel.text = [NSString stringWithFormat:@"第%ld周周报总览", week];
+    _weekLabel.text = [NSString stringWithFormat:@"第%ld周周报总览", (long)week];
     
     _nextWeekBtn.enabled = YES;
     _previousWeekBtn.enabled = YES;
