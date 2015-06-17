@@ -640,6 +640,10 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [_HUD hide:YES];
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        [webView stringByEvaluatingJavaScriptFromString:@"document.body.className = \"night\";"];
+    }
 }
 
 

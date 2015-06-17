@@ -75,6 +75,23 @@ body.night .original {
 }
 
 
+/*** night mode ***/
+
+.night {
+    background-color: #2B2B2B;
+    color: #CCC;
+}
+
+.night span {
+    background-color: #2B2B2B !important;
+    color: #CCC !important;
+}
+
+.night a {
+    color: #15A230;
+}
+
+
 /*** software ***/
 
 #software_logo {
