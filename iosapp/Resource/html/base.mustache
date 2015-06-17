@@ -5,8 +5,12 @@
         <link href="css/detail.css" rel="stylesheet" type="text/css" />
         
         <link href="css/styles/shCore.css" rel="stylesheet" type="text/css" />
-        <link href="css/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
-        
+        {{# night }}
+            <link href="css/styles/shThemeDjango.css" rel="stylesheet" type="text/css" />
+        {{^}}
+            <link href="css/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
+        {{/}}
+
         <script type="text/javascript" src="js/shCore.js"></script>
         <script type="text/javascript" src="js/shLegacy.js"></script>
         <script type="text/javascript" src="js/shAutoloader.js"></script>
@@ -41,7 +45,7 @@
         </script>
     </head>
     
-    <body>
+    <body {{# night }}class="night"{{/}}>
         {{$ body }}
         {{/}}
     </body>
