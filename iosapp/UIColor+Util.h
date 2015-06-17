@@ -23,5 +23,6 @@
 + (UIColor *)navigationbarColor;
 + (UIColor *)selectCellSColor;
 + (UIColor *)labelTextColor;
++ (UIColor *)teamButtonColor;
 
 @end

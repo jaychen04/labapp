@@ -110,4 +110,12 @@
     return [UIColor whiteColor];
 }
 
++ (UIColor *)teamButtonColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+    }
+    return [UIColor colorWithRed:251.0/255 green:251.0/255 blue:253.0/255 alpha:1.0];
+}
+
 @end

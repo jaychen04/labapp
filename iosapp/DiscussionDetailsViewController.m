@@ -49,6 +49,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"帖子详情";
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];

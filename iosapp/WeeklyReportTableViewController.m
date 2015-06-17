@@ -46,6 +46,7 @@ static NSString * const kWeeklyReportCellID = @"WeeklyReportCell";
     [self.tableView registerClass:[WeeklyReportCell class] forCellReuseIdentifier:kWeeklyReportCellID];
     
     self.lastCell.emptyMessage = @"本周没有人提交周报";
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -28,7 +28,9 @@
         NSString *summaryHTML = [[xml firstChildWithTag:@"summary"] stringValue];
         NSMutableAttributedString *attributedSummary = [Utils attributedStringFromHTML:summaryHTML];
         [attributedSummary deleteCharactersInRange:NSMakeRange(attributedSummary.length-1, 1)];
-        [attributedSummary addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+        [attributedSummary addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                           NSForegroundColorAttributeName: [UIColor titleColor]
+                                           }
                                    range:NSMakeRange(0, attributedSummary.length)];
         _summary = attributedSummary;
         
@@ -40,7 +42,9 @@
             NSString *HTML = [detailsXML firstChildWithTag:tag].stringValue;
             NSMutableAttributedString *attributedDetail = [Utils attributedStringFromHTML:HTML];
             
-            [attributedDetail addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15]}
+            [attributedDetail addAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:15],
+                                              NSForegroundColorAttributeName: [UIColor titleColor]
+                                              }
                                       range:NSMakeRange(0, attributedDetail.length)];
             
             if (HTML) {

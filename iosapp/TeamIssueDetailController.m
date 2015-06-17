@@ -112,6 +112,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"任务详情";
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     [self setMainCellData];
     

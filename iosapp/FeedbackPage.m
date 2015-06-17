@@ -10,6 +10,7 @@
 #import "PlaceholderTextView.h"
 #import "Utils.h"
 #import "OSCAPI.h"
+#import "AppDelegate.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
@@ -66,6 +67,10 @@
     _feedbackTextView.translatesAutoresizingMaskIntoConstraints = NO;
     [_feedbackTextView becomeFirstResponder];
     [self.view addSubview:_feedbackTextView];
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        _feedbackTextView.backgroundColor = [UIColor colorWithRed:60.0/255 green:60.0/255 blue:60.0/255 alpha:1.0];
+        _feedbackTextView.textColor = [UIColor titleColor];
+    }
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_feedbackTextView);
     

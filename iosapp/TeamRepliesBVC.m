@@ -62,6 +62,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
     [super viewDidLoad];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     _tableView = [UITableView new];
     _tableView.delegate = self;

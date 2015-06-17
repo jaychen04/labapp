@@ -56,6 +56,8 @@ static NSString * const kSoftware       = @"software";
     [super viewDidLoad];
     
     self.lastCell.emptyMessage = @"找不到和您的查询相符的信息";
+    self.tableView.separatorColor = [UIColor separatorColor];
+    self.tableView.backgroundColor = [UIColor themeColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -70,6 +72,10 @@ static NSString * const kSoftware       = @"software";
     OSCSearchResult *result = self.objects[indexPath.row];
     
     UITableViewCell *cell = [self createCellWithSearchResult:result];
+    
+    cell.backgroundColor = [UIColor themeColor];
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
 }
@@ -94,6 +100,7 @@ static NSString * const kSoftware       = @"software";
         SoftwareCell *cell = [SoftwareCell new];
         cell.nameLabel.text = result.title;
         cell.descriptionLabel.text = result.objectDescription;
+        cell.nameLabel.textColor = [UIColor titleColor];
         
         return cell;
     } else {
@@ -102,6 +109,7 @@ static NSString * const kSoftware       = @"software";
         cell.authorLabel.text = result.author;
         cell.bodyLabel.text   = result.objectDescription;
         cell.timeLabel.attributedText = [Utils attributedTimeString:result.pubDate];
+        cell.titleLabel.textColor = [UIColor titleColor];
         
         return cell;
     }

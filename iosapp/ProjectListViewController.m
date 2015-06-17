@@ -56,6 +56,7 @@ static NSString *kProjectCellID = @"ProjectCell";
     
     self.navigationItem.title = @"团队项目";
     [self.tableView registerClass:[ProjectCell class] forCellReuseIdentifier:kProjectCellID];
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 #pragma mark - tableView things
