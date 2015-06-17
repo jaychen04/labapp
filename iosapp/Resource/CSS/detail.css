@@ -18,6 +18,11 @@ a {
     word-break: break-all;
 }
 
+audio {
+    width: 90%;
+    display: block;
+}
+
 
 img,table {
     max-width: 100%;
