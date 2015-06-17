@@ -9,6 +9,7 @@
 #import "EditingBar.h"
 #import "GrowingTextView.h"
 #import "Utils.h"
+#import "Config.h"
 #import "AppDelegate.h"
 
 #import <ReactiveCocoa.h>
@@ -47,6 +48,7 @@
     [_editView setCornerRadius:5.0];
     [_editView setBorderWidth:1.0f andColor:[UIColor colorWithHex:0xC8C8CD]];
     
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         self.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
         [_editView setBorderWidth:1.0f andColor:[UIColor colorWithRed:106.0/255 green:106.0/255 blue:106.0/255 alpha:1.0]];

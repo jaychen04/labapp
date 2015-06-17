@@ -9,6 +9,7 @@
 #import "EventCell.h"
 #import "OSCEvent.h"
 #import "Utils.h"
+#import "Config.h"
 #import "AppDelegate.h"
 
 @interface EventCell()
@@ -82,6 +83,7 @@
     _referenceText.userInteractionEnabled = NO;
     [self.contentView addSubview:_referenceText];
     
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         _referenceText.backgroundColor = [UIColor colorWithRed:75.0/255 green:75.0/255 blue:75.0/255 alpha:1.0];
         _referenceText.textColor = [UIColor whiteColor];

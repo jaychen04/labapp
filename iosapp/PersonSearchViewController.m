@@ -9,6 +9,7 @@
 #import "PersonSearchViewController.h"
 #import "PeopleTableViewController.h"
 #import "AppDelegate.h"
+#import "Config.h"
 
 @interface PersonSearchViewController () <UISearchBarDelegate>
 
@@ -29,6 +30,8 @@
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:@selector(cancelButtonClicked)];
+    
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     
     [self initSubviews];
     [self setAutoLayout];

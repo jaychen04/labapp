@@ -221,6 +221,7 @@
     //_manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [self fetchDetails];
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 }
 
 - (void)viewDidAppear:(BOOL)animated

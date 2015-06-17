@@ -17,6 +17,7 @@
 #import "ImageViewerController.h"
 #import "AppDelegate.h"
 #import "TeamMemberListViewController.h"
+#import "Config.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <objc/runtime.h>
@@ -94,6 +95,7 @@
                                                                              action:@selector(pubTweet)];
     self.view.backgroundColor = [UIColor whiteColor];
     
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     [self initSubViews];
     [self setLayout];
     

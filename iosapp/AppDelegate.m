@@ -30,6 +30,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    _inNightMode = [Config getMode];
+    
     [NBSAppAgent startWithAppID:@"2142ec9589c2480f952feab9ed19a535"];
     
     OSCTabBarController *tabBarController = [OSCTabBarController new];
@@ -54,17 +56,15 @@
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithHex:0x15A230]];
     NSDictionary *navbarTitleTextAttributes = @{NSForegroundColorAttributeName:[UIColor whiteColor]};
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-    
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
     [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];
-    [[UITabBar appearance] setBarTintColor:[UIColor colorWithHex:0xE1E1E1]];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHex:0x15A230]} forState:UIControlStateSelected];
     
+    [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
+    [[UITabBar appearance] setBarTintColor:[UIColor titleBarColor]];
     
     [UISearchBar appearance].tintColor = [UIColor colorWithHex:0x15A230];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setCornerRadius:14.0];

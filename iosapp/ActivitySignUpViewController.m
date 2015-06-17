@@ -106,6 +106,7 @@
     _positionTextField.textColor = [UIColor titleColor];
     [self.view addSubview:_positionTextField];
     
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         _nameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
         _phoneNumberTextField.keyboardAppearance = UIKeyboardAppearanceDark;

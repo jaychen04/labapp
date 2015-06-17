@@ -234,4 +234,19 @@ NSString * const kTeamsArray = @"teams";
     [userDefaults removeObjectForKey:kTeamsArray];
 }
 
+//夜间状态
++ (void)saveWhetherNightMode:(BOOL)isNight
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setObject:@(isNight) forKey:@"mode"];
+    [userDefaults synchronize];
+}
++ (BOOL)getMode
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    return [[userDefaults objectForKey:@"mode"] boolValue];
+}
+
 @end

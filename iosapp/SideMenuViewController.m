@@ -17,6 +17,7 @@
 #import "SettingsPage.h"
 #import "MyInfoViewController.h"
 #import "LoginViewController.h"
+#import "nightModeSideCell.h"
 
 #import "AppDelegate.h"
 
@@ -24,6 +25,8 @@
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
 #import <ReactiveCocoa.h>
+
+static NSString * const kNightModeSideCellID = @"nightModeSideCell";
 
 @interface SideMenuViewController ()
 
@@ -52,6 +55,9 @@ static BOOL isNight;
     self.tableView.separatorColor = [UIColor separatorColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
+    
+    [self.tableView registerClass:[nightModeSideCell class] forCellReuseIdentifier:kNightModeSideCellID];
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 
 }
 
@@ -135,26 +141,45 @@ static BOOL isNight;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell new];
-    
-    cell.backgroundColor = [UIColor clearColor];
-    UIView *selectedBackground = [UIView new];
-    selectedBackground.backgroundColor = [UIColor colorWithHex:0xCFCFCF];
-    [cell setSelectedBackgroundView:selectedBackground];
-    cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"sidemenu-settings", @"sidemenu-settings"][indexPath.row]];
-    cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"夜间模式", @"注销"][indexPath.row];
+    if (indexPath.row < 4) {
+        UITableViewCell *cell = [UITableViewCell new];
+        
+        cell.backgroundColor = [UIColor clearColor];
+        
+        UIView *selectedBackground = [UIView new];
+        selectedBackground.backgroundColor = [UIColor colorWithHex:0xCFCFCF];
+        [cell setSelectedBackgroundView:selectedBackground];
+        
+        cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"sidemenu-settings"][indexPath.row]];
+        cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"注销"][indexPath.row];
+        
+        if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
+            cell.textLabel.textColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+        } else {
+            cell.textLabel.textColor = [UIColor colorWithHex:0x555555];
+        }
+        cell.textLabel.font = [UIFont systemFontOfSize:19];
+        
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+        
+        return cell;
 
-    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
-        cell.textLabel.textColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     } else {
-        cell.textLabel.textColor = [UIColor colorWithHex:0x555555];
+        nightModeSideCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kNightModeSideCellID forIndexPath:indexPath];
+        cell.backgroundColor = [UIColor clearColor];
+        if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
+            cell.nightTextLabel.textColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+        } else {
+            cell.nightTextLabel.textColor = [UIColor colorWithHex:0x555555];
+        }
+        
+        cell.image.image = [UIImage imageNamed:@"sidemenu-settings"];
+        cell.nightTextLabel.text = @"夜间模式";
+        [cell.isNightSwitch addTarget:self action:@selector(isNightOn) forControlEvents:UIControlEventValueChanged];
+        
+        return cell;
     }
-    cell.textLabel.font = [UIFont systemFontOfSize:19];
-    
-    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -211,18 +236,6 @@ static BOOL isNight;
             break;
         }
         case 4: {
-            UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-            if (isNight) {
-                //正在日间模式
-                cell.textLabel.text = @"夜间模式";
-                ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = NO;
-            } else {
-                //正在夜间模式
-                cell.textLabel.text = @"日间模式";
-                ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = YES;
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"dawnAndNight" object:nil];
-            isNight = !isNight;
         }
         default: break;
     }
@@ -238,6 +251,22 @@ static BOOL isNight;
     [nav pushViewController:viewController animated:NO];
     
     [self.sideMenuViewController hideMenuViewController];
+}
+
+#pragma mark - 夜间/日间模式切换
+- (void)isNightOn
+{
+    isNight = [Config getMode];
+    if (isNight) {
+        //正在日间模式
+        ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = NO;
+    } else {
+        //正在夜间模式
+        ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = YES;
+    }
+    [Config saveWhetherNightMode:!isNight];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"dawnAndNight" object:nil];
+    isNight = !isNight;
 }
 
 
