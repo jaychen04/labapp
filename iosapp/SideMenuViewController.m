@@ -49,7 +49,11 @@ static BOOL isNight;
     
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"menu-background(%dx%d)", (int)screenSize.width, (int)screenSize.height]];
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:image];
+//    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:image];
+    
+    //
+    self.tableView.backgroundColor = [UIColor titleBarColor];
+    //
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     self.tableView.separatorColor = [UIColor separatorColor];
@@ -260,9 +264,11 @@ static BOOL isNight;
     if (isNight) {
         //正在日间模式
         ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = NO;
+        self.tableView.backgroundColor = [UIColor colorWithHex:0xE1E1E1];
     } else {
         //正在夜间模式
         ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = YES;
+        self.tableView.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
     }
     [Config saveWhetherNightMode:!isNight];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"dawnAndNight" object:nil];
