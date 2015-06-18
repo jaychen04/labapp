@@ -151,6 +151,12 @@
     [imageBackView setCornerRadius:27];
     [header addSubview:imageBackView];
     
+    //
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(188, 80, 100, 100)];
+    view.backgroundColor = [UIColor redColor];
+    [header addSubview:view];
+    //
+    
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];

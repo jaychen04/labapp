@@ -1,0 +1,21 @@
+{{< html/base }}
+    {{$ body }}
+
+        {{{ content }}}
+        <br />
+        
+        {{# imageURL }}
+        <br/>
+        <a href="{{imageURL}}">
+            <img src="{{imageURL}}" />
+        </a>
+        {{/}}
+        
+        {{# audioURL }}
+        <br />
+        <audio controls>
+            <source src="{{audioURL}}?avthumb/mp3\" type="audio/mpeg">
+        </audio>
+        {{/}}
+    {{/}}
+{{/}}

@@ -440,7 +440,7 @@
                            @"content": newsDetails.body,
                            @"softwareLink": newsDetails.softwareLink,
                            @"softwareName": newsDetails.softwareName,
-                           @"relatedInfo": [Utils generateRelativeNewsString:newsDetails.relatives]
+                           @"relatedInfo": [Utils generateRelativeNewsString:newsDetails.relatives],
                            };
     
     [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
@@ -484,7 +484,7 @@
                            @"authorName": postDetails.author,
                            @"timeInterval": [Utils intervalSinceNow:postDetails.pubDate],
                            @"content": postDetails.body,
-                           @"tags": [Utils GenerateTags:postDetails.tags]
+                           @"tags": [Utils GenerateTags:postDetails.tags],
                            };
     
     [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
@@ -516,7 +516,7 @@
                            @"recordTime": softwareDetails.recordTime,
                            @"homepageURL": softwareDetails.homepageURL,
                            @"documentURL": softwareDetails.documentURL,
-                           @"downloadURL": softwareDetails.downloadURL
+                           @"downloadURL": softwareDetails.downloadURL,
                            };
     
     [self loadHTMLWithData:data usingTemplate:@"softwareDetail"];
@@ -538,9 +538,13 @@
     NSString *templatePath = [[NSBundle mainBundle] pathForResource:templateName ofType:@"html" inDirectory:@"html"];
     NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
     
-    NSString *html = [GRMustacheTemplate renderObject:data fromString:template error:nil];
+    NSMutableDictionary *mutableData = [data mutableCopy];
+    [mutableData setObject:@(((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
+                    forKey:@"night"];
     
-    [self.detailsView loadHTMLString:html baseURL:[[NSBundle mainBundle] bundleURL]];
+    NSString *html = [GRMustacheTemplate renderObject:mutableData fromString:template error:nil];
+    
+    [self.detailsView loadHTMLString:html baseURL:[[NSBundle mainBundle] resourceURL]];
 }
 
 

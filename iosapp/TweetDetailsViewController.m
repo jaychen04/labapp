@@ -18,11 +18,13 @@
 #import "OSCUser.h"
 
 #import "NSString+FontAwesome.h"
+#import "AppDelegate.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <MBProgressHUD.h>
+#import <GRMustache.h>
 
 @interface TweetDetailsViewController () <UIWebViewDelegate>
 
@@ -76,26 +78,17 @@
              
              _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
              self.objectAuthorID = _tweet.authorID;
-             _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;} audio { width: 90%%; display: block; }</style>\
-                            <font size=\"3\"><strong>%@</strong></font>\
-                            <br/>",
-                            _tweet.body];
              
-             if (_tweet.hasAnImage) {
-                 _tweet.body = [NSString stringWithFormat:@"%@<a href='%@'>\
-                                <img style='max-width:300px;\
-                                margin-top:10px;\
-                                margin-bottom:15px'\
-                                src='%@'/>\
-                                </a>", _tweet.body, _tweet.bigImgURL, _tweet.bigImgURL];
-             }
+             NSDictionary *data = @{
+                                    @"content": _tweet.body,
+                                    @"imageURL": _tweet.bigImgURL.absoluteString,
+                                    @"audioURL": _tweet.attach,
+                                    };
              
-             if (_tweet.attach.length) {
-                 //有语音信息
-                 
-                 NSString *attachStr = [NSString stringWithFormat:@"<source src=\"%@?avthumb/mp3\" type=\"audio/mpeg\">", _tweet.attach];
-                 _tweet.body = [NSString stringWithFormat:@"%@<br/><audio controls>%@</audio>", _tweet.body, attachStr];
-             }
+             NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"tweet" ofType:@"html" inDirectory:@"html"];
+             NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
+             
+             _tweet.body = [GRMustacheTemplate renderObject:data fromString:template error:nil];
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
@@ -196,7 +189,7 @@
             }
             [cell.appclientLabel setAttributedText:[Utils getAppclient:_tweet.appclient]];
             cell.webView.delegate = self;
-            [cell.webView loadHTMLString:_tweet.body baseURL:nil];
+            [cell.webView loadHTMLString:_tweet.body baseURL:[NSBundle mainBundle].resourceURL];
         }
         
         return cell;
@@ -249,6 +242,8 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
