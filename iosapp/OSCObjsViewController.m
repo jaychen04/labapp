@@ -66,9 +66,7 @@
     _label.font = [UIFont boldSystemFontOfSize:14];
     _lastCell.textLabel.textColor = [UIColor titleColor];
     
-    _manager = [AFHTTPRequestOperationManager manager];
-    [_manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    _manager = [AFHTTPRequestOperationManager OSCManager];
     
     if (!_shouldFetchDataAfterLoaded) {return;}
     if (_needRefreshAnimation) {

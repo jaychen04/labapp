@@ -83,9 +83,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"留言发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_MESSAGE_PUB]
        parameters:@{

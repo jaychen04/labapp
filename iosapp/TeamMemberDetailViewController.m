@@ -60,9 +60,9 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 
 -(void)getMemberDetailInfo
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    
     NSString *url = [NSString stringWithFormat:@"%@%@?uid=%d&teamid=%d", TEAM_PREFIX, TEAM_USER_INFORMATION,_uId,_teamId];
     [manager GET:url
       parameters:nil

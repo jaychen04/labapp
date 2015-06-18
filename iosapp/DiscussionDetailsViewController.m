@@ -45,8 +45,8 @@
     self.navigationItem.title = @"帖子详情";
     self.tableView.separatorColor = [UIColor separatorColor];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DISCUSS_DETAIL]
       parameters:@{
                    @"teamid":@([Config teamID]),
@@ -171,9 +171,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DISCUSS_REPLY]
        parameters:@{

@@ -64,10 +64,8 @@
 
 - (void)getTweetDetails
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
 //    manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_TWEET_DETAIL, _tweetID]
       parameters:nil
@@ -265,10 +263,8 @@
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
     }
 
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     [manager POST:postUrl
        parameters:@{
                     @"uid": @([Config getOwnID]),

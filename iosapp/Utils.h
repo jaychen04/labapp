@@ -12,6 +12,7 @@
 #import "UIImageView+Util.h"
 #import "UIImage+Util.h"
 #import "NSTextAttachment+Util.h"
+#import "AFHTTPRequestOperationManager+Util.h"
 
 static NSString * const kKeyYears = @"years";
 static NSString * const kKeyMonths = @"months";
@@ -60,7 +61,6 @@ typedef NS_ENUM(NSUInteger, hudType) {
 
 + (NSAttributedString *)attributedCommentCount:(int)commentCount;
 
-+ (NSString *)generateUserAgent;
 + (NSString *)HTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName;
 
 

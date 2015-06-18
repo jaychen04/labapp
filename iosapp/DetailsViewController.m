@@ -213,10 +213,8 @@
     _HUD = [Utils createHUD];
     _HUD.userInteractionEnabled = NO;
     
-    _manager = [AFHTTPRequestOperationManager manager];
-    [_manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    _manager = [AFHTTPRequestOperationManager OSCManager];
     //_manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [self fetchDetails];
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 }
@@ -247,9 +245,7 @@
     /********* 收藏 **********/
     
     self.operationBar.toggleStar = ^ {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         NSString *API = weakSelf.isStarred? OSCAPI_FAVORITE_DELETE: OSCAPI_FAVORITE_ADD;
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
@@ -544,9 +540,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     NSString *URL;
     NSDictionary *parameters;
@@ -642,9 +636,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [alertView cancelButtonIndex]) {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         [manager POST:@"http://www.oschina.net/action/communityManage/report"
            parameters:@{

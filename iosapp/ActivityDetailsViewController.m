@@ -61,9 +61,7 @@
     _HUD = [Utils createHUD];
     _HUD.userInteractionEnabled = NO;
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, _activityID]
       parameters:nil

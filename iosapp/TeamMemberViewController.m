@@ -123,8 +123,7 @@ static NSString * const kMemberCellID = @"MemberCell";
 {
     [_members removeAllObjects];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager GET:_URL
       parameters:@{

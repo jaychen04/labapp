@@ -97,9 +97,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     NSString *URL;
     if (_commentType == CommentTypeBlog) {

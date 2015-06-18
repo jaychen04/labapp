@@ -131,8 +131,8 @@ static NSString * kTeamCellID = @"TeamCell";
         _HUD.userInteractionEnabled = NO;
         _HUD.labelText = @"正在获取团队信息";
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        
         [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_LIST]
           parameters:@{@"uid": @([Config getOwnID])}
              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
@@ -189,8 +189,8 @@ static NSString * kTeamCellID = @"TeamCell";
         
         
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        
         [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_LIST]
           parameters:@{@"uid": @([Config getOwnID])}
              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
