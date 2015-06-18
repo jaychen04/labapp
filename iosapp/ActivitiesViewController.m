@@ -69,10 +69,13 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     [cell.posterView sd_setImageWithURL:activity.coverURL placeholderImage:nil];
     
     if (activity.status == ActivityStatusActivityFinished && activity.applyStatus == ActivityApplyStatusAttended) {
+        cell.tabImageView.hidden = NO;
         [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_attend"]];
     } else if ((activity.status == ActivityStatusGoing || activity.status == ActivityStatusSignUpClosing)  && activity.applyStatus == ActivityApplyStatusDetermined){
+        cell.tabImageView.hidden = NO;
         [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_checked"]];
     } else if (activity.status == ActivityStatusActivityFinished && activity.applyStatus == ActivityApplyStatusDetermined) {
+        cell.tabImageView.hidden = NO;
         [cell.tabImageView setImage:[UIImage imageNamed:@"icon_event_status_over"]];
     }
     

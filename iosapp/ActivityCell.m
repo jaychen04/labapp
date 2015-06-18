@@ -46,6 +46,7 @@
     //_tabImageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.contentView.frame.size.width-40, 0, 10, 10)];
     _tabImageView = [UIImageView new];
     //_tabImageView.contentMode = UIViewContentModeScaleAspectFill;
+    _tabImageView.hidden = YES;
     [self.contentView addSubview:_tabImageView];
 }
 

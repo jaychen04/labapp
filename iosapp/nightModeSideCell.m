@@ -48,8 +48,8 @@
     
     NSDictionary *views = NSDictionaryOfVariableBindings(_image, _nightTextLabel, _isNightSwitch);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_image(20)]-15-|" options:0 metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-15-[_image(20)]-15-[_nightTextLabel]-15-[_isNightSwitch]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_image(21)]-15-|" options:0 metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-15-[_image(21)]-15-[_nightTextLabel]-15-[_isNightSwitch]"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
 }
 
