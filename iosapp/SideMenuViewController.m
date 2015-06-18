@@ -154,7 +154,7 @@ static BOOL isNight;
         selectedBackground.backgroundColor = [UIColor colorWithHex:0xCFCFCF];
         [cell setSelectedBackgroundView:selectedBackground];
         
-        cell.imageView.image = [UIImage imageNamed:@[@"sidemenu-QA", @"sidemenu-software", @"sidemenu-blog", @"sidemenu-settings"][indexPath.row]];
+        cell.imageView.image = [UIImage imageNamed:@[@"sidemenu_QA", @"sidemenu-software", @"sidemenu_blog", @"sidemenu_setting"][indexPath.row]];
         cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"注销"][indexPath.row];
         
         if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
@@ -178,9 +178,10 @@ static BOOL isNight;
             cell.nightTextLabel.textColor = [UIColor colorWithHex:0x555555];
         }
         
-        cell.image.image = [UIImage imageNamed:@"sidemenu-settings"];
+        cell.image.image = [UIImage imageNamed:@"sidemenu-night"];
         cell.nightTextLabel.text = @"夜间模式";
         [cell.isNightSwitch addTarget:self action:@selector(isNightOn) forControlEvents:UIControlEventValueChanged];
+        cell.selectionStyle = UITableViewCellEditingStyleNone;
         
         return cell;
     }
