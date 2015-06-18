@@ -176,10 +176,10 @@
             [cell.timeLabel setAttributedText:[Utils attributedTimeString:_tweet.pubDate]];
             if (_tweet.isLike) {
                 [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] forState:UIControlStateNormal];
-                [cell.likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
             } else {
                 [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsOUp] forState:UIControlStateNormal];
-                [cell.likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             }
             [cell.appclientLabel setAttributedText:[Utils getAppclient:_tweet.appclient]];
             cell.webView.delegate = self;
@@ -302,15 +302,9 @@
                   tweet.isLike = !tweet.isLike;
                   tweet.likersDetailString = nil;
                   
-#if 0
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                      [self.tableView reloadData];
-                  });
-#else
                   [self.tableView beginUpdates];
                   [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
                   [self.tableView endUpdates];
-#endif
               } else {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
