@@ -16,15 +16,13 @@
 #import "Config.h"
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
-
 #import "NSString+FontAwesome.h"
-#import "AppDelegate.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <MBProgressHUD.h>
-#import <GRMustache.h>
+
 
 @interface TweetDetailsViewController () <UIWebViewDelegate>
 
@@ -85,10 +83,7 @@
                                     @"audioURL": _tweet.attach,
                                     };
              
-             NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"tweet" ofType:@"html" inDirectory:@"html"];
-             NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
-             
-             _tweet.body = [GRMustacheTemplate renderObject:data fromString:template error:nil];
+             _tweet.body = [Utils HTMLWithData:data usingTemplate:@"tweet"];
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
@@ -96,7 +91,6 @@
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [_HUD hide:YES];
          }];
-
 }
 
 - (void)didReceiveMemoryWarning {

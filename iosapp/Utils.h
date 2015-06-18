@@ -61,7 +61,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSAttributedString *)attributedCommentCount:(int)commentCount;
 
 + (NSString *)generateUserAgent;
-
++ (NSString *)HTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName;
 
 
 

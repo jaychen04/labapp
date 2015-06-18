@@ -30,9 +30,6 @@
 #import "UIBarButtonItem+Badge.h"
 #import "AppDelegate.h"
 
-#import <MBProgressHUD.h>
-#import <GRMustache.h>
-
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -535,16 +532,8 @@
 
 - (void)loadHTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName
 {
-    NSString *templatePath = [[NSBundle mainBundle] pathForResource:templateName ofType:@"html" inDirectory:@"html"];
-    NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
-    
-    NSMutableDictionary *mutableData = [data mutableCopy];
-    [mutableData setObject:@(((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
-                    forKey:@"night"];
-    
-    NSString *html = [GRMustacheTemplate renderObject:mutableData fromString:template error:nil];
-    
-    [self.detailsView loadHTMLString:html baseURL:[[NSBundle mainBundle] resourceURL]];
+    [self.detailsView loadHTMLString:[Utils HTMLWithData:data usingTemplate:templateName]
+                             baseURL:[[NSBundle mainBundle] resourceURL]];
 }
 
 

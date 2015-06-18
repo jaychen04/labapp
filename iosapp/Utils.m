@@ -17,6 +17,7 @@
 #import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "TweetsViewController.h"
+#import "AppDelegate.h"
 
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
@@ -25,6 +26,7 @@
 #import <objc/runtime.h>
 #import <Reachability.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <GRMustache.h>
 
 @implementation Utils
 
@@ -579,6 +581,19 @@
                                                                      [UIDevice currentDevice].systemVersion,
                                                                      [UIDevice currentDevice].model,
                                                                      IDFV];
+}
+
+
++ (NSString *)HTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName
+{
+    NSString *templatePath = [[NSBundle mainBundle] pathForResource:templateName ofType:@"html" inDirectory:@"html"];
+    NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
+    
+    NSMutableDictionary *mutableData = [data mutableCopy];
+    [mutableData setObject:@(((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
+                    forKey:@"night"];
+    
+    return [GRMustacheTemplate renderObject:mutableData fromString:template error:nil];
 }
 
 
