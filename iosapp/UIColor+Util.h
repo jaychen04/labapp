@@ -25,4 +25,7 @@
 + (UIColor *)labelTextColor;
 + (UIColor *)teamButtonColor;
 
++ (UIColor *)infosBackViewColor;
++ (UIColor *)lineColor;
+
 @end

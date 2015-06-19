@@ -36,6 +36,10 @@
     backgroundImage.image = [UIImage imageNamed:imageName];
     self.backgroundView = backgroundImage;
     
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, backgroundImage.image.size.width, backgroundImage.image.size.height)];
+    view.backgroundColor = [UIColor infosBackViewColor];
+    [backgroundImage addSubview:view];
+    
     _imageBackView = [UIView new];
     _imageBackView.backgroundColor = [UIColor colorWithHex:0xEEEEEE];
     [_imageBackView setCornerRadius:27];
@@ -57,7 +61,7 @@
     [self.contentView addSubview:_nameLabel];
     
     UIView *line = [UIView new];
-    line.backgroundColor = [UIColor colorWithHex:0x2bc157];
+    line.backgroundColor = [UIColor lineColor];
     [self.contentView addSubview:line];
     
     UIView *countView = [UIView new];
