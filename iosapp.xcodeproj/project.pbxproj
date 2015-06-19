@@ -435,7 +435,6 @@
 		C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */; };
 		C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95931AEE129F006918CD /* TeamCenter.m */; };
 		C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95961AEE14FC006918CD /* TeamTeam.m */; };
-		EE6364791B312044009768A2 /* nightModeSideCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6364781B312044009768A2 /* nightModeSideCell.m */; };
 		EE6469501B32BB7100148F2B /* sidemenu-night@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE64694E1B32BB7100148F2B /* sidemenu-night@2x.png */; };
 		EE6469511B32BB7100148F2B /* sidemenu-night@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE64694F1B32BB7100148F2B /* sidemenu-night@3x.png */; };
 		EE64695A1B32BD4300148F2B /* sidemenu_blog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE6469521B32BD4300148F2B /* sidemenu_blog@2x.png */; };
@@ -453,6 +452,8 @@
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
 		EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */; };
 		EE713BA01AB2BBF100D318AF /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
+		EE739EC01B33EA53003C1881 /* sidemenu-day@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE739EBE1B33EA53003C1881 /* sidemenu-day@2x.png */; };
+		EE739EC11B33EA53003C1881 /* sidemenu-day@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE739EBF1B33EA53003C1881 /* sidemenu-day@3x.png */; };
 		EE74BDCD1AF1DEFF00C0D9FC /* audioTweet@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE74BDCC1AF1DEFF00C0D9FC /* audioTweet@3x.png */; };
 		EE74BDCF1AF1DF4500C0D9FC /* audioTweet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE74BDCE1AF1DF4500C0D9FC /* audioTweet@2x.png */; };
 		EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */; };
@@ -1102,8 +1103,6 @@
 		C5FB95951AEE14FC006918CD /* TeamTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamTeam.h; sourceTree = "<group>"; };
 		C5FB95961AEE14FC006918CD /* TeamTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTeam.m; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		EE6364771B312044009768A2 /* nightModeSideCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = nightModeSideCell.h; sourceTree = "<group>"; };
-		EE6364781B312044009768A2 /* nightModeSideCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = nightModeSideCell.m; sourceTree = "<group>"; };
 		EE64694E1B32BB7100148F2B /* sidemenu-night@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-night@2x.png"; sourceTree = "<group>"; };
 		EE64694F1B32BB7100148F2B /* sidemenu-night@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-night@3x.png"; sourceTree = "<group>"; };
 		EE6469521B32BD4300148F2B /* sidemenu_blog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu_blog@2x.png"; sourceTree = "<group>"; };
@@ -1126,6 +1125,8 @@
 		EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMyTweetLikeList.m; sourceTree = "<group>"; };
 		EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libNBSAppAgent.framework; sourceTree = "<group>"; };
 		EE713BA11AB2C12600D318AF /* iosapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosapp-Prefix.pch"; sourceTree = "<group>"; };
+		EE739EBE1B33EA53003C1881 /* sidemenu-day@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-day@2x.png"; sourceTree = "<group>"; };
+		EE739EBF1B33EA53003C1881 /* sidemenu-day@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sidemenu-day@3x.png"; sourceTree = "<group>"; };
 		EE74BDCC1AF1DEFF00C0D9FC /* audioTweet@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audioTweet@3x.png"; sourceTree = "<group>"; };
 		EE74BDCE1AF1DF4500C0D9FC /* audioTweet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "audioTweet@2x.png"; sourceTree = "<group>"; };
 		EE7A55571AEDD82C00DF10D3 /* VoiceTweetEditingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceTweetEditingVC.h; sourceTree = "<group>"; };
@@ -1762,6 +1763,8 @@
 		383B9FE31AB6CC5900C03C47 /* sidemenu */ = {
 			isa = PBXGroup;
 			children = (
+				EE739EBE1B33EA53003C1881 /* sidemenu-day@2x.png */,
+				EE739EBF1B33EA53003C1881 /* sidemenu-day@3x.png */,
 				EE64694E1B32BB7100148F2B /* sidemenu-night@2x.png */,
 				EE64694F1B32BB7100148F2B /* sidemenu-night@3x.png */,
 				EE6469521B32BD4300148F2B /* sidemenu_blog@2x.png */,
@@ -2060,8 +2063,6 @@
 			children = (
 				387639AF1A7CF95D008E6805 /* SideMenuViewController.h */,
 				387639B01A7CF95D008E6805 /* SideMenuViewController.m */,
-				EE6364771B312044009768A2 /* nightModeSideCell.h */,
-				EE6364781B312044009768A2 /* nightModeSideCell.m */,
 				38A9EEA11AA84A7E006C95BD /* 设置 */,
 			);
 			name = "侧拉菜单";
@@ -2876,6 +2877,7 @@
 				38193C0A1AC139CF0053B1EF /* me-team@3x.png in Resources */,
 				EE6469611B32BD4300148F2B /* sidemenu-software@3x.png in Resources */,
 				EE64695E1B32BD4300148F2B /* sidemenu_setting@2x.png in Resources */,
+				EE739EC01B33EA53003C1881 /* sidemenu-day@2x.png in Resources */,
 				C5D5505B1B04764000CCA308 /* trollface@2x.png in Resources */,
 				380FD2CB1A7762A8003C4021 /* tabbar-tweet@2x.png in Resources */,
 				C5D550501B04764000CCA308 /* goberserk@2x.png in Resources */,
@@ -2996,6 +2998,7 @@
 				EE7B45E31A834DE5002508C6 /* 066@2x.png in Resources */,
 				38BB27C11AAC016A0088A15C /* discover-shake.png in Resources */,
 				EE7EE7141AEF5B1000FE1CA5 /* voice_pause.png in Resources */,
+				EE739EC11B33EA53003C1881 /* sidemenu-day@3x.png in Resources */,
 				382A94671A26D27400AAAFEA /* 035@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3134,7 +3137,6 @@
 				38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */,
 				EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */,
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
-				EE6364791B312044009768A2 /* nightModeSideCell.m in Sources */,
 				38996A591A026D6A0025AA52 /* BlogCell.m in Sources */,
 				C5D7C10E1B12F8A8003EFE9B /* CheckboxTableCell.m in Sources */,
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
