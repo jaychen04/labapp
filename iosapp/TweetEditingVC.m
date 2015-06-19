@@ -453,9 +453,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         NSString *API = _teamID? TEAM_TWEET_PUB : OSCAPI_TWEET_PUB;
         [manager             POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]

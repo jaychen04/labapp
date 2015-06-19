@@ -16,15 +16,13 @@
 #import "Config.h"
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
-
 #import "NSString+FontAwesome.h"
-#import "AppDelegate.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <MBProgressHUD.h>
-#import <GRMustache.h>
+
 
 @interface TweetDetailsViewController () <UIWebViewDelegate>
 
@@ -66,10 +64,8 @@
 
 - (void)getTweetDetails
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
 //    manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_TWEET_DETAIL, _tweetID]
       parameters:nil
@@ -85,10 +81,7 @@
                                     @"audioURL": _tweet.attach,
                                     };
              
-             NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"tweet" ofType:@"html" inDirectory:@"html"];
-             NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
-             
-             _tweet.body = [GRMustacheTemplate renderObject:data fromString:template error:nil];
+             _tweet.body = [Utils HTMLWithData:data usingTemplate:@"tweet"];
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
@@ -96,7 +89,6 @@
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [_HUD hide:YES];
          }];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -182,10 +174,10 @@
             [cell.timeLabel setAttributedText:[Utils attributedTimeString:_tweet.pubDate]];
             if (_tweet.isLike) {
                 [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] forState:UIControlStateNormal];
-                [cell.likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
             } else {
                 [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsOUp] forState:UIControlStateNormal];
-                [cell.likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             }
             [cell.appclientLabel setAttributedText:[Utils getAppclient:_tweet.appclient]];
             cell.webView.delegate = self;
@@ -271,10 +263,8 @@
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
     }
 
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     [manager POST:postUrl
        parameters:@{
                     @"uid": @([Config getOwnID]),
@@ -308,15 +298,9 @@
                   tweet.isLike = !tweet.isLike;
                   tweet.likersDetailString = nil;
                   
-#if 0
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                      [self.tableView reloadData];
-                  });
-#else
                   [self.tableView beginUpdates];
                   [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
                   [self.tableView endUpdates];
-#endif
               } else {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;

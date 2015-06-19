@@ -49,8 +49,8 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
     [self.tableView registerClass:[TimeLineNodeCell class] forCellReuseIdentifier:kTimeLineNodeCellID];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DIARY_DETAIL]
       parameters:@{
                    @"teamid":  @([Config teamID]),
@@ -173,9 +173,7 @@ static NSString * const kTimeLineNodeCellID = @"TimeLineNodeCell";
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_TWEET_REPLY]
        parameters:@{

@@ -53,13 +53,6 @@ pre {
     font-weight: bold;
 }
 
-
-body.night .original {
-    color: #125289;
-    border-color: #363636;
-}
-
-
 #title_div {
     margin-bottom: 30px;
 }
@@ -95,6 +88,11 @@ body.night .original {
 
 .night a {
     color: #15A230;
+}
+
+.night pre {
+    background-color: #2B2B2B !important;
+    color: #CCC !important;
 }
 
 

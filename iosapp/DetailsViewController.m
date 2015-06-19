@@ -30,9 +30,6 @@
 #import "UIBarButtonItem+Badge.h"
 #import "AppDelegate.h"
 
-#import <MBProgressHUD.h>
-#import <GRMustache.h>
-
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -216,10 +213,8 @@
     _HUD = [Utils createHUD];
     _HUD.userInteractionEnabled = NO;
     
-    _manager = [AFHTTPRequestOperationManager manager];
-    [_manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    _manager = [AFHTTPRequestOperationManager OSCManager];
     //_manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [self fetchDetails];
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 }
@@ -250,9 +245,7 @@
     /********* 收藏 **********/
     
     self.operationBar.toggleStar = ^ {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         NSString *API = weakSelf.isStarred? OSCAPI_FAVORITE_DELETE: OSCAPI_FAVORITE_ADD;
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
@@ -535,16 +528,8 @@
 
 - (void)loadHTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName
 {
-    NSString *templatePath = [[NSBundle mainBundle] pathForResource:templateName ofType:@"html" inDirectory:@"html"];
-    NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
-    
-    NSMutableDictionary *mutableData = [data mutableCopy];
-    [mutableData setObject:@(((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
-                    forKey:@"night"];
-    
-    NSString *html = [GRMustacheTemplate renderObject:mutableData fromString:template error:nil];
-    
-    [self.detailsView loadHTMLString:html baseURL:[[NSBundle mainBundle] resourceURL]];
+    [self.detailsView loadHTMLString:[Utils HTMLWithData:data usingTemplate:templateName]
+                             baseURL:[[NSBundle mainBundle] resourceURL]];
 }
 
 
@@ -555,9 +540,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     NSString *URL;
     NSDictionary *parameters;
@@ -653,9 +636,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [alertView cancelButtonIndex]) {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         [manager POST:@"http://www.oschina.net/action/communityManage/report"
            parameters:@{
