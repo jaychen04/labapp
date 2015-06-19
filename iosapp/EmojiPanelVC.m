@@ -111,8 +111,8 @@
             emojiStr = Utils.emojiDict[@(emojiNum).stringValue];
             emojiImageName = [emojiStr stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@":"]];
         } else {
-            emojiStr = [NSString stringWithFormat:@"[%d]", emojiNum - 1];
-            emojiImageName = [NSString stringWithFormat:@"%03ld", (long)emojiNum];
+            emojiStr = [NSString stringWithFormat:@"[%ld]", emojiNum - 1];
+            emojiImageName = [NSString stringWithFormat:@"%03ld", emojiNum];
         }
         
         NSTextAttachment *textAttachment = [NSTextAttachment new];

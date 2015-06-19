@@ -78,7 +78,7 @@
              NSDictionary *data = @{
                                     @"content": _tweet.body,
                                     @"imageURL": _tweet.bigImgURL.absoluteString,
-                                    @"audioURL": _tweet.attach,
+                                    @"audioURL": _tweet.attach ?: @"",
                                     };
              
              _tweet.body = [Utils HTMLWithData:data usingTemplate:@"tweet"];
