@@ -23,6 +23,9 @@
 #import "TeamTeam.h"
 #import "TeamCenter.h"
 
+#import "UIFont+FontAwesome.h"
+#import "NSString+FontAwesome.h"
+
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
@@ -38,7 +41,7 @@
 
 @property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel *nameLabel;
-@property (nonatomic, strong) UIImageView *myQRCodeImageView;
+@property (nonatomic, strong) UIImageView *myQRCodeButton;
 
 @property (nonatomic, strong) UIButton *creditsBtn;
 @property (nonatomic, strong) UIButton *collectionsBtn;
@@ -187,7 +190,7 @@
         }
 
     }
-        [header addSubview:genderImageView];
+    [header addSubview:genderImageView];
     
     _nameLabel = [UILabel new];
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
@@ -195,11 +198,11 @@
     _nameLabel.text = usersInformation[0];
     [header addSubview:_nameLabel];
     
-    UIImageView *QRCodeImageView = [UIImageView new];
-    QRCodeImageView.image = [UIImage imageNamed:@"QR-Code"];
-    QRCodeImageView.userInteractionEnabled = YES;
-    [QRCodeImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapQRCodeImage)]];
-    [header addSubview:QRCodeImageView];
+    UIButton *QRCodeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    QRCodeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:25];
+    [QRCodeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAQrcode] forState:UIControlStateNormal];
+    [QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
+    [header addSubview:QRCodeButton];
     
     _creditsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     _collectionsBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -241,7 +244,7 @@
     for (UIView *view in header.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     for (UIView *view in countView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(imageBackView, _portrait, genderImageView, _nameLabel, _creditsBtn, _collectionsBtn, _followsBtn, _fansBtn, QRCodeImageView, countView, line);
+    NSDictionary *views = NSDictionaryOfVariableBindings(imageBackView, _portrait, genderImageView, _nameLabel, _creditsBtn, _collectionsBtn, _followsBtn, _fansBtn, QRCodeButton, countView, line);
     NSDictionary *metrics = @{@"width": @(tableView.frame.size.width / 4)};
     
     
@@ -270,8 +273,8 @@
 
     [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[countView]|" options:0 metrics:nil views:views]];
     
-    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[QRCodeImageView]" options:0 metrics:nil views:views]];
-    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[QRCodeImageView]-15-|" options:0 metrics:nil views:views]];
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[QRCodeButton]" options:0 metrics:nil views:views]];
+    [header addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[QRCodeButton]-15-|" options:0 metrics:nil views:views]];
     
     [countView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_creditsBtn(width)][_collectionsBtn(width)][_followsBtn(width)][_fansBtn(width)]|"
                                                                       options:NSLayoutFormatAlignAllTop | NSLayoutFormatAlignAllBottom metrics:metrics views:views]];
@@ -281,7 +284,7 @@
     if ([Config getOwnID] == 0) {
         line.hidden = YES;
         countView.hidden = YES;
-        QRCodeImageView.hidden = YES;
+        QRCodeButton.hidden = YES;
     }
     
     return header;
@@ -453,7 +456,7 @@
 
 #pragma mark - 二维码相关
 
-- (void)tapQRCodeImage
+- (void)showQRCode
 {
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.mode = MBProgressHUDModeCustomView;
@@ -462,7 +465,7 @@
     HUD.labelText = @"扫一扫上面的二维码，加我为好友";
     HUD.labelFont = [UIFont systemFontOfSize:13];
     HUD.labelColor = [UIColor grayColor];
-    HUD.customView = self.myQRCodeImageView;
+    HUD.customView = self.myQRCodeButton;
     [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHUD:)]];
 }
 
@@ -471,14 +474,14 @@
     [(MBProgressHUD *)recognizer.view hide:YES];
 }
 
-- (UIImageView *)myQRCodeImageView
+- (UIImageView *)myQRCodeButton
 {
-    if (!_myQRCodeImageView) {
+    if (!_myQRCodeButton) {
         UIImage *myQRCode = [Utils createQRCodeFromString:[NSString stringWithFormat:@"http://my.oschina.net/u/%llu", [Config getOwnID]]];
-        _myQRCodeImageView = [[UIImageView alloc] initWithImage:myQRCode];
+        _myQRCodeButton = [[UIImageView alloc] initWithImage:myQRCode];
     }
     
-    return _myQRCodeImageView;
+    return _myQRCodeButton;
 }
 
 
