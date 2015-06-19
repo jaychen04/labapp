@@ -124,6 +124,10 @@
     }
     header.image = [UIImage imageNamed:imageName];
     
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, header.image.size.width, header.image.size.height)];
+    view.backgroundColor = [UIColor infosBackViewColor];
+    [header addSubview:view];
+    
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];

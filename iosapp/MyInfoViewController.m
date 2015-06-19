@@ -150,7 +150,11 @@
     imageBackView.backgroundColor = [UIColor colorWithHex:0xEEEEEE];
     [imageBackView setCornerRadius:27];
     [header addSubview:imageBackView];
-    
+
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, header.image.size.width, header.image.size.height)];
+    view.backgroundColor = [UIColor infosBackViewColor];
+    [header addSubview:view];
+
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];
@@ -208,7 +212,8 @@
     _fansBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     
     UIView *line = [UIView new];
-    line.backgroundColor = [UIColor colorWithHex:0x2bc157];
+    line.backgroundColor = [UIColor lineColor];
+//    line.backgroundColor = [UIColor redColor];
     [header addSubview:line];
     
     UIView *countView = [UIView new];
