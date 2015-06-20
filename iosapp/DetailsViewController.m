@@ -194,6 +194,7 @@
     _detailsView = [UIWebView new];
     _detailsView.delegate = self;
     _detailsView.scrollView.delegate = self;
+    _detailsView.opaque = NO;
     _detailsView.backgroundColor = [UIColor themeColor];
     _detailsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_detailsView];
