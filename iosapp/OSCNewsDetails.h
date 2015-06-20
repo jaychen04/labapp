@@ -23,4 +23,6 @@
 @property (nonatomic, assign) BOOL isFavorite;
 @property (nonatomic, strong) NSArray *relatives;
 
+@property (nonatomic, strong) NSString *html;
+
 @end

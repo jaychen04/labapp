@@ -425,18 +425,7 @@
 
 - (void)loadNewsDetails:(OSCNewsDetails *)newsDetails
 {
-    NSDictionary *data = @{
-                           @"title": [Utils escapeHTML:newsDetails.title],
-                           @"authorID": @(newsDetails.authorID),
-                           @"authorName": newsDetails.author,
-                           @"timeInterval": [Utils intervalSinceNow:newsDetails.pubDate],
-                           @"content": newsDetails.body,
-                           @"softwareLink": newsDetails.softwareLink,
-                           @"softwareName": newsDetails.softwareName,
-                           @"relatedInfo": [Utils generateRelativeNewsString:newsDetails.relatives],
-                           };
-    
-    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
+    [self.detailsView loadHTMLString:newsDetails.html baseURL:[[NSBundle mainBundle] resourceURL]];
     
     _isStarred = newsDetails.isFavorite;
     
@@ -450,15 +439,7 @@
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
 {
-    NSDictionary *data = @{
-                           @"title": [Utils escapeHTML:blogDetails.title],
-                           @"authorID": @(blogDetails.authorID),
-                           @"authorName": blogDetails.author,
-                           @"timeInterval": [Utils intervalSinceNow:blogDetails.pubDate],
-                           @"content": blogDetails.body,
-                           };
-    
-    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
+    [self.detailsView loadHTMLString:blogDetails.html baseURL:[[NSBundle mainBundle] resourceURL]];
     
     _isStarred = blogDetails.isFavorite;
     _webURL = [blogDetails.url absoluteString];
@@ -471,16 +452,7 @@
 
 - (void)loadPostDetails:(OSCPostDetails *)postDetails
 {
-    NSDictionary *data = @{
-                           @"title": [Utils escapeHTML:postDetails.title],
-                           @"authorID": @(postDetails.authorID),
-                           @"authorName": postDetails.author,
-                           @"timeInterval": [Utils intervalSinceNow:postDetails.pubDate],
-                           @"content": postDetails.body,
-                           @"tags": [Utils GenerateTags:postDetails.tags],
-                           };
-    
-    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
+    [self.detailsView loadHTMLString:postDetails.html baseURL:[[NSBundle mainBundle] resourceURL]];
     
     _isStarred = postDetails.isFavorite;
     _webURL = [postDetails.url absoluteString];
@@ -494,42 +466,17 @@
 
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
 {
-    NSString *titleStr = [NSString stringWithFormat:@"%@ %@", softwareDetails.extensionTitle, softwareDetails.title];
-    
-    NSDictionary *data = @{
-                           @"title": titleStr,
-                           @"authorID": @(softwareDetails.authorID),
-                           @"author": softwareDetails.author,
-                           @"recommended": @(softwareDetails.isRecommended),
-                           @"logoURL": softwareDetails.logoURL,
-                           @"content": softwareDetails.body,
-                           @"license": softwareDetails.license,
-                           @"language": softwareDetails.language,
-                           @"os": softwareDetails.os,
-                           @"recordTime": softwareDetails.recordTime,
-                           @"homepageURL": softwareDetails.homepageURL,
-                           @"documentURL": softwareDetails.documentURL,
-                           @"downloadURL": softwareDetails.downloadURL,
-                           };
-    
-    [self loadHTMLWithData:data usingTemplate:@"softwareDetail"];
+    [self.detailsView loadHTMLString:softwareDetails.html baseURL:[[NSBundle mainBundle] resourceURL]];
     
     _isStarred = softwareDetails.isFavorite;
     _webURL = [softwareDetails.url absoluteString];
     
     _commentCount = softwareDetails.tweetCount;
-    _objectTitle = titleStr;
+    _objectTitle = [NSString stringWithFormat:@"%@ %@", softwareDetails.extensionTitle, softwareDetails.title];
     
     NSString *trimmedHTML = [Utils deleteHTMLTag:softwareDetails.body];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
     _digest = [[Utils deleteHTMLTag:softwareDetails.body] substringToIndex:length];
-}
-
-
-- (void)loadHTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName
-{
-    [self.detailsView loadHTMLString:[Utils HTMLWithData:data usingTemplate:templateName]
-                             baseURL:[[NSBundle mainBundle] resourceURL]];
 }
 
 

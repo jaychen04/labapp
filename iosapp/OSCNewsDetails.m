@@ -7,22 +7,8 @@
 //
 
 #import "OSCNewsDetails.h"
+#import "Utils.h"
 
-static NSString *kID = @"id";
-static NSString *kTitle = @"title";
-static NSString *kURL = @"url";
-static NSString *kBody = @"body";
-static NSString *kCommentCount = @"commentCount";
-static NSString *kAuthor = @"author";
-static NSString *kAuthorID = @"authorid";
-static NSString *kPubDate = @"pubDate";
-static NSString *kSoftwareLink = @"softwarelink";
-static NSString *kSoftwareName = @"softwareName";
-static NSString *kFavorite = @"favorite";
-static NSString *kRelatives = @"relativies";
-static NSString *kRelative = @"relative";
-static NSString *kRTitle = @"rtitle";
-static NSString *kRURL = @"rurl";
 
 @implementation OSCNewsDetails
 
@@ -31,28 +17,49 @@ static NSString *kRURL = @"rurl";
     self = [super init];
     
     if (self) {
-        _newsID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        _title = [[xml firstChildWithTag:kTitle] stringValue];
-        _url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
-        _body = [[xml firstChildWithTag:kBody] stringValue];
-        _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        _author = [[xml firstChildWithTag:kAuthor] stringValue];
-        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
-        _softwareLink = [NSURL URLWithString:[[xml firstChildWithTag:kSoftwareLink] stringValue]];
-        _softwareName = [[xml firstChildWithTag:kSoftwareName] stringValue];
-        _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
+        _newsID = [[[xml firstChildWithTag:@"id"] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:@"title"] stringValue];
+        _url = [NSURL URLWithString:[[xml firstChildWithTag:@"url"] stringValue]];
+        _body = [[xml firstChildWithTag:@"body"] stringValue];
+        _commentCount = [[[xml firstChildWithTag:@"commentCount"] numberValue] intValue];
+        _author = [[xml firstChildWithTag:@"author"] stringValue];
+        _authorID = [[[xml firstChildWithTag:@"authorid"] numberValue] longLongValue];
+        _pubDate = [[xml firstChildWithTag:@"pubDate"] stringValue];
+        _softwareLink = [NSURL URLWithString:[[xml firstChildWithTag:@"softwarelink"] stringValue]];
+        _softwareName = [[xml firstChildWithTag:@"softwareName"] stringValue];
+        _isFavorite = [[[xml firstChildWithTag:@"favorite"] numberValue] boolValue];
         NSMutableArray *mutableRelatives = [NSMutableArray new];
-        NSArray *relativesXML = [[xml firstChildWithTag:kRelatives] childrenWithTag:kRelative];
+        NSArray *relativesXML = [[xml firstChildWithTag:@"relativies"] childrenWithTag:@"relative"];
         for (ONOXMLElement *relativeXML in relativesXML) {
-            NSString *rTitle = [[relativeXML firstChildWithTag:kRTitle] stringValue];
-            NSString *rURL = [[relativeXML firstChildWithTag:kRURL] stringValue];
+            NSString *rTitle = [[relativeXML firstChildWithTag:@"rtitle"] stringValue];
+            NSString *rURL = [[relativeXML firstChildWithTag:@"rurl"] stringValue];
             [mutableRelatives addObject:@[rTitle, rURL]];
         }
         _relatives = [NSArray arrayWithArray:mutableRelatives];
     }
     
     return self;
+}
+
+
+- (NSString *)html
+{
+    if (!_html) {
+        NSDictionary *data = @{
+                               @"title": [Utils escapeHTML:_title],
+                               @"authorID": @(_authorID),
+                               @"authorName": _author,
+                               @"timeInterval": [Utils intervalSinceNow:_pubDate],
+                               @"content": _body,
+                               @"softwareLink": _softwareLink,
+                               @"softwareName": _softwareName,
+                               @"relatedInfo": [Utils generateRelativeNewsString:_relatives],
+                               };
+        
+        _html = [Utils HTMLWithData:data usingTemplate:@"article"];
+    }
+    
+    return _html;
 }
 
 @end
