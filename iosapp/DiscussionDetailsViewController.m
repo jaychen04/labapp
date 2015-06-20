@@ -63,7 +63,7 @@
                                     @"content" : _discussionDetails.body,
                                     };
              
-             _HTML = [Utils HTMLWithData:data usingTemplate:@"newsDetail"];
+             _HTML = [Utils HTMLWithData:data usingTemplate:@"article"];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
          }];
