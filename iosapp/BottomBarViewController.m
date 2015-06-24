@@ -12,6 +12,7 @@
 #import "GrowingTextView.h"
 #import "EmojiPageVC.h"
 #import "Config.h"
+#import "Utils.h"
 #import "LoginViewController.h"
 
 
@@ -43,7 +44,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor themeColor];
     
     [self setup];
 }

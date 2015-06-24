@@ -223,6 +223,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     [self.label setText:tweet.author];
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     
+//    self.label.font = [UIFont systemFontOfSize:15];
     [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
     height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     

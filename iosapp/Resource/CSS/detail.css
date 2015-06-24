@@ -74,6 +74,11 @@ pre {
 }
 
 
+/*** syntaxhighlighter ***/
+
+.syntaxhighlighter { -webkit-text-size-adjust: none; }
+
+
 /*** night mode ***/
 
 .night {
