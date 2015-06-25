@@ -2175,6 +2175,7 @@
 			children = (
 				C5A89C2E1B09C32000798B1C /* FontAwesome */,
 				EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */,
+				C5A89C361B09C34B00798B1C /* UIImage+FontAwesome.m */,
 				EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */,
 				EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */,
 				EED55F701A80AB13004E6371 /* UIButton+Badge.m */,
@@ -2587,7 +2588,6 @@
 				C5A89C331B09C34B00798B1C /* UIFont+FontAwesome.h */,
 				C5A89C341B09C34B00798B1C /* UIFont+FontAwesome.m */,
 				C5A89C351B09C34B00798B1C /* UIImage+FontAwesome.h */,
-				C5A89C361B09C34B00798B1C /* UIImage+FontAwesome.m */,
 			);
 			name = FontAwesome;
 			sourceTree = "<group>";
