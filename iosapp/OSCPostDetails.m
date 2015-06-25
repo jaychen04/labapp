@@ -7,23 +7,8 @@
 //
 
 #import "OSCPostDetails.h"
+#import "Utils.h"
 
-static NSString *kID = @"id";
-static NSString *kTitle = @"title";
-static NSString *kURL = @"url";
-static NSString *kPortrait = @"portrait";
-static NSString *kBody = @"body";
-static NSString *kAuthor = @"author";
-static NSString *kAuthorID = @"authorid";
-static NSString *kAnswerCount = @"answerCount";
-static NSString *kViewCount = @"viewCount";
-static NSString *kPubDate = @"pubDate";
-static NSString *kFavorite = @"favorite";
-static NSString *kTags = @"tags";
-static NSString *kTag = @"tag";
-static NSString *kStatus = @"status";
-static NSString *kApplyStatus = @"applyStatus";
-static NSString *kCategory = @"category";
 
 @implementation OSCPostDetails
 
@@ -32,34 +17,52 @@ static NSString *kCategory = @"category";
     self = [super init];
     
     if (self) {
-        _postID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        _title = [[xml firstChildWithTag:kTitle] stringValue];
-        _url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
-        _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:kPortrait] stringValue]];
-        _body = [[xml firstChildWithTag:kBody] stringValue];
-        _author = [[xml firstChildWithTag:kAuthor] stringValue];
-        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        _answerCount = [[[xml firstChildWithTag:kAnswerCount] numberValue] intValue];
-        _viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
-        _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _postID = [[[xml firstChildWithTag:@"id"] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:@"title"] stringValue];
+        _url = [NSURL URLWithString:[[xml firstChildWithTag:@"url"] stringValue]];
+        _portraitURL = [NSURL URLWithString:[[xml firstChildWithTag:@"portrait"] stringValue]];
+        _body = [[xml firstChildWithTag:@"body"] stringValue];
+        _author = [[xml firstChildWithTag:@"author"] stringValue];
+        _authorID = [[[xml firstChildWithTag:@"authorid"] numberValue] longLongValue];
+        _answerCount = [[[xml firstChildWithTag:@"answerCount"] numberValue] intValue];
+        _viewCount = [[[xml firstChildWithTag:@"viewCount"] numberValue] intValue];
+        _isFavorite = [[[xml firstChildWithTag:@"favorite"] numberValue] boolValue];
+        _pubDate = [[xml firstChildWithTag:@"pubDate"] stringValue];
         
         ONOXMLElement *eventElement = [xml firstChildWithTag:@"event"];
-        _status = [[[eventElement firstChildWithTag:kStatus] numberValue] intValue];
-        _applyStatus = [[[eventElement firstChildWithTag:kApplyStatus] numberValue] intValue];
-        _category    = [[[eventElement firstChildWithTag:kCategory] numberValue] intValue];
-        _signUpUrl = [NSURL URLWithString:[[eventElement firstChildWithTag:kURL] stringValue]];
+        _status = [[[eventElement firstChildWithTag:@"status"] numberValue] intValue];
+        _applyStatus = [[[eventElement firstChildWithTag:@"applyStatus"] numberValue] intValue];
+        _category    = [[[eventElement firstChildWithTag:@"category"] numberValue] intValue];
+        _signUpUrl = [NSURL URLWithString:[[eventElement firstChildWithTag:@"url"] stringValue]];
         
         NSMutableArray *mutableTags = [NSMutableArray new];
-        NSArray *tagsXML = [xml childrenWithTag:kTags];
+        NSArray *tagsXML = [xml childrenWithTag:@"tags"];
         for (ONOXMLElement *tagXML in tagsXML) {
-            NSString *tag = [[tagXML firstChildWithTag:kTag] stringValue];
+            NSString *tag = [[tagXML firstChildWithTag:@"tag"] stringValue];
             [mutableTags addObject:tag];
         }
         _tags = [NSArray arrayWithArray:mutableTags];
     }
     
     return self;
+}
+
+- (NSString *)html
+{
+    if (!_html) {
+        NSDictionary *data = @{
+                               @"title": [Utils escapeHTML:_title],
+                               @"authorID": @(_authorID),
+                               @"authorName": _author,
+                               @"timeInterval": [Utils intervalSinceNow:_pubDate],
+                               @"content": _body,
+                               @"tags": [Utils GenerateTags:_tags],
+                               };
+        
+        _html = [Utils HTMLWithData:data usingTemplate:@"article"];
+    }
+    
+    return _html;
 }
 
 @end

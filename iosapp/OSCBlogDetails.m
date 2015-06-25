@@ -7,18 +7,8 @@
 //
 
 #import "OSCBlogDetails.h"
+#import "Utils.h"
 
-static NSString *kID = @"id";
-static NSString *kTitle = @"title";
-static NSString *kURL = @"url";
-static NSString *kBody = @"body";
-static NSString *kCommentCount = @"commentCount";
-static NSString *kAuthor = @"author";
-static NSString *kAuthorID = @"authorid";
-static NSString *kPubDate = @"pubDate";
-static NSString *kFavorite = @"favorite";
-static NSString *kWhere = @"where";
-static NSString *kDocumentType = @"documentType";
 
 @implementation OSCBlogDetails
 
@@ -27,20 +17,37 @@ static NSString *kDocumentType = @"documentType";
     self = [super init];
     
     if (self) {
-        _blogID = [[[xml firstChildWithTag:kID] numberValue] longLongValue];
-        _title = [[xml firstChildWithTag:kTitle] stringValue];
-        _url = [NSURL URLWithString:[[xml firstChildWithTag:kURL] stringValue]];
-        _body = [[xml firstChildWithTag:kBody] stringValue];
-        _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        _author = [[xml firstChildWithTag:kAuthor] stringValue];
-        _authorID = [[[xml firstChildWithTag:kAuthorID] numberValue] longLongValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
-        _isFavorite = [[[xml firstChildWithTag:kFavorite] numberValue] boolValue];
-        _where = [[xml firstChildWithTag:kWhere] stringValue];
-        _documentType = [[[xml firstChildWithTag:kDocumentType] numberValue] intValue];
+        _blogID = [[[xml firstChildWithTag:@"id"] numberValue] longLongValue];
+        _title = [[xml firstChildWithTag:@"title"] stringValue];
+        _url = [NSURL URLWithString:[[xml firstChildWithTag:@"url"] stringValue]];
+        _body = [[xml firstChildWithTag:@"body"] stringValue];
+        _commentCount = [[[xml firstChildWithTag:@"commentCount"] numberValue] intValue];
+        _author = [[xml firstChildWithTag:@"author"] stringValue];
+        _authorID = [[[xml firstChildWithTag:@"authorid"] numberValue] longLongValue];
+        _pubDate = [[xml firstChildWithTag:@"pubDate"] stringValue];
+        _isFavorite = [[[xml firstChildWithTag:@"favorite"] numberValue] boolValue];
+        _where = [[xml firstChildWithTag:@"where"] stringValue];
+        _documentType = [[[xml firstChildWithTag:@"documentType"] numberValue] intValue];
     }
     
     return self;
+}
+
+- (NSString *)html
+{
+    if (!_html) {
+        NSDictionary *data = @{
+                               @"title": [Utils escapeHTML:_title],
+                               @"authorID": @(_authorID),
+                               @"authorName": _author,
+                               @"timeInterval": [Utils intervalSinceNow:_pubDate],
+                               @"content": _body,
+                               };
+        
+        _html = [Utils HTMLWithData:data usingTemplate:@"article"];
+    }
+    
+    return _html;
 }
 
 @end

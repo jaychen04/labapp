@@ -223,6 +223,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     [self.label setText:tweet.author];
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     
+//    self.label.font = [UIFont systemFontOfSize:15];
     [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
     height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     
@@ -300,9 +301,8 @@ static NSString * const kTweetCellID = @"TweetCell";
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.labelText = @"正在删除动弹";
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_DELETE]
            parameters:@{
                         @"uid": @([Config getOwnID]),
@@ -435,10 +435,7 @@ static NSString * const kTweetCellID = @"TweetCell";
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
     }
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager POST:postUrl
        parameters:@{

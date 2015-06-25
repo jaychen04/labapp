@@ -186,9 +186,7 @@
     if ([Config getOwnID] == 0) {
         [self.navigationController pushViewController:[LoginViewController new] animated:YES];
     } else {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_UPDATERELATION]
            parameters:@{

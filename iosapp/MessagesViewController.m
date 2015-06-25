@@ -144,9 +144,8 @@ static NSString * const kMessageCellID = @"MessageCell";
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.labelText = @"正在删除回复";
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_MESSAGE_DELETE]
            parameters:@{
                         @"friendid": @(message.friendID),

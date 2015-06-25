@@ -29,4 +29,6 @@
 @property (nonatomic, assign) BOOL isFavorite;
 @property (nonatomic, assign) int tweetCount;
 
+@property (nonatomic, copy) NSString *html;
+
 @end

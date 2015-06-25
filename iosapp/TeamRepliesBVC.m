@@ -198,9 +198,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 
 - (void)fetchRepliesOnPage:(NSUInteger)page
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, _API]
       parameters:@{

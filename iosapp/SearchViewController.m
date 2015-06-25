@@ -10,6 +10,7 @@
 #import "SearchResultsViewController.h"
 #import "Utils.h"
 #import "AppDelegate.h"
+#import "Config.h"
 
 @interface SearchViewController () <UISearchBarDelegate, UIScrollViewDelegate>
 
@@ -49,6 +50,7 @@
     _searchBar = [UISearchBar new];
     _searchBar.delegate = self;
     _searchBar.placeholder = @"请输入关键字";
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         _searchBar.keyboardAppearance = UIKeyboardAppearanceDark;
         _searchBar.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];

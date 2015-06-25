@@ -9,6 +9,7 @@
 #import "FeedbackPage.h"
 #import "PlaceholderTextView.h"
 #import "Utils.h"
+#import "Config.h"
 #import "OSCAPI.h"
 #import "AppDelegate.h"
 
@@ -67,6 +68,8 @@
     _feedbackTextView.translatesAutoresizingMaskIntoConstraints = NO;
     [_feedbackTextView becomeFirstResponder];
     [self.view addSubview:_feedbackTextView];
+    
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         _feedbackTextView.backgroundColor = [UIColor colorWithRed:60.0/255 green:60.0/255 blue:60.0/255 alpha:1.0];
         _feedbackTextView.textColor = [UIColor titleColor];
@@ -86,10 +89,7 @@
     _HUD = [Utils createHUD];
     _HUD.labelText = @"正在发送反馈";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_REPORT_TO_ADMIN]
        parameters:@{

@@ -17,6 +17,7 @@
 #import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "TweetsViewController.h"
+#import "AppDelegate.h"
 
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
@@ -25,6 +26,7 @@
 #import <objc/runtime.h>
 #import <Reachability.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <GRMustache.h>
 
 @implementation Utils
 
@@ -569,16 +571,16 @@
 }
 
 
-+ (NSString *)generateUserAgent
++ (NSString *)HTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName
 {
-    NSString *appVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
-    NSString *IDFV = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+    NSString *templatePath = [[NSBundle mainBundle] pathForResource:templateName ofType:@"html" inDirectory:@"html"];
+    NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
     
-    return [NSString stringWithFormat:@"OSChina.NET/%@/%@/%@/%@/%@", appVersion,
-                                                                     [UIDevice currentDevice].systemName,
-                                                                     [UIDevice currentDevice].systemVersion,
-                                                                     [UIDevice currentDevice].model,
-                                                                     IDFV];
+    NSMutableDictionary *mutableData = [data mutableCopy];
+    [mutableData setObject:@(((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
+                    forKey:@"night"];
+    
+    return [GRMustacheTemplate renderObject:mutableData fromString:template error:nil];
 }
 
 

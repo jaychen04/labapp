@@ -22,4 +22,6 @@
 @property (nonatomic, copy) NSString *pubDate;
 @property (nonatomic, assign) BOOL isFavorite;
 
+@property (nonatomic, strong) NSString *html;
+
 @end

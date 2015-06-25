@@ -78,9 +78,8 @@
         _HUD = [Utils createHUD];
         _HUD.userInteractionEnabled = NO;
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        
         [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID]
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
@@ -123,6 +122,10 @@
         imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];
     }
     header.image = [UIImage imageNamed:imageName];
+    
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, header.image.size.width, header.image.size.height)];
+    view.backgroundColor = [UIColor infosBackViewColor];
+    [header addSubview:view];
     
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
@@ -278,9 +281,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"正在上传头像";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USERINFO_UPDATE] parameters:@{@"uid":@([Config getOwnID])}
     constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {

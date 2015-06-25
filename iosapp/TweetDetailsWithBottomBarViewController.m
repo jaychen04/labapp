@@ -53,7 +53,7 @@
     __weak TweetDetailsWithBottomBarViewController *weakSelf = self;
     
     _tweetDetailsVC.didCommentSelected = ^(OSCComment *comment) {
-        NSString *authorString = [NSString stringWithFormat:@"@%@", comment.author];
+        NSString *authorString = [NSString stringWithFormat:@"@%@ ", comment.author];
         
         if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {
             [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:authorString];
@@ -98,9 +98,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENT_PUB]
        parameters:@{

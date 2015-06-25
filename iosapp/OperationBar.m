@@ -8,7 +8,7 @@
 
 #import "OperationBar.h"
 #import "AppDelegate.h"
-
+#import "Config.h"
 #import <ReactiveCocoa.h>
 
 @implementation OperationBar
@@ -43,6 +43,7 @@
             
             UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithCustomView:button];
             
+            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
             if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
                 self.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
                 barButton.tintColor = [UIColor clearColor];

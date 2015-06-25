@@ -16,13 +16,13 @@
 #import "Config.h"
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
-
 #import "NSString+FontAwesome.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <MBProgressHUD.h>
+
 
 @interface TweetDetailsViewController () <UIWebViewDelegate>
 
@@ -64,10 +64,8 @@
 
 - (void)getTweetDetails
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
 //    manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     
     [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_TWEET_DETAIL, _tweetID]
       parameters:nil
@@ -76,26 +74,14 @@
              
              _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
              self.objectAuthorID = _tweet.authorID;
-             _tweet.body = [NSString stringWithFormat:@"<style>a{color:#087221; text-decoration:none;} audio { width: 90%%; display: block; }</style>\
-                            <font size=\"3\"><strong>%@</strong></font>\
-                            <br/>",
-                            _tweet.body];
              
-             if (_tweet.hasAnImage) {
-                 _tweet.body = [NSString stringWithFormat:@"%@<a href='%@'>\
-                                <img style='max-width:300px;\
-                                margin-top:10px;\
-                                margin-bottom:15px'\
-                                src='%@'/>\
-                                </a>", _tweet.body, _tweet.bigImgURL, _tweet.bigImgURL];
-             }
+             NSDictionary *data = @{
+                                    @"content": _tweet.body,
+                                    @"imageURL": _tweet.bigImgURL.absoluteString,
+                                    @"audioURL": _tweet.attach ?: @"",
+                                    };
              
-             if (_tweet.attach.length) {
-                 //有语音信息
-                 
-                 NSString *attachStr = [NSString stringWithFormat:@"<source src=\"%@?avthumb/mp3\" type=\"audio/mpeg\">", _tweet.attach];
-                 _tweet.body = [NSString stringWithFormat:@"%@<br/><audio controls>%@</audio>", _tweet.body, attachStr];
-             }
+             _tweet.body = [Utils HTMLWithData:data usingTemplate:@"tweet"];
              
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
@@ -103,7 +89,6 @@
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [_HUD hide:YES];
          }];
-
 }
 
 - (void)didReceiveMemoryWarning {
@@ -189,14 +174,14 @@
             [cell.timeLabel setAttributedText:[Utils attributedTimeString:_tweet.pubDate]];
             if (_tweet.isLike) {
                 [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsUp] forState:UIControlStateNormal];
-                [cell.likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
             } else {
                 [cell.likeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAThumbsOUp] forState:UIControlStateNormal];
-                [cell.likeButton setTitleColor:[UIColor nameColor] forState:UIControlStateNormal];
+                [cell.likeButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
             }
             [cell.appclientLabel setAttributedText:[Utils getAppclient:_tweet.appclient]];
             cell.webView.delegate = self;
-            [cell.webView loadHTMLString:_tweet.body baseURL:nil];
+            [cell.webView loadHTMLString:_tweet.body baseURL:[NSBundle mainBundle].resourceURL];
         }
         
         return cell;
@@ -249,6 +234,8 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
@@ -276,10 +263,8 @@
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
     }
 
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     [manager POST:postUrl
        parameters:@{
                     @"uid": @([Config getOwnID]),
@@ -313,15 +298,9 @@
                   tweet.isLike = !tweet.isLike;
                   tweet.likersDetailString = nil;
                   
-#if 0
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                      [self.tableView reloadData];
-                  });
-#else
                   [self.tableView beginUpdates];
                   [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
                   [self.tableView endUpdates];
-#endif
               } else {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;

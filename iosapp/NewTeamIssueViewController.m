@@ -71,8 +71,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         _issueGroups = [NSMutableArray new];
         _selectedRow = -2;
         
-        _manager = [AFHTTPRequestOperationManager manager];
-        _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        _manager = [AFHTTPRequestOperationManager OSCManager];
         
         _projectCell = [[CheckboxTableCell alloc] initWithCellType:CellTypeProject];
         _issueGroupCell = [[CheckboxTableCell alloc] initWithCellType:CellTypeIssue];
@@ -104,6 +103,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     _HUD.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
     _HUD.userInteractionEnabled = NO;
     [window addSubview:_HUD];
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 }
 
 

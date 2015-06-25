@@ -17,12 +17,6 @@
 #import <Ono.h>
 #import <MBProgressHUD.h>
 
-#define HTML_STYLE @"<style>\
-                        #oschina_title {color: #000000; margin-bottom: 6px; font-weight:bold;}\
-                        #oschina_outline {color: #707070; font-size: 12px;}\
-                        img {width:95%;}\
-                     </style>"
-
 @interface DiscussionDetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, assign) int teamID;
@@ -51,8 +45,8 @@
     self.navigationItem.title = @"帖子详情";
     self.tableView.separatorColor = [UIColor separatorColor];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     [manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DISCUSS_DETAIL]
       parameters:@{
                    @"teamid":@([Config teamID]),
@@ -61,11 +55,15 @@
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              _discussionDetails = [[TeamDiscussionDetails alloc] initWithXML:[responseObject.rootElement firstChildWithTag:@"discuss"]];
              
-             NSString *titleHTML = [NSString stringWithFormat:@"<p><font size=1>%@发表于%@ %d赞 / %d回</font></p>", _discussionDetails.author.name,
-                                                                                              [Utils intervalSinceNow:_discussionDetails.createTime],
-                                                                                              _discussionDetails.voteUpCount, _discussionDetails.answerCount];
-             _HTML = [NSString stringWithFormat:@"<body style='background-color:#EBEBF3'>%@<div id='oschina_title'>%@</div><div id='oschina_outline'>%@</div><hr>%@<div style='margin-bottom:60px'/></body>",
-                               HTML_STYLE, _discussionDetails.title, titleHTML, _discussionDetails.body];
+             NSDictionary *data = @{
+                                    @"title" : _discussionDetails.title,
+                                    @"authorID" : @(_discussionDetails.author.memberID),
+                                    @"authorName" : _discussionDetails.author.name,
+                                    @"timeInterval" : [Utils intervalSinceNow:_discussionDetails.createTime],
+                                    @"content" : _discussionDetails.body,
+                                    };
+             
+             _HTML = [Utils HTMLWithData:data usingTemplate:@"article"];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
          }];
@@ -133,7 +131,7 @@
         [cell.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[webView]|" options:0 metrics:nil views:views]];
         
         webView.delegate = self;
-        [webView loadHTMLString:_HTML baseURL:nil];
+        [webView loadHTMLString:_HTML baseURL:[NSBundle mainBundle].resourceURL];
         
         return cell;
     } else {
@@ -166,7 +164,6 @@
 }
 
 
-
 #pragma mark - 发表评论
 
 - (void)sendContent
@@ -174,9 +171,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
-    manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_DISCUSS_REPLY]
        parameters:@{

@@ -118,4 +118,20 @@
     return [UIColor colorWithRed:251.0/255 green:251.0/255 blue:253.0/255 alpha:1.0];
 }
 
++ (UIColor *)infosBackViewColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithRed:24.0/255 green:24.0/255 blue:24.0/255 alpha:0.6];
+    }
+    return [UIColor clearColor];
+}
+
++ (UIColor *)lineColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithRed:18.0/255 green:144.0/255 blue:105.0/255 alpha:0.6];
+    }
+    return [UIColor colorWithHex:0x2bc157];
+}
+
 @end

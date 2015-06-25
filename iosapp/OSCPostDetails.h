@@ -27,4 +27,6 @@
 @property (nonatomic, assign, readonly) int category;
 @property (nonatomic, copy) NSURL *signUpUrl;
 
+@property (nonatomic, copy) NSString *html;
+
 @end

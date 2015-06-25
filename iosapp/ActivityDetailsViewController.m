@@ -13,6 +13,7 @@
 #import "OSCAPI.h"
 #import "OSCPostDetails.h"
 #import "Utils.h"
+#import "Config.h"
 #import "ActivityDetailsWithBarViewController.h"
 #import "UIBarButtonItem+Badge.h"
 #import "PresentMembersViewController.h"
@@ -22,6 +23,7 @@
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <MBProgressHUD.h>
+#import <GRMustache.h>
 
 
 @interface ActivityDetailsViewController () <UIWebViewDelegate>
@@ -61,9 +63,7 @@
     _HUD = [Utils createHUD];
     _HUD.userInteractionEnabled = NO;
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, _activityID]
       parameters:nil
@@ -71,7 +71,12 @@
              ONOXMLElement *postXML = [responseObject.rootElement firstChildWithTag:@"post"];
              _postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
              _activity = [[OSCActivity alloc] initWithXML:[postXML firstChildWithTag:@"event"]];
-             _HTML = [NSString stringWithFormat:@"%@\n%@", @"<style>img {max-width: 100%;}</style>", [_postDetails.body copy]];
+             
+             _HTML = [Utils HTMLWithData:@{
+                                           @"content": _postDetails.body,
+                                           @"night": @([Config getMode]),
+                                           }
+                           usingTemplate:@"activity"];
              
              UIBarButtonItem *commentsCountButton = _bottomBarVC.operationBar.items[4];
              commentsCountButton.shouldHideBadgeAtZero = YES;
@@ -181,7 +186,7 @@
         case 2: {
             ActivityDetailsCell *cell = [ActivityDetailsCell new];
             cell.webView.delegate = self;
-            [cell.webView loadHTMLString:_HTML baseURL:nil];
+            [cell.webView loadHTMLString:_HTML baseURL:[NSBundle mainBundle].resourceURL];
             
             return cell;
         }
@@ -231,6 +236,8 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
     [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }

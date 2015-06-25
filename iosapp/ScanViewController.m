@@ -179,9 +179,7 @@
                 [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
                 [HUD hide:YES afterDelay:2];
             } else {
-                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-                [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-                manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
                 
                 [manager GET:URL
                   parameters:nil
@@ -241,9 +239,7 @@
 
 - (void)loginInWeb:(NSString *)webUrl
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager GET:webUrl
              parameters:nil

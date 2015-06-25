@@ -30,9 +30,6 @@
 #import "UIBarButtonItem+Badge.h"
 #import "AppDelegate.h"
 
-#import <MBProgressHUD.h>
-#import <GRMustache.h>
-
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -197,6 +194,7 @@
     _detailsView = [UIWebView new];
     _detailsView.delegate = self;
     _detailsView.scrollView.delegate = self;
+    _detailsView.opaque = NO;
     _detailsView.backgroundColor = [UIColor themeColor];
     _detailsView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_detailsView];
@@ -216,11 +214,10 @@
     _HUD = [Utils createHUD];
     _HUD.userInteractionEnabled = NO;
     
-    _manager = [AFHTTPRequestOperationManager manager];
-    [_manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
+    _manager = [AFHTTPRequestOperationManager OSCManager];
     //_manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    _manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
     [self fetchDetails];
+    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -249,9 +246,7 @@
     /********* 收藏 **********/
     
     self.operationBar.toggleStar = ^ {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         NSString *API = weakSelf.isStarred? OSCAPI_FAVORITE_DELETE: OSCAPI_FAVORITE_ADD;
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
@@ -431,18 +426,7 @@
 
 - (void)loadNewsDetails:(OSCNewsDetails *)newsDetails
 {
-    NSDictionary *data = @{
-                           @"title": [Utils escapeHTML:newsDetails.title],
-                           @"authorID": @(newsDetails.authorID),
-                           @"authorName": newsDetails.author,
-                           @"timeInterval": [Utils intervalSinceNow:newsDetails.pubDate],
-                           @"content": newsDetails.body,
-                           @"softwareLink": newsDetails.softwareLink,
-                           @"softwareName": newsDetails.softwareName,
-                           @"relatedInfo": [Utils generateRelativeNewsString:newsDetails.relatives]
-                           };
-    
-    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
+    [self.detailsView loadHTMLString:newsDetails.html baseURL:[[NSBundle mainBundle] resourceURL]];
     
     _isStarred = newsDetails.isFavorite;
     
@@ -456,15 +440,7 @@
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
 {
-    NSDictionary *data = @{
-                           @"title": [Utils escapeHTML:blogDetails.title],
-                           @"authorID": @(blogDetails.authorID),
-                           @"authorName": blogDetails.author,
-                           @"timeInterval": [Utils intervalSinceNow:blogDetails.pubDate],
-                           @"content": blogDetails.body,
-                           };
-    
-    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
+    [self.detailsView loadHTMLString:blogDetails.html baseURL:[[NSBundle mainBundle] resourceURL]];
     
     _isStarred = blogDetails.isFavorite;
     _webURL = [blogDetails.url absoluteString];
@@ -477,16 +453,7 @@
 
 - (void)loadPostDetails:(OSCPostDetails *)postDetails
 {
-    NSDictionary *data = @{
-                           @"title": [Utils escapeHTML:postDetails.title],
-                           @"authorID": @(postDetails.authorID),
-                           @"authorName": postDetails.author,
-                           @"timeInterval": [Utils intervalSinceNow:postDetails.pubDate],
-                           @"content": postDetails.body,
-                           @"tags": [Utils GenerateTags:postDetails.tags]
-                           };
-    
-    [self loadHTMLWithData:data usingTemplate:@"newsDetail"];
+    [self.detailsView loadHTMLString:postDetails.html baseURL:[[NSBundle mainBundle] resourceURL]];
     
     _isStarred = postDetails.isFavorite;
     _webURL = [postDetails.url absoluteString];
@@ -500,46 +467,17 @@
 
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
 {
-    NSString *titleStr = [NSString stringWithFormat:@"%@ %@", softwareDetails.extensionTitle, softwareDetails.title];
-    
-    NSDictionary *data = @{
-                           @"title": titleStr,
-                           @"authorID": @(softwareDetails.authorID),
-                           @"author": softwareDetails.author,
-                           @"recommended": @(softwareDetails.isRecommended),
-                           @"logoURL": softwareDetails.logoURL,
-                           @"content": softwareDetails.body,
-                           @"license": softwareDetails.license,
-                           @"language": softwareDetails.language,
-                           @"os": softwareDetails.os,
-                           @"recordTime": softwareDetails.recordTime,
-                           @"homepageURL": softwareDetails.homepageURL,
-                           @"documentURL": softwareDetails.documentURL,
-                           @"downloadURL": softwareDetails.downloadURL
-                           };
-    
-    [self loadHTMLWithData:data usingTemplate:@"softwareDetail"];
+    [self.detailsView loadHTMLString:softwareDetails.html baseURL:[[NSBundle mainBundle] resourceURL]];
     
     _isStarred = softwareDetails.isFavorite;
     _webURL = [softwareDetails.url absoluteString];
     
     _commentCount = softwareDetails.tweetCount;
-    _objectTitle = titleStr;
+    _objectTitle = [NSString stringWithFormat:@"%@ %@", softwareDetails.extensionTitle, softwareDetails.title];
     
     NSString *trimmedHTML = [Utils deleteHTMLTag:softwareDetails.body];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
     _digest = [[Utils deleteHTMLTag:softwareDetails.body] substringToIndex:length];
-}
-
-
-- (void)loadHTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName
-{
-    NSString *templatePath = [[NSBundle mainBundle] pathForResource:templateName ofType:@"html" inDirectory:@"html"];
-    NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
-    
-    NSString *html = [GRMustacheTemplate renderObject:data fromString:template error:nil];
-    
-    [self.detailsView loadHTMLString:html baseURL:[[NSBundle mainBundle] bundleURL]];
 }
 
 
@@ -550,9 +488,7 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     NSString *URL;
     NSDictionary *parameters;
@@ -648,9 +584,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [alertView cancelButtonIndex]) {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-        manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         [manager POST:@"http://www.oschina.net/action/communityManage/report"
            parameters:@{

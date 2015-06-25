@@ -35,5 +35,7 @@
 + (void)saveTeams:(NSArray *)teams;
 + (NSMutableArray *)teams;
 + (void)removeTeamInfo;
++ (void)saveWhetherNightMode:(BOOL)isNight;
++ (BOOL)getMode;
 
 @end

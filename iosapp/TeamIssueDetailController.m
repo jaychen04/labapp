@@ -60,8 +60,8 @@
 #pragma mark --任务详情信息
 -(void)getIssueDetailNetWorkingInfo
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     NSString *url = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_DETAIL];
     [manager GET:url
       parameters:@{
@@ -328,8 +328,8 @@
 #pragma mark -- 更改子任务状态
 -(void)changeChildIssueStateWithIssueId:(NSString*)issueId newState:(NSString*)newState arrayIndex:(int)arrayIndex selectedCell:(TeamIssueDetailCell*)selectedCell
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     NSString *url = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_UPDATE_CHILD_ISSUE];
     NSDictionary *parameters = @{
                                  @"teamid": @(_teamId),
@@ -480,8 +480,8 @@
 #pragma mark -- 更改任务状态
 -(void)changeIssueStateWithNewState:(NSString*)newState
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     NSString *url = [NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_UPDATE_STATE];
     NSDictionary *parameters = @{
                                  @"teamid": @(_teamId),
@@ -535,9 +535,8 @@
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"评论发送中";
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager.requestSerializer setValue:[Utils generateUserAgent] forHTTPHeaderField:@"User-Agent"];
-    manager.responseSerializer = [AFOnoResponseSerializer XMLResponseSerializer];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
     NSDictionary *parameter = @{
                                 @"teamid": @(_teamId),
                                 @"uid": @([Config getOwnID]),
