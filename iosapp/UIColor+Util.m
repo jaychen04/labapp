@@ -80,7 +80,7 @@
 + (UIColor *)contentTextColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return  [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+        return  [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
     }
     return [UIColor colorWithHex:0x272727];
 }
