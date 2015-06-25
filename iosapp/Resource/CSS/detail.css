@@ -2,10 +2,11 @@ body {
     font-size: 1em;
     line-height: 1.5em;
     background-color: #EBEBF3;
-    word-break: break-all;
+/*    word-break: break-all;*/
     font-family: Arial;
     
-    margin-bottom: 60px;
+/*    margin-bottom: 60px;*/
+    margin: 10px 10px 60px 10px;
 }
 
 span {

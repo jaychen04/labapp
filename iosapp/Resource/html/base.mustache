@@ -39,14 +39,27 @@
         <script type="text/javascript" src="js/shBrushSql.js"></script>
         <script type="text/javascript" src="js/shBrushVb.js"></script>
         <script type="text/javascript" src="js/shBrushXml.js"></script>
-        
-        <script type="text/javascript">
-            SyntaxHighlighter.all()
-        </script>
     </head>
     
     <body {{# night }}class="night"{{/}}>
         {{$ body }}
         {{/}}
+
+        <script type="text/javascript">
+            SyntaxHighlighter.all()
+
+
+            var img_list = document.getElementsByTagName("img");
+
+            for (var i = 0; i < img_list.length; i++) {
+                var img = img_list[i];
+
+                if (img.alt.length) {continue;}
+
+                var wrapper = document.createElement("a");
+                wrapper.href = img.src;
+                wrapper.appendChild(img.parentNode.replaceChild(wrapper, img));
+            }
+        </script>
     </body>
 </html>
