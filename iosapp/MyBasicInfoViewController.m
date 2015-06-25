@@ -71,7 +71,6 @@
     self.tableView.bounces = NO;
     self.navigationItem.title = @"我的资料";
     self.view.backgroundColor = [UIColor themeColor];
-    self.tableView.separatorColor = [UIColor separatorColor];
     self.tableView.tableFooterView = [UIView new];
     
     if (!_myInfo) {

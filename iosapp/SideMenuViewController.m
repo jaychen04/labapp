@@ -47,7 +47,6 @@ static BOOL isNight;
     self.tableView.backgroundColor = [UIColor titleBarColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.separatorColor = [UIColor separatorColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
     

@@ -55,7 +55,6 @@ static NSString *kTeamIssueListCellID = @"teamIssueListCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.tableView registerClass:[TeamIssueListCell class] forCellReuseIdentifier:kTeamIssueListCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

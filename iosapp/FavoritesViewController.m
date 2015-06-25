@@ -44,7 +44,6 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kFavoriteCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 

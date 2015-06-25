@@ -45,7 +45,6 @@ static NSString * const kMessageCellID = @"MessageCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[MessageCell class] forCellReuseIdentifier:kMessageCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 

@@ -138,12 +138,6 @@ static NSString * const kTweetCellID = @"TweetCell";
 
 #pragma mark - life cycle
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.tableView.separatorColor = [UIColor separatorColor];
-    [self.tableView reloadData];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

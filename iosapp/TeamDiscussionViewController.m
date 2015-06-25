@@ -43,7 +43,6 @@ static NSString * const kDiscussionCellID = @"TeamDiscussionCell";
     
     self.navigationItem.title = @"团队讨论";
     [self.tableView registerClass:[TeamDiscussionCell class] forCellReuseIdentifier:kDiscussionCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

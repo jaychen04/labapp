@@ -55,7 +55,6 @@ static NSString * const kSoftwareCatalogCellID = @"SoftwareCatalogCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kSoftwareCatalogCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 

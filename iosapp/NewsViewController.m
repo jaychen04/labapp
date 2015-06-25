@@ -55,11 +55,6 @@ static NSString *kNewsCellID = @"NewsCell";
     return [[xml.rootElement firstChildWithTag:@"newslist"] childrenWithTag:@"news"];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.tableView.separatorColor = [UIColor separatorColor];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];

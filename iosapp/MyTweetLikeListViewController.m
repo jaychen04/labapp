@@ -45,7 +45,6 @@ static NSString * const MyTweetLikeListCellID = @"MyTweetLikeListCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[MyTweetLikeListCell class] forCellReuseIdentifier:MyTweetLikeListCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

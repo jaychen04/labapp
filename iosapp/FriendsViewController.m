@@ -54,7 +54,6 @@ static NSString * const kPersonCellID = @"PersonCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[PersonCell class] forCellReuseIdentifier:kPersonCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

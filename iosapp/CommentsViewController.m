@@ -64,7 +64,6 @@ static NSString *kCommentCellID = @"CommentCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[CommentCell class] forCellReuseIdentifier:kCommentCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

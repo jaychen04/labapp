@@ -45,7 +45,6 @@ static NSString *kPostCellID = @"PostCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[PostCell class] forCellReuseIdentifier:kPostCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {
