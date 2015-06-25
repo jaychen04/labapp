@@ -28,4 +28,6 @@
 + (UIColor *)infosBackViewColor;
 + (UIColor *)lineColor;
 
++ (UIColor *)contentTextColor;
+
 @end

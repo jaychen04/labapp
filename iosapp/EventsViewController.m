@@ -119,7 +119,7 @@ static NSString * const EventCellID = @"EventCell";
     OSCEvent *event = self.objects[row];
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:EventCellID forIndexPath:indexPath];
     
-    cell.contentLabel.textColor = [UIColor titleColor];
+    cell.contentLabel.textColor = [UIColor contentTextColor];
     
     [self setBlockForEventCell:cell];
     [cell setContentWithEvent:event];

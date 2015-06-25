@@ -63,8 +63,7 @@
     _contentLabel = [UILabel new];
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
-//    _contentLabel.font = [UIFont systemFontOfSize:15 weight:0.13];
-    _contentLabel.font = [UIFont boldSystemFontOfSize:14];
+    _contentLabel.font = [UIFont boldSystemFontOfSize:15];
     [self.contentView addSubview:_contentLabel];
     
     _likeButton = [UIButton new];

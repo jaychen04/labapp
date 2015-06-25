@@ -199,7 +199,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     cell.thumbnail.tag = row;
     cell.likeButton.tag = row;
     cell.likeListLabel.tag = row;
-    cell.contentLabel.textColor = [UIColor titleColor];
+    cell.contentLabel.textColor = [UIColor contentTextColor];
     cell.authorLabel.textColor = [UIColor nameColor];
     
     [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
@@ -223,7 +223,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     [self.label setText:tweet.author];
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     
-//    self.label.font = [UIFont systemFontOfSize:15];
+    self.label.font = [UIFont boldSystemFontOfSize:15];
     [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
     height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     
