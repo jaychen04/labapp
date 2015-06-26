@@ -29,5 +29,6 @@
 + (UIColor *)lineColor;
 
 + (UIColor *)contentTextColor;
++ (UIColor *)borderColor;
 
 @end

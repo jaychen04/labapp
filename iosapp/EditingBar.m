@@ -46,17 +46,17 @@
     _editView.placeholderFont = [UIFont systemFontOfSize:16];
     _editView.returnKeyType = UIReturnKeySend;
     [_editView setCornerRadius:5.0];
-    [_editView setBorderWidth:1.0f andColor:[UIColor colorWithHex:0xC8C8CD]];
     
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         self.barTintColor = [UIColor colorWithRed:22.0/255 green:22.0/255 blue:22.0/255 alpha:1.0];
-        [_editView setBorderWidth:1.0f andColor:[UIColor colorWithRed:106.0/255 green:106.0/255 blue:106.0/255 alpha:1.0]];
+        [_editView setBorderWidth:1.0f andColor:[UIColor borderColor]];
         _modeSwitchButton.backgroundColor = [UIColor clearColor];
         _inputViewButton.backgroundColor = [UIColor clearColor];
         _editView.backgroundColor = [UIColor colorWithRed:0.17 green:0.17 blue:0.17 alpha:1.0];
     } else {
         self.barTintColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
+        [_editView setBorderWidth:1.0f andColor:[UIColor colorWithHex:0xC8C8CD]];
         _modeSwitchButton.backgroundColor = [UIColor clearColor];
         _inputViewButton.backgroundColor = [UIColor clearColor];
         _editView.backgroundColor = [UIColor colorWithHex:0xF5FAFA];
@@ -87,12 +87,12 @@
 - (void)addBorder
 {
     UIView *upperBorder = [UIView new];
-    upperBorder.backgroundColor = [UIColor lightGrayColor];
+    upperBorder.backgroundColor = [UIColor borderColor];
     upperBorder.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:upperBorder];
     
     UIView *bottomBorder = [UIView new];
-    bottomBorder.backgroundColor = [UIColor lightGrayColor];
+    bottomBorder.backgroundColor = [UIColor borderColor];
     bottomBorder.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:bottomBorder];
     

@@ -143,4 +143,12 @@
     return [UIColor colorWithHex:0x2bc157];
 }
 
++ (UIColor *)borderColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithRed:18.0/255 green:144.0/255 blue:105.0/255 alpha:0.6];
+    }
+    return [UIColor lightGrayColor];
+}
+
 @end
