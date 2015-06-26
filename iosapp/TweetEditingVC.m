@@ -217,7 +217,7 @@
     // 底部添加border
     
     UIView *bottomBorder = [UIView new];
-    bottomBorder.backgroundColor = [UIColor lightGrayColor];
+    bottomBorder.backgroundColor = [UIColor borderColor];
     bottomBorder.translatesAutoresizingMaskIntoConstraints = NO;
     [_toolBar addSubview:bottomBorder];
     

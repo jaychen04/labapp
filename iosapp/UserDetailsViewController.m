@@ -98,6 +98,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    self.tableView.separatorColor = [UIColor separatorColor];
+    
     return section == 0? 2 : self.objects.count;
 }
 
