@@ -28,12 +28,6 @@ img,table {
     max-width: 100%;
 }
 
-main img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 ul {
     padding-left: 20px;
 }
