@@ -89,7 +89,7 @@
     self.label.font = [UIFont systemFontOfSize:15];
     CGSize contentSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 85, MAXFLOAT)];
     
-    return contentSize.height + 36;
+    return contentSize.height + 33;
 }
 
 
