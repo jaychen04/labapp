@@ -43,7 +43,6 @@
     [_inputViewButton setImage:[UIImage imageNamed:@"toolbar-emoji2"] forState:UIControlStateNormal];
     
     _editView = [[GrowingTextView alloc] initWithPlaceholder:@"说点什么"];
-    _editView.placeholderFont = [UIFont systemFontOfSize:16];
     _editView.returnKeyType = UIReturnKeySend;
     [_editView setCornerRadius:5.0];
     

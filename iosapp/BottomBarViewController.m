@@ -284,18 +284,6 @@
 }
 
 
-// ugly
-- (void)textViewDidEndEditing:(PlaceholderTextView *)textView
-{
-    [textView checkShouldHidePlaceholder];
-}
-
-- (void)textViewDidChange:(PlaceholderTextView *)textView
-{
-    [textView checkShouldHidePlaceholder];
-}
-
-
 - (void)sendContent
 {
     NSAssert(false, @"Over ride in subclasses");

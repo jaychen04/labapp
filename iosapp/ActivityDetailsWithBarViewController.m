@@ -249,13 +249,11 @@
 
 - (void)textViewDidEndEditing:(PlaceholderTextView *)textView
 {
-    [textView checkShouldHidePlaceholder];
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
 }
 
 - (void)textViewDidChange:(PlaceholderTextView *)textView
 {
-    [textView checkShouldHidePlaceholder];
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
 }
 

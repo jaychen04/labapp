@@ -12,8 +12,9 @@
 
 - (instancetype)initWithPlaceholder:(NSString *)placeholder
 {
-    self = [super initWithPlaceholder:placeholder];
+    self = [super init];
     if (self) {
+        self.placeholder = placeholder;
         self.font = [UIFont systemFontOfSize:16];
         self.scrollEnabled = NO;
         self.scrollsToTop = NO;

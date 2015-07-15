@@ -90,9 +90,9 @@
 
 - (void)initSubViews
 {
-    _edittingArea = [[PlaceholderTextView alloc] initWithPlaceholder:@"为你的声音附上一段描述..."];
+    _edittingArea = [PlaceholderTextView new];
+    _edittingArea.placeholder = @"为你的声音附上一段描述...";
     _edittingArea.delegate = self;
-    _edittingArea.placeholderFont = [UIFont systemFontOfSize:16];
     _edittingArea.returnKeyType = UIReturnKeySend;
     _edittingArea.scrollEnabled = NO;
     _edittingArea.font = [UIFont systemFontOfSize:16];
@@ -544,11 +544,6 @@
 - (void)keyboardHide
 {
     [_edittingArea resignFirstResponder];
-}
-
-- (void)textViewDidChange:(PlaceholderTextView *)textView
-{
-    [textView checkShouldHidePlaceholder];
 }
 
 

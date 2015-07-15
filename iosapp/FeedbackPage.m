@@ -61,8 +61,8 @@
 
 - (void)setLayout
 {
-    _feedbackTextView = [[PlaceholderTextView alloc] initWithPlaceholder:@"感谢您的反馈，请提出您的意见与建议"];
-    _feedbackTextView.placeholderFont = [UIFont systemFontOfSize:15];
+    _feedbackTextView = [PlaceholderTextView new];
+    _feedbackTextView.placeholder = @"感谢您的反馈，请提出您的意见与建议";
     [_feedbackTextView setCornerRadius:3.0];
     _feedbackTextView.font = [UIFont systemFontOfSize:17];
     _feedbackTextView.translatesAutoresizingMaskIntoConstraints = NO;

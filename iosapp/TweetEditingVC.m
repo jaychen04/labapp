@@ -142,9 +142,9 @@
     [_scrollView addSubview:_contentView];
     _scrollView.contentSize = _contentView.bounds.size;
     
-    _edittingArea = [[PlaceholderTextView alloc] initWithPlaceholder:@"今天你动弹了吗？"];
+    _edittingArea = [PlaceholderTextView new];
+    _edittingArea.placeholder = @"今天你动弹了吗？";
     _edittingArea.delegate = self;
-    _edittingArea.placeholderFont = [UIFont systemFontOfSize:17];
     if (_topicName.length) {
         _edittingArea.text = [NSString stringWithFormat:@"#%@#", _topicName];
     }
@@ -587,7 +587,6 @@
 
 - (void)textViewDidChange:(PlaceholderTextView *)textView
 {
-    [textView checkShouldHidePlaceholder];
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
     
     CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 10);
