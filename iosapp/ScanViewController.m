@@ -179,7 +179,8 @@
                 [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
                 [HUD hide:YES afterDelay:2];
             } else {
-                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
                 
                 [manager GET:URL
                   parameters:nil
