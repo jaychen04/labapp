@@ -31,7 +31,7 @@
 #import <RESideMenu/RESideMenu.h>
 
 
-@interface OSCTabBarController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface OSCTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     NewsViewController *newsViewCtl;
     NewsViewController *hotNewsViewCtl;
@@ -152,7 +152,8 @@
                                                                        andControllers:@[newTweetViewCtl, hotTweetViewCtl, myTweetViewCtl]
                                                                           underTabbar:YES];
     
-    DiscoverTableVC *discoverTableVC = [[DiscoverTableVC alloc] initWithStyle:UITableViewStyleGrouped];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];
+    UINavigationController *discoverNav = [storyboard instantiateViewControllerWithIdentifier:@"DiscoverNav"];
     MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
     
     
@@ -161,7 +162,7 @@
                              [self addNavigationItemForViewController:newsSVC],
                              [self addNavigationItemForViewController:tweetsSVC],
                              [UIViewController new],
-                             [self addNavigationItemForViewController:discoverTableVC],
+                             discoverNav,
                              [[UINavigationController alloc] initWithRootViewController:myInfoVC]
                              ];
     
@@ -435,7 +436,6 @@
 
 - (UINavigationController *)addNavigationItemForViewController:(UIViewController *)viewController
 {
-    
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     
     viewController.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"]

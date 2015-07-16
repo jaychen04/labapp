@@ -11,17 +11,14 @@
 #import "Config.h"
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
-#import "OSCTabBarController.h"
-#import "SideMenuViewController.h"
 
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialQQHandler.h"
 #import "UMSocialSinaHandler.h"
 
-#import <RESideMenu/RESideMenu.h>
 
-@interface AppDelegate () <UIApplicationDelegate, UITabBarControllerDelegate>
+@interface AppDelegate () <UIApplicationDelegate>
 
 @end
 
@@ -34,21 +31,6 @@
     
     [NBSAppAgent startWithAppID:@"2142ec9589c2480f952feab9ed19a535"];
     
-    OSCTabBarController *tabBarController = [OSCTabBarController new];
-    tabBarController.delegate = self;
-    
-    RESideMenu *sideMenuTabBarViewController = [[RESideMenu alloc] initWithContentViewController:tabBarController
-                                                                          leftMenuViewController:[SideMenuViewController new]
-                                                                         rightMenuViewController:nil];
-    sideMenuTabBarViewController.scaleContentView = YES;
-    sideMenuTabBarViewController.contentViewScaleValue = 0.95;
-    sideMenuTabBarViewController.scaleMenuView = NO;
-    sideMenuTabBarViewController.contentViewShadowEnabled = YES;
-    sideMenuTabBarViewController.contentViewShadowRadius = 4.5;
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = sideMenuTabBarViewController;
-    [self.window makeKeyAndVisible];
     
     [self loadCookies];
     
@@ -83,9 +65,9 @@
     
     [menuController setMenuVisible:YES animated:YES];
     [menuController setMenuItems:@[
-                                    [[UIMenuItem alloc] initWithTitle:@"复制" action:NSSelectorFromString(@"copyText:")],
-                                    [[UIMenuItem alloc] initWithTitle:@"删除" action:NSSelectorFromString(@"deleteObject:")]
-                                    ]];
+                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:NSSelectorFromString(@"copyText:")],
+                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:NSSelectorFromString(@"deleteObject:")]
+                                   ]];
     
     /************ 检测通知 **************/
     

@@ -32,20 +32,13 @@
     });
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    self.navigationItem.title = @"发现";
     self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
-    self.clearsSelectionOnViewWillAppear = NO;
-//    self.tableView.separatorColor = [UIColor colorWithHex:0xDDDDDD];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
-    
-    //self.tableView.tableHeaderView.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
-    UIView *footer = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.tableFooterView = footer;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -53,20 +46,6 @@
 }
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    switch (section) {
-        case 0:  return 1;
-        case 1:  return 2;
-        case 2:  return 2;
-        default: return 0;
-    }
-}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
