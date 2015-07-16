@@ -13,7 +13,7 @@
 #import "NewsViewController.h"
 #import "BlogsViewController.h"
 #import "LoginViewController.h"
-#import "DiscoverTableVC.h"
+#import "DiscoverViewcontroller.h"
 #import "MyInfoViewController.h"
 #import "Config.h"
 #import "Utils.h"
@@ -100,7 +100,7 @@
             }];
 
         } else if (idx == 3) {
-            DiscoverTableVC *dvc = nav.viewControllers[0];
+            DiscoverViewController *dvc = nav.viewControllers[0];
             [dvc.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
             [dvc.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
             [dvc dawnAndNightMode];

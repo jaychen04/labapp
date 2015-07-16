@@ -10,6 +10,7 @@
 
 @interface UIViewController (Segue)
 
+- (IBAction)pushLoginViewController:(id)sender;
 - (IBAction)pushSearchViewController:(id)sender;
 
 @end

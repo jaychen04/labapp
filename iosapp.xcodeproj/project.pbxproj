@@ -202,7 +202,6 @@
 		382A94AA1A26D27400AAAFEA /* 105@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94431A26D27400AAAFEA /* 105@2x.png */; };
 		382A94AB1A26D27400AAAFEA /* 099@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 382A94441A26D27400AAAFEA /* 099@2x.png */; };
 		382A94AE1A26DBDD00AAAFEA /* EmojiPageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */; };
-		382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */; };
 		382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A95BA1A29D2C300AAAFEA /* EventsViewController.m */; };
 		382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 382A95BD1A29DC4700AAAFEA /* OSCEvent.m */; };
 		382F5EB01A0338C900A8EF11 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 382F5EAF1A0338C900A8EF11 /* DetailsViewController.m */; };
@@ -406,6 +405,7 @@
 		C5D7F6561B0DDCC900AB01CC /* TeamRepliesBVC.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D7F6551B0DDCC900AB01CC /* TeamRepliesBVC.m */; };
 		C5DD1E851B2AE5CF008DC978 /* recommend_tag.png in Resources */ = {isa = PBXBuildFile; fileRef = C5DD1E841B2AE5CF008DC978 /* recommend_tag.png */; };
 		C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4B1781B578F55008E7463 /* UIViewController+Segue.m */; };
+		C5E4B17C1B5794FB008E7463 /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4B17B1B5794FB008E7463 /* DiscoverViewController.m */; };
 		C5E56F411B56AAAF0059924C /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E56F401B56AAAF0059924C /* News.storyboard */; };
 		C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E56F4A1B56AFB50059924C /* Main.storyboard */; };
 		C5E56F4E1B56AFB50059924C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E56F4C1B56AFB50059924C /* RootViewController.m */; };
@@ -712,8 +712,6 @@
 		382A94441A26D27400AAAFEA /* 099@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "099@2x.png"; sourceTree = "<group>"; };
 		382A94AC1A26DBDD00AAAFEA /* EmojiPageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmojiPageVC.h; sourceTree = "<group>"; };
 		382A94AD1A26DBDD00AAAFEA /* EmojiPageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmojiPageVC.m; sourceTree = "<group>"; };
-		382A94B71A28659D00AAAFEA /* DiscoverTableVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DiscoverTableVC.h; path = ../DiscoverTableVC.h; sourceTree = "<group>"; };
-		382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DiscoverTableVC.m; path = ../DiscoverTableVC.m; sourceTree = "<group>"; };
 		382A95B91A29D2C300AAAFEA /* EventsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
 		382A95BA1A29D2C300AAAFEA /* EventsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
 		382A95BC1A29DC4700AAAFEA /* OSCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCEvent.h; sourceTree = "<group>"; };
@@ -1038,6 +1036,8 @@
 		C5DD1E841B2AE5CF008DC978 /* recommend_tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recommend_tag.png; sourceTree = "<group>"; };
 		C5E4B1771B578F55008E7463 /* UIViewController+Segue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Segue.h"; sourceTree = "<group>"; };
 		C5E4B1781B578F55008E7463 /* UIViewController+Segue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Segue.m"; sourceTree = "<group>"; };
+		C5E4B17A1B5794FB008E7463 /* DiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverViewController.h; sourceTree = "<group>"; };
+		C5E4B17B1B5794FB008E7463 /* DiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverViewController.m; sourceTree = "<group>"; };
 		C5E56F401B56AAAF0059924C /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = News.storyboard; path = "综合/News.storyboard"; sourceTree = "<group>"; };
 		C5E56F4A1B56AFB50059924C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C5E56F4B1B56AFB50059924C /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -1197,8 +1197,8 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
-				C5E56F511B56B58B0059924C /* 发现 */,
 				C5E56F491B56AFB50059924C /* 主界面 */,
+				C5E56F511B56B58B0059924C /* 发现 */,
 				C5E56F421B56AAE00059924C /* 综合 */,
 				3843641D1AC5529C00743CB0 /* Team */,
 				00C9A73919EE8536000EA878 /* API */,
@@ -2463,8 +2463,8 @@
 			isa = PBXGroup;
 			children = (
 				C5E56F521B56B58B0059924C /* Discover.storyboard */,
-				382A94B71A28659D00AAAFEA /* DiscoverTableVC.h */,
-				382A94B81A28659D00AAAFEA /* DiscoverTableVC.m */,
+				C5E4B17A1B5794FB008E7463 /* DiscoverViewController.h */,
+				C5E4B17B1B5794FB008E7463 /* DiscoverViewController.m */,
 				382A94B31A28655900AAAFEA /* 好友圈 */,
 				38BC598C1A5D20AC00F3C4D2 /* 找人 */,
 				380FD21A1A74DF22003C4021 /* 活动 */,
@@ -3080,7 +3080,6 @@
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,
 				38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */,
 				384A112C1ADE565200856A7C /* TeamMember.m in Sources */,
-				382A94B91A28659D00AAAFEA /* DiscoverTableVC.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
 				383B9FD91AB416F000C03C47 /* ActivityDetailsWithBarViewController.m in Sources */,
@@ -3132,6 +3131,7 @@
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
 				C52BF4EC1AF9C03700E53508 /* WeeklyReportDetailViewController.m in Sources */,
 				38BDC5401A4D5F84006080F7 /* PersonSearchViewController.m in Sources */,
+				C5E4B17C1B5794FB008E7463 /* DiscoverViewController.m in Sources */,
 				381EAB7019FE7D6700C1937C /* PostCell.m in Sources */,
 				C5FB958E1AEA2C8D006918CD /* DiscussionDetailsViewController.m in Sources */,
 				31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */,

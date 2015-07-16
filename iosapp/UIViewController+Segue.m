@@ -7,12 +7,20 @@
 //
 
 #import "UIViewController+Segue.h"
+#import "LoginViewController.h"
 #import "SearchViewController.h"
 
 @implementation UIViewController (Segue)
+
+- (IBAction)pushLoginViewController:(id)sender
+{
+    [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+}
 
 - (IBAction)pushSearchViewController:(id)sender
 {
     [self.navigationController pushViewController:[SearchViewController new] animated:YES];
 }
+
+
 @end

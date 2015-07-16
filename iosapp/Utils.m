@@ -27,6 +27,7 @@
 #import <Reachability.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <GRMustache.h>
+#import <TOWebViewController.h>
 
 @implementation Utils
 
@@ -84,7 +85,10 @@
     //判断是否包含 oschina.net 来确定是不是站内链接
     NSRange range = [url rangeOfString:@"oschina.net"];
     if (range.length <= 0) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+        NSString *URL = [url hasPrefix:@"http://"]? url : [NSString stringWithFormat:@"http://%@", url];
+        TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:[NSURL URLWithString:URL]];
+        webViewController.hidesBottomBarWhenPushed = YES;
+        [navigationController pushViewController:webViewController animated:YES];
     } else {
         //站内链接
         
@@ -199,7 +203,10 @@
         if (viewController) {
             [navigationController pushViewController:viewController animated:YES];
         } else {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", url]]];
+            NSString *URL = [url hasPrefix:@"http://"]? url : [NSString stringWithFormat:@"http://%@", url];
+            TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:[NSURL URLWithString:URL]];
+            webViewController.hidesBottomBarWhenPushed = YES;
+            [navigationController pushViewController:webViewController animated:YES];
         }
     }
 }
