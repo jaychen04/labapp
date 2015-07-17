@@ -442,9 +442,9 @@
                                                                                         style:UIBarButtonItemStylePlain
                                                                                        target:self action:@selector(onClickMenuButton)];
     
-    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-search"]
-                                                                                        style:UIBarButtonItemStylePlain
-                                                                                       target:self action:@selector(pushSearchViewController)];
+    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                                                                                     target:self
+                                                                                                     action:@selector(pushSearchViewController)];
     
     
     

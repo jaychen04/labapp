@@ -73,7 +73,7 @@
                                 <action selector="presentLeftMenuViewController:" destination="35K-XZ-lhA" id="6H8-rM-vl6"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="navigationbar-search" id="l5B-HT-Vh5">
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="search" id="l5B-HT-Vh5">
                             <connections>
                                 <action selector="pushSearchViewController:" destination="35K-XZ-lhA" id="J6Y-Xu-8Xy"/>
                             </connections>
@@ -102,7 +102,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="navigationbar-search" width="22" height="22"/>
         <image name="navigationbar-sidebar" width="22" height="22"/>
     </resources>
 </document>
