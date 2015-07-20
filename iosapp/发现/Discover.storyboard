@@ -87,7 +87,7 @@
         <!--Navigation Controller-->
         <scene sceneID="7dN-Kp-sPD">
             <objects>
-                <navigationController storyboardIdentifier="DiscoverNav" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4qD-Dy-uh3" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="Nav" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4qD-Dy-uh3" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="E4E-2x-wKR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

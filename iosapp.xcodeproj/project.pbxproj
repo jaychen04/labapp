@@ -330,7 +330,6 @@
 		38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D061A36A97400682D1F /* OSCSoftware.m */; };
 		38BD3D0A1A36AA9700682D1F /* SoftwareListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D091A36AA9700682D1F /* SoftwareListVC.m */; };
 		38BD3D0D1A36D19400682D1F /* SoftwareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D0C1A36D19400682D1F /* SoftwareCell.m */; };
-		38BD3D101A37F38900682D1F /* MyInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD3D0F1A37F38900682D1F /* MyInfoViewController.m */; };
 		38BD7D6E19FF7F94003ABB80 /* CommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */; };
 		38BD7D7219FF7FD0003ABB80 /* CommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7119FF7FD0003ABB80 /* CommentCell.m */; };
 		38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */ = {isa = PBXBuildFile; fileRef = 38BD7D7419FF8521003ABB80 /* OSCComment.m */; };
@@ -407,8 +406,11 @@
 		C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E56F4A1B56AFB50059924C /* Main.storyboard */; };
 		C5E56F4E1B56AFB50059924C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E56F4C1B56AFB50059924C /* RootViewController.m */; };
 		C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E56F521B56B58B0059924C /* Discover.storyboard */; };
+		C5E5E6B41B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E5E6B31B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m */; };
 		C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */; };
 		C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */; };
+		C5E92FDE1B59FAC300EFE47E /* Homepage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E92FDD1B59FAC300EFE47E /* Homepage.storyboard */; };
+		C5E92FE11B5A1E5F00EFE47E /* HomepageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E92FE01B5A1E5F00EFE47E /* HomepageViewController.m */; };
 		C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7721AEFA0140032F775 /* TeamCell.m */; };
 		C5F3D7761AF0C2A50032F775 /* WeeklyReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7751AF0C2A50032F775 /* WeeklyReportViewController.m */; };
 		C5F3D77A1AF0C40B0032F775 /* WeeklyReportTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5F3D7791AF0C40B0032F775 /* WeeklyReportTableViewController.m */; };
@@ -924,8 +926,6 @@
 		38BD3D091A36AA9700682D1F /* SoftwareListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareListVC.m; sourceTree = "<group>"; };
 		38BD3D0B1A36D19400682D1F /* SoftwareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareCell.h; sourceTree = "<group>"; };
 		38BD3D0C1A36D19400682D1F /* SoftwareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareCell.m; sourceTree = "<group>"; };
-		38BD3D0E1A37F38900682D1F /* MyInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyInfoViewController.h; sourceTree = "<group>"; };
-		38BD3D0F1A37F38900682D1F /* MyInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyInfoViewController.m; sourceTree = "<group>"; };
 		38BD7D6C19FF7F94003ABB80 /* CommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentsViewController.h; sourceTree = "<group>"; };
 		38BD7D6D19FF7F94003ABB80 /* CommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommentsViewController.m; sourceTree = "<group>"; };
 		38BD7D7019FF7FD0003ABB80 /* CommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommentCell.h; sourceTree = "<group>"; };
@@ -1037,10 +1037,15 @@
 		C5E56F4B1B56AFB50059924C /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		C5E56F4C1B56AFB50059924C /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		C5E56F521B56B58B0059924C /* Discover.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Discover.storyboard; sourceTree = "<group>"; };
+		C5E5E6B21B5CCBCE009EBD8E /* UIScrollView+ScalableCover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+ScalableCover.h"; sourceTree = "<group>"; };
+		C5E5E6B31B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+ScalableCover.m"; sourceTree = "<group>"; };
 		C5E73DF81AF755A900974EDC /* WeeklyReportTitleBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportTitleBar.h; sourceTree = "<group>"; };
 		C5E73DF91AF755A900974EDC /* WeeklyReportTitleBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportTitleBar.m; sourceTree = "<group>"; };
 		C5E73DFE1AF8A15400974EDC /* WeeklyReportContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportContentViewController.h; sourceTree = "<group>"; };
 		C5E73DFF1AF8A15400974EDC /* WeeklyReportContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeeklyReportContentViewController.m; sourceTree = "<group>"; };
+		C5E92FDD1B59FAC300EFE47E /* Homepage.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Homepage.storyboard; sourceTree = "<group>"; };
+		C5E92FDF1B5A1E5F00EFE47E /* HomepageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomepageViewController.h; sourceTree = "<group>"; };
+		C5E92FE01B5A1E5F00EFE47E /* HomepageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomepageViewController.m; sourceTree = "<group>"; };
 		C5F3D7711AEFA0140032F775 /* TeamCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamCell.h; sourceTree = "<group>"; };
 		C5F3D7721AEFA0140032F775 /* TeamCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamCell.m; sourceTree = "<group>"; };
 		C5F3D7741AF0C2A50032F775 /* WeeklyReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeeklyReportViewController.h; sourceTree = "<group>"; };
@@ -2019,6 +2024,7 @@
 		38A1A1571A15BAB500AFD144 /* Catagory */ = {
 			isa = PBXGroup;
 			children = (
+				C5E5E6B51B5CCBD3009EBD8E /* ScalableCover */,
 				C5A89C2E1B09C32000798B1C /* FontAwesome */,
 				EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */,
 				EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */,
@@ -2246,8 +2252,9 @@
 		38BD3D151A37FD1500682D1F /* 我 */ = {
 			isa = PBXGroup;
 			children = (
-				38BD3D0E1A37F38900682D1F /* MyInfoViewController.h */,
-				38BD3D0F1A37F38900682D1F /* MyInfoViewController.m */,
+				C5E92FDD1B59FAC300EFE47E /* Homepage.storyboard */,
+				C5E92FDF1B5A1E5F00EFE47E /* HomepageViewController.h */,
+				C5E92FE01B5A1E5F00EFE47E /* HomepageViewController.m */,
 				EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */,
 				EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */,
 				38A93FAB1AA31DEB00A515E8 /* 收藏 */,
@@ -2457,6 +2464,15 @@
 			);
 			name = Discover;
 			path = "发现";
+			sourceTree = "<group>";
+		};
+		C5E5E6B51B5CCBD3009EBD8E /* ScalableCover */ = {
+			isa = PBXGroup;
+			children = (
+				C5E5E6B21B5CCBCE009EBD8E /* UIScrollView+ScalableCover.h */,
+				C5E5E6B31B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m */,
+			);
+			name = ScalableCover;
 			sourceTree = "<group>";
 		};
 		C5E73E011AF8A1B100974EDC /* 周报页面组件 */ = {
@@ -2858,6 +2874,7 @@
 				C5D550591B04764000CCA308 /* squirrel@2x.png in Resources */,
 				38BC59B21A5D406300F3C4D2 /* shooting@2x.png in Resources */,
 				382A94601A26D27400AAAFEA /* 028@2x.png in Resources */,
+				C5E92FDE1B59FAC300EFE47E /* Homepage.storyboard in Resources */,
 				386F1E501A7A0D6100B773EE /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				382A94A81A26D27400AAAFEA /* 103@2x.png in Resources */,
 				382A94961A26D27400AAAFEA /* 083@2x.png in Resources */,
@@ -2977,6 +2994,7 @@
 				EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				38EAF1CA1AE112A200397E2A /* TeamIssueCell.m in Sources */,
+				C5E92FE11B5A1E5F00EFE47E /* HomepageViewController.m in Sources */,
 				31405BE91AF07453000A487D /* TeamIssueListViewController.m in Sources */,
 				3801789C1A2C1A7300922858 /* EventCell.m in Sources */,
 				38EAF1B31AE0A6B900397E2A /* TeamActivityViewController.m in Sources */,
@@ -3017,6 +3035,7 @@
 				38BD3D0A1A36AA9700682D1F /* SoftwareListVC.m in Sources */,
 				0004918E19F8FFE9001F3A36 /* HorizonalTableViewController.m in Sources */,
 				38B0BF881A399A1A00A2FDB0 /* OSCFavorite.m in Sources */,
+				C5E5E6B41B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m in Sources */,
 				31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
@@ -3057,7 +3076,6 @@
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,
 				C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */,
 				C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */,
-				38BD3D101A37F38900682D1F /* MyInfoViewController.m in Sources */,
 				EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */,
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,
 				38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */,

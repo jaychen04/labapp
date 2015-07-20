@@ -152,9 +152,12 @@
                                                                        andControllers:@[newTweetViewCtl, hotTweetViewCtl, myTweetViewCtl]
                                                                           underTabbar:YES];
     
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];
-    UINavigationController *discoverNav = [storyboard instantiateViewControllerWithIdentifier:@"DiscoverNav"];
-    MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UIStoryboard *discoverSB = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];
+    UINavigationController *discoverNav = [discoverSB instantiateViewControllerWithIdentifier:@"Nav"];
+    
+    
+    UIStoryboard *homepageSB = [UIStoryboard storyboardWithName:@"Homepage" bundle:nil];
+    UINavigationController *homepageNav = [homepageSB instantiateViewControllerWithIdentifier:@"Nav"];
     
     
     self.tabBar.translucent = NO;
@@ -163,7 +166,7 @@
                              [self addNavigationItemForViewController:tweetsSVC],
                              [UIViewController new],
                              discoverNav,
-                             [[UINavigationController alloc] initWithRootViewController:myInfoVC]
+                             homepageNav,
                              ];
     
     NSArray *titles = @[@"综合", @"动弹", @"", @"发现", @"我"];

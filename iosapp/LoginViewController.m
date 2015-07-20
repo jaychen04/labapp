@@ -21,11 +21,9 @@
 #import <ReactiveCocoa.h>
 #import <MBProgressHUD.h>
 #import <RESideMenu.h>
-#import <TTTAttributedLabel.h>
-#import <CoreText/CoreText.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 
-@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TTTAttributedLabelDelegate, TencentSessionDelegate>
+@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TencentSessionDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *accountField;
 @property (nonatomic, weak) IBOutlet UITextField *passwordField;
@@ -37,7 +35,6 @@
 @property (nonatomic, weak) IBOutlet UIImageView *qqImageView;
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
-@property (nonatomic, strong) TTTAttributedLabel *registerInfo;
 
 
 @property (nonatomic, strong) TencentOAuth *tencentOauth;
@@ -56,7 +53,8 @@
     return self;
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor themeColor];
@@ -78,7 +76,8 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 
@@ -250,15 +249,6 @@
     [defaults setObject: cookiesData forKey: @"sessionCookies"];
     [defaults synchronize];
     
-}
-
-
-
-#pragma mark - TTTAttributedLabelDelegate
-
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
-{
-    [[UIApplication sharedApplication] openURL:url];
 }
 
 
