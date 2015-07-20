@@ -15,7 +15,6 @@
 #import "SoftwareCatalogVC.h"
 #import "SoftwareListVC.h"
 #import "SettingsPage.h"
-#import "MyInfoViewController.h"
 #import "LoginViewController.h"
 
 #import "AppDelegate.h"

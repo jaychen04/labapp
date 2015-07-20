@@ -72,20 +72,24 @@
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              ONOXMLElement *tweetDetailsXML = [responseObject.rootElement firstChildWithTag:@"tweet"];
              
-             _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
-             self.objectAuthorID = _tweet.authorID;
-             
-             NSDictionary *data = @{
-                                    @"content": _tweet.body,
-                                    @"imageURL": _tweet.bigImgURL.absoluteString,
-                                    @"audioURL": _tweet.attach ?: @"",
-                                    };
-             
-             _tweet.body = [Utils HTMLWithData:data usingTemplate:@"tweet"];
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [self.tableView reloadData];
-             });
+             if (!tweetDetailsXML || tweetDetailsXML.children.count <= 0) {
+                 [self.navigationController popViewControllerAnimated:YES];
+             } else {
+                 _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
+                 self.objectAuthorID = _tweet.authorID;
+                 
+                 NSDictionary *data = @{
+                                        @"content": _tweet.body,
+                                        @"imageURL": _tweet.bigImgURL.absoluteString,
+                                        @"audioURL": _tweet.attach ?: @"",
+                                        };
+                 
+                 _tweet.body = [Utils HTMLWithData:data usingTemplate:@"tweet"];
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadData];
+                 });
+             }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              [_HUD hide:YES];
          }];

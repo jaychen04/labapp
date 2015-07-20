@@ -13,8 +13,8 @@
 #import "NewsViewController.h"
 #import "BlogsViewController.h"
 #import "LoginViewController.h"
+#import "HomepageViewController.h"
 #import "DiscoverViewcontroller.h"
-#import "MyInfoViewController.h"
 #import "Config.h"
 #import "Utils.h"
 #import "OptionButton.h"
@@ -105,10 +105,10 @@
             [dvc.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
             [dvc dawnAndNightMode];
         } else if (idx == 4) {
-            MyInfoViewController *myInfo = nav.viewControllers[0];
-            [myInfo.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
-            [myInfo.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
-            [myInfo dawnAndNightMode];
+            HomepageViewController *homepageVC = nav.viewControllers[0];
+            [homepageVC.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+            [homepageVC.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
+            [homepageVC dawnAndNightMode];
         }
     }];
 

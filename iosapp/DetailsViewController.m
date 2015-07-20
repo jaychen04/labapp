@@ -387,22 +387,25 @@
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
               ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
-              
-              id details = [[_detailsClass alloc] initWithXML:XML];
-              _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
-              [self performSelector:_loadMethod withObject:details];
-              
-              self.operationBar.isStarred = _isStarred;
-              
-              UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
-              commentsCountButton.shouldHideBadgeAtZero = YES;
-              commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
-              commentsCountButton.badgePadding = 1;
-              commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
-              
-              if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
-              
-              [self setBlockForOperationBar];
+              if (!XML || XML.children.count <= 0) {
+                  [self.navigationController popViewControllerAnimated:YES];
+              } else {
+                  id details = [[_detailsClass alloc] initWithXML:XML];
+                  _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
+                  [self performSelector:_loadMethod withObject:details];
+                  
+                  self.operationBar.isStarred = _isStarred;
+                  
+                  UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
+                  commentsCountButton.shouldHideBadgeAtZero = YES;
+                  commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
+                  commentsCountButton.badgePadding = 1;
+                  commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
+                  
+                  if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
+                  
+                  [self setBlockForOperationBar];
+              }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _HUD.mode = MBProgressHUDModeCustomView;

@@ -13,7 +13,6 @@
 #import "Utils.h"
 #import "Config.h"
 #import "OSCThread.h"
-#import "MyInfoViewController.h"
 
 #import "UIImage+FontAwesome.h"
 
