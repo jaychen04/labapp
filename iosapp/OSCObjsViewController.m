@@ -14,7 +14,6 @@
 
 @interface OSCObjsViewController ()
 
-@property (nonatomic, assign) BOOL refreshInProgress;
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
 @end
@@ -117,21 +116,14 @@
 
 - (void)refresh
 {
-    _refreshInProgress = NO;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
+        [self fetchObjectsOnPage:0 refresh:YES];
+    });
     
-    if (!_refreshInProgress) {
-        _refreshInProgress = YES;
-        
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
-            [self fetchObjectsOnPage:0 refresh:YES];
-            _refreshInProgress = NO;
-        });
-        
-        //刷新时，增加另外的网络请求功能
-        if (self.anotherNetWorking) {
-            self.anotherNetWorking();
-        }
+    //刷新时，增加另外的网络请求功能
+    if (self.anotherNetWorking) {
+        self.anotherNetWorking();
     }
 }
 

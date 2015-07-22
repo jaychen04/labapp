@@ -215,7 +215,10 @@
     _HUD.userInteractionEnabled = NO;
     
     _manager = [AFHTTPRequestOperationManager OSCManager];
-    //_manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+//    [_manager.responseSerializer setValue:@"utf-8" forKey:@"Accept-Charset"];
+//    [_manager.responseSerializer setValue:@"application/json" forKey:@"Accept"];
+//    _manager.responseSerializer.stringEncoding = NSUTF8StringEncoding;
+//    _manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     [self fetchDetails];
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 }
@@ -386,12 +389,21 @@
     [_manager GET:_detailsURL
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+//              NSString *response = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
+              
+//              ONOXMLDocument *test = [ONOXMLDocument XMLDocumentWithString:response encoding:NSUTF8StringEncoding error:nil];
+              
               ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
               if (!XML || XML.children.count <= 0) {
                   [self.navigationController popViewControllerAnimated:YES];
               } else {
                   id details = [[_detailsClass alloc] initWithXML:XML];
                   _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
+                  
+                  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d条评论", _commentCount]
+                                                                                            style:UIBarButtonItemStylePlain
+                                                                                           target:self action:@selector(refresh)];
+                  
                   [self performSelector:_loadMethod withObject:details];
                   
                   self.operationBar.isStarred = _isStarred;
