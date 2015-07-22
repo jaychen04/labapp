@@ -35,18 +35,10 @@
     
     return self;
 }
-- (void)dawnAndNightMode:(NSNotification *)center
-{
-    _lastCell.textLabel.backgroundColor = [UIColor themeColor];
-    _lastCell.textLabel.textColor = [UIColor titleColor];
-}
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dawnAndNight" object:nil];
-}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
@@ -56,8 +48,12 @@
     [_lastCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fetchMore)]];
     self.tableView.tableFooterView = _lastCell;
     
-    self.refreshControl = [UIRefreshControl new];
-    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    self.tableView.header = ({
+        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refresh)];
+        header.lastUpdatedTimeLabel.hidden = YES;
+        header.stateLabel.hidden = YES;
+        header;
+    });
     
     _label = [UILabel new];
     _label.numberOfLines = 0;
@@ -195,8 +191,8 @@
                      }
                  }
                  
-                 if (self.refreshControl.refreshing) {
-                     [self.refreshControl endRefreshing];
+                 if (self.tableView.header.isRefreshing) {
+                     [self.tableView.header endRefreshing];
                  }
                  
                  [self.tableView reloadData];
@@ -211,8 +207,8 @@
              [HUD hide:YES afterDelay:1];
              
              _lastCell.status = LastCellStatusError;
-             if (self.refreshControl.refreshing) {
-                 [self.refreshControl endRefreshing];
+             if (self.tableView.header.isRefreshing) {
+                 [self.tableView.header endRefreshing];
              }
              [self.tableView reloadData];
          }
