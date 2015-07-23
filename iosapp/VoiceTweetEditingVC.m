@@ -453,7 +453,9 @@
 - (void)pubTweet
 {
     if ([Config getOwnID] == 0) {
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
     if (!_hasVoice) {

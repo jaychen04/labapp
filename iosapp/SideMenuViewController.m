@@ -251,7 +251,9 @@ static BOOL isNight;
 - (void)pushLoginPage
 {
     if ([Config getOwnID] == 0) {
-        [self setContentViewController:[LoginViewController new]];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self setContentViewController:loginVC];
     } else {
         return;
     }

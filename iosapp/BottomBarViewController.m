@@ -258,7 +258,9 @@
 {
     if ([text isEqualToString: @"\n"]) {
         if ([Config getOwnID] == 0) {
-            [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self.navigationController pushViewController:loginVC animated:YES];
         } else {
             [self sendContent];
             [textView resignFirstResponder];
