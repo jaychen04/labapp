@@ -36,6 +36,8 @@
 @property (nonatomic, weak) IBOutlet UIButton *QRCodeButton;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 
+@property (nonatomic, weak) IBOutlet UIView *separator;
+
 @property (nonatomic, weak) IBOutlet UIButton *creditButton;
 @property (nonatomic, weak) IBOutlet UIButton *collectionButton;
 @property (nonatomic, weak) IBOutlet UIButton *followingButton;
@@ -66,6 +68,9 @@
 {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noticeUpdateHandler:) name:OSCAPI_USER_NOTICE object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRefreshHandler:)  name:@"userRefresh"     object:nil];
+    
     [self.tableView addScalableCoverWithImage:[UIImage imageNamed:@"goldengate"]];
     
     self.navigationItem.title = @"我";
@@ -89,9 +94,12 @@
     _myID = [Config getOwnID];
     if (_myID == 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            
+            [self refreshHeaderView];
             [self.refreshControl endRefreshing];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
         });
     } else {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -105,9 +113,9 @@
                  [self refreshHeaderView];
                  [self.refreshControl endRefreshing];
                  
-//                 dispatch_async(dispatch_get_main_queue(), ^{
-//                     [self.tableView reloadData];
-//                 });
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadData];
+                 });
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
@@ -233,15 +241,31 @@
     
     _nameLabel.text = usersInformation[0];
     
-    _QRCodeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:25];
-    [_QRCodeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAQrcode] forState:UIControlStateNormal];
-    [_QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
     
-    
-    [_creditButton setTitle:[NSString stringWithFormat:@"积分\n%d", _myInfo.score] forState:UIControlStateNormal];
-    [_collectionButton setTitle:[NSString stringWithFormat:@"收藏\n%d", _myInfo.favoriteCount] forState:UIControlStateNormal];
-    [_followingButton setTitle:[NSString stringWithFormat:@"关注\n%d", _myInfo.followersCount] forState:UIControlStateNormal];
-    [_fanButton setTitle:[NSString stringWithFormat:@"粉丝\n%d", _myInfo.fansCount] forState:UIControlStateNormal];
+    if (_myID == 0) {
+        _QRCodeButton.hidden = YES;
+        _creditButton.hidden = YES;
+        _collectionButton.hidden = YES;
+        _followingButton.hidden = YES;
+        _fanButton.hidden = YES;
+        _separator.hidden = YES;
+    } else {
+        _QRCodeButton.hidden = NO;
+        _creditButton.hidden = NO;
+        _collectionButton.hidden = NO;
+        _followingButton.hidden = NO;
+        _fanButton.hidden = NO;
+        _separator.hidden = NO;
+        
+        _QRCodeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:25];
+        [_QRCodeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAQrcode] forState:UIControlStateNormal];
+        [_QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
+        
+        [_creditButton setTitle:[NSString stringWithFormat:@"积分\n%@", usersInformation[1]] forState:UIControlStateNormal];
+        [_collectionButton setTitle:[NSString stringWithFormat:@"收藏\n%@", usersInformation[2]] forState:UIControlStateNormal];
+        [_followingButton setTitle:[NSString stringWithFormat:@"关注\n%@", usersInformation[3]] forState:UIControlStateNormal];
+        [_fanButton setTitle:[NSString stringWithFormat:@"粉丝\n%@", usersInformation[4]] forState:UIControlStateNormal];
+    }
 }
 
 
@@ -386,6 +410,7 @@
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
 }
+
 
 - (void)userRefreshHandler:(NSNotification *)notification
 {

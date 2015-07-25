@@ -34,7 +34,7 @@
                             <rect key="frame" x="0.0" y="64" width="600" height="200"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rv9-mR-dOS">
+                                <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-portrait" translatesAutoresizingMaskIntoConstraints="NO" id="Rv9-mR-dOS">
                                     <rect key="frame" x="275" y="33" width="50" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="3Io-pE-Mhz"/>
@@ -46,8 +46,8 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTu-7j-mVS">
-                                    <rect key="frame" x="278" y="91" width="42.5" height="20.5"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" 点击头像登录" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTu-7j-mVS">
+                                    <rect key="frame" x="246" y="91" width="107" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -181,6 +181,7 @@
                         <outlet property="followingButton" destination="4tq-QJ-yGT" id="zFU-i5-bWN"/>
                         <outlet property="nameLabel" destination="cTu-7j-mVS" id="Wq2-iH-A7V"/>
                         <outlet property="portrait" destination="Rv9-mR-dOS" id="TdF-XP-30s"/>
+                        <outlet property="separator" destination="2ci-tj-rvy" id="YDk-Ab-c48"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7FG-iR-xcK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -189,6 +190,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="default-portrait" width="36" height="36"/>
         <image name="navigationbar-sidebar" width="22" height="22"/>
     </resources>
 </document>
