@@ -101,10 +101,7 @@
                                             iconColor:[UIColor grayColor]
                                               andSize:CGSizeMake(20, 20)];
     
-    _qqImageView.image = [UIImage imageWithIcon:@"fa-qq"
-                                backgroundColor:[UIColor colorWithHex:0x29B5EA]
-                                      iconColor:[UIColor whiteColor]
-                                        andSize:CGSizeMake(28, 28)];
+    
     [_qqImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loginFromQQ)]];
     _qqImageView.userInteractionEnabled = YES;
     
