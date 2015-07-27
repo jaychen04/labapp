@@ -18,9 +18,12 @@
 #import "UMSocialSinaHandler.h"
 
 #import <WeiboSDK.h>
+#import "WXApi.h"
+
+#import <AFNetworking.h>
 
 
-@interface AppDelegate () <UIApplicationDelegate, WeiboSDKDelegate>
+@interface AppDelegate () <UIApplicationDelegate, WeiboSDKDelegate, WXApiDelegate>
 
 @end
 
@@ -90,7 +93,7 @@
     /************ 友盟分享组件 **************/
     
     [UMSocialData setAppKey:@"54c9a412fd98c5779c000752"];
-    [UMSocialWechatHandler setWXAppId:@"wx41be5fe48092e94c" appSecret:@"0101b0595ffe2042c214420fac358abc" url:@"http://www.umeng.com/social"];
+    [UMSocialWechatHandler setWXAppId:@"wxa8213dc827399101" appSecret:@"5c716417ce72ff69d8cf0c43572c9284" url:@"http://www.umeng.com/social"];
     [UMSocialQQHandler setQQWithAppId:@"100942993" appKey:@"8edd3cc7ca8dcc15082d6fe75969601b" url:@"http://www.umeng.com/social"];
     [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
     
@@ -140,7 +143,9 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return  [UMSocialSnsService handleOpenURL:url];
+    return [UMSocialSnsService handleOpenURL:url]    ||
+           [WXApi handleOpenURL:url delegate:self]   ||
+           [WeiboSDK handleOpenURL:url delegate:self];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -148,14 +153,15 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    return  [UMSocialSnsService handleOpenURL:url];
+    return [UMSocialSnsService handleOpenURL:url]    ||
+           [WXApi handleOpenURL:url delegate:self]   ||
+           [WeiboSDK handleOpenURL:url delegate:self];
 }
 
 
 - (void)didReceiveWeiboResponse:(WBBaseResponse *)response
 {
-    if ([response isKindOfClass:WBAuthorizeResponse.class])
-    {
+    if ([response isKindOfClass:WBAuthorizeResponse.class]) {
         NSString *title = @"认证结果";
         NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
@@ -175,6 +181,38 @@
 {
     
 }
+
+- (void)onResp:(BaseResp *)resp
+{
+    if ([resp isKindOfClass:[SendAuthResp class]]) {
+        if (resp.errCode != 0) {return;}
+        
+        SendAuthResp *temp = (SendAuthResp *)resp;
+        
+        // https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
+        [manager GET:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token"]
+          parameters:@{
+                       @"appid": @"wxa8213dc827399101",
+                       @"secret": @"5c716417ce72ff69d8cf0c43572c9284",
+                       @"code": temp.code,
+                       @"grant_type": @"authorization_code",
+                       }
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 NSString *accessToken = responseObject[@"access_token"];
+                 NSString *openID = responseObject[@"openid"];
+                 NSString *refreshToken = responseObject[@"refresh_token"];
+                 
+                 NSLog(@"access_token: %@\n openid: %@\n refresh_token: %@", accessToken, openID, refreshToken);
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"error: %@", error);
+             }];
+    }
+}
+
+
 
 
 

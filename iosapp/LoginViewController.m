@@ -22,6 +22,7 @@
 #import <RESideMenu.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <WeiboSDK.h>
+#import "WXApi.h"
 
 
 @interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TencentSessionDelegate>
@@ -160,8 +161,14 @@
 
 - (IBAction)loginFromWechat:(id)sender
 {
-    
+    SendAuthReq *req = [SendAuthReq new];
+    req.scope = @"snsapi_userinfo" ;
+    req.state = @"osc_wechat_login" ;
+    //第三方向微信终端发送一个SendAuthReq消息结构
+    [WXApi sendReq:req];
 }
+
+
 
 #pragma mark 微博登录
 
