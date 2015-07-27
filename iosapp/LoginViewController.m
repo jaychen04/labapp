@@ -21,6 +21,8 @@
 #import <MBProgressHUD.h>
 #import <RESideMenu.h>
 #import <TencentOpenAPI/TencentOAuth.h>
+#import <WeiboSDK.h>
+
 
 @interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TencentSessionDelegate>
 
@@ -31,12 +33,9 @@
 @property (nonatomic, weak) IBOutlet UIImageView *accountImageView;
 @property (nonatomic, weak) IBOutlet UIImageView *passwordImageView;
 
-@property (nonatomic, weak) IBOutlet UIImageView *qqImageView;
-
 @property (nonatomic, strong) MBProgressHUD *HUD;
 
-
-@property (nonatomic, strong) TencentOAuth *tencentOauth;
+@property (nonatomic, strong) TencentOAuth *tencentOAuth;
 
 @end
 
@@ -102,9 +101,6 @@
                                               andSize:CGSizeMake(20, 20)];
     
     
-    [_qqImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loginFromQQ)]];
-    _qqImageView.userInteractionEnabled = YES;
-    
     _accountField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
     _accountField.delegate = self;
     
@@ -131,13 +127,13 @@
 }
 
 
-#pragma mark - 第三方登录 -
+#pragma mark - 第三方登录
 #pragma mark QQ登录
 
-- (void)loginFromQQ
+- (IBAction)loginFromQQ:(id)sender
 {
-    _tencentOauth = [[TencentOAuth alloc] initWithAppId:@"100942993" andDelegate:self];
-    [_tencentOauth authorize:@[kOPEN_PERMISSION_GET_USER_INFO]];
+    _tencentOAuth = [[TencentOAuth alloc] initWithAppId:@"100942993" andDelegate:self];
+    [_tencentOAuth authorize:@[kOPEN_PERMISSION_GET_USER_INFO]];
 }
 
 - (void)tencentDidNotLogin:(BOOL)cancelled
@@ -147,12 +143,11 @@
 
 - (void)tencentDidLogin
 {
-//    if (_tencentOAuth.accessToken && 0 != [_tencentOAuth.accessToken length])
-//    {
-//        //  记录登录用户的OpenID、Token以及过期时间
-//    } else {
+    if (_tencentOAuth.accessToken && [_tencentOAuth.accessToken length]) {
+        //  记录登录用户的OpenID、Token以及过期时间
+    } else {
 //        _labelAccessToken.text = @"登录不成功 没有获取accesstoken";
-//    }
+    }
     NSLog(@"success");
 }
 
@@ -163,9 +158,20 @@
 
 #pragma mark 微信登录
 
-- (void)loginFromWechat
+- (IBAction)loginFromWechat:(id)sender
 {
     
+}
+
+#pragma mark 微博登录
+
+- (IBAction)loginFromWeibo:(id)sender
+{
+    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+    request.redirectURI = @"http://sns.whalecloud.com/sina2/callback";
+    request.scope = @"all";
+    
+    [WeiboSDK sendRequest:request];
 }
 
 

@@ -402,6 +402,11 @@
 		C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4B1781B578F55008E7463 /* UIViewController+Segue.m */; };
 		C5E4B17C1B5794FB008E7463 /* DiscoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4B17B1B5794FB008E7463 /* DiscoverViewController.m */; };
 		C5E4B17E1B57B715008E7463 /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E4B17D1B57B715008E7463 /* Login.storyboard */; };
+		C5E4D9531B65D7B500116D6E /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9521B65D7B500116D6E /* ImageIO.framework */; };
+		C5E4D9551B65D7C000116D6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9541B65D7C000116D6E /* QuartzCore.framework */; };
+		C5E4D9571B65D7E800116D6E /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9561B65D7E800116D6E /* CoreText.framework */; };
+		C5E4D9591B65D7F200116D6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9581B65D7F200116D6E /* UIKit.framework */; };
+		C5E4D95B1B65D7FE00116D6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D95A1B65D7FE00116D6E /* Foundation.framework */; };
 		C5E56F411B56AAAF0059924C /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E56F401B56AAAF0059924C /* News.storyboard */; };
 		C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E56F4A1B56AFB50059924C /* Main.storyboard */; };
 		C5E56F4E1B56AFB50059924C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E56F4C1B56AFB50059924C /* RootViewController.m */; };
@@ -1032,6 +1037,11 @@
 		C5E4B17A1B5794FB008E7463 /* DiscoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiscoverViewController.h; sourceTree = "<group>"; };
 		C5E4B17B1B5794FB008E7463 /* DiscoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiscoverViewController.m; sourceTree = "<group>"; };
 		C5E4B17D1B57B715008E7463 /* Login.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Login.storyboard; sourceTree = "<group>"; };
+		C5E4D9521B65D7B500116D6E /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		C5E4D9541B65D7C000116D6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		C5E4D9561B65D7E800116D6E /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		C5E4D9581B65D7F200116D6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C5E4D95A1B65D7FE00116D6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C5E56F401B56AAAF0059924C /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = News.storyboard; path = "综合/News.storyboard"; sourceTree = "<group>"; };
 		C5E56F4A1B56AFB50059924C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C5E56F4B1B56AFB50059924C /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -1122,6 +1132,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5E4D95B1B65D7FE00116D6E /* Foundation.framework in Frameworks */,
+				C5E4D9591B65D7F200116D6E /* UIKit.framework in Frameworks */,
+				C5E4D9571B65D7E800116D6E /* CoreText.framework in Frameworks */,
+				C5E4D9551B65D7C000116D6E /* QuartzCore.framework in Frameworks */,
+				C5E4D9531B65D7B500116D6E /* ImageIO.framework in Frameworks */,
 				386F1E661A7A2AA300B773EE /* libz.dylib in Frameworks */,
 				386F1E5C1A7A2A6500B773EE /* SystemConfiguration.framework in Frameworks */,
 				386F1E581A7A2A4900B773EE /* Security.framework in Frameworks */,
@@ -1299,6 +1314,11 @@
 		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C5E4D95A1B65D7FE00116D6E /* Foundation.framework */,
+				C5E4D9581B65D7F200116D6E /* UIKit.framework */,
+				C5E4D9561B65D7E800116D6E /* CoreText.framework */,
+				C5E4D9541B65D7C000116D6E /* QuartzCore.framework */,
+				C5E4D9521B65D7B500116D6E /* ImageIO.framework */,
 				386F1E451A7A0D6100B773EE /* TencentOpenAPI.framework */,
 				EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */,
 				386F1E651A7A2AA300B773EE /* libz.dylib */,

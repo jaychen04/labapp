@@ -45,6 +45,7 @@ PODS:
   - SSKeychain (1.2.3)
   - TOWebViewController (2.0.17)
   - TTTAttributedLabel (1.13.4)
+  - WeiboSDK (3.1.1)
 
 DEPENDENCIES:
   - AFOnoResponseSerializer
@@ -59,6 +60,16 @@ DEPENDENCIES:
   - SSKeychain
   - TOWebViewController
   - TTTAttributedLabel
+  - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk`)
+
+EXTERNAL SOURCES:
+  WeiboSDK:
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk
+
+CHECKOUT OPTIONS:
+  WeiboSDK:
+    :commit: 71a9309457c007fa3b5b8c2d8da85e16d49faa3b
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
@@ -76,5 +87,6 @@ SPEC CHECKSUMS:
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   TOWebViewController: aada427e7eba199bbaee77ddee3243c8172f4053
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
+  WeiboSDK: 6e346dd76f1fedd576029bf300a8f54b172189ff
 
 COCOAPODS: 0.37.2
