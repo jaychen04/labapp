@@ -74,12 +74,6 @@
     }];
 }
 
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -145,7 +139,7 @@
 - (void)tencentDidLogin
 {
     if (_tencentOAuth.accessToken && [_tencentOAuth.accessToken length]) {
-        //  记录登录用户的OpenID、Token以及过期时间
+//          记录登录用户的OpenID、Token以及过期时间
     } else {
 //        _labelAccessToken.text = @"登录不成功 没有获取accesstoken";
     }

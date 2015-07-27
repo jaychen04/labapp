@@ -230,11 +230,84 @@
                         <outlet property="loginButton" destination="V7B-rU-qvg" id="62y-3W-tYZ"/>
                         <outlet property="passwordField" destination="GML-u0-Vrq" id="pLW-gu-bIw"/>
                         <outlet property="passwordImageView" destination="Gce-1P-KGW" id="q9k-Rf-Ljf"/>
+                        <segue destination="6W0-4b-8fC" kind="show" identifier="ShowAccountOperation" id="rgm-Ep-xkC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6nS-d5-o0c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="307" y="374"/>
+        </scene>
+        <!--Account Operation View Controller-->
+        <scene sceneID="zKH-4L-n5u">
+            <objects>
+                <viewController id="6W0-4b-8fC" customClass="AccountOperationViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="LXh-jk-WXY"/>
+                        <viewControllerLayoutGuide type="bottom" id="wbx-g3-l4J"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sRm-9R-220">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你好" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaS-F5-pqG">
+                                <rect key="frame" x="46" y="165" width="508" height="24"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i8p-Yg-ODb">
+                                <rect key="frame" x="46" y="325" width="508" height="30"/>
+                                <state key="normal" title="快速创建账号">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如果你已经注册了开源中国账号，你可以" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BZG-hh-J99">
+                                <rect key="frame" x="46" y="209" width="508" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="如果你还没有开源中国账号，可选择" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gpp-7c-iXk">
+                                <rect key="frame" x="46" y="290" width="508" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qXi-jZ-eoH">
+                                <rect key="frame" x="46" y="245" width="508" height="30"/>
+                                <state key="normal" title="绑定已有账号">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="leading" secondItem="gpp-7c-iXk" secondAttribute="leading" id="1pR-ND-Rfm"/>
+                            <constraint firstItem="BZG-hh-J99" firstAttribute="top" secondItem="zaS-F5-pqG" secondAttribute="bottom" constant="20" id="3sm-N3-IAy"/>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="trailing" secondItem="zaS-F5-pqG" secondAttribute="trailing" id="7Ty-G3-6eW"/>
+                            <constraint firstItem="qXi-jZ-eoH" firstAttribute="top" secondItem="BZG-hh-J99" secondAttribute="bottom" constant="15" id="Gu5-41-CbW"/>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="trailing" secondItem="BZG-hh-J99" secondAttribute="trailing" id="KmX-g0-nz5"/>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="top" secondItem="gpp-7c-iXk" secondAttribute="bottom" constant="15" id="NFB-DX-Czl"/>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="leading" secondItem="qXi-jZ-eoH" secondAttribute="leading" id="SlT-Em-b82"/>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="leading" secondItem="BZG-hh-J99" secondAttribute="leading" id="Yyr-VH-9x1"/>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="trailing" secondItem="qXi-jZ-eoH" secondAttribute="trailing" id="gSw-KR-d6Z"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qXi-jZ-eoH" secondAttribute="trailing" constant="30" id="ibP-fX-a7a"/>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="trailing" secondItem="gpp-7c-iXk" secondAttribute="trailing" id="jhl-za-kS1"/>
+                            <constraint firstAttribute="centerY" secondItem="gpp-7c-iXk" secondAttribute="centerY" id="nX0-GY-dsd"/>
+                            <constraint firstItem="qXi-jZ-eoH" firstAttribute="leading" secondItem="sRm-9R-220" secondAttribute="leadingMargin" constant="30" id="tq3-xI-cOU"/>
+                            <constraint firstItem="gpp-7c-iXk" firstAttribute="top" secondItem="qXi-jZ-eoH" secondAttribute="bottom" constant="15" id="vTh-ET-eX3"/>
+                            <constraint firstItem="i8p-Yg-ODb" firstAttribute="leading" secondItem="zaS-F5-pqG" secondAttribute="leading" id="wpH-0V-BEw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bindingAccountButton" destination="qXi-jZ-eoH" id="p7b-nI-pCB"/>
+                        <outlet property="createAccountButton" destination="i8p-Yg-ODb" id="1GG-Ed-mvR"/>
+                        <outlet property="greetingLabel" destination="zaS-F5-pqG" id="Rvf-jF-Spe"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6KA-ay-Xhq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1125" y="374"/>
         </scene>
     </scenes>
     <resources>

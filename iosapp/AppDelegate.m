@@ -11,6 +11,8 @@
 #import "Config.h"
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
+#import "AFHTTPRequestOperationManager+Util.h"
+#import "OSCAPI.h"
 
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
@@ -20,7 +22,8 @@
 #import <WeiboSDK.h>
 #import "WXApi.h"
 
-#import <AFNetworking.h>
+#import <Ono.h>
+#import <AFOnoResponseSerializer.h>
 
 
 @interface AppDelegate () <UIApplicationDelegate, WeiboSDKDelegate, WXApiDelegate>
@@ -189,8 +192,6 @@
         
         SendAuthResp *temp = (SendAuthResp *)resp;
         
-        // https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
-        
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
         manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
         [manager GET:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token"]
@@ -201,15 +202,38 @@
                        @"grant_type": @"authorization_code",
                        }
              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 NSString *accessToken = responseObject[@"access_token"];
-                 NSString *openID = responseObject[@"openid"];
-                 NSString *refreshToken = responseObject[@"refresh_token"];
                  
-                 NSLog(@"access_token: %@\n openid: %@\n refresh_token: %@", accessToken, openID, refreshToken);
+                 [self loginWithCatalog:@"wechat" andAccountInfo:responseObject];
+                 
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  NSLog(@"error: %@", error);
              }];
     }
+}
+
+
+- (void)loginWithCatalog:(NSString *)catalog andAccountInfo:(NSString *)info
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_LOGIN]
+       parameters:@{
+                    @"catalog": catalog,
+                    @"openid_info": info,
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [result firstChildWithTag:@"errorCode"].numberValue.intValue;
+              NSString *errorMessage = [result firstChildWithTag:@"errorMessage"].stringValue;
+              
+              if (errorCode == 1) {
+                  
+              } else {
+                  NSLog(@"%@", errorMessage);
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"%ld", operation.response.statusCode);
+          }];
 }
 
 

@@ -407,6 +407,7 @@
 		C5E4D9591B65D7F200116D6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9581B65D7F200116D6E /* UIKit.framework */; };
 		C5E4D95B1B65D7FE00116D6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D95A1B65D7FE00116D6E /* Foundation.framework */; };
 		C5E4D9631B660A6600116D6E /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9601B660A6600116D6E /* libWeChatSDK.a */; };
+		C5E4D9661B66319200116D6E /* AccountOperationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4D9651B66319200116D6E /* AccountOperationViewController.m */; };
 		C5E56F411B56AAAF0059924C /* News.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E56F401B56AAAF0059924C /* News.storyboard */; };
 		C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C5E56F4A1B56AFB50059924C /* Main.storyboard */; };
 		C5E56F4E1B56AFB50059924C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E56F4C1B56AFB50059924C /* RootViewController.m */; };
@@ -1042,6 +1043,8 @@
 		C5E4D9601B660A6600116D6E /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		C5E4D9611B660A6600116D6E /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		C5E4D9621B660A6600116D6E /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		C5E4D9641B66319200116D6E /* AccountOperationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountOperationViewController.h; sourceTree = "<group>"; };
+		C5E4D9651B66319200116D6E /* AccountOperationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountOperationViewController.m; sourceTree = "<group>"; };
 		C5E56F401B56AAAF0059924C /* News.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = News.storyboard; path = "综合/News.storyboard"; sourceTree = "<group>"; };
 		C5E56F4A1B56AFB50059924C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		C5E56F4B1B56AFB50059924C /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
@@ -1987,6 +1990,8 @@
 				C5E4B17D1B57B715008E7463 /* Login.storyboard */,
 				3874EC261A08E957000D2894 /* LoginViewController.h */,
 				3874EC271A08E957000D2894 /* LoginViewController.m */,
+				C5E4D9641B66319200116D6E /* AccountOperationViewController.h */,
+				C5E4D9651B66319200116D6E /* AccountOperationViewController.m */,
 				38763A041A85E494008E6805 /* 用户详情页 */,
 				38BD3D151A37FD1500682D1F /* 我 */,
 			);
@@ -3009,6 +3014,7 @@
 				384364201AC5532900743CB0 /* TeamMemberViewController.m in Sources */,
 				380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
+				C5E4D9661B66319200116D6E /* AccountOperationViewController.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */,
 				EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */,
