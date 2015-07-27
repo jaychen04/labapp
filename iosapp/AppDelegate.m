@@ -146,8 +146,9 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [UMSocialSnsService handleOpenURL:url]    ||
-           [WXApi handleOpenURL:url delegate:self]   ||
+    return [UMSocialSnsService handleOpenURL:url]   ||
+           [WXApi handleOpenURL:url delegate:self]  ||
+           [TencentOAuth HandleOpenURL:url]         ||
            [WeiboSDK handleOpenURL:url delegate:self];
 }
 
@@ -156,8 +157,9 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    return [UMSocialSnsService handleOpenURL:url]    ||
-           [WXApi handleOpenURL:url delegate:self]   ||
+    return [UMSocialSnsService handleOpenURL:url]   ||
+           [WXApi handleOpenURL:url delegate:self]  ||
+           [TencentOAuth HandleOpenURL:url]         ||
            [WeiboSDK handleOpenURL:url delegate:self];
 }
 
