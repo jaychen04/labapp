@@ -10,4 +10,7 @@
 
 @interface AccountOperationViewController : UIViewController
 
+@property (nonatomic, copy) NSString *catalog;
+@property (nonatomic, copy) NSString *info;
+
 @end

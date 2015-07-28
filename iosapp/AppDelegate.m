@@ -13,6 +13,7 @@
 #import "UIColor+Util.h"
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "OSCAPI.h"
+#import "OSCUser.h"
 
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
@@ -26,7 +27,7 @@
 #import <AFOnoResponseSerializer.h>
 
 
-@interface AppDelegate () <UIApplicationDelegate, WeiboSDKDelegate, WXApiDelegate>
+@interface AppDelegate () <UIApplicationDelegate>
 
 @end
 
@@ -146,10 +147,10 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return [UMSocialSnsService handleOpenURL:url]   ||
-           [WXApi handleOpenURL:url delegate:self]  ||
-           [TencentOAuth HandleOpenURL:url]         ||
-           [WeiboSDK handleOpenURL:url delegate:self];
+    return [UMSocialSnsService handleOpenURL:url]             ||
+           [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
+           [TencentOAuth HandleOpenURL:url]                   ||
+           [WeiboSDK handleOpenURL:url delegate:_loginDelegate];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -157,87 +158,11 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    return [UMSocialSnsService handleOpenURL:url]   ||
-           [WXApi handleOpenURL:url delegate:self]  ||
-           [TencentOAuth HandleOpenURL:url]         ||
-           [WeiboSDK handleOpenURL:url delegate:self];
+    return [UMSocialSnsService handleOpenURL:url]             ||
+           [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
+           [TencentOAuth HandleOpenURL:url]                   ||
+           [WeiboSDK handleOpenURL:url delegate:_loginDelegate];
 }
-
-
-- (void)didReceiveWeiboResponse:(WBBaseResponse *)response
-{
-    if ([response isKindOfClass:WBAuthorizeResponse.class]) {
-        NSString *title = @"认证结果";
-        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
-                                              otherButtonTitles:nil];
-        
-        //        self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
-        //        self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
-        //        self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
-        [alert show];
-    }
-}
-
-- (void)didReceiveWeiboRequest:(WBBaseRequest *)request
-{
-    
-}
-
-- (void)onResp:(BaseResp *)resp
-{
-    if ([resp isKindOfClass:[SendAuthResp class]]) {
-        if (resp.errCode != 0) {return;}
-        
-        SendAuthResp *temp = (SendAuthResp *)resp;
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
-        [manager GET:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token"]
-          parameters:@{
-                       @"appid": @"wxa8213dc827399101",
-                       @"secret": @"5c716417ce72ff69d8cf0c43572c9284",
-                       @"code": temp.code,
-                       @"grant_type": @"authorization_code",
-                       }
-             success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                 
-                 [self loginWithCatalog:@"wechat" andAccountInfo:responseObject];
-                 
-             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 NSLog(@"error: %@", error);
-             }];
-    }
-}
-
-
-- (void)loginWithCatalog:(NSString *)catalog andAccountInfo:(NSString *)info
-{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_LOGIN]
-       parameters:@{
-                    @"catalog": catalog,
-                    @"openid_info": info,
-                    }
-          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
-              int errorCode = [result firstChildWithTag:@"errorCode"].numberValue.intValue;
-              NSString *errorMessage = [result firstChildWithTag:@"errorMessage"].stringValue;
-              
-              if (errorCode == 1) {
-                  
-              } else {
-                  NSLog(@"%@", errorMessage);
-              }
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"%ld", operation.response.statusCode);
-          }];
-}
-
 
 
 

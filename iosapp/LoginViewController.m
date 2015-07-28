@@ -13,19 +13,23 @@
 #import "Utils.h"
 #import "Config.h"
 #import "OSCThread.h"
-
 #import "UIImage+FontAwesome.h"
+#import "AppDelegate.h"
+#import "AccountOperationViewController.h"
 
-
-#import <ReactiveCocoa.h>
-#import <MBProgressHUD.h>
-#import <RESideMenu.h>
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <WeiboSDK.h>
 #import "WXApi.h"
 
+#import <ReactiveCocoa.h>
+#import <MBProgressHUD.h>
+#import <RESideMenu.h>
 
-@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TencentSessionDelegate>
+
+static NSString * const kShowAccountOperation = @"ShowAccountOperation";
+
+
+@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TencentSessionDelegate, WeiboSDKDelegate, WXApiDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *accountField;
 @property (nonatomic, weak) IBOutlet UITextField *passwordField;
@@ -38,19 +42,12 @@
 
 @property (nonatomic, strong) TencentOAuth *tencentOAuth;
 
+@property (nonatomic, copy) NSString *catalog;
+@property (nonatomic, copy) NSString *info;
+
 @end
 
 @implementation LoginViewController
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.hidesBottomBarWhenPushed = YES;
-    }
-    
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -72,6 +69,9 @@
     RAC(_loginButton, alpha) = [valid map:^(NSNumber *b) {
         return b.boolValue ? @1: @0.4;
     }];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.loginDelegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -119,60 +119,6 @@
         return NO;
     }
     return YES;
-}
-
-
-#pragma mark - 第三方登录
-#pragma mark QQ登录
-
-- (IBAction)loginFromQQ:(id)sender
-{
-    _tencentOAuth = [[TencentOAuth alloc] initWithAppId:@"100942993" andDelegate:self];
-    [_tencentOAuth authorize:@[kOPEN_PERMISSION_GET_USER_INFO]];
-}
-
-- (void)tencentDidNotLogin:(BOOL)cancelled
-{
-    NSLog(@"登录失败");
-}
-
-- (void)tencentDidLogin
-{
-    if (_tencentOAuth.accessToken && [_tencentOAuth.accessToken length]) {
-        NSLog(@"%@", _tencentOAuth);
-    } else {
-//        _labelAccessToken.text = @"登录不成功 没有获取accesstoken";
-    }
-    NSLog(@"success");
-}
-
-- (void)tencentDidNotNetWork
-{
-    NSLog(@"没有网络");
-}
-
-#pragma mark 微信登录
-
-- (IBAction)loginFromWechat:(id)sender
-{
-    SendAuthReq *req = [SendAuthReq new];
-    req.scope = @"snsapi_userinfo" ;
-    req.state = @"osc_wechat_login" ;
-    //第三方向微信终端发送一个SendAuthReq消息结构
-    [WXApi sendReq:req];
-}
-
-
-
-#pragma mark 微博登录
-
-- (IBAction)loginFromWeibo:(id)sender
-{
-    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
-    request.redirectURI = @"http://sns.whalecloud.com/sina2/callback";
-    request.scope = @"all";
-    
-    [WeiboSDK sendRequest:request];
 }
 
 
@@ -253,6 +199,157 @@
     [defaults synchronize];
     
 }
+
+
+
+#pragma mark - 第三方登录
+#pragma mark QQ登录
+
+- (IBAction)loginFromQQ:(id)sender
+{
+    _tencentOAuth = [[TencentOAuth alloc] initWithAppId:@"100942993" andDelegate:self];
+    [_tencentOAuth authorize:@[kOPEN_PERMISSION_GET_USER_INFO]];
+}
+
+- (void)tencentDidNotLogin:(BOOL)cancelled
+{
+    NSLog(@"登录失败");
+}
+
+- (void)tencentDidLogin
+{
+    if (_tencentOAuth.accessToken && [_tencentOAuth.accessToken length]) {
+        NSString *userInfo = [NSString stringWithFormat:@"{\"openid\": \"%@\", \"access_token\": \"%@\"}", _tencentOAuth.openId, _tencentOAuth.accessToken];
+        [self loginWithCatalog:@"qq" andAccountInfo:userInfo];
+    } else {
+        
+    }
+}
+
+- (void)tencentDidNotNetWork
+{
+    NSLog(@"请检查网络");
+}
+
+
+#pragma mark 微信登录
+
+- (IBAction)loginFromWechat:(id)sender
+{
+    SendAuthReq *req = [SendAuthReq new];
+    req.scope = @"snsapi_userinfo" ;
+    req.state = @"osc_wechat_login" ;
+    //第三方向微信终端发送一个SendAuthReq消息结构
+    [WXApi sendReq:req];
+}
+
+
+- (void)onResp:(BaseResp *)resp
+{
+    if ([resp isKindOfClass:[SendAuthResp class]]) {
+        if (resp.errCode != 0) {return;}
+        
+        SendAuthResp *temp = (SendAuthResp *)resp;
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
+        [manager GET:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token"]
+          parameters:@{
+                       @"appid": @"wxa8213dc827399101",
+                       @"secret": @"5c716417ce72ff69d8cf0c43572c9284",
+                       @"code": temp.code,
+                       @"grant_type": @"authorization_code",
+                       }
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [self loginWithCatalog:@"wechat" andAccountInfo:operation.responseString];
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"error: %@", error);
+             }];
+    }
+}
+
+
+#pragma mark 微博登录
+
+- (IBAction)loginFromWeibo:(id)sender
+{
+    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+    request.redirectURI = @"http://sns.whalecloud.com/sina2/callback";
+    request.scope = @"all";
+    
+    [WeiboSDK sendRequest:request];
+}
+
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response
+{
+    if ([response isKindOfClass:WBAuthorizeResponse.class]) {
+        WBAuthorizeResponse *authResponse = (WBAuthorizeResponse *)response;
+        
+        if (!authResponse.userID) {return;}
+        NSString *info = [NSString stringWithFormat:@"{"
+                                                    @"\"openid\": %@,\n"
+                                                    @"\"access_token\": \"%@\",\n"
+                                                    @"\"refresh_token\": \"%@\",\n"
+                                                    @"\"expires_in\": \"%@\""
+                                                    @"}",
+                                                    authResponse.userID,
+                                                    authResponse.accessToken,
+                                                    authResponse.refreshToken,
+                                                    authResponse.expirationDate];
+        
+        [self loginWithCatalog:@"weibo" andAccountInfo:info];
+    }
+}
+
+- (void)didReceiveWeiboRequest:(WBBaseRequest *)request
+{
+    
+}
+
+
+#pragma mark 处理第三方账号
+
+- (void)loginWithCatalog:(NSString *)catalog andAccountInfo:(NSString *)info
+{
+    _catalog = [catalog copy];
+    _info = [info copy];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_LOGIN]
+       parameters:@{
+                    @"catalog": catalog,
+                    @"openid_info": info,
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [result firstChildWithTag:@"errorCode"].numberValue.intValue;
+              
+              if (errorCode == 1) {
+                  ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
+                  OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
+              } else {
+                  [self performSegueWithIdentifier:@"ShowAccountOperation" sender:self];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              NSLog(@"%ld", operation.response.statusCode);
+          }];
+}
+
+
+
+#pragma mark - prepare for segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:kShowAccountOperation]) {
+        AccountOperationViewController *accountOperationVC = segue.destinationViewController;
+        
+        accountOperationVC.catalog = _catalog;
+        accountOperationVC.info = _info;
+    }
+}
+
 
 
 

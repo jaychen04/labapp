@@ -11,7 +11,6 @@
 @interface AccountOperationViewController ()
 
 @property (nonatomic, weak) IBOutlet UILabel *greetingLabel;
-
 @property (nonatomic, weak) IBOutlet UIButton *bindingAccountButton;
 @property (nonatomic, weak) IBOutlet UIButton *createAccountButton;
 
