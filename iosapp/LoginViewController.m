@@ -55,7 +55,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     
     self.view.backgroundColor = [UIColor themeColor];
     
-    [self initSubviews];
+    [self setUpSubviews];
     
     NSArray *accountAndPassword = [Config getOwnAccountAndPassword];
     _accountField.text = accountAndPassword? accountAndPassword[0] : @"";
@@ -83,7 +83,8 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 
 #pragma mark - about subviews
-- (void)initSubviews
+
+- (void)setUpSubviews
 {
     _accountImageView.image = [UIImage imageWithIcon:@"fa-envelope-o"
                                      backgroundColor:[UIColor clearColor]
@@ -102,7 +103,8 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     _passwordField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
     _passwordField.delegate = self;
     
-    [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
+    [_accountField addTarget:self action:@selector(returnOnKeyboard:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [_passwordField addTarget:self action:@selector(returnOnKeyboard:) forControlEvents:UIControlEventEditingDidEndOnExit];
     
     
     //添加手势，点击屏幕其他区域关闭键盘的操作
@@ -142,7 +144,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     }
 }
 
-- (void)login
+- (IBAction)login
 {
     _HUD = [Utils createHUD];
     _HUD.labelText = @"正在登录";
@@ -338,7 +340,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 
 
-#pragma mark - prepare for segue
+#pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {

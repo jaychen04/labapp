@@ -83,6 +83,8 @@
 
 #define OSCAPI_USER_REPORT_TO_ADMIN     @"user_report_to_admin"
 #define OSCAPI_OPENID_LOGIN             @"openid_login"
+#define OSCAPI_OPENID_BINDING           @"openid_bind"
+#define OSCAPI_OPENID_REGISTER          @"openid_reg"
 
 
 #endif
