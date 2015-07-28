@@ -194,6 +194,9 @@
                          if (message) {
                              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                              HUD.labelText = message;
+                         } else if ([error isEqualToString:@"你已签到成功:)"]) { // 重复签到
+                             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                             HUD.labelText = error;
                          } else {
                              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                              HUD.labelText = error;
