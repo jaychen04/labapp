@@ -330,11 +330,31 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               if (errorCode == 1) {
                   ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
                   OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
+                  
+                  [Config saveOwnID:user.userID
+                           userName:user.name
+                              score:user.score
+                      favoriteCount:user.favoriteCount
+                          fansCount:user.fansCount
+                   andFollowerCount:user.followersCount];
+                  
+                  [OSCThread startPollingNotice];
+                  
+                  [self saveCookies];
+                  
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
+                  [self.navigationController popViewControllerAnimated:YES];
               } else {
                   [self performSegueWithIdentifier:@"ShowAccountOperation" sender:self];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              NSLog(@"%ld", operation.response.statusCode);
+              MBProgressHUD *hud = [Utils createHUD];
+              hud.mode = MBProgressHUDModeCustomView;
+              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              hud.labelText = [@(operation.response.statusCode) stringValue];
+              hud.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              
+              [hud hide:YES afterDelay:1];
           }];
 }
 

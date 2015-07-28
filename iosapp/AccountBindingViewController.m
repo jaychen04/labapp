@@ -142,6 +142,10 @@
                   [OSCThread startPollingNotice];
                   
                   [self saveCookies];
+                  
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
+                  [self.navigationController popToViewController:self.navigationController.viewControllers[self.navigationController.viewControllers.count-4]
+                                                        animated:YES];
               } else {
                   MBProgressHUD *hud = [Utils createHUD];
                   hud.mode = MBProgressHUDModeCustomView;

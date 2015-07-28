@@ -422,7 +422,7 @@
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _HUD.mode = MBProgressHUDModeCustomView;
               _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              _HUD.labelText = @"网络异常，加载详情失败";
+              _HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
               
               [_HUD hide:YES afterDelay:1];
           }
