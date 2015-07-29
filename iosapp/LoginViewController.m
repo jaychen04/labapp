@@ -15,7 +15,6 @@
 #import "OSCThread.h"
 #import "UIImage+FontAwesome.h"
 #import "AppDelegate.h"
-#import "AccountOperationViewController.h"
 
 #import <TencentOpenAPI/TencentOAuth.h>
 #import <WeiboSDK.h>
@@ -29,7 +28,7 @@
 static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 
-@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TencentSessionDelegate, WeiboSDKDelegate, WXApiDelegate>
+@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, TencentSessionDelegate, WeiboSDKDelegate, WXApiDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *accountField;
 @property (nonatomic, weak) IBOutlet UITextField *passwordField;
@@ -38,12 +37,15 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 @property (nonatomic, weak) IBOutlet UIImageView *accountImageView;
 @property (nonatomic, weak) IBOutlet UIImageView *passwordImageView;
 
-@property (nonatomic, strong) MBProgressHUD *HUD;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 @property (nonatomic, strong) TencentOAuth *tencentOAuth;
 
 @property (nonatomic, copy) NSString *catalog;
 @property (nonatomic, copy) NSString *info;
+
+@property (nonatomic, copy) NSString *account;
+@property (nonatomic, copy) NSString *pasword;
 
 @end
 
@@ -77,7 +79,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_HUD hide:YES];
+    [_hud hide:YES];
 }
 
 
@@ -146,9 +148,9 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 - (IBAction)login
 {
-    _HUD = [Utils createHUD];
-    _HUD.labelText = @"正在登录";
-    _HUD.userInteractionEnabled = NO;
+    _hud = [Utils createHUD];
+    _hud.labelText = @"正在登录";
+    _hud.userInteractionEnabled = NO;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -162,10 +164,10 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               if (!errorCode) {
                   NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
                   
-                  _HUD.mode = MBProgressHUDModeCustomView;
-                  _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  _HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                  [_HUD hide:YES afterDelay:1];
+                  _hud.mode = MBProgressHUDModeCustomView;
+                  _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  _hud.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  [_hud hide:YES afterDelay:1];
                   
                   return;
               }
@@ -180,11 +182,12 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
               [self.navigationController popViewControllerAnimated:YES];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              _HUD.mode = MBProgressHUDModeCustomView;
-              _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              _HUD.labelText = @"网络异常，登录失败";
+              _hud.mode = MBProgressHUDModeCustomView;
+              _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              _hud.labelText = [@(operation.response.statusCode) stringValue];
+              _hud.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
               
-              [_HUD hide:YES afterDelay:1];
+              [_hud hide:YES afterDelay:1];
           }
      ];
 }
@@ -221,7 +224,12 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 - (void)tencentDidLogin
 {
     if (_tencentOAuth.accessToken && [_tencentOAuth.accessToken length]) {
-        NSString *userInfo = [NSString stringWithFormat:@"{\"openid\": \"%@\", \"access_token\": \"%@\"}", _tencentOAuth.openId, _tencentOAuth.accessToken];
+        NSString *userInfo = [NSString stringWithFormat:@"{"
+                                                        @"\"openid\": \"%@\", "
+                                                        @"\"access_token\": \"%@\""
+                                                        @"}",
+                                                        _tencentOAuth.openId, _tencentOAuth.accessToken];
+        
         [self loginWithCatalog:@"qq" andAccountInfo:userInfo];
     }
 }
@@ -343,7 +351,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
                   [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
                   [self.navigationController popViewControllerAnimated:YES];
               } else {
-                  [self performSegueWithIdentifier:@"ShowAccountOperation" sender:self];
+                  [self showOperationAlertView];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *hud = [Utils createHUD];
@@ -357,16 +365,162 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 }
 
 
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)registerAcount
 {
-    if ([segue.identifier isEqualToString:kShowAccountOperation]) {
-        AccountOperationViewController *accountOperationVC = segue.destinationViewController;
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_REGISTER]
+       parameters:@{
+                    @"catalog": _catalog,
+                    @"openid_info": _info,
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [result firstChildWithTag:@"errorCode"].numberValue.intValue;
+              NSString *errorMessage = [result firstChildWithTag:@"errorMessage"].stringValue;
+              
+              if (errorCode == 1) {
+                  ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
+                  OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
+                  
+                  [Config saveOwnID:user.userID
+                           userName:user.name
+                              score:user.score
+                      favoriteCount:user.favoriteCount
+                          fansCount:user.fansCount
+                   andFollowerCount:user.followersCount];
+                  
+                  [OSCThread startPollingNotice];
+                  
+                  [self saveCookies];
+                  
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
+                  [self.navigationController popViewControllerAnimated:YES];
+              } else {
+                  MBProgressHUD *hud = [Utils createHUD];
+                  hud.mode = MBProgressHUDModeCustomView;
+                  hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  hud.detailsLabelText = errorMessage;
+                  
+                  [hud hide:YES afterDelay:1];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *hud = [Utils createHUD];
+              hud.mode = MBProgressHUDModeCustomView;
+              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              hud.labelText = [@(operation.response.statusCode) stringValue];
+              hud.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              
+              [hud hide:YES afterDelay:1];
+          }];
+}
+
+
+- (void)accountBinding
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_BINDING]
+       parameters:@{
+                    @"catalog": _catalog,
+                    @"openid_info": _info,
+                    @"username": _account,
+                    @"pwd": _pasword,
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [result firstChildWithTag:@"errorCode"].numberValue.intValue;
+              NSString *errorMessage = [result firstChildWithTag:@"errorMessage"].stringValue;
+              
+              if (errorCode == 1) {
+                  ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
+                  OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
+                  
+                  [Config saveOwnID:user.userID
+                           userName:user.name
+                              score:user.score
+                      favoriteCount:user.favoriteCount
+                          fansCount:user.fansCount
+                   andFollowerCount:user.followersCount];
+                  
+                  [OSCThread startPollingNotice];
+                  
+                  [self saveCookies];
+                  
+                  [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
+                  [self.navigationController popViewControllerAnimated:YES];
+              } else {
+                  MBProgressHUD *hud = [Utils createHUD];
+                  hud.mode = MBProgressHUDModeCustomView;
+                  hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  hud.detailsLabelText = errorMessage;
+                  
+                  [hud hide:YES afterDelay:1];
+              }
+              
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *hud = [Utils createHUD];
+              hud.mode = MBProgressHUDModeCustomView;
+              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              hud.labelText = [@(operation.response.statusCode) stringValue];
+              hud.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              
+              [hud hide:YES afterDelay:1];
+          }];
+}
+
+
+- (void)showOperationAlertView
+{
+    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"第三方登录"
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:@"取消"
+                                                      otherButtonTitles:@"绑定已有账号", @"快速创建新账号", nil];
+    alerView.tag = 1;
+    alerView.delegate = self;
+    [alerView show];
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex) {return;}
+    
+    if (alertView.tag == 1) {
+        if (buttonIndex == 0) {
+            [self registerAcount];
+        } else {
+            return;
+        }
+    } else if (alertView.tag == 2) {
+        _account = [alertView textFieldAtIndex:0].text;
+        _pasword = [alertView textFieldAtIndex:1].text;
         
-        accountOperationVC.catalog = _catalog;
-        accountOperationVC.info = _info;
+        [self accountBinding];
+    }
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView
+{
+    if (alertView.tag != 2) {return YES;}
+    
+    return ([alertView textFieldAtIndex:0].text.length && [alertView textFieldAtIndex:1].text.length);
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 1 && buttonIndex == 1) {
+        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"绑定已有账号"
+                                                           message:@""
+                                                          delegate:self
+                                                 cancelButtonTitle:@"取消"
+                                                 otherButtonTitles:@"确认", nil];
+        
+        alerView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        alerView.tag = 2;
+        alerView.delegate = self;
+        [alerView show];
     }
 }
 
