@@ -37,10 +37,13 @@
 }
 
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
     
     self.tableView.backgroundColor = [UIColor themeColor];
     
@@ -81,6 +84,20 @@
     [super didReceiveMemoryWarning];
 }
 
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dawnAndNight" object:nil];
+}
+
+
+
+-(void)dawnAndNightMode:(NSNotification *)center
+{
+    _lastCell.textLabel.backgroundColor = [UIColor themeColor];
+    _lastCell.textLabel.textColor = [UIColor titleColor];
+
+}
 
 
 
