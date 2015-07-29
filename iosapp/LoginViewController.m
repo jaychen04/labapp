@@ -462,7 +462,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     if (buttonIndex == alertView.cancelButtonIndex) {return;}
     
     if (alertView.tag == 1) {
-        if (buttonIndex == 0) {
+        if (buttonIndex == 2) {
             [self registerAcount];
         } else {
             return;
