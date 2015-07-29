@@ -184,7 +184,7 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStyleDone target:self action:@selector(refresh)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
     
     // 资讯、博客和软件详情没有“举报”选项
     if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware || _commentType == CommentTypeBlog) {
@@ -400,9 +400,9 @@
                   id details = [[_detailsClass alloc] initWithXML:XML];
                   _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
                   
-                  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d条评论", _commentCount]
-                                                                                            style:UIBarButtonItemStylePlain
-                                                                                           target:self action:@selector(refresh)];
+//                  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d条评论", _commentCount]
+//                                                                                            style:UIBarButtonItemStylePlain
+//                                                                                           target:self action:@selector(refresh)];
                   
                   [self performSelector:_loadMethod withObject:details];
                   
