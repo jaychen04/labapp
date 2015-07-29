@@ -210,7 +210,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 - (IBAction)loginFromQQ:(id)sender
 {
     _tencentOAuth = [[TencentOAuth alloc] initWithAppId:@"100942993" andDelegate:self];
-    [_tencentOAuth authorize:@[kOPEN_PERMISSION_GET_USER_INFO]];
+    [_tencentOAuth authorize:@[kOPEN_PERMISSION_GET_INFO, kOPEN_PERMISSION_GET_USER_INFO, kOPEN_PERMISSION_GET_SIMPLE_USER_INFO]];
 }
 
 - (void)tencentDidNotLogin:(BOOL)cancelled
@@ -223,8 +223,6 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     if (_tencentOAuth.accessToken && [_tencentOAuth.accessToken length]) {
         NSString *userInfo = [NSString stringWithFormat:@"{\"openid\": \"%@\", \"access_token\": \"%@\"}", _tencentOAuth.openId, _tencentOAuth.accessToken];
         [self loginWithCatalog:@"qq" andAccountInfo:userInfo];
-    } else {
-        
     }
 }
 

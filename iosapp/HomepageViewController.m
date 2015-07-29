@@ -71,7 +71,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noticeUpdateHandler:) name:OSCAPI_USER_NOTICE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRefreshHandler:)  name:@"userRefresh"     object:nil];
     
-    [self.tableView addScalableCoverWithImage:[UIImage imageNamed:@"goldengate"]];
     
     self.navigationItem.title = @"我";
     self.tableView.backgroundColor = [UIColor themeColor];
@@ -79,7 +78,7 @@
     
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
-    [self customizeSubviews];
+    [self setUpSubviews];
     
     [self refresh];
 }
@@ -168,7 +167,7 @@
 
 #pragma mark - customize subviews
 
-- (void)customizeSubviews
+- (void)setUpSubviews
 {
     _creditButton.titleLabel.numberOfLines = 0;
     _creditButton.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -189,6 +188,13 @@
     
     [_portrait setBorderWidth:2.0 andColor:[UIColor whiteColor]];
     [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortrait)]];
+    
+    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
+    NSString *imageName = @"user-background";
+    if (screenWidth.intValue < 400) {
+        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];;
+    }
+    [self.tableView addScalableCoverWithImage:[UIImage imageNamed:imageName]];
 }
 
 
