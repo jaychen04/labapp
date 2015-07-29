@@ -28,7 +28,8 @@
 static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 
-@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate, TencentSessionDelegate, WeiboSDKDelegate, WXApiDelegate>
+@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate,
+                                   TencentSessionDelegate, WeiboSDKDelegate, WXApiDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField *accountField;
 @property (nonatomic, weak) IBOutlet UITextField *passwordField;
@@ -98,11 +99,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
                                             iconColor:[UIColor grayColor]
                                               andSize:CGSizeMake(20, 20)];
     
-    
-    _accountField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
     _accountField.delegate = self;
-    
-    _passwordField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
     _passwordField.delegate = self;
     
     [_accountField addTarget:self action:@selector(returnOnKeyboard:) forControlEvents:UIControlEventEditingDidEndOnExit];
@@ -158,7 +155,6 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
        parameters:@{@"username" : _accountField.text, @"pwd" : _passwordField.text, @"keep_login" : @(1)}
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
-              ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
               
               NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
               if (!errorCode) {
@@ -172,15 +168,10 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
                   return;
               }
               
-              OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
-              [Config saveOwnID:user.userID userName:user.name score:user.score favoriteCount:user.favoriteCount fansCount:user.fansCount andFollowerCount:user.followersCount];
-              [OSCThread startPollingNotice];
+              ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
               
-              [self saveCookies];
-              
-              [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
-              [self.navigationController popViewControllerAnimated:YES];
+              [self renewUserWithXML:userXML];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _hud.mode = MBProgressHUDModeCustomView;
               _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
@@ -335,21 +326,8 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               
               if (errorCode == 1) {
                   ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
-                  OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
                   
-                  [Config saveOwnID:user.userID
-                           userName:user.name
-                              score:user.score
-                      favoriteCount:user.favoriteCount
-                          fansCount:user.fansCount
-                   andFollowerCount:user.followersCount];
-                  
-                  [OSCThread startPollingNotice];
-                  
-                  [self saveCookies];
-                  
-                  [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
-                  [self.navigationController popViewControllerAnimated:YES];
+                  [self renewUserWithXML:userXML];
               } else {
                   [self showOperationAlertView];
               }
@@ -380,21 +358,8 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               
               if (errorCode == 1) {
                   ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
-                  OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
                   
-                  [Config saveOwnID:user.userID
-                           userName:user.name
-                              score:user.score
-                      favoriteCount:user.favoriteCount
-                          fansCount:user.fansCount
-                   andFollowerCount:user.followersCount];
-                  
-                  [OSCThread startPollingNotice];
-                  
-                  [self saveCookies];
-                  
-                  [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
-                  [self.navigationController popViewControllerAnimated:YES];
+                  [self renewUserWithXML:userXML];
               } else {
                   MBProgressHUD *hud = [Utils createHUD];
                   hud.mode = MBProgressHUDModeCustomView;
@@ -432,21 +397,8 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               
               if (errorCode == 1) {
                   ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
-                  OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
                   
-                  [Config saveOwnID:user.userID
-                           userName:user.name
-                              score:user.score
-                      favoriteCount:user.favoriteCount
-                          fansCount:user.fansCount
-                   andFollowerCount:user.followersCount];
-                  
-                  [OSCThread startPollingNotice];
-                  
-                  [self saveCookies];
-                  
-                  [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
-                  [self.navigationController popViewControllerAnimated:YES];
+                  [self renewUserWithXML:userXML];
               } else {
                   MBProgressHUD *hud = [Utils createHUD];
                   hud.mode = MBProgressHUDModeCustomView;
@@ -468,6 +420,26 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 }
 
 
+- (void)renewUserWithXML:(ONOXMLElement *)xml
+{
+    OSCUser *user = [[OSCUser alloc] initWithXML:xml];
+    
+    [Config saveOwnID:user.userID
+             userName:user.name
+                score:user.score
+        favoriteCount:user.favoriteCount
+            fansCount:user.fansCount
+     andFollowerCount:user.followersCount];
+    
+    [OSCThread startPollingNotice];
+    
+    [self saveCookies];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 - (void)showOperationAlertView
 {
     UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"第三方登录"
@@ -482,6 +454,8 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 
 #pragma mark - UIAlertViewDelegate
+
+#warning From ios 8.0 onward UIAlertView is deprecated, 以后应改用UIAlertController
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
