@@ -105,6 +105,8 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [_HUD hide:YES];
+    
+    [super viewWillDisappear:animated];
 }
 
 #pragma mark - Table view data source

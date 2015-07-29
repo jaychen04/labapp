@@ -316,12 +316,11 @@
             }
             _isOpeningSubIssue = !_isOpeningSubIssue;
         }
-    }else {
+    } else {
         NSString *selectedIssueId = [selectedIssue objectForKey:@"childIssueId"];
-        NSString *selectedIssueState = [selectedIssue objectForKey:@"childIssueState"];
         int arrayIndex = [[selectedIssue objectForKey:@"arrayIndex"] intValue];
         TeamIssueDetailCell *selectedCell = (TeamIssueDetailCell*)[tableView cellForRowAtIndexPath:indexPath];
-        selectedIssueState = [selectedIssue[@"childIssueState"] isEqualToString:@"opened"] ? @"closed":@"opened";      //当前状态是否为关闭状态
+        NSString *selectedIssueState = [selectedIssue[@"childIssueState"] isEqualToString:@"opened"] ? @"closed":@"opened";      //当前状态是否为关闭状态
         [self changeChildIssueStateWithIssueId:selectedIssueId newState:selectedIssueState arrayIndex:arrayIndex selectedCell:selectedCell];
     }
 }

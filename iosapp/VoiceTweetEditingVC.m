@@ -465,7 +465,7 @@
         [HUD hide:YES afterDelay:1];
         return;
     }
-    NSString *message = [NSString new];
+    NSString *message;
     if ([Utils convertRichTextToRawText:_edittingArea].length) {
         message = [Utils convertRichTextToRawText:_edittingArea];
     } else {
