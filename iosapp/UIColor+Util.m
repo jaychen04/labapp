@@ -151,4 +151,12 @@
     return [UIColor lightGrayColor];
 }
 
++ (UIColor *)refreshControlColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithHex:0x13502A];
+    }
+    return [UIColor colorWithHex:0x21B04B];
+}
+
 @end

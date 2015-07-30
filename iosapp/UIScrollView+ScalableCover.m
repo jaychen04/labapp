@@ -9,7 +9,6 @@
 #import "UIScrollView+ScalableCover.h"
 #import <objc/runtime.h>
 
-static char UIScrollViewScalableCover;
 static NSString * const kContentOffset = @"contentOffset";
 static NSString * const kScalableCover = @"scalableCover";
 
@@ -18,9 +17,9 @@ static NSString * const kScalableCover = @"scalableCover";
 - (void)setScalableCover:(ScalableCover *)scalableCover
 {
     [self willChangeValueForKey:kScalableCover];
-    objc_setAssociatedObject(self, &UIScrollViewScalableCover,
+    objc_setAssociatedObject(self, &kScalableCover,
                              scalableCover,
-                             OBJC_ASSOCIATION_RETAIN);
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     [self didChangeValueForKey:kScalableCover];
 }
 

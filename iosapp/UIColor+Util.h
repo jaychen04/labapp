@@ -30,5 +30,7 @@
 
 + (UIColor *)contentTextColor;
 + (UIColor *)borderColor;
++ (UIColor *)refreshControlColor;
+
 
 @end

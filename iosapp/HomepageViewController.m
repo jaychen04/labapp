@@ -21,8 +21,9 @@
 #import "TeamAPI.h"
 #import "TeamTeam.h"
 #import "TeamCenter.h"
-#import "UIScrollView+ScalableCover.h"
+#import "AppDelegate.h"
 
+#import "UIScrollView+ScalableCover.h"
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
 
@@ -190,12 +191,8 @@
     [_portrait setBorderWidth:2.0 andColor:[UIColor whiteColor]];
     [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortrait)]];
     
-    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
-    NSString *imageName = @"user-background";
-    if (screenWidth.intValue < 400) {
-        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];;
-    }
-    [self.tableView addScalableCoverWithImage:[UIImage imageNamed:imageName]];
+    [self setCoverImage];
+    self.refreshControl.tintColor = [UIColor refreshControlColor];
 }
 
 
@@ -248,7 +245,9 @@
     
     _nameLabel.text = usersInformation[0];
     _separator.backgroundColor = [UIColor lineColor];
+    self.refreshControl.tintColor = [UIColor refreshControlColor];
     
+    [self setCoverImage];
     
     if (_myID == 0) {
         _QRCodeButton.hidden = YES;
@@ -273,6 +272,26 @@
         [_collectionButton setTitle:[NSString stringWithFormat:@"收藏\n%@", usersInformation[2]] forState:UIControlStateNormal];
         [_followingButton setTitle:[NSString stringWithFormat:@"关注\n%@", usersInformation[3]] forState:UIControlStateNormal];
         [_fanButton setTitle:[NSString stringWithFormat:@"粉丝\n%@", usersInformation[4]] forState:UIControlStateNormal];
+    }
+}
+
+
+- (void)setCoverImage
+{
+    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
+    NSString *imageName = @"user-background";
+    if (screenWidth.intValue < 400) {
+        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];;
+    }
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        imageName = [NSString stringWithFormat:@"%@-dark", imageName];
+    }
+    
+    if (!self.tableView.scalableCover) {
+        [self.tableView addScalableCoverWithImage:[UIImage imageNamed:imageName]];
+    } else {
+        self.tableView.scalableCover.image = [UIImage imageNamed:imageName];
     }
 }
 
