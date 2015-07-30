@@ -151,6 +151,8 @@
            [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
            [TencentOAuth HandleOpenURL:url]                   ||
            [WeiboSDK handleOpenURL:url delegate:_loginDelegate];
+    
+//    return [UMSocialSnsService handleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -162,6 +164,8 @@
            [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
            [TencentOAuth HandleOpenURL:url]                   ||
            [WeiboSDK handleOpenURL:url delegate:_loginDelegate];
+    
+//    return [UMSocialSnsService handleOpenURL:url];
 }
 
 

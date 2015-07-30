@@ -47,17 +47,18 @@ static NSString * const kTextKey = @"text";
     [self removeObserver:self forKeyPath:kTextKey];
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    _placeholderView.frame = self.bounds;
+}
+
 
 #pragma mark - observation
 
 - (void)setUpPlaceholderView
 {
-//    如果使用autolayout布局的话，self.frame = CGRectZer，所以placeholderView应该用autolayout布局
-//    _placeholderView = [[UITextView alloc] initWithFrame:self.bounds];
-    
     _placeholderView = [UITextView new];
-    [self addSubview:_placeholderView];
-    
     _placeholderView.editable = NO;
     _placeholderView.scrollEnabled = NO;
     _placeholderView.showsHorizontalScrollIndicator = NO;
@@ -69,12 +70,7 @@ static NSString * const kTextKey = @"text";
     _placeholderView.textContainerInset = self.textContainerInset;
     _placeholderView.textColor = [UIColor lightGrayColor];
     _placeholderView.backgroundColor = [UIColor clearColor];
-    
-    _placeholderView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *views = NSDictionaryOfVariableBindings(_placeholderView);
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_placeholderView]|" options:0 metrics:nil views:views]];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_placeholderView]|" options:0 metrics:nil views:views]];
-    
+    [self addSubview:_placeholderView];
     
     
     NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
@@ -83,6 +79,7 @@ static NSString * const kTextKey = @"text";
     
     [self addObserver:self forKeyPath:kTextKey options:NSKeyValueObservingOptionNew context:nil];
 }
+
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -101,8 +98,7 @@ static NSString * const kTextKey = @"text";
 
 
 
-#pragma mark - property accessor
-
+#pragma mark - setter
 
 - (void)setFont:(UIFont *)font
 {
