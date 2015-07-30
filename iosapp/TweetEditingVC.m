@@ -155,6 +155,10 @@
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
     [_contentView addSubview:_edittingArea];
     
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        _edittingArea.keyboardAppearance = UIKeyboardAppearanceDark;
+    }
+    
     _edittingArea.backgroundColor = [UIColor themeColor];
     _edittingArea.textColor = [UIColor titleColor];
     

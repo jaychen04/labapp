@@ -59,6 +59,7 @@
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
     
+    [self refreshHeaderView];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
@@ -246,6 +247,7 @@
     }
     
     _nameLabel.text = usersInformation[0];
+    _separator.backgroundColor = [UIColor lineColor];
     
     
     if (_myID == 0) {
