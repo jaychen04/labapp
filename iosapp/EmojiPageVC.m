@@ -35,11 +35,9 @@
             textView.textColor = [UIColor titleColor];
             [textView insertText:@""];
             textView.font = [UIFont systemFontOfSize:16];
-            [textView.delegate textViewDidChange:textView];
         };
         _deleteEmoji = ^ {
             [textView deleteBackward];
-            [textView.delegate textViewDidChange:textView];
         };
     }
     
