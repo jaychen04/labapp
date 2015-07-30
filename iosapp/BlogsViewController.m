@@ -31,6 +31,11 @@ static NSString *kBlogCellID = @"BlogCell";
             return [NSString stringWithFormat:@"%@%@?type=%@&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_BLOGS_LIST, blogType, (unsigned long)page, OSCAPI_SUFFIX];
         };
         self.objClass = [OSCBlog class];
+        
+        
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 7200;
+        self.kLastRefreshTime = [NSString stringWithFormat:@"BlogsRefreshInterval-%ld", type];
     }
     
     return self;

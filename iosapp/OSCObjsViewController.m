@@ -16,6 +16,9 @@
 
 @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
+@property (nonatomic, strong) NSDate *lastRefreshTime;
+
 @end
 
 
@@ -64,6 +67,20 @@
     _label.font = [UIFont boldSystemFontOfSize:14];
     _lastCell.textLabel.textColor = [UIColor titleColor];
     
+    
+    /*** 自动刷新 ***/
+    
+    if (_needAutoRefresh) {
+        _userDefaults = [NSUserDefaults standardUserDefaults];
+        _lastRefreshTime = [_userDefaults objectForKey:_kLastRefreshTime];
+        
+        if (!_lastRefreshTime) {
+            _lastRefreshTime = [NSDate date];
+            [_userDefaults setObject:_lastRefreshTime forKey:_kLastRefreshTime];
+        }
+    }
+    
+    
     _manager = [AFHTTPRequestOperationManager OSCManager];
     
     if (!_shouldFetchDataAfterLoaded) {return;}
@@ -80,7 +97,23 @@
 }
 
 
-- (void)didReceiveMemoryWarning {
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_needAutoRefresh) {
+        NSDate *currentTime = [NSDate date];
+        if ([currentTime timeIntervalSinceDate:_lastRefreshTime] > _refreshInterval) {
+            _lastRefreshTime = currentTime;
+            
+            [self refresh];
+        }
+    }
+}
+
+
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
 }
 
@@ -100,8 +133,6 @@
 }
 
 
-
-
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -110,18 +141,6 @@
     
     return _objects.count;
 }
-
-/*
-// 这个方法会导致reloadData时，tableview自动滑动到底部
-// 暂时还没发现好的解决方法，只好不用这个方法了
-// http://stackoverflow.com/questions/22753858/implementing-estimatedheightforrowatindexpath-causes-the-tableview-to-scroll-do
- 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 56;
-}
-*/
-
 
 
 
@@ -147,7 +166,7 @@
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    if(scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height)))
+    if (scrollView.contentOffset.y > ((scrollView.contentSize.height - scrollView.frame.size.height)))
     {
         [self fetchMore];
     }
@@ -194,6 +213,10 @@
                  if (shouldBeAdded) {
                      [_objects addObject:obj];
                  }
+             }
+             
+             if (_needAutoRefresh) {
+                 [_userDefaults setObject:_lastRefreshTime forKey:_kLastRefreshTime];
              }
              
              dispatch_async(dispatch_get_main_queue(), ^{

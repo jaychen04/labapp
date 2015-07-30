@@ -44,6 +44,11 @@ static NSString *kNewsCellID = @"NewsCell";
         };
         
         self.objClass = [OSCNews class];
+        
+        
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 21600;
+        self.kLastRefreshTime = [NSString stringWithFormat:@"NewsRefreshInterval-%d", type];
     }
     
     return self;

@@ -33,7 +33,13 @@ static NSString * const EventCellID = @"EventCell";
 
 - (instancetype)init
 {
-    return [self initWithCatalog:1];
+    self = [self initWithCatalog:1];
+    
+    self.needAutoRefresh = YES;
+    self.refreshInterval = 600;
+    self.kLastRefreshTime = @"MyEventsRefreshInterval";
+    
+    return self;
 }
 
 - (instancetype)initWithCatalog:(int)catalog
