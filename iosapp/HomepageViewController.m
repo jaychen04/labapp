@@ -115,6 +115,8 @@
                  ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
                  _myInfo = [[OSCMyInfo alloc] initWithXML:userXML];
                  
+                 [Config updateMyInfo:_myInfo];
+                 
                  [self refreshHeaderView];
                  [self.refreshControl endRefreshing];
                  

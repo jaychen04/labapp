@@ -8,6 +8,7 @@
 
 #import "Config.h"
 #import "TeamTeam.h"
+#import "OSCMyInfo.h"
 
 #import <SSKeychain.h>
 
@@ -65,6 +66,20 @@ NSString * const kTeamsArray = @"teams";
     [userDefaults setObject:@(followerCount) forKey:kFollowerCount];
     [userDefaults synchronize];
 }
+
+
++ (void)updateMyInfo:(OSCMyInfo *)myInfo
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:myInfo.name forKey:kUserName];
+    [userDefaults setObject:@(myInfo.score) forKey:kUserScore];
+    [userDefaults setObject:@(myInfo.favoriteCount) forKey:kFavoriteCount];
+    [userDefaults setObject:@(myInfo.fansCount)      forKey:kFanCount];
+    [userDefaults setObject:@(myInfo.followersCount) forKey:kFollowerCount];
+    [userDefaults synchronize];
+}
+
+
 
 + (void)clearCookie
 {

@@ -9,11 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class OSCMyInfo;
+
 @interface Config : NSObject
 
 + (void)saveOwnAccount:(NSString *)account andPassword:(NSString *)password;
 
 + (void)saveOwnID:(int64_t)userID userName:(NSString *)userName score:(int)score favoriteCount:(int)favoriteCount fansCount:(int)fanCount andFollowerCount:(int)followerCount;
+
++ (void)updateMyInfo:(OSCMyInfo *)myInfo;
+
 + (void)savePortrait:(UIImage *)portrait;
 
 + (void)saveName:(NSString *)actorName sex:(NSInteger)sex phoneNumber:(NSString *)phoneNumber corporation:(NSString *)corporation andPosition:(NSString *)position;
