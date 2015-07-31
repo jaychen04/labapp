@@ -84,6 +84,9 @@
     
     [self setUpSubviews];
     
+    _myID = [Config getOwnID];
+    [self refreshHeaderView];
+    
     [self refresh];
 }
 
