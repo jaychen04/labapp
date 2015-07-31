@@ -22,7 +22,7 @@
             </objects>
             <point key="canvasLocation" x="-154" y="300"/>
         </scene>
-        <!--Title-->
+        <!--我-->
         <scene sceneID="rBF-uw-aRZ">
             <objects>
                 <tableViewController id="9CB-MD-mci" customClass="HomepageViewController" sceneMemberID="viewController">
@@ -158,7 +158,7 @@
                             <outlet property="delegate" destination="9CB-MD-mci" id="w9T-g4-pff"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Title" id="8UP-78-1G8">
+                    <navigationItem key="navigationItem" title="我" id="8UP-78-1G8">
                         <barButtonItem key="leftBarButtonItem" image="navigationbar-sidebar" id="YqJ-Wm-kkJ">
                             <connections>
                                 <action selector="presentLeftMenuViewController:" destination="9CB-MD-mci" id="YcL-oI-jVh"/>

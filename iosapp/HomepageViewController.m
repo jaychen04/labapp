@@ -74,7 +74,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRefreshHandler:)  name:@"userRefresh"     object:nil];
     
     
-    self.navigationItem.title = @"我";
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
     
@@ -240,6 +239,7 @@
             [_portrait sd_setImageWithURL:_myInfo.portraitURL
                          placeholderImage:[UIImage imageNamed:@"default-portrait"]
                                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                    if (!image) {return;}
                                     [Config savePortrait:image];
                                     [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
                                 }];
