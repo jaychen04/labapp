@@ -24,12 +24,6 @@
 #import <AFNetworking.h>
 #import <ReactiveCocoa.h>
 
-@interface SideMenuViewController ()
-
-@property (nonatomic, strong) UIViewController *reservedViewController;
-
-
-@end
 
 @implementation SideMenuViewController
 

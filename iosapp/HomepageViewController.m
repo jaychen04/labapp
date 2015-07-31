@@ -59,6 +59,7 @@
 {
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
+    self.refreshControl.tintColor = [UIColor refreshControlColor];
     
     [self refreshHeaderView];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -252,7 +253,6 @@
     
     _nameLabel.text = usersInformation[0];
     _separator.backgroundColor = [UIColor lineColor];
-    self.refreshControl.tintColor = [UIColor refreshControlColor];
     
     [self setCoverImage];
     
@@ -452,7 +452,12 @@
 
 - (void)userRefreshHandler:(NSNotification *)notification
 {
-    [self refresh];
+    _myID = [Config getOwnID];
+    
+    [self refreshHeaderView];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 

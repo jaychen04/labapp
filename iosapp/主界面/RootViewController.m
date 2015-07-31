@@ -16,6 +16,7 @@
 
 - (void)awakeFromNib
 {
+    self.parallaxEnabled = NO;
     self.scaleContentView = YES;
     self.contentViewScaleValue = 0.95;
     self.scaleMenuView = NO;
