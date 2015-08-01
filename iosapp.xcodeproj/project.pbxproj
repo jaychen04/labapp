@@ -1185,13 +1185,13 @@
 			name = SwipableViewController;
 			sourceTree = "<group>";
 		};
-		00C9A73919EE8536000EA878 /* API */ = {
+		00C9A73919EE8536000EA878 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				3843641C1AC5527600743CB0 /* Team */,
-				3843641B1AC5525800743CB0 /* 主站 */,
+				3843641B1AC5525800743CB0 /* OSC */,
 			);
-			name = API;
+			path = Models;
 			sourceTree = "<group>";
 		};
 		00D6BCD119EB673200E8754E = {
@@ -1217,11 +1217,13 @@
 		00D6BCDC19EB673200E8754E /* iosapp */ = {
 			isa = PBXGroup;
 			children = (
+				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
+				384364211AC5551300743CB0 /* TeamAPI.h */,
 				C5E56F491B56AFB50059924C /* Main */,
 				C5E56F511B56B58B0059924C /* Discover */,
 				C5E56F421B56AAE00059924C /* 综合 */,
 				3843641D1AC5529C00743CB0 /* Team */,
-				00C9A73919EE8536000EA878 /* API */,
+				00C9A73919EE8536000EA878 /* Models */,
 				00EDF60C19EFC13500A5C842 /* Utils */,
 				3874EC221A08E8EA000D2894 /* 用户 */,
 				00D6BD3219ECD73B00E8754E /* 动弹 */,
@@ -1734,10 +1736,9 @@
 			name = "编辑动弹";
 			sourceTree = "<group>";
 		};
-		3843641B1AC5525800743CB0 /* 主站 */ = {
+		3843641B1AC5525800743CB0 /* OSC */ = {
 			isa = PBXGroup;
 			children = (
-				00EDF60A19EFAE7900A5C842 /* OSCAPI.h */,
 				00C9A73B19EE863B000EA878 /* OSCBaseObject.h */,
 				00C9A73C19EE863B000EA878 /* OSCBaseObject.m */,
 				00EDF60719EF77A100A5C842 /* OSCTweet.h */,
@@ -1773,13 +1774,12 @@
 				38BD3D191A38343F00682D1F /* Blog */,
 				38BD3D011A36A3B800682D1F /* Software */,
 			);
-			name = "主站";
+			path = OSC;
 			sourceTree = "<group>";
 		};
 		3843641C1AC5527600743CB0 /* Team */ = {
 			isa = PBXGroup;
 			children = (
-				384364211AC5551300743CB0 /* TeamAPI.h */,
 				384A112A1ADE565200856A7C /* TeamMember.h */,
 				384A112B1ADE565200856A7C /* TeamMember.m */,
 				384A11341ADFCBD200856A7C /* TeamUser.h */,
@@ -1801,7 +1801,7 @@
 				C52BF4E91AF9BABF00E53508 /* 讨论 */,
 				C52BF4E81AF9AAA900E53508 /* 周报 */,
 			);
-			name = Team;
+			path = Team;
 			sourceTree = "<group>";
 		};
 		3843641D1AC5529C00743CB0 /* Team */ = {
