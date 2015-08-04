@@ -36,13 +36,16 @@ static NSString * const kAuthorUID2 = @"authoruid2";
         
         _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
         _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
-        _url = [NSURL URLWithString:[[xml firstChildWithTag:@"url"] stringValue]];
+        
+        _url = [NSURL URLWithString:[[[xml firstChildWithTag:@"url"] stringValue]
+                                     stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
         
         ONOXMLElement *newsType = [xml firstChildWithTag:kNewsType];
         _type = [[[newsType firstChildWithTag:kType] numberValue] intValue];
         _attachment = [[newsType firstChildWithTag:kAttachment] stringValue];
         _authorUID2 = [[[newsType firstChildWithTag:kAuthorUID2] numberValue] longLongValue];
-        _eventURL = [NSURL URLWithString:[[newsType firstChildWithTag:@"eventurl"] stringValue]];
+        _eventURL = [NSURL URLWithString:[[[newsType firstChildWithTag:@"eventurl"] stringValue]
+                                          stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
     }
     
     return self;

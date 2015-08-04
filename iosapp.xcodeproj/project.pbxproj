@@ -1188,8 +1188,8 @@
 		00C9A73919EE8536000EA878 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3843641C1AC5527600743CB0 /* Team */,
 				3843641B1AC5525800743CB0 /* OSC */,
+				3843641C1AC5527600743CB0 /* Team */,
 			);
 			path = Models;
 			sourceTree = "<group>";

@@ -74,6 +74,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noticeUpdateHandler:) name:OSCAPI_USER_NOTICE object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRefreshHandler:)  name:@"userRefresh"     object:nil];
     
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//    [self.navigationController.navigationBar setTranslucent:YES];
+    
     
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
