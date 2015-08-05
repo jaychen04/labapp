@@ -105,7 +105,7 @@
     [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:recognizer.view.tag] animated:YES];
 }
 
-#pragma mark - 删除留言
+#pragma mark - 删除私信
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -140,7 +140,7 @@
         OSCComment *comment = self.objects[indexPath.row];
         
         MBProgressHUD *HUD = [Utils createHUD];
-        HUD.labelText = @"正在删除留言";
+        HUD.labelText = @"正在删除私信";
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
@@ -159,7 +159,7 @@
                   
                   if (errorCode == 1) {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.labelText = @"留言删除成功";
+                      HUD.labelText = @"私信删除成功";
                       
                       [self.objects removeObjectAtIndex:indexPath.row];
                       self.allCount--;

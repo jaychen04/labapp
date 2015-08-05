@@ -81,7 +81,7 @@
     [self.editingBar.editView resignFirstResponder];
     
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"留言发送中";
+    HUD.labelText = @"私信发送中";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -104,7 +104,7 @@
                   [self updateInputBarHeight];
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = @"发送留言成功";
+                  HUD.labelText = @"发送私信成功";
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
@@ -117,7 +117,7 @@
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.labelText = @"网络异常，留言发送失败";
+              HUD.labelText = @"网络异常，私信发送失败";
               
               [HUD hide:YES afterDelay:1];
           }];

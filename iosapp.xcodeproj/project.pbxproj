@@ -2138,7 +2138,7 @@
 			name = "关注/粉丝";
 			sourceTree = "<group>";
 		};
-		38B0BF961A3AFEB400A2FDB0 /* 留言列表 */ = {
+		38B0BF961A3AFEB400A2FDB0 /* 私信列表 */ = {
 			isa = PBXGroup;
 			children = (
 				38B0BF901A3AE77200A2FDB0 /* MessagesViewController.h */,
@@ -2147,7 +2147,7 @@
 				38B0BF981A3AFED800A2FDB0 /* MessageCell.m */,
 				38763A411A904528008E6805 /* 气泡对话 */,
 			);
-			name = "留言列表";
+			name = "私信列表";
 			sourceTree = "<group>";
 		};
 		38B0BF9D1A3EBBE500A2FDB0 /* Tab Bar */ = {
@@ -2289,7 +2289,7 @@
 				38A93FAB1AA31DEB00A515E8 /* 收藏 */,
 				38A93FAA1AA31DE100A515E8 /* 消息中心 */,
 				38B0BF8F1A3AE72E00A2FDB0 /* 关注/粉丝 */,
-				38B0BF961A3AFEB400A2FDB0 /* 留言列表 */,
+				38B0BF961A3AFEB400A2FDB0 /* 私信列表 */,
 				EE6DB9451AD6628A004FCF3C /* 点赞列表 */,
 			);
 			name = "我";
