@@ -11,17 +11,23 @@
 #import "Config.h"
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
-#import "OSCTabBarController.h"
-#import "SideMenuViewController.h"
+#import "AFHTTPRequestOperationManager+Util.h"
+#import "OSCAPI.h"
+#import "OSCUser.h"
 
 #import "UMSocial.h"
 #import "UMSocialWechatHandler.h"
 #import "UMSocialQQHandler.h"
 #import "UMSocialSinaHandler.h"
 
-#import <RESideMenu/RESideMenu.h>
+#import <WeiboSDK.h>
+#import "WXApi.h"
 
-@interface AppDelegate () <UIApplicationDelegate, UITabBarControllerDelegate>
+#import <Ono.h>
+#import <AFOnoResponseSerializer.h>
+
+
+@interface AppDelegate () <UIApplicationDelegate>
 
 @end
 
@@ -34,21 +40,6 @@
     
     [NBSAppAgent startWithAppID:@"2142ec9589c2480f952feab9ed19a535"];
     
-    OSCTabBarController *tabBarController = [OSCTabBarController new];
-    tabBarController.delegate = self;
-    
-    RESideMenu *sideMenuTabBarViewController = [[RESideMenu alloc] initWithContentViewController:tabBarController
-                                                                          leftMenuViewController:[SideMenuViewController new]
-                                                                         rightMenuViewController:nil];
-    sideMenuTabBarViewController.scaleContentView = YES;
-    sideMenuTabBarViewController.contentViewScaleValue = 0.95;
-    sideMenuTabBarViewController.scaleMenuView = NO;
-    sideMenuTabBarViewController.contentViewShadowEnabled = YES;
-    sideMenuTabBarViewController.contentViewShadowRadius = 4.5;
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = sideMenuTabBarViewController;
-    [self.window makeKeyAndVisible];
     
     [self loadCookies];
     
@@ -83,9 +74,9 @@
     
     [menuController setMenuVisible:YES animated:YES];
     [menuController setMenuItems:@[
-                                    [[UIMenuItem alloc] initWithTitle:@"复制" action:NSSelectorFromString(@"copyText:")],
-                                    [[UIMenuItem alloc] initWithTitle:@"删除" action:NSSelectorFromString(@"deleteObject:")]
-                                    ]];
+                                   [[UIMenuItem alloc] initWithTitle:@"复制" action:NSSelectorFromString(@"copyText:")],
+                                   [[UIMenuItem alloc] initWithTitle:@"删除" action:NSSelectorFromString(@"deleteObject:")]
+                                   ]];
     
     /************ 检测通知 **************/
     
@@ -106,10 +97,15 @@
     /************ 友盟分享组件 **************/
     
     [UMSocialData setAppKey:@"54c9a412fd98c5779c000752"];
-    [UMSocialWechatHandler setWXAppId:@"wx41be5fe48092e94c" appSecret:@"0101b0595ffe2042c214420fac358abc" url:@"http://www.umeng.com/social"];
+    [UMSocialWechatHandler setWXAppId:@"wxa8213dc827399101" appSecret:@"5c716417ce72ff69d8cf0c43572c9284" url:@"http://www.umeng.com/social"];
     [UMSocialQQHandler setQQWithAppId:@"100942993" appKey:@"8edd3cc7ca8dcc15082d6fe75969601b" url:@"http://www.umeng.com/social"];
     [UMSocialSinaHandler openSSOWithRedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
     
+    
+    /************ 第三方登录设置 *************/
+    
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:@"3616966952"];
     
     
     return YES;
@@ -151,7 +147,12 @@
 
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
 {
-    return  [UMSocialSnsService handleOpenURL:url];
+    return [UMSocialSnsService handleOpenURL:url]             ||
+           [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
+           [TencentOAuth HandleOpenURL:url]                   ||
+           [WeiboSDK handleOpenURL:url delegate:_loginDelegate];
+    
+//    return [UMSocialSnsService handleOpenURL:url];
 }
 
 - (BOOL)application:(UIApplication *)application
@@ -159,8 +160,15 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
-    return  [UMSocialSnsService handleOpenURL:url];
+    return [UMSocialSnsService handleOpenURL:url]             ||
+           [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
+           [TencentOAuth HandleOpenURL:url]                   ||
+           [WeiboSDK handleOpenURL:url delegate:_loginDelegate];
+    
+//    return [UMSocialSnsService handleOpenURL:url];
 }
+
+
 
 
 

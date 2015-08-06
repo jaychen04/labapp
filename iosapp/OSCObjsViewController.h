@@ -11,6 +11,7 @@
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
+#import <MJRefresh.h>
 
 #import "Utils.h"
 #import "OSCAPI.h"
@@ -36,7 +37,10 @@
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, assign) NSUInteger page;
 
-//@property(assign,nonatomic)id<anotherNetWorkingDelegate> delegate;
+@property (nonatomic, assign) BOOL needAutoRefresh;
+@property (nonatomic, copy) NSString *kLastRefreshTime;
+@property (nonatomic, assign) NSTimeInterval refreshInterval;
+
 @property (nonatomic, copy) void (^anotherNetWorking)();
 
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;

@@ -45,7 +45,6 @@ static NSString * const kMessageCellID = @"MessageCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[MessageCell class] forCellReuseIdentifier:kMessageCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 
@@ -65,7 +64,7 @@ static NSString * const kMessageCellID = @"MessageCell";
     cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", message.senderID == [Config getOwnID] ? @"发给" : @"来自", message.friendName];
     cell.contentLabel.text = message.content;
     cell.timeLabel.text = [Utils intervalSinceNow:message.pubDate];
-    cell.commentCountLabel.text = [NSString stringWithFormat:@"%d条留言", message.messageCount];
+    cell.commentCountLabel.text = [NSString stringWithFormat:@"%d封私信", message.messageCount];
     
     cell.contentLabel.textColor = [UIColor titleColor];
     

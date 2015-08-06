@@ -58,6 +58,10 @@ static NSString * const kTweetCellID = @"TweetCell";
                 break;
         }
         
+        self.needAutoRefresh = type != TweetsTypeOwnTweets;
+        self.refreshInterval = type == TweetsTypeAllTweets? 360 : 3600;
+        self.kLastRefreshTime = [NSString stringWithFormat:@"TweetsRefreshInterval-%ld", type];
+        
         [self setBlockAndClass];
     }
     
@@ -138,12 +142,6 @@ static NSString * const kTweetCellID = @"TweetCell";
 
 #pragma mark - life cycle
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.tableView.separatorColor = [UIColor separatorColor];
-    [self.tableView reloadData];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -199,7 +197,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     cell.thumbnail.tag = row;
     cell.likeButton.tag = row;
     cell.likeListLabel.tag = row;
-    cell.contentLabel.textColor = [UIColor titleColor];
+    cell.contentLabel.textColor = [UIColor contentTextColor];
     cell.authorLabel.textColor = [UIColor nameColor];
     
     [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
@@ -223,7 +221,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     [self.label setText:tweet.author];
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     
-//    self.label.font = [UIFont systemFontOfSize:15];
+    self.label.font = [UIFont boldSystemFontOfSize:15];
     [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
     height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     

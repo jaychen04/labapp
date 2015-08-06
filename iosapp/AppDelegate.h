@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <WeiboSDK.h>
+#import "WXApi.h"
+
+@class LoginViewController;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) UIWindow *window;
+@property (nonatomic, weak) id <WeiboSDKDelegate, WXApiDelegate> loginDelegate;
 @property (nonatomic, assign) BOOL inNightMode;
 
 @end

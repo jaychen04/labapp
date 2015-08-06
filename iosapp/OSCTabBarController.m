@@ -13,8 +13,8 @@
 #import "NewsViewController.h"
 #import "BlogsViewController.h"
 #import "LoginViewController.h"
-#import "DiscoverTableVC.h"
-#import "MyInfoViewController.h"
+#import "HomepageViewController.h"
+#import "DiscoverViewcontroller.h"
 #import "Config.h"
 #import "Utils.h"
 #import "OptionButton.h"
@@ -31,7 +31,7 @@
 #import <RESideMenu/RESideMenu.h>
 
 
-@interface OSCTabBarController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface OSCTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     NewsViewController *newsViewCtl;
     NewsViewController *hotNewsViewCtl;
@@ -100,15 +100,15 @@
             }];
 
         } else if (idx == 3) {
-            DiscoverTableVC *dvc = nav.viewControllers[0];
+            DiscoverViewController *dvc = nav.viewControllers[0];
             [dvc.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
             [dvc.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
             [dvc dawnAndNightMode];
         } else if (idx == 4) {
-            MyInfoViewController *myInfo = nav.viewControllers[0];
-            [myInfo.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
-            [myInfo.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
-            [myInfo dawnAndNightMode];
+            HomepageViewController *homepageVC = nav.viewControllers[0];
+            [homepageVC.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
+            [homepageVC.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
+            [homepageVC dawnAndNightMode];
         }
     }];
 
@@ -152,8 +152,12 @@
                                                                        andControllers:@[newTweetViewCtl, hotTweetViewCtl, myTweetViewCtl]
                                                                           underTabbar:YES];
     
-    DiscoverTableVC *discoverTableVC = [[DiscoverTableVC alloc] initWithStyle:UITableViewStyleGrouped];
-    MyInfoViewController *myInfoVC = [[MyInfoViewController alloc] initWithStyle:UITableViewStyleGrouped];
+    UIStoryboard *discoverSB = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];
+    UINavigationController *discoverNav = [discoverSB instantiateViewControllerWithIdentifier:@"Nav"];
+    
+    
+    UIStoryboard *homepageSB = [UIStoryboard storyboardWithName:@"Homepage" bundle:nil];
+    UINavigationController *homepageNav = [homepageSB instantiateViewControllerWithIdentifier:@"Nav"];
     
     
     self.tabBar.translucent = NO;
@@ -161,8 +165,8 @@
                              [self addNavigationItemForViewController:newsSVC],
                              [self addNavigationItemForViewController:tweetsSVC],
                              [UIViewController new],
-                             [self addNavigationItemForViewController:discoverTableVC],
-                             [[UINavigationController alloc] initWithRootViewController:myInfoVC]
+                             discoverNav,
+                             homepageNav,
                              ];
     
     NSArray *titles = @[@"综合", @"动弹", @"", @"发现", @"我"];
@@ -435,16 +439,15 @@
 
 - (UINavigationController *)addNavigationItemForViewController:(UIViewController *)viewController
 {
-    
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     
     viewController.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"]
                                                                                         style:UIBarButtonItemStylePlain
                                                                                        target:self action:@selector(onClickMenuButton)];
     
-    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-search"]
-                                                                                        style:UIBarButtonItemStylePlain
-                                                                                       target:self action:@selector(pushSearchViewController)];
+    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
+                                                                                                     target:self
+                                                                                                     action:@selector(pushSearchViewController)];
     
     
     
@@ -468,7 +471,7 @@
         [UIView animateWithDuration:0.1 animations:^{
             [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)];
         } completion:^(BOOL finished) {
-            [objsViewController.refreshControl beginRefreshing];
+            [objsViewController.tableView.header beginRefreshing];
         }];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

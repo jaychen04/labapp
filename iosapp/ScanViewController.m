@@ -179,7 +179,8 @@
                 [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
                 [HUD hide:YES afterDelay:2];
             } else {
-                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+                AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+                manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/html"];
                 
                 [manager GET:URL
                   parameters:nil
@@ -193,6 +194,9 @@
                          if (message) {
                              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                              HUD.labelText = message;
+                         } else if ([error isEqualToString:@"你已签到成功:)"]) { // 重复签到
+                             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                             HUD.labelText = error;
                          } else {
                              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                              HUD.labelText = error;

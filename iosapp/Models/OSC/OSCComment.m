@@ -74,18 +74,6 @@ static NSString * const kRContent = @"rcontent";
     
     return self;
 }
-//<reply>
-//<id>63818</id>
-//<appclient>0</appclient>
-//<appName/>
-//<content><![CDATA[<p>body1</p>]]></content>
-//<createTime>2015-03-24 18:04:45</createTime>
-//<author>
-//<id>253900</id>
-//<name><![CDATA[火蚁]]></name>
-//<portrait>http://static.oschina.net/uploads/user/126/253900_100.jpeg?t=1422505979000</portrait>
-//</author>
-//</reply>
 
 
 + (NSAttributedString *)attributedTextFromReplies:(NSArray *)replies

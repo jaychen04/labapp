@@ -96,7 +96,6 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     
     self.tableView.bounces = NO;
     [self.tableView registerClass:[TeamIssueDetailCell class] forCellReuseIdentifier:kteamIssueDetailCellNomal];
-    self.tableView.separatorColor = [UIColor separatorColor];
     
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     _HUD = [[MBProgressHUD alloc] initWithWindow:window];

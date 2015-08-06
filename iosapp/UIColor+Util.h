@@ -28,4 +28,9 @@
 + (UIColor *)infosBackViewColor;
 + (UIColor *)lineColor;
 
++ (UIColor *)contentTextColor;
++ (UIColor *)borderColor;
++ (UIColor *)refreshControlColor;
+
+
 @end

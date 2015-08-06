@@ -9,6 +9,7 @@
 #ifndef iosapp_OSCAPI_h
 #define iosapp_OSCAPI_h
 
+//#define OSCAPI_PREFIX                   @"http://192.168.1.11/action/api/"
 #define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
@@ -81,6 +82,9 @@
 #define OSCAPI_EVENT_ATTEND_USER        @"event_attend_user"
 
 #define OSCAPI_USER_REPORT_TO_ADMIN     @"user_report_to_admin"
+#define OSCAPI_OPENID_LOGIN             @"openid_login"
+#define OSCAPI_OPENID_BINDING           @"openid_bind"
+#define OSCAPI_OPENID_REGISTER          @"openid_reg"
 
 
 #endif

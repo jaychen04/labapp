@@ -9,7 +9,6 @@
 #import "SettingsPage.h"
 #import "Utils.h"
 #import "Config.h"
-#import "MyInfoViewController.h"
 #import "AboutPage.h"
 #import "OSLicensePage.h"
 #import "FeedbackPage.h"

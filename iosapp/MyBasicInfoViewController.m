@@ -14,7 +14,7 @@
 #import "OSCMyInfo.h"
 #import "Config.h"
 #import "Utils.h"
-#import "MyInfoViewController.h"
+#import "HomepageViewController.h"
 #import "ImageViewerController.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
@@ -71,7 +71,6 @@
     self.tableView.bounces = NO;
     self.navigationItem.title = @"我的资料";
     self.view.backgroundColor = [UIColor themeColor];
-    self.tableView.separatorColor = [UIColor separatorColor];
     self.tableView.tableFooterView = [UIView new];
     
     if (!_myInfo) {
@@ -298,8 +297,8 @@
             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
             HUD.labelText = @"头像更新成功";
             
-            MyInfoViewController *myInfoVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-            [myInfoVC refreshView];
+            HomepageViewController *homepageVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+            [homepageVC refresh];
             
             _portrait.image = _image;
         } else {

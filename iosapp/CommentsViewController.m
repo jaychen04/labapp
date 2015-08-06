@@ -64,7 +64,6 @@ static NSString *kCommentCellID = @"CommentCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[CommentCell class] forCellReuseIdentifier:kCommentCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -85,7 +84,7 @@ static NSString *kCommentCellID = @"CommentCell";
     
     [self setBlockForCommentCell:cell];
     [cell setContentWithComment:comment];
-    cell.contentLabel.textColor = [UIColor titleColor];
+    cell.contentLabel.textColor = [UIColor contentTextColor];
     cell.portrait.tag = row; cell.authorLabel.tag = row;
     [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushDetailsView:)]];
     
@@ -107,6 +106,8 @@ static NSString *kCommentCellID = @"CommentCell";
     if (comment.replies.count > 0) {
         [contentString appendAttributedString:[OSCComment attributedTextFromReplies:comment.replies]];
     }
+    
+    self.label.font = [UIFont boldSystemFontOfSize:15];
     [self.label setAttributedText:contentString];
     __block CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     

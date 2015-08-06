@@ -15,7 +15,6 @@
 #import "SoftwareCatalogVC.h"
 #import "SoftwareListVC.h"
 #import "SettingsPage.h"
-#import "MyInfoViewController.h"
 #import "LoginViewController.h"
 
 #import "AppDelegate.h"
@@ -25,12 +24,6 @@
 #import <AFNetworking.h>
 #import <ReactiveCocoa.h>
 
-@interface SideMenuViewController ()
-
-@property (nonatomic, strong) UIViewController *reservedViewController;
-
-
-@end
 
 @implementation SideMenuViewController
 
@@ -47,7 +40,6 @@ static BOOL isNight;
     self.tableView.backgroundColor = [UIColor titleBarColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
-    self.tableView.separatorColor = [UIColor separatorColor];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
     
@@ -253,7 +245,9 @@ static BOOL isNight;
 - (void)pushLoginPage
 {
     if ([Config getOwnID] == 0) {
-        [self setContentViewController:[LoginViewController new]];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self setContentViewController:loginVC];
     } else {
         return;
     }

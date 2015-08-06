@@ -77,6 +77,15 @@
     return [UIColor colorWithHex:0xE1E1E1];
 }
 
++ (UIColor *)contentTextColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return  [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+    }
+    return [UIColor colorWithHex:0x272727];
+}
+
+
 + (UIColor *)selectTitleBarColor
 {
     
@@ -132,6 +141,22 @@
         return [UIColor colorWithRed:18.0/255 green:144.0/255 blue:105.0/255 alpha:0.6];
     }
     return [UIColor colorWithHex:0x2bc157];
+}
+
++ (UIColor *)borderColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithRed:18.0/255 green:144.0/255 blue:105.0/255 alpha:0.6];
+    }
+    return [UIColor lightGrayColor];
+}
+
++ (UIColor *)refreshControlColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithHex:0x13502A];
+    }
+    return [UIColor colorWithHex:0x21B04B];
 }
 
 @end

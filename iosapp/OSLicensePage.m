@@ -19,7 +19,11 @@
     UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
     webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     webView.scrollView.bounces = NO;
-    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"OSLicense" ofType:@"html"] isDirectory:NO]]];
+    
+
+    [webView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"OSLicense"
+                                                                                                             ofType:@"html"
+                                                                                                        inDirectory:@"html"]]]];
     [self.view addSubview:webView];
 }
 

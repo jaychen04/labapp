@@ -45,7 +45,7 @@
         [button setCornerRadius:3.0];
         [buttonsView addSubview:button];
     };
-    setButtonStyle(_messageButton, @"留言");
+    setButtonStyle(_messageButton, @"私信");
     setButtonStyle(_followButton,  @"关注");
     
     [self.contentView addSubview:buttonsView];

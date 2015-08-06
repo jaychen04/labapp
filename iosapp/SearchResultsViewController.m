@@ -56,7 +56,6 @@ static NSString * const kSoftware       = @"software";
     [super viewDidLoad];
     
     self.lastCell.emptyMessage = @"找不到和您的查询相符的信息";
-    self.tableView.separatorColor = [UIColor separatorColor];
     self.tableView.backgroundColor = [UIColor themeColor];
 }
 

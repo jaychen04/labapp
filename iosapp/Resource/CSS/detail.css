@@ -2,15 +2,15 @@ body {
     font-size: 1em;
     line-height: 1.5em;
     background-color: #EBEBF3;
-    word-break: break-all;
     font-family: Arial;
-    
-    margin-bottom: 60px;
+    margin: 10px 10px 60px 10px;
+    -webkit-text-size-adjust: 100%;
 }
 
 span {
     background-color: #EBEBF3 !important;
     font-family: Arial !important;
+    line-height: inherit !important;
 }
 
 a {
@@ -21,19 +21,12 @@ a {
 audio {
     width: 90%;
     display: block;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px auto 10px auto;
 }
 
 
 img,table {
     max-width: 100%;
-}
-
-main img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 ul {
@@ -80,11 +73,6 @@ pre {
     color: #087221;
     font-weight: bold;
 }
-
-
-/*** syntaxhighlighter ***/
-
-.syntaxhighlighter { -webkit-text-size-adjust: none; }
 
 
 /*** night mode ***/

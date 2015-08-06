@@ -62,7 +62,6 @@ static NSString * const kActivityCellID = @"TeamActivityCell";
     
     self.navigationItem.title = @"团队动态";
     [self.tableView registerClass:[TeamActivityCell class] forCellReuseIdentifier:kActivityCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

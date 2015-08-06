@@ -32,15 +32,12 @@
             NSMutableAttributedString *mutableAttributeString = [[NSMutableAttributedString alloc] initWithAttributedString:textView.attributedText];
             [mutableAttributeString replaceCharactersInRange:textView.selectedRange withAttributedString:emojiAttributedString];
             textView.attributedText = mutableAttributeString;
+            textView.textColor = [UIColor titleColor];
             [textView insertText:@""];
             textView.font = [UIFont systemFontOfSize:16];
-            [textView checkShouldHidePlaceholder];
-            [textView.delegate textViewDidChange:textView];
         };
         _deleteEmoji = ^ {
             [textView deleteBackward];
-            [textView checkShouldHidePlaceholder];
-            [textView.delegate textViewDidChange:textView];
         };
     }
     

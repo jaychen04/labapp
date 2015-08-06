@@ -31,7 +31,7 @@
     
     _nameLabel = [UILabel new];
     _nameLabel.font = [UIFont systemFontOfSize:14];
-    _nameLabel.textColor = [UIColor colorWithHex:0x555555];
+    _nameLabel.textColor = [UIColor contentTextColor];
     [self.contentView addSubview:_nameLabel];
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}

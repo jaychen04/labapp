@@ -13,48 +13,52 @@
 #import "Utils.h"
 #import "Config.h"
 #import "OSCThread.h"
-#import "MyInfoViewController.h"
+#import "UIImage+FontAwesome.h"
+#import "AppDelegate.h"
 
-#import <AFNetworking.h>
-#import <AFOnoResponseSerializer.h>
-#import <Ono.h>
+#import <TencentOpenAPI/TencentOAuth.h>
+#import <WeiboSDK.h>
+#import "WXApi.h"
+
 #import <ReactiveCocoa.h>
 #import <MBProgressHUD.h>
 #import <RESideMenu.h>
-#import <TTTAttributedLabel.h>
-#import <CoreText/CoreText.h>
 
-@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, TTTAttributedLabelDelegate>
 
-@property (nonatomic, strong) UITextField *accountField;
-@property (nonatomic, strong) UITextField *passwordField;
-@property (nonatomic, strong) UIButton *loginButton;
+static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
-@property (nonatomic, strong) MBProgressHUD *HUD;
-@property (nonatomic, strong) TTTAttributedLabel *registerInfo;
+
+@interface LoginViewController () <UITextFieldDelegate, UIGestureRecognizerDelegate, UIAlertViewDelegate,
+                                   TencentSessionDelegate, WeiboSDKDelegate, WXApiDelegate>
+
+@property (nonatomic, weak) IBOutlet UITextField *accountField;
+@property (nonatomic, weak) IBOutlet UITextField *passwordField;
+@property (nonatomic, weak) IBOutlet UIButton *loginButton;
+
+@property (nonatomic, weak) IBOutlet UIImageView *accountImageView;
+@property (nonatomic, weak) IBOutlet UIImageView *passwordImageView;
+
+@property (nonatomic, strong) MBProgressHUD *hud;
+
+@property (nonatomic, strong) TencentOAuth *tencentOAuth;
+
+@property (nonatomic, copy) NSString *catalog;
+@property (nonatomic, copy) NSString *info;
+
+@property (nonatomic, copy) NSString *account;
+@property (nonatomic, copy) NSString *pasword;
 
 @end
 
 @implementation LoginViewController
 
-- (instancetype)init
+- (void)viewDidLoad
 {
-    self = [super init];
-    if (self) {
-        self.hidesBottomBarWhenPushed = YES;
-    }
-    
-    return self;
-}
-
-- (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.navigationItem.title = @"登录";
     self.view.backgroundColor = [UIColor themeColor];
     
-    [self initSubviews];
-    [self setLayout];
+    [self setUpSubviews];
     
     NSArray *accountAndPassword = [Config getOwnAccountAndPassword];
     _accountField.text = accountAndPassword? accountAndPassword[0] : @"";
@@ -68,71 +72,39 @@
     RAC(_loginButton, alpha) = [valid map:^(NSNumber *b) {
         return b.boolValue ? @1: @0.4;
     }];
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.loginDelegate = self;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_HUD hide:YES];
+    [_hud hide:YES];
 }
 
 
 
 #pragma mark - about subviews
-- (void)initSubviews
+
+- (void)setUpSubviews
 {
-    _accountField = [UITextField new];
-    _accountField.placeholder = @"Email";
-    _accountField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
-    _accountField.autocapitalizationType = UITextAutocapitalizationTypeNone;
-    _accountField.keyboardType = UIKeyboardTypeEmailAddress;
-    _accountField.delegate = self;
-    _accountField.returnKeyType = UIReturnKeyNext;
-    _accountField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _accountField.enablesReturnKeyAutomatically = YES;
+    _accountImageView.image = [UIImage imageWithIcon:@"fa-envelope-o"
+                                     backgroundColor:[UIColor clearColor]
+                                           iconColor:[UIColor grayColor]
+                                             andSize:CGSizeMake(20, 20)];
     
-    self.passwordField = [UITextField new];
-    _passwordField.placeholder = @"Password";
-    _passwordField.textColor = [UIColor colorWithRed:56.0f/255.0f green:84.0f/255.0f blue:135.0f/255.0f alpha:1.0f];
-    _passwordField.secureTextEntry = YES;
+    _passwordImageView.image = [UIImage imageWithIcon:@"fa-lock"
+                                      backgroundColor:[UIColor clearColor]
+                                            iconColor:[UIColor grayColor]
+                                              andSize:CGSizeMake(20, 20)];
+    
+    _accountField.delegate = self;
     _passwordField.delegate = self;
-    _passwordField.returnKeyType = UIReturnKeyDone;
-    _passwordField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    _passwordField.enablesReturnKeyAutomatically = YES;
     
     [_accountField addTarget:self action:@selector(returnOnKeyboard:) forControlEvents:UIControlEventEditingDidEndOnExit];
     [_passwordField addTarget:self action:@selector(returnOnKeyboard:) forControlEvents:UIControlEventEditingDidEndOnExit];
     
-    [self.view addSubview: _accountField];
-    [self.view addSubview: _passwordField];
-    
-    _loginButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _loginButton.titleLabel.font = [UIFont systemFontOfSize:17];
-    _loginButton.backgroundColor = [UIColor colorWithHex:0x15A230];
-    [_loginButton setCornerRadius:20];
-    [_loginButton setTitle:@"登录" forState:UIControlStateNormal];
-    [_loginButton addTarget:self action:@selector(login) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview: _loginButton];
-    
-    _registerInfo = [TTTAttributedLabel new];
-    _registerInfo.delegate = self;
-    _registerInfo.numberOfLines = 0;
-    _registerInfo.lineBreakMode = NSLineBreakByWordWrapping;
-    _registerInfo.backgroundColor = [UIColor themeColor];
-    _registerInfo.font = [UIFont systemFontOfSize:14];
-    NSString *info = @"您可以在 https://www.oschina.net 上免费注册账号";
-    _registerInfo.text = info;
-    NSRange range = [info rangeOfString:@"https://www.oschina.net"];
-    _registerInfo.linkAttributes = @{
-                                     (NSString *)kCTForegroundColorAttributeName:[UIColor colorWithHex:0x15A230]
-                                     };
-    [_registerInfo addLinkToURL:[NSURL URLWithString:@"https://www.oschina.net/home/reg"] withRange:range];
-    [self.view addSubview:_registerInfo];
     
     //添加手势，点击屏幕其他区域关闭键盘的操作
     UITapGestureRecognizer *gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidenKeyboard)];
@@ -141,36 +113,6 @@
     [self.view addGestureRecognizer:gesture];
 }
 
-- (void)setLayout
-{
-    UIImageView *email = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-email"]];
-    email.contentMode = UIViewContentModeScaleAspectFill;
-    
-    UIImageView *password = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"login-password"]];
-    password.contentMode = UIViewContentModeScaleAspectFit;
-    
-    [self.view addSubview:email];
-    [self.view addSubview:password];
-    
-    for (UIView *view in [self.view subviews]) { view.translatesAutoresizingMaskIntoConstraints = NO;}
-    
-    NSDictionary *views = NSDictionaryOfVariableBindings(email, password, _accountField, _passwordField, _loginButton, _registerInfo);
-    
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view    attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual
-                                                             toItem:_loginButton attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual
-                                                             toItem:_loginButton attribute:NSLayoutAttributeCenterY multiplier:1 constant:0]];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[email(20)]-20-[password(20)]-30-[_loginButton(40)]"
-                                                                      options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-20-[_loginButton]-20-|" options:0 metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_loginButton]-20-[_registerInfo(30)]"
-                                                                      options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                      metrics:nil views:views]];
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[email(20)]-[_accountField]-30-|"     options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-30-[password(20)]-[_passwordField]-30-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
-}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
@@ -201,11 +143,11 @@
     }
 }
 
-- (void)login
+- (IBAction)login
 {
-    _HUD = [Utils createHUD];
-    _HUD.labelText = @"正在登录";
-    _HUD.userInteractionEnabled = NO;
+    _hud = [Utils createHUD];
+    _hud.labelText = @"正在登录";
+    _hud.userInteractionEnabled = NO;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -213,35 +155,30 @@
        parameters:@{@"username" : _accountField.text, @"pwd" : _passwordField.text, @"keep_login" : @(1)}
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
-              ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
               
               NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
               if (!errorCode) {
                   NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
                   
-                  _HUD.mode = MBProgressHUDModeCustomView;
-                  _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  _HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                  [_HUD hide:YES afterDelay:1];
+                  _hud.mode = MBProgressHUDModeCustomView;
+                  _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  _hud.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  [_hud hide:YES afterDelay:1];
                   
                   return;
               }
               
-              OSCUser *user = [[OSCUser alloc] initWithXML:userXML];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
-              [Config saveOwnID:user.userID userName:user.name score:user.score favoriteCount:user.favoriteCount fansCount:user.fansCount andFollowerCount:user.followersCount];
-              [OSCThread startPollingNotice];
+              ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
               
-              [self saveCookies];
-              
-              [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
-              [self.navigationController popViewControllerAnimated:YES];
+              [self renewUserWithXML:userXML];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              _HUD.mode = MBProgressHUDModeCustomView;
-              _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              _HUD.labelText = @"网络异常，登录失败";
+              _hud.mode = MBProgressHUDModeCustomView;
+              _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              _hud.labelText = [@(operation.response.statusCode) stringValue];
+              _hud.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
               
-              [_HUD hide:YES afterDelay:1];
+              [_hud hide:YES afterDelay:1];
           }
      ];
 }
@@ -261,12 +198,306 @@
 
 
 
-#pragma mark - TTTAttributedLabelDelegate
+#pragma mark - 第三方登录
+#pragma mark QQ登录
 
-- (void)attributedLabel:(TTTAttributedLabel *)label didSelectLinkWithURL:(NSURL *)url
+- (IBAction)loginFromQQ:(id)sender
 {
-    [[UIApplication sharedApplication] openURL:url];
+    _tencentOAuth = [[TencentOAuth alloc] initWithAppId:@"100942993" andDelegate:self];
+    [_tencentOAuth authorize:@[kOPEN_PERMISSION_GET_INFO, kOPEN_PERMISSION_GET_USER_INFO, kOPEN_PERMISSION_GET_SIMPLE_USER_INFO]];
 }
+
+- (void)tencentDidNotLogin:(BOOL)cancelled
+{
+    NSLog(@"登录失败");
+}
+
+- (void)tencentDidLogin
+{
+    if (_tencentOAuth.accessToken && [_tencentOAuth.accessToken length]) {
+        NSString *userInfo = [NSString stringWithFormat:@"{"
+                                                        @"\"openid\": \"%@\", "
+                                                        @"\"access_token\": \"%@\""
+                                                        @"}",
+                                                        _tencentOAuth.openId, _tencentOAuth.accessToken];
+        
+        [self loginWithCatalog:@"qq" andAccountInfo:userInfo];
+    }
+}
+
+- (void)tencentDidNotNetWork
+{
+    NSLog(@"请检查网络");
+}
+
+
+#pragma mark 微信登录
+
+- (IBAction)loginFromWechat:(id)sender
+{
+    SendAuthReq *req = [SendAuthReq new];
+    req.scope = @"snsapi_userinfo" ;
+    req.state = @"osc_wechat_login" ;
+    //第三方向微信终端发送一个SendAuthReq消息结构
+    [WXApi sendReq:req];
+}
+
+
+- (void)onResp:(BaseResp *)resp
+{
+    if ([resp isKindOfClass:[SendAuthResp class]]) {
+        if (resp.errCode != 0) {return;}
+        
+        SendAuthResp *temp = (SendAuthResp *)resp;
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+        manager.responseSerializer.acceptableContentTypes = [manager.responseSerializer.acceptableContentTypes setByAddingObject:@"text/plain"];
+        [manager GET:[NSString stringWithFormat:@"https://api.weixin.qq.com/sns/oauth2/access_token"]
+          parameters:@{
+                       @"appid": @"wxa8213dc827399101",
+                       @"secret": @"5c716417ce72ff69d8cf0c43572c9284",
+                       @"code": temp.code,
+                       @"grant_type": @"authorization_code",
+                       }
+             success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                 [self loginWithCatalog:@"wechat" andAccountInfo:operation.responseString];
+             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                 NSLog(@"error: %@", error);
+             }];
+    }
+}
+
+
+#pragma mark 微博登录
+
+- (IBAction)loginFromWeibo:(id)sender
+{
+    WBAuthorizeRequest *request = [WBAuthorizeRequest request];
+    request.redirectURI = @"http://sns.whalecloud.com/sina2/callback";
+    request.scope = @"all";
+    
+    [WeiboSDK sendRequest:request];
+}
+
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response
+{
+    if ([response isKindOfClass:WBAuthorizeResponse.class]) {
+        WBAuthorizeResponse *authResponse = (WBAuthorizeResponse *)response;
+        
+        if (!authResponse.userID) {return;}
+        NSString *info = [NSString stringWithFormat:@"{"
+                                                    @"\"openid\": %@,\n"
+                                                    @"\"access_token\": \"%@\",\n"
+                                                    @"\"refresh_token\": \"%@\",\n"
+                                                    @"\"expires_in\": \"%@\""
+                                                    @"}",
+                                                    authResponse.userID,
+                                                    authResponse.accessToken,
+                                                    authResponse.refreshToken,
+                                                    authResponse.expirationDate];
+        
+        [self loginWithCatalog:@"weibo" andAccountInfo:info];
+    }
+}
+
+- (void)didReceiveWeiboRequest:(WBBaseRequest *)request
+{
+    
+}
+
+
+#pragma mark 处理第三方账号
+
+- (void)loginWithCatalog:(NSString *)catalog andAccountInfo:(NSString *)info
+{
+    _catalog = [catalog copy];
+    _info = [info copy];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_LOGIN]
+       parameters:@{
+                    @"catalog": catalog,
+                    @"openid_info": info,
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [result firstChildWithTag:@"errorCode"].numberValue.intValue;
+              
+              if (errorCode == 1) {
+                  ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
+                  
+                  [self renewUserWithXML:userXML];
+              } else {
+                  [self showOperationAlertView];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *hud = [Utils createHUD];
+              hud.mode = MBProgressHUDModeCustomView;
+              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              hud.labelText = [@(operation.response.statusCode) stringValue];
+              hud.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              
+              [hud hide:YES afterDelay:1];
+          }];
+}
+
+
+- (void)registerAcount
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_REGISTER]
+       parameters:@{
+                    @"catalog": _catalog,
+                    @"openid_info": _info,
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [result firstChildWithTag:@"errorCode"].numberValue.intValue;
+              NSString *errorMessage = [result firstChildWithTag:@"errorMessage"].stringValue;
+              
+              if (errorCode == 1) {
+                  ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
+                  
+                  [self renewUserWithXML:userXML];
+              } else {
+                  MBProgressHUD *hud = [Utils createHUD];
+                  hud.mode = MBProgressHUDModeCustomView;
+                  hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  hud.detailsLabelText = errorMessage;
+                  
+                  [hud hide:YES afterDelay:1];
+              }
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *hud = [Utils createHUD];
+              hud.mode = MBProgressHUDModeCustomView;
+              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              hud.labelText = [@(operation.response.statusCode) stringValue];
+              hud.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              
+              [hud hide:YES afterDelay:1];
+          }];
+}
+
+
+- (void)accountBinding
+{
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_BINDING]
+       parameters:@{
+                    @"catalog": _catalog,
+                    @"openid_info": _info,
+                    @"username": _account,
+                    @"pwd": _pasword,
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [result firstChildWithTag:@"errorCode"].numberValue.intValue;
+              NSString *errorMessage = [result firstChildWithTag:@"errorMessage"].stringValue;
+              
+              if (errorCode == 1) {
+                  ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
+                  
+                  [self renewUserWithXML:userXML];
+              } else {
+                  MBProgressHUD *hud = [Utils createHUD];
+                  hud.mode = MBProgressHUDModeCustomView;
+                  hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  hud.detailsLabelText = errorMessage;
+                  
+                  [hud hide:YES afterDelay:1];
+              }
+              
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *hud = [Utils createHUD];
+              hud.mode = MBProgressHUDModeCustomView;
+              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              hud.labelText = [@(operation.response.statusCode) stringValue];
+              hud.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              
+              [hud hide:YES afterDelay:1];
+          }];
+}
+
+
+- (void)renewUserWithXML:(ONOXMLElement *)xml
+{
+    OSCUser *user = [[OSCUser alloc] initWithXML:xml];
+    
+    [Config saveOwnID:user.userID
+             userName:user.name
+                score:user.score
+        favoriteCount:user.favoriteCount
+            fansCount:user.fansCount
+     andFollowerCount:user.followersCount];
+    
+    [OSCThread startPollingNotice];
+    
+    [self saveCookies];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)showOperationAlertView
+{
+    UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"第三方登录"
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:@"取消"
+                                                      otherButtonTitles:@"绑定已有账号", @"快速创建新账号", nil];
+    alerView.tag = 1;
+    alerView.delegate = self;
+    [alerView show];
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+#warning From ios 8.0 onward UIAlertView is deprecated, 以后应改用UIAlertController
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex) {return;}
+    
+    if (alertView.tag == 1) {
+        if (buttonIndex == 2) {
+            [self registerAcount];
+        } else {
+            return;
+        }
+    } else if (alertView.tag == 2) {
+        _account = [alertView textFieldAtIndex:0].text;
+        _pasword = [alertView textFieldAtIndex:1].text;
+        
+        [self accountBinding];
+    }
+}
+
+- (BOOL)alertViewShouldEnableFirstOtherButton:(UIAlertView *)alertView
+{
+    if (alertView.tag != 2) {return YES;}
+    
+    return ([alertView textFieldAtIndex:0].text.length && [alertView textFieldAtIndex:1].text.length);
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == 1 && buttonIndex == 1) {
+        UIAlertView *alerView = [[UIAlertView alloc] initWithTitle:@"绑定已有账号"
+                                                           message:@""
+                                                          delegate:self
+                                                 cancelButtonTitle:@"取消"
+                                                 otherButtonTitles:@"确认", nil];
+        
+        alerView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        alerView.tag = 2;
+        alerView.delegate = self;
+        [alerView show];
+    }
+}
+
 
 
 

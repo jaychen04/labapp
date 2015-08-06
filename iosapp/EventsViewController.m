@@ -33,7 +33,13 @@ static NSString * const EventCellID = @"EventCell";
 
 - (instancetype)init
 {
-    return [self initWithCatalog:1];
+    self = [self initWithCatalog:1];
+    
+    self.needAutoRefresh = YES;
+    self.refreshInterval = 600;
+    self.kLastRefreshTime = @"MyEventsRefreshInterval";
+    
+    return self;
 }
 
 - (instancetype)initWithCatalog:(int)catalog
@@ -95,7 +101,6 @@ static NSString * const EventCellID = @"EventCell";
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:EventCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
     
     self.lastCell.emptyMessage = @"没有动态信息";
 }
@@ -119,7 +124,7 @@ static NSString * const EventCellID = @"EventCell";
     OSCEvent *event = self.objects[row];
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:EventCellID forIndexPath:indexPath];
     
-    cell.contentLabel.textColor = [UIColor titleColor];
+    cell.contentLabel.textColor = [UIColor contentTextColor];
     
     [self setBlockForEventCell:cell];
     [cell setContentWithEvent:event];

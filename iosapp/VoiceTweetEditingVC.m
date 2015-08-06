@@ -90,9 +90,9 @@
 
 - (void)initSubViews
 {
-    _edittingArea = [[PlaceholderTextView alloc] initWithPlaceholder:@"为你的声音附上一段描述..."];
+    _edittingArea = [PlaceholderTextView new];
+    _edittingArea.placeholder = @"为你的声音附上一段描述...";
     _edittingArea.delegate = self;
-    _edittingArea.placeholderFont = [UIFont systemFontOfSize:16];
     _edittingArea.returnKeyType = UIReturnKeySend;
     _edittingArea.scrollEnabled = NO;
     _edittingArea.font = [UIFont systemFontOfSize:16];
@@ -453,7 +453,9 @@
 - (void)pubTweet
 {
     if ([Config getOwnID] == 0) {
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
     if (!_hasVoice) {
@@ -463,7 +465,7 @@
         [HUD hide:YES afterDelay:1];
         return;
     }
-    NSString *message = [NSString new];
+    NSString *message;
     if ([Utils convertRichTextToRawText:_edittingArea].length) {
         message = [Utils convertRichTextToRawText:_edittingArea];
     } else {
@@ -544,11 +546,6 @@
 - (void)keyboardHide
 {
     [_edittingArea resignFirstResponder];
-}
-
-- (void)textViewDidChange:(PlaceholderTextView *)textView
-{
-    [textView checkShouldHidePlaceholder];
 }
 
 

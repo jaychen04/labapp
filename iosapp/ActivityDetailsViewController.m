@@ -58,6 +58,7 @@
     self.navigationItem.title = @"活动详情";
     self.view.backgroundColor = [UIColor themeColor];
     self.tableView.bounces = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     _HUD = [Utils createHUD];
@@ -104,13 +105,15 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [_HUD hide:YES];
+    
+    [super viewWillDisappear:animated];
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _postDetails? 3 : 0;
+    return _postDetails? 2 : 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -136,8 +139,6 @@
             return height + 95;
         }
         case 1:
-            return 35;
-        case 2:
             return _isLoadingFinished? _webViewHeight + 30 : 400;
         default:
             return 0;
@@ -175,15 +176,6 @@
             return cell;
         }
         case 1: {
-            UITableViewCell *Cell = [UITableViewCell new];
-            Cell.textLabel.text = @"活动详情";
-            Cell.textLabel.textColor = [UIColor darkGrayColor];
-            Cell.backgroundColor = [UIColor themeColor];
-            Cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            
-            return Cell;
-        }
-        case 2: {
             ActivityDetailsCell *cell = [ActivityDetailsCell new];
             cell.webView.delegate = self;
             [cell.webView loadHTMLString:_HTML baseURL:[NSBundle mainBundle].resourceURL];

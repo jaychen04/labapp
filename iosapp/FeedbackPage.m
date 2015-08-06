@@ -34,7 +34,7 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"意见反馈";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"send"]
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发送"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(sendFeedback)];
@@ -61,8 +61,8 @@
 
 - (void)setLayout
 {
-    _feedbackTextView = [[PlaceholderTextView alloc] initWithPlaceholder:@"感谢您的反馈，请提出您的意见与建议"];
-    _feedbackTextView.placeholderFont = [UIFont systemFontOfSize:15];
+    _feedbackTextView = [PlaceholderTextView new];
+    _feedbackTextView.placeholder = @"感谢您的反馈，请提出您的意见与建议";
     [_feedbackTextView setCornerRadius:3.0];
     _feedbackTextView.font = [UIFont systemFontOfSize:17];
     _feedbackTextView.translatesAutoresizingMaskIntoConstraints = NO;

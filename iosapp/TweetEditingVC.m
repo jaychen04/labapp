@@ -142,9 +142,9 @@
     [_scrollView addSubview:_contentView];
     _scrollView.contentSize = _contentView.bounds.size;
     
-    _edittingArea = [[PlaceholderTextView alloc] initWithPlaceholder:@"今天你动弹了吗？"];
+    _edittingArea = [PlaceholderTextView new];
+    _edittingArea.placeholder = @"今天你动弹了吗？";
     _edittingArea.delegate = self;
-    _edittingArea.placeholderFont = [UIFont systemFontOfSize:17];
     if (_topicName.length) {
         _edittingArea.text = [NSString stringWithFormat:@"#%@#", _topicName];
     }
@@ -154,6 +154,10 @@
     _edittingArea.font = [UIFont systemFontOfSize:18];
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
     [_contentView addSubview:_edittingArea];
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        _edittingArea.keyboardAppearance = UIKeyboardAppearanceDark;
+    }
     
     _edittingArea.backgroundColor = [UIColor themeColor];
     _edittingArea.textColor = [UIColor titleColor];
@@ -217,7 +221,7 @@
     // 底部添加border
     
     UIView *bottomBorder = [UIView new];
-    bottomBorder.backgroundColor = [UIColor lightGrayColor];
+    bottomBorder.backgroundColor = [UIColor borderColor];
     bottomBorder.translatesAutoresizingMaskIntoConstraints = NO;
     [_toolBar addSubview:bottomBorder];
     
@@ -443,7 +447,9 @@
 - (void)pubTweet
 {
     if ([Config getOwnID] == 0) {
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
     
@@ -587,7 +593,6 @@
 
 - (void)textViewDidChange:(PlaceholderTextView *)textView
 {
-    [textView checkShouldHidePlaceholder];
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
     
     CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 10);

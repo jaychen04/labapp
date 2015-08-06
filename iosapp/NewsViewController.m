@@ -44,6 +44,11 @@ static NSString *kNewsCellID = @"NewsCell";
         };
         
         self.objClass = [OSCNews class];
+        
+        
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 21600;
+        self.kLastRefreshTime = [NSString stringWithFormat:@"NewsRefreshInterval-%d", type];
     }
     
     return self;
@@ -53,11 +58,6 @@ static NSString *kNewsCellID = @"NewsCell";
 - (NSArray *)parseXML:(ONOXMLDocument *)xml
 {
     return [[xml.rootElement firstChildWithTag:@"newslist"] childrenWithTag:@"news"];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)viewDidLoad

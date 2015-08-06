@@ -3,20 +3,23 @@
 
         <style>
             a {color: #087221;}
+            body {
+                color: #333;
+                font-weight: bold;
+                line-height: 135%;
+            }
         </style>
         
         {{{ content }}}
         <br />
         
         {{# imageURL }}
-        <br/>
         <a href="{{imageURL}}">
-            <img src="{{imageURL}}" style="display: block; margin-left: auto; margin-right: auto;"/>
+            <img src="{{imageURL}}"/>
         </a>
         {{/}}
         
         {{# audioURL }}
-        <br />
         <audio controls>
             <source src="{{audioURL}}?avthumb.mp3" type="audio/mpeg">
         </audio>

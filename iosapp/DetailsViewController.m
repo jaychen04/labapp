@@ -184,7 +184,7 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"刷新" style:UIBarButtonItemStyleDone target:self action:@selector(refresh)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
     
     // 资讯、博客和软件详情没有“举报”选项
     if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware || _commentType == CommentTypeBlog) {
@@ -215,7 +215,10 @@
     _HUD.userInteractionEnabled = NO;
     
     _manager = [AFHTTPRequestOperationManager OSCManager];
-    //_manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
+//    [_manager.responseSerializer setValue:@"utf-8" forKey:@"Accept-Charset"];
+//    [_manager.responseSerializer setValue:@"application/json" forKey:@"Accept"];
+//    _manager.responseSerializer.stringEncoding = NSUTF8StringEncoding;
+//    _manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     [self fetchDetails];
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 }
@@ -386,28 +389,40 @@
     [_manager GET:_detailsURL
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+//              NSString *response = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
+              
+//              ONOXMLDocument *test = [ONOXMLDocument XMLDocumentWithString:response encoding:NSUTF8StringEncoding error:nil];
+              
               ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
-              
-              id details = [[_detailsClass alloc] initWithXML:XML];
-              _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
-              [self performSelector:_loadMethod withObject:details];
-              
-              self.operationBar.isStarred = _isStarred;
-              
-              UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
-              commentsCountButton.shouldHideBadgeAtZero = YES;
-              commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
-              commentsCountButton.badgePadding = 1;
-              commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
-              
-              if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
-              
-              [self setBlockForOperationBar];
+              if (!XML || XML.children.count <= 0) {
+                  [self.navigationController popViewControllerAnimated:YES];
+              } else {
+                  id details = [[_detailsClass alloc] initWithXML:XML];
+                  _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
+                  
+//                  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d条评论", _commentCount]
+//                                                                                            style:UIBarButtonItemStylePlain
+//                                                                                           target:self action:@selector(refresh)];
+                  
+                  [self performSelector:_loadMethod withObject:details];
+                  
+                  self.operationBar.isStarred = _isStarred;
+                  
+                  UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
+                  commentsCountButton.shouldHideBadgeAtZero = YES;
+                  commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
+                  commentsCountButton.badgePadding = 1;
+                  commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
+                  
+                  if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
+                  
+                  [self setBlockForOperationBar];
+              }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _HUD.mode = MBProgressHUDModeCustomView;
               _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              _HUD.labelText = @"网络异常，加载详情失败";
+              _HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
               
               [_HUD hide:YES afterDelay:1];
           }

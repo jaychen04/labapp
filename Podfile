@@ -10,3 +10,6 @@ pod 'RESideMenu'
 pod 'Reachability'
 pod 'TTTAttributedLabel'
 pod 'GRMustache'
+pod 'TOWebViewController'
+pod 'MJRefresh'
+pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk"

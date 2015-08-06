@@ -49,7 +49,6 @@ static NSString * const kActivtyCellID = @"ActivityCell";
 {
     [super viewDidLoad];
     [self.tableView registerClass:[ActivityCell class] forCellReuseIdentifier:kActivtyCellID];
-    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 - (void)didReceiveMemoryWarning {

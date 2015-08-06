@@ -14,6 +14,7 @@
 #import "Config.h"
 #import "Utils.h"
 #import "LoginViewController.h"
+#import "AppDelegate.h"
 
 
 @interface BottomBarViewController () <UITextViewDelegate>
@@ -80,6 +81,10 @@
     [_editingBar.inputViewButton addTarget:self action:@selector(switchInputView) forControlEvents:UIControlEventTouchUpInside];
     [_editingBar.modeSwitchButton addTarget:self action:@selector(switchMode) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_editingBar];
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        _editingBar.editView.keyboardAppearance = UIKeyboardAppearanceDark;
+    }
     
     _editingBarYConstraint = [NSLayoutConstraint constraintWithItem:self.view    attribute:NSLayoutAttributeBottom   relatedBy:NSLayoutRelationEqual
                                                              toItem:_editingBar  attribute:NSLayoutAttributeBottom   multiplier:1.0 constant:0];
@@ -258,7 +263,9 @@
 {
     if ([text isEqualToString: @"\n"]) {
         if ([Config getOwnID] == 0) {
-            [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self.navigationController pushViewController:loginVC animated:YES];
         } else {
             [self sendContent];
             [textView resignFirstResponder];
@@ -281,18 +288,6 @@
         _editingBarYConstraint.constant = 0;
         [self setBottomBarHeight];
     }
-}
-
-
-// ugly
-- (void)textViewDidEndEditing:(PlaceholderTextView *)textView
-{
-    [textView checkShouldHidePlaceholder];
-}
-
-- (void)textViewDidChange:(PlaceholderTextView *)textView
-{
-    [textView checkShouldHidePlaceholder];
 }
 
 
