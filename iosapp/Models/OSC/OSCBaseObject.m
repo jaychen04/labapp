@@ -15,6 +15,10 @@
     NSAssert(false, @"Over ride in subclasses");
     return nil;
 }
- 
+
+- (instancetype)initWithTBXMLElement:(TBXMLElement*)element {
+    NSAssert(false, @"Over ride in TBXML subclasses");
+    return nil;
+}
 
 @end

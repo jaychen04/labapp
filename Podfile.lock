@@ -43,6 +43,7 @@ PODS:
     - SDWebImage/Core (= 3.7.3)
   - SDWebImage/Core (3.7.3)
   - SSKeychain (1.2.3)
+  - TBXML (1.5)
   - TOWebViewController (2.0.17)
   - TTTAttributedLabel (1.13.4)
   - WeiboSDK (3.1.1)
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - RESideMenu
   - SDWebImage
   - SSKeychain
+  - TBXML
   - TOWebViewController
   - TTTAttributedLabel
   - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk`)
@@ -68,7 +70,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   WeiboSDK:
-    :commit: 71a9309457c007fa3b5b8c2d8da85e16d49faa3b
+    :commit: e371a0f44e77cb0f23d08135b6a63ae575694935
     :git: https://github.com/sinaweibosdk/weibo_ios_sdk
 
 SPEC CHECKSUMS:
@@ -85,8 +87,9 @@ SPEC CHECKSUMS:
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
+  TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
   TOWebViewController: aada427e7eba199bbaee77ddee3243c8172f4053
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   WeiboSDK: 6e346dd76f1fedd576029bf300a8f54b172189ff
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.36.4

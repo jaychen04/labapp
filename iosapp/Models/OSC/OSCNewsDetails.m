@@ -26,7 +26,7 @@
         _authorID = [[[xml firstChildWithTag:@"authorid"] numberValue] longLongValue];
         _pubDate = [[xml firstChildWithTag:@"pubDate"] stringValue];
         _softwareLink = [NSURL URLWithString:[[xml firstChildWithTag:@"softwarelink"] stringValue]];
-        _softwareName = [[xml firstChildWithTag:@"softwareName"] stringValue];
+        _softwareName = [[xml firstChildWithTag:@"softwarename"] stringValue];
         _isFavorite = [[[xml firstChildWithTag:@"favorite"] numberValue] boolValue];
         NSMutableArray *mutableRelatives = [NSMutableArray new];
         NSArray *relativesXML = [[xml firstChildWithTag:@"relativies"] childrenWithTag:@"relative"];
@@ -41,6 +41,36 @@
     return self;
 }
 
+- (instancetype)initWithTBXMLElement:(TBXMLElement*)element {
+    self = [super init];
+    
+    if (self) {
+        _newsID = [[TBXML textForElement:[TBXML childElementNamed:@"id" parentElement:element]] longLongValue];
+        _title = [TBXML textForElement:[TBXML childElementNamed:@"title" parentElement:element]];
+        _url = [NSURL URLWithString:[TBXML textForElement:[TBXML childElementNamed:@"url" parentElement:element]]];
+        _body = [TBXML textForElement:[TBXML childElementNamed:@"body" parentElement:element]];
+        _commentCount = [[TBXML textForElement:[TBXML childElementNamed:@"commentCount" parentElement:element]] intValue];
+        _author = [TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:element]];
+        _authorID = [[TBXML textForElement:[TBXML childElementNamed:@"authorid" parentElement:element]] integerValue];
+        _pubDate = [TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]];
+        _softwareLink = [NSURL URLWithString:[TBXML textForElement:[TBXML childElementNamed:@"softwarelink" parentElement:element]]];
+        _softwareName = [TBXML textForElement:[TBXML childElementNamed:@"softwarename" parentElement:element]];
+        _isFavorite = [[TBXML textForElement:[TBXML childElementNamed:@"favorite" parentElement:element]] boolValue];
+
+        NSMutableArray *mutableRelatives = [NSMutableArray new];
+        TBXMLElement *relativies = [TBXML childElementNamed:@"relativies" parentElement:element];
+        TBXMLElement *relative = [TBXML childElementNamed:@"relative" parentElement:relativies];
+        while (relative) {
+            NSString *rTitle = [TBXML textForElement:[TBXML childElementNamed:@"rtitle" parentElement:relative]];
+            NSString *rURL = [TBXML textForElement:[TBXML childElementNamed:@"rurl" parentElement:relative]];
+            [mutableRelatives addObject:@[rTitle, rURL]];
+            relative = [TBXML nextSiblingNamed:@"relative" searchFromElement:relative];
+        }
+        _relatives = [NSArray arrayWithArray:mutableRelatives];
+    }
+    
+    return self;
+}
 
 - (NSString *)html
 {

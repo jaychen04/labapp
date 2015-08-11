@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <Ono.h>
+#import <TBXML.h>
 
 @interface OSCBaseObject : NSObject
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml;
 
+- (instancetype)initWithTBXMLElement:(TBXMLElement*)element;
 @end
