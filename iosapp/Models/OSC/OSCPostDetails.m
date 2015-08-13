@@ -47,6 +47,48 @@
     return self;
 }
 
+- (instancetype)initWithTBXMLElement:(TBXMLElement*)element {
+    self = [super init];
+    
+    if (self) {
+        _postID = [[TBXML textForElement:[TBXML childElementNamed:@"id" parentElement:element]] longLongValue];
+        _title = [TBXML textForElement:[TBXML childElementNamed:@"title" parentElement:element]];
+        _url = [NSURL URLWithString:[TBXML textForElement:[TBXML childElementNamed:@"url" parentElement:element]]];
+        _portraitURL = [NSURL URLWithString:[TBXML textForElement:[TBXML childElementNamed:@"portrait" parentElement:element]]];
+        _body = [TBXML textForElement:[TBXML childElementNamed:@"body" parentElement:element]];
+        _author = [TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:element]];
+        _authorID = [[TBXML textForElement:[TBXML childElementNamed:@"authorid" parentElement:element]] integerValue];
+        _answerCount = [[TBXML textForElement:[TBXML childElementNamed:@"answerCount" parentElement:element]] intValue];
+        _viewCount = [[TBXML textForElement:[TBXML childElementNamed:@"viewCount" parentElement:element]] intValue];
+        _isFavorite = [[TBXML textForElement:[TBXML childElementNamed:@"favorite" parentElement:element]] boolValue];
+        _pubDate = [TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]];
+
+        TBXMLElement *eventElement = [TBXML childElementNamed:@"event" parentElement:element];
+        if (eventElement && eventElement->firstChild) {
+            _status = [[TBXML textForElement:[TBXML childElementNamed:@"status" parentElement:eventElement]] intValue];
+            _applyStatus = [[TBXML textForElement:[TBXML childElementNamed:@"applyStatus" parentElement:eventElement]] intValue];
+            _category    = [[TBXML textForElement:[TBXML childElementNamed:@"category" parentElement:eventElement]] intValue];
+            _signUpUrl = [NSURL URLWithString:[TBXML textForElement:[TBXML childElementNamed:@"url" parentElement:eventElement]]];
+        }
+        
+        TBXMLElement *tags = [TBXML childElementNamed:@"tags" parentElement:element];
+        if (tags) {
+            NSMutableArray *mutableTags = [NSMutableArray new];
+            TBXMLElement *tag = [TBXML childElementNamed:@"tag" parentElement:tags];
+            while (tag) {
+                NSString *tagStr = [TBXML textForElement:tag];
+                [mutableTags addObject:tagStr];
+                tag = [TBXML nextSiblingNamed:@"tag" searchFromElement:tag];
+            }
+            _tags = [NSArray arrayWithArray:mutableTags];
+        }
+        
+    }
+    
+    return self;
+}
+
+
 - (NSString *)html
 {
     if (!_html) {

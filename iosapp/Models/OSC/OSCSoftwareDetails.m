@@ -40,6 +40,33 @@
     return self;
 }
 
+- (instancetype)initWithTBXMLElement:(TBXMLElement*)element {
+    self = [super init];
+    
+    if (self) {
+        _authorID = [[TBXML textForElement:[TBXML childElementNamed:@"authorid" parentElement:element]] integerValue];
+        _author = [TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:element]];
+        _title = [TBXML textForElement:[TBXML childElementNamed:@"title" parentElement:element]];
+        _softwareID = [[TBXML textForElement:[TBXML childElementNamed:@"id" parentElement:element]] longLongValue];
+        _isRecommended = [[TBXML textForElement:[TBXML childElementNamed:@"recommended" parentElement:element]] boolValue];
+        _url = [NSURL URLWithString:[TBXML textForElement:[TBXML childElementNamed:@"url" parentElement:element]]];
+        _body = [TBXML textForElement:[TBXML childElementNamed:@"body" parentElement:element]];
+        _extensionTitle = [TBXML textForElement:[TBXML childElementNamed:@"extensionTitle" parentElement:element]];
+        _license = [TBXML textForElement:[TBXML childElementNamed:@"license" parentElement:element]];
+        _os = [TBXML textForElement:[TBXML childElementNamed:@"os" parentElement:element]];
+        _language = [TBXML textForElement:[TBXML childElementNamed:@"language" parentElement:element]];
+        _recordTime = [TBXML textForElement:[TBXML childElementNamed:@"recordtime" parentElement:element]];
+        _homepageURL = [TBXML textForElement:[TBXML childElementNamed:@"homepage" parentElement:element]];
+        _documentURL = [TBXML textForElement:[TBXML childElementNamed:@"document" parentElement:element]];
+        _downloadURL = [TBXML textForElement:[TBXML childElementNamed:@"download" parentElement:element]];
+        _logoURL = [TBXML textForElement:[TBXML childElementNamed:@"logo" parentElement:element]];
+        _isFavorite = [[TBXML textForElement:[TBXML childElementNamed:@"favorite" parentElement:element]] boolValue];
+        _tweetCount = [[TBXML textForElement:[TBXML childElementNamed:@"tweetCount" parentElement:element]] intValue];
+    }
+    
+    return self;
+}
+
 - (NSString *)html
 {
     if (!_html) {        

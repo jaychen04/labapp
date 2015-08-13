@@ -33,6 +33,27 @@
     return self;
 }
 
+- (instancetype)initWithTBXMLElement:(TBXMLElement*)element {
+    self = [super init];
+    
+    if (self) {
+        _blogID = [[TBXML textForElement:[TBXML childElementNamed:@"id" parentElement:element]] longLongValue];
+        _title = [TBXML textForElement:[TBXML childElementNamed:@"title" parentElement:element]] ;
+        _url = [NSURL URLWithString:[TBXML textForElement:[TBXML childElementNamed:@"url" parentElement:element]]];
+        _body = [TBXML textForElement:[TBXML childElementNamed:@"body" parentElement:element]];
+        _commentCount = [[TBXML textForElement:[TBXML childElementNamed:@"commentCount" parentElement:element]] intValue];
+        _author = [TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:element]];
+        _authorID = [[TBXML textForElement:[TBXML childElementNamed:@"authorid" parentElement:element]] longLongValue];
+        _pubDate = [TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]];
+        _isFavorite = [[TBXML textForElement:[TBXML childElementNamed:@"favorite" parentElement:element]] boolValue];
+        _where = [TBXML textForElement:[TBXML childElementNamed:@"where" parentElement:element]];
+        _documentType = [[TBXML textForElement:[TBXML childElementNamed:@"documentType" parentElement:element]] intValue];
+    }
+    
+    return self;
+}
+
+
 - (NSString *)html
 {
     if (!_html) {

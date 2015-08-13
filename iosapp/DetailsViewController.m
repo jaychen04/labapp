@@ -29,7 +29,7 @@
 #import "UMSocial.h"
 #import "UIBarButtonItem+Badge.h"
 #import "AppDelegate.h"
-
+#import <TBXML.h>
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -383,9 +383,49 @@
     }
 }
 
-
 - (void)fetchDetails
 {
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
+    [manager GET:_detailsURL parameters:nil success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+        NSString *response = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
+        TBXML *XML = [[TBXML alloc]initWithXMLString:response error:nil];
+        if (!XML || XML.rootXMLElement <= 0) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            id details;
+            if ([_tag isEqualToString:@"blog"] || [_tag isEqualToString:@"post"]) {     //tbxml
+                TBXMLElement *element = XML.rootXMLElement;
+                TBXMLElement *subElement = [TBXML childElementNamed:_tag parentElement:element];
+                details = [[_detailsClass alloc] initWithTBXMLElement:subElement];
+            }else {     //onoxml
+                ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
+                details = [[_detailsClass alloc] initWithXML:XML];
+            }
+            
+            [self performSelector:_loadMethod withObject:details];
+            
+            self.operationBar.isStarred = _isStarred;
+            
+            UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
+            commentsCountButton.shouldHideBadgeAtZero = YES;
+            commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
+            commentsCountButton.badgePadding = 1;
+            commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
+            
+            if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
+            
+            [self setBlockForOperationBar];
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"error:%@",error);
+    }];
+    
+
+    //////////////////ONOXMLDocument///////////////////////
+    /*
     [_manager GET:_detailsURL
        parameters:nil
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
@@ -427,6 +467,7 @@
               [_HUD hide:YES afterDelay:1];
           }
      ];
+     */
 }
 
 
@@ -447,7 +488,7 @@
     
     _webURL = [newsDetails.url absoluteString];
     _objectTitle = newsDetails.title;
-    
+    _commentCount = newsDetails.commentCount;
     NSString *trimmedHTML = [Utils deleteHTMLTag:newsDetails.body];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
     _digest = [[Utils deleteHTMLTag:newsDetails.body] substringToIndex:length];
@@ -460,7 +501,7 @@
     _isStarred = blogDetails.isFavorite;
     _webURL = [blogDetails.url absoluteString];
     _objectTitle = blogDetails.title;
-    
+    _commentCount = blogDetails.commentCount;
     NSString *trimmedHTML = [Utils deleteHTMLTag:blogDetails.body];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
     _digest = [[Utils deleteHTMLTag:blogDetails.body] substringToIndex:length];
