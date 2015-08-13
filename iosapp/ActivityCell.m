@@ -71,4 +71,9 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tabImageView(30)]|" options:0 metrics:nil views:views]];
 }
 
+- (void)prepareForReuse
+{
+    _tabImageView.hidden = YES;
+}
+
 @end
