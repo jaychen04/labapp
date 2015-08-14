@@ -57,7 +57,6 @@
     
     self.navigationItem.title = @"活动详情";
     self.view.backgroundColor = [UIColor themeColor];
-    self.tableView.bounces = NO;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
