@@ -11,5 +11,7 @@
 @interface ActivitySignUpViewController : UIViewController
 
 @property (nonatomic, readwrite, assign) int64_t eventId;
+@property (nonatomic, copy) NSString *remarkTipStr;
+@property (nonatomic, strong) NSArray *remarkCitys;
 
 @end

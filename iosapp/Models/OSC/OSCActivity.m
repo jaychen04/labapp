@@ -26,6 +26,15 @@
         _city        = [[xml firstChildWithTag:@"city"] stringValue];
         _status      = [[[xml firstChildWithTag:@"status"] numberValue] intValue];
         _applyStatus = [[[xml firstChildWithTag:@"applyStatus"] numberValue] intValue];
+        _remarkTip   = [[[xml firstChildWithTag:@"remark"] firstChildWithTag:@"remarkTip"] stringValue];
+        
+        _remarkCitys = [NSMutableArray new];
+        ONOXMLElement *remarkXML = [[xml firstChildWithTag:@"remark"] firstChildWithTag:@"remarkSelect"];
+        NSArray *remarksXML = [remarkXML childrenWithTag:@"select"];
+        for (ONOXMLElement *element in remarksXML) {
+            NSString *str = element.stringValue;
+            [_remarkCitys addObject:str];
+        }
     }
     
     return self;

@@ -20,7 +20,9 @@
 #import <Ono.h>
 #import <ReactiveCocoa.h>
 
-@interface ActivitySignUpViewController () <UITextFieldDelegate>
+static NSInteger HeightPicker;
+
+@interface ActivitySignUpViewController () <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, copy) UITextField *nameTextField;
 @property (nonatomic, copy) UITextField *phoneNumberTextField;
@@ -28,9 +30,31 @@
 @property (nonatomic, copy) UITextField *positionTextField;
 @property (nonatomic, copy) UISegmentedControl *sexSegmentCtl;
 @property (nonatomic, copy) UIButton *saveButton;
+
+@property (nonatomic, copy) UITextField *remarkSelectTextField;
+@property (nonatomic, copy) UITableView *remarktoggle;
+@property (nonatomic, strong) UIView *backView;
+@property (nonatomic, strong) UILabel *messageLabel;
+@property (nonatomic, strong) UIImageView *selecteImage;
+
 @end
 
 @implementation ActivitySignUpViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (_remarkCitys.count <= 0) {
+        _remarkSelectTextField.hidden = YES;
+        _selecteImage.hidden = YES;
+        _remarktoggle.hidden = YES;
+        _messageLabel.hidden = YES;
+    } else {
+        _remarkSelectTextField.hidden = NO;
+        _selecteImage.hidden = NO;
+        _remarktoggle.hidden = NO;
+        _messageLabel.hidden = NO;
+    }
+}
 
 - (void)viewDidLoad
 {
@@ -106,6 +130,52 @@
     _positionTextField.textColor = [UIColor titleColor];
     [self.view addSubview:_positionTextField];
     
+    _messageLabel = [UILabel new];
+    _messageLabel.text = @"请选择你要参加的城市";
+    _messageLabel.textAlignment = NSTextAlignmentLeft;
+    _messageLabel.font = [UIFont systemFontOfSize:14];
+    _messageLabel.textColor = [UIColor titleColor];
+    [self.view addSubview:_messageLabel];
+    
+    _remarkSelectTextField = [UITextField new];
+    _remarkSelectTextField.delegate = self;
+    _remarkSelectTextField.borderStyle = UITextBorderStyleRoundedRect;
+    _remarkSelectTextField.backgroundColor = [UIColor labelTextColor];
+    _remarkSelectTextField.textColor = [UIColor titleColor];
+    _remarkSelectTextField.placeholder = _remarkTipStr;
+    [self.view addSubview:_remarkSelectTextField];
+    
+    _selecteImage = [UIImageView new];
+//    selecteImage.image = [UIImage imageNamed:@""];
+    _selecteImage.backgroundColor = [UIColor colorWithHex:0x15A230];
+    [_selecteImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(selectRewardCity)]];
+    _selecteImage.userInteractionEnabled = YES;
+    [self.view addSubview:_selecteImage];
+    
+    _remarktoggle = [UITableView new];
+    
+    _backView = [[UIView alloc] initWithFrame:self.view.bounds];
+    _backView.backgroundColor = [UIColor clearColor];
+    [_backView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTitlePicker)]];
+    [_backView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(toggleTitlePicker)]];
+    
+    if (_remarkCitys.count > 5) {
+        HeightPicker = 200;
+    } else {
+        HeightPicker = 30*_remarkCitys.count;
+    }
+    
+    _remarktoggle = [[UITableView alloc] initWithFrame:CGRectMake(10, 318, 100, HeightPicker)];
+    _remarktoggle.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _remarktoggle.delegate = self;
+    _remarktoggle.dataSource = self;
+    _remarktoggle.backgroundColor = [UIColor colorWithHex:0xD9D9D9];
+    _remarktoggle.alpha = 0;
+    [_remarktoggle setCornerRadius:3];
+    _remarktoggle.backgroundColor = [UIColor colorWithHex:0x555555];
+    [self.view addSubview:_remarktoggle];
+    
+    
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         _nameTextField.keyboardAppearance = UIKeyboardAppearanceDark;
@@ -127,10 +197,26 @@
         subView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     
-    NSDictionary *viewDic = NSDictionaryOfVariableBindings(_nameTextField, sexLabel, _sexSegmentCtl, _phoneNumberTextField, _corporationTextField, _positionTextField, _saveButton);
-
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[_nameTextField(fieldHeight)]-12-[sexLabel]-15-[_phoneNumberTextField(fieldHeight)]-15-[_corporationTextField(fieldHeight)]-15-[_positionTextField(fieldHeight)]-25-[_saveButton]" options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:@{@"fieldHeight": @(30)} views:viewDic]];
+    NSDictionary *viewDic = NSDictionaryOfVariableBindings(_nameTextField, sexLabel, _sexSegmentCtl, _phoneNumberTextField, _corporationTextField, _positionTextField, _saveButton, _remarkSelectTextField, _messageLabel, _selecteImage);
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[_nameTextField(fieldHeight)]-12-[sexLabel]-15-[_phoneNumberTextField(fieldHeight)]-15-[_corporationTextField(fieldHeight)]-15-[_positionTextField(fieldHeight)]-15-[_remarkSelectTextField]-25-[_saveButton]"
+                                                                      options:NSLayoutFormatAlignAllLeft
+                                                                      metrics:@{@"fieldHeight": @(30)}
+                                                                        views:viewDic]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[_nameTextField(fieldHeight)]-12-[sexLabel]-15-[_phoneNumberTextField(fieldHeight)]-15-[_corporationTextField(fieldHeight)]-15-[_positionTextField(fieldHeight)]-15-[_messageLabel]-25-[_saveButton]"
+                                                                      options:NSLayoutFormatAlignAllRight
+                                                                      metrics:@{@"fieldHeight": @(30)}
+                                                                        views:viewDic]];
+    
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_nameTextField]-10-|" options:0 metrics:nil views:viewDic]];
+    
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_remarkSelectTextField(100)]-(-2)-[_selecteImage(15)]-2-[_messageLabel]-10-|"
+                                                                      options:NSLayoutFormatAlignAllCenterY
+                                                                      metrics:nil
+                                                                        views:viewDic]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_selecteImage(28)]"
+                                                                             options:0 metrics:nil views:viewDic]];
     
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:sexLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
                                                              toItem:_sexSegmentCtl attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
@@ -140,6 +226,80 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_sexSegmentCtl(100)]" options:0 metrics:nil views:viewDic]];
 }
 
+#pragma mark - Table view data source
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (_remarkCitys.count) {
+        return _remarkCitys.count;
+    }
+    
+    return 4;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 30;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"sideCell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"sideCell"];
+    }
+    if (_remarkCitys.count) {
+        cell.textLabel.text = _remarkCitys[indexPath.row];
+        cell.backgroundColor = [UIColor colorWithHex:0xD9D9D9];
+        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self toggleTitlePicker];
+    
+    if (_remarkCitys.count) {
+        _remarkSelectTextField.text = _remarkCitys[indexPath.row];
+    }
+}
+
+#pragma mark - 选择栏处理
+
+- (void)selectRewardCity
+{
+    if (_remarktoggle.alpha > 0) {
+        [self toggleTitlePicker];
+    }
+    
+    [UIView animateWithDuration:0.15f animations:^{
+        [_remarktoggle setAlpha:1.0f - _remarktoggle.alpha];
+    } completion:^(BOOL finished) {
+        if (_remarktoggle.alpha <= 0.0f) {
+            [_backView removeFromSuperview];
+        } else {
+            [self.view addSubview:_backView];
+            [self.view bringSubviewToFront:_remarktoggle];
+        }
+    }];
+}
+
+- (void)toggleTitlePicker
+{
+    if (_remarktoggle.alpha > 0) {
+        [UIView animateWithDuration:0.15f animations:^{
+            [_remarktoggle setAlpha:1.0f - _remarktoggle.alpha];
+        } completion:^(BOOL finished) {
+            if (_remarktoggle.alpha <= 0.0f) {
+                [_backView removeFromSuperview];
+            } else {
+                [self.view addSubview:_backView];
+                [self.view bringSubviewToFront:_remarktoggle];
+            }
+        }];
+    }
+}
 
 #pragma mark - 提交报名信息并保存
 
@@ -149,13 +309,14 @@
     
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_EVENT_APPLY]
        parameters:@{
-                    @"event":   @(_eventId),
-                    @"user":    @([Config getOwnID]),
-                    @"name":    _nameTextField.text,
-                    @"gender":  @(_sexSegmentCtl.selectedSegmentIndex) ,
-                    @"mobile":  _phoneNumberTextField.text,
-                    @"company": _corporationTextField.text,
-                    @"job":     _positionTextField.text
+                    @"event"     : @(_eventId),
+                    @"user"      : @([Config getOwnID]),
+                    @"name"      : _nameTextField.text,
+                    @"gender"    : @(_sexSegmentCtl.selectedSegmentIndex) ,
+                    @"mobile"    : _phoneNumberTextField.text,
+                    @"company"   : _corporationTextField.text,
+                    @"job"       : _positionTextField.text,
+                    @"misc_info" : _remarkSelectTextField.text
                     }
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];

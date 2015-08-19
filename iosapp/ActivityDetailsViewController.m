@@ -64,7 +64,7 @@
     _HUD.userInteractionEnabled = NO;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    
+
     [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, _activityID]
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
@@ -200,6 +200,8 @@
         } else {
             ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
             signUpViewController.eventId = _postDetails.postID;
+            signUpViewController.remarkTipStr = _activity.remarkTip;
+            signUpViewController.remarkCitys = _activity.remarkCitys;
             [_bottomBarVC.navigationController pushViewController:signUpViewController animated:YES];
         }
     }

@@ -37,5 +37,7 @@ typedef NS_ENUM(NSUInteger, ActivityApplyStatus)
 @property (nonatomic, readonly, copy)     NSString   *city;
 @property (nonatomic, readonly, assign)   ActivityStatus status;
 @property (nonatomic, readonly, assign)   ActivityApplyStatus applyStatus;
+@property (nonatomic, readonly, copy)     NSString   *remarkTip;
+@property (nonatomic, readonly, strong)   NSMutableArray *remarkCitys;
 
 @end
