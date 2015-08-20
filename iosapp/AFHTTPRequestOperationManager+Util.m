@@ -9,6 +9,7 @@
 #import "AFHTTPRequestOperationManager+Util.h"
 
 #import <AFOnoResponseSerializer.h>
+#import <UIKit/UIKit.h>
 
 @implementation AFHTTPRequestOperationManager (Util)
 
