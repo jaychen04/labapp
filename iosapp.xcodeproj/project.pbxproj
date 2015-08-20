@@ -460,6 +460,8 @@
 		EE7EE7121AEF5B1000FE1CA5 /* voice_delete.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE70B1AEF5B1000FE1CA5 /* voice_delete.png */; };
 		EE7EE7131AEF5B1000FE1CA5 /* voice_play.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE70C1AEF5B1000FE1CA5 /* voice_play.png */; };
 		EE7EE7141AEF5B1000FE1CA5 /* voice_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = EE7EE70D1AEF5B1000FE1CA5 /* voice_pause.png */; };
+		EE9549F71B857B5B00F2FD73 /* signup_select@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9549F51B857B5B00F2FD73 /* signup_select@3x.png */; };
+		EE9549F81B857B5B00F2FD73 /* signup_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EE9549F61B857B5B00F2FD73 /* signup_select@2x.png */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 /* End PBXBuildFile section */
@@ -1127,6 +1129,8 @@
 		EE7EE70B1AEF5B1000FE1CA5 /* voice_delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_delete.png; sourceTree = "<group>"; };
 		EE7EE70C1AEF5B1000FE1CA5 /* voice_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_play.png; sourceTree = "<group>"; };
 		EE7EE70D1AEF5B1000FE1CA5 /* voice_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = voice_pause.png; sourceTree = "<group>"; };
+		EE9549F51B857B5B00F2FD73 /* signup_select@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup_select@3x.png"; sourceTree = "<group>"; };
+		EE9549F61B857B5B00F2FD73 /* signup_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "signup_select@2x.png"; sourceTree = "<group>"; };
 		EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
@@ -1847,6 +1851,8 @@
 		386039661A0A34F5007C9B88 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				EE9549F51B857B5B00F2FD73 /* signup_select@3x.png */,
+				EE9549F61B857B5B00F2FD73 /* signup_select@2x.png */,
 				C5B123191B316830000B29D2 /* css */,
 				C5B1231A1B316830000B29D2 /* html */,
 				C5B1231B1B316830000B29D2 /* js */,
@@ -2774,6 +2780,7 @@
 				EE7D33081AA9A00400ABFE58 /* icon_event_status_over.png in Resources */,
 				382A94711A26D27400AAAFEA /* 045@2x.png in Resources */,
 				382A948A1A26D27400AAAFEA /* 071@2x.png in Resources */,
+				EE9549F81B857B5B00F2FD73 /* signup_select@2x.png in Resources */,
 				382A94681A26D27400AAAFEA /* 036@2x.png in Resources */,
 				382A948C1A26D27400AAAFEA /* 073@2x.png in Resources */,
 				383BA0071AB7FBFA00C03C47 /* toolbar-text@2x.png in Resources */,
@@ -2876,6 +2883,7 @@
 				382A949F1A26D27400AAAFEA /* 092@2x.png in Resources */,
 				382A94A41A26D27400AAAFEA /* 097@2x.png in Resources */,
 				38BC59AD1A5D406300F3C4D2 /* picture@3x.png in Resources */,
+				EE9549F71B857B5B00F2FD73 /* signup_select@3x.png in Resources */,
 				38BB27F31AADA76C0088A15C /* user-background@3x.png in Resources */,
 				382A94A31A26D27400AAAFEA /* 096@2x.png in Resources */,
 				382A944F1A26D27400AAAFEA /* 011@2x.png in Resources */,
