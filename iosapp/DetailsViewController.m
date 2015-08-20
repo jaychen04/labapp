@@ -391,7 +391,8 @@
     [manager GET:_detailsURL parameters:nil success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
         NSString *response = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
         TBXML *XML = [[TBXML alloc]initWithXMLString:response error:nil];
-        if (!XML || XML.rootXMLElement <= 0) {
+        ONOXMLElement *onoXML = [responseDocument.rootElement firstChildWithTag:_tag];
+        if (!onoXML || onoXML.children.count <= 0) {
             [self.navigationController popViewControllerAnimated:YES];
         } else {
             id details;
