@@ -90,8 +90,6 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
         _wechatButtonWidth.constant = 0;
         _wechatButtonRight.constant = 0;
     }
-    
-    [self.view layoutIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
