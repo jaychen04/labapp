@@ -2,17 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "UMS_wechat_icon.png"
-    },
-    {
-      "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "UMS_wechat_icon@2x.png"
+      "filename" : "weibo-icon@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "weibo-icon@3x.png"
     }
   ],
   "info" : {

@@ -35,8 +35,12 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 @property (nonatomic, weak) IBOutlet UITextField *passwordField;
 @property (nonatomic, weak) IBOutlet UIButton *loginButton;
 
-@property (nonatomic, weak) IBOutlet UIImageView *accountImageView;
-@property (nonatomic, weak) IBOutlet UIImageView *passwordImageView;
+@property (nonatomic, weak) IBOutlet UIButton *qqButton;
+@property (nonatomic, weak) IBOutlet UIButton *wechatButton;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *qqButtonRight;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *qqButtonWidth;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *wechatButtonRight;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *wechatButtonWidth;
 
 @property (nonatomic, strong) MBProgressHUD *hud;
 
@@ -75,6 +79,19 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.loginDelegate = self;
+    
+    
+    if (![TencentOAuth iphoneQQInstalled]) {
+        _qqButtonWidth.constant = 0;
+        _qqButtonRight.constant = 0;
+    }
+    
+    if (![WXApi isWXAppInstalled]) {
+        _wechatButtonWidth.constant = 0;
+        _wechatButtonRight.constant = 0;
+    }
+    
+    [self.view layoutIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -89,16 +106,6 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 - (void)setUpSubviews
 {
-    _accountImageView.image = [UIImage imageWithIcon:@"fa-envelope-o"
-                                     backgroundColor:[UIColor clearColor]
-                                           iconColor:[UIColor grayColor]
-                                             andSize:CGSizeMake(20, 20)];
-    
-    _passwordImageView.image = [UIImage imageWithIcon:@"fa-lock"
-                                      backgroundColor:[UIColor clearColor]
-                                            iconColor:[UIColor grayColor]
-                                              andSize:CGSizeMake(20, 20)];
-    
     _accountField.delegate = self;
     _passwordField.delegate = self;
     

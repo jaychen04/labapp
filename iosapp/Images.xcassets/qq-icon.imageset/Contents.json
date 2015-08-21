@@ -2,17 +2,13 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "UMS_sina_icon.png"
-    },
-    {
-      "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "UMS_sina_icon@2x.png"
+      "filename" : "qq-icon@2x.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "qq-icon@3x.png"
     }
   ],
   "info" : {
