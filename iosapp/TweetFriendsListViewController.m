@@ -17,12 +17,13 @@
 
 static NSString *kTweetFriendCellID = @"TweetFriendCell";
 
-@interface TweetFriendsListViewController () <UISearchBarDelegate,UISearchDisplayDelegate>
+@interface TweetFriendsListViewController () <UISearchBarDelegate,UISearchDisplayDelegate,UISearchControllerDelegate>
 @property (nonatomic,strong) NSMutableArray *selectedObjects;
 @property (nonatomic,strong) NSMutableArray *filterObjects;
 @property (nonatomic,strong) NSMutableArray *objectsWithIndex;
 @property (nonatomic,strong) NSMutableArray *sectionTitles;
-@property (nonatomic,strong) UISearchDisplayController *searchDisplayController;
+@property (nonatomic,strong) UISearchDisplayController *searchDisplay;
+
 @end
 
 @implementation TweetFriendsListViewController
@@ -119,12 +120,12 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
     searchBar.translucent = NO; //是否半透明
     [searchBar setAutocapitalizationType:UITextAutocapitalizationTypeNone];
     [searchBar sizeToFit];
-    self.searchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
-    self.searchDisplayController.searchResultsTableView.tag = 1;
-    [self.searchDisplayController.searchResultsTableView registerClass:[TweetFriendCell class] forCellReuseIdentifier:kTweetFriendCellID];
-    self.searchDisplayController.delegate = self;
-    self.searchDisplayController.searchResultsDataSource = self;
-    self.searchDisplayController.searchResultsDelegate = self;
+    self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
+    self.searchDisplay.searchResultsTableView.tag = 1;
+    [self.searchDisplay.searchResultsTableView registerClass:[TweetFriendCell class] forCellReuseIdentifier:kTweetFriendCellID];
+    self.searchDisplay.delegate = self;
+    self.searchDisplay.searchResultsDataSource = self;
+    self.searchDisplay.searchResultsDelegate = self;
 }
 
 #pragma mark table回调
@@ -331,8 +332,8 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 
 - (void)click_search {
     [self.view addSubview:self.searchDisplayController.searchBar];
-    [self.searchDisplayController.searchBar becomeFirstResponder];
-    [self.searchDisplayController setActive:YES animated:YES];
+    [self.searchDisplay.searchBar becomeFirstResponder];
+    [self.searchDisplay setActive:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
