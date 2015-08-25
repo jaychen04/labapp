@@ -390,6 +390,13 @@
 
 - (void)mentionSomenone
 {
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+        return;
+    }
+    
     if (_teamID) {
         [self.navigationController pushViewController:[TeamMemberListViewController new]
                                              animated:YES];
