@@ -395,7 +395,11 @@
                                              animated:YES];
     }
     else {
-        [self.navigationController pushViewController:[TweetFriendsListViewController new]
+        TweetFriendsListViewController * vc = [TweetFriendsListViewController new];
+        [vc setSelectDone:^(NSString *result) {
+            [self insertString:result andSelect:NO];
+        }];
+        [self.navigationController pushViewController:vc
                                              animated:YES];
     }
 }

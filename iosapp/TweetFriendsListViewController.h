@@ -10,4 +10,5 @@
 #import "OSCObjsViewController.h"
 
 @interface TweetFriendsListViewController : OSCObjsViewController
+@property (nonatomic, copy) void (^selectDone)(NSString *result);
 @end

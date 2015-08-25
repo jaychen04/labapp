@@ -319,7 +319,14 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 }
 
 - (void)click_done {
-    
+    if ([self.selectedObjects count]) {
+        NSMutableString *result = @"".mutableCopy;
+        [self.selectedObjects enumerateObjectsUsingBlock:^(OSCUser *obj, NSUInteger idx, BOOL *stop) {
+            [result appendFormat:@"@%@ ",obj.name];
+        }];
+        self.selectDone(result);
+    }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)click_search {
