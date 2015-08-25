@@ -2662,7 +2662,7 @@
 		00D6BCD219EB673200E8754E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0600;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = oschina;
 				TargetAttributes = {
 					00D6BCD919EB673200E8754E = {
@@ -3241,6 +3241,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3308,6 +3309,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iosapp/UMSocial_Sdk_4.2.1/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3327,20 +3329,20 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"Pods-AFNetworking\"",
-					"-l\"Pods-AFOnoResponseSerializer\"",
-					"-l\"Pods-GPUImage\"",
-					"-l\"Pods-GRMustache\"",
-					"-l\"Pods-JRSwizzle\"",
-					"-l\"Pods-MBProgressHUD\"",
-					"-l\"Pods-Ono\"",
-					"-l\"Pods-RESideMenu\"",
-					"-l\"Pods-Reachability\"",
-					"-l\"Pods-ReactiveCocoa\"",
-					"-l\"Pods-SDWebImage\"",
-					"-l\"Pods-SSKeychain\"",
-					"-l\"Pods-TOWebViewController\"",
-					"-l\"Pods-TTTAttributedLabel\"",
+					"-l\"GPUImage\"",
+					"-l\"AFNetworking\"",
+					"-l\"AFOnoResponseSerializer\"",
+					"-l\"GRMustache\"",
+					"-l\"JRSwizzle\"",
+					"-l\"MBProgressHUD\"",
+					"-l\"Ono\"",
+					"-l\"RESideMenu\"",
+					"-l\"Reachability\"",
+					"-l\"ReactiveCocoa\"",
+					"-l\"SDWebImage\"",
+					"-l\"SSKeychain\"",
+					"-l\"TOWebViewController\"",
+					"-l\"TTTAttributedLabel\"",
 					"-l\"xml2\"",
 					"-framework",
 					"\"AVFoundation\"",
@@ -3368,6 +3370,7 @@
 					"\"UIKit\"",
 					"-fobjc-arc",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -3381,6 +3384,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/iosapp/UMSocial_Sdk_4.2.1/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
@@ -3400,20 +3404,20 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"Pods-AFNetworking\"",
-					"-l\"Pods-AFOnoResponseSerializer\"",
-					"-l\"Pods-GPUImage\"",
-					"-l\"Pods-GRMustache\"",
-					"-l\"Pods-JRSwizzle\"",
-					"-l\"Pods-MBProgressHUD\"",
-					"-l\"Pods-Ono\"",
-					"-l\"Pods-RESideMenu\"",
-					"-l\"Pods-Reachability\"",
-					"-l\"Pods-ReactiveCocoa\"",
-					"-l\"Pods-SDWebImage\"",
-					"-l\"Pods-SSKeychain\"",
-					"-l\"Pods-TOWebViewController\"",
-					"-l\"Pods-TTTAttributedLabel\"",
+					"-l\"GPUImage\"",
+					"-l\"AFNetworking\"",
+					"-l\"AFOnoResponseSerializer\"",
+					"-l\"GRMustache\"",
+					"-l\"JRSwizzle\"",
+					"-l\"MBProgressHUD\"",
+					"-l\"Ono\"",
+					"-l\"RESideMenu\"",
+					"-l\"Reachability\"",
+					"-l\"ReactiveCocoa\"",
+					"-l\"SDWebImage\"",
+					"-l\"SSKeychain\"",
+					"-l\"TOWebViewController\"",
+					"-l\"TTTAttributedLabel\"",
 					"-l\"xml2\"",
 					"-framework",
 					"\"AVFoundation\"",
@@ -3441,6 +3445,7 @@
 					"\"UIKit\"",
 					"-fobjc-arc",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -3462,6 +3467,7 @@
 				);
 				INFOPLIST_FILE = iosappTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iosapp.app/iosapp";
@@ -3480,6 +3486,7 @@
 				);
 				INFOPLIST_FILE = iosappTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iosapp.app/iosapp";
