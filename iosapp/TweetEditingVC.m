@@ -26,6 +26,7 @@
 #import <Ono.h>
 #import <MBProgressHUD.h>
 #import <ReactiveCocoa.h>
+#import "TweetFriendsListViewController.h"
 
 
 @interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UIScrollViewDelegate>
@@ -360,6 +361,8 @@
 
 - (void)addImage
 {
+    [self.edittingArea resignFirstResponder]; //键盘遮盖了actionsheet
+    
     [[[UIActionSheet alloc] initWithTitle:@"添加图片"
                                  delegate:self
                         cancelButtonTitle:@"取消"
@@ -387,10 +390,12 @@
 
 - (void)mentionSomenone
 {
-    [self insertString:@"@请输入用户名 " andSelect:YES];
-    
     if (_teamID) {
         [self.navigationController pushViewController:[TeamMemberListViewController new]
+                                             animated:YES];
+    }
+    else {
+        [self.navigationController pushViewController:[TweetFriendsListViewController new]
                                              animated:YES];
     }
 }

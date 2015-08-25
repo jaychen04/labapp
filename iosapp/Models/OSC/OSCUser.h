@@ -24,5 +24,7 @@
 @property (nonatomic, readonly, copy) NSString *expertise;
 @property (nonatomic, readonly, copy) NSString *joinTime;
 @property (nonatomic, readonly, copy) NSString *latestOnlineTime;
+@property (nonatomic, readwrite, copy) NSString *pinyin; //拼音
+@property (nonatomic, readwrite, copy) NSString *pinyinFirst; //拼音首字母
 
 @end

@@ -356,6 +356,9 @@
 		38F0A6331AAEC7C7001B531E /* widget_taday@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F0A62A1AAEC7C7001B531E /* widget_taday@3x.png */; };
 		38F5FA7E1AB9858C00E01A84 /* overlaygraphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */; };
 		5A18E45EBCB9B7AA5DDAB126 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E50FD03E01F2716AFACD8E30 /* libPods.a */; };
+		6662BACA1B8C4B7400D6A9BC /* TweetFriendsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6662BAC91B8C4B7400D6A9BC /* TweetFriendsListViewController.m */; };
+		6662BACD1B8C508500D6A9BC /* TweetFriendCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6662BACC1B8C508500D6A9BC /* TweetFriendCell.m */; };
+		6662BAD01B8C5EBD00D6A9BC /* NSString+pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */; };
 		C52BF4E71AF9AAA000E53508 /* TeamWeeklyReportDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4E61AF9AAA000E53508 /* TeamWeeklyReportDetail.m */; };
 		C52BF4EC1AF9C03700E53508 /* WeeklyReportDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4EB1AF9C03700E53508 /* WeeklyReportDetailViewController.m */; };
 		C52BF4F01AF9FE8800E53508 /* TimeLineNodeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4EF1AF9FE8800E53508 /* TimeLineNodeCell.m */; };
@@ -974,6 +977,12 @@
 		38F0A6291AAEC7C7001B531E /* widget_taday@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "widget_taday@2x.png"; sourceTree = "<group>"; };
 		38F0A62A1AAEC7C7001B531E /* widget_taday@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "widget_taday@3x.png"; sourceTree = "<group>"; };
 		38F5FA7D1AB9858C00E01A84 /* overlaygraphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = overlaygraphic.png; sourceTree = "<group>"; };
+		6662BAC81B8C4B7400D6A9BC /* TweetFriendsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetFriendsListViewController.h; sourceTree = "<group>"; };
+		6662BAC91B8C4B7400D6A9BC /* TweetFriendsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetFriendsListViewController.m; sourceTree = "<group>"; };
+		6662BACB1B8C508500D6A9BC /* TweetFriendCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetFriendCell.h; sourceTree = "<group>"; };
+		6662BACC1B8C508500D6A9BC /* TweetFriendCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetFriendCell.m; sourceTree = "<group>"; };
+		6662BACE1B8C5EBD00D6A9BC /* NSString+pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+pinyin.h"; sourceTree = "<group>"; };
+		6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+pinyin.m"; sourceTree = "<group>"; };
 		6959BD4140C2AB481559B021 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		699EDA3CBAD8E0586E4069CD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		C52BF4E51AF9AAA000E53508 /* TeamWeeklyReportDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamWeeklyReportDetail.h; sourceTree = "<group>"; };
@@ -1736,6 +1745,10 @@
 			children = (
 				38B0BFA71A42AF5500A2FDB0 /* TweetEditingVC.h */,
 				38B0BFA81A42AF5500A2FDB0 /* TweetEditingVC.m */,
+				6662BAC81B8C4B7400D6A9BC /* TweetFriendsListViewController.h */,
+				6662BAC91B8C4B7400D6A9BC /* TweetFriendsListViewController.m */,
+				6662BACB1B8C508500D6A9BC /* TweetFriendCell.h */,
+				6662BACC1B8C508500D6A9BC /* TweetFriendCell.m */,
 			);
 			name = "编辑动弹";
 			sourceTree = "<group>";
@@ -2077,6 +2090,8 @@
 				38963EB51AD7D11D00DE9479 /* NSTextAttachment+Util.m */,
 				C5B123331B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.h */,
 				C5B123341B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m */,
+				6662BACE1B8C5EBD00D6A9BC /* NSString+pinyin.h */,
+				6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */,
 			);
 			name = Catagory;
 			sourceTree = "<group>";
@@ -3069,6 +3084,7 @@
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,
 				3838D1A91A6F455600CC7913 /* ShakingViewController.m in Sources */,
+				6662BACD1B8C508500D6A9BC /* TweetFriendCell.m in Sources */,
 				31C50BC21AF1FE7F00074B72 /* TeamIssueDetailController.m in Sources */,
 				38996A521A02642C0025AA52 /* OSCBlog.m in Sources */,
 				38BD7D6E19FF7F94003ABB80 /* CommentsViewController.m in Sources */,
@@ -3076,6 +3092,7 @@
 				0004918E19F8FFE9001F3A36 /* HorizonalTableViewController.m in Sources */,
 				38B0BF881A399A1A00A2FDB0 /* OSCFavorite.m in Sources */,
 				C5E5E6B41B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m in Sources */,
+				6662BAD01B8C5EBD00D6A9BC /* NSString+pinyin.m in Sources */,
 				31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
@@ -3097,6 +3114,7 @@
 				38B0BF9C1A3E8F9C00A2FDB0 /* OSCTabBarController.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
 				C52BF5011AFCBF1700E53508 /* TeamReplyCell.m in Sources */,
+				6662BACA1B8C4B7400D6A9BC /* TweetFriendsListViewController.m in Sources */,
 				38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */,
 				EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */,
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
