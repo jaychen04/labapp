@@ -195,7 +195,22 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 }
 
 - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.tableView.indexPathsForSelectedRows.count >= 10) {
+    OSCUser *user = nil;
+    switch (tableView.tag) {
+        case 0: {
+            user = self.objectsWithIndex[indexPath.section][indexPath.row];
+        }
+            break;
+        case 1: {
+            user = self.filterObjects[indexPath.row];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    
+    if (self.selectedObjects.count - [self.selectedObjects containsObject:user] >= 10) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
                                                             message:@"您最多可以一次选择10个好友"
                                                            delegate:nil
@@ -278,8 +293,13 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 }
 - (void) searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
     [controller.searchBar removeFromSuperview];
-    [self refresh_done];
+    [self.filterObjects removeAllObjects];
     [self refresh_tableHeader];
+    [self refresh_done];
+
+}
+
+- (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     [self.tableView reloadData];
 }
 #pragma mark custom event
@@ -333,7 +353,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 - (void)click_search {
     [self.view addSubview:self.searchDisplayController.searchBar];
     [self.searchDisplay.searchBar becomeFirstResponder];
-    [self.searchDisplay setActive:YES animated:YES];
+//    [self.searchDisplay setActive:YES animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
