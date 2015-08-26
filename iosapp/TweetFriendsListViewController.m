@@ -304,23 +304,28 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 }
 #pragma mark custom event
 - (void)refresh_tableHeader {
-    UIScrollView * scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 52)];
-    scrollView.backgroundColor = [UIColor whiteColor];
-    self.tableView.tableHeaderView = scrollView;
+    CGFloat blank = 10;
+    UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 58)];
+    footer.backgroundColor = [UIColor whiteColor];
+    self.tableView.tableHeaderView = footer;
     
-    CGFloat offsetX = 8;
+    UIScrollView * scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(blank, blank, CGRectGetWidth(footer.frame) - blank*2, CGRectGetHeight(footer.frame) - blank*2)];
+    scrollView.backgroundColor = [UIColor whiteColor];
+    [footer addSubview:scrollView];
+    
+    CGFloat offsetX = 0;
     for (OSCUser *user in self.selectedObjects) {
-        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX, 8, 36, 36)];
+        UIImageView *image = [[UIImageView alloc] initWithFrame:CGRectMake(offsetX, 0, CGRectGetHeight(scrollView.frame), CGRectGetHeight(scrollView.frame))];
         image.contentMode = UIViewContentModeScaleAspectFill;
         [image setCornerRadius:5.0];
         [image loadPortrait:user.portraitURL];
         [scrollView addSubview:image];
         
-        offsetX += 36 + 8;
+        offsetX += CGRectGetWidth(image.frame) + 5;
     }
     
     UIButton * searchBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    searchBtn.frame = CGRectMake(offsetX, 8, 30, 36);
+    searchBtn.frame = CGRectMake(offsetX, 0, 30, CGRectGetHeight(scrollView.frame));
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [searchBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
@@ -328,7 +333,11 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
     [scrollView addSubview:searchBtn];
     offsetX += 30;
     
-    scrollView.contentSize = CGSizeMake(offsetX, 52);
+    scrollView.contentSize = CGSizeMake(offsetX, CGRectGetHeight(scrollView.frame));
+    
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(blank - 2, CGRectGetMaxY(scrollView.frame) + 3, CGRectGetWidth(scrollView.frame) - 2*2, 1)];
+    line.backgroundColor = [UIColor lightGrayColor];
+    [footer addSubview:line];
 }
 
 - (void)refresh_done {
