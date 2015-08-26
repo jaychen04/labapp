@@ -121,18 +121,15 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
     UISearchBar * searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
     searchBar.delegate = self;
     searchBar.searchBarStyle = UISearchBarStyleDefault;
-//    searchBar.translucent = NO;
-//    searchBar.backgroundColor = [UIColor colorWithHex:0x15A230];
-//    searchBar.keyboardAppearance = UIKeyboardAppearanceDark;
-//    searchBar.barTintColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
     [searchBar setAutocapitalizationType:UITextAutocapitalizationTypeNone];
 
     self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     self.searchDisplay.searchResultsTableView.tag = 1;
-    [self.searchDisplay.searchResultsTableView registerClass:[TweetFriendCell class] forCellReuseIdentifier:kTweetFriendCellID];
     self.searchDisplay.delegate = self;
     self.searchDisplay.searchResultsDataSource = self;
     self.searchDisplay.searchResultsDelegate = self;
+    self.searchDisplay.searchResultsTableView.tableFooterView = [UIView new];
+    [self.searchDisplay.searchResultsTableView registerClass:[TweetFriendCell class] forCellReuseIdentifier:kTweetFriendCellID];
 }
 
 #pragma mark table回调
@@ -412,6 +409,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 1) {
         [self.selectedObjects removeObjectAtIndex:alertView.tag];
+        [self refresh_done];
         [self refresh_tableHeader];
         [self.tableView reloadData];
     }
