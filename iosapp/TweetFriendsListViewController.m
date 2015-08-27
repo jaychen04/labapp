@@ -396,6 +396,13 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 }
 
 - (void)click_del:(UITapGestureRecognizer*)tap {
+    [self.selectedObjects removeObjectAtIndex:tap.view.tag];
+    [self refresh_done];
+    [self refresh_tableHeader];
+    [self.tableView reloadData];
+}
+/*
+- (void)click_del:(UITapGestureRecognizer*)tap {
     OSCUser *user = self.selectedObjects[tap.view.tag];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"温馨提示"
                                                         message:[NSString stringWithFormat:@"您不想@%@了么?",user.name]
@@ -414,7 +421,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
         [self.tableView reloadData];
     }
 }
-
+*/
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
