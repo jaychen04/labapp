@@ -113,7 +113,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 - (void)initSubViews
 {
     self.tableView.footer = nil;
-    self.tableView.tintColor = [UIColor colorWithHex:0x15A230];
+    self.tableView.tintColor = [UIColor navigationbarColor];
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor]; 
     [self.tableView registerClass:[TweetFriendCell class] forCellReuseIdentifier:kTweetFriendCellID];
     self.tableView.allowsMultipleSelection = YES;
@@ -121,6 +121,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
     UISearchBar * searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
     searchBar.delegate = self;
     searchBar.searchBarStyle = UISearchBarStyleDefault;
+    searchBar.barStyle = ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode?UIBarStyleBlack:UIBarStyleDefault;
     [searchBar setAutocapitalizationType:UITextAutocapitalizationTypeNone];
 
     self.searchDisplay = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
@@ -130,6 +131,8 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
     self.searchDisplay.searchResultsDelegate = self;
     self.searchDisplay.searchResultsTableView.tableFooterView = [UIView new];
     [self.searchDisplay.searchResultsTableView registerClass:[TweetFriendCell class] forCellReuseIdentifier:kTweetFriendCellID];
+    self.searchDisplay.searchResultsTableView.backgroundColor = [UIColor themeColor];
+
 }
 
 #pragma mark table回调
@@ -184,7 +187,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
     }
 
     TweetFriendCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetFriendCellID forIndexPath:indexPath];
-    
+    cell.backgroundColor = [UIColor cellsColor];
     [cell.portrait loadPortrait:user.portraitURL];
     cell.nameLabel.text = user.name;
     cell.accessoryType = [self.selectedObjects containsObject:user]?UITableViewCellAccessoryCheckmark:UITableViewCellAccessoryNone;
@@ -297,7 +300,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 }
 
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
-    self.navigationController.view.backgroundColor = [UIColor colorWithHex:0x15A230];
+    self.navigationController.view.backgroundColor = [UIColor navigationbarColor];
 //    self.navigationController.navigationBar.translucent = NO;
 //    [UISearchBar appearance].tintColor = [UIColor whiteColor];
 //    [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setTintColor:[UIColor whiteColor]];
@@ -326,12 +329,12 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 - (void)refresh_tableHeader {
     CGFloat blank = 10;
     UIView *footer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.tableView.frame), 58)];
-    footer.backgroundColor = [UIColor whiteColor];
+    footer.backgroundColor = [UIColor cellsColor];
     self.tableView.tableHeaderView = footer;
     
     UIScrollView * scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(blank, blank, CGRectGetWidth(footer.frame) - blank*2, CGRectGetHeight(footer.frame) - blank*2)];
     scrollView.showsHorizontalScrollIndicator = NO;
-    scrollView.backgroundColor = [UIColor whiteColor];
+    scrollView.backgroundColor = [UIColor clearColor];
     [footer addSubview:scrollView];
     
     __block CGFloat offsetX = 0;
@@ -356,6 +359,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
     searchBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     searchBtn.frame = CGRectMake(offsetX, 0, 100, CGRectGetHeight(scrollView.frame));
     searchBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+    searchBtn.backgroundColor = [UIColor clearColor];
     [searchBtn setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
     [searchBtn setTitle:@"搜索" forState:UIControlStateNormal];
     [searchBtn addTarget:self action:@selector(click_search) forControlEvents:UIControlEventTouchUpInside];
@@ -364,7 +368,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
     
     scrollView.contentSize = CGSizeMake(offsetX, CGRectGetHeight(scrollView.frame));
     
-    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(blank - 2, CGRectGetMaxY(scrollView.frame) + 3, CGRectGetWidth(scrollView.frame) - 2*2, 1)];
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(blank - 2, CGRectGetMaxY(scrollView.frame) + 3, CGRectGetWidth(scrollView.frame) - 2*2, 0.5)];
     line.backgroundColor = [UIColor lightGrayColor];
     [footer addSubview:line];
     
