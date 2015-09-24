@@ -37,8 +37,13 @@
         for (SearchResultsViewController *searchResultsVC in self.viewPager.childViewControllers) {
             searchResultsVC.viewDidScroll = ^ {
                 [weakSelf.searchBar resignFirstResponder];
+            
             };
         }
+        
+        weakSelf.viewPager.viewDidScroll = ^{
+            [self.searchBar resignFirstResponder];
+        };
     }
     
     return self;

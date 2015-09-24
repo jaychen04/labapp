@@ -16,6 +16,8 @@
 @property (nonatomic, copy) void (^scrollView)(CGFloat offsetRatio, NSUInteger focusIndex, NSUInteger animationIndex);
 @property (nonatomic, copy) void (^viewDidAppear)(NSInteger index);
 
+@property (nonatomic, copy) void (^viewDidScroll)();
+
 - (instancetype)initWithViewControllers:(NSArray *)controllers;
 
 - (void)scrollToViewAtIndex:(NSUInteger)index;
