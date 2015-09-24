@@ -229,6 +229,14 @@
         } else {
             
             NSString *str = [NSString stringWithFormat:@"%@", _myInfo.portraitURL];
+            
+            if (str.length == 0) {
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"尚未设置头像" message:nil delegate:self
+                                                          cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                [alertView show];
+                return ;
+            }
+            
             NSArray *array1 = [str componentsSeparatedByString:@"_"];
             
             NSArray *array2 = [array1[1] componentsSeparatedByString:@"."];
