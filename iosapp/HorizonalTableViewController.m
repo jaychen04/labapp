@@ -90,7 +90,9 @@ static NSString *kHorizonalCellID = @"HorizonalCell";
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [self scrollStop:NO];
-    self.viewDidScroll();
+    if (_viewDidScroll) {
+        _viewDidScroll();
+    }
 }
 
 
