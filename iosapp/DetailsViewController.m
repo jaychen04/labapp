@@ -647,7 +647,8 @@
            parameters:@{
                         @"memo":        [alertView textFieldAtIndex:0].text.length == 0? @"其他原因": [alertView textFieldAtIndex:0].text,
                         @"obj_id":      @(_objectID),
-                        @"obj_type":    @"4",
+                        @"obj_type":    @"2",
+                        @"reason":      @"4",
                         @"url":         _webURL
                         }
               success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {

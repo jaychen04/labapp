@@ -28,7 +28,7 @@ PODS:
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - MBProgressHUD (0.9.1)
-  - MJRefresh (2.4.7)
+  - MJRefresh (2.4.11)
   - Ono (1.2.2)
   - Reachability (3.2)
   - ReactiveCocoa (2.5):
@@ -44,7 +44,7 @@ PODS:
   - SDWebImage/Core (3.7.3)
   - SSKeychain (1.2.3)
   - TBXML (1.5)
-  - TOWebViewController (2.0.17)
+  - TOWebViewController (2.0.19)
   - TTTAttributedLabel (1.13.4)
   - WeiboSDK (3.1.1)
 
@@ -70,7 +70,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   WeiboSDK:
-    :commit: 314dfb77b306a2a9a93ce7575def5dbc0ae7995a
+    :commit: 5f22555f1d23ff834b2f3c3b93b0fe1916141649
     :git: https://github.com/sinaweibosdk/weibo_ios_sdk
 
 SPEC CHECKSUMS:
@@ -80,7 +80,7 @@ SPEC CHECKSUMS:
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  MJRefresh: 6eb2f61338f89f64fd628fd43debcf479381ff59
+  MJRefresh: b327947f35ab3eb16ca42646b26f7347e6aa7186
   Ono: 80b1c686777d3f6d5d5ce6fcac8a74afef4ca197
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
@@ -88,7 +88,7 @@ SPEC CHECKSUMS:
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SSKeychain: 3f42991739c6c60a9cf1bbd4dff6c0d3694bcf3d
   TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
-  TOWebViewController: aada427e7eba199bbaee77ddee3243c8172f4053
+  TOWebViewController: accd62ec0acc8d5c2e1e195c6f7ff7654c3c840c
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   WeiboSDK: 5925fdb6199b44d504d62628a52186efa095a747
 
