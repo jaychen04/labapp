@@ -151,7 +151,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_LOGIN_VALIDATE]
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX, OSCAPI_LOGIN_VALIDATE]
        parameters:@{@"username" : _accountField.text, @"pwd" : _passwordField.text, @"keep_login" : @(1)}
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
@@ -315,7 +315,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_LOGIN]
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX, OSCAPI_OPENID_LOGIN]
        parameters:@{
                     @"catalog": catalog,
                     @"openid_info": info,
@@ -346,7 +346,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 - (void)registerAcount
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_REGISTER]
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX, OSCAPI_OPENID_REGISTER]
        parameters:@{
                     @"catalog": _catalog,
                     @"openid_info": _info,
@@ -383,7 +383,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 - (void)accountBinding
 {
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_OPENID_BINDING]
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX, OSCAPI_OPENID_BINDING]
        parameters:@{
                     @"catalog": _catalog,
                     @"openid_info": _info,
