@@ -74,9 +74,9 @@ static NSInteger HeightPicker;
     _corporationTextField.text = activitySignUpInfo[3];
     _positionTextField.text = activitySignUpInfo[4];
     
-    RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal]
-                                         reduce:^(NSString *name, NSString *phoneNumber){
-                                             return @(name.length > 0 && phoneNumber.length > 0);
+    RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal, _remarkSelectTextField.rac_textSignal]
+                                         reduce:^(NSString *name, NSString *phoneNumber, NSString *remarkSelectStr){
+                                             return @(name.length > 0 && phoneNumber.length > 0 && remarkSelectStr.length > 0);
                                          }];
     RAC(_saveButton, enabled) = valid;
     RAC(_saveButton, alpha) = [valid map:^(NSNumber *b) {
@@ -131,19 +131,19 @@ static NSInteger HeightPicker;
     [self.view addSubview:_positionTextField];
     
     _messageLabel = [UILabel new];
-    _messageLabel.text = @"请选择你要参加的城市";
+    _messageLabel.text = [NSString stringWithFormat:@"%@：", _remarkTipStr];
     _messageLabel.textAlignment = NSTextAlignmentLeft;
-    _messageLabel.font = [UIFont systemFontOfSize:14];
     _messageLabel.textColor = [UIColor titleColor];
+    [_messageLabel setContentHuggingPriority:752 forAxis:UILayoutConstraintAxisHorizontal];
     [self.view addSubview:_messageLabel];
     
     _remarkSelectTextField = [UITextField new];
-    _remarkSelectTextField.text = _remarkCitys[0];
     _remarkSelectTextField.delegate = self;
     _remarkSelectTextField.borderStyle = UITextBorderStyleRoundedRect;
     _remarkSelectTextField.backgroundColor = [UIColor labelTextColor];
     _remarkSelectTextField.textColor = [UIColor titleColor];
     _remarkSelectTextField.placeholder = _remarkTipStr;
+    [_remarkSelectTextField setContentHuggingPriority:750 forAxis:UILayoutConstraintAxisVertical];
     [self.view addSubview:_remarkSelectTextField];
     
     _selecteImage = [UIImageView new];
@@ -166,12 +166,12 @@ static NSInteger HeightPicker;
         HeightPicker = 30*_remarkCitys.count;
     }
     
-    _remarktoggle = [[UITableView alloc] initWithFrame:CGRectMake(10, 318, 100, HeightPicker)];
-    _remarktoggle.separatorStyle = UITableViewCellSeparatorStyleNone;
+    _remarktoggle = [[UITableView alloc] initWithFrame:CGRectMake(110, 318, self.view.frame.size.width-120, HeightPicker)];//
     _remarktoggle.delegate = self;
     _remarktoggle.dataSource = self;
     _remarktoggle.backgroundColor = [UIColor colorWithHex:0xD9D9D9];
     _remarktoggle.alpha = 0;
+    _remarktoggle.bounces = NO;
     [_remarktoggle setCornerRadius:3];
     _remarktoggle.backgroundColor = [UIColor colorWithHex:0x555555];
     [self.view addSubview:_remarktoggle];
@@ -200,19 +200,19 @@ static NSInteger HeightPicker;
     
     NSDictionary *viewDic = NSDictionaryOfVariableBindings(_nameTextField, sexLabel, _sexSegmentCtl, _phoneNumberTextField, _corporationTextField, _positionTextField, _saveButton, _remarkSelectTextField, _messageLabel, _selecteImage);
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[_nameTextField(fieldHeight)]-12-[sexLabel]-15-[_phoneNumberTextField(fieldHeight)]-15-[_corporationTextField(fieldHeight)]-15-[_positionTextField(fieldHeight)]-15-[_remarkSelectTextField]-25-[_saveButton]"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[_nameTextField(fieldHeight)]-12-[sexLabel]-15-[_phoneNumberTextField(fieldHeight)]-15-[_corporationTextField(fieldHeight)]-15-[_positionTextField(fieldHeight)]-15-[_messageLabel]-25-[_saveButton]"
                                                                       options:NSLayoutFormatAlignAllLeft
                                                                       metrics:@{@"fieldHeight": @(30)}
                                                                         views:viewDic]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[_nameTextField(fieldHeight)]-12-[sexLabel]-15-[_phoneNumberTextField(fieldHeight)]-15-[_corporationTextField(fieldHeight)]-15-[_positionTextField(fieldHeight)]-15-[_messageLabel]-25-[_saveButton]"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-75-[_nameTextField(fieldHeight)]-12-[sexLabel]-15-[_phoneNumberTextField(fieldHeight)]-15-[_corporationTextField(fieldHeight)]-15-[_positionTextField(fieldHeight)]-15-[_remarkSelectTextField]-25-[_saveButton]"
                                                                       options:NSLayoutFormatAlignAllRight
                                                                       metrics:@{@"fieldHeight": @(30)}
                                                                         views:viewDic]];
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_nameTextField]-10-|" options:0 metrics:nil views:viewDic]];
     
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_remarkSelectTextField(100)]-(-2)-[_selecteImage(15)]-2-[_messageLabel]-10-|"
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_messageLabel]-2-[_remarkSelectTextField]-(-2)-[_selecteImage(15)]-10-|"
                                                                       options:NSLayoutFormatAlignAllCenterY
                                                                       metrics:nil
                                                                         views:viewDic]];
@@ -251,7 +251,6 @@ static NSInteger HeightPicker;
     if (_remarkCitys.count) {
         cell.textLabel.text = _remarkCitys[indexPath.row];
         cell.backgroundColor = [UIColor colorWithHex:0xD9D9D9];
-        cell.textLabel.textAlignment = NSTextAlignmentCenter;
     }
     
     return cell;
@@ -263,6 +262,27 @@ static NSInteger HeightPicker;
     
     if (_remarkCitys.count) {
         _remarkSelectTextField.text = _remarkCitys[indexPath.row];
+    }
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if (textField == _remarkSelectTextField) {
+        [_remarkSelectTextField resignFirstResponder];
+        if (_remarktoggle.alpha > 0) {
+            [self toggleTitlePicker];
+        }
+        
+        [UIView animateWithDuration:0.15f animations:^{
+            [_remarktoggle setAlpha:1.0f - _remarktoggle.alpha];
+        } completion:^(BOOL finished) {
+            if (_remarktoggle.alpha <= 0.0f) {
+                [_backView removeFromSuperview];
+            } else {
+                [self.view addSubview:_backView];
+                [self.view bringSubviewToFront:_remarktoggle];
+            }
+        }];
     }
 }
 
