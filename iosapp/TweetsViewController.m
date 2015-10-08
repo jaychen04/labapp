@@ -59,7 +59,7 @@ static NSString * const kTweetCellID = @"TweetCell";
         }
         
         self.needAutoRefresh = type != TweetsTypeOwnTweets;
-        self.refreshInterval = type == TweetsTypeAllTweets? 360 : 3600;
+        self.refreshInterval = 3600;
         self.kLastRefreshTime = [NSString stringWithFormat:@"TweetsRefreshInterval-%ld", type];
         
         [self setBlockAndClass];
