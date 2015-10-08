@@ -50,7 +50,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 @property (nonatomic, copy) NSString *info;
 
 @property (nonatomic, copy) NSString *account;
-@property (nonatomic, copy) NSString *pasword;
+@property (nonatomic, copy) NSString *password;
 
 @end
 
@@ -393,7 +393,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
                     @"catalog": _catalog,
                     @"openid_info": _info,
                     @"username": _account,
-                    @"pwd": _pasword,
+                    @"pwd": _password,
                     }
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
@@ -474,7 +474,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
         }
     } else if (alertView.tag == 2) {
         _account = [alertView textFieldAtIndex:0].text;
-        _pasword = [alertView textFieldAtIndex:1].text;
+        _password = [alertView textFieldAtIndex:1].text;
         
         [self accountBinding];
     }
