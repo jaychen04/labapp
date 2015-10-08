@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import <TencentOpenAPI/TencentOAuth.h>
-#import <WeiboSDK.h>
+#import "WeiboSDK.h"
 #import "WXApi.h"
 
 @class LoginViewController;

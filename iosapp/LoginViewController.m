@@ -17,7 +17,7 @@
 #import "AppDelegate.h"
 
 #import <TencentOpenAPI/TencentOAuth.h>
-#import <WeiboSDK.h>
+#import "WeiboSDK.h"
 #import "WXApi.h"
 
 #import <ReactiveCocoa.h>

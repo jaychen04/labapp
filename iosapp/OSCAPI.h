@@ -9,9 +9,12 @@
 #ifndef iosapp_OSCAPI_h
 #define iosapp_OSCAPI_h
 
+//#define OSCAPI_HTTPS_PREFIX             @"https://192.168.1.11/action/api/"
 //#define OSCAPI_PREFIX                   @"http://192.168.1.11/action/api/"
+
 #define OSCAPI_HTTPS_PREFIX             @"https://www.oschina.net/action/api/"
 #define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
+
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
 #define OSCAPI_NEWS_LIST                @"news_list"

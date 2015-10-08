@@ -20,9 +20,6 @@
 #import "UMSocialQQHandler.h"
 #import "UMSocialSinaHandler.h"
 
-#import <WeiboSDK.h>
-#import "WXApi.h"
-
 #import <Ono.h>
 #import <AFOnoResponseSerializer.h>
 

@@ -46,7 +46,6 @@ PODS:
   - TBXML (1.5)
   - TOWebViewController (2.0.19)
   - TTTAttributedLabel (1.13.4)
-  - WeiboSDK (3.1.1)
 
 DEPENDENCIES:
   - AFOnoResponseSerializer
@@ -62,16 +61,6 @@ DEPENDENCIES:
   - TBXML
   - TOWebViewController
   - TTTAttributedLabel
-  - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk`)
-
-EXTERNAL SOURCES:
-  WeiboSDK:
-    :git: https://github.com/sinaweibosdk/weibo_ios_sdk
-
-CHECKOUT OPTIONS:
-  WeiboSDK:
-    :commit: 5f22555f1d23ff834b2f3c3b93b0fe1916141649
-    :git: https://github.com/sinaweibosdk/weibo_ios_sdk
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
@@ -90,6 +79,5 @@ SPEC CHECKSUMS:
   TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
   TOWebViewController: accd62ec0acc8d5c2e1e195c6f7ff7654c3c840c
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
-  WeiboSDK: 5925fdb6199b44d504d62628a52186efa095a747
 
 COCOAPODS: 0.38.2
