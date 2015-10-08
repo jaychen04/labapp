@@ -60,6 +60,7 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
 
 -(void)getMemberDetailInfo
 {
+
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     
@@ -69,11 +70,11 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              ONOXMLElement *memberDetailsXML = [responseObject.rootElement firstChildWithTag:@"member"];
              _member = [[TeamMember alloc] initWithXML:memberDetailsXML];
-             dispatch_async(dispatch_get_main_queue(), ^{
+//             dispatch_async(dispatch_get_main_queue(), ^{
                  if(self.tableView){
                      [self.tableView reloadData];
                  }
-             });
+//             });
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 
          }];
@@ -83,12 +84,12 @@ static NSString * const kMemberDetailCellID = @"memberDetailCell";
     [super viewDidLoad];
     
     self.navigationItem.title = @"用户主页";
-    self.edgesForExtendedLayout = UIRectEdgeNone;
+//    self.edgesForExtendedLayout = UIRectEdgeNone;
     
     [self.tableView registerClass:[TeamActivityCell class] forCellReuseIdentifier:kUserActivityCellID];
     [self.tableView registerClass:[MemberDetailCell class] forCellReuseIdentifier:kMemberDetailCellID];
     
-    [self getMemberDetailInfo];
+//    [self getMemberDetailInfo];
 
 }
 
