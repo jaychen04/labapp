@@ -85,7 +85,7 @@
     //判断是否包含 oschina.net 来确定是不是站内链接
     NSRange range = [url rangeOfString:@"oschina.net"];
     if (range.length <= 0) {
-        NSString *URL = [url hasPrefix:@"http://"]? url : [NSString stringWithFormat:@"http://%@", url];
+        NSString *URL = [url hasPrefix:@"http://"] || [url hasPrefix:@"https://"]? url : [NSString stringWithFormat:@"http://%@", url];
         TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:[NSURL URLWithString:URL]];
         webViewController.hidesBottomBarWhenPushed = YES;
         [navigationController pushViewController:webViewController animated:YES];
@@ -203,7 +203,7 @@
         if (viewController) {
             [navigationController pushViewController:viewController animated:YES];
         } else {
-            NSString *URL = [url hasPrefix:@"http://"]? url : [NSString stringWithFormat:@"http://%@", url];
+            NSString *URL = [url hasPrefix:@"http://"] || [url hasPrefix:@"https://"]? url : [NSString stringWithFormat:@"http://%@", url];
             TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:[NSURL URLWithString:URL]];
             webViewController.hidesBottomBarWhenPushed = YES;
             [navigationController pushViewController:webViewController animated:YES];
