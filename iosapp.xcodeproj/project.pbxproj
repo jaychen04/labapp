@@ -384,6 +384,7 @@
 		C5B1231D1B316830000B29D2 /* html in Resources */ = {isa = PBXBuildFile; fileRef = C5B1231A1B316830000B29D2 /* html */; };
 		C5B1231E1B316830000B29D2 /* js in Resources */ = {isa = PBXBuildFile; fileRef = C5B1231B1B316830000B29D2 /* js */; };
 		C5B123351B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B123341B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m */; };
+		C5B2F1A81BCE6C84004B4785 /* UINavigationController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B2F1A71BCE6C84004B4785 /* UINavigationController+Router.m */; settings = {ASSET_TAGS = (); }; };
 		C5D5123D1B15ACD900EB79D2 /* team-creaete@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D5123B1B15ACD900EB79D2 /* team-creaete@3x.png */; };
 		C5D5123E1B15ACD900EB79D2 /* team-create@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D5123C1B15ACD900EB79D2 /* team-create@2x.png */; };
 		C5D5504A1B04764000CCA308 /* -1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D550381B04764000CCA308 /* -1@2x.png */; };
@@ -1039,6 +1040,8 @@
 		C5B1231B1B316830000B29D2 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		C5B123331B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AFHTTPRequestOperationManager+Util.h"; sourceTree = "<group>"; };
 		C5B123341B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+Util.m"; sourceTree = "<group>"; };
+		C5B2F1A61BCE6C84004B4785 /* UINavigationController+Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Router.h"; sourceTree = "<group>"; };
+		C5B2F1A71BCE6C84004B4785 /* UINavigationController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Router.m"; sourceTree = "<group>"; };
 		C5D5123B1B15ACD900EB79D2 /* team-creaete@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "team-creaete@3x.png"; sourceTree = "<group>"; };
 		C5D5123C1B15ACD900EB79D2 /* team-create@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "team-create@2x.png"; sourceTree = "<group>"; };
 		C5D550381B04764000CCA308 /* -1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-1@2x.png"; sourceTree = "<group>"; };
@@ -2023,6 +2026,8 @@
 				C5B123341B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m */,
 				6662BACE1B8C5EBD00D6A9BC /* NSString+pinyin.h */,
 				6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */,
+				C5B2F1A61BCE6C84004B4785 /* UINavigationController+Router.h */,
+				C5B2F1A71BCE6C84004B4785 /* UINavigationController+Router.m */,
 			);
 			name = Catagory;
 			sourceTree = "<group>";
@@ -3227,6 +3232,7 @@
 				C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */,
 				384A11331ADFA6BB00856A7C /* TeamUserMainCell.m in Sources */,
 				386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */,
+				C5B2F1A81BCE6C84004B4785 /* UINavigationController+Router.m in Sources */,
 				31405BEC1AF074A4000A487D /* TeamIssueListCell.m in Sources */,
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
 				C52BF4EC1AF9C03700E53508 /* WeeklyReportDetailViewController.m in Sources */,

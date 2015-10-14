@@ -240,7 +240,7 @@
 {
     if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
     
-    [Utils analysis:[request.URL absoluteString] andNavController:self.navigationController];
+    [self.navigationController handleURL:request.URL];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
 

@@ -7,16 +7,6 @@
 //
 
 #import "Utils.h"
-#import "OSCTweet.h"
-#import "OSCNews.h"
-#import "OSCBlog.h"
-#import "OSCPost.h"
-#import "UserDetailsViewController.h"
-#import "DetailsViewController.h"
-#import "PostsViewController.h"
-#import "ImageViewerController.h"
-#import "TweetDetailsWithBottomBarViewController.h"
-#import "TweetsViewController.h"
 #import "AppDelegate.h"
 
 #import "UIFont+FontAwesome.h"
@@ -27,7 +17,7 @@
 #import <Reachability.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <GRMustache.h>
-#import <TOWebViewController.h>
+
 
 @implementation Utils
 
@@ -78,140 +68,6 @@
         return result;
     }
 }
-
-
-+ (void)analysis:(NSString *)url andNavController:(UINavigationController *)navigationController
-{
-    //判断是否包含 oschina.net 来确定是不是站内链接
-    NSRange range = [url rangeOfString:@"oschina.net"];
-    if (range.length <= 0) {
-        NSString *URL = [url hasPrefix:@"http://"] || [url hasPrefix:@"https://"]? url : [NSString stringWithFormat:@"http://%@", url];
-        TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:[NSURL URLWithString:URL]];
-        webViewController.hidesBottomBarWhenPushed = YES;
-        [navigationController pushViewController:webViewController animated:YES];
-    } else {
-        //站内链接
-        
-        url = [url substringFromIndex:7];
-        NSArray *pathComponents = [url pathComponents];
-        NSString *prefix = [pathComponents[0] componentsSeparatedByString:@"."][0];
-        UIViewController *viewController;
-        
-        if ([prefix isEqualToString:@"my"])
-        {
-            if (pathComponents.count == 2) {
-                // 个人专页 my.oschina.net/dong706
-                
-                viewController = [[UserDetailsViewController alloc] initWithUserName:pathComponents[1]];
-                viewController.navigationItem.title = @"用户详情";
-            } else if (pathComponents.count == 3) {
-                // 个人专页 my.oschina.net/u/12
-                
-                if ([pathComponents[1] isEqualToString:@"u"]) {
-                    viewController= [[UserDetailsViewController alloc] initWithUserID:[pathComponents[2] longLongValue]];
-                    viewController.navigationItem.title = @"用户详情";
-                }
-            } else if (pathComponents.count == 4) {
-                NSString *type = pathComponents[2];
-                if ([type isEqualToString:@"blog"]) {
-                    OSCNews *news = [OSCNews new];
-                    news.type = NewsTypeBlog;
-                    news.attachment = pathComponents[3];
-                    viewController = [[DetailsViewController alloc] initWithNews:news];
-                    viewController.navigationItem.title = @"博客详情";
-                } else if ([type isEqualToString:@"tweet"]){
-                    OSCTweet *tweet = [OSCTweet new];
-                    tweet.tweetID = [pathComponents[3] longLongValue];
-                    viewController = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
-                    viewController.navigationItem.title = @"动弹详情";
-                }
-            } else if(pathComponents.count == 5) {
-                NSString *type = pathComponents[3];
-                if ([type isEqualToString:@"blog"]) {
-                    OSCNews *news = [OSCNews new];
-                    news.type = NewsTypeBlog;
-                    news.attachment = pathComponents[4];
-                    viewController = [[DetailsViewController alloc] initWithNews:news];
-                    viewController.navigationItem.title = @"博客详情";
-                }
-            }
-        } else if ([prefix isEqualToString:@"www"]) {
-            //新闻,软件,问答
-            NSArray *urlComponents = [url componentsSeparatedByString:@"/"];
-            NSUInteger count = urlComponents.count;
-            if (count >= 3) {
-                NSString *type = urlComponents[1];
-                if ([type isEqualToString:@"news"]) {
-                    // 新闻
-                    // www.oschina.net/news/27259/mobile-internet-market-is-small
-                    
-                    int64_t newsID = [urlComponents[2] longLongValue];
-                    OSCNews *news = [OSCNews new];
-                    news.type = NewsTypeStandardNews;
-                    news.newsID = newsID;
-                    viewController = [[DetailsViewController alloc] initWithNews:news];
-                    viewController.navigationItem.title = @"资讯详情";
-                } else if ([type isEqualToString:@"p"]) {
-                    // 软件 www.oschina.net/p/jx
-                    
-                    OSCNews *news = [OSCNews new];
-                    news.type = NewsTypeSoftWare;
-                    news.attachment = urlComponents[2];
-                    viewController = [[DetailsViewController alloc] initWithNews:news];
-                    viewController.navigationItem.title = @"软件详情";
-                } else if ([type isEqualToString:@"question"]) {
-                    // 问答
-                    
-                    if (count == 3) {
-                        // 问答 www.oschina.net/question/12_45738
-                        
-                        NSArray *IDs = [urlComponents[2] componentsSeparatedByString:@"_"];
-                        if ([IDs count] >= 2) {
-                            OSCPost *post = [OSCPost new];
-                            post.postID = [IDs[1] longLongValue];
-                            viewController = [[DetailsViewController alloc] initWithPost:post];
-                            viewController.navigationItem.title = @"帖子详情";
-                        }
-                    } else if (count >= 4) {
-                        // 问答-标签 www.oschina.net/question/tag/python
-                        
-                        NSString *tag = urlComponents.lastObject;
-                        
-                        viewController = [PostsViewController new];
-                        ((PostsViewController *)viewController).generateURL = ^NSString * (NSUInteger page) {
-                            return [NSString stringWithFormat:@"%@%@?tag=%@&pageIndex=0&%@", OSCAPI_PREFIX, OSCAPI_POSTS_LIST, tag, OSCAPI_SUFFIX];
-                        };
-                        
-                        ((PostsViewController *)viewController).objClass = [OSCPost class];
-                        viewController.navigationItem.title = [tag stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                    }
-                } else if ([type isEqualToString:@"tweet-topic"]) {
-                    //话题
-                    url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-                    urlComponents = [url componentsSeparatedByString:@"/"];
-                    
-                    viewController = [[TweetsViewController alloc] initWithTopic:urlComponents[2]];
-                }
-            }
-        } else if ([prefix isEqualToString:@"static"]) {
-            ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", url]]];
-            
-            [navigationController presentViewController:imageViewerVC animated:YES completion:nil];
-            
-            return;
-        }
-        if (viewController) {
-            [navigationController pushViewController:viewController animated:YES];
-        } else {
-            NSString *URL = [url hasPrefix:@"http://"] || [url hasPrefix:@"https://"]? url : [NSString stringWithFormat:@"http://%@", url];
-            TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:[NSURL URLWithString:URL]];
-            webViewController.hidesBottomBarWhenPushed = YES;
-            [navigationController pushViewController:webViewController animated:YES];
-        }
-    }
-}
-
-
 
 
 
@@ -534,6 +390,7 @@
     HUD.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
     [window addSubview:HUD];
     [HUD show:YES];
+    HUD.removeFromSuperViewOnHide = YES;
     //[HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
     
     return HUD;

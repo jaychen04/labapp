@@ -28,7 +28,7 @@ PODS:
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
   - MBProgressHUD (0.9.1)
-  - MJRefresh (2.4.11)
+  - MJRefresh (2.4.12)
   - Ono (1.2.2)
   - Reachability (3.2)
   - ReactiveCocoa (2.5):
@@ -69,7 +69,7 @@ SPEC CHECKSUMS:
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  MJRefresh: b327947f35ab3eb16ca42646b26f7347e6aa7186
+  MJRefresh: ca8e9589895977df32d379d46e6b8a5450b3ff44
   Ono: 80b1c686777d3f6d5d5ce6fcac8a74afef4ca197
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a

@@ -116,7 +116,7 @@ static NSString *kNewsCellID = @"NewsCell";
         ActivityDetailsWithBarViewController *activityBVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:[news.attachment longLongValue]];
         [self.navigationController pushViewController:activityBVC animated:YES];
     } else if (news.url.absoluteString.length > 0) {
-        [Utils analysis:news.url.absoluteString andNavController:self.navigationController];
+        [self.navigationController handleURL:news.url];
     } else {
         DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNews:news];
         [self.navigationController pushViewController:detailsViewController animated:YES];

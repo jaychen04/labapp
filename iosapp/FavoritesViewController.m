@@ -73,7 +73,7 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCFavorite *favorite = self.objects[indexPath.row];
-    [Utils analysis:[favorite.url absoluteString] andNavController:self.navigationController];
+    [self.navigationController handleURL:favorite.url];
 }
 
 

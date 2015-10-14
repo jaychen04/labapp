@@ -278,7 +278,7 @@ static const double accelerationThreshold = 2.0f;
             break;
         }
         case RandomTypeSoftware: {
-            [Utils analysis:_randomMessage.url.absoluteString andNavController:self.navigationController];
+            [self.navigationController handleURL:_randomMessage.url];
             break;
         }
         default:
