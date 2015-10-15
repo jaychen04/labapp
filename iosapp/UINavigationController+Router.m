@@ -137,7 +137,7 @@
                 }
             }
         } else if ([prefix isEqualToString:@"static"]) {
-            ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", url]]];
+            ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:url];
             
             [self presentViewController:imageViewerVC animated:YES completion:nil];
             
