@@ -11,7 +11,7 @@
 @interface OSCReply ()
 
 @property (nonatomic, readwrite, copy) NSString *author;
-@property (nonatomic, readwrite, copy) NSString *pubDate;
+@property (nonatomic, readwrite, strong) NSDate *pubDate;
 @property (nonatomic, readwrite, copy) NSString *content;
 
 @end
@@ -23,7 +23,7 @@
     self = [super init];
     if (self) {
         _author  = [[xml firstChildWithTag:@"rauthor"] stringValue];
-        _pubDate = [[xml firstChildWithTag:@"rpubDate"] stringValue];
+        _pubDate = [NSDate dateFromString:[[xml firstChildWithTag:@"rpubDate"] stringValue]];
         _content = [[xml firstChildWithTag:@"rcontent"] stringValue];
     }
     

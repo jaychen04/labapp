@@ -77,7 +77,8 @@
 
              NSString *subIssueCount = _detailIssue.childIssues.count ? [NSString stringWithFormat:@"%d个子任务，%d个已完成", _detailIssue.childIssuesCount, _detailIssue.closedChildIssuesCount] : @"暂无子任务";
              NSString *toUser = _detailIssue.user.name.length ? _detailIssue.user.name : @"未指派";
-             NSString *deadLineTime = _detailIssue.deadline.length ? [[_detailIssue.deadline componentsSeparatedByString:@" "] objectAtIndex:0]          : @"未指定截止日期";
+             
+             NSString *deadLineTime = _detailIssue.deadline ? [_detailIssue.deadline formattedDateWithStyle:NSDateFormatterMediumStyle] : @"未指定截止日期";
 
              NSString *state = [self getChineseNameWithState:_issueState];
              NSString *attachmentsCount = _detailIssue.attachmentsCount ?[NSString stringWithFormat:@"%d",_detailIssue.attachmentsCount] : @"暂无附件";

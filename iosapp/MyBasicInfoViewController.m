@@ -169,7 +169,7 @@
     NSDictionary *titleAttributes = @{NSForegroundColorAttributeName:[UIColor grayColor]};
     NSArray *title = @[@"加入时间：", @"所在地区：", @"开发平台：", @"专长领域："];
     
-    NSString *joinTime = [_myInfo.joinTime componentsSeparatedByString:@" "][0];
+    NSString *joinTime = [_myInfo.joinTime timeAgoSinceNow];
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:title[indexPath.row]
                                                                                        attributes:titleAttributes];

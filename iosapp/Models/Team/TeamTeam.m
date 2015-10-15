@@ -19,7 +19,7 @@
         _status = [[[xml firstChildWithTag:@"status"] numberValue] intValue];
         _name = [[xml firstChildWithTag:@"name"] stringValue];
         _ident = [[xml firstChildWithTag:@"ident"] stringValue];
-        _createTime = [[xml firstChildWithTag:@"createTime"] stringValue];
+        _createTime = [NSDate dateFromString:[xml firstChildWithTag:@"createTime"].stringValue];
         
         ONOXMLElement *aboutXML = [xml firstChildWithTag:@"about"];
         _sign = [[aboutXML firstChildWithTag:@"sign"] stringValue];

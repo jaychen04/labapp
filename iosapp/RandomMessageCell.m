@@ -91,7 +91,7 @@
     _contentLabel.text  = message.detail;
     _authorLabel.text   = [NSString stringWithFormat:@"作者：%@", message.author];
     _commentCount.text  = [NSString stringWithFormat:@"评论：%d", message.commentCount];
-    _timeLabel.text     = [NSString stringWithFormat:@"时间：%@", [message.pubDate componentsSeparatedByString:@" "][0]];
+    _timeLabel.text     = [NSString stringWithFormat:@"时间：%@", [message.pubDate timeAgoSinceNow]];
 }
 
 

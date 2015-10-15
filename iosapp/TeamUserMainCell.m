@@ -156,11 +156,11 @@
 {
     [_portrait setImage:[Config getPortrait]];
     
-    NSDateComponents *nowComps = [Utils getDateComponentsFromDate:[NSDate date]];
+    NSDate *date = [NSDate date];
     NSString *greetingString;
-    if (nowComps.hour < 12 && nowComps.hour >= 6) {
+    if (date.hour < 12 && date.hour >= 5) {
         greetingString = @"早上好";
-    } else if (nowComps.hour >= 12 && nowComps.hour < 18) {
+    } else if (date.hour >= 12 && date.hour < 18) {
         greetingString = @"下午好";
     } else {
         greetingString = @"晚上好";
@@ -168,8 +168,8 @@
     
     _greetingLabel.text = [NSString stringWithFormat:@"%@，%@", user.name, greetingString];
     
-    NSString *dateString = [NSString stringWithFormat:@"%ld年%ld月%ld日", (long)nowComps.year, (long)nowComps.month, (long)nowComps.day];
-    _timeLabel.text = [NSString stringWithFormat:@"今天是%@，%@", [Utils getWeekdayFromDateComponents:nowComps], dateString];
+    NSString *dateString = [NSString stringWithFormat:@"%ld年%ld月%ld日", date.year, date.month, date.day];
+    _timeLabel.text = [NSString stringWithFormat:@"今天是%@，%@", date.weekdayString, dateString];
     
     [_unfinishedButton setTitle:[NSString stringWithFormat:@"%d\n待完成", user.openedTaskCount] forState:UIControlStateNormal];
     [_overdueButton setTitle:[NSString stringWithFormat:@"%d\n过期的", user.outdateTaskCount] forState:UIControlStateNormal];

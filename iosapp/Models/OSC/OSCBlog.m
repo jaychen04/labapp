@@ -31,7 +31,7 @@ static NSString * const kDocumentType = @"documentType";
         _title = [[xml firstChildWithTag:kTitle] stringValue];
         _body = [[xml firstChildWithTag:kBody] stringValue];
         _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:kPubDate].stringValue];
         _documentType = [[[xml firstChildWithTag:kDocumentType] numberValue] intValue];
     }
     

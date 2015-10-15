@@ -32,10 +32,8 @@
         
         _teamID = teamID;
         
-        NSDateComponents *dateComps = [Utils getDateComponentsFromDate:[NSDate date]];
-        
         CGFloat barHeight = 36;
-        _titleBar = [[WeeklyReportTitleBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, barHeight) andWeek:dateComps.weekOfYear - 1];
+        _titleBar = [[WeeklyReportTitleBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, barHeight) andWeek:[NSDate date].weekOfYear];
         [_titleBar.previousWeekBtn addTarget:self action:@selector(scrollToPreWeek)  forControlEvents:UIControlEventTouchUpInside];
         [_titleBar.nextWeekBtn     addTarget:self action:@selector(scrollToNextWeek) forControlEvents:UIControlEventTouchUpInside];
         

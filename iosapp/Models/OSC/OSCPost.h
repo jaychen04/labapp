@@ -18,6 +18,6 @@
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, assign) int replyCount;
 @property (nonatomic, assign) int viewCount;
-@property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) NSDate *pubDate;
 
 @end

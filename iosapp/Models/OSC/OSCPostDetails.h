@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *author;
 @property (nonatomic, copy) NSString *body;
-@property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) NSDate *pubDate;
 @property (nonatomic, copy) NSURL *url;
 @property (nonatomic, copy) NSURL *portraitURL;
 @property (nonatomic, assign) int answerCount;

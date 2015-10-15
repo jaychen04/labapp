@@ -19,8 +19,8 @@
         _title             = [[[xml firstChildWithTag:@"title"] stringValue] copy];
         _author            = [[[xml firstChildWithTag:@"author"] stringValue] copy];
         _objectDescription = [[[xml firstChildWithTag:@"description"] stringValue] copy];
-        _url               = [[[xml firstChildWithTag:@"url"] stringValue] copy];
-        _pubDate           = [[[xml firstChildWithTag:@"pubDate"] stringValue] copy];
+        _url               = [NSURL URLWithString:[xml firstChildWithTag:@"url"].stringValue];
+        _pubDate           = [NSDate dateFromString:[xml firstChildWithTag:@"pubDate"].stringValue];
     }
     
     return self;

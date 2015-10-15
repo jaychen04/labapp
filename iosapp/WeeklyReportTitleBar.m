@@ -33,7 +33,7 @@
         [self setLayout];
         _weekLabel.text = [NSString stringWithFormat:@"第%ld周周报总览", (long)week];
         
-        _currentWeek = [Utils getDateComponentsFromDate:[NSDate date]].weekOfYear - 1;
+        _currentWeek = [NSDate date].weekOfYear;
         if (_currentWeek == week) {_nextWeekBtn.enabled = NO;}
     }
     

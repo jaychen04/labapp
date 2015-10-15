@@ -135,7 +135,7 @@
         } else {
             UserOperationCell *cell = [UserOperationCell new];
             if (_user) {
-                cell.loginTimeLabel.text = [NSString stringWithFormat:@"上次登录：%@", [Utils intervalSinceNow:_user.latestOnlineTime]];
+                cell.loginTimeLabel.text = [NSString stringWithFormat:@"上次登录：%@", [_user.latestOnlineTime timeAgoSinceNow]];
                 [cell setFollowButtonByRelationship:_user.relationship];
                 [cell.followButton addTarget:self action:@selector(updateRelationship) forControlEvents:UIControlEventTouchUpInside];
                 [cell.blogsButton addTarget:self action:@selector(pushBlogsVC) forControlEvents:UIControlEventTouchUpInside];
@@ -259,7 +259,7 @@
     NSDictionary *titleAttributes = @{NSForegroundColorAttributeName:[UIColor grayColor]};
     
     NSArray *title = @[@"加入时间：", @"所在地区：", @"开发平台：", @"专长领域："];
-    NSString *joinTime = [_user.joinTime componentsSeparatedByString:@" "][0];
+    NSString *joinTime = [_user.joinTime timeAgoSinceNow];
     NSArray *content = @[joinTime, _user.location, _user.developPlatform, _user.expertise];
     
     NSMutableAttributedString *userInformation = [NSMutableAttributedString new];

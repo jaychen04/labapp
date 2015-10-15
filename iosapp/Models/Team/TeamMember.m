@@ -23,7 +23,7 @@
         _teamJob     = [[xml firstChildWithTag:@"teamJob"] stringValue];
         _teamRole    = [[[xml firstChildWithTag:@"teamRole"] numberValue] intValue];
         _space       = [NSURL URLWithString:[[xml firstChildWithTag:@"space"] stringValue]];
-        _joinTime    = [[xml firstChildWithTag:@"joinTime"] stringValue];
+        _joinTime    = [NSDate dateFromString:[xml firstChildWithTag:@"joinTime"].stringValue];
         _location    = [[xml firstChildWithTag:@"location"] stringValue];
     }
     

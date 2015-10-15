@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSString *author;
 @property (nonatomic, assign) int64_t authorID;
 @property (nonatomic, assign) int documentType;
-@property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) NSDate *pubDate;
 @property (nonatomic, assign) BOOL isFavorite;
 
 @property (nonatomic, strong) NSString *html;

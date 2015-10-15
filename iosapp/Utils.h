@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "UIView+Util.h"
 #import "UIColor+Util.h"
 #import "UIImageView+Util.h"
@@ -14,12 +15,8 @@
 #import "NSTextAttachment+Util.h"
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "UINavigationController+Router.h"
+#import "NSDate+Util.h"
 
-static NSString * const kKeyYears = @"years";
-static NSString * const kKeyMonths = @"months";
-static NSString * const kKeyDays = @"days";
-static NSString * const kKeyHours = @"hours";
-static NSString * const kKeyMinutes = @"minutes";
 
 typedef NS_ENUM(NSUInteger, hudType) {
     hudTypeSendingTweet,
@@ -34,14 +31,12 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSDictionary *)emojiDict;
 
 + (NSAttributedString *)getAppclient:(int)clientType;
+
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 + (NSString *)GenerateTags:(NSArray *)tags;
 
-+ (NSDictionary *)timeIntervalArrayFromString:(NSString *)dateStr;
-+ (NSAttributedString *)attributedTimeString:(NSString *)dateStr;
-+ (NSString *)intervalSinceNow:(NSString *)dateStr;
-+ (NSString *)getWeekdayFromDateComponents:(NSDateComponents *)dateComps;
-+ (NSDateComponents *)getDateComponentsFromDate:(NSDate *)date;
++ (NSAttributedString *)attributedTimeString:(NSDate *)date;
+
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 + (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML;
 + (NSData *)compressImage:(UIImage *)image;

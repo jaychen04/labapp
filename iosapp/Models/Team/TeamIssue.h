@@ -23,10 +23,10 @@
 @property (nonatomic, assign) int catalogID;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *issueDescription;
-@property (nonatomic, copy) NSString *createTime;
-@property (nonatomic, copy) NSString *updateTime;
-@property (nonatomic, copy) NSString *acceptTime;
-@property (nonatomic, copy) NSString *deadline;
+@property (nonatomic, strong) NSDate *createTime;
+@property (nonatomic, strong) NSDate *updateTime;
+@property (nonatomic, strong) NSDate *acceptTime;
+@property (nonatomic, strong) NSDate *deadline;
 @property (nonatomic, assign) int replyCount;
 @property (nonatomic, strong) NSURL *gitIssueURL;
 @property (nonatomic, strong) TeamMember *author;
@@ -43,9 +43,9 @@
 @property (nonatomic, assign) BOOL hasExtraInfo;
 
 
-@property (nonatomic,strong)NSMutableArray *childIssues;       //任务详情的子任务
-@property (nonatomic,strong)NSMutableArray *issueLabels;       //任务标签
-@property (nonatomic,strong)NSMutableArray *collaborators;     //协助者
+@property (nonatomic,strong) NSMutableArray *childIssues;       //任务详情的子任务
+@property (nonatomic,strong) NSMutableArray *issueLabels;       //任务标签
+@property (nonatomic,strong) NSMutableArray *collaborators;     //协助者
 
 
 @property (nonatomic, strong) NSMutableAttributedString *attributedIssueTitle;

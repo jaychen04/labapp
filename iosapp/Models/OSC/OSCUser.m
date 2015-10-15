@@ -50,8 +50,8 @@ static NSString * const kExpertise = @"expertise";
     
     _developPlatform    = [[[xml firstChildWithTag:@"devplatform"] stringValue] copy];
     _expertise = [[[xml firstChildWithTag:kExpertise] stringValue] copy];
-    _joinTime = [[[xml firstChildWithTag:@"jointime"] stringValue] copy];
-    _latestOnlineTime = [[[xml firstChildWithTag:@"latestonline"] stringValue] copy];
+    _joinTime = [NSDate dateFromString:[xml firstChildWithTag:@"jointime"].stringValue];
+    _latestOnlineTime = [NSDate dateFromString:[xml firstChildWithTag:@"latestonline"].stringValue];
     
     return self;
 }

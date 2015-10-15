@@ -20,7 +20,7 @@
 @property (nonatomic, copy) NSString *teamJob;
 @property (nonatomic, assign) int teamRole;
 @property (nonatomic, strong) NSURL *space;
-@property (nonatomic, copy) NSString *joinTime;
+@property (nonatomic, strong) NSDate *joinTime;
 @property (nonatomic, copy) NSString *location;
 
 - (instancetype)initWithCollaboratorXML:(ONOXMLElement *)xml;   //协助者

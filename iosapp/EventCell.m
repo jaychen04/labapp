@@ -140,7 +140,7 @@
 {
     [_portrait loadPortrait:event.portraitURL];
     [_authorLabel setText:event.author];
-    [_timeLabel setText:[Utils intervalSinceNow:event.pubDate]];
+    [_timeLabel setText:[event.pubDate timeAgoSinceNow]];
     [_appclientLabel setAttributedText:[Utils getAppclient:event.appclient]];
     [_actionLabel setAttributedText:event.actionStr];
     [_commentCount setAttributedText:event.attributedCommentCount];

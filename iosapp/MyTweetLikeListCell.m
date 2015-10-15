@@ -85,7 +85,7 @@
     [_portrait loadPortrait:myLikeTweet.portraitURL];
     [_likeUserNameLabel setText:[NSString stringWithFormat:@"%@", myLikeTweet.name]];
     [_textlLikeLabel setText:[NSString stringWithFormat:@"赞了我的动弹："]];
-    [_timeLabel setText:[Utils intervalSinceNow:myLikeTweet.dataTime]];
+    [_timeLabel setText:[myLikeTweet.date timeAgoSinceNow]];
     [_authorTweetLabel setAttributedText:myLikeTweet.authorAndBody];
     
 }

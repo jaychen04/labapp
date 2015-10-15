@@ -20,7 +20,7 @@
         _appName = [[xml firstChildWithTag:@"appName"] stringValue];
         NSString *rawString = [Utils deleteHTMLTag:[[xml firstChildWithTag:@"content"] stringValue]];
         _content = [Utils emojiStringFromRawString:rawString];
-        _createTime = [[xml firstChildWithTag:@"createTime"] stringValue];
+        _createTime = [NSDate dateFromString:[xml firstChildWithTag:@"createTime"].stringValue];
         
         ONOXMLElement *authorXML = [xml firstChildWithTag:@"author"];
         _author = [[TeamMember alloc] initWithXML:authorXML];

@@ -17,7 +17,7 @@
         _reportID = [[[xml firstChildWithTag:@"id"] numberValue] intValue];
         _title = [[xml firstChildWithTag:@"title"] stringValue];
         _replyCount = [[[xml firstChildWithTag:@"reply"] numberValue] intValue];
-        _createTime = [[xml firstChildWithTag:@"createTime"] stringValue];
+        _createTime = [NSDate dateFromString:[xml firstChildWithTag:@"createTime"].stringValue];
         
         ONOXMLElement *authorXML = [xml firstChildWithTag:@"author"];
         _author = [[TeamMember alloc] initWithXML:authorXML];

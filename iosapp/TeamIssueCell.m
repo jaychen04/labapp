@@ -99,8 +99,8 @@
     if (issue.hasExtraInfo) {
         NSMutableString *extraInfo = [NSMutableString new];
         
-        if (issue.deadline.length) {
-            [extraInfo appendString:[NSString stringWithFormat:@"%@ ", [issue.deadline componentsSeparatedByString:@" "][0]]];
+        if (issue.deadline) {
+            [extraInfo appendString:[issue.deadline formattedDateWithStyle:NSDateFormatterMediumStyle]];
         }
         
         if (issue.attachmentsCount) {

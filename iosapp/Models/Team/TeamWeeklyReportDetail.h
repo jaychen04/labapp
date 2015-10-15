@@ -14,7 +14,7 @@
 @property (nonatomic, assign) int reportID;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, assign) int replyCount;
-@property (nonatomic, copy) NSString *createTime;
+@property (nonatomic, strong) NSDate *createTime;
 
 @property (nonatomic, strong) TeamMember *author;
 @property (nonatomic, copy) NSAttributedString *summary;

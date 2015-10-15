@@ -11,7 +11,7 @@
 @interface OSCReply : OSCBaseObject <NSCopying>
 
 @property (nonatomic, readonly, copy) NSString *author;
-@property (nonatomic, readonly, copy) NSString *pubDate;
+@property (nonatomic, readonly, strong) NSDate *pubDate;
 @property (nonatomic, readonly, copy) NSString *content;
 
 @end

@@ -54,7 +54,7 @@ static NSString * const kObjectCatalog = @"objectcatalog";
         _catalog = [[[xml firstChildWithTag:kCatalog] numberValue] intValue];
         _appclient = [[[xml firstChildWithTag:kAppClient] numberValue] intValue];
         _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:kPubDate].stringValue];
         
         _objectID = [[[xml firstChildWithTag:kObjectID] numberValue] longLongValue];
         _objectType = [[[xml firstChildWithTag:kObjectType] numberValue] intValue];

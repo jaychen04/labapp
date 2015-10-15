@@ -23,7 +23,7 @@
         _appID = [[[xml firstChildWithTag:@"appid"] numberValue] intValue];
         _appName = [[xml firstChildWithTag:@"appName"] stringValue];
         _replyCount = [[[xml firstChildWithTag:@"reply"] numberValue] intValue];
-        _createTime = [[xml firstChildWithTag:@"createTime"] stringValue];
+        _createTime = [NSDate dateFromString:[xml firstChildWithTag:@"createTime"].stringValue];
         
         ONOXMLElement *bodyXML = [xml firstChildWithTag:@"body"];
         _title = [[bodyXML firstChildWithTag:@"title"] stringValue];

@@ -63,7 +63,7 @@ static NSString * const kMessageCellID = @"MessageCell";
     
     cell.nameLabel.text = [NSString stringWithFormat:@"%@ %@", message.senderID == [Config getOwnID] ? @"发给" : @"来自", message.friendName];
     cell.contentLabel.text = message.content;
-    cell.timeLabel.text = [Utils intervalSinceNow:message.pubDate];
+    cell.timeLabel.text = [message.pubDate timeAgoSinceNow];
     cell.commentCountLabel.text = [NSString stringWithFormat:@"%d封私信", message.messageCount];
     
     cell.contentLabel.textColor = [UIColor titleColor];

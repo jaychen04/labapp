@@ -385,6 +385,8 @@
 		C5B1231E1B316830000B29D2 /* js in Resources */ = {isa = PBXBuildFile; fileRef = C5B1231B1B316830000B29D2 /* js */; };
 		C5B123351B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B123341B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m */; };
 		C5B2F1A81BCE6C84004B4785 /* UINavigationController+Router.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B2F1A71BCE6C84004B4785 /* UINavigationController+Router.m */; settings = {ASSET_TAGS = (); }; };
+		C5B2F1AB1BCF451F004B4785 /* NSDate+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B2F1AA1BCF451F004B4785 /* NSDate+Util.m */; settings = {ASSET_TAGS = (); }; };
+		C5B2F1AF1BCF453F004B4785 /* NSDateFormatter+Singleton.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B2F1AE1BCF453F004B4785 /* NSDateFormatter+Singleton.m */; settings = {ASSET_TAGS = (); }; };
 		C5D5123D1B15ACD900EB79D2 /* team-creaete@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D5123B1B15ACD900EB79D2 /* team-creaete@3x.png */; };
 		C5D5123E1B15ACD900EB79D2 /* team-create@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D5123C1B15ACD900EB79D2 /* team-create@2x.png */; };
 		C5D5504A1B04764000CCA308 /* -1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D550381B04764000CCA308 /* -1@2x.png */; };
@@ -1042,6 +1044,10 @@
 		C5B123341B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AFHTTPRequestOperationManager+Util.m"; sourceTree = "<group>"; };
 		C5B2F1A61BCE6C84004B4785 /* UINavigationController+Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Router.h"; sourceTree = "<group>"; };
 		C5B2F1A71BCE6C84004B4785 /* UINavigationController+Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Router.m"; sourceTree = "<group>"; };
+		C5B2F1A91BCF451F004B4785 /* NSDate+Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Util.h"; sourceTree = "<group>"; };
+		C5B2F1AA1BCF451F004B4785 /* NSDate+Util.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Util.m"; sourceTree = "<group>"; };
+		C5B2F1AD1BCF453F004B4785 /* NSDateFormatter+Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+Singleton.h"; sourceTree = "<group>"; };
+		C5B2F1AE1BCF453F004B4785 /* NSDateFormatter+Singleton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+Singleton.m"; sourceTree = "<group>"; };
 		C5D5123B1B15ACD900EB79D2 /* team-creaete@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "team-creaete@3x.png"; sourceTree = "<group>"; };
 		C5D5123C1B15ACD900EB79D2 /* team-create@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "team-create@2x.png"; sourceTree = "<group>"; };
 		C5D550381B04764000CCA308 /* -1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "-1@2x.png"; sourceTree = "<group>"; };
@@ -2028,6 +2034,7 @@
 				6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */,
 				C5B2F1A61BCE6C84004B4785 /* UINavigationController+Router.h */,
 				C5B2F1A71BCE6C84004B4785 /* UINavigationController+Router.m */,
+				C5B2F1B01BCF468F004B4785 /* Date */,
 			);
 			name = Catagory;
 			sourceTree = "<group>";
@@ -2523,6 +2530,17 @@
 				C5A89C351B09C34B00798B1C /* UIImage+FontAwesome.h */,
 			);
 			name = FontAwesome;
+			sourceTree = "<group>";
+		};
+		C5B2F1B01BCF468F004B4785 /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				C5B2F1A91BCF451F004B4785 /* NSDate+Util.h */,
+				C5B2F1AA1BCF451F004B4785 /* NSDate+Util.m */,
+				C5B2F1AD1BCF453F004B4785 /* NSDateFormatter+Singleton.h */,
+				C5B2F1AE1BCF453F004B4785 /* NSDateFormatter+Singleton.m */,
+			);
+			name = Date;
 			sourceTree = "<group>";
 		};
 		C5E56F421B56AAE00059924C /* 综合 */ = {
@@ -3161,6 +3179,7 @@
 				38B0BF9C1A3E8F9C00A2FDB0 /* OSCTabBarController.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
 				C52BF5011AFCBF1700E53508 /* TeamReplyCell.m in Sources */,
+				C5B2F1AF1BCF453F004B4785 /* NSDateFormatter+Singleton.m in Sources */,
 				6662BACA1B8C4B7400D6A9BC /* TweetFriendsListViewController.m in Sources */,
 				38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */,
 				EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */,
@@ -3180,6 +3199,7 @@
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,
 				C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */,
+				C5B2F1AB1BCF451F004B4785 /* NSDate+Util.m in Sources */,
 				C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */,
 				EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */,
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,

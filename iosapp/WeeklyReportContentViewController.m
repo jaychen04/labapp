@@ -24,11 +24,10 @@
     _teamID = teamID;
     
     NSDate *date = [NSDate date];
-    NSDateComponents *dateComps = [Utils getDateComponentsFromDate:date];
     
     return [super initWithViewControllers:@[[[WeeklyReportTableViewController alloc] initWithTeamID:teamID
-                                                                                               year:dateComps.year
-                                                                                            andWeek:dateComps.weekOfYear - 1]]];
+                                                                                               year:date.year
+                                                                                            andWeek:date.weekOfYear]]];
 }
 
 - (void)viewDidLoad

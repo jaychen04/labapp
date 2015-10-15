@@ -10,9 +10,12 @@
 #import <Ono.h>
 #import <TBXML.h>
 
+#import "NSDate+Util.h"
+
 @interface OSCBaseObject : NSObject
 
 - (instancetype)initWithXML:(ONOXMLElement *)xml;
 
 - (instancetype)initWithTBXMLElement:(TBXMLElement*)element;
+
 @end

@@ -6,9 +6,12 @@
 //  Copyright (c) 2014 oschina. All rights reserved.
 //
 
+#import <UIKit/UIKit.h>
+
 #import "OSCNews.h"
 #import "Utils.h"
-#import <UIKit/UIKit.h>
+
+#import <DateTools.h>
 
 static NSString * const kID = @"id";
 static NSString * const kTitle = @"title";
@@ -35,7 +38,7 @@ static NSString * const kAuthorUID2 = @"authoruid2";
         _author = [[xml firstChildWithTag:kAuthor] stringValue];
         
         _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:kPubDate].stringValue];
         
         _url = [NSURL URLWithString:[[[xml firstChildWithTag:@"url"] stringValue]
                                      stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
@@ -54,7 +57,7 @@ static NSString * const kAuthorUID2 = @"authoruid2";
 - (NSAttributedString *)attributedTittle
 {
     if (!_attributedTittle) {
-        if ([[Utils timeIntervalArrayFromString:_pubDate][kKeyDays] integerValue] == 0) {
+        if ([_pubDate daysAgo] == 0) {
             NSTextAttachment *textAttachment = [NSTextAttachment new];
             textAttachment.image = [UIImage imageNamed:@"widget_taday"];
             NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];

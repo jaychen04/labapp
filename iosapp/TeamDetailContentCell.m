@@ -70,7 +70,7 @@
 {
     [_portrait loadPortrait:detail.author.portraitURL];
     _authorLabel.text = detail.author.name;
-    _timeLabel.text = [Utils intervalSinceNow:detail.createTime];
+    _timeLabel.text = [detail.createTime timeAgoSinceNow];
     self.contentLabel.attributedText = detail.summary;
 }
 
@@ -78,7 +78,7 @@
 {
     [_portrait loadPortrait:activity.author.portraitURL];
     _authorLabel.text = activity.author.name;
-    _timeLabel.text = [Utils intervalSinceNow:activity.createTime];
+    _timeLabel.text = [activity.createTime timeAgoSinceNow];
     _contentLabel.attributedText = activity.attributedDetail;
 }
 

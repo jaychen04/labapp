@@ -19,7 +19,7 @@
         _hometown           = [[[xml firstChildWithTag:@"from"] stringValue] copy];
         _developPlatform    = [[[xml firstChildWithTag:@"devplatform"] stringValue] copy];
         _expertise          = [[[xml firstChildWithTag:@"expertise"] stringValue] copy];
-        _joinTime           = [[[xml firstChildWithTag:@"joinTime"] stringValue] copy];
+        _joinTime           = [NSDate dateFromString:[xml firstChildWithTag:@"joinTime"].stringValue];
         
         _gender             = [[[xml firstChildWithTag:@"gender"] numberValue] intValue];
         _favoriteCount      = [[[xml firstChildWithTag:@"favoritecount"] numberValue] intValue];
@@ -31,7 +31,7 @@
     return self;
 }
 
-- (void)setDetailInformationJointime:(NSString *)jointime
+- (void)setDetailInformationJointime:(NSDate *)jointime
                          andHometown:(NSString *)hometown
                   andDevelopPlatform:(NSString *)developPlatform
                         andExpertise:(NSString *)expertise

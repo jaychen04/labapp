@@ -66,7 +66,7 @@ static NSString *kPostCellID = @"PostCell";
     [cell.titleLabel setText:post.title];
     [cell.bodyLabel setText:post.body];
     [cell.authorLabel setText:post.author];
-    [cell.timeLabel setText:[Utils intervalSinceNow:post.pubDate]];
+    [cell.timeLabel setText:[post.pubDate timeAgoSinceNow]];
     [cell.commentAndView setText:[NSString stringWithFormat:@"%d回 / %d阅", post.replyCount, post.viewCount]];
     
     cell.titleLabel.textColor = [UIColor titleColor];

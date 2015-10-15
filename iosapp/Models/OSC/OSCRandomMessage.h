@@ -24,7 +24,7 @@ typedef NS_ENUM(int, RandomType)
 @property (nonatomic, readonly, copy) NSString *author;
 @property (nonatomic, readonly, assign) int64_t authorID;
 @property (nonatomic, readonly, strong) NSURL *portraitURL;
-@property (nonatomic, readonly, copy) NSString *pubDate;
+@property (nonatomic, readonly, strong) NSDate *pubDate;
 @property (nonatomic, readonly, assign) int commentCount;
 @property (nonatomic, readonly, strong) NSURL *url;
 

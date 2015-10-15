@@ -58,7 +58,7 @@
                                     @"title" : _discussionDetails.title,
                                     @"authorID" : @(_discussionDetails.author.memberID),
                                     @"authorName" : _discussionDetails.author.name,
-                                    @"timeInterval" : [Utils intervalSinceNow:_discussionDetails.createTime],
+                                    @"timeInterval" : [_discussionDetails.createTime timeAgoSinceNow],
                                     @"content" : _discussionDetails.body,
                                     };
              
