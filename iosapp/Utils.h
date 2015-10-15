@@ -35,8 +35,6 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 + (NSString *)GenerateTags:(NSArray *)tags;
 
-+ (NSAttributedString *)attributedTimeString:(NSDate *)date;
-
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 + (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML;
 + (NSData *)compressImage:(UIImage *)image;
@@ -54,6 +52,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (MBProgressHUD *)createHUD;
 + (UIImage *)createQRCodeFromString:(NSString *)string;
 
++ (NSAttributedString *)attributedTimeString:(NSDate *)date;
 + (NSAttributedString *)attributedCommentCount:(int)commentCount;
 
 + (NSString *)HTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName;

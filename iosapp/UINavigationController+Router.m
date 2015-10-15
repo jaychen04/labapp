@@ -37,12 +37,11 @@
         //站内链接
         
         urlString = [urlString substringFromIndex:7];
-        NSArray *pathComponents = [url pathComponents];
+        NSArray *pathComponents = [urlString pathComponents];
         NSString *prefix = [pathComponents[0] componentsSeparatedByString:@"."][0];
         UIViewController *viewController;
         
-        if ([prefix isEqualToString:@"my"])
-        {
+        if ([prefix isEqualToString:@"my"]) {
             if (pathComponents.count == 2) {
                 // 个人专页 my.oschina.net/dong706
                 
