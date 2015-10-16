@@ -490,9 +490,9 @@
     _webURL = [newsDetails.url absoluteString];
     _objectTitle = newsDetails.title;
     _commentCount = newsDetails.commentCount;
-    NSString *trimmedHTML = [Utils deleteHTMLTag:newsDetails.body];
+    NSString *trimmedHTML = [newsDetails.body deleteHTMLTag];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
-    _digest = [[Utils deleteHTMLTag:newsDetails.body] substringToIndex:length];
+    _digest = [trimmedHTML substringToIndex:length];
 }
 
 - (void)loadBlogDetails:(OSCBlogDetails *)blogDetails
@@ -503,9 +503,9 @@
     _webURL = [blogDetails.url absoluteString];
     _objectTitle = blogDetails.title;
     _commentCount = blogDetails.commentCount;
-    NSString *trimmedHTML = [Utils deleteHTMLTag:blogDetails.body];
+    NSString *trimmedHTML = [blogDetails.body deleteHTMLTag];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
-    _digest = [[Utils deleteHTMLTag:blogDetails.body] substringToIndex:length];
+    _digest = [trimmedHTML substringToIndex:length];
 }
 
 - (void)loadPostDetails:(OSCPostDetails *)postDetails
@@ -517,9 +517,9 @@
     _commentCount = postDetails.answerCount;
     _objectTitle = postDetails.title;
     
-    NSString *trimmedHTML = [Utils deleteHTMLTag:postDetails.body];
+    NSString *trimmedHTML = [postDetails.body deleteHTMLTag];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
-    _digest = [[Utils deleteHTMLTag:postDetails.body] substringToIndex:length];
+    _digest = [trimmedHTML substringToIndex:length];
 }
 
 - (void)loadSoftwareDetails:(OSCSoftwareDetails *)softwareDetails
@@ -532,9 +532,9 @@
     _commentCount = softwareDetails.tweetCount;
     _objectTitle = [NSString stringWithFormat:@"%@ %@", softwareDetails.extensionTitle, softwareDetails.title];
     
-    NSString *trimmedHTML = [Utils deleteHTMLTag:softwareDetails.body];
+    NSString *trimmedHTML = [softwareDetails.body deleteHTMLTag];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
-    _digest = [[Utils deleteHTMLTag:softwareDetails.body] substringToIndex:length];
+    _digest = [trimmedHTML substringToIndex:length];
 }
 
 

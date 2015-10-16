@@ -16,6 +16,7 @@
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "UINavigationController+Router.h"
 #import "NSDate+Util.h"
+#import "NSString+Util.h"
 
 
 typedef NS_ENUM(NSUInteger, hudType) {
@@ -33,15 +34,12 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSAttributedString *)getAppclient:(int)clientType;
 
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
-+ (NSString *)GenerateTags:(NSArray *)tags;
++ (NSString *)generateTags:(NSArray *)tags;
 
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
 + (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML;
 + (NSData *)compressImage:(UIImage *)image;
 + (NSString *)convertRichTextToRawText:(UITextView *)textView;
-
-+ (NSString *)escapeHTML:(NSString *)originalHTML;
-+ (NSString *)deleteHTMLTag:(NSString *)HTML;
 
 + (BOOL)isURL:(NSString *)string;
 + (NSInteger)networkStatus;

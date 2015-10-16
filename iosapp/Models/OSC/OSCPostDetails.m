@@ -93,12 +93,12 @@
 {
     if (!_html) {
         NSDictionary *data = @{
-                               @"title": [Utils escapeHTML:_title],
+                               @"title": [_title escapeHTML],
                                @"authorID": @(_authorID),
                                @"authorName": _author,
                                @"timeInterval": [_pubDate timeAgoSinceNow],
                                @"content": _body,
-                               @"tags": [Utils GenerateTags:_tags],
+                               @"tags": [Utils generateTags:_tags],
                                };
         
         _html = [Utils HTMLWithData:data usingTemplate:@"article"];

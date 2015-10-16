@@ -18,7 +18,7 @@
         _type = [[[xml firstChildWithTag:@"type"] numberValue] intValue];
         _appclient = [[[xml firstChildWithTag:@"appclient"] numberValue] intValue];
         _appName = [[xml firstChildWithTag:@"appName"] stringValue];
-        NSString *rawString = [Utils deleteHTMLTag:[[xml firstChildWithTag:@"content"] stringValue]];
+        NSString *rawString = [[xml firstChildWithTag:@"content"].stringValue deleteHTMLTag];
         _content = [Utils emojiStringFromRawString:rawString];
         _createTime = [NSDate dateFromString:[xml firstChildWithTag:@"createTime"].stringValue];
         
