@@ -74,14 +74,25 @@ static NSInteger HeightPicker;
     _corporationTextField.text = activitySignUpInfo[3];
     _positionTextField.text = activitySignUpInfo[4];
     
-    RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal, _remarkSelectTextField.rac_textSignal]
-                                         reduce:^(NSString *name, NSString *phoneNumber, NSString *remarkSelectStr){
-                                             return @(name.length > 0 && phoneNumber.length > 0 && remarkSelectStr.length > 0);
+    RACSignal *valid = [RACSignal combineLatest:@[_nameTextField.rac_textSignal, _phoneNumberTextField.rac_textSignal]
+                                         reduce:^(NSString *name, NSString *phoneNumber){
+                                             return @(name.length > 0 && phoneNumber.length > 0);
                                          }];
     RAC(_saveButton, enabled) = valid;
     RAC(_saveButton, alpha) = [valid map:^(NSNumber *b) {
         return b.boolValue ? @1 : @0.4;
     }];
+    
+    if (_remarkCitys.count > 0) {
+        RACSignal *valid = [RACSignal combineLatest:@[_remarkSelectTextField.rac_textSignal]
+                                             reduce:^(NSString *remarkSelectStr) {
+                                                 return @(remarkSelectStr.length > 0);
+                                             }];
+        RAC(_saveButton, enabled) = valid;
+        RAC(_saveButton, alpha) = [valid map:^(NSNumber *b) {
+            return b.boolValue ? @1: @0.4;
+        }];
+    }
 }
 
 - (void)setLayout
