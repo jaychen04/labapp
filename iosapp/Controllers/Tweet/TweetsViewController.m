@@ -25,10 +25,11 @@
 static NSString * const kTweetCellID = @"TweetCell";
 
 
-@interface TweetsViewController ()
+@interface TweetsViewController () <UITextViewDelegate>
 
 @property (nonatomic, assign) int64_t uid;
 @property (nonatomic, copy) NSString *topic;
+@property (nonatomic, strong) UITextView *textView; // for calculating height of cell
 
 @end
 
@@ -128,7 +129,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     };
     
     self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
+        return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
     };
     
     self.objClass = [OSCTweet class];
@@ -147,6 +148,10 @@ static NSString * const kTweetCellID = @"TweetCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:kTweetCellID];
+    
+    _textView = [[UITextView alloc] initWithFrame:CGRectZero];
+    [TweetCell initContetTextView:_textView];
+    [self.view addSubview:_textView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -168,7 +173,8 @@ static NSString * const kTweetCellID = @"TweetCell";
     
     OSCTweet *tweet = self.objects[row];
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
-    
+    if (!cell.contentTextView.delegate) cell.contentTextView.delegate = self;
+
     cell.backgroundColor = [UIColor themeColor];
     
     [self setBlockForCommentCell:cell];
@@ -197,7 +203,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     cell.thumbnail.tag = row;
     cell.likeButton.tag = row;
     cell.likeListLabel.tag = row;
-    cell.contentLabel.textColor = [UIColor contentTextColor];
+    cell.contentTextView.textColor = [UIColor contentTextColor];
     cell.authorLabel.textColor = [UIColor nameColor];
     
     [cell.portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
@@ -221,9 +227,8 @@ static NSString * const kTweetCellID = @"TweetCell";
     [self.label setText:tweet.author];
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     
-    self.label.font = [UIFont boldSystemFontOfSize:15];
-    [self.label setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
-    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+    [self.textView setAttributedText:[TweetCell contentStringFromRawString:tweet.body]];
+    height += [self.textView sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
     
     if (tweet.likeCount) {
         [self.label setAttributedText:tweet.likersString];
@@ -492,6 +497,14 @@ static NSString * const kTweetCellID = @"TweetCell";
               
               [HUD hide:YES afterDelay:1];
           }];
+}
+
+#pragma mark UITableViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+    [self.navigationController handleURL:URL];
+    return NO;
 }
 
 

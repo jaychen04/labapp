@@ -37,6 +37,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSString *)generateTags:(NSArray *)tags;
 
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString;
++ (NSAttributedString *)emojiStringFromAttrString:(NSAttributedString*)attrString;
 + (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML;
 + (NSData *)compressImage:(UIImage *)image;
 + (NSString *)convertRichTextToRawText:(UITextView *)textView;

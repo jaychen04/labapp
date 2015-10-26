@@ -60,11 +60,9 @@
     _appclientLabel.textColor = [UIColor grayColor];
     [self.contentView addSubview:_appclientLabel];
     
-    _contentLabel = [UILabel new];
-    _contentLabel.numberOfLines = 0;
-    _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    _contentLabel.font = [UIFont boldSystemFontOfSize:15];
-    [self.contentView addSubview:_contentLabel];
+    _contentTextView = [[UITextView alloc] initWithFrame:CGRectZero];
+    [TweetCell initContetTextView:_contentTextView];
+    [self.contentView addSubview:_contentTextView];
     
     _likeButton = [UIButton new];
     _likeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:12];
@@ -95,7 +93,7 @@
 {
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentLabel, _likeButton, _commentCount, _likeListLabel, _thumbnail);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_portrait, _authorLabel, _timeLabel, _appclientLabel, _contentTextView, _likeButton, _commentCount, _likeListLabel, _thumbnail);
     
 
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-8-[_portrait(36)]" options:0 metrics:nil views:views]];
@@ -103,7 +101,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentLabel]-<=6-[_thumbnail(80)]-<=6-[_likeListLabel]-6-[_timeLabel]-5-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentTextView]-<=6-[_thumbnail(80)]-<=6-[_likeListLabel]-6-[_timeLabel]-5-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
     
@@ -116,7 +114,7 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_likeListLabel]-8-|" options:0 metrics:nil views:views]];
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_authorLabel  attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_contentLabel attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+                                                                    toItem:_contentTextView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
 }
 
 - (void)setContentWithTweet:(OSCTweet *)tweet
@@ -143,11 +141,11 @@
         NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
         NSMutableAttributedString *attributedTweetBody = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
         [attributedTweetBody appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-        [attributedTweetBody appendAttributedString:[Utils emojiStringFromRawString:tweet.body]];
+        [attributedTweetBody appendAttributedString:[TweetCell contentStringFromRawString:tweet.body]];
         
-        [_contentLabel setAttributedText:attributedTweetBody];
+        [_contentTextView setAttributedText:attributedTweetBody];
     } else {
-        [_contentLabel setAttributedText:[Utils emojiStringFromRawString:tweet.body]];
+        [_contentTextView setAttributedText:[TweetCell contentStringFromRawString:tweet.body]];
     }
     
     [_likeListLabel setAttributedText:tweet.likersString];
@@ -175,7 +173,7 @@
 - (void)copyText:(id)sender
 {
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
-    [pasteBoard setString:_contentLabel.text];
+    [pasteBoard setString:_contentTextView.text];
 }
 
 - (void)deleteObject:(id)sender
@@ -183,6 +181,46 @@
     _deleteObject(self);
 }
 
+
+#pragma mark - class methods
+
++ (void)initContetTextView:(UITextView*)textView
+{
+    textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+    textView.backgroundColor = [UIColor clearColor];
+    textView.font = [UIFont boldSystemFontOfSize:15.0];
+    textView.editable = NO;
+    textView.scrollEnabled = NO;
+    [textView setTextContainerInset:UIEdgeInsetsZero];
+    textView.textContainer.lineFragmentPadding = 0;
+    textView.linkTextAttributes = @{
+                                 NSForegroundColorAttributeName: [UIColor nameColor],
+                                 NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
+                                 };
+}
+
++ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString
+{
+    if (!rawString || rawString.length == 0) return [[NSAttributedString alloc] initWithString:@""];
+    
+    NSAttributedString *attrString = [Utils attributedStringFromHTML:rawString];
+    NSMutableAttributedString *mutableAttrString = [[Utils emojiStringFromAttrString:attrString] mutableCopy];
+    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14.0] range:NSMakeRange(0, mutableAttrString.length)];
+    
+    // remove under line style
+    [mutableAttrString beginEditing];
+    [mutableAttrString enumerateAttribute:NSUnderlineStyleAttributeName
+                                inRange:NSMakeRange(0, mutableAttrString.length)
+                                options:0
+                             usingBlock:^(id value, NSRange range, BOOL *stop) {
+                                 if (value) {
+                                     [mutableAttrString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:range];
+                                 }
+                             }];
+    [mutableAttrString endEditing];
+    
+    return mutableAttrString;
+}
 
 
 @end

@@ -109,20 +109,26 @@
 
 + (NSAttributedString *)emojiStringFromRawString:(NSString *)rawString
 {
-    NSMutableAttributedString *emojiString = [[NSMutableAttributedString alloc] initWithString:rawString];
+    NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:rawString attributes:nil];
+    return [Utils emojiStringFromAttrString:attrString];
+}
+
++ (NSAttributedString *)emojiStringFromAttrString:(NSAttributedString*)attrString
+{
+    NSMutableAttributedString *emojiString = [[NSMutableAttributedString alloc] initWithAttributedString:attrString];
     NSDictionary *emoji = self.emojiDict;
     
     NSString *pattern = @"\\[[a-zA-Z0-9\\u4e00-\\u9fa5]+\\]|:[a-zA-Z0-9\\u4e00-\\u9fa5_]+:";
     NSError *error = nil;
     NSRegularExpression *re = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&error];
     
-    NSArray *resultsArray = [re matchesInString:rawString options:0 range:NSMakeRange(0, rawString.length)];
+    NSArray *resultsArray = [re matchesInString:attrString.string options:0 range:NSMakeRange(0, attrString.string.length)];
     
     NSMutableArray *emojiArray = [NSMutableArray arrayWithCapacity:resultsArray.count];
     
     for (NSTextCheckingResult *match in resultsArray) {
         NSRange range = [match range];
-        NSString *emojiName = [rawString substringWithRange:range];
+        NSString *emojiName = [attrString.string substringWithRange:range];
         
         if ([emojiName hasPrefix:@"["] && emoji[emojiName]) {
             NSTextAttachment *textAttachment = [NSTextAttachment new];

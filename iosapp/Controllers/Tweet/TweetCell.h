@@ -18,7 +18,7 @@
 @property (nonatomic, strong) UILabel *commentCount;
 @property (nonatomic, strong) UILabel *appclientLabel;
 @property (nonatomic, strong) UIButton *likeButton;
-@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UITextView *contentTextView;
 @property (nonatomic, strong) UILabel *likeListLabel;
 @property (nonatomic, strong) UIImageView *thumbnail;
 
@@ -32,5 +32,8 @@
 - (void)setContentWithTweet:(OSCTweet *)tweet;
 - (void)copyText:(id)sender;
 - (void)deleteObject:(id)sender;
+
++ (void)initContetTextView:(UITextView*)textView;
++ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
 
 @end
