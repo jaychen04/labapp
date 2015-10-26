@@ -137,12 +137,12 @@ static NSString * const EventCellID = @"EventCell";
     [cell setContentWithEvent:event];
     
     if (event.hasAnImage) {
-#if 0
+#if EVENT_CELL_IMAGE_USE_REALSIZE
         UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
         
         // 有图就加载，无图则下载并reload tableview
         if (!image) {
-            [self downloadImageThenReload:event.tweetImg];
+            [self downloadThumbnailImageThenReload:event];
         } else {
             [cell.thumbnail setImage:image];
         }
@@ -187,7 +187,7 @@ static NSString * const EventCellID = @"EventCell";
     }
     
     if (event.hasAnImage) {
-#if 0
+#if EVENT_CELL_IMAGE_USE_REALSIZE
         UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:event.tweetImg.absoluteString];
         if (!image) {image = [UIImage imageNamed:@"portrait_loading"];}
         height += image.size.height + 5;
@@ -270,18 +270,22 @@ static NSString * const EventCellID = @"EventCell";
     };
 }
 
-- (void)downloadImageThenReload:(NSURL *)imageURL
+- (void)downloadThumbnailImageThenReload:(OSCEvent *)event
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:imageURL
+        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:event.tweetImg
                                                               options:SDWebImageDownloaderUseNSURLCache
                                                              progress:nil
                                                             completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                                                                [[SDImageCache sharedImageCache] storeImage:image forKey:imageURL.absoluteString toDisk:NO];
+                                                                [[SDImageCache sharedImageCache] storeImage:image forKey:event.tweetImg.absoluteString toDisk:NO];
                                                                 
                                                                 // 单独刷新某一行会有闪烁，全部reload反而较为顺畅
                                                                 dispatch_async(dispatch_get_main_queue(), ^{
+#if EVENT_CELL_IMAGE_USE_REALSIZE
+                                                                    event.cellHeight = 0;
+#else
                                                                     [self.tableView reloadData];
+#endif
                                                                 });
                                                             }];
     });

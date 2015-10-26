@@ -35,4 +35,7 @@ static NSString * const kEventWithoutExtraInfoCellID = @"EventCellWithoutExtraIn
 
 + (void)initContetTextView:(UITextView*)textView;
 + (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
+
 @end
+
+#define EVENT_CELL_IMAGE_USE_REALSIZE 1
