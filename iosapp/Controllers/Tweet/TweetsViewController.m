@@ -183,13 +183,13 @@ static NSString * const kTweetCellID = @"TweetCell";
     if (tweet.hasAnImage) {
         cell.thumbnail.hidden = NO;
         
-#if 0
+#if TWEET_CELL_USE_REAL_SIZE
         UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
         
         // 有图就加载，无图则下载并reload tableview
         if (!image) {
             [cell.thumbnail setImage:[UIImage imageNamed:@"loading"]];
-            [self downloadImageThenReload:tweet.smallImgURL];
+            [self downloadThumbnailImageThenReload:tweet];
         } else {
             [cell.thumbnail setImage:image];
         }
@@ -237,7 +237,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     }
     
     if (tweet.hasAnImage) {
-#if 0
+#if TWEET_CELL_USE_REAL_SIZE
         UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
         if (!image) {image = [UIImage imageNamed:@"loading"];}
         height += image.size.height + 5;
@@ -352,22 +352,24 @@ static NSString * const kTweetCellID = @"TweetCell";
 
 #pragma mark - 下载图片
 
-- (void)downloadImageThenReload:(NSURL *)imageURL
+- (void)downloadThumbnailImageThenReload:(OSCTweet*)tweet
 {
-    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:imageURL
+    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:tweet.smallImgURL
                                                         options:SDWebImageDownloaderUseNSURLCache
                                                        progress:nil
                                                       completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                                                          [[SDImageCache sharedImageCache] storeImage:image forKey:imageURL.absoluteString toDisk:NO];
-                                                        
+                                                          [[SDImageCache sharedImageCache] storeImage:image forKey:tweet.smallImgURL.absoluteString toDisk:NO];
+                                                          
                                                           // 单独刷新某一行会有闪烁，全部reload反而较为顺畅
                                                           dispatch_async(dispatch_get_main_queue(), ^{
+#if TWEET_CELL_USE_REAL_SIZE
+                                                              tweet.cellHeight = 0;
+#endif
                                                               [self.tableView reloadData];
                                                           });
                                                       }];
+
 }
-
-
 
 
 #pragma mark - 跳转到用户详情页

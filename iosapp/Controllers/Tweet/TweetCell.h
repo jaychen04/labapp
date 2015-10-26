@@ -37,3 +37,5 @@
 + (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
 
 @end
+
+#define TWEET_CELL_USE_REAL_SIZE 1
