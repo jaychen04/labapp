@@ -183,7 +183,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     if (tweet.hasAnImage) {
         cell.thumbnail.hidden = NO;
         
-#if TWEET_CELL_USE_REAL_SIZE
+#if TWEET_CELL_IMAGE_USE_REALSIZE
         UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
         
         // 有图就加载，无图则下载并reload tableview
@@ -237,7 +237,7 @@ static NSString * const kTweetCellID = @"TweetCell";
     }
     
     if (tweet.hasAnImage) {
-#if TWEET_CELL_USE_REAL_SIZE
+#if TWEET_CELL_IMAGE_USE_REALSIZE
         UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
         if (!image) {image = [UIImage imageNamed:@"loading"];}
         height += image.size.height + 5;
@@ -362,7 +362,7 @@ static NSString * const kTweetCellID = @"TweetCell";
                                                           
                                                           // 单独刷新某一行会有闪烁，全部reload反而较为顺畅
                                                           dispatch_async(dispatch_get_main_queue(), ^{
-#if TWEET_CELL_USE_REAL_SIZE
+#if TWEET_CELL_IMAGE_USE_REALSIZE
                                                               tweet.cellHeight = 0;
 #endif
                                                               [self.tableView reloadData];

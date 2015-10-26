@@ -100,7 +100,7 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
-#if TWEET_CELL_USE_REAL_SIZE
+#if TWEET_CELL_IMAGE_USE_REALSIZE
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentTextView]-<=6-[_thumbnail]-<=6-[_likeListLabel]-6-[_timeLabel]-5-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
