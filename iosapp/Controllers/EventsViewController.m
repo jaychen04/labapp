@@ -23,7 +23,9 @@
 
 static NSString * const EventCellID = @"EventCell";
 
-@interface EventsViewController ()
+@interface EventsViewController () <UITextViewDelegate>
+
+@property (nonatomic, strong) UITextView *textView; // for calculating height of cell
 
 @end
 
@@ -49,7 +51,7 @@ static NSString * const EventCellID = @"EventCell";
         
         self.objClass = [OSCEvent class];
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?catalog=%d&pageIndex=%lu&pageSize=20&uid=%lld", OSCAPI_PREFIX, OSCAPI_ACTIVE_LIST, catalog, (unsigned long)page, [Config getOwnID]];
+            return [NSString stringWithFormat:@"%@%@?catalog=%d&pageIndex=%lu&pageSize=20&uid=%lld&clientType=android", OSCAPI_PREFIX, OSCAPI_ACTIVE_LIST, catalog, (unsigned long)page, [Config getOwnID]];
         };
     }
     
@@ -66,7 +68,7 @@ static NSString * const EventCellID = @"EventCell";
         
         self.objClass = [OSCEvent class];
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?uid=%lld&hisuid=%lld&pageIndex=%lu&pageSize=20", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userID, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?uid=%lld&hisuid=%lld&pageIndex=%lu&pageSize=20&clientType=android", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userID, (unsigned long)page];
         };
     }
     
@@ -80,7 +82,7 @@ static NSString * const EventCellID = @"EventCell";
         
         self.objClass = [OSCEvent class];
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?uid=%lld&hisname=%@&pageIndex=%lu&pageSize=20", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userName, (unsigned long)page];
+            return [NSString stringWithFormat:@"%@%@?uid=%lld&hisname=%@&pageIndex=%lu&pageSize=20&clientType=android", OSCAPI_PREFIX, OSCAPI_USER_INFORMATION, [Config getOwnID], userName, (unsigned long)page];
         };
     }
     
@@ -103,6 +105,10 @@ static NSString * const EventCellID = @"EventCell";
     [self.tableView registerClass:[EventCell class] forCellReuseIdentifier:EventCellID];
     
     self.lastCell.emptyMessage = @"没有动态信息";
+    
+    _textView = [[UITextView alloc] initWithFrame:CGRectZero];
+    [EventCell initContetTextView:_textView];
+    [self.view addSubview:_textView];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -123,8 +129,9 @@ static NSString * const EventCellID = @"EventCell";
 
     OSCEvent *event = self.objects[row];
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:EventCellID forIndexPath:indexPath];
+    if (!cell.contentTextView.delegate) cell.contentTextView.delegate = self;
     
-    cell.contentLabel.textColor = [UIColor contentTextColor];
+    cell.contentTextView.textColor = [UIColor contentTextColor];
     
     [self setBlockForEventCell:cell];
     [cell setContentWithEvent:event];
@@ -160,9 +167,8 @@ static NSString * const EventCellID = @"EventCell";
     
     if (event.cellHeight) {return event.cellHeight;}
     
-    self.label.font = [UIFont boldSystemFontOfSize:15];
-    [self.label setAttributedText:[Utils emojiStringFromRawString:event.message]];
-    CGSize size = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
+    [self.textView setAttributedText:[EventCell contentStringFromRawString:event.message]];
+    CGSize size = [self.textView sizeThatFits:CGSizeMake(tableView.frame.size.width - 51, MAXFLOAT)];
     CGFloat height = size.height + 24 + [UIFont systemFontOfSize:14].lineHeight;
     
     [self.label setAttributedText:event.actionStr];
@@ -308,6 +314,13 @@ static NSString * const EventCellID = @"EventCell";
 }
 
 
+#pragma mark UITableViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+    [self.navigationController handleURL:URL];
+    return NO;
+}
 
 
 @end

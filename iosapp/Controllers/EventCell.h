@@ -20,7 +20,7 @@ static NSString * const kEventWithoutExtraInfoCellID = @"EventCellWithoutExtraIn
 @property (nonatomic, strong) UILabel *authorLabel;
 @property (nonatomic, strong) UILabel *actionLabel;
 @property (nonatomic, strong) UILabel *timeLabel;
-@property (nonatomic, strong) UILabel *contentLabel;
+@property (nonatomic, strong) UITextView *contentTextView;
 
 @property (nonatomic, strong) UIImageView *thumbnail;
 @property (nonatomic, strong) UITextView *referenceText;
@@ -31,7 +31,8 @@ static NSString * const kEventWithoutExtraInfoCellID = @"EventCellWithoutExtraIn
 @property (nonatomic, copy) BOOL (^canPerformAction)(UITableViewCell *cell, SEL action);
 
 - (void)setContentWithEvent:(OSCEvent *)event;
-
 - (void)copyText:(id)sender;
 
++ (void)initContetTextView:(UITextView*)textView;
++ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
 @end

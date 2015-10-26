@@ -78,7 +78,7 @@
                     viewController.navigationItem.title = @"博客详情";
                 }
             }
-        } else if ([prefix isEqualToString:@"www"]) {
+        } else if ([prefix isEqualToString:@"www"] || [prefix isEqualToString:@"m"]) {
             //新闻,软件,问答
             NSArray *urlComponents = [urlString componentsSeparatedByString:@"/"];
             NSUInteger count = urlComponents.count;
