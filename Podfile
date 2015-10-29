@@ -1,3 +1,5 @@
+platform :ios, '7.0'
+inhibit_all_warnings!
 source 'https://github.com/CocoaPods/Specs.git'
 
 pod 'AFOnoResponseSerializer'
@@ -12,5 +14,5 @@ pod 'TTTAttributedLabel'
 pod 'GRMustache'
 pod 'TOWebViewController'
 pod 'MJRefresh'
-pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk"
 pod 'TBXML'
+pod 'DateTools'

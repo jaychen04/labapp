@@ -18,7 +18,7 @@
         _type = [[xml firstChildWithTag:@"type"] stringValue];
         _title = [[xml firstChildWithTag:@"title"] stringValue];
         _body = [[xml firstChildWithTag:@"body"] stringValue];
-        _createTime = [[xml firstChildWithTag:@"createTime"] stringValue];
+        _createTime = [NSDate dateFromString:[xml firstChildWithTag:@"createTime"].stringValue];
         _answerCount = [[[xml firstChildWithTag:@"answerCount"] numberValue] intValue];
         _voteUpCount = [[[xml firstChildWithTag:@"voteUp"] numberValue] intValue];
         _author = [[TeamMember alloc] initWithXML:[xml firstChildWithTag:@"author"]];

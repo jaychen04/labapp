@@ -20,7 +20,7 @@
 @property (nonatomic, copy) NSString *job;
 @property (nonatomic, assign) int role;
 @property (nonatomic, strong) NSURL *space;
-@property (nonatomic, copy) NSString *joinTime;
+@property (nonatomic, strong) NSDate *joinTime;
 @property (nonatomic, copy) NSString *location;
 
 @property (nonatomic, assign) int openedTaskCount;

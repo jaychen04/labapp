@@ -15,7 +15,7 @@
 @property (nonatomic, readonly, copy) NSString *title;
 @property (nonatomic, readonly, copy) NSString *author;
 @property (nonatomic, readonly, copy) NSString *objectDescription;
-@property (nonatomic, readonly, copy) NSString *url;
-@property (nonatomic, readonly, copy) NSString *pubDate;
+@property (nonatomic, readonly, strong) NSURL *url;
+@property (nonatomic, readonly, strong) NSDate *pubDate;
 
 @end

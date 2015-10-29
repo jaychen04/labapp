@@ -18,6 +18,6 @@
 @property (nonatomic, readonly, copy) NSString *senderName;
 @property (nonatomic, readonly, copy) NSString *content;
 @property (nonatomic, readonly, assign) int messageCount;
-@property (nonatomic, readonly, copy) NSString *pubDate;
+@property (nonatomic, readonly, strong) NSDate *pubDate;
 
 @end

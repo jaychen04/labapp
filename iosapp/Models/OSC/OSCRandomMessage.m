@@ -21,7 +21,7 @@
         _author = [[[xml firstChildWithTag:@"author"] stringValue] copy];
         _authorID = [[[xml firstChildWithTag:@"authorid"] numberValue] longLongValue];
         _portraitURL = [NSURL URLWithString:[[[xml firstChildWithTag:@"image"] stringValue] copy]];
-        _pubDate = [[[xml firstChildWithTag:@"pubDate"] stringValue] copy];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:@"pubDate"].stringValue];
         _commentCount = [[[xml firstChildWithTag:@"commentCount"] numberValue] intValue];
         _url = [NSURL URLWithString:[[[xml firstChildWithTag:@"url"] stringValue] copy]];
     }

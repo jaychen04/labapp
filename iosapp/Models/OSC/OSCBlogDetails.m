@@ -24,7 +24,7 @@
         _commentCount = [[[xml firstChildWithTag:@"commentCount"] numberValue] intValue];
         _author = [[xml firstChildWithTag:@"author"] stringValue];
         _authorID = [[[xml firstChildWithTag:@"authorid"] numberValue] longLongValue];
-        _pubDate = [[xml firstChildWithTag:@"pubDate"] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:@"pubDate"].stringValue];
         _isFavorite = [[[xml firstChildWithTag:@"favorite"] numberValue] boolValue];
         _where = [[xml firstChildWithTag:@"where"] stringValue];
         _documentType = [[[xml firstChildWithTag:@"documentType"] numberValue] intValue];
@@ -44,7 +44,7 @@
         _commentCount = [[TBXML textForElement:[TBXML childElementNamed:@"commentCount" parentElement:element]] intValue];
         _author = [TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:element]];
         _authorID = [[TBXML textForElement:[TBXML childElementNamed:@"authorid" parentElement:element]] longLongValue];
-        _pubDate = [TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]];
+        _pubDate = [NSDate dateFromString:[TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]]];
         _isFavorite = [[TBXML textForElement:[TBXML childElementNamed:@"favorite" parentElement:element]] boolValue];
         _where = [TBXML textForElement:[TBXML childElementNamed:@"where" parentElement:element]];
         _documentType = [[TBXML textForElement:[TBXML childElementNamed:@"documentType" parentElement:element]] intValue];
@@ -58,10 +58,10 @@
 {
     if (!_html) {
         NSDictionary *data = @{
-                               @"title": [Utils escapeHTML:_title],
+                               @"title": [_title escapeHTML],
                                @"authorID": @(_authorID),
                                @"authorName": _author,
-                               @"timeInterval": [Utils intervalSinceNow:_pubDate],
+                               @"timeInterval": [_pubDate timeAgoSinceNow],
                                @"content": _body,
                                };
         

@@ -22,7 +22,7 @@
 @property (nonatomic, copy) NSURL *portraitURL;
 
 // 其他信息
-@property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) NSDate *pubDate;
 @property (nonatomic, assign) int appclient;
 @property (nonatomic, assign) int catalog;
 @property (nonatomic, assign) int commentCount;

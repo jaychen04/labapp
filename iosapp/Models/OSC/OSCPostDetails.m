@@ -27,7 +27,7 @@
         _answerCount = [[[xml firstChildWithTag:@"answerCount"] numberValue] intValue];
         _viewCount = [[[xml firstChildWithTag:@"viewCount"] numberValue] intValue];
         _isFavorite = [[[xml firstChildWithTag:@"favorite"] numberValue] boolValue];
-        _pubDate = [[xml firstChildWithTag:@"pubDate"] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:@"pubDate"].stringValue];
         
         ONOXMLElement *eventElement = [xml firstChildWithTag:@"event"];
         _status = [[[eventElement firstChildWithTag:@"status"] numberValue] intValue];
@@ -61,7 +61,7 @@
         _answerCount = [[TBXML textForElement:[TBXML childElementNamed:@"answerCount" parentElement:element]] intValue];
         _viewCount = [[TBXML textForElement:[TBXML childElementNamed:@"viewCount" parentElement:element]] intValue];
         _isFavorite = [[TBXML textForElement:[TBXML childElementNamed:@"favorite" parentElement:element]] boolValue];
-        _pubDate = [TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]];
+        _pubDate = [NSDate dateFromString:[TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]]];
 
         TBXMLElement *eventElement = [TBXML childElementNamed:@"event" parentElement:element];
         if (eventElement && eventElement->firstChild) {
@@ -93,12 +93,12 @@
 {
     if (!_html) {
         NSDictionary *data = @{
-                               @"title": [Utils escapeHTML:_title],
+                               @"title": [_title escapeHTML],
                                @"authorID": @(_authorID),
                                @"authorName": _author,
-                               @"timeInterval": [Utils intervalSinceNow:_pubDate],
+                               @"timeInterval": [_pubDate timeAgoSinceNow],
                                @"content": _body,
-                               @"tags": [Utils GenerateTags:_tags],
+                               @"tags": [Utils generateTags:_tags],
                                };
         
         _html = [Utils HTMLWithData:data usingTemplate:@"article"];

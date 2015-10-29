@@ -38,7 +38,7 @@ static NSString * const kDataTime = @"datatime";
         _body = [[tweetXML firstChildWithTag:kBody] stringValue];
         _author = [[tweetXML firstChildWithTag:kAuthor] stringValue];
         
-        _dataTime = [[xml firstChildWithTag:kDataTime] stringValue];
+        _date = [NSDate dateFromString:[xml firstChildWithTag:kDataTime].stringValue];
     }
     
     return self;

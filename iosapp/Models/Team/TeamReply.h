@@ -16,7 +16,7 @@
 @property (nonatomic, assign) int appclient;
 @property (nonatomic, copy) NSString *appName;
 @property (nonatomic, copy) NSAttributedString *content;
-@property (nonatomic, copy) NSString *createTime;
+@property (nonatomic, strong) NSDate *createTime;
 
 @property (nonatomic, strong) TeamMember *author;
 //@property (nonatomic, strong) NSMutableAttributedString *attributedContent;

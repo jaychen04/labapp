@@ -19,8 +19,8 @@
         _coverURL    = [NSURL URLWithString:[[xml firstChildWithTag:@"cover"] stringValue]];
         _url         = [NSURL URLWithString:[[xml firstChildWithTag:@"url"]   stringValue]];
         _title       = [[xml firstChildWithTag:@"title"] stringValue];
-        _startTime   = [[xml firstChildWithTag:@"startTime"] stringValue];
-        _endTime     = [[xml firstChildWithTag:@"endTIme"] stringValue];
+        _startTime   = [NSDate dateFromString:[xml firstChildWithTag:@"startTime"].stringValue];
+        _endTime     = [NSDate dateFromString:[xml firstChildWithTag:@"endTIme"].stringValue];
         _createTime  = [[xml firstChildWithTag:@"createTime"] stringValue];
         _location    = [[xml firstChildWithTag:@"spot"] stringValue];
         _city        = [[xml firstChildWithTag:@"city"] stringValue];

@@ -18,7 +18,7 @@
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, assign) int appclient;
 @property (nonatomic, assign) int commentCount;
-@property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) NSDate *pubDate;
 @property (nonatomic, assign) BOOL hasAnImage;
 @property (nonatomic, strong) NSURL *smallImgURL;
 @property (nonatomic, strong) NSURL *bigImgURL;

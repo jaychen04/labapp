@@ -15,7 +15,7 @@
 @property (nonatomic, assign) int status;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *ident;
-@property (nonatomic, copy) NSString *createTime;
+@property (nonatomic, strong) NSDate *createTime;
 @property (nonatomic, copy) NSString *sign;
 @property (nonatomic, copy) NSString *address;
 @property (nonatomic, copy) NSString *phoneNumber;

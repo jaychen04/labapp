@@ -24,7 +24,7 @@
         _commentCount = [[[xml firstChildWithTag:@"commentCount"] numberValue] intValue];
         _author = [[xml firstChildWithTag:@"author"] stringValue];
         _authorID = [[[xml firstChildWithTag:@"authorid"] numberValue] longLongValue];
-        _pubDate = [[xml firstChildWithTag:@"pubDate"] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:@"pubDate"].stringValue];
         _softwareLink = [NSURL URLWithString:[[xml firstChildWithTag:@"softwarelink"] stringValue]];
         _softwareName = [[xml firstChildWithTag:@"softwarename"] stringValue];
         _isFavorite = [[[xml firstChildWithTag:@"favorite"] numberValue] boolValue];
@@ -52,7 +52,7 @@
         _commentCount = [[TBXML textForElement:[TBXML childElementNamed:@"commentCount" parentElement:element]] intValue];
         _author = [TBXML textForElement:[TBXML childElementNamed:@"author" parentElement:element]];
         _authorID = [[TBXML textForElement:[TBXML childElementNamed:@"authorid" parentElement:element]] integerValue];
-        _pubDate = [TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]];
+        _pubDate = [NSDate dateFromString:[TBXML textForElement:[TBXML childElementNamed:@"pubDate" parentElement:element]]];
         _softwareLink = [NSURL URLWithString:[TBXML textForElement:[TBXML childElementNamed:@"softwarelink" parentElement:element]]];
         _softwareName = [TBXML textForElement:[TBXML childElementNamed:@"softwarename" parentElement:element]];
         _isFavorite = [[TBXML textForElement:[TBXML childElementNamed:@"favorite" parentElement:element]] boolValue];
@@ -76,10 +76,10 @@
 {
     if (!_html) {
         NSDictionary *data = @{
-                               @"title": [Utils escapeHTML:_title],
+                               @"title": [_title escapeHTML],
                                @"authorID": @(_authorID),
                                @"authorName": _author,
-                               @"timeInterval": [Utils intervalSinceNow:_pubDate],
+                               @"timeInterval": [_pubDate timeAgoSinceNow],
                                @"content": _body,
                                @"softwareLink": _softwareLink,
                                @"softwareName": _softwareName,

@@ -22,7 +22,9 @@
 @property (nonatomic, readonly, copy) NSString *gender;
 @property (nonatomic, readonly, copy) NSString *developPlatform;
 @property (nonatomic, readonly, copy) NSString *expertise;
-@property (nonatomic, readonly, copy) NSString *joinTime;
-@property (nonatomic, readonly, copy) NSString *latestOnlineTime;
+@property (nonatomic, readonly, strong) NSDate *joinTime;
+@property (nonatomic, readonly, strong) NSDate *latestOnlineTime;
+@property (nonatomic, readwrite, copy) NSString *pinyin; //拼音
+@property (nonatomic, readwrite, copy) NSString *pinyinFirst; //拼音首字母
 
 @end

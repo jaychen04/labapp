@@ -18,7 +18,7 @@
 @property (nonatomic, readwrite, copy) NSString *senderName;
 @property (nonatomic, readwrite, copy) NSString *content;
 @property (nonatomic, readwrite, assign) int messageCount;
-@property (nonatomic, readwrite, copy) NSString *pubDate;
+@property (nonatomic, readwrite, strong) NSDate *pubDate;
 
 @end
 
@@ -35,7 +35,7 @@
         _senderName = [[xml firstChildWithTag:@"sender"] stringValue];
         _content = [[xml firstChildWithTag:@"content"] stringValue];
         _messageCount = [[[xml firstChildWithTag:@"messageCount"] numberValue] intValue];
-        _pubDate = [[xml firstChildWithTag:@"pubDate"] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:@"pubDate"].stringValue];
     }
     
     return self;

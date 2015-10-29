@@ -17,7 +17,7 @@
 @property (nonatomic, assign) int commentCount;
 @property (nonatomic, copy) NSString *author;
 @property (nonatomic, assign) ino64_t authorID;
-@property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) NSDate *pubDate;
 @property (nonatomic, copy) NSURL *softwareLink;
 @property (nonatomic, copy) NSString *softwareName;
 @property (nonatomic, assign) BOOL isFavorite;

@@ -32,7 +32,7 @@ static NSString * const kPubDate = @"pubDate";
         _body = [[xml firstChildWithTag:kBody] stringValue];
         _replyCount = [[[xml firstChildWithTag:kReplyCount] numberValue] intValue];
         _viewCount = [[[xml firstChildWithTag:kViewCount] numberValue] intValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:kPubDate].stringValue];
     }
 
     return self;

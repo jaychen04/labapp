@@ -17,7 +17,7 @@
 @property (nonatomic, readonly, assign) int followersCount;
 @property (nonatomic, readonly, assign) int score;
 @property (nonatomic, readonly, assign) int gender;
-@property (nonatomic, readonly, copy) NSString *joinTime;
+@property (nonatomic, readonly, strong) NSDate *joinTime;
 @property (nonatomic, readonly, copy) NSString *developPlatform;
 @property (nonatomic, readonly, copy) NSString *expertise;
 @property (nonatomic, readonly, copy) NSString *hometown;

@@ -37,7 +37,7 @@ static NSString * const kRContent = @"rcontent";
         _author = [[xml firstChildWithTag:kAuthor] stringValue];
         
         _content = [[xml firstChildWithTag:kContent] stringValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:kPubDate].stringValue];
         _appclient = [[[xml firstChildWithTag:kAppclient] numberValue] intValue];
         
         NSMutableArray *mutableReplies = [NSMutableArray new];
@@ -67,7 +67,7 @@ static NSString * const kRContent = @"rcontent";
 
         
         _teamMember = [[TeamMember alloc]initWithXML:[xml firstChildWithTag:kAuthor]];
-        _pubDate = [[xml firstChildWithTag:@"createTime"] stringValue];
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:@"createTime"].stringValue];
         _content = [[xml firstChildWithTag:kContent] stringValue];
         
     }

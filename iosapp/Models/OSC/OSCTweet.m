@@ -43,7 +43,8 @@ static NSString * const kUser = @"user";
         _body = [[xml firstChildWithTag:kBody] stringValue];
         _appclient = [[[xml firstChildWithTag:kAppclient] numberValue] intValue];
         _commentCount = [[[xml firstChildWithTag:kCommentCount] numberValue] intValue];
-        _pubDate = [[xml firstChildWithTag:kPubDate] stringValue];
+        
+        _pubDate = [NSDate dateFromString:[xml firstChildWithTag:kPubDate].stringValue];
         
         // 附图
         NSString *imageURLStr = [[xml firstChildWithTag:kImgSmall] stringValue];

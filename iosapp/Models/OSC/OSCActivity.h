@@ -30,8 +30,8 @@ typedef NS_ENUM(NSUInteger, ActivityApplyStatus)
 @property (nonatomic, readonly, strong)   NSURL      *coverURL;
 @property (nonatomic, readonly, strong)   NSURL      *url;
 @property (nonatomic, readonly, copy)     NSString   *title;
-@property (nonatomic, readonly, copy)     NSString   *startTime;
-@property (nonatomic, readonly, copy)     NSString   *endTime;
+@property (nonatomic, readonly, strong)   NSDate     *startTime;
+@property (nonatomic, readonly, strong)   NSDate     *endTime;
 @property (nonatomic, readonly, copy)     NSString   *createTime;
 @property (nonatomic, readonly, copy)     NSString   *location;
 @property (nonatomic, readonly, copy)     NSString   *city;

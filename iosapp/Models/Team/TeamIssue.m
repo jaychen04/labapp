@@ -37,10 +37,10 @@
     _catalogID = [[[xml firstChildWithTag:@"catalogid"] numberValue] intValue];
     _title = [[xml firstChildWithTag:@"title"] stringValue];
     _issueDescription = [[xml firstChildWithTag:@"description"] stringValue];
-    _createTime = [[xml firstChildWithTag:@"createTime"] stringValue];
-    _updateTime = [[xml firstChildWithTag:@"updateTime"] stringValue];
-    _acceptTime = [[xml firstChildWithTag:@"acceptTime"] stringValue];
-    _deadline = [[xml firstChildWithTag:@"deadlineTime"] stringValue];
+    _createTime = [NSDate dateFromString:[xml firstChildWithTag:@"createTime"].stringValue];
+    _updateTime = [NSDate dateFromString:[xml firstChildWithTag:@"updateTime"].stringValue];
+    _acceptTime = [NSDate dateFromString:[xml firstChildWithTag:@"acceptTime"].stringValue];
+    _deadline = [NSDate dateFromString:[xml firstChildWithTag:@"deadlineTime"].stringValue];
     
     _replyCount = [[[xml firstChildWithTag:@"replyCount"] numberValue] intValue];
     _gitIssueURL = [NSURL URLWithString:[[xml firstChildWithTag:@"gitIssueUrl"] stringValue]];
@@ -54,7 +54,7 @@
     _attachmentsCount = [[xml firstChildWithTag:@"attachments"] firstChildWithTag:@"totalCount"].numberValue.intValue;
     _relatedIssuesCount = [[xml firstChildWithTag:@"relations"] firstChildWithTag:@"totalCount"].numberValue.intValue;
     
-    _hasExtraInfo = _childIssuesCount || _deadline.length || _attachmentsCount || _relatedIssuesCount;
+    _hasExtraInfo = _childIssuesCount || _deadline || _attachmentsCount || _relatedIssuesCount;
     
     _author = [[TeamMember alloc] initWithXML:[xml firstChildWithTag:@"author"]];
     _user = [[TeamMember alloc] initWithXML:[xml firstChildWithTag:@"toUser"]];

@@ -15,7 +15,7 @@
 @property (nonatomic, assign) int64_t authorID;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *body;
-@property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) NSDate *pubDate;
 @property (nonatomic, assign) int commentCount;
 @property (nonatomic, assign) int documentType;
 

@@ -18,7 +18,7 @@
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, copy) NSString *author;
 
-@property (nonatomic, copy) NSString *dataTime;
+@property (nonatomic, strong) NSDate *date;
 
 @property (nonatomic, copy) NSMutableAttributedString *authorAndBody;
 

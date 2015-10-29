@@ -24,7 +24,7 @@
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong) NSURL *originImageURL;
 @property (nonatomic, assign) int replyCount;
-@property (nonatomic, copy) NSString *createTime;
+@property (nonatomic, strong) NSDate *createTime;
 @property (nonatomic, strong) TeamMember *author;
 
 @property (nonatomic, copy) NSAttributedString *attributedDetail;

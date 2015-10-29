@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *body;
-@property (nonatomic, copy) NSString *createTime;
+@property (nonatomic, strong) NSDate *createTime;
 @property (nonatomic, assign) int answerCount;
 @property (nonatomic, assign) int voteUpCount;
 @property (nonatomic, strong) TeamMember *author;

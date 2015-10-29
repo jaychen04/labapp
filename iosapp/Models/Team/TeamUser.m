@@ -26,7 +26,7 @@
         _job = [[member firstChildWithTag:@"teamJob"] stringValue];
         _role = [[[member firstChildWithTag:@"teamRole"] numberValue] intValue];
         _space = [NSURL URLWithString:[[member firstChildWithTag:@"space"] stringValue]];
-        _joinTime = [[member firstChildWithTag:@"joinTime"] stringValue];
+        _joinTime = [NSDate dateFromString:[member firstChildWithTag:@"joinTime"].stringValue];
         _location = [[member firstChildWithTag:@"location"] stringValue];
         
         _openedTaskCount = [[[xml firstChildWithTag:@"opened"] numberValue] intValue];
