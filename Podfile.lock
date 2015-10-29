@@ -24,6 +24,17 @@ PODS:
     - AFNetworking (~> 2.2)
     - Ono (~> 1.0)
   - DateTools (1.7.0)
+  - DTCoreText (1.6.16):
+    - DTFoundation/Core (~> 1.7.5)
+    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
+    - DTFoundation/DTHTMLParser (~> 1.7.5)
+    - DTFoundation/UIKit (~> 1.7.5)
+  - DTFoundation/Core (1.7.8)
+  - DTFoundation/DTAnimatedGIF (1.7.8)
+  - DTFoundation/DTHTMLParser (1.7.8):
+    - DTFoundation/Core
+  - DTFoundation/UIKit (1.7.8):
+    - DTFoundation/Core
   - GPUImage (0.1.7)
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
@@ -51,6 +62,7 @@ PODS:
 DEPENDENCIES:
   - AFOnoResponseSerializer
   - DateTools
+  - DTCoreText
   - GPUImage
   - GRMustache
   - MBProgressHUD
@@ -68,6 +80,8 @@ SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
   AFOnoResponseSerializer: c02c8bef1d6742ac68f33ecaed41826c9657bc33
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
+  DTCoreText: 934a16fe9ffdd169c96261721b39dc312b75713d
+  DTFoundation: 46e2b2fafe78d67febfd8d1f85fe9845a093f00e
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
@@ -83,4 +97,4 @@ SPEC CHECKSUMS:
   TOWebViewController: accd62ec0acc8d5c2e1e195c6f7ff7654c3c840c
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
 
-COCOAPODS: 0.38.2
+COCOAPODS: 0.39.0

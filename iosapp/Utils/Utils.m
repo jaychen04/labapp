@@ -17,6 +17,7 @@
 #import <Reachability.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <GRMustache.h>
+#import <DTCoreText.h>
 
 
 @implementation Utils
@@ -167,12 +168,17 @@
     return emojiString;
 }
 
-+ (NSMutableAttributedString *)attributedStringFromHTML:(NSString *)HTML
++ (NSAttributedString *)attributedStringFromHTML:(NSString *)html
 {
-    return [[NSMutableAttributedString alloc] initWithData:[HTML dataUsingEncoding:NSUnicodeStringEncoding]
-                                                   options:@{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType}
-                                        documentAttributes:nil
-                                                     error:nil];
+    // [NSAttributedAttributedString initWithData:options:documentAttributes:error:] is very slow
+    // use DTCoreText instead
+    
+    if (![html hasPrefix:@"<"]) {
+        html = [NSString stringWithFormat:@"<span>%@</span>", html]; // DTCoreText treat raw string as <p> element
+    }
+    NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
+    return [[NSAttributedString alloc] initWithHTMLData:data options:@{ DTUseiOS6Attributes: @YES}
+                                     documentAttributes:nil];
 }
 
 + (NSString *)convertRichTextToRawText:(UITextView *)textView

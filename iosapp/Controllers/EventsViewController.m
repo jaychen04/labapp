@@ -283,9 +283,8 @@ static NSString * const EventCellID = @"EventCell";
                                                                 dispatch_async(dispatch_get_main_queue(), ^{
 #if EVENT_CELL_IMAGE_USE_REALSIZE
                                                                     event.cellHeight = 0;
-#else
-                                                                    [self.tableView reloadData];
 #endif
+                                                                    [self.tableView reloadData];
                                                                 });
                                                             }];
     });
@@ -322,6 +321,9 @@ static NSString * const EventCellID = @"EventCell";
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
+    if (!URL.host) {
+        URL = [[NSURL URLWithString:@"http://my.oschina.net"] URLByAppendingPathComponent:[URL absoluteString]];;
+    }
     [self.navigationController handleURL:URL];
     return NO;
 }

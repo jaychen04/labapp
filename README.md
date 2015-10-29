@@ -29,7 +29,7 @@ Xcode 6＋
 8. TTTAttributedLabel                   支持富文本显示的label
 9. ReactiveCocoa                        函数式编程和响应式编程框架
 10. GPUImage                            实现模糊效果
-
+11. DTCoreText                          渲染HTML
 
 ## 开源协议
 OSChina iOS app is under the GPL license. See the LICENSE file for more details.
