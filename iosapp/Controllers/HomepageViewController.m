@@ -241,9 +241,9 @@
 {
     NSArray *usersInformation = [Config getUsersInformation];
     
-    if (_myID == 0) {
-        _portrait.image = [UIImage imageNamed:@"default-portrait"];
-    } else {
+    BOOL isLogin = _myID != 0;
+    
+    if (isLogin) {
         UIImage *portrait = [Config getPortrait];
         if (portrait == nil) {
             [_portrait sd_setImageWithURL:_myInfo.portraitURL
@@ -256,6 +256,8 @@
         } else {
             _portrait.image = portrait;
         }
+    } else {
+        _portrait.image = [UIImage imageNamed:@"default-portrait"];
     }
     
     _nameLabel.text = usersInformation[0];
@@ -263,25 +265,15 @@
     
     [self setCoverImage];
     
-    if (_myID == 0) {
-        _QRCodeButton.hidden = YES;
-        _creditButton.hidden = YES;
-        _collectionButton.hidden = YES;
-        _followingButton.hidden = YES;
-        _fanButton.hidden = YES;
-        _separator.hidden = YES;
-    } else {
-        _QRCodeButton.hidden = NO;
-        _creditButton.hidden = NO;
-        _collectionButton.hidden = NO;
-        _followingButton.hidden = NO;
-        _fanButton.hidden = NO;
-        _separator.hidden = NO;
-        
-        _QRCodeButton.titleLabel.font = [UIFont fontAwesomeFontOfSize:25];
-        [_QRCodeButton setTitle:[NSString fontAwesomeIconStringForEnum:FAQrcode] forState:UIControlStateNormal];
+    _QRCodeButton.hidden = !isLogin;
+    _creditButton.hidden = !isLogin;
+    _collectionButton.hidden = !isLogin;
+    _followingButton.hidden = !isLogin;
+    _fanButton.hidden = !isLogin;
+    _separator.hidden = !isLogin;
+    
+    if (isLogin) {
         [_QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
-        
         [_creditButton setTitle:[NSString stringWithFormat:@"积分\n%@", usersInformation[1]] forState:UIControlStateNormal];
         [_collectionButton setTitle:[NSString stringWithFormat:@"收藏\n%@", usersInformation[2]] forState:UIControlStateNormal];
         [_followingButton setTitle:[NSString stringWithFormat:@"关注\n%@", usersInformation[3]] forState:UIControlStateNormal];
