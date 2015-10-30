@@ -119,8 +119,7 @@
             [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
         }
     } else if (section == 2) {
-        [Config saveOwnID:0 userName:@"点击头像登录" score:0 favoriteCount:0 fansCount:0 andFollowerCount:0];
-        [Config savePortrait:nil];
+        [Config clearUserProfile];
         [Config removeTeamInfo];
         [Config clearCookie];
         

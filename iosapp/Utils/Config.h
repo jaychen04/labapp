@@ -10,12 +10,14 @@
 #import <UIKit/UIKit.h>
 
 @class OSCMyInfo;
+@class OSCUser;
 
 @interface Config : NSObject
 
 + (void)saveOwnAccount:(NSString *)account andPassword:(NSString *)password;
 
-+ (void)saveOwnID:(int64_t)userID userName:(NSString *)userName score:(int)score favoriteCount:(int)favoriteCount fansCount:(int)fanCount andFollowerCount:(int)followerCount;
++ (void)saveUserProfile:(OSCUser *)user;
++ (void)clearUserProfile;
 
 + (void)updateMyInfo:(OSCMyInfo *)myInfo;
 

@@ -426,15 +426,8 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 
 - (void)renewUserWithXML:(ONOXMLElement *)xml
-{
-    OSCUser *user = [[OSCUser alloc] initWithXML:xml];
-    
-    [Config saveOwnID:user.userID
-             userName:user.name
-                score:user.score
-        favoriteCount:user.favoriteCount
-            fansCount:user.fansCount
-     andFollowerCount:user.followersCount];
+{    
+    [Config saveUserProfile:[[OSCUser alloc] initWithXML:xml]];
     
     [OSCThread startPollingNotice];
     

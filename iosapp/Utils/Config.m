@@ -9,6 +9,7 @@
 #import "Config.h"
 #import "TeamTeam.h"
 #import "OSCMyInfo.h"
+#import "OSCUser.h"
 
 #import <SSKeychain.h>
 
@@ -49,24 +50,33 @@ NSString * const kTeamsArray = @"teams";
     [SSKeychain setPassword:password forService:kService account:account];
 }
 
-
-+ (void)saveOwnID:(int64_t)userID
-         userName:(NSString *)userName
-            score:(int)score
-    favoriteCount:(int)favoriteCount
-        fansCount:(int)fanCount
- andFollowerCount:(int)followerCount
++ (void)saveUserProfile:(OSCUser *)user
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:@(userID) forKey:kUserID];
-    [userDefaults setObject:userName forKey:kUserName];
-    [userDefaults setObject:@(score) forKey:kUserScore];
-    [userDefaults setObject:@(favoriteCount) forKey:kFavoriteCount];
-    [userDefaults setObject:@(fanCount)      forKey:kFanCount];
-    [userDefaults setObject:@(followerCount) forKey:kFollowerCount];
+    
+    [userDefaults setObject:@(user.userID) forKey:kUserID];
+    [userDefaults setObject:user.name forKey:kUserName];
+    [userDefaults setObject:@(user.score) forKey:kUserScore];
+    [userDefaults setObject:@(user.favoriteCount) forKey:kFavoriteCount];
+    [userDefaults setObject:@(user.fansCount)      forKey:kFanCount];
+    [userDefaults setObject:@(user.followersCount) forKey:kFollowerCount];
+    
     [userDefaults synchronize];
 }
 
++ (void)clearUserProfile
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setObject:@(0) forKey:kUserID];
+    [userDefaults setObject:@"点击头像登录" forKey:kUserName];
+    [userDefaults setObject:@(0) forKey:kUserScore];
+    [userDefaults setObject:@(0) forKey:kFavoriteCount];
+    [userDefaults setObject:@(0)      forKey:kFanCount];
+    [userDefaults setObject:@(0) forKey:kFollowerCount];
+    
+    [userDefaults synchronize];
+}
 
 + (void)updateMyInfo:(OSCMyInfo *)myInfo
 {
