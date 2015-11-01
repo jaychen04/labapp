@@ -25,7 +25,7 @@
 
 @interface MyBasicInfoViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, strong) OSCUser *myInfo;
+@property (nonatomic, strong) OSCUser *myProfile;
 @property (nonatomic, readonly, assign) int64_t myID;
 
 @property (nonatomic, strong) UIView *backView;
@@ -40,29 +40,6 @@
 
 @implementation MyBasicInfoViewController
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        _myID = [Config getOwnID];
-    }
-    
-    return self;
-}
-
-- (instancetype)initWithMyInformation:(OSCUser *)myInfo
-{
-    self = [super self];
-    if (self) {
-        self.hidesBottomBarWhenPushed = YES;
-        
-        _myInfo = myInfo;
-        _myID = [Config getOwnID];
-    }
-    
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -72,30 +49,7 @@
     self.view.backgroundColor = [UIColor themeColor];
     self.tableView.tableFooterView = [UIView new];
     
-    if (!_myInfo) {
-        _HUD = [Utils createHUD];
-        _HUD.userInteractionEnabled = NO;
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        
-        [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID]
-          parameters:nil
-             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-                 ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
-                 _myInfo = [[OSCUser alloc] initWithXML:userXML];
-                 [_HUD hide:YES];
-                 
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [self.tableView reloadData];
-                 });
-             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 _HUD.mode = MBProgressHUDModeCustomView;
-                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                 _HUD.labelText = @"网络异常，加载失败";
-                 
-                 [_HUD hide:YES afterDelay:1];
-             }];
-    }
+    _myProfile = [Config myProfile];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -128,7 +82,7 @@
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
     [_portrait setCornerRadius:25];
-    [_portrait loadPortrait:_myInfo.portraitURL];
+    [_portrait loadPortrait:_myProfile.portraitURL];
     _portrait.userInteractionEnabled = YES;
     [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortrait)]];
     [header addSubview:_portrait];
@@ -136,7 +90,7 @@
     _nameLabel = [UILabel new];
     _nameLabel.font = [UIFont boldSystemFontOfSize:18];
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
-    _nameLabel.text = _myInfo.name;
+    _nameLabel.text = _myProfile.name;
     [header addSubview:_nameLabel];
     
     for (UIView *view in header.subviews) {
@@ -168,15 +122,15 @@
     NSDictionary *titleAttributes = @{NSForegroundColorAttributeName:[UIColor grayColor]};
     NSArray *title = @[@"加入时间：", @"所在地区：", @"开发平台：", @"专长领域："];
     
-    NSString *joinTime = [_myInfo.joinTime timeAgoSinceNow];
+    NSString *joinTime = [_myProfile.joinTime timeAgoSinceNow];
     
     NSMutableAttributedString *attributedText = [[NSMutableAttributedString alloc] initWithString:title[indexPath.row]
                                                                                        attributes:titleAttributes];
     [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@[
                                                                                         joinTime ?: @"",
-                                                                                        _myInfo.location ?: @"",
-                                                                                        _myInfo.developPlatform ?: @"",
-                                                                                        _myInfo.expertise ?: @""
+                                                                                        _myProfile.location ?: @"",
+                                                                                        _myProfile.developPlatform ?: @"",
+                                                                                        _myProfile.expertise ?: @""
                                                                                         ][indexPath.row]]];
     
     cell.textLabel.attributedText = [attributedText copy];
@@ -227,7 +181,7 @@
             
         } else {
             
-            NSString *str = [NSString stringWithFormat:@"%@", _myInfo.portraitURL];
+            NSString *str = [NSString stringWithFormat:@"%@", _myProfile.portraitURL];
             
             if (str.length == 0) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"尚未设置头像" message:nil delegate:self
@@ -323,7 +277,9 @@
     }];
 }
 
+
 #pragma mark - UIImagePickerController
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     _image = info[UIImagePickerControllerEditedImage];

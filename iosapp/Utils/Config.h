@@ -18,6 +18,7 @@
 + (void)saveProfile:(OSCUser *)user;
 + (void)updateProfile:(OSCUser *)user;
 + (void)clearProfile;
++ (OSCUser *)myProfile;
 
 + (void)savePortrait:(UIImage *)portrait;
 
@@ -29,7 +30,6 @@
 + (int64_t)getOwnID;
 + (NSString *)getOwnUserName;
 + (NSArray *)getActivitySignUpInfomation;
-+ (OSCUser *)myProfile;
 + (UIImage *)getPortrait;
 
 + (void)saveTweetText:(NSString *)tweetText forUser:(ino64_t)userID;

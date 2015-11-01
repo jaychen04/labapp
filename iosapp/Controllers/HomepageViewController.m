@@ -225,11 +225,7 @@
             LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else {
-            if (_myProfile) {
-                [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myProfile] animated:YES];
-            } else {
-                [self.navigationController pushViewController:[MyBasicInfoViewController new] animated:YES];
-            }
+            [self.navigationController pushViewController:[MyBasicInfoViewController new] animated:YES];
         }
     }
 }

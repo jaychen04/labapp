@@ -8,10 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class OSCUser;
-
 @interface MyBasicInfoViewController : UITableViewController
-
-- (instancetype)initWithMyInformation:(OSCUser *)myInfo;
 
 @end

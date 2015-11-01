@@ -43,6 +43,8 @@ static NSInteger HeightPicker;
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
+    
     if (_remarkCitys.count <= 0) {
         _remarkSelectTextField.hidden = YES;
         _selecteImage.hidden = YES;

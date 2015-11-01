@@ -24,10 +24,10 @@ NSString * const kFavoriteCount = @"favoritecount";
 NSString * const kFanCount = @"fans";
 NSString * const kFollowerCount = @"followers";
 
-NSString * const kJointime = @"jointime";
+NSString * const kJoinTime = @"jointime";
 NSString * const kDevelopPlatform = @"devplatform";
 NSString * const kExpertise = @"expertise";
-NSString * const kHometown = @"from";
+NSString * const kLocation = @"location";
 
 NSString * const kTrueName = @"trueName";
 NSString * const kSex = @"sex";
@@ -50,13 +50,16 @@ NSString * const kTeamsArray = @"teams";
     [SSKeychain setPassword:password forService:kService account:account];
 }
 
+
+#pragma mark - user profile
+
 + (void)saveProfile:(OSCUser *)user
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
-    [userDefaults setObject:@(user.userID) forKey:kUserID];
+    [userDefaults setInteger:user.userID forKey:kUserID];
     [userDefaults setObject:user.name forKey:kUserName];
-    [userDefaults setObject:user.portraitURL.absoluteString forKey:kPortraitURL];
+    [userDefaults setURL:user.portraitURL forKey:kPortraitURL];
     [userDefaults setObject:@(user.score) forKey:kUserScore];
     [userDefaults setObject:@(user.favoriteCount) forKey:kFavoriteCount];
     [userDefaults setObject:@(user.fansCount)      forKey:kFanCount];
@@ -64,22 +67,25 @@ NSString * const kTeamsArray = @"teams";
     
     [userDefaults synchronize];
 }
-
 
 + (void)updateProfile:(OSCUser *)user
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     [userDefaults setObject:user.name forKey:kUserName];
-    [userDefaults setObject:user.portraitURL.absoluteString forKey:kPortraitURL];
+    [userDefaults setURL:user.portraitURL forKey:kPortraitURL];
     [userDefaults setObject:@(user.score) forKey:kUserScore];
     [userDefaults setObject:@(user.favoriteCount) forKey:kFavoriteCount];
     [userDefaults setObject:@(user.fansCount)      forKey:kFanCount];
     [userDefaults setObject:@(user.followersCount) forKey:kFollowerCount];
     
+    [userDefaults setObject:user.joinTime forKey:kJoinTime];
+    [userDefaults setObject:user.location forKey:kLocation];
+    [userDefaults setObject:user.expertise forKey:kExpertise];
+    [userDefaults setObject:user.developPlatform forKey:kDevelopPlatform];
+    
     [userDefaults synchronize];
 }
-
 
 + (void)clearProfile
 {
@@ -89,10 +95,35 @@ NSString * const kTeamsArray = @"teams";
     [userDefaults setObject:@"点击头像登录" forKey:kUserName];
     [userDefaults setObject:@(0) forKey:kUserScore];
     [userDefaults setObject:@(0) forKey:kFavoriteCount];
-    [userDefaults setObject:@(0)      forKey:kFanCount];
+    [userDefaults setObject:@(0) forKey:kFanCount];
     [userDefaults setObject:@(0) forKey:kFollowerCount];
     
     [userDefaults synchronize];
+}
+
++ (OSCUser *)myProfile
+{
+    OSCUser *user = [OSCUser new];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    user.userID = [userDefaults integerForKey:kUserID];
+    user.name = [userDefaults objectForKey:kUserName];
+    user.portraitURL = [userDefaults URLForKey:kPortraitURL];
+    user.score = [[userDefaults objectForKey:kUserScore] intValue];
+    user.favoriteCount = [[userDefaults objectForKey:kFavoriteCount] intValue];
+    user.fansCount = [[userDefaults objectForKey:kFanCount] intValue];
+    user.followersCount = [[userDefaults objectForKey:kFollowerCount] intValue];
+    
+    user.joinTime = [userDefaults objectForKey:kJoinTime];
+    user.location = [userDefaults objectForKey:kLocation];
+    user.expertise = [userDefaults objectForKey:kExpertise];
+    user.developPlatform = [userDefaults objectForKey:kDevelopPlatform];
+    
+    if (!user.name) {
+        user.name = @"点击头像登录";
+    }
+    
+    return user;
 }
 
 
@@ -169,26 +200,6 @@ NSString * const kTeamsArray = @"teams";
     NSString *position = [userDefaults objectForKey:kPosition] ?: @"";
     
     return @[name, sex, phoneNumber, corporation, position];
-}
-
-+ (OSCUser *)myProfile
-{
-    OSCUser *user = [OSCUser new];
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    user.userID = [userDefaults integerForKey:kUserID];
-    user.name = [userDefaults objectForKey:kUserName];
-    user.portraitURL = [NSURL URLWithString:[userDefaults objectForKey:kPortraitURL]];
-    user.score = [[userDefaults objectForKey:kUserScore] intValue];
-    user.favoriteCount = [[userDefaults objectForKey:kFavoriteCount] intValue];
-    user.fansCount = [[userDefaults objectForKey:kFanCount] intValue];
-    user.followersCount = [[userDefaults objectForKey:kFollowerCount] intValue];
-    
-    if (!user.name) {
-        user.name = @"点击头像登录";
-    }
-    
-    return user;
 }
 
 + (UIImage *)getPortrait
