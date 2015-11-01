@@ -10,7 +10,7 @@
 #import "Utils.h"
 #import "Config.h"
 #import "OSCAPI.h"
-#import "OSCMyInfo.h"
+#import "OSCUser.h"
 #import "BlogsViewController.h"
 #import "SwipableViewController.h"
 #import "FriendsViewController.h"
@@ -47,7 +47,7 @@
 @property (nonatomic, strong) UIImageView *myQRCodeImageView;
 
 @property (nonatomic, assign) int64_t myID;
-@property (nonatomic, strong) OSCMyInfo *myInfo;
+@property (nonatomic, strong) OSCUser *myProfile;
 @property (nonatomic, strong) NSMutableArray *noticeCounts;
 @property (nonatomic, assign) int badgeValue;
 
@@ -121,9 +121,9 @@
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
                  ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
-                 _myInfo = [[OSCMyInfo alloc] initWithXML:userXML];
+                 _myProfile = [[OSCUser alloc] initWithXML:userXML];
                  
-                 [Config updateMyInfo:_myInfo];
+                 [Config updateProfile:_myProfile];
                  
                  [self refreshHeaderView];
                  [self.refreshControl endRefreshing];
@@ -225,8 +225,8 @@
             LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
             [self.navigationController pushViewController:loginVC animated:YES];
         } else {
-            if (_myInfo) {
-                [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myInfo] animated:YES];
+            if (_myProfile) {
+                [self.navigationController pushViewController:[[MyBasicInfoViewController alloc] initWithMyInformation:_myProfile] animated:YES];
             } else {
                 [self.navigationController pushViewController:[MyBasicInfoViewController new] animated:YES];
             }
@@ -239,28 +239,23 @@
 
 - (void)refreshHeaderView
 {
-    NSArray *usersInformation = [Config getUsersInformation];
+    _myProfile = [Config myProfile];
     
     BOOL isLogin = _myID != 0;
     
     if (isLogin) {
-        UIImage *portrait = [Config getPortrait];
-        if (portrait == nil) {
-            [_portrait sd_setImageWithURL:_myInfo.portraitURL
-                         placeholderImage:[UIImage imageNamed:@"default-portrait"]
-                                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                    if (!image) {return;}
-                                    [Config savePortrait:image];
-                                    [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
-                                }];
-        } else {
-            _portrait.image = portrait;
-        }
+        [_portrait sd_setImageWithURL:_myProfile.portraitURL
+                     placeholderImage:[UIImage imageNamed:@"default-portrait"]
+                              options:SDWebImageContinueInBackground | SDWebImageHandleCookies
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                if (!image) {return;}
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"TweetUserUpdate" object:@(YES)];
+                            }];
     } else {
         _portrait.image = [UIImage imageNamed:@"default-portrait"];
     }
     
-    _nameLabel.text = usersInformation[0];
+    _nameLabel.text = _myProfile.name;
     _separator.backgroundColor = [UIColor lineColor];
     
     [self setCoverImage];
@@ -274,10 +269,10 @@
     
     if (isLogin) {
         [_QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
-        [_creditButton setTitle:[NSString stringWithFormat:@"积分\n%@", usersInformation[1]] forState:UIControlStateNormal];
-        [_collectionButton setTitle:[NSString stringWithFormat:@"收藏\n%@", usersInformation[2]] forState:UIControlStateNormal];
-        [_followingButton setTitle:[NSString stringWithFormat:@"关注\n%@", usersInformation[3]] forState:UIControlStateNormal];
-        [_fanButton setTitle:[NSString stringWithFormat:@"粉丝\n%@", usersInformation[4]] forState:UIControlStateNormal];
+        [_creditButton setTitle:[NSString stringWithFormat:@"积分\n%@", @(_myProfile.score)] forState:UIControlStateNormal];
+        [_collectionButton setTitle:[NSString stringWithFormat:@"收藏\n%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
+        [_followingButton setTitle:[NSString stringWithFormat:@"关注\n%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
+        [_fanButton setTitle:[NSString stringWithFormat:@"粉丝\n%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
     }
 }
 

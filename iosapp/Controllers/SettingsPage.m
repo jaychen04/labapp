@@ -119,7 +119,7 @@
             [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
         }
     } else if (section == 2) {
-        [Config clearUserProfile];
+        [Config clearProfile];
         [Config removeTeamInfo];
         [Config clearCookie];
         

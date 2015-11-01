@@ -10,20 +10,20 @@
 
 @interface OSCUser : OSCBaseObject
 
-@property (nonatomic, readwrite, assign) int64_t userID;
-@property (nonatomic, readonly, copy) NSString *location;
-@property (nonatomic, readwrite, copy) NSString *name;
-@property (nonatomic, readonly, assign) int followersCount;
-@property (nonatomic, readonly, assign) int fansCount;
-@property (nonatomic, readonly, assign) int score;
-@property (nonatomic, readonly, assign) int favoriteCount;
-@property (nonatomic, assign)           int relationship;
-@property (nonatomic, readwrite, strong) NSURL *portraitURL;
-@property (nonatomic, readonly, copy) NSString *gender;
-@property (nonatomic, readonly, copy) NSString *developPlatform;
-@property (nonatomic, readonly, copy) NSString *expertise;
-@property (nonatomic, readonly, strong) NSDate *joinTime;
-@property (nonatomic, readonly, strong) NSDate *latestOnlineTime;
+@property (nonatomic, assign) NSInteger userID;
+@property (nonatomic, copy) NSString *name;
+@property (nonatomic, assign) int followersCount;
+@property (nonatomic, assign) int fansCount;
+@property (nonatomic, assign) int score;
+@property (nonatomic, assign) int favoriteCount;
+@property (nonatomic, assign) int relationship;
+@property (nonatomic, strong) NSURL *portraitURL;
+@property (nonatomic, copy) NSString *gender;
+@property (nonatomic, copy) NSString *developPlatform;
+@property (nonatomic, copy) NSString *expertise;
+@property (nonatomic, copy) NSString *location;
+@property (nonatomic, strong) NSDate *joinTime;
+@property (nonatomic, strong) NSDate *latestOnlineTime;
 @property (nonatomic, readwrite, copy) NSString *pinyin; //拼音
 @property (nonatomic, readwrite, copy) NSString *pinyinFirst; //拼音首字母
 

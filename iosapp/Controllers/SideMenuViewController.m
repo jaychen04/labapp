@@ -9,6 +9,7 @@
 #import "SideMenuViewController.h"
 #import "Config.h"
 #import "Utils.h"
+#import "OSCUser.h"
 #import "SwipableViewController.h"
 #import "PostsViewController.h"
 #import "BlogsViewController.h"
@@ -23,6 +24,7 @@
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
 #import <ReactiveCocoa.h>
+#import <UIImageView+WebCache.h>
 
 
 @implementation SideMenuViewController
@@ -70,27 +72,26 @@ static BOOL isNight;
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    NSArray *usersInformation = [Config getUsersInformation];
-    UIImage *portrait = [Config getPortrait];
+    OSCUser *myProfile = [Config myProfile];
     
     UIView *headerView = [UIView new];
     headerView.backgroundColor = [UIColor clearColor];
     
-    UIImageView *portraitView = [UIImageView new];
-    portraitView.contentMode = UIViewContentModeScaleAspectFit;
-    [portraitView setCornerRadius:30];
-    portraitView.userInteractionEnabled = YES;
-    portraitView.translatesAutoresizingMaskIntoConstraints = NO;
-    [headerView addSubview:portraitView];
-    
-    if (portrait == nil) {
-        portraitView.image = [UIImage imageNamed:@"default-portrait"];
+    UIImageView *avatar = [UIImageView new];
+    avatar.contentMode = UIViewContentModeScaleAspectFit;
+    [avatar setCornerRadius:30];
+    avatar.userInteractionEnabled = YES;
+    avatar.translatesAutoresizingMaskIntoConstraints = NO;
+    [headerView addSubview:avatar];
+    if (myProfile.userID) {
+        [avatar loadPortrait:myProfile.portraitURL];
     } else {
-        portraitView.image = portrait;
+        avatar.image = [UIImage imageNamed:@"default-portrait"];
     }
     
+    
     UILabel *nameLabel = [UILabel new];
-    nameLabel.text = usersInformation[0];
+    nameLabel.text = myProfile.name;
     nameLabel.font = [UIFont boldSystemFontOfSize:20];
     
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
@@ -101,14 +102,14 @@ static BOOL isNight;
     nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [headerView addSubview:nameLabel];
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(portraitView, nameLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(avatar, nameLabel);
     NSDictionary *metrics = @{@"x": @([UIScreen mainScreen].bounds.size.width / 4 - 15)};
-    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[portraitView(60)]-10-[nameLabel]-15-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
-    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-x-[portraitView(60)]" options:0 metrics:metrics views:views]];
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[avatar(60)]-10-[nameLabel]-15-|" options:NSLayoutFormatAlignAllCenterX metrics:nil views:views]];
+    [headerView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-x-[avatar(60)]" options:0 metrics:metrics views:views]];
     
-    portraitView.userInteractionEnabled = YES;
+    avatar.userInteractionEnabled = YES;
     nameLabel.userInteractionEnabled = YES;
-    [portraitView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushLoginPage)]];
+    [avatar addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushLoginPage)]];
     [nameLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushLoginPage)]];
         
     return headerView;
@@ -127,36 +128,36 @@ static BOOL isNight;
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        UITableViewCell *cell = [UITableViewCell new];
-        
-        cell.backgroundColor = [UIColor clearColor];
-        
-        UIView *selectedBackground = [UIView new];
-        selectedBackground.backgroundColor = [UIColor colorWithHex:0xCFCFCF];
-        [cell setSelectedBackgroundView:selectedBackground];
-        
-        cell.imageView.image = [UIImage imageNamed:@[@"sidemenu_QA", @"sidemenu-software", @"sidemenu_blog", @"sidemenu_setting", @"sidemenu-night"][indexPath.row]];
-        cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"夜间模式", @"注销"][indexPath.row];
-        
-        if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
-            cell.textLabel.textColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
-            if (indexPath.row == 4) {
-                cell.textLabel.text = @"日间模式";
-                cell.imageView.image = [UIImage imageNamed:@"sidemenu-day"];
-            }
-        } else {
-            cell.textLabel.textColor = [UIColor colorWithHex:0x555555];
-            if (indexPath.row == 4) { 
-                cell.textLabel.text = @"夜间模式";
-                cell.imageView.image = [UIImage imageNamed:@"sidemenu-night"];
-            }
+    UITableViewCell *cell = [UITableViewCell new];
+    
+    cell.backgroundColor = [UIColor clearColor];
+    
+    UIView *selectedBackground = [UIView new];
+    selectedBackground.backgroundColor = [UIColor colorWithHex:0xCFCFCF];
+    [cell setSelectedBackgroundView:selectedBackground];
+    
+    cell.imageView.image = [UIImage imageNamed:@[@"sidemenu_QA", @"sidemenu-software", @"sidemenu_blog", @"sidemenu_setting", @"sidemenu-night"][indexPath.row]];
+    cell.textLabel.text = @[@"技术问答", @"开源软件", @"博客区", @"设置", @"夜间模式", @"注销"][indexPath.row];
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode){
+        cell.textLabel.textColor = [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+        if (indexPath.row == 4) {
+            cell.textLabel.text = @"日间模式";
+            cell.imageView.image = [UIImage imageNamed:@"sidemenu-day"];
         }
-        cell.textLabel.font = [UIFont systemFontOfSize:19];
-        
-        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-        
-        return cell;
+    } else {
+        cell.textLabel.textColor = [UIColor colorWithHex:0x555555];
+        if (indexPath.row == 4) { 
+            cell.textLabel.text = @"夜间模式";
+            cell.imageView.image = [UIImage imageNamed:@"sidemenu-night"];
+        }
+    }
+    cell.textLabel.font = [UIFont systemFontOfSize:19];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
+    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

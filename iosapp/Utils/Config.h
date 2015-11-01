@@ -9,17 +9,15 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class OSCMyInfo;
 @class OSCUser;
 
 @interface Config : NSObject
 
 + (void)saveOwnAccount:(NSString *)account andPassword:(NSString *)password;
 
-+ (void)saveUserProfile:(OSCUser *)user;
-+ (void)clearUserProfile;
-
-+ (void)updateMyInfo:(OSCMyInfo *)myInfo;
++ (void)saveProfile:(OSCUser *)user;
++ (void)updateProfile:(OSCUser *)user;
++ (void)clearProfile;
 
 + (void)savePortrait:(UIImage *)portrait;
 
@@ -31,7 +29,7 @@
 + (int64_t)getOwnID;
 + (NSString *)getOwnUserName;
 + (NSArray *)getActivitySignUpInfomation;
-+ (NSArray *)getUsersInformation;
++ (OSCUser *)myProfile;
 + (UIImage *)getPortrait;
 
 + (void)saveTweetText:(NSString *)tweetText forUser:(ino64_t)userID;

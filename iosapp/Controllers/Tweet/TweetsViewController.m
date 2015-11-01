@@ -49,7 +49,7 @@ static NSString * const kTweetCellID = @"TweetCell";
                 _uid = -1; break;
             case TweetsTypeOwnTweets:
                 _uid = [Config getOwnID];
-                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRefreshHandler:)  name:@"userRefresh" object:nil];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRefreshHandler:)  name:@"TweetUserUpdate" object:nil];
                 if (_uid == 0) {
                     // 显示提示页面
                 }
@@ -411,9 +411,9 @@ static NSString * const kTweetCellID = @"TweetCell";
 - (void)userRefreshHandler:(NSNotification *)notification
 {
     _uid = [Config getOwnID];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self refresh];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self refresh];
+//    });
 }
 
 #pragma mark - 点赞功能

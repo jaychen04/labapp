@@ -8,10 +8,9 @@
 
 #import "MyBasicInfoViewController.h"
 
-//#import "OSCUser.h"
+#import "OSCUser.h"
 #import "UIColor+Util.h"
 #import "OSCAPI.h"
-#import "OSCMyInfo.h"
 #import "Config.h"
 #import "Utils.h"
 #import "HomepageViewController.h"
@@ -26,7 +25,7 @@
 
 @interface MyBasicInfoViewController () <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
 
-@property (nonatomic, strong) OSCMyInfo *myInfo;
+@property (nonatomic, strong) OSCUser *myInfo;
 @property (nonatomic, readonly, assign) int64_t myID;
 
 @property (nonatomic, strong) UIView *backView;
@@ -51,7 +50,7 @@
     return self;
 }
 
-- (instancetype)initWithMyInformation:(OSCMyInfo *)myInfo
+- (instancetype)initWithMyInformation:(OSCUser *)myInfo
 {
     self = [super self];
     if (self) {
@@ -83,7 +82,7 @@
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
                  ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
-                 _myInfo = [[OSCMyInfo alloc] initWithXML:userXML];
+                 _myInfo = [[OSCUser alloc] initWithXML:userXML];
                  [_HUD hide:YES];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -175,7 +174,7 @@
                                                                                        attributes:titleAttributes];
     [attributedText appendAttributedString:[[NSAttributedString alloc] initWithString:@[
                                                                                         joinTime ?: @"",
-                                                                                        _myInfo.hometown ?: @"",
+                                                                                        _myInfo.location ?: @"",
                                                                                         _myInfo.developPlatform ?: @"",
                                                                                         _myInfo.expertise ?: @""
                                                                                         ][indexPath.row]]];

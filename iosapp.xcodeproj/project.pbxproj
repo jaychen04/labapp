@@ -87,7 +87,6 @@
 		3874EC281A08E957000D2894 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3874EC271A08E957000D2894 /* LoginViewController.m */; };
 		387639B11A7CF95D008E6805 /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 387639B01A7CF95D008E6805 /* SideMenuViewController.m */; };
 		387639FD1A807918008E6805 /* SoftwareCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */; };
-		38763A011A820B46008E6805 /* OSCMyInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A001A820B46008E6805 /* OSCMyInfo.m */; };
 		38763A071A85E591008E6805 /* UserHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A061A85E591008E6805 /* UserHeaderCell.m */; };
 		38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A091A860A96008E6805 /* UserOperationCell.m */; };
 		38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 38763A321A8DDF51008E6805 /* MessageBubbleCell.m */; };
@@ -406,8 +405,6 @@
 		387639B01A7CF95D008E6805 /* SideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SideMenuViewController.m; sourceTree = "<group>"; };
 		387639FB1A807918008E6805 /* SoftwareCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftwareCommentsViewController.h; sourceTree = "<group>"; };
 		387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftwareCommentsViewController.m; sourceTree = "<group>"; };
-		387639FF1A820B46008E6805 /* OSCMyInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMyInfo.h; sourceTree = "<group>"; };
-		38763A001A820B46008E6805 /* OSCMyInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMyInfo.m; sourceTree = "<group>"; };
 		38763A051A85E591008E6805 /* UserHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserHeaderCell.h; sourceTree = "<group>"; };
 		38763A061A85E591008E6805 /* UserHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserHeaderCell.m; sourceTree = "<group>"; };
 		38763A081A860A96008E6805 /* UserOperationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserOperationCell.h; sourceTree = "<group>"; };
@@ -1600,8 +1597,6 @@
 			children = (
 				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
 				386039601A09C5A1007C9B88 /* OSCUser.m */,
-				387639FF1A820B46008E6805 /* OSCMyInfo.h */,
-				38763A001A820B46008E6805 /* OSCMyInfo.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -2246,7 +2241,6 @@
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
 				31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */,
 				38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */,
-				38763A011A820B46008E6805 /* OSCMyInfo.m in Sources */,
 				C5F3D77A1AF0C40B0032F775 /* WeeklyReportTableViewController.m in Sources */,
 				38EAF1C11AE0E6B100397E2A /* TeamIssue.m in Sources */,
 				31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */,
