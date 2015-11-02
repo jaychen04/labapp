@@ -129,7 +129,10 @@ static NSString * const EventCellID = @"EventCell";
 
     OSCEvent *event = self.objects[row];
     EventCell *cell = [tableView dequeueReusableCellWithIdentifier:EventCellID forIndexPath:indexPath];
-    if (!cell.contentTextView.delegate) cell.contentTextView.delegate = self;
+    if (!cell.contentTextView.delegate) {
+        cell.contentTextView.delegate = self;
+        [cell.contentTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
+    }
     
     cell.contentTextView.textColor = [UIColor contentTextColor];
     
@@ -326,6 +329,12 @@ static NSString * const EventCellID = @"EventCell";
     }
     [self.navigationController handleURL:URL];
     return NO;
+}
+
+#pragma  mark - 转发cell.contentText的tap事件
+- (void)onTapCellContentText:(UITapGestureRecognizer*)tap
+{
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:tap.view.tag inSection:0]];
 }
 
 

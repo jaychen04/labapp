@@ -173,7 +173,11 @@ static NSString * const kTweetCellID = @"TweetCell";
     
     OSCTweet *tweet = self.objects[row];
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:kTweetCellID forIndexPath:indexPath];
-    if (!cell.contentTextView.delegate) cell.contentTextView.delegate = self;
+    if (!cell.contentTextView.delegate) {
+        cell.contentTextView.delegate = self;
+        [cell.contentTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
+    }
+    cell.contentTextView.tag = row;
 
     cell.backgroundColor = [UIColor themeColor];
     
@@ -501,7 +505,7 @@ static NSString * const kTweetCellID = @"TweetCell";
           }];
 }
 
-#pragma mark UITableViewDelegate
+#pragma mark - UITableViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
@@ -509,6 +513,12 @@ static NSString * const kTweetCellID = @"TweetCell";
     return NO;
 }
 
+
+#pragma  mark - 转发cell.contentText的tap事件
+- (void)onTapCellContentText:(UITapGestureRecognizer*)tap
+{
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:tap.view.tag inSection:0]];
+}
 
 
 @end
