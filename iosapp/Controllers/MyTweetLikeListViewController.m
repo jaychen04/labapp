@@ -26,7 +26,7 @@ static NSString * const MyTweetLikeListCellID = @"MyTweetLikeListCell";
     self = [super init];
     if (self) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_MY_TWEET_LIKE_LIST];
+            return [NSString stringWithFormat:@"%@%@?pageIndex=%ld", OSCAPI_PREFIX, OSCAPI_MY_TWEET_LIKE_LIST, (long)page];
         };
         
         self.objClass = [OSCMyTweetLikeList class];

@@ -34,7 +34,7 @@
 - (instancetype)initWithNoticeCounts:(NSArray *)noticeCounts
 {
     self = [super initWithTitle:@"消息中心"
-                   andSubTitles:@[@"@我", @"评论", @"私信", @"粉丝", @"动弹"]
+                   andSubTitles:@[@"@我", @"评论", @"私信", @"粉丝", @"赞过我"]
                  andControllers:@[
                                   [[EventsViewController alloc] initWithCatalog:2],
                                   [[EventsViewController alloc] initWithCatalog:3],
