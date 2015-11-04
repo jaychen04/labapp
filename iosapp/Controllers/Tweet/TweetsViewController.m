@@ -517,7 +517,8 @@ static NSString * const kTweetCellID = @"TweetCell";
 #pragma  mark - 转发cell.contentText的tap事件
 - (void)onTapCellContentText:(UITapGestureRecognizer*)tap
 {
-    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:tap.view.tag inSection:0]];
+    CGPoint point = [tap locationInView:self.tableView];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForRowAtPoint:point]];
 }
 
 
