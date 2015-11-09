@@ -282,6 +282,7 @@ static NSString * const kTweetCellID = @"TweetCell";
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [super scrollViewDidScroll:scrollView];
     if (_didScroll) {_didScroll();}
 }
 
