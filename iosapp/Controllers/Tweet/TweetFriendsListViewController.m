@@ -72,8 +72,8 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
                     i --;
                 }
             }
-            [weakSelf.tableView.header endRefreshing];
-            weakSelf.tableView.header = nil;
+            [weakSelf.tableView.mj_header endRefreshing];
+            weakSelf.tableView.mj_header = nil;
             [weakSelf refresh_tableHeader];
         };
     }
@@ -112,7 +112,7 @@ static NSString *kTweetFriendCellID = @"TweetFriendCell";
 
 - (void)initSubViews
 {
-    self.tableView.footer = nil;
+    self.tableView.mj_footer = nil;
     self.tableView.tintColor = [UIColor navigationbarColor];
     self.tableView.sectionIndexBackgroundColor = [UIColor clearColor]; 
     [self.tableView registerClass:[TweetFriendCell class] forCellReuseIdentifier:kTweetFriendCellID];

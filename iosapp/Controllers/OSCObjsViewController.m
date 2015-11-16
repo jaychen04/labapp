@@ -54,7 +54,7 @@
     [_lastCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fetchMore)]];
     self.tableView.tableFooterView = _lastCell;
     
-    self.tableView.header = ({
+    self.tableView.mj_header = ({
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refresh)];
         header.lastUpdatedTimeLabel.hidden = YES;
         header.stateLabel.hidden = YES;
@@ -85,7 +85,7 @@
     
     if (!_shouldFetchDataAfterLoaded) {return;}
     if (_needRefreshAnimation) {
-        [self.tableView.header beginRefreshing];
+        [self.tableView.mj_header beginRefreshing];
         [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentOffset.y-self.refreshControl.frame.size.height)
                                 animated:YES];
     }
@@ -230,8 +230,8 @@
                      }
                  }
                  
-                 if (self.tableView.header.isRefreshing) {
-                     [self.tableView.header endRefreshing];
+                 if (self.tableView.mj_header.isRefreshing) {
+                     [self.tableView.mj_header endRefreshing];
                  }
                  
                  [self.tableView reloadData];
@@ -246,8 +246,8 @@
              [HUD hide:YES afterDelay:1];
              
              _lastCell.status = LastCellStatusError;
-             if (self.tableView.header.isRefreshing) {
-                 [self.tableView.header endRefreshing];
+             if (self.tableView.mj_header.isRefreshing) {
+                 [self.tableView.mj_header endRefreshing];
              }
              [self.tableView reloadData];
          }

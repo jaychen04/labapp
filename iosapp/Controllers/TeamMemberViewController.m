@@ -75,7 +75,7 @@ static NSString * const kMemberCellID = @"MemberCell";
     [self.collectionView registerClass:[MemberCell class] forCellWithReuseIdentifier:kMemberCellID];
     self.collectionView.backgroundColor = [UIColor themeColor];
     
-    self.collectionView.header = ({
+    self.collectionView.mj_header = ({
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refresh)];
         header.lastUpdatedTimeLabel.hidden = YES;
         header.stateLabel.hidden = YES;
@@ -141,7 +141,7 @@ static NSString * const kMemberCellID = @"MemberCell";
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
              NSArray *membersXML = [[responseObject.rootElement firstChildWithTag:@"members"] childrenWithTag:@"member"];
              
-             [self.collectionView.header endRefreshing];
+             [self.collectionView.mj_header endRefreshing];
              
              for (ONOXMLElement *memberXML in membersXML) {
                  TeamMember *teamMember = [[TeamMember alloc] initWithXML:memberXML];
@@ -153,7 +153,7 @@ static NSString * const kMemberCellID = @"MemberCell";
              });
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
-             [self.collectionView.header endRefreshing];
+             [self.collectionView.mj_header endRefreshing];
          }];
 }
 
