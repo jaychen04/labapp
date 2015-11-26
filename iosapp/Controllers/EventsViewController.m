@@ -255,6 +255,8 @@ static NSString * const EventCellID = @"EventCell";
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
+    [super scrollViewDidScroll:scrollView];
+    
     if (scrollView == self.tableView && _didScroll) {_didScroll();}
 }
 
