@@ -220,4 +220,14 @@
 }
 
 
+#pragma mark - prepare for reuse
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    
+    _thumbnail.image = nil;
+}
+
+
 @end
