@@ -57,7 +57,7 @@ static NSString * const kAuthorUID2 = @"authoruid2";
 - (NSAttributedString *)attributedTittle
 {
     if (!_attributedTittle) {
-        if ([_pubDate daysAgo] == 0) {
+        if ([_pubDate isToday]) {
             NSTextAttachment *textAttachment = [NSTextAttachment new];
             textAttachment.image = [UIImage imageNamed:@"widget_taday"];
             NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
