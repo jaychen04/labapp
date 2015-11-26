@@ -100,22 +100,11 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_portrait(36)]-8-[_authorLabel]-8-|"
                                                                              options:0 metrics:nil views:views]];
-#if TWEET_CELL_IMAGE_USE_REALSIZE
+    
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentTextView]-<=6-[_thumbnail]-<=6-[_likeListLabel]-6-[_timeLabel]-5-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
-    
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_thumbnail]"
-                                                                             options:0 metrics:nil views:views]];
-#else
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-7-[_authorLabel]-5-[_contentTextView]-<=6-[_thumbnail(80)]-<=6-[_likeListLabel]-6-[_timeLabel]-5-|"
-                                                                             options:NSLayoutFormatAlignAllLeft
-                                                                             metrics:nil views:views]];
-    
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_thumbnail(80)]"
-                                                                             options:0 metrics:nil views:views]];
-#endif
-    
+        
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]-10-[_appclientLabel]->=5-[_likeButton(30)]-5-[_commentCount]-8-|"
                                                                              options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
     

@@ -37,5 +37,3 @@
 + (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
 
 @end
-
-#define TWEET_CELL_IMAGE_USE_REALSIZE 1
