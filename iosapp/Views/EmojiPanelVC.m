@@ -80,7 +80,7 @@
     NSInteger section = indexPath.section;
     NSInteger row     = indexPath.row;
     
-    if (section == [self numberOfSectionsInCollectionView:collectionView] - 1&&
+    if (section == [self numberOfSectionsInCollectionView:collectionView] - 1 &&
             row == [self collectionView:collectionView numberOfItemsInSection:section] - 1) {
         [cell setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"delete"]]];
     } else {
@@ -102,7 +102,8 @@
     NSInteger section = indexPath.section;
     NSInteger row     = indexPath.row;
     
-    if (section == 2 && row == 6) {
+    if (section == [self numberOfSectionsInCollectionView:collectionView] - 1 &&
+        row == [self collectionView:collectionView numberOfItemsInSection:section] - 1) {
         _deleteEmoji();
     } else {
         NSInteger emojiNum = _pageIndex * 20 + section * 7 + row + 1;
