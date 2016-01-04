@@ -15,14 +15,12 @@
 #import "OSCAPI.h"
 #import "OSCUser.h"
 
-#import "UMSocial.h"
-#import "UMSocialWechatHandler.h"
-#import "UMSocialQQHandler.h"
-#import "UMSocialSinaHandler.h"
-
-#import <Ono.h>
 #import <AFOnoResponseSerializer.h>
-
+#import <Ono.h>
+#import <UMSocial.h>
+#import <UMengSocial/UMSocialQQHandler.h>
+#import <UMengSocial/UMSocialWechatHandler.h>
+#import <UMengSocial/UMSocialSinaHandler.h>
 
 @interface AppDelegate () <UIApplicationDelegate>
 
