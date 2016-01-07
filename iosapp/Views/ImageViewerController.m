@@ -34,11 +34,22 @@
 
 #pragma mark - init method
 
-- (instancetype)initWithImageURL:(NSURL *)imageURL
+- (instancetype)init
 {
     self = [super init];
     if (self) {
+        self.modalPresentationStyle = UIModalPresentationCustom;
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+        self.modalPresentationCapturesStatusBarAppearance = YES;
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithImageURL:(NSURL *)imageURL
+{
+    self = [self init];
+    if (self) {
         _imageURL = imageURL;
     }
     
@@ -47,16 +58,13 @@
 
 - (instancetype)initWithImage:(UIImage *)image
 {
-    self = [super init];
+    self = [self init];
     if (self) {
-        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         _image = image;
     }
     
     return self;
 }
-
-
 
 #pragma mark - life cycle
 
@@ -109,11 +117,6 @@
     _scrollView.contentSize = _imageView.frame.size;
     [_scrollView addSubview:_imageView];
     
-    UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-50, self.view.frame.size.width, 50)];
-    backView.backgroundColor = [UIColor clearColor];
-    backView.alpha = 0.8;
-    [self.view addSubview:backView];
-    
     _saveButton = [UIButton new];
     CGFloat X = self.view.frame.size.width;
     CGFloat Y = self.view.frame.size.height;
@@ -122,26 +125,24 @@
     [_saveButton addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_saveButton];
     
+    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
     
     _imageView.frame = _scrollView.bounds;
 }
-
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:YES];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 }
-
-
 
 #pragma mark - UIScrollViewDelegate
 
@@ -177,6 +178,82 @@
     CGRect rectToZoomTo = CGRectMake(x, y, width, height);
     
     [_scrollView zoomToRect:rectToZoomTo animated:YES];
+}
+
+// from https://github.com/ideaismobile/IDMPhotoBrowser
+
+- (void)panGestureRecognized:(id)sender
+{
+    static float firstX, firstY;
+    
+    float viewHeight = _scrollView.frame.size.height;
+    float viewHalfHeight = viewHeight / 2;
+    
+    CGPoint translatedPoint = [(UIPanGestureRecognizer *)sender translationInView:self.view];
+    
+    if ([(UIPanGestureRecognizer *)sender state] == UIGestureRecognizerStateBegan) {
+        firstX = _scrollView.center.x;
+        firstY = _scrollView.center.y;
+        
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+    
+    translatedPoint = CGPointMake(firstX, firstY + translatedPoint.y);
+    [_scrollView setCenter:translatedPoint];
+    
+    float newY = _scrollView.center.y - viewHalfHeight;
+    float newAlpha = 1 - fabsf(newY) / viewHeight;
+    
+    self.view.opaque = YES;
+    self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:newAlpha];
+    
+    // Gesture Ended
+    if ([(UIPanGestureRecognizer*)sender state] == UIGestureRecognizerStateEnded) {
+        if (_scrollView.center.y > viewHalfHeight + 100 || _scrollView.center.y < viewHalfHeight - 100) { // Automatic Dismiss View
+            
+            CGFloat finalX = firstX, finalY;
+            
+            CGFloat windowsHeigt = self.view.frame.size.height;
+            
+            if (_scrollView.center.y > viewHalfHeight + 30) { // swipe down
+                finalY = windowsHeigt * 2;
+            } else { // swipe up
+                finalY = -viewHalfHeight;
+            }
+            
+            CGFloat animationDuration = 0.35;
+            
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:animationDuration];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+            [UIView setAnimationDelegate:self];
+            [_scrollView setCenter:CGPointMake(finalX, finalY)];
+            self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:0];
+            [UIView commitAnimations];
+            
+            self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+            
+            [self dismissViewControllerAnimated:YES completion:nil];
+        } else { // Continue Showing View
+            [self setNeedsStatusBarAppearanceUpdate];
+            
+            self.view.backgroundColor = [UIColor colorWithWhite:0 alpha:1];
+            
+            CGFloat velocityY = (0.35 * [(UIPanGestureRecognizer *)sender velocityInView:self.view].y);
+            
+            CGFloat finalX = firstX;
+            CGFloat finalY = viewHalfHeight;
+            
+            CGFloat animationDuration = (ABS(velocityY) * 0.0002) + 0.2;
+            
+            [UIView beginAnimations:nil context:NULL];
+            [UIView setAnimationDuration:animationDuration];
+            [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+            [UIView setAnimationDelegate:self];
+            [_scrollView setCenter:CGPointMake(finalX, finalY)];
+            [UIView commitAnimations];
+        }
+    }
 }
 
 //下载保存图片
