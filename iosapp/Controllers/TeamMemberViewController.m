@@ -128,8 +128,6 @@ static NSString * const kMemberCellID = @"MemberCell";
 
 - (void)refresh
 {
-    [_members removeAllObjects];
-    
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
     [manager GET:_URL
@@ -142,6 +140,8 @@ static NSString * const kMemberCellID = @"MemberCell";
              NSArray *membersXML = [[responseObject.rootElement firstChildWithTag:@"members"] childrenWithTag:@"member"];
              
              [self.collectionView.mj_header endRefreshing];
+             
+             [_members removeAllObjects];
              
              for (ONOXMLElement *memberXML in membersXML) {
                  TeamMember *teamMember = [[TeamMember alloc] initWithXML:memberXML];
