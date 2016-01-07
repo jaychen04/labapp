@@ -44,10 +44,10 @@ NSString * const kTeamsArray = @"teams";
 + (void)saveOwnAccount:(NSString *)account andPassword:(NSString *)password
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:account forKey:kAccount];
+    [userDefaults setObject:account ?: @"" forKey:kAccount];
     [userDefaults synchronize];
     
-    [SSKeychain setPassword:password forService:kService account:account];
+    [SSKeychain setPassword:password ?: @"" forService:kService account:account];
 }
 
 
@@ -169,7 +169,7 @@ NSString * const kTeamsArray = @"teams";
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *account = [userDefaults objectForKey:kAccount];
-    NSString *password = [SSKeychain passwordForService:kService account:account];
+    NSString *password = [SSKeychain passwordForService:kService account:account] ?: @"";
     
     if (account) {return @[account, password];}
     return nil;
