@@ -2307,7 +2307,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "fecdb508-54a3-4671-807e-e8d8e70d4e68";
 			};
 			name = Debug;
 		};
@@ -2375,7 +2375,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "fecdb508-54a3-4671-807e-e8d8e70d4e68";
 			};
 			name = Release;
 		};
