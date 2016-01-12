@@ -11,7 +11,7 @@
 #import "Config.h"
 #import "AboutPage.h"
 #import "OSLicensePage.h"
-#import "FeedbackPage.h"
+#import "FeedBackViewController.h"
 
 #import <RESideMenu.h>
 #import <MBProgressHUD.h>
@@ -67,7 +67,7 @@
 {
     switch (section) {
         case 0: return 1;
-        case 1: return 4;
+        case 1: return 3;
         case 2: return 1;
             
         default: return 0;
@@ -80,7 +80,7 @@
     
     NSArray *titles = @[
                         @[@"清除缓存", @"消息通知"],
-                        @[@"意见反馈", @"给应用评分", @"关于", @"开源许可"],
+                        @[@"给应用评分", @"关于", @"开源许可"],
                         @[@"注销登录"],
                         ];
     cell.textLabel.text = titles[indexPath.section][indexPath.row];
@@ -110,12 +110,10 @@
         }
     } else if (section == 1) {
         if (row == 0) {
-            [self.navigationController pushViewController:[FeedbackPage new] animated:YES];
-        } else if (row == 1) {
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://itunes.apple.com/cn/app/kai-yuan-zhong-guo/id524298520?mt=8"]];
-        } else if (row == 2) {
+        } else if (row == 1) {
             [self.navigationController pushViewController:[AboutPage new] animated:YES];
-        } else if (row == 3) {
+        } else if (row == 2) {
             [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
         }
     } else if (section == 2) {
