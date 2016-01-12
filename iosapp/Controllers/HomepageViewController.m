@@ -379,7 +379,9 @@
             break;
         }
         case 3: {
-            [self.navigationController pushViewController:[FeedBackViewController new] animated:YES];
+            FeedBackViewController *feedBackViewController = [FeedBackViewController new];
+            feedBackViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:feedBackViewController animated:YES];
             break;
         }
         default: break;

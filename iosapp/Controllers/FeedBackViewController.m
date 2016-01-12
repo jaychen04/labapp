@@ -66,7 +66,7 @@
 
 - (void)setLayout
 {
-    _feedbackTextView.placeholder = @"感谢您的反馈，请提出您的意见与建议";
+    _feedbackTextView.placeholder = @"请提出您的意见与建议";
     _feedbackTextView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_feedbackTextView];
     
