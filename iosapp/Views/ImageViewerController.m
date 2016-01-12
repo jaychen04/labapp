@@ -16,7 +16,7 @@
 #import <UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
 
-@interface ImageViewerController () <UIScrollViewDelegate, UIAlertViewDelegate>
+@interface ImageViewerController () <UIScrollViewDelegate, UIAlertViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) NSURL *imageURL;
 @property (nonatomic, strong) UIImage *image;
@@ -68,7 +68,8 @@
 
 #pragma mark - life cycle
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor blackColor];
@@ -80,13 +81,14 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_scrollView];
     
-    
     _imageView = [UIImageView new];
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     _imageView.userInteractionEnabled = YES;
     
     if (_image) {
         _imageView.image = _image;
+        _scrollView.contentSize = [self contentSIzeForImage:_image];
+        _imageView.frame = [self frameForImage:_image];
     } else {
         if (![[SDWebImageManager sharedManager] cachedImageExistsForURL:_imageURL]) {
             _HUD = [Utils createHUD];
@@ -102,9 +104,11 @@
                               }
                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                  [_HUD hide:YES];
+                                 
+                                 _scrollView.contentSize = [self contentSIzeForImage:image];
+                                 _imageView.frame = [self frameForImage:image];
                              }];
     }
-    
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     doubleTap.numberOfTapsRequired = 2;
@@ -114,7 +118,6 @@
     [singleTap requireGestureRecognizerToFail:doubleTap];
     [_imageView addGestureRecognizer:singleTap];
     
-    _scrollView.contentSize = _imageView.frame.size;
     [_scrollView addSubview:_imageView];
     
     _saveButton = [UIButton new];
@@ -125,7 +128,28 @@
     [_saveButton addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_saveButton];
     
-    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)]];
+    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
+    panGestureRecognizer.delegate = self;
+    [_scrollView addGestureRecognizer:panGestureRecognizer];
+}
+
+- (CGSize)contentSIzeForImage:(UIImage *)image
+{
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat contentHeight = screenWidth * image.size.height / image.size.width;
+    return CGSizeMake(screenWidth, contentHeight);
+}
+
+- (CGRect)frameForImage:(UIImage *)image
+{
+    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
+    
+    CGFloat imageHeight = screenWidth / image.size.width * image.size.height;
+    CGFloat y = imageHeight > screenHeight ? 0 : (screenHeight - imageHeight) / 2;
+    
+    return CGRectMake(0, y, screenWidth, imageHeight);
+//    return CGRectMake(0, 0, screenWidth, imageHeight);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -133,8 +157,6 @@
     [super viewWillAppear:animated];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
-    
-    _imageView.frame = _scrollView.bounds;
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -184,6 +206,10 @@
 
 - (void)panGestureRecognized:(id)sender
 {
+    if (_scrollView.contentOffset.y > 0 && _scrollView.contentOffset.y < _scrollView.contentSize.height - _scrollView.bounds.size.height) {
+        return;
+    }
+    
     static float firstX, firstY;
     
     float viewHeight = _scrollView.frame.size.height;
@@ -254,6 +280,11 @@
             [UIView commitAnimations];
         }
     }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
 //下载保存图片
