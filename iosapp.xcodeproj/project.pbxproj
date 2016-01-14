@@ -2307,7 +2307,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fecdb508-54a3-4671-807e-e8d8e70d4e68";
+				PROVISIONING_PROFILE = "873b295e-047e-41db-8d96-2177085c81ba";
 			};
 			name = Debug;
 		};
@@ -2375,7 +2375,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "fecdb508-54a3-4671-807e-e8d8e70d4e68";
+				PROVISIONING_PROFILE = "873b295e-047e-41db-8d96-2177085c81ba";
 			};
 			name = Release;
 		};

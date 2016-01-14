@@ -149,7 +149,6 @@
     CGFloat y = imageHeight > screenHeight ? 0 : (screenHeight - imageHeight) / 2;
     
     return CGRectMake(0, y, screenWidth, imageHeight);
-//    return CGRectMake(0, 0, screenWidth, imageHeight);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -206,7 +205,10 @@
 
 - (void)panGestureRecognized:(id)sender
 {
-    if (_scrollView.contentOffset.y > 0 && _scrollView.contentOffset.y < _scrollView.contentSize.height - _scrollView.bounds.size.height) {
+    CGFloat bottomOffset = _scrollView.contentSize.height - _scrollView.bounds.size.height;
+    BOOL isInContentRegion = _scrollView.contentOffset.y > 0 && _scrollView.contentOffset.y < bottomOffset;
+    
+    if (isInContentRegion || _zoomOut) {
         return;
     }
     
