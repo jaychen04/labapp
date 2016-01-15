@@ -74,21 +74,13 @@
     
     self.view.backgroundColor = [UIColor blackColor];
     
-    _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
-    _scrollView.delegate = self;
-    _scrollView.maximumZoomScale = 2;
-    _scrollView.showsHorizontalScrollIndicator = NO;
-    _scrollView.showsVerticalScrollIndicator = NO;
-    [self.view addSubview:_scrollView];
-    
-    _imageView = [UIImageView new];
-    _imageView.contentMode = UIViewContentModeScaleAspectFit;
-    _imageView.userInteractionEnabled = YES;
+    [self configureScrollView];
+    [self configureImageView];
     
     if (_image) {
         _imageView.image = _image;
-        _scrollView.contentSize = [self contentSIzeForImage:_image];
         _imageView.frame = [self frameForImage:_image];
+        _scrollView.contentSize = [self contentSizeForImage:_image];
     } else {
         if (![[SDWebImageManager sharedManager] cachedImageExistsForURL:_imageURL]) {
             _HUD = [Utils createHUD];
@@ -105,20 +97,10 @@
                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                                  [_HUD hide:YES];
                                  
-                                 _scrollView.contentSize = [self contentSIzeForImage:image];
                                  _imageView.frame = [self frameForImage:image];
+                                 _scrollView.contentSize = [self contentSizeForImage:image];
                              }];
     }
-    
-    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
-    doubleTap.numberOfTapsRequired = 2;
-    [_imageView addGestureRecognizer:doubleTap];
-    
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap)];
-    [singleTap requireGestureRecognizerToFail:doubleTap];
-    [_imageView addGestureRecognizer:singleTap];
-    
-    [_scrollView addSubview:_imageView];
     
     _saveButton = [UIButton new];
     CGFloat X = self.view.frame.size.width;
@@ -127,13 +109,39 @@
     [_saveButton setImage:[UIImage imageNamed:@"picture_download"] forState:UIControlStateNormal];
     [_saveButton addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_saveButton];
+}
+
+- (void)configureScrollView
+{
+    _scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
+    _scrollView.delegate = self;
+    _scrollView.maximumZoomScale = 2;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:_scrollView];
     
     UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
     panGestureRecognizer.delegate = self;
     [_scrollView addGestureRecognizer:panGestureRecognizer];
 }
 
-- (CGSize)contentSIzeForImage:(UIImage *)image
+- (void)configureImageView
+{
+    _imageView = [UIImageView new];
+    _imageView.contentMode = UIViewContentModeScaleAspectFit;
+    _imageView.userInteractionEnabled = YES;
+    [_scrollView addSubview:_imageView];
+    
+    UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
+    doubleTap.numberOfTapsRequired = 2;
+    [_imageView addGestureRecognizer:doubleTap];
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap)];
+    [singleTap requireGestureRecognizerToFail:doubleTap];
+    [_imageView addGestureRecognizer:singleTap];
+}
+
+- (CGSize)contentSizeForImage:(UIImage *)image
 {
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     CGFloat contentHeight = screenWidth * image.size.height / image.size.width;
@@ -142,13 +150,13 @@
 
 - (CGRect)frameForImage:(UIImage *)image
 {
-    CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
+    CGFloat width = self.view.bounds.size.width;
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     
-    CGFloat imageHeight = screenWidth / image.size.width * image.size.height;
+    CGFloat imageHeight = width / image.size.width * image.size.height;
     CGFloat y = imageHeight > screenHeight ? 0 : (screenHeight - imageHeight) / 2;
     
-    return CGRectMake(0, y, screenWidth, imageHeight);
+    return CGRectMake(0, y, width, imageHeight);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -169,7 +177,21 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
 {
-    return self.imageView;
+    return _imageView;
+}
+
+// http://stackoverflow.com/questions/1316451/center-content-of-uiscrollview-when-smaller
+
+- (void)scrollViewDidZoom:(UIScrollView *)scrollView
+{
+    CGFloat offsetX = scrollView.bounds.size.width > scrollView.contentSize.width ?
+                      (scrollView.bounds.size.width - scrollView.contentSize.width) / 2 : 0;
+    
+    CGFloat offsetY = scrollView.bounds.size.height > scrollView.contentSize.height ?
+                      (scrollView.bounds.size.height - scrollView.contentSize.height) / 2 : 0;
+    
+    _imageView.center = CGPointMake(scrollView.contentSize.width / 2 + offsetX,
+                                    scrollView.contentSize.height / 2 + offsetY);
 }
 
 #pragma mark - handle gesture
@@ -194,7 +216,7 @@
     CGFloat width = scrollViewSize.width / newZoomScale;
     CGFloat height = scrollViewSize.height / newZoomScale;
     CGFloat x = pointInView.x - (width / 2.0f);
-    CGFloat y = _scrollView.center.y - (height / 2.0f);
+    CGFloat y = pointInView.y - (height / 2.0f);
     
     CGRect rectToZoomTo = CGRectMake(x, y, width, height);
     
@@ -317,6 +339,5 @@
     
     [HUD hide:YES afterDelay:1];
 }
-
 
 @end
