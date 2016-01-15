@@ -22,6 +22,7 @@
 #import "TeamTeam.h"
 #import "TeamCenter.h"
 #import "AppDelegate.h"
+#import "FeedBackViewController.h"
 
 #import "UIScrollView+ScalableCover.h"
 #import "UIFont+FontAwesome.h"
@@ -306,8 +307,8 @@
     
     cell.backgroundColor = [UIColor cellsColor];//colorWithHex:0xF9F9F9
     
-    cell.textLabel.text = @[@"消息", @"博客", @"团队"][indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team"][indexPath.row]];
+    cell.textLabel.text = @[@"消息", @"博客", @"团队", @"反馈"][indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"me-feedback"][indexPath.row]];
     
     cell.textLabel.textColor = [UIColor titleColor];
     
@@ -375,6 +376,12 @@
             TeamCenter *teamCenter = [TeamCenter new];
             teamCenter.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:teamCenter animated:YES];
+            break;
+        }
+        case 3: {
+            FeedBackViewController *feedBackViewController = [FeedBackViewController new];
+            feedBackViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:feedBackViewController animated:YES];
             break;
         }
         default: break;

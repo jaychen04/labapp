@@ -14,6 +14,8 @@
 
 #define OSCAPI_HTTPS_PREFIX             @"https://www.oschina.net/action/api/"
 #define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
+//#define OSCAPI_HTTPS_PREFIX             @"https://192.168.1.58:8080/action/api/"
+//#define OSCAPI_PREFIX                   @"http://192.168.1.58:8080/action/api/"
 
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
