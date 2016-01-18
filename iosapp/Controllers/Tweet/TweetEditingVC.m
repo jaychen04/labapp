@@ -471,8 +471,8 @@
     
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"动弹发送中";
+    HUD.removeFromSuperViewOnHide = NO;
     [HUD hide:YES afterDelay:1];
-    [self dismissViewControllerAnimated:YES completion:nil];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -518,18 +518,21 @@
                                   [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
                               }
                               
+                              HUD.removeFromSuperViewOnHide = YES;
                               [HUD hide:YES afterDelay:1];
                               
                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               HUD.mode = MBProgressHUDModeCustomView;
                               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                               HUD.labelText = @"网络异常，动弹发送失败";
-                              
+                              HUD.removeFromSuperViewOnHide = YES;
                               [HUD hide:YES afterDelay:1];
                               
                               [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
                           }];
     });
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

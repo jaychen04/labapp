@@ -63,12 +63,12 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"取消"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
-                                                                            action:@selector(cancelButtonClicked)];
+                                                                            action:@selector(cancelEditing)];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发表"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
-                                                                             action:@selector(judgeVoice)];
+                                                                             action:@selector(pubTweet)];
     self.navigationItem.rightBarButtonItem.enabled = _hasVoice;
     self.view.backgroundColor = [UIColor themeColor];
     
@@ -413,7 +413,7 @@
         
         [_audioPlayer stop];
         _isPlay = NO;
-        [_playButton setImage:[UIImage imageNamed:@"voice_play.png"] forState:UIControlStateNormal];
+        [_playButton setImage:[UIImage imageNamed:@"voice_play"] forState:UIControlStateNormal];
         [_voiceImageView stopAnimating];
         
         [_audioRecorder stop];
@@ -431,24 +431,13 @@
 }
 
 #pragma mark - 取消发送动弹
-- (void)cancelButtonClicked
+
+- (void)cancelEditing
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - 发送语音动弹
-
-- (void)judgeVoice
-{
-    if (_hasVoice) {
-        [self pubTweet];
-    } else {
-        MBProgressHUD *HUD = [Utils createHUD];
-        HUD.mode = MBProgressHUDModeCustomView;
-        HUD.labelText = @"还没有语音，请录音";
-        [HUD hide:YES afterDelay:1];
-    }
-}
 
 - (void)pubTweet
 {
@@ -473,6 +462,7 @@
     }
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.labelText = @"语音动弹发送中";
+    HUD.removeFromSuperViewOnHide = NO;
     [HUD hide:YES afterDelay:1];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -498,36 +488,37 @@
              
          }
      }
-             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-                 ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
-                 int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-                 NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-                 
-                 HUD.mode = MBProgressHUDModeCustomView;
-                 [HUD show:YES];
-                 
-                 if (errorCode == 1) {
-                     _edittingArea.text = @"";
-                     
-                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                     HUD.labelText = @"语音动弹发表成功";
-                 } else {
-                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                     HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                 }
-                 
-                 [HUD hide:YES afterDelay:1];
-                 
-                 [self dismissViewControllerAnimated:YES completion:nil];
-                 
+     success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+         ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
+         int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+         NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+         
+         HUD.mode = MBProgressHUDModeCustomView;
+         [HUD show:YES];
+         
+         if (errorCode == 1) {
+             _edittingArea.text = @"";
+             
+             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+             HUD.labelText = @"动弹发表成功";
+         } else {
+             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+             HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+         }
+         
+         HUD.removeFromSuperViewOnHide = YES;
+         [HUD hide:YES afterDelay:1];
+         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
         HUD.labelText = @"网络异常，动弹发送失败";
         
+        HUD.removeFromSuperViewOnHide = YES;
         [HUD hide:YES afterDelay:1];
     }];
     
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UITextViewDelegate
