@@ -231,7 +231,7 @@
 {
     if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
     
-    [self.navigationController handleURL:request.URL];
+    [self.bottomBarVC.navigationController handleURL:request.URL];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
 

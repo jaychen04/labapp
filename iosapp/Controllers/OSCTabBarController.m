@@ -216,6 +216,10 @@
     }
 }
 
+- (void)dealloc
+{
+    [self.tabBar removeObserver:self forKeyPath:@"selectedItem"];
+}
 
 -(void)addCenterButtonWithImage:(UIImage *)buttonImage
 {
@@ -319,12 +323,11 @@
     [_dimView  addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(buttonPressed)]];
     
     [UIView animateWithDuration:0.25f
-                     animations:nil
+                     animations:^{}
                      completion:^(BOOL finished) {
                          if (finished) {_centerButton.enabled = YES;}
                      }];
 }
-
 
 - (void)removeBlurView
 {
@@ -332,7 +335,7 @@
     
     self.view.alpha = 1;
     [UIView animateWithDuration:0.25f
-                     animations:nil
+                     animations:^{}
                      completion:^(BOOL finished) {
                          if(finished) {
                              [_dimView removeFromSuperview];
@@ -344,7 +347,6 @@
                          }
                      }];
 }
-
 
 
 #pragma mark - 处理点击事件
