@@ -120,9 +120,9 @@
     _scrollView.showsVerticalScrollIndicator = NO;
     [self.view addSubview:_scrollView];
     
-    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
-    panGestureRecognizer.delegate = self;
-    [_scrollView addGestureRecognizer:panGestureRecognizer];
+//    UIPanGestureRecognizer *panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureRecognized:)];
+//    panGestureRecognizer.delegate = self;
+//    [_scrollView addGestureRecognizer:panGestureRecognizer];
 }
 
 - (void)configureImageView
