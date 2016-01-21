@@ -12,6 +12,7 @@
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <MBProgressHUD.h>
+#import <TBXML.h>
 
 #import "OSCAPI.h"
 #import "OSCNews.h"
@@ -29,7 +30,6 @@
 #import "UMSocial.h"
 #import "UIBarButtonItem+Badge.h"
 #import "AppDelegate.h"
-#import <TBXML.h>
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -184,7 +184,7 @@
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(fetchDetails)];
     
     // 资讯、博客和软件详情没有“举报”选项
     if (_commentType == CommentTypeNews || _commentType == CommentTypeSoftware || _commentType == CommentTypeBlog) {
@@ -215,10 +215,6 @@
     _HUD.userInteractionEnabled = NO;
     
     _manager = [AFHTTPRequestOperationManager OSCManager];
-//    [_manager.responseSerializer setValue:@"utf-8" forKey:@"Accept-Charset"];
-//    [_manager.responseSerializer setValue:@"application/json" forKey:@"Accept"];
-//    _manager.responseSerializer.stringEncoding = NSUTF8StringEncoding;
-//    _manager.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     [self fetchDetails];
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
 }
@@ -385,10 +381,7 @@
 
 - (void)fetchDetails
 {
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    
-    [manager GET:_detailsURL parameters:nil success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+    [_manager GET:_detailsURL parameters:nil success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
         NSString *response = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
         TBXML *XML = [[TBXML alloc]initWithXMLString:response error:nil];
         ONOXMLElement *onoXML = [responseDocument.rootElement firstChildWithTag:_tag];
@@ -400,7 +393,7 @@
                 TBXMLElement *element = XML.rootXMLElement;
                 TBXMLElement *subElement = [TBXML childElementNamed:_tag parentElement:element];
                 details = [[_detailsClass alloc] initWithTBXMLElement:subElement];
-            }else {     //onoxml
+            } else {     //onoxml
                 ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
                 details = [[_detailsClass alloc] initWithXML:XML];
             }
@@ -470,16 +463,6 @@
      ];
      */
 }
-
-
-- (void)refresh
-{
-    _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
-    [self fetchDetails];
-}
-
-
-
 
 - (void)loadNewsDetails:(OSCNewsDetails *)newsDetails
 {

@@ -2204,7 +2204,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0c27fbe6-2a77-4d74-b419-cd956c537d5c";
+				PROVISIONING_PROFILE = "c6989e49-eaaf-4aaa-9f05-6cd82bd1e1da";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -2240,7 +2240,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0c27fbe6-2a77-4d74-b419-cd956c537d5c";
+				PROVISIONING_PROFILE = "c6989e49-eaaf-4aaa-9f05-6cd82bd1e1da";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -2311,7 +2311,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c27fbe6-2a77-4d74-b419-cd956c537d5c";
+				PROVISIONING_PROFILE = "c6989e49-eaaf-4aaa-9f05-6cd82bd1e1da";
 			};
 			name = Debug;
 		};
@@ -2379,7 +2379,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c27fbe6-2a77-4d74-b419-cd956c537d5c";
+				PROVISIONING_PROFILE = "c6989e49-eaaf-4aaa-9f05-6cd82bd1e1da";
 			};
 			name = Release;
 		};
