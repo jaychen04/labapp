@@ -94,55 +94,20 @@
 #pragma mark - 选择截图
 - (void)takeprintscreen
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择图片"
-                                                        message:nil
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"相机", @"相册", nil];
+    UIImagePickerController *imagePickerController = [UIImagePickerController new];
+    imagePickerController.delegate = self;
+    imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imagePickerController.allowsEditing = NO;
+    imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
     
-    [alertView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                message:@"Device has no camera"
-                                                               delegate:nil
-                                                      cancelButtonTitle:@"OK"
-                                                      otherButtonTitles: nil];
-            
-            [alertView show];
-        } else {
-            UIImagePickerController *imagePickerController = [UIImagePickerController new];
-            imagePickerController.delegate = self;
-            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePickerController.allowsEditing = YES;
-            imagePickerController.showsCameraControls = YES;
-            imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-            imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
-            
-            [self presentViewController:imagePickerController animated:YES completion:nil];
-        }
-        
-        
-    } else {
-        UIImagePickerController *imagePickerController = [UIImagePickerController new];
-        imagePickerController.delegate = self;
-        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        imagePickerController.allowsEditing = YES;
-        imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
-        
-        [self presentViewController:imagePickerController animated:YES completion:nil];
-    }
+    [self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
 #pragma mark - UIImagePickerController
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
-    _image = info[UIImagePickerControllerEditedImage];
+    _image = info[UIImagePickerControllerOriginalImage];
     
     [picker dismissViewControllerAnimated:YES completion:^ {
         _printscrenImagView.image = _image;
@@ -171,20 +136,31 @@
                     @"content"  : [NSString stringWithFormat:@"[iOS-主站-%@]\n%@", _stringType, _feedbackTextView.text]
                     }
 constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
-    [formData appendPartWithFileData:[Utils compressImage:_image]
-                                name:@"file"
-                            fileName:@"img.jpg"
-                            mimeType:@"image/jpeg"];
-        } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            [_HUD hide:YES];
-            MBProgressHUD *HUD = [Utils createHUD];
+            if (_image) {
+                [formData appendPartWithFileData:[Utils compressImage:_image]
+                                            name:@"file"
+                                        fileName:@"img.jpg"
+                                        mimeType:@"image/jpeg"];
+            }
+        } success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+            ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+            int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+            NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
             
-            HUD.mode = MBProgressHUDModeCustomView;
-            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-            HUD.labelText = @"发送成功，感谢您的反馈";
-            [HUD hide:YES afterDelay:2];
+            if (errorCode == 1) {
+                [_HUD hide:YES];
+                _HUD.mode = MBProgressHUDModeCustomView;
+                _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                _HUD.labelText = @"发送成功，感谢您的反馈";
+                [_HUD hide:YES afterDelay:2];
+                
+                [self.navigationController popViewControllerAnimated:YES];
+            } else {
+                _HUD.mode = MBProgressHUDModeCustomView;
+                _HUD.labelText = errorMessage;
+                [_HUD hide:YES afterDelay:1];
+            }
             
-            [self.navigationController popViewControllerAnimated:YES];
         } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             _HUD.mode = MBProgressHUDModeCustomView;
             _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
