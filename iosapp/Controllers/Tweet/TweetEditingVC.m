@@ -406,8 +406,7 @@
         [vc setSelectDone:^(NSString *result) {
             [self insertString:result andSelect:NO];
         }];
-        [self.navigationController pushViewController:vc
-                                             animated:YES];
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
