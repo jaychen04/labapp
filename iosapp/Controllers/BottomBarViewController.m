@@ -136,9 +136,16 @@
 - (void)switchMode
 {
     if (_operationBar.isHidden) {
+        _emojiPageVC.view.hidden = YES;
+        _isEmojiPageOnScreen = NO;
+        
         [_editingBar.editView resignFirstResponder];
         _editingBar.hidden = YES;
         _operationBar.hidden = NO;
+        
+        _editingBarYConstraint.constant = 0;
+        [self setBottomBarHeight];
+        
     } else {
         _operationBar.hidden = YES;
         _editingBar.hidden = NO;
