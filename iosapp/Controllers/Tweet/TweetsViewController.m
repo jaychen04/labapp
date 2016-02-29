@@ -321,11 +321,11 @@ static NSString * const kTweetCellID = @"TweetCell";
                       
                       [self.objects removeObjectAtIndex:indexPath.row];
                       self.allCount--;
-                      if (self.objects.count > 0) {
-                          [self.tableView beginUpdates];
-                          [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-                          [self.tableView endUpdates];
-                      }
+//                      if (self.objects.count > 0) {
+//                          [self.tableView beginUpdates];
+//                          [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//                          [self.tableView endUpdates];
+//                      }
                       dispatch_async(dispatch_get_main_queue(), ^{
                           [self.tableView reloadData];
                       });
