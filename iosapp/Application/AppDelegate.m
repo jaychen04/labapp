@@ -14,6 +14,11 @@
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "OSCAPI.h"
 #import "OSCUser.h"
+#import "PersonSearchViewController.h"
+#import "ScanViewController.h"
+#import "ShakingViewController.h"
+#import "TweetEditingVC.h"
+#import "SwipableViewController.h"
 
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
@@ -102,6 +107,13 @@
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:@"3616966952"];
     
+    /*3D Touch*/
+    UIApplicationShortcutItem *shortcutItem = [launchOptions objectForKeyedSubscript:UIApplicationLaunchOptionsShortcutItemKey];
+    
+    if(shortcutItem)
+    {
+        [self quickActionWithShortcutItem:shortcutItem];
+    }
     
     return YES;
 }
@@ -163,8 +175,39 @@
 //    return [UMSocialSnsService handleOpenURL:url];
 }
 
+#pragma mark - 3D Touch
+- (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler
+{
+    [self quickActionWithShortcutItem:shortcutItem];
+    completionHandler(YES);
+}
 
-
+- (void)quickActionWithShortcutItem:(UIApplicationShortcutItem *)shortcutItem
+{
+    NSLog(@"%@",shortcutItem.type);
+    
+    if ([shortcutItem.type isEqualToString:@"发动弹"]) {
+        TweetEditingVC *tweetEditingVC = [TweetEditingVC new];
+        UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+        [self.window.rootViewController presentViewController:tweetEditingNav animated:YES completion:nil];
+        
+    } else if ([shortcutItem.type isEqualToString:@"扫一扫"]) {
+        ScanViewController *scanVC = [ScanViewController new];
+        UINavigationController *scanNav = [[UINavigationController alloc] initWithRootViewController:scanVC];
+        [self.window.rootViewController presentViewController:scanNav animated:NO completion:nil];
+        
+    } else if ([shortcutItem.type isEqualToString:@"找一找"]) {
+        PersonSearchViewController *personSearchVC = [PersonSearchViewController new];
+        UINavigationController *personSearchNavVC = [[UINavigationController alloc] initWithRootViewController:personSearchVC];
+        [self.window.rootViewController presentViewController:personSearchNavVC animated:YES completion:nil];
+        
+    } else if ([shortcutItem.type isEqualToString:@"摇一摇"]) {
+        ShakingViewController *shakingVC = [ShakingViewController new];
+        UINavigationController *shakingNavVC = [[UINavigationController alloc] initWithRootViewController:shakingVC];
+        [self.window.rootViewController presentViewController:shakingNavVC animated:YES completion:nil];
+        
+    }
+}
 
 
 @end

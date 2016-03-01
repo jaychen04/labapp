@@ -109,6 +109,41 @@
 	<array>
 		<string>FontAwesome.ttf</string>
 	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>发动弹</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>发动弹</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>扫一扫</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>扫一扫</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string></string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>找一找</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>找一找</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict/>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string></string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>摇一摇</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>摇一摇</string>
+			<key>UIApplicationShortcutItemUserInfo</key>
+			<dict/>
+		</dict>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
