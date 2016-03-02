@@ -186,7 +186,7 @@
 {
     NSLog(@"%@",shortcutItem.type);
     
-    if ([shortcutItem.type isEqualToString:@"发动弹"]) {
+    if ([shortcutItem.type isEqualToString:@"弹一弹"]) {
         TweetEditingVC *tweetEditingVC = [TweetEditingVC new];
         UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
         [self.window.rootViewController presentViewController:tweetEditingNav animated:YES completion:nil];
