@@ -108,11 +108,14 @@
     [WeiboSDK registerApp:@"3616966952"];
     
     /*3D Touch*/
-    UIApplicationShortcutItem *shortcutItem = [launchOptions objectForKeyedSubscript:UIApplicationLaunchOptionsShortcutItemKey];
     
-    if(shortcutItem)
-    {
-        [self quickActionWithShortcutItem:shortcutItem];
+    if ([[UIDevice currentDevice].systemVersion floatValue] >= 9.0) {//判定系统版本
+        UIApplicationShortcutItem *shortcutItem = [launchOptions objectForKeyedSubscript:UIApplicationLaunchOptionsShortcutItemKey];
+        
+        if(shortcutItem)
+        {
+            [self quickActionWithShortcutItem:shortcutItem];
+        }
     }
     
     return YES;
