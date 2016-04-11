@@ -613,7 +613,7 @@
 {
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
     
-    CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 10);
+    CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 100);
     if (height != _textViewHeightConstraint.constant) {
         _textViewHeightConstraint.constant = height;
         [self.view layoutIfNeeded];
