@@ -204,7 +204,7 @@
     
     
     [_portrait setBorderWidth:2.0 andColor:[UIColor whiteColor]];
-    [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortrait)]];
+    [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
     
     [self setCoverImage];
     self.refreshControl.tintColor = [UIColor refreshControlColor];
@@ -212,7 +212,7 @@
 
 
 
-- (void)tapPortrait
+- (void)tapPortraitAction
 {
     if (![Utils isNetworkExist]) {
         MBProgressHUD *HUD = [Utils createHUD];
