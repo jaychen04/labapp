@@ -39,6 +39,7 @@ PODS:
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
   - JRSwizzle (1.0)
+  - Masonry (1.0.0)
   - MBProgressHUD (0.9.2)
   - MJRefresh (3.1.0)
   - Ono (1.2.2)
@@ -68,6 +69,7 @@ DEPENDENCIES:
   - DTCoreText
   - GPUImage
   - GRMustache
+  - Masonry
   - MBProgressHUD
   - MJRefresh
   - Reachability
@@ -89,6 +91,7 @@ SPEC CHECKSUMS:
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
+  Masonry: b529bb169217897b6354d4b56b1fada6d475b13d
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   Ono: 80b1c686777d3f6d5d5ce6fcac8a74afef4ca197

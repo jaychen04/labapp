@@ -30,6 +30,8 @@
 
 #import <RESideMenu/RESideMenu.h>
 
+#import "QuesAnsViewController.h"
+
 
 @interface OSCTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
@@ -37,6 +39,7 @@
     NewsViewController *hotNewsViewCtl;
     BlogsViewController *blogViewCtl;
     BlogsViewController *recommendBlogViewCtl;
+    QuesAnsViewController *quesViewCtl;
     
     TweetsViewController *newTweetViewCtl;
     TweetsViewController *hotTweetViewCtl;
@@ -70,6 +73,7 @@
     hotNewsViewCtl.view.backgroundColor = [UIColor themeColor];
     blogViewCtl.view.backgroundColor = [UIColor themeColor];
     recommendBlogViewCtl.view.backgroundColor = [UIColor themeColor];
+    quesViewCtl.view.backgroundColor = [UIColor themeColor];
     
     newTweetViewCtl.view.backgroundColor = [UIColor themeColor];
     hotTweetViewCtl.view.backgroundColor = [UIColor themeColor];
@@ -128,6 +132,7 @@
     hotNewsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest];
     blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
     recommendBlogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended];
+    quesViewCtl = [QuesAnsViewController new];
     
     newTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets];
     hotTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets];
@@ -143,8 +148,8 @@
     myTweetViewCtl.needCache = YES;
     
     SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"综合"
-                                                                       andSubTitles:@[@"资讯", @"热点", @"博客", @"推荐"]
-                                                                     andControllers:@[newsViewCtl, hotNewsViewCtl, blogViewCtl,recommendBlogViewCtl]
+                                                                       andSubTitles:@[@"资讯", @"热点", @"博客", @"推荐", @"问答"]
+                                                                     andControllers:@[newsViewCtl, hotNewsViewCtl, blogViewCtl,recommendBlogViewCtl, quesViewCtl]
                                                                         underTabbar:YES];
     
     SwipableViewController *tweetsSVC = [[SwipableViewController alloc] initWithTitle:@"动弹"

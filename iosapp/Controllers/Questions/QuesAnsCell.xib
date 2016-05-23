@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="119" id="KGk-i7-Jjw" customClass="QuesAnsCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="118.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="p4H-t3-paB">
+                        <rect key="frame" x="24" y="24" width="45" height="45"/>
+                        <color key="backgroundColor" red="0.41568627450000001" green="0.41568627450000001" blue="0.41568627450000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="45" id="2kr-4C-vm1"/>
+                            <constraint firstAttribute="width" constant="45" id="alT-5m-qZQ"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="22"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="风宇冲 6分钟前" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bsz-54-K0I">
+                        <rect key="frame" x="77" y="85.5" width="69.5" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D28-N1-qHd">
+                        <rect key="frame" x="285" y="85.5" width="11" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="246" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U3g-Jz-e1q">
+                        <rect key="frame" x="253.5" y="85.5" width="19.5" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@诺灬晓月 你好，想跟你请教个问题：就是你用Echarts做的甘特图，那个矩形的颜色是怎么设置，能不能显示进度条啊" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JrN-gL-zbL">
+                        <rect key="frame" x="77" y="46" width="219" height="33.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.41568627450980389" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="java算法问题求解" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1TX-GA-DN6">
+                        <rect key="frame" x="77" y="24" width="219" height="18"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" red="0.043137254901960784" green="0.043137254901960784" blue="0.043137254901960784" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="p4H-t3-paB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="16" id="4tc-FX-WTk"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="1TX-GA-DN6" secondAttribute="trailing" constant="16" id="8ok-yT-YBJ"/>
+                    <constraint firstItem="1TX-GA-DN6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="16" id="B5v-p0-fhk"/>
+                    <constraint firstItem="D28-N1-qHd" firstAttribute="leading" secondItem="U3g-Jz-e1q" secondAttribute="trailing" constant="12" id="JXX-P2-oMK"/>
+                    <constraint firstItem="JrN-gL-zbL" firstAttribute="top" secondItem="1TX-GA-DN6" secondAttribute="bottom" constant="4" id="KE7-xb-qUu"/>
+                    <constraint firstItem="JrN-gL-zbL" firstAttribute="leading" secondItem="1TX-GA-DN6" secondAttribute="leading" id="KcV-g8-Dbn"/>
+                    <constraint firstItem="Bsz-54-K0I" firstAttribute="leading" secondItem="JrN-gL-zbL" secondAttribute="leading" id="M4g-Wj-2W0"/>
+                    <constraint firstItem="U3g-Jz-e1q" firstAttribute="centerY" secondItem="Bsz-54-K0I" secondAttribute="centerY" id="OFB-ac-ahZ"/>
+                    <constraint firstItem="Bsz-54-K0I" firstAttribute="top" secondItem="JrN-gL-zbL" secondAttribute="bottom" constant="6" id="UGc-kZ-4og"/>
+                    <constraint firstItem="p4H-t3-paB" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="16" id="Xh4-EK-0Nr"/>
+                    <constraint firstItem="D28-N1-qHd" firstAttribute="centerY" secondItem="Bsz-54-K0I" secondAttribute="centerY" id="kvw-6c-mhR"/>
+                    <constraint firstItem="D28-N1-qHd" firstAttribute="trailing" secondItem="JrN-gL-zbL" secondAttribute="trailing" id="l4F-fb-z0t"/>
+                    <constraint firstItem="JrN-gL-zbL" firstAttribute="trailing" secondItem="1TX-GA-DN6" secondAttribute="trailing" id="qvZ-ka-Dm3"/>
+                    <constraint firstItem="1TX-GA-DN6" firstAttribute="leading" secondItem="p4H-t3-paB" secondAttribute="trailing" constant="8" id="tFy-Bg-gWE"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="commentCountLabel" destination="D28-N1-qHd" id="kME-4O-4vF"/>
+                <outlet property="descLabel" destination="JrN-gL-zbL" id="fgJ-Vc-jSB"/>
+                <outlet property="quesImageView" destination="p4H-t3-paB" id="W02-d2-5Ae"/>
+                <outlet property="titleLabel" destination="1TX-GA-DN6" id="Ij5-cu-IKY"/>
+                <outlet property="userNameLabel" destination="Bsz-54-K0I" id="l7T-pK-bei"/>
+                <outlet property="watchCountLabel" destination="U3g-Jz-e1q" id="MZ6-uU-RgH"/>
+            </connections>
+            <point key="canvasLocation" x="372" y="261.5"/>
+        </tableViewCell>
+    </objects>
+</document>

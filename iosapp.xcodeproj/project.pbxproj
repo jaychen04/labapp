@@ -204,6 +204,8 @@
 		C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */; };
 		C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95931AEE129F006918CD /* TeamCenter.m */; };
 		C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95961AEE14FC006918CD /* TeamTeam.m */; };
+		EE02C9191CF2F7430075AE16 /* QuesAnsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE02C9171CF2F7430075AE16 /* QuesAnsCell.m */; };
+		EE02C91A1CF2F7430075AE16 /* QuesAnsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE02C9181CF2F7430075AE16 /* QuesAnsCell.xib */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
@@ -219,6 +221,8 @@
 		EE82D0441C43B1E30066FDC9 /* FeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE82D0421C43B1E30066FDC9 /* FeedBackViewController.xib */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
+		EEEC98C31CF317D600995A03 /* QuesAnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */; };
+		EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -605,6 +609,9 @@
 		C5FB95951AEE14FC006918CD /* TeamTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamTeam.h; sourceTree = "<group>"; };
 		C5FB95961AEE14FC006918CD /* TeamTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTeam.m; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE02C9161CF2F7430075AE16 /* QuesAnsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsCell.h; path = Questions/QuesAnsCell.h; sourceTree = "<group>"; };
+		EE02C9171CF2F7430075AE16 /* QuesAnsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsCell.m; path = Questions/QuesAnsCell.m; sourceTree = "<group>"; };
+		EE02C9181CF2F7430075AE16 /* QuesAnsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsCell.xib; path = Questions/QuesAnsCell.xib; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE6DB9461AD6633E004FCF3C /* MyTweetLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTweetLikeListViewController.h; sourceTree = "<group>"; };
@@ -634,6 +641,9 @@
 		EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
 		EED55F701A80AB13004E6371 /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
+		EEEC98C01CF317D600995A03 /* QuesAnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsViewController.h; path = Questions/QuesAnsViewController.h; sourceTree = "<group>"; };
+		EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsViewController.m; path = Questions/QuesAnsViewController.m; sourceTree = "<group>"; };
+		EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsViewController.xib; path = Questions/QuesAnsViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1496,6 +1506,7 @@
 		C54689FD1BD1F02300D49223 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				EE02C9101CF2F6AC0075AE16 /* Questions */,
 				00EDF60B19EFB42500A5C842 /* Main ViewControllers */,
 				3843641D1AC5529C00743CB0 /* Team */,
 				C5E56F491B56AFB50059924C /* Main */,
@@ -1768,6 +1779,19 @@
 			name = "Team切换";
 			sourceTree = "<group>";
 		};
+		EE02C9101CF2F6AC0075AE16 /* Questions */ = {
+			isa = PBXGroup;
+			children = (
+				EEEC98C01CF317D600995A03 /* QuesAnsViewController.h */,
+				EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */,
+				EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */,
+				EE02C9161CF2F7430075AE16 /* QuesAnsCell.h */,
+				EE02C9171CF2F7430075AE16 /* QuesAnsCell.m */,
+				EE02C9181CF2F7430075AE16 /* QuesAnsCell.xib */,
+			);
+			name = Questions;
+			sourceTree = "<group>";
+		};
 		EE6DB9451AD6628A004FCF3C /* 点赞列表 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1885,12 +1909,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE02C91A1CF2F7430075AE16 /* QuesAnsCell.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
 				C5E4B17E1B57B715008E7463 /* Login.storyboard in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
+				EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */,
 				C5B1231D1B316830000B29D2 /* html in Resources */,
 				C5A89C3C1B09C59400798B1C /* FontAwesome.ttf in Resources */,
 				C5E56F411B56AAAF0059924C /* News.storyboard in Resources */,
@@ -2044,6 +2070,7 @@
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
 				C52BF4F41AFB50CC00E53508 /* TeamDetailContentCell.m in Sources */,
+				EE02C9191CF2F7430075AE16 /* QuesAnsCell.m in Sources */,
 				384A112F1ADF9B5F00856A7C /* TeamHomePage.m in Sources */,
 				C57E7B571B56734300F39B5C /* PlaceholderTextView.m in Sources */,
 				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,
@@ -2145,6 +2172,7 @@
 				C5B123351B32E79C000B29D2 /* AFHTTPRequestOperationManager+Util.m in Sources */,
 				31A338F11AF8683E0037B37F /* TeamActivityDetailViewController.m in Sources */,
 				00EDF60919EF77A100A5C842 /* OSCTweet.m in Sources */,
+				EEEC98C31CF317D600995A03 /* QuesAnsViewController.m in Sources */,
 				C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
