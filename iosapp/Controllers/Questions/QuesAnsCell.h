@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OSCPost.h"
+#import "OSCQuestion.h"
 
 @interface QuesAnsCell : UITableViewCell
 
@@ -19,6 +19,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *watchCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
 
-- (void)setcontentForQuestionsAns:(OSCPost *)post;
+- (void)setcontentForQuestionsAns:(OSCQuestion *)question;
 
 @end

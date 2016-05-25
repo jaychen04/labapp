@@ -219,6 +219,7 @@
 		EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */; };
 		EE82D0431C43B1E30066FDC9 /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE82D0411C43B1E30066FDC9 /* FeedBackViewController.m */; };
 		EE82D0441C43B1E30066FDC9 /* FeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE82D0421C43B1E30066FDC9 /* FeedBackViewController.xib */; };
+		EE876F311CF45C7A00681230 /* OSCQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = EE876F301CF45C7A00681230 /* OSCQuestion.m */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 		EEEC98C31CF317D600995A03 /* QuesAnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */; };
@@ -637,6 +638,8 @@
 		EE82D0401C43B1E30066FDC9 /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
 		EE82D0411C43B1E30066FDC9 /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
 		EE82D0421C43B1E30066FDC9 /* FeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedBackViewController.xib; sourceTree = "<group>"; };
+		EE876F2F1CF45C7A00681230 /* OSCQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCQuestion.h; path = Questions/OSCQuestion.h; sourceTree = "<group>"; };
+		EE876F301CF45C7A00681230 /* OSCQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSCQuestion.m; path = Questions/OSCQuestion.m; sourceTree = "<group>"; };
 		EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
@@ -1788,6 +1791,8 @@
 				EE02C9161CF2F7430075AE16 /* QuesAnsCell.h */,
 				EE02C9171CF2F7430075AE16 /* QuesAnsCell.m */,
 				EE02C9181CF2F7430075AE16 /* QuesAnsCell.xib */,
+				EE876F2F1CF45C7A00681230 /* OSCQuestion.h */,
+				EE876F301CF45C7A00681230 /* OSCQuestion.m */,
 			);
 			name = Questions;
 			sourceTree = "<group>";
@@ -2100,6 +2105,7 @@
 				386039611A09C5A1007C9B88 /* OSCUser.m in Sources */,
 				38EAF1B61AE0A85F00397E2A /* TeamActivity.m in Sources */,
 				C5EF89221BE3194800B5FA46 /* SoftwareCatalogVC.m in Sources */,
+				EE876F311CF45C7A00681230 /* OSCQuestion.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,
 				C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */,

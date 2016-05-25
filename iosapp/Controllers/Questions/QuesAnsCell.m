@@ -32,15 +32,15 @@
  
  cell.titleLabel.textColor = [UIColor titleColor];
  */
-- (void)setcontentForQuestionsAns:(OSCPost *)post
+- (void)setcontentForQuestionsAns:(OSCQuestion *)question
 {
-    [_quesImageView loadPortrait:post.portraitURL];
-    _titleLabel.text = post.title;
-    _descLabel.text = post.body;
+    [_quesImageView loadPortrait:[NSURL URLWithString:question.authorPortraitUrl]];
+    _titleLabel.text = question.title;
+    _descLabel.text = question.body;
     
-    _userNameLabel.text = [NSString stringWithFormat:@"%@ %@", post.author, [post.pubDate timeAgoSinceNow]];
-    _watchCountLabel.text = [NSString stringWithFormat:@"%d", post.viewCount];
-    _commentCountLabel.text = [NSString stringWithFormat:@"%d", post.replyCount];
+    _userNameLabel.text = [NSString stringWithFormat:@"%@ %@", question.authorName, [question.pubDate timeAgoSinceNow]];
+    _watchCountLabel.text = [NSString stringWithFormat:@"%d", question.viewCount];
+    _commentCountLabel.text = [NSString stringWithFormat:@"%d", question.commentCount];
 }
 
 @end
