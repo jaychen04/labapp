@@ -11,9 +11,3 @@
 @implementation OSCInformation
 
 @end
-
-
-@implementation OSCInformationBanner
-
-
-@end

@@ -10,6 +10,7 @@
 #import "SDCycleScrollView.h"
 #import "OSCInformation.h"
 #import "InformationTableViewCell.h"
+#import "UITableView+FDTemplateLayoutCell.h"
 
 #import <ReactiveCocoa.h>
 #import <MJExtension.h>
@@ -26,6 +27,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 @property (nonatomic,strong) NSMutableArray* bannerImageUrls;
 
 @property (nonatomic,strong) id netWorkingModel;
+@property (nonatomic,strong) NSArray* dataArr;
 @end
 
 @implementation InformationViewController
@@ -56,14 +58,17 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
     self.tableView.delegate = nil;
 }
 
+
 #pragma mark - method
+
 -(void)layoutUI{
+    [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
+    
     self.tableView.tableHeaderView = self.cycleScrollView;
     self.tableView.estimatedRowHeight = 132;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
 -(void)bindingRAC{
-    [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
 #warning TODO : netWorkingModel是解析好的model
 //    RAC(self,bannerImageUrls) = RACObserve(self.netWorkingModel, imageUrls);
 //    RAC(self,bannerTitles) = RACObserve(self.netWorkingModel, titles);
@@ -73,7 +78,9 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
     self.cycleScrollView.titlesGroup = self.bannerTitles.copy;
 }
 
+
 #pragma mark - tableView datasource && delegate
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 20;
 }
@@ -81,6 +88,11 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
     
     return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [tableView fd_heightForCellWithIdentifier:informationReuseIdentifier configuration:^(id cell) {
+        //做和 cellForRowAtIndexPath: 一样的事
+    }];
 }
 
 
