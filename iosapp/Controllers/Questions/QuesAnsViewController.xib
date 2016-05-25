@@ -12,7 +12,7 @@
                 <outlet property="officeButton" destination="xUJ-Vc-bXl" id="Rzc-ue-e8s"/>
                 <outlet property="shareButton" destination="9De-IZ-Eum" id="iV4-af-OYM"/>
                 <outlet property="synthButton" destination="Xy3-of-EQu" id="tUR-uY-QMa"/>
-                <outlet property="tableView" destination="Xdk-nU-il6" id="on9-8I-J1b"/>
+                <outlet property="tableSubView" destination="Fdr-zn-jc8" id="q20-D2-aKv"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -151,21 +151,20 @@
                         <constraint firstItem="Xy3-of-EQu" firstAttribute="height" secondItem="OMj-U5-Uc9" secondAttribute="height" id="zTg-Z3-bQ5"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Xdk-nU-il6">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fdr-zn-jc8">
                     <rect key="frame" x="0.0" y="52" width="600" height="548"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </tableView>
+                    <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Xdk-nU-il6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1QX-pz-QKK"/>
+                <constraint firstItem="Fdr-zn-jc8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3u4-sX-qba"/>
                 <constraint firstItem="38D-YS-JW7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Bu9-At-APh"/>
-                <constraint firstAttribute="bottom" secondItem="Xdk-nU-il6" secondAttribute="bottom" id="KHX-Vo-bAi"/>
                 <constraint firstAttribute="trailing" secondItem="38D-YS-JW7" secondAttribute="trailing" id="NkU-71-SGp"/>
-                <constraint firstItem="Xdk-nU-il6" firstAttribute="top" secondItem="38D-YS-JW7" secondAttribute="bottom" id="ViI-nf-grq"/>
+                <constraint firstItem="Fdr-zn-jc8" firstAttribute="top" secondItem="38D-YS-JW7" secondAttribute="bottom" id="WFV-Lp-TXm"/>
+                <constraint firstAttribute="bottom" secondItem="Fdr-zn-jc8" secondAttribute="bottom" id="Xn2-B7-38t"/>
                 <constraint firstItem="38D-YS-JW7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bxe-mN-wE9"/>
-                <constraint firstItem="Xdk-nU-il6" firstAttribute="top" secondItem="38D-YS-JW7" secondAttribute="bottom" id="cFi-c6-c5x"/>
-                <constraint firstAttribute="trailing" secondItem="Xdk-nU-il6" secondAttribute="trailing" id="q4F-48-zoo"/>
+                <constraint firstAttribute="trailing" secondItem="Fdr-zn-jc8" secondAttribute="trailing" id="ef3-fC-XO7"/>
             </constraints>
             <point key="canvasLocation" x="256" y="249"/>
         </view>
