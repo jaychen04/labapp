@@ -16,6 +16,9 @@
 #import "ActivitiesViewController.h"
 #import "Config.h"
 
+#import "SwipableViewController.h"
+#import "SoftwareCatalogVC.h"
+#import "SoftwareListVC.h"
 @implementation DiscoverViewController
 
 - (void)dawnAndNightMode
@@ -63,12 +66,15 @@
     
     switch (indexPath.section) {
         case 0:
-            cell.textLabel.text = @"好友圈";
+            cell.textLabel.text = @"开源软件";
             cell.imageView.image = [UIImage imageNamed:@"discover-events"];
             break;
         case 1:
-            cell.textLabel.text = @[@"找人", @"活动"][indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@[@"discover-search", @"discover-activities"][indexPath.row]];
+            cell.textLabel.text = @"找人";
+            cell.imageView.image = [UIImage imageNamed:@"discover-search"];
+            
+//            cell.textLabel.text = @[@"找人", @"活动"][indexPath.row];
+//            cell.imageView.image = [UIImage imageNamed:@[@"discover-search", @"discover-activities"][indexPath.row]];
             break;
         case 2:
             cell.textLabel.text = @[@"扫一扫", @"摇一摇"][indexPath.row];
@@ -91,9 +97,20 @@
     switch (indexPath.section) {
         case 0:
         {
-            EventsViewController *eventsViewCtl = [EventsViewController new];
-            eventsViewCtl.needCache = YES;
-            [self.navigationController pushViewController:eventsViewCtl animated:YES];
+//            EventsViewController *eventsViewCtl = [EventsViewController new];
+//            eventsViewCtl.needCache = YES;
+//            [self.navigationController pushViewController:eventsViewCtl animated:YES];
+            
+            SwipableViewController *softwaresSVC = [[SwipableViewController alloc] initWithTitle:@"开源软件"
+                                                                                    andSubTitles:@[@"分类", @"推荐", @"最新", @"热门", @"国产"]
+                                                                                  andControllers:@[
+                                                                                                   [[SoftwareCatalogVC alloc] initWithTag:0],
+                                                                                                   [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeRecommended],
+                                                                                                   [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeNewest],
+                                                                                                   [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeHottest],
+                                                                                                   [[SoftwareListVC alloc] initWithSoftwaresType:SoftwaresTypeCN]                            ]];
+            softwaresSVC.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:softwaresSVC animated:YES];
             break;
         }
         case 1:

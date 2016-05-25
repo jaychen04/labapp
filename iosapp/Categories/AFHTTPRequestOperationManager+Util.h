@@ -11,5 +11,5 @@
 @interface AFHTTPRequestOperationManager (Util)
 
 + (instancetype)OSCManager;
-
++ (instancetype)OSCJsonManager;
 @end

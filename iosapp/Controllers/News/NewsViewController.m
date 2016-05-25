@@ -20,6 +20,31 @@ static NSString *kNewsCellID = @"NewsCell";
 
 @implementation NewsViewController
 
+//- (instancetype)init {
+//    self = [super init];
+//    if (self) {
+//        __weak NewsViewController *weakSelf = self;
+//        self.generateURL = ^NSString * (NSUInteger page) {
+//            
+//                return @"http://192.168.1.72:1104/action/apiv2/news";
+//
+//        };
+//        
+//        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+//
+//            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+//                (weakSelf.lastCell.status = LastCellStatusMore);
+//        };
+//        
+//        self.objClass = [OSCNews class];
+//        
+//        
+//        self.needAutoRefresh = YES;
+//        self.refreshInterval = 21600;
+//        self.kLastRefreshTime = @"NewsRefreshInterval";
+//    }
+//    return self;
+//}
 
 - (instancetype)initWithNewsListType:(NewsListType)type
 {

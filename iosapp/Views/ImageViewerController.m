@@ -134,11 +134,12 @@
     
     UITapGestureRecognizer *doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleDoubleTap:)];
     doubleTap.numberOfTapsRequired = 2;
-    [_imageView addGestureRecognizer:doubleTap];
+    [self.view addGestureRecognizer:doubleTap];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleSingleTap)];
     [singleTap requireGestureRecognizerToFail:doubleTap];
-    [_imageView addGestureRecognizer:singleTap];
+//    [_imageView addGestureRecognizer:singleTap];
+    [self.view addGestureRecognizer:singleTap];
 }
 
 - (CGSize)contentSizeForImage:(UIImage *)image

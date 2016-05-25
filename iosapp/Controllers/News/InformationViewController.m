@@ -35,8 +35,21 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 -(instancetype)init{
     self = [super init];
     if (self) {
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
+        __weak InformationViewController *weakSelf = self;
+        self.generateUrl = ^NSString * () {
+            return @"http://192.168.1.72:1104/action/apiv2/news";
+        };
+        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+            (weakSelf.lastCell.status = LastCellStatusMore);
+        };
+        self.objClass = [OSCInformation class];
+        
+        self.isJsonDataVc = YES;
+        self.parametersDic = @{};
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 21600;
+        self.kLastRefreshTime = @"NewsRefreshInterval";
     }
     return self;
 }
@@ -52,6 +65,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
     
     [self bindingRAC];
     [self layoutUI];
+    
 }
 -(void)dealloc{
     self.tableView.dataSource = nil;
@@ -87,6 +101,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
     
+    NSLog(@"res:%@",self.responseJsonObject);
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
