@@ -30,11 +30,12 @@
 
 #import <RESideMenu/RESideMenu.h>
 
+#import "InformationViewController.h"
 
 @interface OSCTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
-    NewsViewController *newsViewCtl;
-    NewsViewController *hotNewsViewCtl;
+    InformationViewController *newsViewCtl;
+    InformationViewController *hotNewsViewCtl;
     BlogsViewController *blogViewCtl;
     BlogsViewController *recommendBlogViewCtl;
     
@@ -125,12 +126,16 @@
     [super viewDidLoad];
     
 //    newsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews];
-    newsViewCtl = [[NewsViewController alloc]  init];
-    newsViewCtl.isJsonDataVc = YES;
+    newsViewCtl = [[InformationViewController alloc]  init];
+//    newsViewCtl.parametersDic = @{};
+    
     
 //    hotNewsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest];
-    hotNewsViewCtl = [[NewsViewController alloc]  init];
-    hotNewsViewCtl.isJsonDataVc = YES;
+//    hotNewsViewCtl = [[NewsViewController alloc]  init];
+//    hotNewsViewCtl.isJsonDataVc = YES;
+    hotNewsViewCtl = [[InformationViewController alloc]  init];
+//    hotNewsViewCtl.parametersDic = @{};
+    
     
     blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
     blogViewCtl.isJsonDataVc = NO;

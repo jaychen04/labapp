@@ -42,8 +42,11 @@
 @property (nonatomic, assign) NSTimeInterval refreshInterval;
 
 @property (nonatomic, copy) void (^anotherNetWorking)();
-
+//新接口相关
 @property (nonatomic)BOOL isJsonDataVc;
+@property (nonatomic, copy) NSString * (^generateUrl)();
+@property (nonatomic, strong) NSDictionary *parametersDic;
+@property (nonatomic, strong) id responseJsonObject;
 
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;
 - (void)fetchMore;

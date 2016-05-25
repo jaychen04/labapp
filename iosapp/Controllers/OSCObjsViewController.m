@@ -36,6 +36,12 @@
         _shouldFetchDataAfterLoaded = YES;
     }
     
+//    if (_isJsonDataVc) {
+//        _manager = [AFHTTPRequestOperationManager OSCJsonManager];
+//    }else {
+//        _manager = [AFHTTPRequestOperationManager OSCManager];
+//    }
+    
     return self;
 }
 
@@ -81,17 +87,11 @@
     }
     
     if (_isJsonDataVc) {
-//        NSString *url = self.generateURL(0);
-//        NSLog(@"jsonUrl:%@",url);
-        
         _manager = [AFHTTPRequestOperationManager OSCJsonManager];
-//        [self fetchJsonObjectsOnPage:0 refresh:YES];
+        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];;
     }else {
-//        NSString *url = self.generateURL(0);
-//        NSLog(@"url:%@",url);
-        
         _manager = [AFHTTPRequestOperationManager OSCManager];
-//        [self fetchObjectsOnPage:0 refresh:YES];
+        [self fetchObjectsOnPage:0 refresh:YES];
     }
     
     if (!_shouldFetchDataAfterLoaded) {return;}
@@ -162,7 +162,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
         if (_isJsonDataVc) {
-            [self fetchJsonObjectsOnPage:0 refresh:YES];
+            [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];;
         }else {
             [self fetchObjectsOnPage:0 refresh:YES];
         }
@@ -195,7 +195,7 @@
     _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     
     if (_isJsonDataVc) {
-        [self fetchJsonObjectsOnPage:++_page refresh:NO];
+        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:NO];
     }else {
         [self fetchObjectsOnPage:++_page refresh:NO];
     }
@@ -279,16 +279,18 @@
      ];
 }
 
-- (void)fetchJsonObjectsOnPage:(NSUInteger)page refresh:(BOOL)refresh
+- (void)fetchJsonObjectsWithParmeters:(NSDictionary*)paraDic refresh:(BOOL)refresh
 {
-        NSString *url = self.generateURL(page);
+        NSString *url = self.generateUrl();
         NSLog(@"urlsss:%@",url);
     
-//    Error Domain=com.alamofire.error.serialization.response Code=-1016 "Request failed: unacceptable content-type: application/json" 
-    [_manager GET:self.generateURL(page)
-       parameters:nil
+    NSDictionary *parameters = paraDic?:@{};
+    [_manager GET:self.generateUrl()
+       parameters:parameters
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               NSLog(@"res:%@",responseObject);
+              _responseJsonObject = responseObject;
+              
 //              _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
 //              NSArray *objectsXML = [self parseXML:responseDocument];
 //              
