@@ -43,6 +43,8 @@
 
 @property (nonatomic, copy) void (^anotherNetWorking)();
 
+@property (nonatomic)BOOL isJsonDataVc;
+
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;
 - (void)fetchMore;
 - (void)refresh;
