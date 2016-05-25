@@ -13,6 +13,7 @@
 @interface QuesAnsViewController ()
 
 @property (nonatomic, strong) NSArray *buttons;
+@property (nonatomic, strong) QuesListViewController *questListCtl;
 
 @end
 
@@ -25,10 +26,10 @@
     [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
     _buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
     
-    QuesListViewController *questListVC = [[QuesListViewController alloc] init];
-    questListVC.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
-    [self addChildViewController:questListVC];
-    [self.tableSubView addSubview:questListVC.view];
+    _questListCtl = [[QuesListViewController alloc] init];
+    _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
+    [self addChildViewController:_questListCtl];
+    [self.tableSubView addSubview:_questListCtl.view];
 }
 
 - (void)viewDidLoad {

@@ -22,10 +22,40 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
 
 @implementation QuesListViewController
 
+-(instancetype)init{
+    self = [super init];
+    if (self) {
+        __weak QuesListViewController *weakSelf = self;
+        self.generateUrl = ^NSString * () {
+            return @"http://192.168.1.72:1104/action/apiv2/news";
+        };
+        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+            (weakSelf.lastCell.status = LastCellStatusMore);
+        };
+        self.objClass = [OSCQuestion class];
+        
+        self.isJsonDataVc = YES;
+        self.parametersDic = @{
+//                               @"catalog"   : @(questionCatalog),
+//                               @"pageToken" : _pageToken
+                               };
+        
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 21600;
+        self.kLastRefreshTime = @"NewsRefreshInterval";
+    }
+    return self;
+}
+
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
     _pageToken = @" ";
 //    [self fetchQuestion:1];
+    
+//    self.responseJsonObject
 }
 
 - (void)viewDidLoad {
@@ -44,24 +74,6 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-//#pragma mark - 获取数据
-//- (void)fetchQuestion:(NSInteger)questionCatalog
-//{
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-//    [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX, OSCAPI_QUESTION]
-//      parameters:@{
-//                   @"catalog"   : @(questionCatalog),
-//                   @"pageToken" : _pageToken,
-//                   }
-//         success:^(AFHTTPRequestOperation * _Nonnull operation, NSDictionary * _Nonnull responseObject) {
-//             //
-//             NSLog(@"%@", responseObject);
-//         } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-//             //
-//             NSLog(@"%@", error);
-//         }];
-//}
 
 #pragma mark - Table view data source
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

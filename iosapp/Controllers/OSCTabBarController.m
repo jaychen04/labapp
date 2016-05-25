@@ -32,11 +32,12 @@
 
 #import "QuesAnsViewController.h"
 
+#import "InformationViewController.h"
 
 @interface OSCTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
-    NewsViewController *newsViewCtl;
-    NewsViewController *hotNewsViewCtl;
+    InformationViewController *newsViewCtl;
+    InformationViewController *hotNewsViewCtl;
     BlogsViewController *blogViewCtl;
     BlogsViewController *recommendBlogViewCtl;
     QuesAnsViewController *quesViewCtl;
@@ -128,9 +129,20 @@
 {
     [super viewDidLoad];
     
-    newsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews];
-    hotNewsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest];
+//    newsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews];
+    newsViewCtl = [[InformationViewController alloc]  init];
+//    newsViewCtl.parametersDic = @{};
+    
+    
+//    hotNewsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest];
+//    hotNewsViewCtl = [[NewsViewController alloc]  init];
+//    hotNewsViewCtl.isJsonDataVc = YES;
+    hotNewsViewCtl = [[InformationViewController alloc]  init];
+//    hotNewsViewCtl.parametersDic = @{};
+    
+    
     blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
+    blogViewCtl.isJsonDataVc = NO;
     recommendBlogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended];
     quesViewCtl = [QuesAnsViewController new];
     
@@ -448,9 +460,11 @@
 {
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     
+    //去掉侧边栏
     viewController.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"]
                                                                                         style:UIBarButtonItemStylePlain
-                                                                                       target:self action:@selector(onClickMenuButton)];
+                                                                                       target:self
+                                                                                       action:@selector(onClickMenuButton)];
     
     viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
                                                                                                      target:self
