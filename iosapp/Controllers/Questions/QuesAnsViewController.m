@@ -26,8 +26,9 @@
     [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
     _buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
     
-    _questListCtl = [[QuesListViewController alloc] init];
+    _questListCtl = [[QuesListViewController alloc] initWithQuestionType:1];
     _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
+    [_questListCtl.questions removeAllObjects];
     [self addChildViewController:_questListCtl];
     [self.tableSubView addSubview:_questListCtl.view];
 }
@@ -56,6 +57,15 @@
             [self setButtonBoradWidthAndColor:obj isSelected:NO];
         }
     }];
+    
+    [self removeFromParentViewController];
+    [self.tableSubView removeFromSuperview];
+    
+    _questListCtl = [[QuesListViewController alloc] initWithQuestionType:tagNumber];
+    _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
+    [_questListCtl.questions removeAllObjects];
+    [self addChildViewController:_questListCtl];
+    [self.tableSubView addSubview:_questListCtl.view];
     
     NSLog(@"按钮 = %ld", tagNumber);
 }

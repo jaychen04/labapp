@@ -24,11 +24,11 @@
 
 - (void)setcontentForQuestionsAns:(OSCQuestion *)question
 {
-    [_quesImageView loadPortrait:[NSURL URLWithString:question.authorPortraitUrl]];
+    [_quesImageView loadPortrait:[NSURL URLWithString:question.authorPortrait]];
     _titleLabel.text = question.title;
     _descLabel.text = question.body;
     
-    _userNameLabel.text = [NSString stringWithFormat:@"%@ %@", question.authorName, [question.pubDate timeAgoSinceNow]];
+    _userNameLabel.text = [NSString stringWithFormat:@"%@ %@", question.author, [question.pubDate timeAgoSinceNow]];
     _watchCountLabel.text = [NSString stringWithFormat:@"%d", question.viewCount];
     _commentCountLabel.text = [NSString stringWithFormat:@"%d", question.commentCount];
 }

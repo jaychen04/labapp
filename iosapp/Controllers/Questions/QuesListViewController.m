@@ -11,23 +11,26 @@
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "OSCQuestion.h"
+#import <MJExtension.h>
 
 static NSString * const reuseIdentifier = @"QuesAnsCell";
 @interface QuesListViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, copy) NSString *pageToken;
-@property (nonatomic, strong) NSMutableArray *questions;
+@property (nonatomic, copy) NSString *nextPageToken;
+@property (nonatomic, copy) NSString *prevPageToken;
 
 @end
 
 @implementation QuesListViewController
 
--(instancetype)init{
+-(instancetype)initWithQuestionType:(NSInteger)catalog {
     self = [super init];
     if (self) {
+        _pageToken = @"";
         __weak QuesListViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-            return @"http://192.168.1.72:1104/action/apiv2/news";
+            return @"http://192.168.1.72:1104/action/apiv2/question";
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
@@ -37,8 +40,8 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
         
         self.isJsonDataVc = YES;
         self.parametersDic = @{
-//                               @"catalog"   : @(questionCatalog),
-//                               @"pageToken" : _pageToken
+                               @"catalog"   : @(catalog),
+                               @"pageToken" : _pageToken
                                };
         
         self.needAutoRefresh = YES;
@@ -48,14 +51,11 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     return self;
 }
 
-
-
 - (void)viewWillAppear:(BOOL)animated
 {
-    _pageToken = @" ";
-//    [self fetchQuestion:1];
+    [super viewWillAppear:animated];
     
-//    self.responseJsonObject
+    
 }
 
 - (void)viewDidLoad {
@@ -67,12 +67,30 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([QuesAnsCell class]) bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:reuseIdentifier];
+    
+    [self fetchForQuestions];
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - JSON解析数据
+- (void)fetchForQuestions
+{
+    NSLog(@"self.responseJsonObject === %@", self.responseJsonObject);
+    NSDictionary *result = [self.responseJsonObject objectForKey:@"result"];
+    NSArray *items = [result objectForKey:@"items"];
+    [items enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        OSCQuestion *question = [OSCQuestion mj_objectWithKeyValues:obj];
+        
+        [_questions addObject:question];
+        NSLog(@"question = %@", question);
+    }];
+    
+    _nextPageToken = [[result objectForKey:@"nextPageToken"] stringValue];
+    _prevPageToken = [[result objectForKey:@"prevPageToken"] stringValue];
 }
 
 #pragma mark - Table view data source

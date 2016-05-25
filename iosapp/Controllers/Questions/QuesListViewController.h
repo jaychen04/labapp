@@ -10,4 +10,7 @@
 
 @interface QuesListViewController : OSCObjsViewController
 
+@property (nonatomic, strong) NSMutableArray *questions;
+-(instancetype)initWithQuestionType:(NSInteger)catalog;
+
 @end
