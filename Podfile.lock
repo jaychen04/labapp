@@ -57,9 +57,9 @@ PODS:
   - SDWebImage/Core (3.7.6)
   - SSKeychain (1.4.0)
   - TBXML (1.5)
-  - TOWebViewController (2.2.3):
-    - TOWebViewController/Core (= 2.2.3)
-  - TOWebViewController/Core (2.2.3)
+  - TOWebViewController (2.2.4):
+    - TOWebViewController/Core (= 2.2.4)
+  - TOWebViewController/Core (2.2.4)
   - TTTAttributedLabel (1.13.4)
   - UMengSocial (4.4)
 
@@ -101,7 +101,7 @@ SPEC CHECKSUMS:
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SSKeychain: c71293fa57216a40ab06c23f4085387583293de4
   TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
-  TOWebViewController: ca47b9aeefe66acb3353d197dc8270338540b116
+  TOWebViewController: f6b234d2be45dbf81d2a71a1f9480f8f3cc6501a
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   UMengSocial: aba7296602310385114d82c255539a7bef3b7ab0
 

@@ -70,7 +70,8 @@
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[softwaresTableView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[softwaresTableView][editingBar]"
                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-                                                                      metrics:nil views:views]];
+                                                                      metrics:nil
+                                                                        views:views]];
 }
 
 
