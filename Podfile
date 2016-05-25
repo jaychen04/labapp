@@ -17,5 +17,5 @@ pod 'MJRefresh'
 pod 'TBXML'
 pod 'DateTools'
 pod 'DTCoreText'
-pod 'UMengSocial'
-pod 'Masonry'
+pod 'MJExtension'
+pod 'UMengSocial' , '~>4.4’
