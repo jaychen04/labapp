@@ -9,7 +9,7 @@
 #import "OSCObjsViewController.h"
 
 @interface QuesListViewController : OSCObjsViewController
-
+@property (nonatomic,strong)NSDictionary *paraDic;
 @property (nonatomic, strong) NSMutableArray *questions;
 -(instancetype)initWithQuestionType:(NSInteger)catalog;
 

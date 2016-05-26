@@ -10,11 +10,11 @@
 
 @interface OSCQuestion : NSObject
 
-@property (nonatomic, assign) long id;
+@property (nonatomic, assign) int64_t Id;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, copy) NSString *author;
-@property (nonatomic, assign) long authorId;
+@property (nonatomic, assign) int64_t authorId;
 @property (nonatomic, copy) NSString *authorPortrait;
 
 @property (nonatomic, copy) NSString *pubDate;

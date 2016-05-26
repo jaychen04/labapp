@@ -11,6 +11,7 @@
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "OSCQuestion.h"
+#import "DetailsViewController.h"
 
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
@@ -31,17 +32,18 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
         _pageToken = @"";
         __weak QuesListViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-            return @"http://192.168.1.72:1104/action/apiv2/question";
+            return @"http://192.168.1.15:8000/action/apiv2/question";
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
             (weakSelf.lastCell.status = LastCellStatusMore);
         };
-        self.objClass = [OSCQuestion class];
+//        self.objClass = [OSCQuestion class];
         
         self.netWorkingdelegate = self;
         self.isJsonDataVc = YES;
-        self.parametersDic = @{
+        
+        self.paraDic = @{
                                @"catalog"   : @(catalog),
                                @"pageToken" : _pageToken
                                };
@@ -86,7 +88,6 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
         OSCQuestion *question = [OSCQuestion mj_objectWithKeyValues:obj];
         
         [_questions addObject:question];
-        NSLog(@"question.authorName = %@", question.author);
     }];
     
     _nextPageToken = [result objectForKey:@"nextPageToken"];
@@ -95,9 +96,9 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
 
 #pragma mark -- networkingDelegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{
-    NSDictionary *parameters = paraDic?:@{};
+    
     [self.manager GET:self.generateUrl()
-           parameters:parameters
+           parameters:_paraDic
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   
                   [self fetchForQuestions:responseObject];
@@ -174,6 +175,9 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    OSCQuestion *question = _questions[indexPath.row];
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithQuestion:question];
+    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 @end
