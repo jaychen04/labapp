@@ -23,39 +23,6 @@
     // Configure the view for the selected state
 }
 
-//- (NSMutableAttributedString *)attributedTitleString
-//{
-//    if (_attributedTitleString == nil) {
-//        
-//        _attributedTitleString = [NSMutableAttributedString new];
-//        if (_newHotBlog.recommend) {
-//            NSTextAttachment *textAttachment = [NSTextAttachment new];
-//            textAttachment.image = [UIImage imageNamed:@"ic_label_recommend"];
-//            NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-//            _attributedTitleString = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-//            [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-//            [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:_newHotBlog.title]];
-//        } else {
-//            if (_newHotBlog.original) {
-//                NSTextAttachment *textAttachment = [NSTextAttachment new];
-//                textAttachment.image = [UIImage imageNamed:@"ic_label_originate"];
-//                NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-//                _attributedTitleString = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-//                [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-//                [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:_newHotBlog.title]];
-//            } else {
-//                NSTextAttachment *textAttachment = [NSTextAttachment new];
-//                textAttachment.image = [UIImage imageNamed:@"ic_label_reprint"];
-//                NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-//                _attributedTitleString = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
-//                [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-//                [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:_newHotBlog.title]];
-//            }
-//        }
-//    }
-//    return _attributedTitleString;
-//}
-
 - (void)setNewHotBlogContent:(OSCNewHotBlog *)blog
 {
     _titleLabel.attributedText = blog.attributedTitleString;

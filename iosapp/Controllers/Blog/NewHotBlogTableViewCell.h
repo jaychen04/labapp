@@ -18,8 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *viewCountLabel;
 
-//@property (nonatomic, strong) OSCNewHotBlog *newHotBlog;
-//@property (nonatomic, copy) NSMutableAttributedString *attributedTitleString;
 - (void)setNewHotBlogContent:(OSCNewHotBlog *)blog;
 
 @end
