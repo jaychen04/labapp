@@ -14,7 +14,7 @@
 
 @interface OSCObjsViewController ()
 
-@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
+
 
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 @property (nonatomic, strong) NSDate *lastRefreshTime;
@@ -35,13 +35,6 @@
         _needRefreshAnimation = YES;
         _shouldFetchDataAfterLoaded = YES;
     }
-    
-//    if (_isJsonDataVc) {
-//        _manager = [AFHTTPRequestOperationManager OSCJsonManager];
-//    }else {
-//        _manager = [AFHTTPRequestOperationManager OSCManager];
-//    }
-    
     return self;
 }
 
@@ -88,7 +81,10 @@
     
     if (_isJsonDataVc) {
         _manager = [AFHTTPRequestOperationManager OSCJsonManager];
-        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];;
+//        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];
+        if ([_netWorkingdelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
+            [_netWorkingdelegate getJsonDataWithParametersDic:_parametersDic isRefresh:YES];
+        }
     }else {
         _manager = [AFHTTPRequestOperationManager OSCManager];
         [self fetchObjectsOnPage:0 refresh:YES];
@@ -162,7 +158,10 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
         if (_isJsonDataVc) {
-            [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];;
+            if ([_netWorkingdelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
+                [_netWorkingdelegate getJsonDataWithParametersDic:_parametersDic isRefresh:YES];
+            }
+//            [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];;
         }else {
             [self fetchObjectsOnPage:0 refresh:YES];
         }
@@ -195,7 +194,10 @@
     _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     
     if (_isJsonDataVc) {
-        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:NO];
+        if ([_netWorkingdelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
+            [_netWorkingdelegate getJsonDataWithParametersDic:_parametersDic isRefresh:NO];
+        }
+//        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:NO];
     }else {
         [self fetchObjectsOnPage:++_page refresh:NO];
     }
