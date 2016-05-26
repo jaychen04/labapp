@@ -17,9 +17,14 @@
 #import "OSCAPI.h"
 #import "LastCell.h"
 
-@class ONOXMLDocument;
+@protocol networkingJsonDataDelegate <NSObject>
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh;
+@end
 
+@class ONOXMLDocument;
 @interface OSCObjsViewController : UITableViewController
+
+@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 
 @property (nonatomic, copy) void (^parseExtraInfo)(ONOXMLDocument *);
 @property (nonatomic, copy) NSString * (^generateURL)(NSUInteger page);
@@ -47,6 +52,8 @@
 @property (nonatomic, copy) NSString * (^generateUrl)();
 @property (nonatomic, strong) NSDictionary *parametersDic;
 @property (nonatomic, strong) id responseJsonObject;
+@property (nonatomic,weak) id<networkingJsonDataDelegate> netWorkingdelegate;
+
 
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;
 - (void)fetchMore;

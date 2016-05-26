@@ -17,21 +17,45 @@
 static NSString *kBlogCellID = @"BlogCell";
 @interface NewHotBlogTableViewController ()
 @property (nonatomic, strong)NSArray *blogObjects;
-@property (nonatomic, strong) UILabel *label;
+//@property (nonatomic, strong) UILabel *label;
 
 @end
 
 @implementation NewHotBlogTableViewController
+
+-(instancetype)init{
+    self = [super init];
+    if (self) {
+        __weak NewHotBlogTableViewController *weakSelf = self;
+        self.generateUrl = ^NSString * () {
+            return @"http://192.168.1.72:1104/action/apiv2/news";
+        };
+        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+            (weakSelf.lastCell.status = LastCellStatusMore);
+        };
+//        self.objClass = [OSCInformation class];
+        
+        
+        self.isJsonDataVc = YES;
+        self.parametersDic = @{};
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 21600;
+        self.kLastRefreshTime = @"NewsRefreshInterval";
+    }
+    return self;
+}
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView registerClass:[BlogCell class] forCellReuseIdentifier:kBlogCellID];
     
-    _label = [UILabel new];
-    _label.numberOfLines = 0;
-    _label.lineBreakMode = NSLineBreakByWordWrapping;
-    _label.font = [UIFont boldSystemFontOfSize:14];
+//    _label = [UILabel new];
+//    _label.numberOfLines = 0;
+//    _label.lineBreakMode = NSLineBreakByWordWrapping;
+//    _label.font = [UIFont boldSystemFontOfSize:14];
 }
 
 - (void)didReceiveMemoryWarning {
