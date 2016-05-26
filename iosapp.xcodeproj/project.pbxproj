@@ -47,6 +47,7 @@
 		042E8D0F1CF5950900364BD7 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8D0E1CF5950900364BD7 /* libiconv.tbd */; };
 		042E8D111CF5950F00364BD7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8D101CF5950F00364BD7 /* libPods.a */; };
 		042E8D121CF595FC00364BD7 /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
+		042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D141CF6A3F000364BD7 /* TokenManager.m */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
 		04EC96961CF436B10004B54E /* OSCActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96951CF436B10004B54E /* OSCActivityViewController.m */; };
 		04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC969B1CF436FB0004B54E /* OSCActivityTableViewCell.m */; };
@@ -307,6 +308,8 @@
 		042E8D0C1CF594F700364BD7 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		042E8D0E1CF5950900364BD7 /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		042E8D101CF5950F00364BD7 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../Library/Developer/Xcode/DerivedData/iosapp-bwkrilcdiwhsfycglcddwhgzdkxi/Build/Products/Debug-iphonesimulator/libPods.a"; sourceTree = "<group>"; };
+		042E8D131CF6A3F000364BD7 /* TokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenManager.h; sourceTree = "<group>"; };
+		042E8D141CF6A3F000364BD7 /* TokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenManager.m; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
 		04EC96941CF436B10004B54E /* OSCActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCActivityViewController.h; sourceTree = "<group>"; };
@@ -845,6 +848,8 @@
 		00EDF60C19EFC13500A5C842 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				042E8D131CF6A3F000364BD7 /* TokenManager.h */,
+				042E8D141CF6A3F000364BD7 /* TokenManager.m */,
 				00EDF60D19EFF4B300A5C842 /* Utils.h */,
 				00EDF60E19EFF4B300A5C842 /* Utils.m */,
 				387794231A0B60C700C41C78 /* Config.h */,
@@ -2208,6 +2213,7 @@
 				C5B2F1AB1BCF451F004B4785 /* NSDate+Util.m in Sources */,
 				C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */,
 				EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */,
+				042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */,
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,
 				38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */,
 				04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */,

@@ -79,7 +79,7 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSDate* date = [formatter dateFromString:viewModel.pubDate];
     
-    _titleLabel.text = [Utils attributedTimeString:date].string;
+    _timeDistanceLabel.text = [Utils attributedTimeString:date].string;
     
 }
 

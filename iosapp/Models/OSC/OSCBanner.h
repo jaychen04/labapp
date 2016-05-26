@@ -9,11 +9,8 @@
 #import <Foundation/Foundation.h>
 typedef NS_ENUM (NSInteger , BannerType){
     BannerTypeNews = 1,//资讯
-    BannerTypeActivity,//活动
-    BannerTypeQA,//问答
     BannerTypeBlog,//博客
-    BannerTypeSoftWare,//开源软件
-    BannerTypeOther//外链Href，此时href有值，id无值
+    BannerTypeActivity//活动
 };
 
 @interface OSCBanner : NSObject
