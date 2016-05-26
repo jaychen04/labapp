@@ -7,6 +7,7 @@
 //
 
 #import "InformationViewController.h"
+#import "TokenManager.h"
 #import "SDCycleScrollView.h"
 #import "InformationTableViewCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
@@ -32,6 +33,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 @property (nonatomic,strong) NSMutableArray* bannerModels;
 @property (nonatomic,strong) NSMutableArray* dataModels;
+
+@property (nonatomic,strong) NSString* nextToken;
 @end
 
 @implementation InformationViewController
@@ -61,10 +64,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 
 #pragma mark - life cycle
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -151,14 +150,22 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 #pragma mark -- networking Delegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
-    NSDictionary *parameters = paraDic?:@{};
+    NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
+    if (isRefresh == NO) {
+        [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
+        NSLog(@"%@",paraMutableDic);
+    }
     [self.manager GET:self.generateUrl()
-       parameters:parameters
+       parameters:paraMutableDic.copy
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               NSLog(@"res:%@",responseObject);
               [self handleData:responseObject isRefresh:isRefresh];
+              NSDictionary* resultDic = responseObject[@"result"];
+              NSArray* items = resultDic[@"items"];
+              self.nextToken = resultDic[@"nextPageToken"];
+              NSLog(@"%@",self.nextToken);
               dispatch_async(dispatch_get_main_queue(), ^{
-                  self.lastCell.status = LastCellStatusFinished;
+                  self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
                   
                   if (self.tableView.mj_header.isRefreshing) {
                       [self.tableView.mj_header endRefreshing];

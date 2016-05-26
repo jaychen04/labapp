@@ -24,7 +24,6 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
 
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
 
-
 @end
 
 @implementation InformationTableViewCell
@@ -53,20 +52,10 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
 #pragma mark - seeting VM
 -(void)setViewModel:(OSCInformation* )viewModel{
     _viewModel = viewModel;
-    
-//    NSString* contextString = viewModel.title;
-//    NSMutableAttributedString* attributedStr = [[NSMutableAttributedString alloc]initWithString:contextString];
-//    
-//    NSMutableParagraphStyle * paragraphStyle1 = [[NSMutableParagraphStyle alloc] init];
-//    paragraphStyle1.alignment = NSTextAlignmentJustified;
-//    [paragraphStyle1 setLineSpacing:20];
-//    
-//    [attributedStr addAttribute:NSParagraphStyleAttributeName value:paragraphStyle1 range:NSMakeRange(0, attributedStr.length)];
-    
-    
+
     if (viewModel.recommend) {//"推荐"新闻
         _recommendImageView.hidden = NO;
-        _titleLabel.text = [NSString stringWithFormat:@"  %@",viewModel.title];
+        _titleLabel.text = [NSString stringWithFormat:@"     %@",viewModel.title];
     }else{//不是"推荐"新闻 普通新闻
         _recommendImageView.hidden = YES;
         _titleLabel.text = viewModel.title;
@@ -79,8 +68,7 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSDate* date = [formatter dateFromString:viewModel.pubDate];
     
-    _timeDistanceLabel.text = [Utils attributedTimeString:date].string;
-    
+    [_timeDistanceLabel setAttributedText:[Utils attributedTimeString:date]];
 }
 
 @end
