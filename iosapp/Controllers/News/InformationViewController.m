@@ -18,7 +18,7 @@
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define OSC_BANNER_HEIGHT 120
 
-static NSString * const informationReuseIdentifier = @"InformationTableViewCellReuseIdenfitier";
+static NSString * const informationReuseIdentifier = @"InformationTableViewCell";
 
 @interface InformationViewController () <SDCycleScrollViewDelegate>
 @property (nonatomic,strong) SDCycleScrollView* cycleScrollView;
@@ -27,7 +27,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 @property (nonatomic,strong) NSMutableArray* bannerImageUrls;
 
 @property (nonatomic,strong) id netWorkingModel;
-@property (nonatomic,strong) NSArray* dataArr;
+@property (nonatomic,strong) NSMutableArray* dataModels;
 @end
 
 @implementation InformationViewController
@@ -60,20 +60,26 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
+    NSLog(@"%@",self.responseJsonObject);
     
+    [self handleData];
     [self bindingRAC];
     [self layoutUI];
     
 }
--(void)dealloc{
-    self.tableView.dataSource = nil;
-    self.tableView.delegate = nil;
-}
+
 
 
 #pragma mark - method
+
+-(void)handleData{
+    if (self.responseJsonObject) {
+        NSDictionary* result = self.responseJsonObject[@"result"];
+        NSArray* items = result[@"items"];
+        NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
+    }
+    
+}
 
 -(void)layoutUI{
     [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
@@ -81,6 +87,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
     self.tableView.tableHeaderView = self.cycleScrollView;
     self.tableView.estimatedRowHeight = 132;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 -(void)bindingRAC{
 #warning TODO : netWorkingModel是解析好的model
@@ -101,14 +108,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
     
-    NSLog(@"res:%@",self.responseJsonObject);
     return cell;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [tableView fd_heightForCellWithIdentifier:informationReuseIdentifier configuration:^(id cell) {
-        //做和 cellForRowAtIndexPath: 一样的事
-    }];
-}
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return [tableView fd_heightForCellWithIdentifier:informationReuseIdentifier configuration:^(id cell) {
+//        //做和 cellForRowAtIndexPath: 一样的事
+//    }];
+//}
 
 
 
@@ -159,6 +165,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 		_bannerImageUrls = @[].mutableCopy;
 	}
 	return _bannerImageUrls;
+}
+
+- (NSMutableArray *)dataModels {
+	if(_dataModels == nil) {
+		_dataModels = [NSMutableArray array];
+	}
+	return _dataModels;
 }
 
 @end

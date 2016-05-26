@@ -14,8 +14,8 @@ typedef NS_ENUM(NSUInteger, InformationType)
     InformationTypeSoftWare,//软件推荐
     InformationTypeForum,//讨论区帖子
     InformationTypeBlog,//博客
-    InformationTypeDefaultNews,//普通新闻
-    InformationTypeTranslation//翻译文章
+    InformationTypeTranslation,//翻译文章
+    InformationTypeActivityType//活动类型
 };
 
 @interface OSCInformation : NSObject
