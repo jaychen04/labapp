@@ -48,6 +48,7 @@
 		042E8D111CF5950F00364BD7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8D101CF5950F00364BD7 /* libPods.a */; };
 		042E8D121CF595FC00364BD7 /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
 		042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D141CF6A3F000364BD7 /* TokenManager.m */; };
+		042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
 		04EC96961CF436B10004B54E /* OSCActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96951CF436B10004B54E /* OSCActivityViewController.m */; };
 		04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC969B1CF436FB0004B54E /* OSCActivityTableViewCell.m */; };
@@ -316,6 +317,8 @@
 		042E8D101CF5950F00364BD7 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../Library/Developer/Xcode/DerivedData/iosapp-bwkrilcdiwhsfycglcddwhgzdkxi/Build/Products/Debug-iphonesimulator/libPods.a"; sourceTree = "<group>"; };
 		042E8D131CF6A3F000364BD7 /* TokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenManager.h; sourceTree = "<group>"; };
 		042E8D141CF6A3F000364BD7 /* TokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenManager.m; sourceTree = "<group>"; };
+		042E8D1C1CF7038600364BD7 /* OSCBlogDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetail.h; sourceTree = "<group>"; };
+		042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetail.m; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
 		04EC96941CF436B10004B54E /* OSCActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCActivityViewController.h; sourceTree = "<group>"; };
@@ -1490,6 +1493,8 @@
 				38996A511A02642C0025AA52 /* OSCBlog.m */,
 				382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */,
 				382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */,
+				042E8D1C1CF7038600364BD7 /* OSCBlogDetail.h */,
+				042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */,
 			);
 			name = Blog;
 			sourceTree = "<group>";
@@ -2147,6 +2152,7 @@
 				C5EF89311BE319A300B5FA46 /* BlogCell.m in Sources */,
 				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
+				042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */,
 				C5EF89381BE319F600B5FA46 /* NewsCell.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */,
