@@ -20,8 +20,8 @@
 //#define OSCAPI_HTTPS_PREFIX             @"http://192.168.1.72:1104/action/apiv2/"
 //#define OSCAPI_PREFIX                   @"http://192.168.1.72:1104/action/apiv2/"
 
-#define OSCAPI_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/apiv2/"
-#define OSCAPI_PREFIX                   @"http://192.168.1.15:8000/action/apiv2/"
+#define OSCAPI_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/api/"
+#define OSCAPI_PREFIX                   @"http://192.168.1.15:8000/action/api/"
 
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
