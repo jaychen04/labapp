@@ -19,5 +19,8 @@ pod 'DateTools'
 pod 'DTCoreText'
 pod 'MJExtension'
 pod 'UMengSocial' , '~>4.4’
+<<<<<<< HEAD
 
 pod 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
+=======
+>>>>>>> 50a4799aa18b98ed936122afe14306d19742dd99
