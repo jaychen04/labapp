@@ -67,6 +67,9 @@
 		31ABF5811B0F1B5300663C08 /* JKAlertDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 31ABF5801B0F1B5300663C08 /* JKAlertDialog.m */; };
 		31B6F1921AF78A8B00DC28FE /* TeamIssueDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F1911AF78A8B00DC28FE /* TeamIssueDetailCell.m */; };
 		31C50BC21AF1FE7F00074B72 /* TeamIssueDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C50BC11AF1FE7F00074B72 /* TeamIssueDetailController.m */; };
+		31D56E831CF6D16F000AA1D4 /* OSCNewHotBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D56E821CF6D16F000AA1D4 /* OSCNewHotBlog.m */; };
+		31D56E871CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D56E851CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m */; };
+		31D56E881CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D56E861CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib */; };
 		31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */; };
 		31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FA1AEF2685004DF445 /* ProjectCell.m */; };
 		31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */; };
@@ -352,6 +355,11 @@
 		31B6F1911AF78A8B00DC28FE /* TeamIssueDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueDetailCell.m; sourceTree = "<group>"; };
 		31C50BC01AF1FE7F00074B72 /* TeamIssueDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamIssueDetailController.h; sourceTree = "<group>"; };
 		31C50BC11AF1FE7F00074B72 /* TeamIssueDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueDetailController.m; sourceTree = "<group>"; };
+		31D56E811CF6D16F000AA1D4 /* OSCNewHotBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewHotBlog.h; sourceTree = "<group>"; };
+		31D56E821CF6D16F000AA1D4 /* OSCNewHotBlog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewHotBlog.m; sourceTree = "<group>"; };
+		31D56E841CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHotBlogTableViewCell.h; sourceTree = "<group>"; };
+		31D56E851CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHotBlogTableViewCell.m; sourceTree = "<group>"; };
+		31D56E861CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
 		31EAF9F71AEF2685004DF445 /* ProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectListViewController.h; sourceTree = "<group>"; };
 		31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectListViewController.m; sourceTree = "<group>"; };
 		31EAF9F91AEF2685004DF445 /* ProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectCell.h; sourceTree = "<group>"; };
@@ -1490,6 +1498,8 @@
 				38996A511A02642C0025AA52 /* OSCBlog.m */,
 				382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */,
 				382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */,
+				31D56E811CF6D16F000AA1D4 /* OSCNewHotBlog.h */,
+				31D56E821CF6D16F000AA1D4 /* OSCNewHotBlog.m */,
 			);
 			name = Blog;
 			sourceTree = "<group>";
@@ -1854,6 +1864,9 @@
 				C5EF89301BE319A300B5FA46 /* BlogsViewController.m */,
 				31FF2F931CF2F36600C7A0B6 /* NewHotBlogTableViewController.h */,
 				31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */,
+				31D56E841CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.h */,
+				31D56E851CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m */,
+				31D56E861CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib */,
 			);
 			path = Blog;
 			sourceTree = "<group>";
@@ -2054,6 +2067,7 @@
 				EE02C91A1CF2F7430075AE16 /* QuesAnsCell.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
+				31D56E881CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib in Resources */,
 				04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
@@ -2234,6 +2248,7 @@
 				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,
 				38B0BF9C1A3E8F9C00A2FDB0 /* OSCTabBarController.m in Sources */,
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
+				31D56E831CF6D16F000AA1D4 /* OSCNewHotBlog.m in Sources */,
 				C52BF5011AFCBF1700E53508 /* TeamReplyCell.m in Sources */,
 				C5B2F1AF1BCF453F004B4785 /* NSDateFormatter+Singleton.m in Sources */,
 				6662BACA1B8C4B7400D6A9BC /* TweetFriendsListViewController.m in Sources */,
@@ -2250,6 +2265,7 @@
 				31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */,
 				C52BF4F01AF9FE8800E53508 /* TimeLineNodeCell.m in Sources */,
 				386039611A09C5A1007C9B88 /* OSCUser.m in Sources */,
+				31D56E871CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m in Sources */,
 				38EAF1B61AE0A85F00397E2A /* TeamActivity.m in Sources */,
 				C5EF89221BE3194800B5FA46 /* SoftwareCatalogVC.m in Sources */,
 				0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */,

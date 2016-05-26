@@ -52,7 +52,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         };
         self.objClass = [OSCInformation class];
         
-        self.netWorkingdelegate = self;
+        self.netWorkingDelegate = self;
         self.isJsonDataVc = YES;
         self.parametersDic = @{};
         self.needAutoRefresh = YES;

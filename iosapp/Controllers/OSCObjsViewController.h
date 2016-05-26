@@ -52,7 +52,7 @@
 @property (nonatomic, copy) NSString * (^generateUrl)();
 @property (nonatomic, strong) NSDictionary *parametersDic;
 @property (nonatomic, strong) id responseJsonObject;
-@property (nonatomic,weak) id<networkingJsonDataDelegate> netWorkingdelegate;
+@property (nonatomic,weak) id<networkingJsonDataDelegate> netWorkingDelegate;
 
 
 - (NSArray *)parseXML:(ONOXMLDocument *)xml;
