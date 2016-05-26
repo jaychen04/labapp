@@ -10,12 +10,12 @@
 
 typedef NS_ENUM(NSUInteger, InformationType)
 {
-    InformationTypeLinkNews,
-    InformationTypeSoftWare,
-    InformationTypeForum,
-    InformationTypeBlog,
-    InformationTypeDefaultNews,
-    InformationTypeTranslation
+    InformationTypeLinkNews,//链接新闻
+    InformationTypeSoftWare,//软件推荐
+    InformationTypeForum,//讨论区帖子
+    InformationTypeBlog,//博客
+    InformationTypeTranslation,//翻译文章
+    InformationTypeActivityType//活动类型
 };
 
 @interface OSCInformation : NSObject
@@ -41,20 +41,3 @@ typedef NS_ENUM(NSUInteger, InformationType)
 @end
 
 
-@interface OSCInformationBanner : NSObject
-
-@property (nonatomic,strong) NSString* name;
-
-@property (nonatomic,strong) NSString* detail;
-
-@property (nonatomic,strong) NSString* img;
-
-@property (nonatomic,strong) NSString* href;
-
-@property (nonatomic,assign) NSInteger type;
-
-@property (nonatomic,assign) NSInteger id;
-
-@property (nonatomic,strong) NSString* time;
-
-@end

@@ -9,6 +9,7 @@
 #import "OSCActivityViewController.h"
 #import "OSCActivityTableViewCell.h"
 #import "SDCycleScrollView.h"
+#import "UITableView+FDTemplateLayoutCell.h"
 
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define OSC_BANNER_HEIGHT 215
@@ -32,7 +33,9 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCellReus
 
 
 #pragma mark - layout UI
+
 -(void)layoutUI{
+    [self.tableView registerNib:[UINib nibWithNibName:@"OSCActivityTableViewCell" bundle:nil] forCellReuseIdentifier:activityReuseIdentifier];
     self.tableView.tableHeaderView = self.bannerView;
 }
 
@@ -44,6 +47,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCellReus
 
 
 #pragma mark - tableView datasource && delegate 
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return 20;
 }
@@ -52,9 +56,15 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCellReus
     
     return cell;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [tableView fd_heightForCellWithIdentifier:activityReuseIdentifier configuration:^(id cell) {
+        
+    }];
+}
 
 
 #pragma mark - 生成bannerItem View 并转换成最终的UIImage
+
 -(UIImage* )mapBannerItem:(id)model{
     
     

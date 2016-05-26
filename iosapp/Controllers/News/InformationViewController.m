@@ -7,18 +7,23 @@
 //
 
 #import "InformationViewController.h"
+#import "TokenManager.h"
 #import "SDCycleScrollView.h"
-#import "OSCInformation.h"
 #import "InformationTableViewCell.h"
+#import "UITableView+FDTemplateLayoutCell.h"
+
+#import "OSCInformation.h"
+#import "OSCBanner.h"
 
 #import <ReactiveCocoa.h>
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
+#import <AFNetworking.h>
 
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define OSC_BANNER_HEIGHT 120
 
-static NSString * const informationReuseIdentifier = @"InformationTableViewCellReuseIdenfitier";
+static NSString * const informationReuseIdentifier = @"InformationTableViewCell";
 
 @interface InformationViewController () <SDCycleScrollViewDelegate,networkingJsonDataDelegate>
 @property (nonatomic,strong) SDCycleScrollView* cycleScrollView;
@@ -26,7 +31,10 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 @property (nonatomic,strong) NSMutableArray* bannerTitles;
 @property (nonatomic,strong) NSMutableArray* bannerImageUrls;
 
-@property (nonatomic,strong) id netWorkingModel;
+@property (nonatomic,strong) NSMutableArray* bannerModels;
+@property (nonatomic,strong) NSMutableArray* dataModels;
+
+@property (nonatomic,strong) NSString* nextToken;
 @end
 
 @implementation InformationViewController
@@ -36,7 +44,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
     if (self) {
         __weak InformationViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-            return @"http://192.168.1.72:1104/action/apiv2/news";
+            return @"http://192.168.1.15:8000/action/apiv2/news";
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
@@ -60,106 +68,111 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    
-    [self bindingRAC];
+    [self getBannerData];
     [self layoutUI];
-    
-}
--(void)dealloc{
-    self.tableView.dataSource = nil;
-    self.tableView.delegate = nil;
 }
 
+
 #pragma mark - method
+#pragma mark --- 维护用作tableView数据源的数组
+-(void)handleData:(id)responseJSON isRefresh:(BOOL)isRefresh{
+    if (responseJSON) {
+        NSDictionary* result = responseJSON[@"result"];
+        NSArray* items = result[@"items"];
+        NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
+        NSLog(@"%@",modelArray);
+        if (isRefresh) {//上拉得到的数据
+            [self.dataModels removeAllObjects];
+        }
+        [self.dataModels addObjectsFromArray:modelArray];
+    }
+}
+
+-(void)getBannerData{
+    NSString* urlStr = @"http://192.168.1.15:8000/action/apiv2/banner";
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager manager];
+    [manger GET:urlStr
+     parameters:@{@"catalog" : @1}
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            NSDictionary* resultDic = responseObject[@"result"];
+            NSArray* responseArr = resultDic[@"items"];
+            NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
+            self.bannerModels = bannerModels.mutableCopy;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self configurationCycleScrollView];
+            });
+}
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+}];
+}
 -(void)layoutUI{
+    [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
+    
     self.tableView.tableHeaderView = self.cycleScrollView;
     self.tableView.estimatedRowHeight = 132;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-}
--(void)bindingRAC{
-    [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
-#warning TODO : netWorkingModel是解析好的model
-//    RAC(self,bannerImageUrls) = RACObserve(self.netWorkingModel, imageUrls);
-//    RAC(self,bannerTitles) = RACObserve(self.netWorkingModel, titles);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 -(void)configurationCycleScrollView{
+    for (OSCBanner* bannerItem in self.bannerModels) {
+        NSLog(@"%@",bannerItem);
+        [self.bannerTitles addObject:bannerItem.name];
+        [self.bannerImageUrls addObject:bannerItem.img];
+    }
+    
     self.cycleScrollView.imageURLStringsGroup = self.bannerImageUrls.copy;
     self.cycleScrollView.titlesGroup = self.bannerTitles.copy;
+    
+    NSLog(@"banner Imgs %@",self.cycleScrollView.imageURLStringsGroup);
+    NSLog(@"banner titles %@",self.cycleScrollView.titlesGroup);
+    
+    [self.tableView reloadData];
 }
 
+
 #pragma mark - tableView datasource && delegate
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 20;
+    return self.dataModels.count;
 }
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
-    
-//    NSLog(@"res:%@",self.responseJsonObject);
+    cell.viewModel = self.dataModels[indexPath.row];
     return cell;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [tableView fd_heightForCellWithIdentifier:informationReuseIdentifier configuration:^(InformationTableViewCell* cell) {
+        cell.viewModel = self.dataModels[indexPath.row];
+    }];
+}
 
-#pragma mark -- networkingDelegate
--(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{
-    NSDictionary *parameters = paraDic?:@{};
+#pragma mark -- networking Delegate
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
+    NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
+    if (isRefresh == NO) {
+        [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
+        NSLog(@"%@",paraMutableDic);
+    }
     [self.manager GET:self.generateUrl()
-       parameters:parameters
+       parameters:paraMutableDic.copy
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               NSLog(@"res:%@",responseObject);
-
-              
-              //              _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
-              //              NSArray *objectsXML = [self parseXML:responseDocument];
-              //
-              //              if (refresh) {
-              //                  _page = 0;
-              //                  [_objects removeAllObjects];
-              //                  if (_didRefreshSucceed) {_didRefreshSucceed();}
-              //              }
-              //
-              //              if (_parseExtraInfo) {_parseExtraInfo(responseDocument);}
-              //
-              //              for (ONOXMLElement *objectXML in objectsXML) {
-              //                  BOOL shouldBeAdded = YES;
-              //                  id obj = [[_objClass alloc] initWithXML:objectXML];
-              //
-              //                  for (OSCBaseObject *baseObj in _objects) {
-              //                      if ([obj isEqual:baseObj]) {
-              //                          shouldBeAdded = NO;
-              //                          break;
-              //                      }
-              //                  }
-              //                  if (shouldBeAdded) {
-              //                      [_objects addObject:obj];
-              //                  }
-              //              }
-              //
-              //              if (_needAutoRefresh) {
-              //                  [_userDefaults setObject:_lastRefreshTime forKey:_kLastRefreshTime];
-              //              }
-              //
-//                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
-//                                else {
-//                                    if (_page == 0 && objectsXML.count == 0) {
-//                                        _lastCell.status = LastCellStatusEmpty;
-//                                    } else if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
-//                                        _lastCell.status = LastCellStatusFinished;
-//                                    } else {
-//                                        _lastCell.status = LastCellStatusMore;
-//                                    }
-//                                }
-              //
-                    self.lastCell.status = LastCellStatusFinished;
-              
-                                if (self.tableView.mj_header.isRefreshing) {
-                                    [self.tableView.mj_header endRefreshing];
-                                }
-              //
-                    [self.tableView reloadData];
-              //              });
-          }
+              [self handleData:responseObject isRefresh:isRefresh];
+              NSDictionary* resultDic = responseObject[@"result"];
+              NSArray* items = resultDic[@"items"];
+              self.nextToken = resultDic[@"nextPageToken"];
+              NSLog(@"%@",self.nextToken);
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
+                  
+                  if (self.tableView.mj_header.isRefreshing) {
+                      [self.tableView.mj_header endRefreshing];
+                  }
+                  [self.tableView reloadData];
+              });
+            }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
@@ -204,7 +217,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 
 - (SDCycleScrollView *)cycleScrollView {
 	if(_cycleScrollView == nil) {
-#pragma message "TODO: setting placeholderImage Name"
         _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:(CGRect){{0,0},{OSC_SCREEN_WIDTH,OSC_BANNER_HEIGHT}} delegate:self placeholderImage:[UIImage imageNamed:@""]];
         _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
         
@@ -214,16 +226,30 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 
 - (NSMutableArray *)bannerTitles {
 	if(_bannerTitles == nil) {
-		_bannerTitles = @[].mutableCopy;
+		_bannerTitles = [NSMutableArray arrayWithCapacity:5];
 	}
 	return _bannerTitles;
 }
 
 - (NSMutableArray *)bannerImageUrls {
 	if(_bannerImageUrls == nil) {
-		_bannerImageUrls = @[].mutableCopy;
+		_bannerImageUrls = [NSMutableArray arrayWithCapacity:5];
 	}
 	return _bannerImageUrls;
+}
+
+- (NSMutableArray *)dataModels {
+	if(_dataModels == nil) {
+		_dataModels = [NSMutableArray array];
+	}
+	return _dataModels;
+}
+
+- (NSMutableArray *)bannerModels {
+	if(_bannerModels == nil) {
+		_bannerModels = [NSMutableArray arrayWithCapacity:5];
+	}
+	return _bannerModels;
 }
 
 @end
