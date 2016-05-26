@@ -28,6 +28,7 @@ typedef NS_ENUM(int, FavoriteType)
 @class OSCBlog;
 @class OSCPost;
 @class OSCSoftware;
+@class OSCNewHotBlog;
 @class OSCQuestion;
 
 @interface DetailsViewController : BottomBarViewController
@@ -37,6 +38,8 @@ typedef NS_ENUM(int, FavoriteType)
 - (instancetype)initWithPost:(OSCPost *)post;
 - (instancetype)initWithSoftware:(OSCSoftware *)software;
 
+/* 新 */
+- (instancetype)initWithNewHotBlog:(OSCNewHotBlog *)blog;
 - (instancetype)initWithQuestion:(OSCQuestion *)question;
 
 @end

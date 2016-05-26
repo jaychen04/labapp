@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @interface OSCNewHotBlog : NSObject
 
@@ -22,5 +23,7 @@
 @property (nonatomic,assign) BOOL recommend;
 @property (nonatomic,assign) BOOL original;
 @property (nonatomic,assign) NSInteger type;
+
+@property (nonatomic, copy) NSMutableAttributedString *attributedTitleString;
 
 @end

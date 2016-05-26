@@ -7,7 +7,7 @@
 //
 
 #import "NewHotBlogTableViewController.h"
-#import "BlogCell.h"
+#import "NewHotBlogTableViewCell.h"
 #import "OSCBlog.h"
 #import "Config.h"
 #import "Utils.h"
@@ -16,11 +16,13 @@
 #import "OSCNewHotBlog.h"
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
-static NSString *kBlogCellID = @"BlogCell";
+static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 @interface NewHotBlogTableViewController ()<networkingJsonDataDelegate>
-@property (nonatomic, strong)NSMutableArray *blogObjects;
-@property (nonatomic, strong)UILabel *utilLabel;
+
+@property (nonatomic, strong) NSMutableArray *newsBlogObjects;
+@property (nonatomic, strong) NSMutableArray *hotBlogObjects;
+
 @end
 
 @implementation NewHotBlogTableViewController
@@ -40,7 +42,7 @@ static NSString *kBlogCellID = @"BlogCell";
         
         self.netWorkingDelegate = self;
         self.isJsonDataVc = YES;
-//        self.parametersDic = @{@"catalog":@1};
+        self.parametersDic = @{@"catalog":@1};
         self.needAutoRefresh = YES;
         self.refreshInterval = 21600;
         self.kLastRefreshTime = @"NewsRefreshInterval";
@@ -51,17 +53,27 @@ static NSString *kBlogCellID = @"BlogCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _blogObjects = [NSMutableArray new];
-    _utilLabel = [UILabel new];
-    [self.tableView registerClass:[BlogCell class] forCellReuseIdentifier:kBlogCellID];
+    
+    _newsBlogObjects = [NSMutableArray new];
+    _hotBlogObjects = [NSMutableArray new];
+    
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NewHotBlogTableViewCell class])
+                                               bundle:[NSBundle mainBundle]]
+     
+        forCellReuseIdentifier:reuseIdentifier];
+    
+    [self getJSONDataWithNewBlog:@{@"catalog":@2} isRefresh:NO];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
 }
+
+#pragma mark - 获取最热博客
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh {
     NSDictionary *parameters = @{@"catalog":@1};
+    
     [self.manager GET:self.generateUrl()
            parameters:parameters
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -70,82 +82,11 @@ static NSString *kBlogCellID = @"BlogCell";
                   if ([[responseObject objectForKey:@"code"]integerValue] == 1) {
                       NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[[responseObject objectForKey:@"result"] objectForKey:@"items"]];
                       if (isRefresh) {
-                          [_blogObjects removeAllObjects];
+                          [_hotBlogObjects removeAllObjects];
                       }
-                      [_blogObjects addObjectsFromArray:blogModels];
+                      [_hotBlogObjects addObjectsFromArray:blogModels];
                   }
-                  //                  nextPageToken = "2_20";
-                  //                  pageInfo =         {
-                  //                      resultsPerPage = 1;
-                  //                      totalResults = 1000;
-                  //                  };
-                  //                  prevPageToken = "1_20";
-                  //              };
-                  //     time = "2016-05-26 06:29:10:463";
-                  //                  code = 1;
-                  //                  message = success;
-                  //                  result =     {
-                  //                      items =         (
-//                  {
-                      //     {
-                      //         author = "\U5f6d\U82cf\U4e91";
-                      //         body = "\U95ee\U9898\U63cf\U8ff0\Uff1a \U5728portal6.1\U9875\U9762\U7ba1\U7406\U63a7\U5236\U53f0\U4e0a\U505a\U7528\U6237\U548c\U7ec4\U7684\U76f8\U5173\U64cd\U4f5c\U65f6\Uff08\U6dfb\U52a0\U7ec4...";
-                      //         commentCount = 0;
-                      //         href = "http://my.oschina.me/psuyun/blog/179520";
-                      //         id = 179520;
-                      //         original = 1;
-                      //         pubDate = "2013-11-27 19:08:05:000";
-                      //         recommend = 0;
-                      //         title = "ITDS\U95ee\U9898-LDAP: error code 50 - Insufficient Access Rights";
-                      //         type = 1;
-                      //         viewCount = 19;
-                      //     }
-
-                                           
-                                           
                   
-                  //              _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
-                  //              NSArray *objectsXML = [self parseXML:responseDocument];
-                  //
-                  //              if (refresh) {
-                  //                  _page = 0;
-                  //                  [_objects removeAllObjects];
-                  //                  if (_didRefreshSucceed) {_didRefreshSucceed();}
-                  //              }
-                  //
-                  //              if (_parseExtraInfo) {_parseExtraInfo(responseDocument);}
-                  //
-                  //              for (ONOXMLElement *objectXML in objectsXML) {
-                  //                  BOOL shouldBeAdded = YES;
-                  //                  id obj = [[_objClass alloc] initWithXML:objectXML];
-                  //
-                  //                  for (OSCBaseObject *baseObj in _objects) {
-                  //                      if ([obj isEqual:baseObj]) {
-                  //                          shouldBeAdded = NO;
-                  //                          break;
-                  //                      }
-                  //                  }
-                  //                  if (shouldBeAdded) {
-                  //                      [_objects addObject:obj];
-                  //                  }
-                  //              }
-                  //
-                  //              if (_needAutoRefresh) {
-                  //                  [_userDefaults setObject:_lastRefreshTime forKey:_kLastRefreshTime];
-                  //              }
-                  //
-                  //                            dispatch_async(dispatch_get_main_queue(), ^{
-                  //                                if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
-                  //                                else {
-                  //                                    if (_page == 0 && objectsXML.count == 0) {
-                  //                                        _lastCell.status = LastCellStatusEmpty;
-                  //                                    } else if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
-                  //                                        _lastCell.status = LastCellStatusFinished;
-                  //                                    } else {
-                  //                                        _lastCell.status = LastCellStatusMore;
-                  //                                    }
-                  //                                }
-                  //
                   self.lastCell.status = LastCellStatusFinished;
                   
                   if (self.tableView.mj_header.isRefreshing) {
@@ -171,16 +112,59 @@ static NSString *kBlogCellID = @"BlogCell";
               }
      ];
 }
+
+#pragma mark - 获取最新博客
+- (void)getJSONDataWithNewBlog:(NSDictionary *)paraDic isRefresh:(BOOL)isRefresh
+{
+    [self.manager GET:self.generateUrl()
+           parameters:paraDic
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  NSLog(@"res:%@",responseObject);
+                  
+                  if ([[responseObject objectForKey:@"code"]integerValue] == 1) {
+                      NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[[responseObject objectForKey:@"result"] objectForKey:@"items"]];
+                      if (isRefresh) {
+                          [_newsBlogObjects removeAllObjects];
+                      }
+                      [_newsBlogObjects addObjectsFromArray:blogModels];
+                  }
+                  
+                  self.lastCell.status = LastCellStatusFinished;
+                  
+                  if (self.tableView.mj_header.isRefreshing) {
+                      [self.tableView.mj_header endRefreshing];
+                  }
+                  
+                  [self.tableView reloadData];
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+                  
+                  [HUD hide:YES afterDelay:1];
+                  
+                  self.lastCell.status = LastCellStatusError;
+                  if (self.tableView.mj_header.isRefreshing) {
+                      [self.tableView.mj_header endRefreshing];
+                  }
+                  [self.tableView reloadData];
+              }
+     ];
+}
+
 #pragma mark -- DIY_headerView
 - (UIView*)setUpHeaderViewWithSectionTitle:(NSString*)title iconUrl:(NSURL*)iconUrl {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
     headerView.backgroundColor = [UIColor colorWithHex:0xffffff];
     
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 30, 16)];
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
     titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
     titleLabel.tag = 8;
     titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
-    titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:30];
+    titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
     titleLabel.text = title;
     [headerView addSubview:titleLabel];
     
@@ -190,11 +174,13 @@ static NSString *kBlogCellID = @"BlogCell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.objects.count;
+    NSMutableArray *array = section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
+
+    return array.count;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     NSString *seriesTitle = section==0?@"最热":@"最新";
@@ -202,45 +188,66 @@ static NSString *kBlogCellID = @"BlogCell";
     return [self setUpHeaderViewWithSectionTitle:seriesTitle iconUrl:seriesUrl];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 32;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    BlogCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kBlogCellID forIndexPath:indexPath];
-    OSCNewHotBlog *blog = self.blogObjects[indexPath.row];
+    NewHotBlogTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     cell.backgroundColor = [UIColor themeColor];
-    
-    [cell.titleLabel setText:blog.title];
-    [cell.bodyLabel setText:blog.body];
-    [cell.authorLabel setText:blog.author];
     cell.titleLabel.textColor = [UIColor titleColor];
-    [cell.timeLabel setAttributedText:[Utils attributedTimeString:[NSDate dateFromString:blog.pubDate]]];
-    [cell.commentCount setText:[NSString stringWithFormat:@"%d", blog.commentCount]];
-    
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
+    NSMutableArray *array = indexPath.section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
+    
+    if (array.count > 0) {
+        OSCNewHotBlog *blog = array[indexPath.row];
+        
+//        cell.newHotBlog = blog;
+        [cell setNewHotBlogContent:blog];
+    }
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OSCBlog *blog = self.blogObjects[indexPath.row];
-    self.utilLabel.font = [UIFont boldSystemFontOfSize:15];
-    [self.utilLabel setAttributedText:blog.attributedTittle];
-    CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
+    NSMutableArray *array = indexPath.section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
+     UILabel *label = [UILabel new];
+    label.numberOfLines = 2;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
     
-    self.utilLabel.text = blog.body;
-    self.utilLabel.font = [UIFont systemFontOfSize:13];
-    height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 16, MAXFLOAT)].height;
-    
-    return height + 42;
+    if (array.count > 0) {
+        OSCNewHotBlog *blog = array[indexPath.row];
+        
+        label.font = [UIFont boldSystemFontOfSize:15];
+        [label setAttributedText:blog.attributedTitleString];
+        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+        
+        label.text = blog.body;
+        label.font = [UIFont systemFontOfSize:13];
+        height += [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+        
+        return height + 54;
+    }
+    return 130;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    OSCBlog *blog = self.blogObjects[indexPath.row];
-    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithBlog:blog];
+    NSMutableArray *array = indexPath.section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
+    OSCNewHotBlog *blog;
+    
+    if (array.count > 0) {
+        blog = array[indexPath.row];
+    }
+    
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNewHotBlog:blog];
     [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
