@@ -9,11 +9,13 @@
 #import <Foundation/Foundation.h>
 
 @interface OSCNewHotBlog : NSObject
+
 @property (nonatomic, assign) int64_t id;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, copy) NSString *author;
 @property (nonatomic, copy) NSString *pubDate;
+
 @property (nonatomic, copy) NSString *href;
 @property (nonatomic, assign) int commentCount;
 @property (nonatomic, assign) int viewCount;

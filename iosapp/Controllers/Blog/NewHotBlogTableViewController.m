@@ -208,12 +208,12 @@ static NSString *kBlogCellID = @"BlogCell";
     
     cell.backgroundColor = [UIColor themeColor];
     
-    [cell.titleLabel setAttributedText:blog.attributedTittle];
+    [cell.titleLabel setText:blog.title];
     [cell.bodyLabel setText:blog.body];
     [cell.authorLabel setText:blog.author];
     cell.titleLabel.textColor = [UIColor titleColor];
-    [cell.timeLabel setAttributedText:[Utils attributedTimeString:blog.pubDate]];
-    [cell.commentCount setAttributedText:blog.attributedCommentCount];
+    [cell.timeLabel setAttributedText:[Utils attributedTimeString:[NSDate dateFromString:blog.pubDate]]];
+    [cell.commentCount setText:[NSString stringWithFormat:@"%d", blog.commentCount]];
     
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];

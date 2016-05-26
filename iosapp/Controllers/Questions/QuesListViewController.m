@@ -40,7 +40,7 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
         };
 //        self.objClass = [OSCQuestion class];
         
-        self.netWorkingdelegate = self;
+        self.netWorkingDelegate = self;
         self.isJsonDataVc = YES;
         
         self.paraDic = @{
