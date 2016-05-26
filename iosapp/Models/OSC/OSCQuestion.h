@@ -17,7 +17,7 @@
 @property (nonatomic, assign) long authorId;
 @property (nonatomic, copy) NSString *authorPortrait;
 
-@property (nonatomic, strong) NSDate *pubDate;
+@property (nonatomic, copy) NSString *pubDate;
 @property (nonatomic, assign) int commentCount;
 @property (nonatomic, assign) int viewCount;
 

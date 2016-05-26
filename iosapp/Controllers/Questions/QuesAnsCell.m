@@ -28,7 +28,10 @@
     _titleLabel.text = question.title;
     _descLabel.text = question.body;
     
-    _userNameLabel.text = [NSString stringWithFormat:@"%@ %@", question.author, [question.pubDate timeAgoSinceNow]];
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    NSDate* date = [formatter dateFromString:question.pubDate];
+    
+    _userNameLabel.text = [NSString stringWithFormat:@"%@ %@", question.author, [Utils attributedTimeString:date].string];
     _watchCountLabel.text = [NSString stringWithFormat:@"%d", question.viewCount];
     _commentCountLabel.text = [NSString stringWithFormat:@"%d", question.commentCount];
 }

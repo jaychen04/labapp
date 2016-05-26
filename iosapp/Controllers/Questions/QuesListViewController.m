@@ -11,10 +11,11 @@
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "OSCQuestion.h"
-#import <MJExtension.h>
 
+#import <MJExtension.h>
+#import <MBProgressHUD.h>
 static NSString * const reuseIdentifier = @"QuesAnsCell";
-@interface QuesListViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface QuesListViewController () <UITableViewDelegate, UITableViewDataSource, networkingJsonDataDelegate>
 
 @property (nonatomic, copy) NSString *pageToken;
 @property (nonatomic, copy) NSString *nextPageToken;
@@ -38,6 +39,7 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
         };
         self.objClass = [OSCQuestion class];
         
+        self.netWorkingdelegate = self;
         self.isJsonDataVc = YES;
         self.parametersDic = @{
                                @"catalog"   : @(catalog),
@@ -67,8 +69,7 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([QuesAnsCell class]) bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:reuseIdentifier];
-    
-    [self fetchForQuestions];
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,20 +78,54 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
 }
 
 #pragma mark - JSON解析数据
-- (void)fetchForQuestions
+- (void)fetchForQuestions:(id)responseObject
 {
-    NSLog(@"self.responseJsonObject === %@", self.responseJsonObject);
-    NSDictionary *result = [self.responseJsonObject objectForKey:@"result"];
+    NSDictionary *result = [responseObject objectForKey:@"result"];
     NSArray *items = [result objectForKey:@"items"];
     [items enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         OSCQuestion *question = [OSCQuestion mj_objectWithKeyValues:obj];
         
         [_questions addObject:question];
-        NSLog(@"question = %@", question);
+        NSLog(@"question.authorName = %@", question.author);
     }];
     
-    _nextPageToken = [[result objectForKey:@"nextPageToken"] stringValue];
-    _prevPageToken = [[result objectForKey:@"prevPageToken"] stringValue];
+    _nextPageToken = [result objectForKey:@"nextPageToken"];
+    _prevPageToken = [result objectForKey:@"prevPageToken"];
+}
+
+#pragma mark -- networkingDelegate
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{
+    NSDictionary *parameters = paraDic?:@{};
+    [self.manager GET:self.generateUrl()
+           parameters:parameters
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  
+                  [self fetchForQuestions:responseObject];
+                  
+                  self.lastCell.status = LastCellStatusFinished;
+                  
+                  if (self.tableView.mj_header.isRefreshing) {
+                      [self.tableView.mj_header endRefreshing];
+                  }
+                  //
+                  [self.tableView reloadData];
+
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+                  
+                  [HUD hide:YES afterDelay:1];
+                  
+                  self.lastCell.status = LastCellStatusError;
+                  if (self.tableView.mj_header.isRefreshing) {
+                      [self.tableView.mj_header endRefreshing];
+                  }
+                  [self.tableView reloadData];
+              }
+     ];
 }
 
 #pragma mark - Table view data source
@@ -118,9 +153,9 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
         label.text = question.body;
         height += [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 85, MAXFLOAT)].height;
         
-        return height;
+        return height + 64;
     }
-    return 120;
+    return 101;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

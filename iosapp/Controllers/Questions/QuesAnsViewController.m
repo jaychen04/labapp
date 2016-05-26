@@ -28,7 +28,7 @@
     
     _questListCtl = [[QuesListViewController alloc] initWithQuestionType:1];
     _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
-    [_questListCtl.questions removeAllObjects];
+//    [_questListCtl.questions removeAllObjects];
     [self addChildViewController:_questListCtl];
     [self.tableSubView addSubview:_questListCtl.view];
 }
@@ -59,13 +59,14 @@
     }];
     
     [self removeFromParentViewController];
-    [self.tableSubView removeFromSuperview];
+//    [self.tableSubView removeFromSuperview];
     
     _questListCtl = [[QuesListViewController alloc] initWithQuestionType:tagNumber];
     _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
-    [_questListCtl.questions removeAllObjects];
-    [self addChildViewController:_questListCtl];
+//    [_questListCtl.questions removeAllObjects];
+//    [self addChildViewController:_questListCtl];
     [self.tableSubView addSubview:_questListCtl.view];
+    [_questListCtl.tableView reloadData];
     
     NSLog(@"按钮 = %ld", tagNumber);
 }
