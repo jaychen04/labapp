@@ -168,6 +168,10 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     titleLabel.text = title;
     [headerView addSubview:titleLabel];
     
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    lineView.backgroundColor = [UIColor colorWithHex:0xd2d2d2];
+    [headerView addSubview:lineView];
+    
     return headerView;
 }
 
