@@ -35,7 +35,7 @@ Get unlimited private repositories
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mUW-Sg-ecP">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_label_recommend" translatesAutoresizingMaskIntoConstraints="NO" id="mUW-Sg-ecP">
                         <rect key="frame" x="15" y="8" width="16" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="4EI-hH-LtD"/>
@@ -61,7 +61,7 @@ Get unlimited private repositories
                             <constraint firstAttribute="height" constant="1" id="Tzs-Q5-HtB"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cad-Fc-PRK">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_comment" translatesAutoresizingMaskIntoConstraints="NO" id="cad-Fc-PRK">
                         <rect key="frame" x="363" y="112" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="7jI-LI-lPY"/>
@@ -102,4 +102,8 @@ Get unlimited private repositories
             <point key="canvasLocation" x="22.5" y="314.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ic_comment" width="10" height="10"/>
+        <image name="ic_label_recommend" width="16" height="18"/>
+    </resources>
 </document>
