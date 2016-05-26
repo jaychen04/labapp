@@ -13,13 +13,14 @@
 
 #import <ReactiveCocoa.h>
 #import <MJExtension.h>
+#import <MBProgressHUD.h>
 
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define OSC_BANNER_HEIGHT 120
 
 static NSString * const informationReuseIdentifier = @"InformationTableViewCellReuseIdenfitier";
 
-@interface InformationViewController () <SDCycleScrollViewDelegate>
+@interface InformationViewController () <SDCycleScrollViewDelegate,networkingJsonDataDelegate>
 @property (nonatomic,strong) SDCycleScrollView* cycleScrollView;
 
 @property (nonatomic,strong) NSMutableArray* bannerTitles;
@@ -43,6 +44,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
         };
         self.objClass = [OSCInformation class];
         
+        self.netWorkingdelegate = self;
         self.isJsonDataVc = YES;
         self.parametersDic = @{};
         self.needAutoRefresh = YES;
@@ -94,11 +96,86 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCellR
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
     
-    NSLog(@"res:%@",self.responseJsonObject);
+//    NSLog(@"res:%@",self.responseJsonObject);
     return cell;
 }
 
+#pragma mark -- networkingDelegate
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{
+    NSDictionary *parameters = paraDic?:@{};
+    [self.manager GET:self.generateUrl()
+       parameters:parameters
+          success:^(AFHTTPRequestOperation *operation, id responseObject) {
+              NSLog(@"res:%@",responseObject);
 
+              
+              //              _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
+              //              NSArray *objectsXML = [self parseXML:responseDocument];
+              //
+              //              if (refresh) {
+              //                  _page = 0;
+              //                  [_objects removeAllObjects];
+              //                  if (_didRefreshSucceed) {_didRefreshSucceed();}
+              //              }
+              //
+              //              if (_parseExtraInfo) {_parseExtraInfo(responseDocument);}
+              //
+              //              for (ONOXMLElement *objectXML in objectsXML) {
+              //                  BOOL shouldBeAdded = YES;
+              //                  id obj = [[_objClass alloc] initWithXML:objectXML];
+              //
+              //                  for (OSCBaseObject *baseObj in _objects) {
+              //                      if ([obj isEqual:baseObj]) {
+              //                          shouldBeAdded = NO;
+              //                          break;
+              //                      }
+              //                  }
+              //                  if (shouldBeAdded) {
+              //                      [_objects addObject:obj];
+              //                  }
+              //              }
+              //
+              //              if (_needAutoRefresh) {
+              //                  [_userDefaults setObject:_lastRefreshTime forKey:_kLastRefreshTime];
+              //              }
+              //
+//                            dispatch_async(dispatch_get_main_queue(), ^{
+//                                if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
+//                                else {
+//                                    if (_page == 0 && objectsXML.count == 0) {
+//                                        _lastCell.status = LastCellStatusEmpty;
+//                                    } else if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
+//                                        _lastCell.status = LastCellStatusFinished;
+//                                    } else {
+//                                        _lastCell.status = LastCellStatusMore;
+//                                    }
+//                                }
+              //
+                    self.lastCell.status = LastCellStatusFinished;
+              
+                                if (self.tableView.mj_header.isRefreshing) {
+                                    [self.tableView.mj_header endRefreshing];
+                                }
+              //
+                    [self.tableView reloadData];
+              //              });
+          }
+          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *HUD = [Utils createHUD];
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+              
+              [HUD hide:YES afterDelay:1];
+              
+              self.lastCell.status = LastCellStatusError;
+              if (self.tableView.mj_header.isRefreshing) {
+                  [self.tableView.mj_header endRefreshing];
+              }
+              [self.tableView reloadData];
+          }
+     ];
+}
 
 #pragma mark - banner delegate 
 /** 点击banner触发 */

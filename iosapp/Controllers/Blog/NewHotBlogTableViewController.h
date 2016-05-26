@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface NewHotBlogTableViewController : UITableViewController
+#import "OSCObjsViewController.h"
+@interface NewHotBlogTableViewController : OSCObjsViewController
 
 @end
