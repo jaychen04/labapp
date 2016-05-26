@@ -30,6 +30,7 @@
 #import "UMSocial.h"
 #import "UIBarButtonItem+Badge.h"
 #import "AppDelegate.h"
+#import "OSCQuestion.h"
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -148,6 +149,25 @@
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"帖子详情";
     _detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, post.postID];
+    _tag = @"post";
+    _detailsClass = [OSCPostDetails class];
+    _loadMethod = @selector(loadPostDetails:);
+    
+    return self;
+}
+
+- (instancetype)initWithQuestion:(OSCQuestion *)question
+{
+    self = [super initWithModeSwitchButton:YES];
+    if (!self) {return nil;}
+    
+    _commentType = CommentTypePost;
+    _favoriteType = FavoriteTypeTopic;
+    _objectID = question.Id;
+    
+    self.hidesBottomBarWhenPushed = YES;
+    self.navigationItem.title = @"帖子详情";
+    _detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, question.Id];
     _tag = @"post";
     _detailsClass = [OSCPostDetails class];
     _loadMethod = @selector(loadPostDetails:);

@@ -26,17 +26,15 @@
     [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
     _buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
     
-    _questListCtl = [[QuesListViewController alloc] initWithQuestionType:1];
-    _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
-//    [_questListCtl.questions removeAllObjects];
-    [self addChildViewController:_questListCtl];
-    [self.tableSubView addSubview:_questListCtl.view];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    //
+
+    _questListCtl = [[QuesListViewController alloc] initWithQuestionType:1];
+    _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
+    [self addChildViewController:_questListCtl];
+    [self.tableSubView addSubview:_questListCtl.view];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,17 +56,22 @@
         }
     }];
     
-    [self removeFromParentViewController];
+//    [self removeFromParentViewController];
 //    [self.tableSubView removeFromSuperview];
     
-    _questListCtl = [[QuesListViewController alloc] initWithQuestionType:tagNumber];
-    _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
-//    [_questListCtl.questions removeAllObjects];
+//    _questListCtl = [[QuesListViewController alloc] initWithQuestionType:tagNumber];
+//    _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
+
 //    [self addChildViewController:_questListCtl];
-    [self.tableSubView addSubview:_questListCtl.view];
-    [_questListCtl.tableView reloadData];
+//    [self.tableSubView addSubview:_questListCtl.view];
+//    [_questListCtl.tableView reloadData];
     
-    NSLog(@"按钮 = %ld", tagNumber);
+    
+    _questListCtl.paraDic = @{
+      @"catalog"   : @(tagNumber),
+      @"pageToken" : @""
+      };
+    [_questListCtl refresh];
 }
 
 #pragma mark - 按钮设置边框、颜色

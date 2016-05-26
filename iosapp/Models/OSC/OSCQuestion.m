@@ -10,6 +10,10 @@
 
 @implementation OSCQuestion
 
-//
++ (NSDictionary *)replacedKeyFromPropertyName {
+    return @{
+             @"Id" : @"id"
+             };
+}
 
 @end
