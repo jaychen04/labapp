@@ -7,14 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OSCNewHotBlog.h"
 
 @interface NewHotBlogTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *tagIv;
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *viewCountLabel;
+
+- (void)setNewHotBlogContent:(OSCNewHotBlog *)blog;
 
 @end
