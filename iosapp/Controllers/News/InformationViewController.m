@@ -9,11 +9,18 @@
 #import "InformationViewController.h"
 #import "TokenManager.h"
 #import "SDCycleScrollView.h"
+#import "enumList.h"
+#import "ActivityDetailsWithBarViewController.h"
+#import "DetailsViewController.h"
+#import "ActivityDetailsWithBarViewController.h"
 #import "InformationTableViewCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
 #import "OSCInformation.h"
 #import "OSCBanner.h"
+#import "OSCSoftware.h"
+#import "OSCNewHotBlog.h"
+#import "OSCPost.h"
 
 #import <ReactiveCocoa.h>
 #import <MJExtension.h>
@@ -167,6 +174,58 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    OSCInformation* informationModel = self.dataModels[indexPath.row];
+    [self pushDetailInformationVC:informationModel];
+}
+
+#pragma mark - 跳转操作
+
+-(void)pushDetailInformationVC:(OSCInformation* )model{
+    switch (model.type) {
+        case InformationTypeLinkNews:{
+            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            break;
+        }
+            
+        case InformationTypeSoftWare:{
+            OSCSoftware* softWare = [OSCSoftware new];
+            softWare.name = model.title;
+            softWare.url = [NSURL URLWithString:model.href];
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:softWare];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+            break;
+        }
+            
+        case InformationTypeForum:{
+            OSCPost* post = [OSCPost new];
+            post.postID = model.id;
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+            break;
+        }
+            
+        case InformationTypeBlog:{
+            OSCNewHotBlog* blog = [[OSCNewHotBlog alloc]init];
+            blog.id = model.id;
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNewHotBlog:blog];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+            break;
+        }
+            
+        case InformationTypeTranslation:{
+            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            break;
+        }
+            
+        case InformationTypeActivity:{
+            ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:model.id];
+            [self.navigationController pushViewController:activityVC animated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark -- networking Delegate
@@ -216,13 +275,57 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 #pragma mark - banner delegate 
 /** 点击banner触发 */
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
-
-}
-/** 滚动banner触发 */
--(void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didScrollToIndex:(NSInteger)index{
-
+    OSCBanner* bannerModel = self.bannerModels[index];
+    [self pushConcreteViewController:bannerModel];
 }
 
+-(void)pushConcreteViewController:(OSCBanner* )model{
+    switch (model.type) {
+        case InformationTypeLinkNews:{
+            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            break;
+        }
+            
+        case InformationTypeSoftWare:{
+            OSCSoftware* softWare = [OSCSoftware new];
+            softWare.name = model.name;
+            softWare.url = [NSURL URLWithString:model.href];
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:softWare];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+            break;
+        }
+            
+        case InformationTypeForum:{
+            OSCPost* post = [OSCPost new];
+            post.postID = model.id;
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+            break;
+        }
+            
+        case InformationTypeBlog:{
+            OSCNewHotBlog* blog = [[OSCNewHotBlog alloc]init];
+            blog.id = model.id;
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNewHotBlog:blog];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+            break;
+        }
+            
+        case InformationTypeTranslation:{
+            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            break;
+        }
+            
+        case InformationTypeActivity:{
+            ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:model.id];
+            [self.navigationController pushViewController:activityVC animated:YES];
+            break;
+        }
+            
+        default:
+            break;
+    }
+}
 
 #pragma mark - memory warning
 

@@ -7,11 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef NS_ENUM (NSInteger , BannerType){
-    BannerTypeNews = 1,//资讯
-    BannerTypeBlog,//博客
-    BannerTypeActivity//活动
-};
+#import "enumList.h"
 
 @interface OSCBanner : NSObject
 
@@ -23,7 +19,7 @@ typedef NS_ENUM (NSInteger , BannerType){
 
 @property (nonatomic,strong) NSString* href;
 
-@property (nonatomic,assign) BannerType type;
+@property (nonatomic,assign) InformationType type;
 
 @property (nonatomic,assign) NSInteger id;
 

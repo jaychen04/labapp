@@ -7,16 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef NS_ENUM(NSUInteger, InformationType)
-{
-    InformationTypeLinkNews,//链接新闻
-    InformationTypeSoftWare,//软件推荐
-    InformationTypeForum,//讨论区帖子
-    InformationTypeBlog,//博客
-    InformationTypeTranslation,//翻译文章
-    InformationTypeActivityType//活动类型
-};
+#import "enumList.h"
 
 @interface OSCInformation : NSObject
 

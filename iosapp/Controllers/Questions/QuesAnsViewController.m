@@ -48,6 +48,11 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     });
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dawnAndNight" object:nil];
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -75,7 +80,9 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 
 }
 
+
 #pragma mark - 设置颜色
+
 - (void)setColorForSubViews
 {
     self.tableView.backgroundColor = [UIColor themeColor];
@@ -209,7 +216,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     NSInteger tagNumber = sender.tag;
     NSArray* dataSource = self.dataModels[tagNumber];
     
-    [_buttons enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.buttons enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == tagNumber-1) {
             [self setButtonBoradWidthAndColor:obj isSelected:YES];
         } else {
@@ -255,10 +262,13 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 	return _dataModels;
 }
 
-
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dawnAndNight" object:nil];
+- (NSArray *)buttons {
+	if(_buttons == nil) {
+		_buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
+	}
+    return _buttons;
 }
+
+
 
 @end
