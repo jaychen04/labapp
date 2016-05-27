@@ -10,7 +10,9 @@
 
 #import "Utils.h"
 #import "QuesAnsTableViewCell.h"
+#import "OSCPost.h"
 #import "OSCQuestion.h"
+#import "DetailsViewController.h"
 
 #import <AFNetworking.h>
 #import <MJRefresh.h>
@@ -147,6 +149,14 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSInteger currentIndex = self.selectedBtn.tag;
+    NSArray* dataSource = self.dataModels[currentIndex];
+    OSCQuestion* question = dataSource[indexPath.row];
+    OSCPost* post = [OSCPost new];
+    post.postID = question.Id;
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 #pragma mark - 改变selected Btn && 切换数据源 && 选择性发送请求
