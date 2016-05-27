@@ -388,6 +388,7 @@
         }
         case 4: {
             ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
+            myActivitiesVc.navigationItem.title = @"我的活动";
             myActivitiesVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:myActivitiesVc animated:YES];
             break;
