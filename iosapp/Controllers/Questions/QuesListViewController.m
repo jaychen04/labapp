@@ -176,6 +176,11 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     QuesAnsCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
+    cell.contentView.backgroundColor = [UIColor newCellColor];
+    cell.titleLabel.textColor = [UIColor newTitleColor];
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     if (_questions.count > 0) {
         OSCQuestion *question = _questions[indexPath.row];
         [cell setcontentForQuestionsAns:question];

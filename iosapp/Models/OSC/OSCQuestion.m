@@ -7,10 +7,10 @@
 //
 
 #import "OSCQuestion.h"
+#import <MJExtension.h>
 
 @implementation OSCQuestion
-
-+ (NSDictionary *)replacedKeyFromPropertyName {
++(NSDictionary *)mj_replacedKeyFromPropertyName{
     return @{
              @"Id" : @"id"
              };

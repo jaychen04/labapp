@@ -153,7 +153,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 #pragma mark -- DIY_headerView
 - (UIView*)setUpHeaderViewWithSectionTitle:(NSString*)title iconUrl:(NSURL*)iconUrl {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
-    headerView.backgroundColor = [UIColor colorWithHex:0xffffff];
+    headerView.backgroundColor = [UIColor newCellColor];
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
     titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
@@ -196,7 +196,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     NewHotBlogTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
     cell.backgroundColor = [UIColor themeColor];
-    cell.titleLabel.textColor = [UIColor titleColor];
+    cell.titleLabel.textColor = [UIColor newTitleColor];
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
