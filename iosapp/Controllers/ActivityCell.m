@@ -17,7 +17,7 @@
     if (self) {
         self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         self.backgroundColor = [UIColor themeColor];
-        
+        self.contentView.backgroundColor = [UIColor newCellColor];
         [self initSubviews];
         [self setLayout];
     }

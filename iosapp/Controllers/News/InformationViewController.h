@@ -10,4 +10,6 @@
 
 @interface InformationViewController : OSCObjsViewController
 
+- (void)dawnAndNightMode;
+
 @end

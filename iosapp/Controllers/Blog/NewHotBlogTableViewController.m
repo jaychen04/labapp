@@ -50,6 +50,15 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     return self;
 }
 
+- (void)dawnAndNightMode
+{
+    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.separatorColor = [UIColor separatorColor];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -61,6 +70,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                                                bundle:[NSBundle mainBundle]]
      
          forCellReuseIdentifier:reuseIdentifier];
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     _newblogParaDic = @{@"catalog":@2};
 }
@@ -164,7 +174,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     [headerView addSubview:titleLabel];
     
     UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
-    lineView.backgroundColor = [UIColor colorWithHex:0xd2d2d2];
+    lineView.backgroundColor = [UIColor separatorColor];
     [headerView addSubview:lineView];
     
     return headerView;
@@ -195,6 +205,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NewHotBlogTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
+    cell.contentView.backgroundColor = [UIColor newCellColor];
     cell.backgroundColor = [UIColor themeColor];
     cell.titleLabel.textColor = [UIColor newTitleColor];
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];

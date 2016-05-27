@@ -39,32 +39,60 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 
 #pragma mark - life cycle
 
+- (void)dawnAndNightMode:(NSNotificationCenter*)center
+{
+    [self setColorForSubViews];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
     _buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
     self.selectedBtn = _askQuesButton;
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.tableView.separatorColor = [UIColor separatorColor];
+        [self.tableView reloadData];
+    });
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setColorForSubViews];
 
     [self settingSomething];
     [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
     [self.tableView.mj_header beginRefreshing];
+    
+    self.tableView.separatorColor = [UIColor separatorColor];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
+
 }
 
-#pragma mark - setting Something
-
--(void)settingSomething{
+#pragma mark - 设置颜色
+- (void)setColorForSubViews
+{
+    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.separatorColor = [UIColor separatorColor];
+    self.buttonViewLine.backgroundColor = [UIColor separatorColor];
     self.buttonView.backgroundColor = [UIColor newCellColor];
+    
     _askQuesButton.backgroundColor = [UIColor titleBarColor];
     _shareButton.backgroundColor = [UIColor titleBarColor];
     _synthButton.backgroundColor = [UIColor titleBarColor];
     _jobButton.backgroundColor = [UIColor titleBarColor];
     _officeButton.backgroundColor = [UIColor titleBarColor];
-    
+}
+
+#pragma mark - setting Something
+
+-(void)settingSomething{
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.estimatedRowHeight = 105;
@@ -225,6 +253,12 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
         _dataModels = @[@[@"dataModelsPlaceholder"],@[],@[],@[],@[],@[]].mutableCopy;
 	}
 	return _dataModels;
+}
+
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dawnAndNight" object:nil];
 }
 
 @end
