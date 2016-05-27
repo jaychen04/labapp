@@ -168,19 +168,21 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
        parameters:paraMutableDic.copy
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //              NSLog(@"res:%@",responseObject);
-              [self handleData:responseObject isRefresh:isRefresh];
-              NSDictionary* resultDic = responseObject[@"result"];
-              NSArray* items = resultDic[@"items"];
-              self.nextToken = resultDic[@"nextPageToken"];
-//              NSLog(@"%@",self.nextToken);
-              dispatch_async(dispatch_get_main_queue(), ^{
-                  self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
-                  
-                  if (self.tableView.mj_header.isRefreshing) {
-                      [self.tableView.mj_header endRefreshing];
-                  }
-                  [self.tableView reloadData];
-              });
+              if([responseObject[@"code"]integerValue] == 1) {
+                  [self handleData:responseObject isRefresh:isRefresh];
+                  NSDictionary* resultDic = responseObject[@"result"];
+                  NSArray* items = resultDic[@"items"];
+                  self.nextToken = resultDic[@"nextPageToken"];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
+                      
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      [self.tableView reloadData];
+                  });
+              }
+              
             }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
