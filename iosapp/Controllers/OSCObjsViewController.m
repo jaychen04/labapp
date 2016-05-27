@@ -82,8 +82,8 @@
     if (_isJsonDataVc) {
         _manager = [AFHTTPRequestOperationManager OSCJsonManager];
 //        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];
-        if ([_netWorkingdelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
-            [_netWorkingdelegate getJsonDataWithParametersDic:_parametersDic isRefresh:YES];
+        if ([_netWorkingDelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
+            [_netWorkingDelegate getJsonDataWithParametersDic:_parametersDic isRefresh:YES];
         }
     }else {
         _manager = [AFHTTPRequestOperationManager OSCManager];
@@ -158,8 +158,8 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
         if (_isJsonDataVc) {
-            if ([_netWorkingdelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
-                [_netWorkingdelegate getJsonDataWithParametersDic:_parametersDic isRefresh:YES];
+            if ([_netWorkingDelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
+                [_netWorkingDelegate getJsonDataWithParametersDic:_parametersDic isRefresh:YES];
             }
 //            [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];;
         }else {
@@ -194,8 +194,8 @@
     _manager.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     
     if (_isJsonDataVc) {
-        if ([_netWorkingdelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
-            [_netWorkingdelegate getJsonDataWithParametersDic:_parametersDic isRefresh:NO];
+        if ([_netWorkingDelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
+            [_netWorkingDelegate getJsonDataWithParametersDic:_parametersDic isRefresh:NO];
         }
 //        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:NO];
     }else {
