@@ -9,6 +9,7 @@
 #import "InformationViewController.h"
 #import "TokenManager.h"
 #import "SDCycleScrollView.h"
+#import "ActivityDetailsWithBarViewController.h"
 #import "InformationTableViewCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 
@@ -150,6 +151,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
 }
 
 #pragma mark -- networking Delegate

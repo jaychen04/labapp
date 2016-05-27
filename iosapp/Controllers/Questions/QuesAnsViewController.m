@@ -39,15 +39,6 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 
 #pragma mark - life cycle
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
-    _buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
-    self.selectedBtn = _askQuesButton;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -59,6 +50,9 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 #pragma mark - setting Something
 
 -(void)settingSomething{
+    [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
+    self.selectedBtn = _askQuesButton;
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.estimatedRowHeight = 105;
@@ -168,7 +162,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     NSInteger tagNumber = sender.tag;
     NSArray* dataSource = self.dataModels[tagNumber];
     
-    [_buttons enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+    [self.buttons enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == tagNumber-1) {
             [self setButtonBoradWidthAndColor:obj isSelected:YES];
         } else {
@@ -212,6 +206,13 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
         _dataModels = @[@[@"dataModelsPlaceholder"],@[],@[],@[],@[],@[]].mutableCopy;
 	}
 	return _dataModels;
+}
+
+- (NSArray *)buttons {
+	if(_buttons == nil) {
+		_buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
+	}
+	return _buttons;
 }
 
 @end
