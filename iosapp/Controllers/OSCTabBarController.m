@@ -94,7 +94,10 @@
                 UITableViewController *table = obj;
                 [table.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
                 [table.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
-                [table.tableView reloadData];
+                if([table isKindOfClass:[UITableViewController class]]){
+                    [table.tableView reloadData];
+                }
+                
             }];
 
         } else if (idx == 1) {

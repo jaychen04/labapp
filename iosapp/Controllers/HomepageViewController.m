@@ -23,6 +23,8 @@
 #import "TeamCenter.h"
 #import "AppDelegate.h"
 #import "FeedBackViewController.h"
+#import "SettingsPage.h"
+#import "ActivitiesViewController.h"
 
 #import "UIScrollView+ScalableCover.h"
 #import "UIFont+FontAwesome.h"
@@ -307,8 +309,8 @@
     
     cell.backgroundColor = [UIColor cellsColor];//colorWithHex:0xF9F9F9
     
-    cell.textLabel.text = @[@"消息", @"博客", @"团队", @"反馈"][indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"me-feedback"][indexPath.row]];
+    cell.textLabel.text = @[@"消息", @"博客", @"团队", @"反馈", @"活动", @"设置"][indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"me-feedback", @"discover-activities", @"sidemenu_setting"][indexPath.row]];
     
     cell.textLabel.textColor = [UIColor titleColor];
     
@@ -379,9 +381,21 @@
             break;
         }
         case 3: {
-            FeedBackViewController *feedBackViewController = [FeedBackViewController new];
-            feedBackViewController.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:feedBackViewController animated:YES];
+            FeedBackViewController *fbVc = [FeedBackViewController new];
+            fbVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:fbVc animated:YES];
+            break;
+        }
+        case 4: {
+            ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
+            myActivitiesVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:myActivitiesVc animated:YES];
+            break;
+        }
+        case 5: {
+            SettingsPage *settingPage = [SettingsPage new];
+            settingPage.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:settingPage animated:YES];
             break;
         }
         default: break;
