@@ -22,7 +22,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 @property (nonatomic, strong) NSMutableArray *newsBlogObjects;
 @property (nonatomic, strong) NSMutableArray *hotBlogObjects;
-
+@property (nonatomic, strong) NSDictionary *newblogParaDic;
 @end
 
 @implementation NewHotBlogTableViewController
@@ -38,11 +38,11 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
             responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
             (weakSelf.lastCell.status = LastCellStatusMore);
         };
-//        self.objClass = [OSCInformation class];
+        //        self.objClass = [OSCInformation class];
         
         self.netWorkingDelegate = self;
         self.isJsonDataVc = YES;
-        self.parametersDic = @{@"catalog":@1};
+//        self.parametersDic = @{@"catalog":@1};
         self.needAutoRefresh = YES;
         self.refreshInterval = 21600;
         self.kLastRefreshTime = @"NewsRefreshInterval";
@@ -60,76 +60,71 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NewHotBlogTableViewCell class])
                                                bundle:[NSBundle mainBundle]]
      
-        forCellReuseIdentifier:reuseIdentifier];
+         forCellReuseIdentifier:reuseIdentifier];
     
-    [self getJSONDataWithNewBlog:@{@"catalog":@2} isRefresh:NO];
+    _newblogParaDic = @{@"catalog":@2};
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
+}
 
+
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh {
+    if (isRefresh) {
+        [self getHotBlogIsRefresh:isRefresh];
+        [self getNewBlogIsRefresh:isRefresh];
+    }else {
+        [self getNewBlogIsRefresh:isRefresh];
+    }
 }
 
 #pragma mark - 获取最热博客
--(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh {
-    NSDictionary *parameters = @{@"catalog":@1};
+-(void)getHotBlogIsRefresh:(BOOL)isRefresh {
+//    NSLog(@"hotPara:%@",@{@"catalog":@1});
     
     [self.manager GET:self.generateUrl()
-           parameters:parameters
+           parameters:@{@"catalog":@1}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  NSLog(@"res:%@",responseObject);
-                  
-                  if ([[responseObject objectForKey:@"code"]integerValue] == 1) {
-                      NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[[responseObject objectForKey:@"result"] objectForKey:@"items"]];
+//                  NSLog(@"hotres:%ld",[[responseObject[@"result"] objectForKey:@"items"] count]);
+                  if ([responseObject[@"code"]integerValue] == 1) {
+                      NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[responseObject[@"result"] objectForKey:@"items"]];
                       if (isRefresh) {
                           [_hotBlogObjects removeAllObjects];
                       }
                       [_hotBlogObjects addObjectsFromArray:blogModels];
                   }
-                  
-                  self.lastCell.status = LastCellStatusFinished;
-                  
-                  if (self.tableView.mj_header.isRefreshing) {
-                      [self.tableView.mj_header endRefreshing];
-                  }
-
                   [self.tableView reloadData];
-
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  MBProgressHUD *HUD = [Utils createHUD];
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
                   
-                  [HUD hide:YES afterDelay:1];
-                  
-                  self.lastCell.status = LastCellStatusError;
-                  if (self.tableView.mj_header.isRefreshing) {
-                      [self.tableView.mj_header endRefreshing];
-                  }
-                  [self.tableView reloadData];
               }
      ];
 }
-
 #pragma mark - 获取最新博客
-- (void)getJSONDataWithNewBlog:(NSDictionary *)paraDic isRefresh:(BOOL)isRefresh
+- (void)getNewBlogIsRefresh:(BOOL)isRefresh
 {
+    if (isRefresh) {
+        _newblogParaDic = @{@"catalog":@2};
+    }
+//    NSLog(@"newPara:%@",_newblogParaDic);
+    
     [self.manager GET:self.generateUrl()
-           parameters:paraDic
+           parameters:_newblogParaDic
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  NSLog(@"res:%@",responseObject);
-                  
+//                  NSLog(@"newres:%ld",[[responseObject[@"result"] objectForKey:@"items"] count]);
                   if ([[responseObject objectForKey:@"code"]integerValue] == 1) {
-                      NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[[responseObject objectForKey:@"result"] objectForKey:@"items"]];
+                      NSDictionary* resultDic = responseObject[@"result"];
+                      NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:resultDic[@"items"]];
                       if (isRefresh) {
                           [_newsBlogObjects removeAllObjects];
                       }
                       [_newsBlogObjects addObjectsFromArray:blogModels];
+                      self.lastCell.status = blogModels.count<20?LastCellStatusFinished:LastCellStatusMore;
+                      _newblogParaDic = @{@"catalog":@2,
+                                          @"pageToken":resultDic[@"nextPageToken"]?:@""};
                   }
-                  
-                  self.lastCell.status = LastCellStatusFinished;
                   
                   if (self.tableView.mj_header.isRefreshing) {
                       [self.tableView.mj_header endRefreshing];
@@ -183,7 +178,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSMutableArray *array = section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
-
+    
     return array.count;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -219,7 +214,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSMutableArray *array = indexPath.section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
-     UILabel *label = [UILabel new];
+    UILabel *label = [UILabel new];
     label.numberOfLines = 2;
     label.lineBreakMode = NSLineBreakByWordWrapping;
     
