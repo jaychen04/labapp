@@ -59,6 +59,13 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 #pragma mark - setting Something
 
 -(void)settingSomething{
+    self.buttonView.backgroundColor = [UIColor newCellColor];
+    _askQuesButton.backgroundColor = [UIColor titleBarColor];
+    _shareButton.backgroundColor = [UIColor titleBarColor];
+    _synthButton.backgroundColor = [UIColor titleBarColor];
+    _jobButton.backgroundColor = [UIColor titleBarColor];
+    _officeButton.backgroundColor = [UIColor titleBarColor];
+    
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.estimatedRowHeight = 105;
@@ -87,6 +94,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
         [paraMutableDic setObject:self.tokens[index] forKey:@"pageToken"];
     }
     
+
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager manager];
     [manger GET:QUESTION_URL
      parameters:paraMutableDic.copy
@@ -137,6 +145,12 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     
     QuesAnsTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:QuesAnsCellIdentifier forIndexPath:indexPath];
     cell.viewModel = dataSource[indexPath.row];
+    
+    cell.contentView.backgroundColor = [UIColor newCellColor];
+    cell.backgroundColor = [UIColor themeColor];
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -188,8 +202,8 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 {
     if (isSelected) {
         button.layer.borderWidth = 1.0;
-        button.layer.borderColor = [UIColor colorWithHex:0x24CF5F].CGColor;
-        [button setTitleColor:[UIColor colorWithHex:0x24CF5F] forState:UIControlStateNormal];
+        button.layer.borderColor = [UIColor sectionButtonSelectedColor].CGColor;
+        [button setTitleColor:[UIColor sectionButtonSelectedColor] forState:UIControlStateNormal];
     } else {
         button.layer.borderWidth = 0;
         button.layer.borderColor = [UIColor colorWithHex:0xF6F6F6].CGColor;

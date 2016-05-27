@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QuesAnsViewController">
             <connections>
                 <outlet property="askQuesButton" destination="OMj-U5-Uc9" id="kYz-bz-gl0"/>
+                <outlet property="buttonView" destination="38D-YS-JW7" id="1mO-ZV-Qli"/>
                 <outlet property="jobButton" destination="zZz-fJ-Vcm" id="pFR-vp-Unq"/>
                 <outlet property="officeButton" destination="xUJ-Vc-bXl" id="Rzc-ue-e8s"/>
                 <outlet property="shareButton" destination="9De-IZ-Eum" id="iV4-af-OYM"/>

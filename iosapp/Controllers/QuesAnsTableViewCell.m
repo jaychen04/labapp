@@ -41,6 +41,8 @@
 -(void)setViewModel:(OSCQuestion *)viewModel{
     _viewModel = viewModel;
     
+    _titleLabel.textColor = [UIColor newTitleColor];
+    
     [_iconImageView loadPortrait:[NSURL URLWithString:viewModel.authorPortrait]];
     _titleLabel.text = viewModel.title;
     _descLabel.text = viewModel.body;

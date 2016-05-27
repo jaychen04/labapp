@@ -14,7 +14,9 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    
+    self.contentView.backgroundColor = [UIColor newCellColor];
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
