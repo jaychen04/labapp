@@ -351,68 +351,68 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ([Config getOwnID] == 0) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [self.navigationController pushViewController:loginVC animated:YES];
-        return;
-    }
-    
-    if (indexPath.section == 0) {
-        switch (indexPath.row) {
-            case 0: {
-                _badgeValue = 0;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                });
-                self.navigationController.tabBarItem.badgeValue = nil;
-                
-                MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
-                messageCenterVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:messageCenterVC animated:YES];
-                
-                break;
-            }
-            case 1: {
-                BlogsViewController *blogsVC = [[BlogsViewController alloc] initWithUserID:_myID];
-                blogsVC.navigationItem.title = @"我的博客";
-                blogsVC.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:blogsVC animated:YES];
-                break;
-            }
-            case 2: {
-                TeamCenter *teamCenter = [TeamCenter new];
-                teamCenter.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:teamCenter animated:YES];
-                break;
-            }
-            case 3: {
-                ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
-                myActivitiesVc.navigationItem.title = @"我的活动";
-                myActivitiesVc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:myActivitiesVc animated:YES];
-                break;
-            }
-            default: break;
-        }
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        SettingsPage *settingPage = [SettingsPage new];
+        settingPage.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:settingPage animated:YES];
     } else {
-        switch (indexPath.row) {
-            case 0: {
-                FeedBackViewController *fbVc = [FeedBackViewController new];
-                fbVc.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:fbVc animated:YES];
-                break;
+        if ([Config getOwnID] == 0) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self.navigationController pushViewController:loginVC animated:YES];
+            return;
+        }
+        
+        if (indexPath.section == 0) {
+            switch (indexPath.row) {
+                case 0: {
+                    _badgeValue = 0;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    });
+                    self.navigationController.tabBarItem.badgeValue = nil;
+                    
+                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+                    messageCenterVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:messageCenterVC animated:YES];
+                    
+                    break;
+                }
+                case 1: {
+                    BlogsViewController *blogsVC = [[BlogsViewController alloc] initWithUserID:_myID];
+                    blogsVC.navigationItem.title = @"我的博客";
+                    blogsVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:blogsVC animated:YES];
+                    break;
+                }
+                case 2: {
+                    TeamCenter *teamCenter = [TeamCenter new];
+                    teamCenter.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:teamCenter animated:YES];
+                    break;
+                }
+                case 3: {
+                    ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
+                    myActivitiesVc.navigationItem.title = @"我的活动";
+                    myActivitiesVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:myActivitiesVc animated:YES];
+                    break;
+                }
+                default: break;
             }
-            case 1: {
-                SettingsPage *settingPage = [SettingsPage new];
-                settingPage.hidesBottomBarWhenPushed = YES;
-                [self.navigationController pushViewController:settingPage animated:YES];
-                break;
+        } else {
+            switch (indexPath.row) {
+                case 0: {
+                    FeedBackViewController *fbVc = [FeedBackViewController new];
+                    fbVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:fbVc animated:YES];
+                    break;
+                }
+                
+                default: break;
             }
-            default: break;
         }
     }
-    
 }
 
 
