@@ -18,8 +18,6 @@
 @property (nonatomic, strong) QuesListViewController *generalListCtl;
 @property (nonatomic, strong) QuesListViewController *jobListCtl;
 @property (nonatomic, strong) QuesListViewController *forumListCtl;
-
-@property (nonatomic, strong) QuesListViewController *currentListCtl;
 @property (nonatomic, strong) NSArray *subVcs;
 @end
 
@@ -37,30 +35,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     _questListCtl = [[QuesListViewController alloc] initWithQuestionType:1];
-    _shareListCtl = [[QuesListViewController alloc] initWithQuestionType:2];
-    _generalListCtl = [[QuesListViewController alloc] initWithQuestionType:3];
-    _jobListCtl = [[QuesListViewController alloc] initWithQuestionType:4];
-    _forumListCtl = [[QuesListViewController alloc] initWithQuestionType:5];
+//    QuesListViewController *shareListCtl = [[QuesListViewController alloc] initWithQuestionType:2];
+//    QuesListViewController *generalListCtl = [[QuesListViewController alloc] initWithQuestionType:3];
+//    QuesListViewController *jobListCtl = [[QuesListViewController alloc] initWithQuestionType:4];
+//    QuesListViewController *forumListCtl = [[QuesListViewController alloc] initWithQuestionType:5];
     
     CGRect subViewFrame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
     _questListCtl.view.frame = subViewFrame;
-    _shareListCtl.view.frame = subViewFrame;
-    _generalListCtl.view.frame = subViewFrame;
-    _jobListCtl.view.frame = subViewFrame;
-    _forumListCtl.view.frame = subViewFrame;
+//    shareListCtl.view.frame = subViewFrame;
+//    generalListCtl.view.frame = subViewFrame;
+//    jobListCtl.view.frame = subViewFrame;
+//    forumListCtl.view.frame = subViewFrame;
     
-    _subVcs = @[_questListCtl,_shareListCtl,_generalListCtl,_jobListCtl,_forumListCtl];
+//    _subVcs = @[questListCtl,shareListCtl,generalListCtl,jobListCtl,forumListCtl];
     
     
     
     [self addChildViewController:_questListCtl];
+    
 //    [self addChildViewController:_shareListCtl];
 //    [self addChildViewController:_generalListCtl];
 //    [self addChildViewController:_jobListCtl];
 //    [self addChildViewController:_forumListCtl];
     
     [self.tableSubView addSubview:_questListCtl.view];
-    _currentListCtl = _questListCtl;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,32 +80,26 @@
         }
     }];
     
-//    [self removeFromParentViewController];
-//    [self.tableSubView removeFromSuperview];
-    
-//    _questListCtl = [[QuesListViewController alloc] initWithQuestionType:tagNumber];
-//    _questListCtl.view.frame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
 
-//    [self addChildViewController:_questListCtl];
-//    [self.tableSubView addSubview:_questListCtl.view];
-//    [_questListCtl.tableView reloadData];
     
     
-    QuesListViewController *newCurrentVc = _subVcs[tagNumber];
-    if (_currentListCtl == newCurrentVc) {
-        return;
-    }else {
-        
-        [self addChildViewController:newCurrentVc];
-        [self transitionFromViewController:_currentListCtl toViewController:newCurrentVc duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
-            if (finished) {
-                [newCurrentVc didMoveToParentViewController:self];
-                [_currentListCtl willMoveToParentViewController:nil];
-                [_currentListCtl removeFromParentViewController];
-                _currentListCtl = newCurrentVc;
-            }
-        }];
-    }
+//    QuesListViewController *newCurrentVc = _subVcs[tagNumber];
+//    if (_currentListCtl == newCurrentVc) {
+//        return;
+//    }else {
+//        
+//        [self addChildViewController:newCurrentVc];
+//        [self transitionFromViewController:_currentListCtl toViewController:newCurrentVc duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
+//            if (finished) {
+//                
+//                [newCurrentVc didMoveToParentViewController:self];
+//                [_currentListCtl willMoveToParentViewController:nil];
+//                [_currentListCtl removeFromParentViewController];
+//                _currentListCtl = newCurrentVc;
+//            }
+//        }];
+//    }
+    
     _questListCtl.paraDic = @{
       @"catalog"   : @(tagNumber),
       @"pageToken" : @""
