@@ -43,7 +43,6 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 {
     [super viewWillAppear:animated];
     
-    [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
     _buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
     self.selectedBtn = _askQuesButton;
 }
@@ -52,7 +51,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     [super viewDidLoad];
 
     [self settingSomething];
-
+    [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
     [self.tableView.mj_header beginRefreshing];
 }
 
