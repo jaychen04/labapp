@@ -10,7 +10,6 @@
 
 @interface QuesAnsViewController : UIViewController
 
-@property (nonatomic, weak) IBOutlet UIView   *tableSubView;
 @property (nonatomic, weak) IBOutlet UIView   *buttonView;
 @property (nonatomic, weak) IBOutlet UIButton *askQuesButton;
 @property (nonatomic, weak) IBOutlet UIButton *shareButton;

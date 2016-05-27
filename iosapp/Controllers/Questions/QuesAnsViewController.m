@@ -145,6 +145,12 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     
     QuesAnsTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:QuesAnsCellIdentifier forIndexPath:indexPath];
     cell.viewModel = dataSource[indexPath.row];
+    
+    cell.contentView.backgroundColor = [UIColor newCellColor];
+    cell.backgroundColor = [UIColor themeColor];
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
