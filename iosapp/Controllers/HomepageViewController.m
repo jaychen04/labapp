@@ -23,6 +23,8 @@
 #import "TeamCenter.h"
 #import "AppDelegate.h"
 #import "FeedBackViewController.h"
+#import "SettingsPage.h"
+#import "ActivitiesViewController.h"
 
 #import "UIScrollView+ScalableCover.h"
 #import "UIFont+FontAwesome.h"
@@ -307,8 +309,14 @@
     
     cell.backgroundColor = [UIColor cellsColor];//colorWithHex:0xF9F9F9
     
-    cell.textLabel.text = @[@"消息", @"博客", @"团队", @"反馈"][indexPath.row];
-    cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"me-feedback"][indexPath.row]];
+    if (indexPath.section == 0) {
+        cell.textLabel.text = @[@"消息", @"博客", @"团队", @"活动"][indexPath.row];
+        cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"discover-activities"][indexPath.row]];
+    } else {
+        cell.textLabel.text = @[@"反馈", @"设置"][indexPath.row];
+        cell.imageView.image = [UIImage imageNamed:@[@"me-feedback", @"sidemenu_setting"][indexPath.row]];
+    }
+    
     
     cell.textLabel.textColor = [UIColor titleColor];
     
@@ -337,54 +345,73 @@
     return cell;
 }
 
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if ([Config getOwnID] == 0) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [self.navigationController pushViewController:loginVC animated:YES];
-        return;
-    }
-    
-    switch (indexPath.row) {
-        case 0: {
-            _badgeValue = 0;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-            });
-            self.navigationController.tabBarItem.badgeValue = nil;
-            
-            MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
-            messageCenterVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:messageCenterVC animated:YES];
-            
-            break;
+    if (indexPath.section == 1 && indexPath.row == 1) {
+        SettingsPage *settingPage = [SettingsPage new];
+        settingPage.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:settingPage animated:YES];
+    } else {
+        if ([Config getOwnID] == 0) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self.navigationController pushViewController:loginVC animated:YES];
+            return;
         }
-        case 1: {
-            BlogsViewController *blogsVC = [[BlogsViewController alloc] initWithUserID:_myID];
-            blogsVC.navigationItem.title = @"我的博客";
-            blogsVC.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:blogsVC animated:YES];
-            break;
+        
+        if (indexPath.section == 0) {
+            switch (indexPath.row) {
+                case 0: {
+                    _badgeValue = 0;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    });
+                    self.navigationController.tabBarItem.badgeValue = nil;
+                    
+                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+                    messageCenterVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:messageCenterVC animated:YES];
+                    
+                    break;
+                }
+                case 1: {
+                    BlogsViewController *blogsVC = [[BlogsViewController alloc] initWithUserID:_myID];
+                    blogsVC.navigationItem.title = @"我的博客";
+                    blogsVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:blogsVC animated:YES];
+                    break;
+                }
+                case 2: {
+                    TeamCenter *teamCenter = [TeamCenter new];
+                    teamCenter.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:teamCenter animated:YES];
+                    break;
+                }
+                case 3: {
+                    ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
+                    myActivitiesVc.navigationItem.title = @"我的活动";
+                    myActivitiesVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:myActivitiesVc animated:YES];
+                    break;
+                }
+                default: break;
+            }
+        } else {
+            switch (indexPath.row) {
+                case 0: {
+                    FeedBackViewController *fbVc = [FeedBackViewController new];
+                    fbVc.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:fbVc animated:YES];
+                    break;
+                }
+                
+                default: break;
+            }
         }
-        case 2: {
-            TeamCenter *teamCenter = [TeamCenter new];
-            teamCenter.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:teamCenter animated:YES];
-            break;
-        }
-        case 3: {
-            FeedBackViewController *feedBackViewController = [FeedBackViewController new];
-            feedBackViewController.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:feedBackViewController animated:YES];
-            break;
-        }
-        default: break;
     }
 }
 

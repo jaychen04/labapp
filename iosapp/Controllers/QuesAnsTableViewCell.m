@@ -35,6 +35,7 @@
     _iconImageView.layer.rasterizationScale = _iconImageView.layer.contentsScale;
     
     _authorLabel.preferredMaxLayoutWidth = 150;
+    self.contentView.backgroundColor = [UIColor newCellColor];
 }
 
 #pragma mark - setting VM
