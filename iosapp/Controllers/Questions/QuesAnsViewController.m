@@ -145,6 +145,10 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
         cell.viewModel = dataSource[indexPath.row];
     }];
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 
 #pragma mark - 改变selected Btn && 切换数据源 && 选择性发送请求
 

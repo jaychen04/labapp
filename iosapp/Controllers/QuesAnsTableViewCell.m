@@ -28,11 +28,13 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-//    使用栅格化实现高效圆角
+
     _iconImageView.layer.masksToBounds = true;
     _iconImageView.layer.cornerRadius = _iconImageView.frame.size.width * 0.5;
     _iconImageView.layer.shouldRasterize = true;
     _iconImageView.layer.rasterizationScale = _iconImageView.layer.contentsScale;
+    
+    _authorLabel.preferredMaxLayoutWidth = 150;
 }
 
 #pragma mark - setting VM
