@@ -118,7 +118,6 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
             }
             NSLog(@"%@",error);
         }];
-
 }
 
 
