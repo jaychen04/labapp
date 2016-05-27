@@ -39,10 +39,9 @@
 {
     InformationViewController *newsViewCtl;
     NewHotBlogTableViewController *newHotBlogCtl;
-    BlogsViewController *blogViewCtl;
-    BlogsViewController *recommendBlogViewCtl;
+//    BlogsViewController *blogViewCtl;
+//    BlogsViewController *recommendBlogViewCtl;
     QuesAnsViewController *quesViewCtl;
-    
     ActivitiesViewController *activitiesViewCtl;
     
     TweetsViewController *newTweetViewCtl;
@@ -75,8 +74,8 @@
 {
     newsViewCtl.view.backgroundColor = [UIColor themeColor];
     newHotBlogCtl.view.backgroundColor = [UIColor themeColor];
-    blogViewCtl.view.backgroundColor = [UIColor themeColor];
-    recommendBlogViewCtl.view.backgroundColor = [UIColor themeColor];
+//    blogViewCtl.view.backgroundColor = [UIColor themeColor];
+//    recommendBlogViewCtl.view.backgroundColor = [UIColor themeColor];
     quesViewCtl.view.backgroundColor = [UIColor themeColor];
     activitiesViewCtl.view.backgroundColor = [UIColor themeColor];
     
@@ -135,6 +134,7 @@
     
 //    newsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews];
     newsViewCtl = [[InformationViewController alloc]  init];
+    newsViewCtl.isJsonDataVc = YES;
 //    newsViewCtl.parametersDic = @{};
     
     
@@ -142,12 +142,12 @@
 //    hotNewsViewCtl = [[NewsViewController alloc]  init];
 //    hotNewsViewCtl.isJsonDataVc = YES;
     newHotBlogCtl = [[NewHotBlogTableViewController alloc]  init];
-
+    newHotBlogCtl.isJsonDataVc = YES;
     
     
-    blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
-    blogViewCtl.isJsonDataVc = NO;
-    recommendBlogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended];
+//    blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
+//    blogViewCtl.isJsonDataVc = NO;
+//    recommendBlogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended];
     quesViewCtl = [QuesAnsViewController new];
     activitiesViewCtl = [[ActivitiesViewController alloc] initWithUID:0];
     
@@ -157,8 +157,9 @@
     
     newsViewCtl.needCache = YES;
     newHotBlogCtl.needCache = YES;
-    blogViewCtl.needCache = YES;
-    recommendBlogViewCtl.needCache = YES;
+    activitiesViewCtl.needCache = YES;
+//    blogViewCtl.needCache = YES;
+//    recommendBlogViewCtl.needCache = YES;
     
     newTweetViewCtl.needCache = YES;
     hotTweetViewCtl.needCache = YES;
