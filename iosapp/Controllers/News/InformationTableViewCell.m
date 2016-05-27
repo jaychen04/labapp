@@ -53,6 +53,7 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
 -(void)setViewModel:(OSCInformation* )viewModel{
     _viewModel = viewModel;
 
+    _titleLabel.textColor = [UIColor newTitleColor];
     if (viewModel.recommend) {//"推荐"新闻
         _recommendImageView.hidden = NO;
         _titleLabel.text = [NSString stringWithFormat:@"     %@",viewModel.title];

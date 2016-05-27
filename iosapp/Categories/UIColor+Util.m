@@ -32,15 +32,15 @@
 + (UIColor *)themeColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:0.17 green:0.17 blue:0.17 alpha:1.0];
+        return [UIColor colorWithHex:0x2c2c2c];
     }
-    return [UIColor colorWithRed:235.0/255 green:235.0/255 blue:243.0/255 alpha:1.0];
+    return [UIColor colorWithHex:0xebebf3];
 }
 
 + (UIColor *)nameColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:37.0/255 green:147.0/255 blue:58.0/255 alpha:1.0];
+        return [UIColor colorWithHex:0x25933a];
     }
     return [UIColor colorWithHex:0x087221];
 }
@@ -48,7 +48,7 @@
 + (UIColor *)titleColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+        return [UIColor colorWithHex:0xcdcdcd];
     }
     return [UIColor blackColor];
 }
@@ -56,31 +56,31 @@
 + (UIColor *)separatorColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:0.234 green:0.234 blue:0.234 alpha:1.0];
+        return [UIColor colorWithHex:0x3c3c3c];
     }
-    return [UIColor colorWithRed:217.0/255 green:217.0/255 blue:223.0/255 alpha:1.0];
+    return [UIColor colorWithHex:0xd9d9df];
 }
 
 + (UIColor *)cellsColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:0.17 green:0.17 blue:0.17 alpha:1.0];
+        return [UIColor colorWithHex:0x2c2c2c];
     }
     return [UIColor whiteColor];
 }
 
-+ (UIColor *)titleBarColor
++ (UIColor *)titleBarColor//标题滚动按钮背景色
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return  [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+        return  [UIColor colorWithHex:0x333333];
     }
-    return [UIColor colorWithHex:0xE1E1E1];
+    return [UIColor colorWithHex:0xf6f6f6];
 }
 
 + (UIColor *)contentTextColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return  [UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:1.0];
+        return  [UIColor colorWithHex:0xcdcdcd];
     }
     return [UIColor colorWithHex:0x272727];
 }
@@ -90,7 +90,7 @@
 {
     
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return  [UIColor colorWithRed:0.067 green:0.282 blue:0.094 alpha:1.0];
+        return  [UIColor colorWithHex:0x114818];//[UIColor colorWithRed:0.067 green:0.282 blue:0.094 alpha:1.0];
     }
     return [UIColor colorWithHex:0xE1E1E1];
 }
@@ -98,7 +98,7 @@
 + (UIColor *)navigationbarColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:0.067 green:0.282 blue:0.094 alpha:1.0];
+        return [UIColor colorWithHex:0x114818];
     }
     return [UIColor colorWithHex:0x15A230];//0x009000
 }
@@ -106,15 +106,15 @@
 + (UIColor *)selectCellSColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:23.0/255 green:23.0/255 blue:23.0/255 alpha:1.0];
+        return [UIColor colorWithHex:0x171717];
     }
-    return [UIColor colorWithRed:203.0/255 green:203.0/255 blue:203.0/255 alpha:1.0];
+    return [UIColor colorWithHex:0xcbcbcb];
 }
 
 + (UIColor *)labelTextColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:74.0/255 green:74.0/255 blue:74.0/255 alpha:1.0];
+        return [UIColor colorWithHex:0x4a4a4a];
     }
     return [UIColor whiteColor];
 }
@@ -122,15 +122,15 @@
 + (UIColor *)teamButtonColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:1.0];
+        return [UIColor colorWithHex:0x333333];
     }
-    return [UIColor colorWithRed:251.0/255 green:251.0/255 blue:253.0/255 alpha:1.0];
+    return [UIColor colorWithHex:0xfbfbfd];
 }
 
 + (UIColor *)infosBackViewColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:24.0/255 green:24.0/255 blue:24.0/255 alpha:0.6];
+        return [UIColor colorWithHex:0x181818 alpha:0.6];
     }
     return [UIColor clearColor];
 }
@@ -138,7 +138,7 @@
 + (UIColor *)lineColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:18.0/255 green:144.0/255 blue:105.0/255 alpha:0.6];
+        return [UIColor colorWithHex:0x129069 alpha:0.6];
     }
     return [UIColor colorWithHex:0x2bc157];
 }
@@ -146,7 +146,7 @@
 + (UIColor *)borderColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithRed:18.0/255 green:144.0/255 blue:105.0/255 alpha:0.6];
+        return [UIColor colorWithHex:0x129069 alpha:0.6];
     }
     return [UIColor lightGrayColor];
 }
@@ -158,5 +158,37 @@
     }
     return [UIColor colorWithHex:0x21B04B];
 }
+
+/*
+ 新版 日夜间颜色
+ */
+/* 新 cell.contentView 背景色*/
++ (UIColor *)newCellColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithHex:0x2c2c2c];
+    }
+    return [UIColor colorWithHex:0xffffff];
+}
+
+/* 新“综合”页面cell.titleLable 标题字体颜色*/
++ (UIColor *)newTitleColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithHex:0xcdcdcd];
+    }
+    return [UIColor colorWithHex:0x111111];
+}
+
+///* 新section 问答 按钮颜色*/
+//+ (UIColor *)sectionColor
+//{
+//    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+//        return [UIColor colorWithHex:0x2c2c2c];
+//    }
+//    return [UIColor colorWithHex:0xffffff];
+//}
+
+/* 新 */
 
 @end

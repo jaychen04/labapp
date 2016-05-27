@@ -32,5 +32,7 @@
 + (UIColor *)borderColor;
 + (UIColor *)refreshControlColor;
 
++ (UIColor *)newCellColor;
++ (UIColor *)newTitleColor;
 
 @end

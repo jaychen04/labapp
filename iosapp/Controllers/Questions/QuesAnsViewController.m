@@ -34,6 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     _questListCtl = [[QuesListViewController alloc] initWithQuestionType:1];
 //    QuesListViewController *shareListCtl = [[QuesListViewController alloc] initWithQuestionType:2];
 //    QuesListViewController *generalListCtl = [[QuesListViewController alloc] initWithQuestionType:3];
@@ -59,6 +60,13 @@
 //    [self addChildViewController:_forumListCtl];
     
     [self.tableSubView addSubview:_questListCtl.view];
+    
+    self.buttonView.backgroundColor = [UIColor newCellColor];
+    [_buttons enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        {
+            obj.backgroundColor = [UIColor colorWithHex:0x333333];
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning {
