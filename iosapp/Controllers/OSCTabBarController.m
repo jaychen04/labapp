@@ -94,7 +94,10 @@
                 UITableViewController *table = obj;
                 [table.navigationController.navigationBar setBarTintColor:[UIColor navigationbarColor]];
                 [table.tabBarController.tabBar setBarTintColor:[UIColor titleBarColor]];
-                [table.tableView reloadData];
+                if([table isKindOfClass:[UITableViewController class]]){
+                    [table.tableView reloadData];
+                }
+                
             }];
 
         } else if (idx == 1) {
@@ -467,10 +470,10 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     
     //去掉侧边栏
-    viewController.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"]
-                                                                                        style:UIBarButtonItemStylePlain
-                                                                                       target:self
-                                                                                       action:@selector(onClickMenuButton)];
+//    viewController.navigationItem.leftBarButtonItem  = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"navigationbar-sidebar"]
+//                                                                                        style:UIBarButtonItemStylePlain
+//                                                                                       target:self
+//                                                                                       action:@selector(onClickMenuButton)];
     
     viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSearch
                                                                                                      target:self
@@ -496,7 +499,9 @@
         OSCObjsViewController *objsViewController = (OSCObjsViewController *)swipeableVC.viewPager.childViewControllers[swipeableVC.titleBar.currentIndex];
         
         [UIView animateWithDuration:0.1 animations:^{
-            [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)];
+            if ([objsViewController isKindOfClass:[UITableViewController class]]) {
+                [objsViewController.tableView setContentOffset:CGPointMake(0, -objsViewController.refreshControl.frame.size.height)];
+            }
         } completion:^(BOOL finished) {
             [objsViewController.tableView.mj_header beginRefreshing];
         }];

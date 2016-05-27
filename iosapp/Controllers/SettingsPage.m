@@ -11,8 +11,8 @@
 #import "Config.h"
 #import "AboutPage.h"
 #import "OSLicensePage.h"
-#import "FeedBackViewController.h"
-
+//#import "FeedBackViewController.h"
+#import "AppDelegate.h"
 #import <RESideMenu.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
@@ -23,6 +23,7 @@
 @end
 
 @implementation SettingsPage
+static BOOL isNightMode;
 
 - (instancetype)init
 {
@@ -41,7 +42,7 @@
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 
     self.tableView.separatorColor = [UIColor separatorColor];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -58,9 +59,9 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if ([Config getOwnID] == 0) {
-        return 2;
+        return 3;
     }
-    return 3;
+    return 4;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -69,6 +70,7 @@
         case 0: return 1;
         case 1: return 3;
         case 2: return 1;
+        case 3: return 1;
             
         default: return 0;
     }
@@ -77,14 +79,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [UITableViewCell new];
-    
+
+    NSString *nightModeStr = [Config getMode]?@"日间模式":@"夜间模式";
     NSArray *titles = @[
                         @[@"清除缓存", @"消息通知"],
                         @[@"给应用评分", @"关于", @"开源许可"],
+                        @[nightModeStr],
                         @[@"注销登录"],
                         ];
     cell.textLabel.text = titles[indexPath.section][indexPath.row];
-    cell.backgroundColor = [UIColor cellsColor];
+    cell.contentView.backgroundColor = [UIColor cellsColor];
     cell.textLabel.textColor = [UIColor titleColor];
     
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
@@ -116,7 +120,24 @@
         } else if (row == 2) {
             [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
         }
-    } else if (section == 2) {
+    }else if (section == 2) {
+        isNightMode = [Config getMode];
+        if (isNightMode) {
+            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = NO;
+        } else {
+            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = YES;
+        }
+        
+        self.tableView.backgroundColor = [UIColor themeColor];
+        self.tableView.separatorColor = [UIColor separatorColor];
+
+        [Config saveWhetherNightMode:!isNightMode];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"dawnAndNight" object:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
+    }else if (section == 3) {
         [Config clearProfile];
         [Config removeTeamInfo];
         [Config clearCookie];
@@ -140,6 +161,27 @@
     }
 }
 
+-(void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)];
+    }
+    
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];
+    }
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
 
 #pragma mark - UIAlertViewDelegate
 

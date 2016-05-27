@@ -80,7 +80,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         NSDictionary* result = responseJSON[@"result"];
         NSArray* items = result[@"items"];
         NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
-        NSLog(@"%@",modelArray);
+//        NSLog(@"%@",modelArray);
         if (isRefresh) {//上拉得到的数据
             [self.dataModels removeAllObjects];
         }
@@ -117,7 +117,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 -(void)configurationCycleScrollView{
     for (OSCBanner* bannerItem in self.bannerModels) {
-        NSLog(@"%@",bannerItem);
+//        NSLog(@"%@",bannerItem);
         [self.bannerTitles addObject:bannerItem.name];
         [self.bannerImageUrls addObject:bannerItem.img];
     }
@@ -125,8 +125,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     self.cycleScrollView.imageURLStringsGroup = self.bannerImageUrls.copy;
     self.cycleScrollView.titlesGroup = self.bannerTitles.copy;
     
-    NSLog(@"banner Imgs %@",self.cycleScrollView.imageURLStringsGroup);
-    NSLog(@"banner titles %@",self.cycleScrollView.titlesGroup);
+//    NSLog(@"banner Imgs %@",self.cycleScrollView.imageURLStringsGroup);
+//    NSLog(@"banner titles %@",self.cycleScrollView.titlesGroup);
     
     [self.tableView reloadData];
 }
@@ -160,27 +160,29 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 #pragma mark -- networking Delegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
-    if (isRefresh == NO) {
+    if (!isRefresh && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
-        NSLog(@"%@",paraMutableDic);
+//        NSLog(@"%@",paraMutableDic);
     }
     [self.manager GET:self.generateUrl()
        parameters:paraMutableDic.copy
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"res:%@",responseObject);
-              [self handleData:responseObject isRefresh:isRefresh];
-              NSDictionary* resultDic = responseObject[@"result"];
-              NSArray* items = resultDic[@"items"];
-              self.nextToken = resultDic[@"nextPageToken"];
-              NSLog(@"%@",self.nextToken);
-              dispatch_async(dispatch_get_main_queue(), ^{
-                  self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
-                  
-                  if (self.tableView.mj_header.isRefreshing) {
-                      [self.tableView.mj_header endRefreshing];
-                  }
-                  [self.tableView reloadData];
-              });
+//              NSLog(@"res:%@",responseObject);
+              if([responseObject[@"code"]integerValue] == 1) {
+                  [self handleData:responseObject isRefresh:isRefresh];
+                  NSDictionary* resultDic = responseObject[@"result"];
+                  NSArray* items = resultDic[@"items"];
+                  self.nextToken = resultDic[@"nextPageToken"];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
+                      
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      [self.tableView reloadData];
+                  });
+              }
+              
             }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
@@ -258,5 +260,4 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 	}
 	return _bannerModels;
 }
-
 @end

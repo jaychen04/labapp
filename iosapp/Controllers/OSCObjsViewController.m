@@ -81,7 +81,6 @@
     
     if (_isJsonDataVc) {
         _manager = [AFHTTPRequestOperationManager OSCJsonManager];
-//        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];
         if ([_netWorkingDelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
             [_netWorkingDelegate getJsonDataWithParametersDic:_parametersDic isRefresh:YES];
         }
@@ -161,7 +160,6 @@
             if ([_netWorkingDelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
                 [_netWorkingDelegate getJsonDataWithParametersDic:_parametersDic isRefresh:YES];
             }
-//            [self fetchJsonObjectsWithParmeters:_parametersDic refresh:YES];;
         }else {
             [self fetchObjectsOnPage:0 refresh:YES];
         }
@@ -197,7 +195,6 @@
         if ([_netWorkingDelegate respondsToSelector:@selector(getJsonDataWithParametersDic:isRefresh:)]) {
             [_netWorkingDelegate getJsonDataWithParametersDic:_parametersDic isRefresh:NO];
         }
-//        [self fetchJsonObjectsWithParmeters:_parametersDic refresh:NO];
     }else {
         [self fetchObjectsOnPage:++_page refresh:NO];
     }
@@ -209,9 +206,6 @@
 
 - (void)fetchObjectsOnPage:(NSUInteger)page refresh:(BOOL)refresh
 {
-    NSString *url = self.generateURL(page);
-    NSLog(@"urlwwwwsss:%@",url);
-    
     [_manager GET:self.generateURL(page)
       parameters:nil
          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
@@ -278,84 +272,6 @@
              }
              [self.tableView reloadData];
          }
-     ];
-}
-
-- (void)fetchJsonObjectsWithParmeters:(NSDictionary*)paraDic refresh:(BOOL)refresh
-{
-        NSString *url = self.generateUrl();
-        NSLog(@"urlsss:%@",url);
-    
-    NSDictionary *parameters = paraDic?:@{};
-    [_manager GET:self.generateUrl()
-       parameters:parameters
-          success:^(AFHTTPRequestOperation *operation, id responseObject) {
-              NSLog(@"res:%@",responseObject);
-              _responseJsonObject = responseObject;
-              
-//              _allCount = [[[responseDocument.rootElement firstChildWithTag:@"allCount"] numberValue] intValue];
-//              NSArray *objectsXML = [self parseXML:responseDocument];
-//              
-//              if (refresh) {
-//                  _page = 0;
-//                  [_objects removeAllObjects];
-//                  if (_didRefreshSucceed) {_didRefreshSucceed();}
-//              }
-//              
-//              if (_parseExtraInfo) {_parseExtraInfo(responseDocument);}
-//              
-//              for (ONOXMLElement *objectXML in objectsXML) {
-//                  BOOL shouldBeAdded = YES;
-//                  id obj = [[_objClass alloc] initWithXML:objectXML];
-//                  
-//                  for (OSCBaseObject *baseObj in _objects) {
-//                      if ([obj isEqual:baseObj]) {
-//                          shouldBeAdded = NO;
-//                          break;
-//                      }
-//                  }
-//                  if (shouldBeAdded) {
-//                      [_objects addObject:obj];
-//                  }
-//              }
-//              
-//              if (_needAutoRefresh) {
-//                  [_userDefaults setObject:_lastRefreshTime forKey:_kLastRefreshTime];
-//              }
-//              
-//              dispatch_async(dispatch_get_main_queue(), ^{
-//                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
-//                  else {
-//                      if (_page == 0 && objectsXML.count == 0) {
-//                          _lastCell.status = LastCellStatusEmpty;
-//                      } else if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
-//                          _lastCell.status = LastCellStatusFinished;
-//                      } else {
-//                          _lastCell.status = LastCellStatusMore;
-//                      }
-//                  }
-//                  
-//                  if (self.tableView.mj_header.isRefreshing) {
-//                      [self.tableView.mj_header endRefreshing];
-//                  }
-//                  
-//                  [self.tableView reloadData];
-//              });
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              MBProgressHUD *HUD = [Utils createHUD];
-              HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
-              
-              [HUD hide:YES afterDelay:1];
-              
-              _lastCell.status = LastCellStatusError;
-              if (self.tableView.mj_header.isRefreshing) {
-                  [self.tableView.mj_header endRefreshing];
-              }
-              [self.tableView reloadData];
-          }
      ];
 }
 
