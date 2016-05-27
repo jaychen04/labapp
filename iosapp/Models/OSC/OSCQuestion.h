@@ -10,15 +10,22 @@
 
 @interface OSCQuestion : NSObject
 
-@property (nonatomic, assign) int64_t Id;
+@property (nonatomic, assign) NSInteger Id;
+
 @property (nonatomic, copy) NSString *title;
+
 @property (nonatomic, copy) NSString *body;
+
 @property (nonatomic, copy) NSString *author;
-@property (nonatomic, assign) int64_t authorId;
+
+@property (nonatomic, assign) NSInteger authorId;
+
 @property (nonatomic, copy) NSString *authorPortrait;
 
 @property (nonatomic, copy) NSString *pubDate;
-@property (nonatomic, assign) int commentCount;
-@property (nonatomic, assign) int viewCount;
+
+@property (nonatomic, assign) NSInteger commentCount;
+
+@property (nonatomic, assign) NSInteger viewCount;
 
 @end

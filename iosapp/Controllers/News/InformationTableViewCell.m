@@ -10,7 +10,6 @@
 #import "OSCInformation.h"
 #import "Utils.h"
 
-
 NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCellReuseIdenfitier";
 
 @interface InformationTableViewCell ()
