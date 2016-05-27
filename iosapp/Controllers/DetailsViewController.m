@@ -31,6 +31,7 @@
 #import "UIBarButtonItem+Badge.h"
 #import "AppDelegate.h"
 #import "OSCQuestion.h"
+#import "OSCNewHotBlog.h"
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -129,6 +130,25 @@
         self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.title = @"博客详情";
         _detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, blog.blogID];
+        _tag = @"blog";
+        _detailsClass = [OSCBlogDetails class];
+        _loadMethod = @selector(loadBlogDetails:);
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithNewHotBlog:(OSCNewHotBlog *)blog
+{
+    self = [super initWithModeSwitchButton:YES];
+    if (self) {
+        _commentType = CommentTypeBlog;
+        _favoriteType = FavoriteTypeBlog;
+        _objectID = blog.id;
+        
+        self.hidesBottomBarWhenPushed = YES;
+        self.navigationItem.title = @"博客详情";
+        _detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, blog.id];
         _tag = @"blog";
         _detailsClass = [OSCBlogDetails class];
         _loadMethod = @selector(loadBlogDetails:);
