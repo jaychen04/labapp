@@ -180,14 +180,14 @@
     return [UIColor colorWithHex:0x111111];
 }
 
-///* 新section 问答 按钮颜色*/
-//+ (UIColor *)sectionColor
-//{
-//    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-//        return [UIColor colorWithHex:0x2c2c2c];
-//    }
-//    return [UIColor colorWithHex:0xffffff];
-//}
+///* 新section 问答 按钮选中颜色*/
++ (UIColor *)sectionButtonSelectedColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithHex:0x25933a];
+    }
+    return [UIColor colorWithHex:0x24CF5F];
+}
 
 /* 新 */
 

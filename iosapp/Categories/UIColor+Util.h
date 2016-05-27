@@ -34,5 +34,6 @@
 
 + (UIColor *)newCellColor;
 + (UIColor *)newTitleColor;
++ (UIColor *)sectionButtonSelectedColor;
 
 @end

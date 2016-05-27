@@ -62,11 +62,11 @@
     [self.tableSubView addSubview:_questListCtl.view];
     
     self.buttonView.backgroundColor = [UIColor newCellColor];
-    [_buttons enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        {
-            obj.backgroundColor = [UIColor colorWithHex:0x333333];
-        }
-    }];
+    _askQuesButton.backgroundColor = [UIColor titleBarColor];
+    _shareButton.backgroundColor = [UIColor titleBarColor];
+    _synthButton.backgroundColor = [UIColor titleBarColor];
+    _jobButton.backgroundColor = [UIColor titleBarColor];
+    _officeButton.backgroundColor = [UIColor titleBarColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -120,8 +120,8 @@
 {
     if (isSelected) {
         button.layer.borderWidth = 1.0;
-        button.layer.borderColor = [UIColor colorWithHex:0x24CF5F].CGColor;
-        [button setTitleColor:[UIColor colorWithHex:0x24CF5F] forState:UIControlStateNormal];
+        button.layer.borderColor = [UIColor sectionButtonSelectedColor].CGColor;
+        [button setTitleColor:[UIColor sectionButtonSelectedColor] forState:UIControlStateNormal];
     } else {
         button.layer.borderWidth = 0;
         button.layer.borderColor = [UIColor colorWithHex:0xF6F6F6].CGColor;
