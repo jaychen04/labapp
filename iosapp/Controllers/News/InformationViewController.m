@@ -140,7 +140,12 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
+    cell.contentView.backgroundColor = [UIColor newCellColor];
     cell.viewModel = self.dataModels[indexPath.row];
+    
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
