@@ -19,8 +19,9 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
 @interface QuesListViewController () <UITableViewDelegate, UITableViewDataSource, networkingJsonDataDelegate>
 
 @property (nonatomic, copy) NSString *pageToken;
-@property (nonatomic, copy) NSString *nextPageToken;
-@property (nonatomic, copy) NSString *prevPageToken;
+@property (nonatomic) NSInteger catalog;
+//@property (nonatomic, copy) NSString *nextPageToken;
+//@property (nonatomic, copy) NSString *prevPageToken;
 
 @end
 
@@ -30,23 +31,24 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     self = [super init];
     if (self) {
         _pageToken = @"";
-        __weak QuesListViewController *weakSelf = self;
+        //        __weak QuesListViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
             return @"http://192.168.1.15:8000/action/apiv2/question";
         };
-        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
-            (weakSelf.lastCell.status = LastCellStatusMore);
-        };
-//        self.objClass = [OSCQuestion class];
+        //        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+        //            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+        //            (weakSelf.lastCell.status = LastCellStatusMore);
+        //        };
+        //        self.objClass = [OSCQuestion class];
         
         self.netWorkingDelegate = self;
         self.isJsonDataVc = YES;
         
+        _catalog = catalog;
         self.paraDic = @{
-                               @"catalog"   : @(catalog),
-                               @"pageToken" : _pageToken
-                               };
+                         @"catalog"   : @(_catalog),
+                         @"pageToken" : _pageToken
+                         };
         
         self.needAutoRefresh = YES;
         self.refreshInterval = 21600;
@@ -71,7 +73,7 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([QuesAnsCell class]) bundle:[NSBundle mainBundle]]
          forCellReuseIdentifier:reuseIdentifier];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,20 +81,20 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - JSON解析数据
-- (void)fetchForQuestions:(id)responseObject
-{
-    NSDictionary *result = [responseObject objectForKey:@"result"];
-    NSArray *items = [result objectForKey:@"items"];
-    [items enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        OSCQuestion *question = [OSCQuestion mj_objectWithKeyValues:obj];
-        
-        [_questions addObject:question];
-    }];
-    
-    _nextPageToken = [result objectForKey:@"nextPageToken"];
-    _prevPageToken = [result objectForKey:@"prevPageToken"];
-}
+//#pragma mark - JSON解析数据
+//- (void)fetchForQuestions:(id)responseObject
+//{
+//    NSDictionary *result = [responseObject objectForKey:@"result"];
+//    NSArray *items = [result objectForKey:@"items"];
+//    [items enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+//        OSCQuestion *question = [OSCQuestion mj_objectWithKeyValues:obj];
+//        
+//        [_questions addObject:question];
+//    }];
+//    
+//    _nextPageToken = [result objectForKey:@"nextPageToken"];
+//    _prevPageToken = [result objectForKey:@"prevPageToken"];
+//}
 
 #pragma mark -- networkingDelegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{
@@ -100,17 +102,29 @@ static NSString * const reuseIdentifier = @"QuesAnsCell";
     [self.manager GET:self.generateUrl()
            parameters:_paraDic
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  if ([[responseObject objectForKey:@"code"]integerValue] == 1) {
+                      NSDictionary *resultDic = [responseObject objectForKey:@"result"];
+                      NSArray* questions = [OSCQuestion mj_objectArrayWithKeyValuesArray:[resultDic objectForKey:@"items"]];
+                      if (isRefresh) {
+                          [_questions removeAllObjects];
+                      }
+                      [_questions addObjectsFromArray:questions];
+                      
+                      _pageToken = [resultDic objectForKey:@"nextPageToken"];
+                      self.lastCell.status = questions.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
+                  }else {
+                      self.lastCell.status = LastCellStatusError;
+                  }
+                  _paraDic = @{
+                               @"catalog"   : @(_catalog),
+                               @"pageToken" : _pageToken
+                               };
                   
-                  [self fetchForQuestions:responseObject];
-                  
-                  self.lastCell.status = LastCellStatusFinished;
                   
                   if (self.tableView.mj_header.isRefreshing) {
                       [self.tableView.mj_header endRefreshing];
                   }
-                  //
                   [self.tableView reloadData];
-
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
