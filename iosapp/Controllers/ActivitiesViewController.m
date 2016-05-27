@@ -44,6 +44,12 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     return [[xml.rootElement firstChildWithTag:@"events"] childrenWithTag:@"event"];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad
 {
@@ -62,6 +68,7 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     ActivityCell *cell = [tableView dequeueReusableCellWithIdentifier:kActivtyCellID forIndexPath:indexPath];
     OSCActivity *activity = self.objects[indexPath.row];
     
+    cell.contentView.backgroundColor = [UIColor newCellColor];
     cell.titleLabel.text       = activity.title;
     cell.titleLabel.textColor = [UIColor titleColor];
     cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];

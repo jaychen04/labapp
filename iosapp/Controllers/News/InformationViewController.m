@@ -65,11 +65,23 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 #pragma mark - life cycle
 
+- (void)dawnAndNightMode
+{
+    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.separatorColor = [UIColor separatorColor];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self getBannerData];
     [self layoutUI];
+    
+    self.tableView.separatorColor = [UIColor separatorColor];
 }
 
 

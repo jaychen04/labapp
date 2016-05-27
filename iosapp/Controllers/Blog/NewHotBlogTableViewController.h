@@ -10,4 +10,6 @@
 #import "OSCObjsViewController.h"
 @interface NewHotBlogTableViewController : OSCObjsViewController
 
+- (void)dawnAndNightMode;
+
 @end

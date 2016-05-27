@@ -11,10 +11,12 @@
 @interface QuesAnsViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet UIView   *buttonView;
+@property (weak, nonatomic) IBOutlet UIView *buttonViewLine;
 @property (nonatomic, weak) IBOutlet UIButton *askQuesButton;
 @property (nonatomic, weak) IBOutlet UIButton *shareButton;
 @property (nonatomic, weak) IBOutlet UIButton *synthButton;
 @property (nonatomic, weak) IBOutlet UIButton *jobButton;
 @property (nonatomic, weak) IBOutlet UIButton *officeButton;
+
 
 @end
