@@ -7,21 +7,37 @@
 //
 
 #import "QuesAnsViewController.h"
-#import "Utils.h"
-#import "QuesListViewController.h"
 
-@interface QuesAnsViewController ()
+#import "Utils.h"
+#import "QuesAnsTableViewCell.h"
+#import "OSCPost.h"
+#import "OSCQuestion.h"
+#import "DetailsViewController.h"
+
+#import <AFNetworking.h>
+#import <MJRefresh.h>
+#import <MJExtension.h>
+#import <UITableView+FDTemplateLayoutCell.h>
+
+static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
+
+#define QUESTION_URL @"http://192.168.1.15:8000/action/apiv2/question"
+
+@interface QuesAnsViewController () <UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *buttons;
-@property (nonatomic, strong) QuesListViewController *questListCtl;
-@property (nonatomic, strong) QuesListViewController *shareListCtl;
-@property (nonatomic, strong) QuesListViewController *generalListCtl;
-@property (nonatomic, strong) QuesListViewController *jobListCtl;
-@property (nonatomic, strong) QuesListViewController *forumListCtl;
-@property (nonatomic, strong) NSArray *subVcs;
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic,strong) UIButton* selectedBtn;
+
+@property (nonatomic,strong) NSMutableArray* dataModels;
+@property (nonatomic,strong) NSMutableArray* tokens;
+
 @end
 
 @implementation QuesAnsViewController
+
+#pragma mark - life cycle
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -29,56 +45,136 @@
     
     [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
     _buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
-    
+    self.selectedBtn = _askQuesButton;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    _questListCtl = [[QuesListViewController alloc] initWithQuestionType:1];
-//    QuesListViewController *shareListCtl = [[QuesListViewController alloc] initWithQuestionType:2];
-//    QuesListViewController *generalListCtl = [[QuesListViewController alloc] initWithQuestionType:3];
-//    QuesListViewController *jobListCtl = [[QuesListViewController alloc] initWithQuestionType:4];
-//    QuesListViewController *forumListCtl = [[QuesListViewController alloc] initWithQuestionType:5];
-    
-    CGRect subViewFrame = CGRectMake(0, 0, CGRectGetWidth(self.tableSubView.frame), CGRectGetHeight(self.tableSubView.frame));
-    _questListCtl.view.frame = subViewFrame;
-//    shareListCtl.view.frame = subViewFrame;
-//    generalListCtl.view.frame = subViewFrame;
-//    jobListCtl.view.frame = subViewFrame;
-//    forumListCtl.view.frame = subViewFrame;
-    
-//    _subVcs = @[questListCtl,shareListCtl,generalListCtl,jobListCtl,forumListCtl];
-    
-    
-    
-    [self addChildViewController:_questListCtl];
-    
-//    [self addChildViewController:_shareListCtl];
-//    [self addChildViewController:_generalListCtl];
-//    [self addChildViewController:_jobListCtl];
-//    [self addChildViewController:_forumListCtl];
-    
-    [self.tableSubView addSubview:_questListCtl.view];
-    
+
+    [self settingSomething];
+
+    [self.tableView.mj_header beginRefreshing];
+}
+
+#pragma mark - setting Something
+
+-(void)settingSomething{
     self.buttonView.backgroundColor = [UIColor newCellColor];
     _askQuesButton.backgroundColor = [UIColor titleBarColor];
     _shareButton.backgroundColor = [UIColor titleBarColor];
     _synthButton.backgroundColor = [UIColor titleBarColor];
     _jobButton.backgroundColor = [UIColor titleBarColor];
     _officeButton.backgroundColor = [UIColor titleBarColor];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
     
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.estimatedRowHeight = 105;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsTableViewCell" bundle:nil] forCellReuseIdentifier:QuesAnsCellIdentifier];
+    
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self sendNetworkingRequestWithRefresh:YES];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self sendNetworkingRequestWithRefresh:NO];
+    }];
 }
 
-#pragma mark - 小标题功能
+#pragma mark - NetWorking
+
+-(void)sendNetworkingRequestWithRefresh:(BOOL)isRefresh{
+    NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
+
+    NSInteger index = self.selectedBtn.tag;
+    
+    [paraMutableDic setObject:@(index) forKey:@"catalog"];
+    if (isRefresh == NO) {//下拉刷新请求
+        [paraMutableDic setObject:self.tokens[index] forKey:@"pageToken"];
+    }
+    
+
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager manager];
+    [manger GET:QUESTION_URL
+     parameters:paraMutableDic.copy
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            NSDictionary* result = responseObject[@"result"];
+            NSArray* JsonItems = result[@"items"];
+            NSArray* models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
+            if (isRefresh) {
+                self.dataModels[index] = models;
+            }else{
+                [self.dataModels[index] addObjectsFromArray:models];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (isRefresh) {
+                    [self.tableView.mj_header endRefreshing];
+                }else{
+                    if (models.count < 20) {
+                        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                    }else{
+                        [self.tableView.mj_footer endRefreshing];
+                    }
+                }
+                [self.tableView reloadData];
+            });
+        }
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            if (isRefresh) {
+                [self.tableView.mj_header endRefreshing];
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+            NSLog(@"%@",error);
+        }];
+}
+
+
+
+#pragma mark - tableView delegate && datasource 
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSInteger currentIndex = self.selectedBtn.tag;
+    NSArray* dataSource = self.dataModels[currentIndex];
+    return dataSource.count;
+}
+-(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSInteger currentIndex = self.selectedBtn.tag;
+    NSArray* dataSource = self.dataModels[currentIndex];
+    
+    QuesAnsTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:QuesAnsCellIdentifier forIndexPath:indexPath];
+    cell.viewModel = dataSource[indexPath.row];
+    return cell;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return [tableView fd_heightForCellWithIdentifier:QuesAnsCellIdentifier configuration:^(QuesAnsTableViewCell* cell) {
+        NSInteger currentIndex = self.selectedBtn.tag;
+        NSArray* dataSource = self.dataModels[currentIndex];
+        cell.viewModel = dataSource[indexPath.row];
+    }];
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSInteger currentIndex = self.selectedBtn.tag;
+    NSArray* dataSource = self.dataModels[currentIndex];
+    OSCQuestion* question = dataSource[indexPath.row];
+    OSCPost* post = [OSCPost new];
+    post.postID = question.Id;
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+    [self.navigationController pushViewController:detailsViewController animated:YES];
+}
+
+#pragma mark - 改变selected Btn && 切换数据源 && 选择性发送请求
 
 - (IBAction)clickSubTitle:(UIButton *)sender {
     
+    self.selectedBtn = sender;
+    
     NSInteger tagNumber = sender.tag;
+    NSArray* dataSource = self.dataModels[tagNumber];
     
     [_buttons enumerateObjectsUsingBlock:^(UIButton *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (idx == tagNumber-1) {
@@ -88,31 +184,11 @@
         }
     }];
     
-
+    if (dataSource.count == 0) {
+        [self.tableView.mj_header beginRefreshing];
+    }
     
-    
-//    QuesListViewController *newCurrentVc = _subVcs[tagNumber];
-//    if (_currentListCtl == newCurrentVc) {
-//        return;
-//    }else {
-//        
-//        [self addChildViewController:newCurrentVc];
-//        [self transitionFromViewController:_currentListCtl toViewController:newCurrentVc duration:1.0 options:UIViewAnimationOptionTransitionCrossDissolve animations:nil completion:^(BOOL finished) {
-//            if (finished) {
-//                
-//                [newCurrentVc didMoveToParentViewController:self];
-//                [_currentListCtl willMoveToParentViewController:nil];
-//                [_currentListCtl removeFromParentViewController];
-//                _currentListCtl = newCurrentVc;
-//            }
-//        }];
-//    }
-    
-    _questListCtl.paraDic = @{
-      @"catalog"   : @(tagNumber),
-      @"pageToken" : @""
-      };
-    [_questListCtl refresh];
+    [self.tableView reloadData];
 }
 
 #pragma mark - 按钮设置边框、颜色
@@ -128,6 +204,22 @@
         [button setTitleColor:[UIColor colorWithHex:0x6A6A6A] forState:UIControlStateNormal];
     }
     
+}
+
+#pragma mark - lazy loading
+
+- (NSMutableArray *)tokens {
+	if(_tokens == nil) {
+        _tokens = @[@"tokensPlaceholder",@"",@"",@"",@"",@""].mutableCopy;
+    }
+	return _tokens;
+}
+
+- (NSMutableArray *)dataModels {
+	if(_dataModels == nil) {
+        _dataModels = @[@[@"dataModelsPlaceholder"],@[],@[],@[],@[],@[]].mutableCopy;
+	}
+	return _dataModels;
 }
 
 @end

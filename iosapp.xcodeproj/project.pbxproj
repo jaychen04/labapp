@@ -48,6 +48,9 @@
 		042E8D111CF5950F00364BD7 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8D101CF5950F00364BD7 /* libPods.a */; };
 		042E8D121CF595FC00364BD7 /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
 		042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D141CF6A3F000364BD7 /* TokenManager.m */; };
+		042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */; };
+		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
+		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
 		04EC96961CF436B10004B54E /* OSCActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96951CF436B10004B54E /* OSCActivityViewController.m */; };
 		04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC969B1CF436FB0004B54E /* OSCActivityTableViewCell.m */; };
@@ -226,9 +229,6 @@
 		C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */; };
 		C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95931AEE129F006918CD /* TeamCenter.m */; };
 		C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95961AEE14FC006918CD /* TeamTeam.m */; };
-		EE01E6651CF5865000E0FC39 /* QuesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE01E6641CF5865000E0FC39 /* QuesListViewController.m */; };
-		EE02C9191CF2F7430075AE16 /* QuesAnsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE02C9171CF2F7430075AE16 /* QuesAnsCell.m */; };
-		EE02C91A1CF2F7430075AE16 /* QuesAnsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE02C9181CF2F7430075AE16 /* QuesAnsCell.xib */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
@@ -319,6 +319,11 @@
 		042E8D101CF5950F00364BD7 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "../../../Library/Developer/Xcode/DerivedData/iosapp-bwkrilcdiwhsfycglcddwhgzdkxi/Build/Products/Debug-iphonesimulator/libPods.a"; sourceTree = "<group>"; };
 		042E8D131CF6A3F000364BD7 /* TokenManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TokenManager.h; sourceTree = "<group>"; };
 		042E8D141CF6A3F000364BD7 /* TokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenManager.m; sourceTree = "<group>"; };
+		042E8D1C1CF7038600364BD7 /* OSCBlogDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetail.h; sourceTree = "<group>"; };
+		042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetail.m; sourceTree = "<group>"; };
+		0473259A1CF821A700460658 /* QuesAnsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuesAnsTableViewCell.h; sourceTree = "<group>"; };
+		0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuesAnsTableViewCell.m; sourceTree = "<group>"; };
+		0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuesAnsTableViewCell.xib; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
 		04EC96941CF436B10004B54E /* OSCActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCActivityViewController.h; sourceTree = "<group>"; };
@@ -678,11 +683,6 @@
 		C5FB95951AEE14FC006918CD /* TeamTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamTeam.h; sourceTree = "<group>"; };
 		C5FB95961AEE14FC006918CD /* TeamTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTeam.m; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		EE01E6631CF5865000E0FC39 /* QuesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesListViewController.h; path = Questions/QuesListViewController.h; sourceTree = "<group>"; };
-		EE01E6641CF5865000E0FC39 /* QuesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesListViewController.m; path = Questions/QuesListViewController.m; sourceTree = "<group>"; };
-		EE02C9161CF2F7430075AE16 /* QuesAnsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsCell.h; path = Questions/QuesAnsCell.h; sourceTree = "<group>"; };
-		EE02C9171CF2F7430075AE16 /* QuesAnsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsCell.m; path = Questions/QuesAnsCell.m; sourceTree = "<group>"; };
-		EE02C9181CF2F7430075AE16 /* QuesAnsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsCell.xib; path = Questions/QuesAnsCell.xib; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE6DB9461AD6633E004FCF3C /* MyTweetLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTweetLikeListViewController.h; sourceTree = "<group>"; };
@@ -1498,6 +1498,8 @@
 				38996A511A02642C0025AA52 /* OSCBlog.m */,
 				382F5EB11A036EB800A8EF11 /* OSCBlogDetails.h */,
 				382F5EB21A036EB800A8EF11 /* OSCBlogDetails.m */,
+				042E8D1C1CF7038600364BD7 /* OSCBlogDetail.h */,
+				042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */,
 				31D56E811CF6D16F000AA1D4 /* OSCNewHotBlog.h */,
 				31D56E821CF6D16F000AA1D4 /* OSCNewHotBlog.m */,
 			);
@@ -1929,11 +1931,9 @@
 				EEEC98C01CF317D600995A03 /* QuesAnsViewController.h */,
 				EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */,
 				EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */,
-				EE01E6631CF5865000E0FC39 /* QuesListViewController.h */,
-				EE01E6641CF5865000E0FC39 /* QuesListViewController.m */,
-				EE02C9161CF2F7430075AE16 /* QuesAnsCell.h */,
-				EE02C9171CF2F7430075AE16 /* QuesAnsCell.m */,
-				EE02C9181CF2F7430075AE16 /* QuesAnsCell.xib */,
+				0473259A1CF821A700460658 /* QuesAnsTableViewCell.h */,
+				0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */,
+				0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */,
 			);
 			name = Questions;
 			sourceTree = "<group>";
@@ -2064,10 +2064,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE02C91A1CF2F7430075AE16 /* QuesAnsCell.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				31D56E881CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib in Resources */,
+				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
 				04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
@@ -2161,6 +2161,7 @@
 				C5EF89311BE319A300B5FA46 /* BlogCell.m in Sources */,
 				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
+				042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */,
 				C5EF89381BE319F600B5FA46 /* NewsCell.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */,
@@ -2235,7 +2236,6 @@
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
 				C52BF4F41AFB50CC00E53508 /* TeamDetailContentCell.m in Sources */,
-				EE02C9191CF2F7430075AE16 /* QuesAnsCell.m in Sources */,
 				384A112F1ADF9B5F00856A7C /* TeamHomePage.m in Sources */,
 				C57E7B571B56734300F39B5C /* PlaceholderTextView.m in Sources */,
 				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,
@@ -2257,7 +2257,6 @@
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
 				C5D7C10E1B12F8A8003EFE9B /* CheckboxTableCell.m in Sources */,
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
-				EE01E6651CF5865000E0FC39 /* QuesListViewController.m in Sources */,
 				31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */,
 				38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */,
 				C5F3D77A1AF0C40B0032F775 /* WeeklyReportTableViewController.m in Sources */,
@@ -2269,6 +2268,7 @@
 				38EAF1B61AE0A85F00397E2A /* TeamActivity.m in Sources */,
 				C5EF89221BE3194800B5FA46 /* SoftwareCatalogVC.m in Sources */,
 				0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */,
+				0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,
 				0422BC2E1CEDA2A7007DB140 /* InformationViewController.m in Sources */,

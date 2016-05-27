@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -13,7 +13,7 @@
                 <outlet property="officeButton" destination="xUJ-Vc-bXl" id="Rzc-ue-e8s"/>
                 <outlet property="shareButton" destination="9De-IZ-Eum" id="iV4-af-OYM"/>
                 <outlet property="synthButton" destination="Xy3-of-EQu" id="tUR-uY-QMa"/>
-                <outlet property="tableSubView" destination="Fdr-zn-jc8" id="q20-D2-aKv"/>
+                <outlet property="tableView" destination="MBQ-Um-Dcu" id="any-V2-R7U"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,7 +22,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38D-YS-JW7">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38D-YS-JW7" userLabel="btns_View">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="52"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ojj-Ig-0Nx">
@@ -152,20 +152,20 @@
                         <constraint firstItem="Xy3-of-EQu" firstAttribute="height" secondItem="OMj-U5-Uc9" secondAttribute="height" id="zTg-Z3-bQ5"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fdr-zn-jc8">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MBQ-Um-Dcu">
                     <rect key="frame" x="0.0" y="52" width="600" height="548"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                </view>
+                </tableView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Fdr-zn-jc8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3u4-sX-qba"/>
                 <constraint firstItem="38D-YS-JW7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Bu9-At-APh"/>
                 <constraint firstAttribute="trailing" secondItem="38D-YS-JW7" secondAttribute="trailing" id="NkU-71-SGp"/>
-                <constraint firstItem="Fdr-zn-jc8" firstAttribute="top" secondItem="38D-YS-JW7" secondAttribute="bottom" id="WFV-Lp-TXm"/>
-                <constraint firstAttribute="bottom" secondItem="Fdr-zn-jc8" secondAttribute="bottom" id="Xn2-B7-38t"/>
+                <constraint firstItem="MBQ-Um-Dcu" firstAttribute="top" secondItem="38D-YS-JW7" secondAttribute="bottom" id="Xvl-nv-hYE"/>
+                <constraint firstItem="MBQ-Um-Dcu" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="bE5-aR-NoD"/>
+                <constraint firstAttribute="bottom" secondItem="MBQ-Um-Dcu" secondAttribute="bottom" id="bfj-4y-0gw"/>
                 <constraint firstItem="38D-YS-JW7" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="bxe-mN-wE9"/>
-                <constraint firstAttribute="trailing" secondItem="Fdr-zn-jc8" secondAttribute="trailing" id="ef3-fC-XO7"/>
+                <constraint firstAttribute="trailing" secondItem="MBQ-Um-Dcu" secondAttribute="trailing" id="xbe-5W-LNt"/>
             </constraints>
             <point key="canvasLocation" x="256" y="249"/>
         </view>

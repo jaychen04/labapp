@@ -152,11 +152,9 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         cell.viewModel = self.dataModels[indexPath.row];
     }];
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
 }
 
 #pragma mark -- networking Delegate
@@ -220,8 +218,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     
     [self.cycleScrollView clearCache];
 }
-
-
 
 
 #pragma mark - lazy loading
