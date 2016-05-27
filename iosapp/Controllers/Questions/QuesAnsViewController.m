@@ -59,7 +59,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 -(void)settingSomething{
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    self.tableView.estimatedRowHeight = 125;
+    self.tableView.estimatedRowHeight = 105;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
