@@ -85,7 +85,7 @@
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoq-xg-FOn">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoq-xg-FOn">
                                     <rect key="frame" x="555" y="10" width="30" height="38"/>
                                     <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="25"/>
                                     <state key="normal" title="">
@@ -195,11 +195,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="我" id="8UP-78-1G8">
-                        <barButtonItem key="leftBarButtonItem" image="navigationbar-sidebar" id="YqJ-Wm-kkJ">
-                            <connections>
-                                <action selector="presentLeftMenuViewController:" destination="9CB-MD-mci" id="YcL-oI-jVh"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="8BC-WN-4NH">
                             <connections>
                                 <action selector="pushSearchViewController:" destination="9CB-MD-mci" id="xSk-a9-JqX"/>
@@ -227,6 +222,5 @@
     </scenes>
     <resources>
         <image name="default-portrait" width="36" height="36"/>
-        <image name="navigationbar-sidebar" width="22" height="22"/>
     </resources>
 </document>

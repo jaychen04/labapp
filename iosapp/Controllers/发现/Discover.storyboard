@@ -70,11 +70,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="发现" id="IKV-X7-1hi">
-                        <barButtonItem key="leftBarButtonItem" image="navigationbar-sidebar" id="pv7-zr-jJL">
-                            <connections>
-                                <action selector="presentLeftMenuViewController:" destination="35K-XZ-lhA" id="6H8-rM-vl6"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="l5B-HT-Vh5">
                             <connections>
                                 <action selector="pushSearchViewController:" destination="35K-XZ-lhA" id="J6Y-Xu-8Xy"/>
@@ -103,7 +98,4 @@
             <point key="canvasLocation" x="-64" y="324"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="navigationbar-sidebar" width="22" height="22"/>
-    </resources>
 </document>
