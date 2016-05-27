@@ -210,7 +210,6 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     if (array.count > 0) {
         OSCNewHotBlog *blog = array[indexPath.row];
         
-//        cell.newHotBlog = blog;
         [cell setNewHotBlogContent:blog];
     }
     
@@ -235,9 +234,9 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
         label.font = [UIFont systemFontOfSize:13];
         height += [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
         
-        return height + 54;
+        return height + 51;
     }
-    return 130;
+    return 87;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

@@ -10,7 +10,7 @@
 #import "OSCNewHotBlog.h"
 
 @interface NewHotBlogTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UIImageView *tagIv;
+
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;

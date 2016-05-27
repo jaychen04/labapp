@@ -7,6 +7,7 @@
 //
 
 #import "OSCNewHotBlog.h"
+#import "Utils.h"
 
 @implementation OSCNewHotBlog
 
@@ -18,6 +19,7 @@
         if (self.recommend) {
             NSTextAttachment *textAttachment = [NSTextAttachment new];
             textAttachment.image = [UIImage imageNamed:@"ic_label_recommend"];
+            [textAttachment adjustY:-3];
             NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
             _attributedTitleString = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
             [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
@@ -26,6 +28,7 @@
             if (self.original) {
                 NSTextAttachment *textAttachment = [NSTextAttachment new];
                 textAttachment.image = [UIImage imageNamed:@"ic_label_originate"];
+                [textAttachment adjustY:-3];
                 NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
                 _attributedTitleString = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
                 [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
@@ -33,6 +36,7 @@
             } else {
                 NSTextAttachment *textAttachment = [NSTextAttachment new];
                 textAttachment.image = [UIImage imageNamed:@"ic_label_reprint"];
+                [textAttachment adjustY:-3];
                 NSAttributedString *attachmentString = [NSAttributedString attributedStringWithAttachment:textAttachment];
                 _attributedTitleString = [[NSMutableAttributedString alloc] initWithAttributedString:attachmentString];
                 [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
