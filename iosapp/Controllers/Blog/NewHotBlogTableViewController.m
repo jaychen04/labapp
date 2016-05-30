@@ -16,6 +16,7 @@
 #import "OSCNewHotBlog.h"
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
+#import "NewsBlogDetailTableViewController.h"
 static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 @interface NewHotBlogTableViewController ()<networkingJsonDataDelegate>
@@ -248,6 +249,12 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NewsBlogDetailTableViewController *newsBlogDetailVc = [NewsBlogDetailTableViewController new];
+    newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+    return;
+    
     
     NSMutableArray *array = indexPath.section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
     OSCNewHotBlog *blog;
