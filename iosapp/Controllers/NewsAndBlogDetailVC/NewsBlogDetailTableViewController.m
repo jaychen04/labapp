@@ -9,28 +9,62 @@
 #import "NewsBlogDetailTableViewController.h"
 #import "FollowAuthorTableViewCell.h"
 #import "TitleInfoTableViewCell.h"
+#import "recommandBlogTableViewCell.h"
+#import "OSCNewHotBlogDetails.h"
 #import "UIColor+Util.h"
+#import "AFHTTPRequestOperationManager+Util.h"
 
 static NSString *followAuthorReuseIdentifier = @"FollowAuthorTableViewCell";
 static NSString *titleInfoReuseIdentifier = @"TitleInfoTableViewCell";
 static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
 
-@interface NewsBlogDetailTableViewController ()
-
+@interface NewsBlogDetailTableViewController ()<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic, strong)UITableView *tableView;
 @end
 
 @implementation NewsBlogDetailTableViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"FollowAuthorTableViewCell" bundle:nil] forCellReuseIdentifier:followAuthorReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TitleInfoTableViewCell" bundle:nil] forCellReuseIdentifier:titleInfoReuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"recommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
+    
     self.tableView.tableFooterView = [UIView new];
+    
+    [self getBlogDetails];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    
+}
 
+#pragma mark - 获取博客详情
+-(void)getBlogDetails {
+    //    NSLog(@"hotPara:%@",@{@"catalog":@1});
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manager GET:@"http://192.168.1.15:8000/action/apiv2/blog"
+           parameters:@{@"id":@(_blogId)}
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                                    NSLog(@"hotres:%ld",[[responseObject[@"result"] objectForKey:@"items"] count]);
+//                  if ([responseObject[@"code"]integerValue] == 1) {
+//                      NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[responseObject[@"result"] objectForKey:@"items"]];
+//                      if (isRefresh) {
+//                          [_hottestBlogObjects removeAllObjects];
+//                      }
+//                      [_hottestBlogObjects addObjectsFromArray:blogModels];
+//                  }
+//                  [self.tableView reloadData];
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  
+              }
+     ];
 }
 
 #pragma mark -- DIY_headerView
@@ -72,17 +106,51 @@ static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (section == 1 || section == 2) {
-        return 35;
+    switch (section) {
+        case 0:
+            
+            break;
+        case 1:
+            return 50;
+            break;
+        case 2:
+            return 35;
+            break;
+        default:
+            break;
     }
+    
     return 0.001;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FollowAuthorTableViewCell *followAuthorcell = [tableView dequeueReusableCellWithIdentifier:followAuthorReuseIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
-    return followAuthorcell;
+    switch (indexPath.section) {
+        case 0:
+        {
+            if (indexPath.row==0) {
+                FollowAuthorTableViewCell *followAuthorCell = [tableView dequeueReusableCellWithIdentifier:followAuthorReuseIdentifier forIndexPath:indexPath];
+                return followAuthorCell;
+            }else if (indexPath.row==1) {
+                TitleInfoTableViewCell *titleInfoCell = [tableView dequeueReusableCellWithIdentifier:titleInfoReuseIdentifier forIndexPath:indexPath];
+                return titleInfoCell;
+            }else if (indexPath.row==2) {
+                
+            }
+        }
+            break;
+        case 1:
+        {
+            recommandBlogTableViewCell *recommandBlogCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
+            return recommandBlogCell;
+        }
+            break;
+        case 2:
+        {
+        }
+            break;
+        default:
+            break;
+    }
+    return [UITableViewCell new];
 }
 
 

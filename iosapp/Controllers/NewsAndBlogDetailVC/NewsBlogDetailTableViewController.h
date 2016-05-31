@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BottomBarViewController.h"
+#import "OSCNewHotBlog.h"
 
-@interface NewsBlogDetailTableViewController : UITableViewController
-
+@interface NewsBlogDetailTableViewController : BottomBarViewController
+@property (nonatomic)BOOL isBlogDetail;
+@property (nonatomic)int64_t blogId;
 @end
