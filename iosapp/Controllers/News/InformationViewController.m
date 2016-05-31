@@ -51,7 +51,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     if (self) {
         __weak InformationViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-            return @"http://192.168.1.15:8000/action/apiv2/news";
+//            return @"http://192.168.1.15:8000/action/apiv2/news";
+            return [NSString stringWithFormat:@"%@news",OSCAPI_V2_PREFIX];
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
@@ -108,20 +109,21 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 
 -(void)getBannerData{
-    NSString* urlStr = @"http://192.168.1.15:8000/action/apiv2/banner";
-    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager manager];
+    NSString* urlStr = [NSString stringWithFormat:@"%@banner",OSCAPI_V2_PREFIX];
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:urlStr
      parameters:@{@"catalog" : @1}
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            
-            NSDictionary* resultDic = responseObject[@"result"];
-            NSArray* responseArr = resultDic[@"items"];
-            NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
-            self.bannerModels = bannerModels.mutableCopy;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self configurationCycleScrollView];
-            });
+            if([responseObject[@"code"] integerValue] == 1) {
+                NSDictionary* resultDic = responseObject[@"result"];
+                NSArray* responseArr = resultDic[@"items"];
+                NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
+                self.bannerModels = bannerModels.mutableCopy;
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self configurationCycleScrollView];
+                });
+            }
 }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             NSLog(@"%@",error);
@@ -194,6 +196,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             softWare.url = [NSURL URLWithString:model.href];
             DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:softWare];
             [self.navigationController pushViewController:detailsViewController animated:YES];
+            
             break;
         }
             
@@ -234,20 +237,23 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
     if (!isRefresh && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
-//        NSLog(@"%@",paraMutableDic);
     }
     [self.manager GET:self.generateUrl()
        parameters:paraMutableDic.copy
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-//              NSLog(@"res:%@",responseObject);
+
               if([responseObject[@"code"]integerValue] == 1) {
-                  [self handleData:responseObject isRefresh:isRefresh];
+//                  [self handleData:responseObject isRefresh:isRefresh];
                   NSDictionary* resultDic = responseObject[@"result"];
                   NSArray* items = resultDic[@"items"];
+                  NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
+                  if (isRefresh) {//上拉得到的数据
+                      [self.dataModels removeAllObjects];
+                  }
+                  [self.dataModels addObjectsFromArray:modelArray];
                   self.nextToken = resultDic[@"nextPageToken"];
                   dispatch_async(dispatch_get_main_queue(), ^{
                       self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
-                      
                       if (self.tableView.mj_header.isRefreshing) {
                           [self.tableView.mj_header endRefreshing];
                       }
