@@ -253,6 +253,12 @@
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 		EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED81D5C1CF54F88000ACFBC /* OSCQuestion.m */; };
+		EEE241A91CFD65710088FFB3 /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE241A71CFD65710088FFB3 /* ActivityDetailViewController.m */; };
+		EEE241AA1CFD65710088FFB3 /* ActivityDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE241A81CFD65710088FFB3 /* ActivityDetailViewController.xib */; };
+		EEE241B01CFD6ECC0088FFB3 /* ActivityHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE241AE1CFD6ECC0088FFB3 /* ActivityHeadCell.m */; };
+		EEE241B11CFD6ECC0088FFB3 /* ActivityHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE241AF1CFD6ECC0088FFB3 /* ActivityHeadCell.xib */; };
+		EEE241B51CFD79C00088FFB3 /* ActivityDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE241B31CFD79C00088FFB3 /* ActivityDetailCell.m */; };
+		EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE241B41CFD79C00088FFB3 /* ActivityDetailCell.xib */; };
 		EEEC98C31CF317D600995A03 /* QuesAnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */; };
 		EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */; };
 /* End PBXBuildFile section */
@@ -739,6 +745,15 @@
 		EED55F701A80AB13004E6371 /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
 		EED81D5B1CF54F88000ACFBC /* OSCQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCQuestion.h; sourceTree = "<group>"; };
 		EED81D5C1CF54F88000ACFBC /* OSCQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCQuestion.m; sourceTree = "<group>"; };
+		EEE241A61CFD65710088FFB3 /* ActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailViewController.h; sourceTree = "<group>"; };
+		EEE241A71CFD65710088FFB3 /* ActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailViewController.m; sourceTree = "<group>"; };
+		EEE241A81CFD65710088FFB3 /* ActivityDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailViewController.xib; sourceTree = "<group>"; };
+		EEE241AD1CFD6ECC0088FFB3 /* ActivityHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadCell.h; sourceTree = "<group>"; };
+		EEE241AE1CFD6ECC0088FFB3 /* ActivityHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadCell.m; sourceTree = "<group>"; };
+		EEE241AF1CFD6ECC0088FFB3 /* ActivityHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityHeadCell.xib; sourceTree = "<group>"; };
+		EEE241B21CFD79C00088FFB3 /* ActivityDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailCell.h; sourceTree = "<group>"; };
+		EEE241B31CFD79C00088FFB3 /* ActivityDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityDetailCell.m; sourceTree = "<group>"; };
+		EEE241B41CFD79C00088FFB3 /* ActivityDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ActivityDetailCell.xib; sourceTree = "<group>"; };
 		EEEC98C01CF317D600995A03 /* QuesAnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsViewController.h; path = Questions/QuesAnsViewController.h; sourceTree = "<group>"; };
 		EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsViewController.m; path = Questions/QuesAnsViewController.m; sourceTree = "<group>"; };
 		EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsViewController.xib; path = Questions/QuesAnsViewController.xib; sourceTree = "<group>"; };
@@ -945,10 +960,19 @@
 				04EC969A1CF436FB0004B54E /* OSCActivityTableViewCell.h */,
 				04EC969B1CF436FB0004B54E /* OSCActivityTableViewCell.m */,
 				04EC969C1CF436FB0004B54E /* OSCActivityTableViewCell.xib */,
-				04EC96941CF436B10004B54E /* OSCActivityViewController.h */,
-				04EC96951CF436B10004B54E /* OSCActivityViewController.m */,
 				EE2023291CFBE675002756E4 /* ActivityHeadView.h */,
 				EE20232A1CFBE675002756E4 /* ActivityHeadView.m */,
+				04EC96941CF436B10004B54E /* OSCActivityViewController.h */,
+				04EC96951CF436B10004B54E /* OSCActivityViewController.m */,
+				EEE241A61CFD65710088FFB3 /* ActivityDetailViewController.h */,
+				EEE241A71CFD65710088FFB3 /* ActivityDetailViewController.m */,
+				EEE241A81CFD65710088FFB3 /* ActivityDetailViewController.xib */,
+				EEE241AD1CFD6ECC0088FFB3 /* ActivityHeadCell.h */,
+				EEE241AE1CFD6ECC0088FFB3 /* ActivityHeadCell.m */,
+				EEE241AF1CFD6ECC0088FFB3 /* ActivityHeadCell.xib */,
+				EEE241B21CFD79C00088FFB3 /* ActivityDetailCell.h */,
+				EEE241B31CFD79C00088FFB3 /* ActivityDetailCell.m */,
+				EEE241B41CFD79C00088FFB3 /* ActivityDetailCell.xib */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -2113,10 +2137,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EEE241AA1CFD65710088FFB3 /* ActivityDetailViewController.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				31D56E881CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib in Resources */,
 				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
+				EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */,
 				04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				31D6996A1CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib in Resources */,
@@ -2124,6 +2150,7 @@
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
 				31D699601CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib in Resources */,
 				C5E4B17E1B57B715008E7463 /* Login.storyboard in Resources */,
+				EEE241B11CFD6ECC0088FFB3 /* ActivityHeadCell.xib in Resources */,
 				0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
 				EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */,
@@ -2259,6 +2286,7 @@
 				04EC96961CF436B10004B54E /* OSCActivityViewController.m in Sources */,
 				EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */,
 				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,
+				EEE241B51CFD79C00088FFB3 /* ActivityDetailCell.m in Sources */,
 				C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */,
 				EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */,
 				38EAF1C41AE0EA6D00397E2A /* TeamProject.m in Sources */,
@@ -2364,6 +2392,7 @@
 				38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
 				38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */,
+				EEE241B01CFD6ECC0088FFB3 /* ActivityHeadCell.m in Sources */,
 				0422BC5B1CEDA390007DB140 /* SDCycleScrollView.m in Sources */,
 				38B0BFA91A42AF5500A2FDB0 /* TweetEditingVC.m in Sources */,
 				31ABF5811B0F1B5300663C08 /* JKAlertDialog.m in Sources */,
@@ -2381,6 +2410,7 @@
 				C5F3D7761AF0C2A50032F775 /* WeeklyReportViewController.m in Sources */,
 				31FF2F951CF2F36600C7A0B6 /* NewHotBlogTableViewController.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
+				EEE241A91CFD65710088FFB3 /* ActivityDetailViewController.m in Sources */,
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
 				C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */,

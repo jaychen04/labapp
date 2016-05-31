@@ -14,6 +14,7 @@
 #import "OSCActivities.h"
 #import "OSCBanner.h"
 #import "ActivityHeadView.h"
+#import "ActivityDetailViewController.h"
 
 #import <ReactiveCocoa.h>
 #import <MJExtension.h>
@@ -212,6 +213,10 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    OSCActivities *activity = _activitys[indexPath.row];
+    ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:activity.id];
+    activityDetailCtl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:activityDetailCtl animated:YES];
 }
 
 
