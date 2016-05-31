@@ -7,7 +7,6 @@
 //
 
 #import "ActivityHeadView.h"
-#import <Masonry.h>
 #import "Utils.h"
 
 @interface ActivityHeadView ()
