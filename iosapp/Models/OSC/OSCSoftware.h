@@ -14,4 +14,6 @@
 @property (nonatomic, copy) NSString *softwareDescription;
 @property (nonatomic, copy) NSURL *url;
 
+//v2接口
+@property (nonatomic)NSInteger softId;
 @end
