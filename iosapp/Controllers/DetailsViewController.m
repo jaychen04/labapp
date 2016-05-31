@@ -137,25 +137,25 @@
     
     return self;
 }
-
-- (instancetype)initWithNewHotBlog:(OSCNewHotBlog *)blog
-{
-    self = [super initWithModeSwitchButton:YES];
-    if (self) {
-        _commentType = CommentTypeBlog;
-        _favoriteType = FavoriteTypeBlog;
-        _objectID = blog.id;
-        
-        self.hidesBottomBarWhenPushed = YES;
-        self.navigationItem.title = @"博客详情";
-        _detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, blog.id];
-        _tag = @"blog";
-        _detailsClass = [OSCBlogDetails class];
-        _loadMethod = @selector(loadBlogDetails:);
-    }
-    
-    return self;
-}
+//#pragma mark -- 新接口json格式
+//- (instancetype)initWithNewHotBlog:(OSCNewHotBlog *)blog
+//{
+//    self = [super initWithModeSwitchButton:YES];
+//    if (self) {
+//        _commentType = CommentTypeBlog;
+//        _favoriteType = FavoriteTypeBlog;
+//        _objectID = blog.id;
+//        
+//        self.hidesBottomBarWhenPushed = YES;
+//        self.navigationItem.title = @"博客详情";
+//        _detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_V2_PREFIX, OSCAPI_BLOG_DETAIL, blog.id];
+//        _tag = @"blog";
+//        _detailsClass = [OSCBlogDetails class];
+//        _loadMethod = @selector(loadBlogDetails:);
+//    }
+//    
+//    return self;
+//}
 
 - (instancetype)initWithPost:(OSCPost *)post
 {
@@ -418,6 +418,17 @@
         return _mURL;
     }
 }
+
+//#pragma mark -- detailsWithJsonData
+//-(void)fetchDetailsWithJsonData {
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
+//
+//    [manager GET:_detailsURL parameters:nil success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"error:%@",error);
+//    }];
+//}
 
 - (void)fetchDetails
 {

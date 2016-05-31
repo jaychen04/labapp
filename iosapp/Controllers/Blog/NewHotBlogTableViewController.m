@@ -33,7 +33,8 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     if (self) {
         __weak NewHotBlogTableViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-            return @"http://192.168.1.15:8000/action/apiv2/blog";
+//            return @"http://192.168.1.15:8000/action/apiv2/blog";
+            return [NSString stringWithFormat:@"%@blog",OSCAPI_V2_PREFIX];
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
