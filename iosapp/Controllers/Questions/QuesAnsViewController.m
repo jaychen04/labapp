@@ -13,7 +13,7 @@
 #import "OSCPost.h"
 #import "OSCQuestion.h"
 #import "DetailsViewController.h"
-
+#import "OSCAPI.h"
 #import <AFNetworking.h>
 #import <MJRefresh.h>
 #import <MJExtension.h>
@@ -21,7 +21,7 @@
 
 static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 
-#define QUESTION_URL @"http://192.168.1.15:8000/action/apiv2/question"
+//#define QUESTION_URL @"http://192.168.1.15:8000/action/apiv2/question"
 
 @interface QuesAnsViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -128,9 +128,9 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
         [paraMutableDic setObject:self.tokens[index] forKey:@"pageToken"];
     }
     
-
+    NSString *url = [NSString stringWithFormat:@"%@question",OSCAPI_V2_PREFIX];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager manager];
-    [manger GET:QUESTION_URL
+    [manger GET:url
      parameters:paraMutableDic.copy
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             NSDictionary* result = responseObject[@"result"];

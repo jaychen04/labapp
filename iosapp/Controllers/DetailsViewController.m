@@ -137,7 +137,7 @@
     
     return self;
 }
-
+#pragma mark -- 旧接口新的初始化方式
 - (instancetype)initWithNewHotBlog:(OSCNewHotBlog *)blog
 {
     self = [super initWithModeSwitchButton:YES];
@@ -187,7 +187,7 @@
     
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"帖子详情";
-    _detailsURL = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, question.Id];
+    _detailsURL = [NSString stringWithFormat:@"%@%@?id=%ld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, (long)question.Id];
     _tag = @"post";
     _detailsClass = [OSCPostDetails class];
     _loadMethod = @selector(loadPostDetails:);
@@ -206,11 +206,31 @@
     self.hidesBottomBarWhenPushed = YES;
     self.navigationItem.title = @"软件详情";
     _detailsURL = [NSString stringWithFormat:@"%@%@?ident=%@", OSCAPI_PREFIX, OSCAPI_SOFTWARE_DETAIL, software.url.absoluteString.lastPathComponent];
+    
     _tag = @"software";
     _softwareName = software.name;
     _detailsClass = [OSCSoftwareDetails class];
     _loadMethod = @selector(loadSoftwareDetails:);
+//    http://www.oschina.net/news/73898/apache-shiro-1-2-5
+    return self;
+}
+#pragma mark -- v2接口软件详情的初始化方式
+- (instancetype)initWithV2Software:(OSCSoftware *)software
+{
+    self = [super initWithModeSwitchButton:YES];
+    if (!self) {return nil;}
     
+    _commentType = CommentTypeSoftware;
+    _favoriteType = FavoriteTypeSoftware;
+    
+    self.hidesBottomBarWhenPushed = YES;
+    self.navigationItem.title = @"软件详情";
+    _detailsURL = [NSString stringWithFormat:@"%@%@?id=%ld", OSCAPI_PREFIX, OSCAPI_SOFTWARE_DETAIL, software.softId];
+    
+    _tag = @"software";
+    _softwareName = software.name;
+    _detailsClass = [OSCSoftwareDetails class];
+    _loadMethod = @selector(loadSoftwareDetails:);
     return self;
 }
 
@@ -418,6 +438,17 @@
         return _mURL;
     }
 }
+
+//#pragma mark -- detailsWithJsonData
+//-(void)fetchDetailsWithJsonData {
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
+//
+//    [manager GET:_detailsURL parameters:nil success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"error:%@",error);
+//    }];
+//}
 
 - (void)fetchDetails
 {
