@@ -113,6 +113,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     [manger GET:urlStr
      parameters:@{@"catalog" : @1}
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            
             NSDictionary* resultDic = responseObject[@"result"];
             NSArray* responseArr = resultDic[@"items"];
             NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
