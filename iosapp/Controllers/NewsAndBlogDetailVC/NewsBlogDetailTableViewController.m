@@ -10,61 +10,30 @@
 #import "FollowAuthorTableViewCell.h"
 #import "TitleInfoTableViewCell.h"
 #import "recommandBlogTableViewCell.h"
-#import "OSCNewHotBlogDetails.h"
 #import "UIColor+Util.h"
-#import "AFHTTPRequestOperationManager+Util.h"
 
 static NSString *followAuthorReuseIdentifier = @"FollowAuthorTableViewCell";
 static NSString *titleInfoReuseIdentifier = @"TitleInfoTableViewCell";
 static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
 
-@interface NewsBlogDetailTableViewController ()<UITableViewDelegate,UITableViewDataSource>
-@property (nonatomic, strong)UITableView *tableView;
+@interface NewsBlogDetailTableViewController ()
+
 @end
 
 @implementation NewsBlogDetailTableViewController
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"FollowAuthorTableViewCell" bundle:nil] forCellReuseIdentifier:followAuthorReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TitleInfoTableViewCell" bundle:nil] forCellReuseIdentifier:titleInfoReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"recommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
     
     self.tableView.tableFooterView = [UIView new];
-    
-    [self getBlogDetails];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
-}
-
-#pragma mark - 获取博客详情
--(void)getBlogDetails {
-    //    NSLog(@"hotPara:%@",@{@"catalog":@1});
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
-    [manager GET:@"http://192.168.1.15:8000/action/apiv2/blog"
-           parameters:@{@"id":@(_blogId)}
-              success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                    NSLog(@"hotres:%ld",[[responseObject[@"result"] objectForKey:@"items"] count]);
-//                  if ([responseObject[@"code"]integerValue] == 1) {
-//                      NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[responseObject[@"result"] objectForKey:@"items"]];
-//                      if (isRefresh) {
-//                          [_hottestBlogObjects removeAllObjects];
-//                      }
-//                      [_hottestBlogObjects addObjectsFromArray:blogModels];
-//                  }
-//                  [self.tableView reloadData];
-              }
-              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  
-              }
-     ];
 }
 
 #pragma mark -- DIY_headerView
