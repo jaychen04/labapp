@@ -229,6 +229,7 @@
 		C5FB95911AEA305D006918CD /* TeamDiscussionDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */; };
 		C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95931AEE129F006918CD /* TeamCenter.m */; };
 		C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95961AEE14FC006918CD /* TeamTeam.m */; };
+		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
@@ -684,6 +685,8 @@
 		C5FB95951AEE14FC006918CD /* TeamTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamTeam.h; sourceTree = "<group>"; };
 		C5FB95961AEE14FC006918CD /* TeamTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTeam.m; sourceTree = "<group>"; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE2023291CFBE675002756E4 /* ActivityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadView.h; sourceTree = "<group>"; };
+		EE20232A1CFBE675002756E4 /* ActivityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadView.m; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE6DB9461AD6633E004FCF3C /* MyTweetLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTweetLikeListViewController.h; sourceTree = "<group>"; };
@@ -923,6 +926,8 @@
 				04EC969C1CF436FB0004B54E /* OSCActivityTableViewCell.xib */,
 				04EC96941CF436B10004B54E /* OSCActivityViewController.h */,
 				04EC96951CF436B10004B54E /* OSCActivityViewController.m */,
+				EE2023291CFBE675002756E4 /* ActivityHeadView.h */,
+				EE20232A1CFBE675002756E4 /* ActivityHeadView.m */,
 			);
 			path = Activity;
 			sourceTree = "<group>";
@@ -2331,6 +2336,7 @@
 				C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */,
 				384A11331ADFA6BB00856A7C /* TeamUserMainCell.m in Sources */,
 				386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */,
+				EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */,
 				C5B2F1A81BCE6C84004B4785 /* UINavigationController+Router.m in Sources */,
 				31405BEC1AF074A4000A487D /* TeamIssueListCell.m in Sources */,
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
