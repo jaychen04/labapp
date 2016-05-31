@@ -16,12 +16,13 @@
 #import "OSCNewHotBlog.h"
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
+#import "NewsBlogDetailTableViewController.h"
 static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 @interface NewHotBlogTableViewController ()<networkingJsonDataDelegate>
 
-@property (nonatomic, strong) NSMutableArray *newsBlogObjects;
-@property (nonatomic, strong) NSMutableArray *hotBlogObjects;
+@property (nonatomic, strong) NSMutableArray *newestBlogObjects;
+@property (nonatomic, strong) NSMutableArray *hottestBlogObjects;
 @property (nonatomic, strong) NSDictionary *newblogParaDic;
 @end
 
@@ -63,8 +64,8 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    _newsBlogObjects = [NSMutableArray new];
-    _hotBlogObjects = [NSMutableArray new];
+    _newestBlogObjects = [NSMutableArray new];
+    _hottestBlogObjects = [NSMutableArray new];
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NewHotBlogTableViewCell class])
                                                bundle:[NSBundle mainBundle]]
@@ -101,9 +102,9 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                   if ([responseObject[@"code"]integerValue] == 1) {
                       NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[responseObject[@"result"] objectForKey:@"items"]];
                       if (isRefresh) {
-                          [_hotBlogObjects removeAllObjects];
+                          [_hottestBlogObjects removeAllObjects];
                       }
-                      [_hotBlogObjects addObjectsFromArray:blogModels];
+                      [_hottestBlogObjects addObjectsFromArray:blogModels];
                   }
                   [self.tableView reloadData];
               }
@@ -128,9 +129,9 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                       NSDictionary* resultDic = responseObject[@"result"];
                       NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:resultDic[@"items"]];
                       if (isRefresh) {
-                          [_newsBlogObjects removeAllObjects];
+                          [_newestBlogObjects removeAllObjects];
                       }
-                      [_newsBlogObjects addObjectsFromArray:blogModels];
+                      [_newestBlogObjects addObjectsFromArray:blogModels];
                       self.lastCell.status = blogModels.count<20?LastCellStatusFinished:LastCellStatusMore;
                       _newblogParaDic = @{@"catalog":@2,
                                           @"pageToken":resultDic[@"nextPageToken"]?:@""};
@@ -187,7 +188,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSMutableArray *array = section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
+    NSMutableArray *array = section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
     
     return array.count;
 }
@@ -211,7 +212,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
-    NSMutableArray *array = indexPath.section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
+    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
     
     if (array.count > 0) {
         OSCNewHotBlog *blog = array[indexPath.row];
@@ -224,7 +225,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray *array = indexPath.section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
+    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
     UILabel *label = [UILabel new];
     label.numberOfLines = 2;
     label.lineBreakMode = NSLineBreakByWordWrapping;
@@ -249,7 +250,21 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSMutableArray *array = indexPath.section == 0 ? self.hotBlogObjects : self.newsBlogObjects;
+//    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+//    OSCNewHotBlog *blog;
+//    
+//    if (array.count > 0) {
+//        blog = array[indexPath.row];
+//    }
+//    
+//    NewsBlogDetailTableViewController *newsBlogDetailVc = [NewsBlogDetailTableViewController new];
+//    newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
+//    newsBlogDetailVc.blogId = blog.id;
+//    [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+    
+
+
+    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
     OSCNewHotBlog *blog;
     
     if (array.count > 0) {

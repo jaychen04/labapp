@@ -69,10 +69,18 @@
 		31A338F11AF8683E0037B37F /* TeamActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */; };
 		31ABF5811B0F1B5300663C08 /* JKAlertDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 31ABF5801B0F1B5300663C08 /* JKAlertDialog.m */; };
 		31B6F1921AF78A8B00DC28FE /* TeamIssueDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F1911AF78A8B00DC28FE /* TeamIssueDetailCell.m */; };
+		31BC910B1CFD34D0004E7D66 /* OSCNewHotBlogDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 31BC910A1CFD34D0004E7D66 /* OSCNewHotBlogDetails.m */; };
 		31C50BC21AF1FE7F00074B72 /* TeamIssueDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31C50BC11AF1FE7F00074B72 /* TeamIssueDetailController.m */; };
 		31D56E831CF6D16F000AA1D4 /* OSCNewHotBlog.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D56E821CF6D16F000AA1D4 /* OSCNewHotBlog.m */; };
 		31D56E871CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D56E851CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m */; };
 		31D56E881CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D56E861CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib */; };
+		31D699581CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D699571CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m */; };
+		31D6995F1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D6995D1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m */; };
+		31D699601CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D6995E1CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib */; };
+		31D699641CFC352400B48BB0 /* TitleInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D699621CFC352300B48BB0 /* TitleInfoTableViewCell.m */; };
+		31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D699631CFC352400B48BB0 /* TitleInfoTableViewCell.xib */; };
+		31D699691CFC4F8600B48BB0 /* recommandBlogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D699671CFC4F8600B48BB0 /* recommandBlogTableViewCell.m */; };
+		31D6996A1CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D699681CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib */; };
 		31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */; };
 		31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FA1AEF2685004DF445 /* ProjectCell.m */; };
 		31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */; };
@@ -360,6 +368,8 @@
 		31ABF5801B0F1B5300663C08 /* JKAlertDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JKAlertDialog.m; sourceTree = "<group>"; };
 		31B6F1901AF78A8B00DC28FE /* TeamIssueDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamIssueDetailCell.h; sourceTree = "<group>"; };
 		31B6F1911AF78A8B00DC28FE /* TeamIssueDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueDetailCell.m; sourceTree = "<group>"; };
+		31BC91091CFD34D0004E7D66 /* OSCNewHotBlogDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewHotBlogDetails.h; sourceTree = "<group>"; };
+		31BC910A1CFD34D0004E7D66 /* OSCNewHotBlogDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewHotBlogDetails.m; sourceTree = "<group>"; };
 		31C50BC01AF1FE7F00074B72 /* TeamIssueDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamIssueDetailController.h; sourceTree = "<group>"; };
 		31C50BC11AF1FE7F00074B72 /* TeamIssueDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueDetailController.m; sourceTree = "<group>"; };
 		31D56E811CF6D16F000AA1D4 /* OSCNewHotBlog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewHotBlog.h; sourceTree = "<group>"; };
@@ -367,6 +377,17 @@
 		31D56E841CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHotBlogTableViewCell.h; sourceTree = "<group>"; };
 		31D56E851CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHotBlogTableViewCell.m; sourceTree = "<group>"; };
 		31D56E861CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
+		31D699561CFC28D200B48BB0 /* NewsBlogDetailTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsBlogDetailTableViewController.h; sourceTree = "<group>"; };
+		31D699571CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsBlogDetailTableViewController.m; sourceTree = "<group>"; };
+		31D6995C1CFC29B500B48BB0 /* FollowAuthorTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FollowAuthorTableViewCell.h; sourceTree = "<group>"; };
+		31D6995D1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FollowAuthorTableViewCell.m; sourceTree = "<group>"; };
+		31D6995E1CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FollowAuthorTableViewCell.xib; sourceTree = "<group>"; };
+		31D699611CFC352300B48BB0 /* TitleInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleInfoTableViewCell.h; sourceTree = "<group>"; };
+		31D699621CFC352300B48BB0 /* TitleInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleInfoTableViewCell.m; sourceTree = "<group>"; };
+		31D699631CFC352400B48BB0 /* TitleInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleInfoTableViewCell.xib; sourceTree = "<group>"; };
+		31D699661CFC4F8600B48BB0 /* recommandBlogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = recommandBlogTableViewCell.h; sourceTree = "<group>"; };
+		31D699671CFC4F8600B48BB0 /* recommandBlogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = recommandBlogTableViewCell.m; sourceTree = "<group>"; };
+		31D699681CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = recommandBlogTableViewCell.xib; sourceTree = "<group>"; };
 		31EAF9F71AEF2685004DF445 /* ProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectListViewController.h; sourceTree = "<group>"; };
 		31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectListViewController.m; sourceTree = "<group>"; };
 		31EAF9F91AEF2685004DF445 /* ProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectCell.h; sourceTree = "<group>"; };
@@ -1020,6 +1041,24 @@
 			name = "任务详情";
 			sourceTree = "<group>";
 		};
+		31D699551CFBE27900B48BB0 /* NewsAndBlogDetailVC */ = {
+			isa = PBXGroup;
+			children = (
+				31D699561CFC28D200B48BB0 /* NewsBlogDetailTableViewController.h */,
+				31D699571CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m */,
+				31D6995C1CFC29B500B48BB0 /* FollowAuthorTableViewCell.h */,
+				31D6995D1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m */,
+				31D6995E1CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib */,
+				31D699611CFC352300B48BB0 /* TitleInfoTableViewCell.h */,
+				31D699621CFC352300B48BB0 /* TitleInfoTableViewCell.m */,
+				31D699631CFC352400B48BB0 /* TitleInfoTableViewCell.xib */,
+				31D699661CFC4F8600B48BB0 /* recommandBlogTableViewCell.h */,
+				31D699671CFC4F8600B48BB0 /* recommandBlogTableViewCell.m */,
+				31D699681CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib */,
+			);
+			path = NewsAndBlogDetailVC;
+			sourceTree = "<group>";
+		};
 		31EAF9F61AEF266A004DF445 /* 项目 */ = {
 			isa = PBXGroup;
 			children = (
@@ -1509,6 +1548,8 @@
 				042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */,
 				31D56E811CF6D16F000AA1D4 /* OSCNewHotBlog.h */,
 				31D56E821CF6D16F000AA1D4 /* OSCNewHotBlog.m */,
+				31BC91091CFD34D0004E7D66 /* OSCNewHotBlogDetails.h */,
+				31BC910A1CFD34D0004E7D66 /* OSCNewHotBlogDetails.m */,
 			);
 			name = Blog;
 			sourceTree = "<group>";
@@ -1660,6 +1701,7 @@
 				04EC96931CF4368F0004B54E /* Activity */,
 				C5EF89331BE319F600B5FA46 /* News */,
 				C5EF892C1BE319A300B5FA46 /* Blog */,
+				31D699551CFBE27900B48BB0 /* NewsAndBlogDetailVC */,
 				C5EF89251BE3197C00B5FA46 /* Post */,
 				C5EF891B1BE3194800B5FA46 /* Software */,
 				C5EF89111BE318E800B5FA46 /* Comment */,
@@ -2077,7 +2119,10 @@
 				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
 				04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
+				31D6996A1CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib in Resources */,
+				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
+				31D699601CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib in Resources */,
 				C5E4B17E1B57B715008E7463 /* Login.storyboard in Resources */,
 				0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
@@ -2160,6 +2205,7 @@
 				C52BF4FE1AFCB6EE00E53508 /* TeamReply.m in Sources */,
 				38EAF1BA1AE0E20E00397E2A /* TeamActivityCell.m in Sources */,
 				386BEA451A66500400C078A8 /* TweetDetailsCell.m in Sources */,
+				31D699641CFC352400B48BB0 /* TitleInfoTableViewCell.m in Sources */,
 				C5A89C391B09C34B00798B1C /* UIFont+FontAwesome.m in Sources */,
 				38BD3D071A36A97400682D1F /* OSCSoftware.m in Sources */,
 				0422BC581CEDA390007DB140 /* TADotView.m in Sources */,
@@ -2236,7 +2282,9 @@
 				31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				C5EF89391BE319F600B5FA46 /* NewsViewController.m in Sources */,
+				31D6995F1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
+				31D699691CFC4F8600B48BB0 /* recommandBlogTableViewCell.m in Sources */,
 				C5A89C381B09C34B00798B1C /* NSString+FontAwesome.m in Sources */,
 				38B0BF921A3AE77300A2FDB0 /* MessagesViewController.m in Sources */,
 				38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */,
@@ -2279,6 +2327,7 @@
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,
 				0422BC2E1CEDA2A7007DB140 /* InformationViewController.m in Sources */,
+				31BC910B1CFD34D0004E7D66 /* OSCNewHotBlogDetails.m in Sources */,
 				C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */,
 				C5B2F1AB1BCF451F004B4785 /* NSDate+Util.m in Sources */,
 				C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */,
@@ -2294,6 +2343,7 @@
 				C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */,
 				0422BC5A1CEDA390007DB140 /* SDCollectionViewCell.m in Sources */,
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
+				31D699581CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m in Sources */,
 				C5F3D7801AF0C8BF0032F775 /* WeeklyReportCell.m in Sources */,
 				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
 				04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */,
