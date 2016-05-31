@@ -194,7 +194,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             OSCSoftware* softWare = [OSCSoftware new];
             softWare.name = model.title;
             softWare.url = [NSURL URLWithString:model.href];
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:softWare];
+            softWare.softId = model.id;
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
             [self.navigationController pushViewController:detailsViewController animated:YES];
             
             break;
@@ -234,6 +235,10 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 #pragma mark -- networking Delegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
+    if (isRefresh) {    //刷新banners
+        [self getBannerData];
+    }
+    
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
     if (!isRefresh && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
@@ -297,7 +302,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             OSCSoftware* softWare = [OSCSoftware new];
             softWare.name = model.name;
             softWare.url = [NSURL URLWithString:model.href];
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:softWare];
+            softWare.softId = model.id;
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
             [self.navigationController pushViewController:detailsViewController animated:YES];
             break;
         }

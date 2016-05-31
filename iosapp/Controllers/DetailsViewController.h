@@ -40,6 +40,7 @@ typedef NS_ENUM(int, FavoriteType)
 
 /* 新 */
 - (instancetype)initWithNewHotBlog:(OSCNewHotBlog *)blog;
+- (instancetype)initWithV2Software:(OSCSoftware *)software;
 - (instancetype)initWithQuestion:(OSCQuestion *)question;
 
 @end
