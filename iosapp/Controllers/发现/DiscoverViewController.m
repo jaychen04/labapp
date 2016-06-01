@@ -63,22 +63,22 @@
     
     cell.backgroundColor = [UIColor cellsColor];
     cell.textLabel.textColor = [UIColor titleColor];
-    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     switch (indexPath.section) {
         case 0:
             cell.textLabel.text = @"开源软件";
-            cell.imageView.image = [UIImage imageNamed:@"discover-events"];
+            cell.imageView.image = [UIImage imageNamed:@"ic_discover_softwares"];
             break;
         case 1:
             cell.textLabel.text = @"找人";
-            cell.imageView.image = [UIImage imageNamed:@"discover-search"];
+            cell.imageView.image = [UIImage imageNamed:@"ic_discover_find"];
             
 //            cell.textLabel.text = @[@"找人", @"活动"][indexPath.row];
 //            cell.imageView.image = [UIImage imageNamed:@[@"discover-search", @"discover-activities"][indexPath.row]];
             break;
         case 2:
             cell.textLabel.text = @[@"扫一扫", @"摇一摇"][indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@[@"discover-scan", @"discover-shake"][indexPath.row]];
+            cell.imageView.image = [UIImage imageNamed:@[@"ic_discover_scan", @"ic_discover_shake"][indexPath.row]];
             break;
         default: break;
     }

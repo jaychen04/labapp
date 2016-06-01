@@ -54,7 +54,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     if (self) {
         __weak InformationViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-//            return @"http://192.168.1.15:8000/action/apiv2/news";
+//            OSCAPI_PREFIX_15
             return [NSString stringWithFormat:@"%@news",OSCAPI_V2_PREFIX];
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
@@ -107,6 +107,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 
 -(void)getBannerData{
+//    OSCAPI_PREFIX_15
     NSString* urlStr = [NSString stringWithFormat:@"%@banner",OSCAPI_V2_PREFIX];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:urlStr
@@ -139,9 +140,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 
 -(void)configurationCycleScrollView{
-    
-    [self.bannerTitles removeAllObjects];
     [self.bannerImageUrls removeAllObjects];
+    [self.bannerTitles removeAllObjects];
     
     for (OSCBanner* bannerItem in self.bannerModels) {
         [self.bannerTitles addObject:bannerItem.name];
@@ -234,7 +234,14 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             [self.navigationController pushViewController:activityVC animated:YES];
             break;
         }
-            
+        case InformationTypeInfo:{
+            OSCInformation* info = [[OSCInformation alloc]init];
+            info.id = model.id;
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithInfo:info];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+            break;
+        }
+       
         default:
             break;
     }
@@ -272,7 +279,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
                       [self.tableView reloadData];
                   });
               }
-              
             }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
@@ -345,7 +351,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             [self.navigationController pushViewController:activityVC animated:YES];
             break;
         }
-            
+        case InformationTypeInfo:{
+            OSCInformation* info = [[OSCInformation alloc]init];
+            info.id = model.id;
+            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithInfo:info];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+            break;
+        }
         default:
             break;
     }
