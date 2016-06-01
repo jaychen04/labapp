@@ -261,6 +261,8 @@
 		EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE241B41CFD79C00088FFB3 /* ActivityDetailCell.xib */; };
 		EEEC98C31CF317D600995A03 /* QuesAnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */; };
 		EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */; };
+		EEFFA6421CFEDAC000A8701C /* webAndAbsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFFA6401CFEDAC000A8701C /* webAndAbsTableViewCell.m */; };
+		EEFFA6431CFEDAC000A8701C /* webAndAbsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFFA6411CFEDAC000A8701C /* webAndAbsTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -757,6 +759,9 @@
 		EEEC98C01CF317D600995A03 /* QuesAnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsViewController.h; path = Questions/QuesAnsViewController.h; sourceTree = "<group>"; };
 		EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsViewController.m; path = Questions/QuesAnsViewController.m; sourceTree = "<group>"; };
 		EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsViewController.xib; path = Questions/QuesAnsViewController.xib; sourceTree = "<group>"; };
+		EEFFA63F1CFEDAC000A8701C /* webAndAbsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webAndAbsTableViewCell.h; sourceTree = "<group>"; };
+		EEFFA6401CFEDAC000A8701C /* webAndAbsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = webAndAbsTableViewCell.m; sourceTree = "<group>"; };
+		EEFFA6411CFEDAC000A8701C /* webAndAbsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = webAndAbsTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1076,6 +1081,9 @@
 				31D699611CFC352300B48BB0 /* TitleInfoTableViewCell.h */,
 				31D699621CFC352300B48BB0 /* TitleInfoTableViewCell.m */,
 				31D699631CFC352400B48BB0 /* TitleInfoTableViewCell.xib */,
+				EEFFA63F1CFEDAC000A8701C /* webAndAbsTableViewCell.h */,
+				EEFFA6401CFEDAC000A8701C /* webAndAbsTableViewCell.m */,
+				EEFFA6411CFEDAC000A8701C /* webAndAbsTableViewCell.xib */,
 				31D699661CFC4F8600B48BB0 /* RecommandBlogTableViewCell.h */,
 				31D699671CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m */,
 				31D699681CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib */,
@@ -2142,6 +2150,7 @@
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				31D56E881CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.xib in Resources */,
 				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
+				EEFFA6431CFEDAC000A8701C /* webAndAbsTableViewCell.xib in Resources */,
 				EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */,
 				04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
@@ -2432,6 +2441,7 @@
 				C5B2F1B91BD0DFF2004B4785 /* NSString+Util.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,
 				386825A91A70D5E6008F5706 /* OSCSearchResult.m in Sources */,
+				EEFFA6421CFEDAC000A8701C /* webAndAbsTableViewCell.m in Sources */,
 				38BD3D041A36A3E500682D1F /* OSCSoftwareCatalog.m in Sources */,
 				387639B11A7CF95D008E6805 /* SideMenuViewController.m in Sources */,
 				31B6F1921AF78A8B00DC28FE /* TeamIssueDetailCell.m in Sources */,

@@ -7,6 +7,8 @@
 //
 
 #import "FollowAuthorTableViewCell.h"
+#import "Config.h"
+#import "Utils.h"
 
 @implementation FollowAuthorTableViewCell
 
@@ -18,6 +20,26 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
 
+}
+
+- (void)setBlogDetail:(OSCBlogDetail *)blogDetail
+{
+    [_portraitIv loadPortrait:[NSURL URLWithString:blogDetail.authorPortrait]];
+    _nameLabel.text = blogDetail.author;
+    
+    _pubTimeLabel.text = [NSString stringWithFormat:@"发表于%@", [[NSDate dateFromString:blogDetail.pubDate] timeAgoSinceNow]];
+    switch (blogDetail.authorRelation) {
+        case 1://双方互为粉丝
+        case 2://已单方面关注
+            [_followBtn setTitle:@"已关注" forState:UIControlStateNormal];
+            break;
+        case 3://互不关注
+            [_followBtn setTitle:@"关注" forState:UIControlStateNormal];
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

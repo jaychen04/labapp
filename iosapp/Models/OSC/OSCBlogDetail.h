@@ -42,9 +42,11 @@
 
 @property (nonatomic, assign) NSInteger commentCount;
 
-@property (nonatomic,strong) NSArray<OSCBlogDetailRecommend* >* about;
+@property (nonatomic,strong) NSArray<OSCBlogDetailRecommend* >* abouts;
 
 @property (nonatomic,strong) NSArray<OSCBlogDetailComment* >* comments;
+
+@property (nonatomic, copy) NSString *abstract;//摘要
 
 @end
 
