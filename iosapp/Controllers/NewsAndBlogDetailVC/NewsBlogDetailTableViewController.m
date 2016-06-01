@@ -13,6 +13,8 @@
 #import "UIColor+Util.h"
 #import "OSCAPI.h"
 #import "AFHTTPRequestOperationManager+Util.h"
+#import "OSCBlog.h"
+#import "OSCNewHotBlogDetails.h"
 
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
@@ -24,7 +26,12 @@ static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
 
 @interface NewsBlogDetailTableViewController ()
 
+@property  (nonatomic,strong) OSCNewHotBlogDetails *detail;
+
 @end
+
+
+
 
 @implementation NewsBlogDetailTableViewController
 
@@ -53,17 +60,17 @@ static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
 }
 
 -(void)getBlogData{
-    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, self.blogId];
-    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
-    [manger GET:blogDetailUrlStr
-     parameters:nil
-        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            //TODO
-            NSLog(@"hello");
-        }
-        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
-        }];
+    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@blog?id=%lld", OSCAPI_V2_PREFIX,self.blogId];
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manager GET:blogDetailUrlStr parameters:nil success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        //TODO
+        NSLog(@"result object is %@",responseObject);
+        self.detail = [[OSCNewHotBlogDetails alloc] init];
+        
+    } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+        //TODO
+
+    }];
 }
 
 #pragma mark -- DIY_headerView

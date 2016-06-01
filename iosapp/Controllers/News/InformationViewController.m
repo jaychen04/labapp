@@ -333,16 +333,10 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeBlog:{
-            OSCNewHotBlog* blog = [[OSCNewHotBlog alloc]init];
-            blog.id = model.id;
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNewHotBlog:blog];
-            [self.navigationController pushViewController:detailsViewController animated:YES];
-            
-            /*
-            //博客详情
+            //轮播：博客详情
             NewsBlogDetailTableViewController *detailViewController = [[NewsBlogDetailTableViewController alloc] initWithBlogId:model.id isBlogDetail:YES];
             [self.navigationController pushViewController:detailViewController animated:YES];
-             */
+            
              
             break;
         }

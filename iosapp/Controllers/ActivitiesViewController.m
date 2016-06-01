@@ -18,6 +18,8 @@ static NSString * const kActivtyCellID = @"ActivityCell";
 
 @interface ActivitiesViewController ()
 
+@property NSDateFormatter *formatter;
+
 @end
 
 @implementation ActivitiesViewController
@@ -33,6 +35,8 @@ static NSString * const kActivtyCellID = @"ActivityCell";
         };
         
         self.objClass = [OSCActivity class];
+        self.formatter = [[NSDateFormatter alloc] init];
+        [self.formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
     }
     
     return self;
@@ -71,7 +75,7 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     cell.contentView.backgroundColor = [UIColor newCellColor];
     cell.titleLabel.text       = activity.title;
     cell.titleLabel.textColor = [UIColor titleColor];
-    cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
+    cell.descriptionLabel.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", [self.formatter stringFromDate:activity.startTime], activity.location];
     [cell.posterView sd_setImageWithURL:activity.coverURL placeholderImage:nil];
     
     if (activity.status == ActivityStatusActivityFinished && activity.applyStatus == ActivityApplyStatusAttended) {
@@ -99,7 +103,7 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     self.label.font = [UIFont boldSystemFontOfSize:14];
     CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 84, MAXFLOAT)].height;
     
-    self.label.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", activity.startTime, activity.location];
+    self.label.text = [NSString stringWithFormat:@"时间：%@\n地点：%@", [self.formatter stringFromDate:activity.startTime], activity.location];
     self.label.font = [UIFont systemFontOfSize:13];
     height += [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 84, MAXFLOAT)].height;
     
