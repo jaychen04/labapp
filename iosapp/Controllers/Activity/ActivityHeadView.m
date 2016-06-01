@@ -177,7 +177,7 @@
     // create gaussian blur filter
     CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
     [filter setValue:inputImage forKey:kCIInputImageKey];
-    [filter setValue:[NSNumber numberWithFloat:10] forKey:@"inputRadius"];//模糊
+    [filter setValue:[NSNumber numberWithFloat:5] forKey:@"inputRadius"];//模糊
     
     // blur image
     CIImage *result = [filter valueForKey:kCIOutputImageKey];
