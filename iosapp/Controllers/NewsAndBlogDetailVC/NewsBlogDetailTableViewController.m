@@ -108,6 +108,10 @@ static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
     return [UIView new];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 0;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

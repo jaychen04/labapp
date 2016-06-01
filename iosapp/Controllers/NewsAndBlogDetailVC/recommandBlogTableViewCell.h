@@ -13,4 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *viewCountLabel;
 
+//@property (nonatomic, strong) abouts;
+
 @end
