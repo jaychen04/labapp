@@ -24,10 +24,19 @@ typedef NS_ENUM(NSUInteger, ActivityApplyStatus)
     ActivityApplyStatusRejected,
 };
 
+typedef NS_ENUM(NSUInteger, ActivityCategoryStatus)
+{
+    ActivityCategoryStatusOSChinaMeeting = 1,//源创会
+    ActivityCategoryStatusTechnical,//技术交流
+    ActivityCategoryStatusOther,// 其他
+    ActivityCategoryStatuseBelow,//站外活动(当为站外活动的时候，href为站外活动报名地址)
+};
+
 @interface OSCActivity : OSCBaseObject
 
 @property (nonatomic, readonly, assign)   int64_t     activityID;
 @property (nonatomic, readonly, strong)   NSURL      *coverURL;
+@property (nonatomic, readonly, assign)   ActivityCategoryStatus category;
 @property (nonatomic, readonly, strong)   NSURL      *url;
 @property (nonatomic, readonly, copy)     NSString   *title;
 @property (nonatomic, readonly, strong)   NSDate     *startTime;

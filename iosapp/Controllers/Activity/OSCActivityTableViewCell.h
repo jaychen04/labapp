@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OSCActivities.h"
 
 extern NSString* OSCActivityTableViewCell_IdentifierString;
 
@@ -15,5 +16,7 @@ extern NSString* OSCActivityTableViewCell_IdentifierString;
 +(instancetype)returnReuseCellFormTableView:(UITableView* )tableView
                                   indexPath:(NSIndexPath *)indexPath
                                  identifier:(NSString *)identifierString;
+
+@property (nonatomic,strong) OSCActivities* viewModel;
 
 @end
