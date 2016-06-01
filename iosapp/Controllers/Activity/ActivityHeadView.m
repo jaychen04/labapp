@@ -24,17 +24,22 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        _currentIndex = 0;
     }
     return self;
 }
 
 - (void)setUpScrollView:(NSArray *)bannners
 {
+    _banners = bannners;
+    
     NSInteger arrayCount = bannners.count;
     _scrollView = [[UIScrollView alloc] initWithFrame:self.frame];
     _scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.frame) * arrayCount, CGRectGetHeight(self.frame));
     _scrollView.pagingEnabled = YES;
+    _scrollView.showsVerticalScrollIndicator = NO;
+    _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.backgroundColor = [UIColor blackColor];
     [self addSubview:_scrollView];
     
     CGFloat imageViewWidth = CGRectGetWidth(_scrollView.frame);
@@ -50,7 +55,7 @@
         [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTopImage:)]];
     }
     if (arrayCount > 1) {
-        [NSTimer scheduledTimerWithTimeInterval:1.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
+        [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
     }
 }
 
@@ -100,7 +105,7 @@
 - (void)setUpUI:(CGRect)frame
 {
     _bottomImage = [[UIImageView alloc] initWithFrame:frame];
-    _bottomImage.contentMode = UIViewContentModeCenter;
+    _bottomImage.contentMode = UIViewContentModeScaleAspectFill;
     _bottomImage.clipsToBounds = YES;
     [self addSubview:_bottomImage];
    
@@ -134,7 +139,7 @@
     
     
     
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_bottomImage]"
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_bottomImage]|"
                                                                  options:0
                                                                  metrics:nil
                                                                    views:views]];
@@ -151,7 +156,7 @@
                                                                  options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                  metrics:nil
                                                                    views:subViews]];
-    [_bottomImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_subImageView(120)]-16-[_titleLable(207)]"
+    [_bottomImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_subImageView(120)]-16-[_titleLable]-16-|"
                                                                  options:NSLayoutFormatAlignAllTop
                                                                  metrics:nil
                                                                    views:subViews]];
@@ -170,12 +175,11 @@
 {
     CIContext *context = [CIContext contextWithOptions:nil];
     CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]]];
-//    CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageNamed:@"1.png"]];
     
     // create gaussian blur filter
     CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
     [filter setValue:inputImage forKey:kCIInputImageKey];
-    [filter setValue:[NSNumber numberWithFloat:10.0] forKey:@"inputRadius"];
+    [filter setValue:[NSNumber numberWithFloat:0.5] forKey:@"inputRadius"];//模糊
     
     // blur image
     CIImage *result = [filter valueForKey:kCIOutputImageKey];
