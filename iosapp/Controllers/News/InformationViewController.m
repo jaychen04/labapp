@@ -15,6 +15,7 @@
 #import "ActivityDetailsWithBarViewController.h"
 #import "InformationTableViewCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
+#import "NewsBlogDetailTableViewController.h"
 
 #import "OSCInformation.h"
 #import "OSCBanner.h"
@@ -33,16 +34,18 @@
 static NSString * const informationReuseIdentifier = @"InformationTableViewCell";
 
 @interface InformationViewController () <SDCycleScrollViewDelegate,networkingJsonDataDelegate>
-@property (nonatomic,strong) SDCycleScrollView* cycleScrollView;
 
+@property (nonatomic,strong) SDCycleScrollView* cycleScrollView;
 @property (nonatomic,strong) NSMutableArray* bannerTitles;
 @property (nonatomic,strong) NSMutableArray* bannerImageUrls;
-
 @property (nonatomic,strong) NSMutableArray* bannerModels;
 @property (nonatomic,strong) NSMutableArray* dataModels;
-
 @property (nonatomic,strong) NSString* nextToken;
+
 @end
+
+
+
 
 @implementation InformationViewController
 
@@ -59,7 +62,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             (weakSelf.lastCell.status = LastCellStatusMore);
         };
         self.objClass = [OSCInformation class];
-        
         self.netWorkingDelegate = self;
         self.isJsonDataVc = YES;
         self.parametersDic = @{};
@@ -77,7 +79,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 {
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
@@ -85,10 +86,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self getBannerData];
     [self layoutUI];
-    
     self.tableView.separatorColor = [UIColor separatorColor];
 }
 
@@ -100,7 +99,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         NSDictionary* result = responseJSON[@"result"];
         NSArray* items = result[@"items"];
         NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
-//        NSLog(@"%@",modelArray);
         if (isRefresh) {//上拉得到的数据
             [self.dataModels removeAllObjects];
         }
@@ -130,29 +128,28 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             NSLog(@"%@",error);
 }];
 }
+
+
 -(void)layoutUI{
     [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
-    
     self.tableView.tableHeaderView = self.cycleScrollView;
     self.tableView.estimatedRowHeight = 132;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
+
+
 -(void)configurationCycleScrollView{
     [self.bannerImageUrls removeAllObjects];
     [self.bannerTitles removeAllObjects];
     
     for (OSCBanner* bannerItem in self.bannerModels) {
-//        NSLog(@"%@",bannerItem);
         [self.bannerTitles addObject:bannerItem.name];
         [self.bannerImageUrls addObject:bannerItem.img];
     }
     
     self.cycleScrollView.imageURLStringsGroup = self.bannerImageUrls.copy;
     self.cycleScrollView.titlesGroup = self.bannerTitles.copy;
-    
-//    NSLog(@"banner Imgs %@",self.cycleScrollView.imageURLStringsGroup);
-//    NSLog(@"banner titles %@",self.cycleScrollView.titlesGroup);
     
     [self.tableView reloadData];
 }
@@ -163,6 +160,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataModels.count;
 }
+
+
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
     cell.contentView.backgroundColor = [UIColor newCellColor];
@@ -173,11 +172,15 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     
     return cell;
 }
+
+
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return [tableView fd_heightForCellWithIdentifier:informationReuseIdentifier configuration:^(InformationTableViewCell* cell) {
         cell.viewModel = self.dataModels[indexPath.row];
     }];
 }
+
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -254,12 +257,12 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     if (!isRefresh && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
     }
+    
     [self.manager GET:self.generateUrl()
        parameters:paraMutableDic.copy
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
 
               if([responseObject[@"code"]integerValue] == 1) {
-//                  [self handleData:responseObject isRefresh:isRefresh];
                   NSDictionary* resultDic = responseObject[@"result"];
                   NSArray* items = resultDic[@"items"];
                   NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
@@ -294,12 +297,15 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
      ];
 }
 
+
+
 #pragma mark - banner delegate 
-/** 点击banner触发 */
+
 - (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
     OSCBanner* bannerModel = self.bannerModels[index];
     [self pushConcreteViewController:bannerModel];
 }
+
 
 -(void)pushConcreteViewController:(OSCBanner* )model{
     switch (model.type) {
@@ -331,6 +337,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             blog.id = model.id;
             DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNewHotBlog:blog];
             [self.navigationController pushViewController:detailsViewController animated:YES];
+            
+            /*
+            //博客详情
+            NewsBlogDetailTableViewController *detailViewController = [[NewsBlogDetailTableViewController alloc] initWithBlogId:model.id isBlogDetail:YES];
+            [self.navigationController pushViewController:detailViewController animated:YES];
+             */
+             
             break;
         }
             
@@ -360,8 +373,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-    
     [self.cycleScrollView clearCache];
 }
 
@@ -379,14 +390,14 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 - (NSMutableArray *)bannerTitles {
 	if(_bannerTitles == nil) {
-		_bannerTitles = [NSMutableArray arrayWithCapacity:5];
+		_bannerTitles = [NSMutableArray array];
 	}
 	return _bannerTitles;
 }
 
 - (NSMutableArray *)bannerImageUrls {
 	if(_bannerImageUrls == nil) {
-		_bannerImageUrls = [NSMutableArray arrayWithCapacity:5];
+		_bannerImageUrls = [NSMutableArray array];
 	}
 	return _bannerImageUrls;
 }
@@ -400,7 +411,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 - (NSMutableArray *)bannerModels {
 	if(_bannerModels == nil) {
-		_bannerModels = [NSMutableArray arrayWithCapacity:5];
+		_bannerModels = [NSMutableArray array];
 	}
 	return _bannerModels;
 }

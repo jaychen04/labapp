@@ -2,19 +2,25 @@
 //  NewsBlogDetailTableViewController.m
 //  iosapp
 //
-//  Created by Holden on 16/5/30.
+//  Created by 巴拉提 on 16/5/30.
 //  Copyright © 2016年 oschina. All rights reserved.
 //
 
 #import "NewsBlogDetailTableViewController.h"
 #import "FollowAuthorTableViewCell.h"
 #import "TitleInfoTableViewCell.h"
-#import "recommandBlogTableViewCell.h"
+#import "RecommandBlogTableViewCell.h"
 #import "UIColor+Util.h"
+#import "OSCAPI.h"
+#import "AFHTTPRequestOperationManager+Util.h"
+
+#import <MJExtension.h>
+#import <MBProgressHUD.h>
+#import <AFNetworking.h>
 
 static NSString *followAuthorReuseIdentifier = @"FollowAuthorTableViewCell";
 static NSString *titleInfoReuseIdentifier = @"TitleInfoTableViewCell";
-static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
+static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
 
 @interface NewsBlogDetailTableViewController ()
 
@@ -22,18 +28,42 @@ static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
 
 @implementation NewsBlogDetailTableViewController
 
+-(instancetype) initWithBlogId:(NSInteger)blogId
+                  isBlogDetail:(BOOL)isBlogDetail {
+    if(self) {
+        self.blogId = blogId;
+        self.isBlogDetail = isBlogDetail;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
+    
     [super viewDidLoad];
     [self.tableView registerNib:[UINib nibWithNibName:@"FollowAuthorTableViewCell" bundle:nil] forCellReuseIdentifier:followAuthorReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TitleInfoTableViewCell" bundle:nil] forCellReuseIdentifier:titleInfoReuseIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"recommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
-    
+    [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];    
     self.tableView.tableFooterView = [UIView new];
+    
+    [self getBlogData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
+}
+
+-(void)getBlogData{
+    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_BLOG_DETAIL, self.blogId];
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manger GET:blogDetailUrlStr
+     parameters:nil
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            //TODO
+            NSLog(@"hello");
+        }
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+        }];
 }
 
 #pragma mark -- DIY_headerView
@@ -55,15 +85,19 @@ static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
     
     return headerView;
 }
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 3;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return 2;
 }
+
 
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 1) {
@@ -73,6 +107,8 @@ static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
     }
     return [UIView new];
 }
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     switch (section) {
@@ -90,6 +126,8 @@ static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
     
     return 0.001;
 }
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case 0:
@@ -107,7 +145,7 @@ static NSString *recommandBlogReuseIdentifier = @"recommandBlogTableViewCell";
             break;
         case 1:
         {
-            recommandBlogTableViewCell *recommandBlogCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
+            RecommandBlogTableViewCell *recommandBlogCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
             return recommandBlogCell;
         }
             break;
