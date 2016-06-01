@@ -25,7 +25,7 @@
 #import "ShakingViewController.h"
 #import "SearchViewController.h"
 #import "VoiceTweetEditingVC.h"
-#import "ActivitiesViewController.h"
+#import "OSCActivityViewController.h"
 #import "QuesAnsViewController.h"
 #import "InformationViewController.h"
 #import "NewHotBlogTableViewController.h"
@@ -42,7 +42,7 @@
 //    BlogsViewController *blogViewCtl;
 //    BlogsViewController *recommendBlogViewCtl;
     QuesAnsViewController *quesViewCtl;
-    ActivitiesViewController *activitiesViewCtl;
+    OSCActivityViewController *activitiesViewCtl;
     
     TweetsViewController *newTweetViewCtl;
     TweetsViewController *hotTweetViewCtl;
@@ -152,7 +152,7 @@
 //    blogViewCtl.isJsonDataVc = NO;
 //    recommendBlogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeRecommended];
     quesViewCtl = [QuesAnsViewController new];
-    activitiesViewCtl = [[ActivitiesViewController alloc] initWithUID:0];
+    activitiesViewCtl = [OSCActivityViewController new];
     
     newTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets];
     hotTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets];
