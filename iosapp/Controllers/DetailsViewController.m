@@ -32,6 +32,7 @@
 #import "AppDelegate.h"
 #import "OSCQuestion.h"
 #import "OSCNewHotBlog.h"
+#import "OSCInformation.h"
 
 @interface DetailsViewController () <UIWebViewDelegate, UIScrollViewDelegate, UIAlertViewDelegate>
 
@@ -118,7 +119,23 @@
     
     return self;
 }
-
+#pragma mark --新的资讯详情初始化
+- (instancetype)initWithInfo:(OSCInformation *)info {
+    self = [super initWithModeSwitchButton:YES];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+        //        _news = news;
+        _objectID = info.id;
+        self.navigationItem.title = @"资讯详情";
+        _detailsURL = [NSString stringWithFormat:@"%@%@?id=%ld", OSCAPI_PREFIX, OSCAPI_NEWS_DETAIL, (long)info.id];
+        _tag = @"news";
+        _commentType = CommentTypeNews;
+        _favoriteType = FavoriteTypeNews;
+        _detailsClass = [OSCNewsDetails class];
+        _loadMethod = @selector(loadNewsDetails:);
+    }
+    return self;
+}
 - (instancetype)initWithBlog:(OSCBlog *)blog
 {
     self = [super initWithModeSwitchButton:YES];
@@ -211,7 +228,7 @@
     _softwareName = software.name;
     _detailsClass = [OSCSoftwareDetails class];
     _loadMethod = @selector(loadSoftwareDetails:);
-//    http://www.oschina.net/news/73898/apache-shiro-1-2-5
+    //    http://www.oschina.net/news/73898/apache-shiro-1-2-5
     return self;
 }
 #pragma mark -- v2接口软件详情的初始化方式
@@ -331,7 +348,7 @@
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                       HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }
-                 
+                  
                   [HUD hide:YES afterDelay:1];
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
@@ -444,7 +461,7 @@
 //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
 //
 //    [manager GET:_detailsURL parameters:nil success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-//        
+//
 //    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //        NSLog(@"error:%@",error);
 //    }];
@@ -467,6 +484,10 @@
             } else {     //onoxml
                 ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
                 details = [[_detailsClass alloc] initWithXML:XML];
+                //新接口软件详情评论
+                if([_tag isEqualToString:@"software"]) {
+                    _softwareName = ((OSCSoftwareDetails*)details).title;
+                }
             }
             
             [self performSelector:_loadMethod withObject:details];
@@ -488,49 +509,49 @@
         NSLog(@"error:%@",error);
     }];
     
-
+    
     //////////////////ONOXMLDocument///////////////////////
     /*
-    [_manager GET:_detailsURL
-       parameters:nil
-          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-//              NSString *response = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
-              
-//              ONOXMLDocument *test = [ONOXMLDocument XMLDocumentWithString:response encoding:NSUTF8StringEncoding error:nil];
-              
-              ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
-              if (!XML || XML.children.count <= 0) {
-                  [self.navigationController popViewControllerAnimated:YES];
-              } else {
-                  id details = [[_detailsClass alloc] initWithXML:XML];
-                  _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
-                  
-//                  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d条评论", _commentCount]
-//                                                                                            style:UIBarButtonItemStylePlain
-//                                                                                           target:self action:@selector(refresh)];
-                  
-                  [self performSelector:_loadMethod withObject:details];
-                  
-                  self.operationBar.isStarred = _isStarred;
-                  
-                  UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
-                  commentsCountButton.shouldHideBadgeAtZero = YES;
-                  commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
-                  commentsCountButton.badgePadding = 1;
-                  commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
-                  
-                  if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
-                  
-                  [self setBlockForOperationBar];
-              }
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              _HUD.mode = MBProgressHUDModeCustomView;
-              _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              _HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
-              
-              [_HUD hide:YES afterDelay:1];
-          }
+     [_manager GET:_detailsURL
+     parameters:nil
+     success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+     //              NSString *response = [[NSString alloc] initWithData:operation.responseData encoding:NSUTF8StringEncoding];
+     
+     //              ONOXMLDocument *test = [ONOXMLDocument XMLDocumentWithString:response encoding:NSUTF8StringEncoding error:nil];
+     
+     ONOXMLElement *XML = [responseDocument.rootElement firstChildWithTag:_tag];
+     if (!XML || XML.children.count <= 0) {
+     [self.navigationController popViewControllerAnimated:YES];
+     } else {
+     id details = [[_detailsClass alloc] initWithXML:XML];
+     _commentCount = [[[XML firstChildWithTag:@"commentCount"] numberValue] intValue];
+     
+     //                  self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[NSString stringWithFormat:@"%d条评论", _commentCount]
+     //                                                                                            style:UIBarButtonItemStylePlain
+     //                                                                                           target:self action:@selector(refresh)];
+     
+     [self performSelector:_loadMethod withObject:details];
+     
+     self.operationBar.isStarred = _isStarred;
+     
+     UIBarButtonItem *commentsCountButton = self.operationBar.items[4];
+     commentsCountButton.shouldHideBadgeAtZero = YES;
+     commentsCountButton.badgeValue = [NSString stringWithFormat:@"%i", _commentCount];
+     commentsCountButton.badgePadding = 1;
+     commentsCountButton.badgeBGColor = [UIColor colorWithHex:0x24a83d];
+     
+     if (_commentType == CommentTypeSoftware) {_objectID = ((OSCSoftwareDetails *)details).softwareID;}
+     
+     [self setBlockForOperationBar];
+     }
+     }
+     failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+     _HUD.mode = MBProgressHUDModeCustomView;
+     _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+     _HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+     
+     [_HUD hide:YES afterDelay:1];
+     }
      ];
      */
 }
