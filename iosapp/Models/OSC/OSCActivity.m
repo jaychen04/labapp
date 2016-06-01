@@ -17,6 +17,7 @@
     if (self) {
         _activityID  = [[[xml firstChildWithTag:@"id"] numberValue] longLongValue];
         _coverURL    = [NSURL URLWithString:[[xml firstChildWithTag:@"cover"] stringValue]];
+        _category    = [[[xml firstChildWithTag:@"category"] numberValue] intValue];
         _url         = [NSURL URLWithString:[[xml firstChildWithTag:@"url"]   stringValue]];
         _title       = [[xml firstChildWithTag:@"title"] stringValue];
         _startTime   = [NSDate dateFromString:[xml firstChildWithTag:@"startTime"].stringValue];
