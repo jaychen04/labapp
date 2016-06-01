@@ -79,8 +79,8 @@
 		31D699601CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D6995E1CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib */; };
 		31D699641CFC352400B48BB0 /* TitleInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D699621CFC352300B48BB0 /* TitleInfoTableViewCell.m */; };
 		31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D699631CFC352400B48BB0 /* TitleInfoTableViewCell.xib */; };
-		31D699691CFC4F8600B48BB0 /* recommandBlogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D699671CFC4F8600B48BB0 /* recommandBlogTableViewCell.m */; };
-		31D6996A1CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D699681CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib */; };
+		31D699691CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D699671CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m */; };
+		31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D699681CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib */; };
 		31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */; };
 		31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FA1AEF2685004DF445 /* ProjectCell.m */; };
 		31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */; };
@@ -391,9 +391,9 @@
 		31D699611CFC352300B48BB0 /* TitleInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TitleInfoTableViewCell.h; sourceTree = "<group>"; };
 		31D699621CFC352300B48BB0 /* TitleInfoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TitleInfoTableViewCell.m; sourceTree = "<group>"; };
 		31D699631CFC352400B48BB0 /* TitleInfoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TitleInfoTableViewCell.xib; sourceTree = "<group>"; };
-		31D699661CFC4F8600B48BB0 /* recommandBlogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = recommandBlogTableViewCell.h; sourceTree = "<group>"; };
-		31D699671CFC4F8600B48BB0 /* recommandBlogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = recommandBlogTableViewCell.m; sourceTree = "<group>"; };
-		31D699681CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = recommandBlogTableViewCell.xib; sourceTree = "<group>"; };
+		31D699661CFC4F8600B48BB0 /* RecommandBlogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommandBlogTableViewCell.h; sourceTree = "<group>"; };
+		31D699671CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommandBlogTableViewCell.m; sourceTree = "<group>"; };
+		31D699681CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecommandBlogTableViewCell.xib; sourceTree = "<group>"; };
 		31EAF9F71AEF2685004DF445 /* ProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectListViewController.h; sourceTree = "<group>"; };
 		31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectListViewController.m; sourceTree = "<group>"; };
 		31EAF9F91AEF2685004DF445 /* ProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectCell.h; sourceTree = "<group>"; };
@@ -1076,9 +1076,9 @@
 				31D699611CFC352300B48BB0 /* TitleInfoTableViewCell.h */,
 				31D699621CFC352300B48BB0 /* TitleInfoTableViewCell.m */,
 				31D699631CFC352400B48BB0 /* TitleInfoTableViewCell.xib */,
-				31D699661CFC4F8600B48BB0 /* recommandBlogTableViewCell.h */,
-				31D699671CFC4F8600B48BB0 /* recommandBlogTableViewCell.m */,
-				31D699681CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib */,
+				31D699661CFC4F8600B48BB0 /* RecommandBlogTableViewCell.h */,
+				31D699671CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m */,
+				31D699681CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib */,
 			);
 			path = NewsAndBlogDetailVC;
 			sourceTree = "<group>";
@@ -2145,7 +2145,7 @@
 				EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */,
 				04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
-				31D6996A1CFC4F8600B48BB0 /* recommandBlogTableViewCell.xib in Resources */,
+				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
 				31D699601CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib in Resources */,
@@ -2312,7 +2312,7 @@
 				C5EF89391BE319F600B5FA46 /* NewsViewController.m in Sources */,
 				31D6995F1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
-				31D699691CFC4F8600B48BB0 /* recommandBlogTableViewCell.m in Sources */,
+				31D699691CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m in Sources */,
 				C5A89C381B09C34B00798B1C /* NSString+FontAwesome.m in Sources */,
 				38B0BF921A3AE77300A2FDB0 /* MessagesViewController.m in Sources */,
 				38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */,

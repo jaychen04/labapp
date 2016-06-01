@@ -2,7 +2,7 @@
 //  TitleInfoTableViewCell.m
 //  iosapp
 //
-//  Created by Holden on 16/5/30.
+//  Created by 巴拉提 on 16/5/30.
 //  Copyright © 2016年 oschina. All rights reserved.
 //
 
