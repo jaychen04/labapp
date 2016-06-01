@@ -111,7 +111,7 @@ NSString* OSCActivityTableViewCell_IdentifierString = @"OSCActivityTableViewCell
 
     _activityAreaLabel.backgroundColor = [UIColor titleBarColor];
     _activityAreaLabel.text = areaStr;
-    _timeLabel.text = viewModel.pubDate;
+    _timeLabel.text = [viewModel.startDate substringToIndex:16];
     _peopleNumLabel.text = [NSString stringWithFormat:@"%ld人参与", (long)viewModel.applyCount];
 }
 
