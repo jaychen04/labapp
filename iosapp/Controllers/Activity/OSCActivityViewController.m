@@ -42,7 +42,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
     if (self) {
         __weak OSCActivityViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-            return @"http://192.168.1.15:8000/action/apiv2/event";
+            return [NSString stringWithFormat:@"%@event",OSCAPI_V2_PREFIX];;
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
@@ -96,7 +96,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 }
 
 -(void)getBannerData{
-    NSString* urlStr = @"http://192.168.1.15:8000/action/apiv2/banner";
+    NSString* urlStr = [NSString stringWithFormat:@"%@banner",OSCAPI_V2_PREFIX];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager manager];
     [manger GET:urlStr
      parameters:@{@"catalog" : @3}
