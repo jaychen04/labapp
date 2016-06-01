@@ -10,6 +10,7 @@
 #import "OSCActivityTableViewCell.h"
 #import "SDCycleScrollView.h"
 #import "UITableView+FDTemplateLayoutCell.h"
+#import "ActivityDetailsWithBarViewController.h"
 
 #import "OSCActivities.h"
 #import "OSCBanner.h"
@@ -106,9 +107,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
             NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
             self.bannerModels = bannerModels.mutableCopy;
             self.bannerView.banners = self.bannerModels;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self configurationCycleScrollView];
-            });
+            
         }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             NSLog(@"%@",error);
@@ -134,12 +133,6 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
-}
-
-#pragma mark - headerview Banner
--(void)configurationCycleScrollView
-{
-    
 }
 
 #pragma mark -- networking Delegate
@@ -214,9 +207,16 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     OSCActivities *activity = _activitys[indexPath.row];
+    
+    /*//新活动详情页面
     ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:activity.id];
     activityDetailCtl.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:activityDetailCtl animated:YES];
+    */
+    
+    ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:activity.id];
+    activityVC.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:activityVC animated:YES];
 }
 
 
@@ -245,7 +245,12 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 #pragma mark - ActivityHeadViewDelegate
 - (void)clickScrollViewBanner:(NSInteger)bannerTag
 {
-    NSLog(@"push to detail activity tag = %ld", (long)bannerTag);
+    if (_bannerModels.count > 0) {
+        OSCBanner *banner = _bannerModels[bannerTag];
+        ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:banner.id];
+        [self.navigationController pushViewController:activityVC animated:YES];
+    }
+    
 }
 
 @end
