@@ -17,7 +17,7 @@
 
 @interface ActivityHeadView : UIView
 
-@property (nonatomic, strong) NSArray *banners;
+@property (nonatomic, strong) NSMutableArray *banners;
 @property (nonatomic, strong) id <ActivityHeadViewDelegate> delegate;
 
 @end
