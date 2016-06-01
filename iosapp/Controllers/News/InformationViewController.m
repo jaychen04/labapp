@@ -138,6 +138,9 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 -(void)configurationCycleScrollView{
+    [self.bannerImageUrls removeAllObjects];
+    [self.bannerTitles removeAllObjects];
+    
     for (OSCBanner* bannerItem in self.bannerModels) {
 //        NSLog(@"%@",bannerItem);
         [self.bannerTitles addObject:bannerItem.name];
@@ -265,7 +268,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
                       [self.tableView reloadData];
                   });
               }
-              
             }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
