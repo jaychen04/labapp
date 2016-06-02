@@ -58,7 +58,12 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     [super viewWillAppear:animated];
     
     _buttons = @[_askQuesButton, _shareButton, _synthButton, _jobButton, _officeButton];
-    self.selectedBtn = _askQuesButton;
+    
+    if(self.selectedBtn.tag == 0 ) {
+        self.selectedBtn = _askQuesButton;
+    }
+    
+    NSLog(@"button index %ld",self.selectedBtn.tag);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         self.tableView.separatorColor = [UIColor separatorColor];
