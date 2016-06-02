@@ -67,8 +67,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 #pragma mark - life cycle
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    
+    [super viewDidLoad];    
     self.bannerView = [[ActivityHeadView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 212)];
     self.bannerView.delegate = self;
     [self getBannerData];
@@ -77,7 +76,6 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -88,7 +86,6 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
         NSDictionary* result = responseJSON[@"result"];
         NSArray* items = result[@"items"];
         NSArray* modelArray = [OSCActivities mj_objectArrayWithKeyValuesArray:items];
-        //        NSLog(@"%@",modelArray);
         if (isRefresh) {//上拉得到的数据
             [self.activitys removeAllObjects];
         }
@@ -106,8 +103,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
             NSArray* responseArr = resultDic[@"items"];
             NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
             self.bannerModels = bannerModels.mutableCopy;
-            self.bannerView.banners = self.bannerModels;
-            
+            self.bannerView.banners = self.bannerModels.mutableCopy;
         }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             NSLog(@"%@",error);
@@ -118,9 +114,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 
 -(void)layoutUI{
     [self.tableView registerNib:[UINib nibWithNibName:@"OSCActivityTableViewCell" bundle:nil] forCellReuseIdentifier:activityReuseIdentifier];
-    
     self.tableView.tableHeaderView = self.bannerView;
-    
     self.tableView.estimatedRowHeight = 132;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
 }
@@ -137,15 +131,19 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 
 #pragma mark -- networking Delegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
+    
+    if(isRefresh) {
+        [self getBannerData];
+    }
+    
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
     if (!isRefresh && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
-        //        NSLog(@"%@",paraMutableDic);
     }
+    
     [self.manager GET:self.generateUrl()
            parameters:paraMutableDic.copy
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  //              NSLog(@"res:%@",responseObject);
                   if([responseObject[@"code"]integerValue] == 1) {
                       [self handleData:responseObject isRefresh:isRefresh];
                       NSDictionary* resultDic = responseObject[@"result"];
@@ -223,8 +221,6 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 #pragma mark - 生成bannerItem View 并转换成最终的UIImage
 
 -(UIImage* )mapBannerItem:(id)model{
-    
-    
     return [self imageWithUIView:nil];
 }
 

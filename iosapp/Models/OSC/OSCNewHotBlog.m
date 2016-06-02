@@ -38,9 +38,13 @@
             [_attributedTitleString appendAttributedString:attachmentString];
             
         }
-        
         [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-        [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:self.title]];
+        
+        if (self.title.length > 0) {
+            [_attributedTitleString appendAttributedString:[[NSAttributedString alloc] initWithString:self.title]];
+        }
+        
+        
     }
     return _attributedTitleString;
 }

@@ -320,7 +320,7 @@
     
     cell.textLabel.textColor = [UIColor titleColor];
     
-    if (indexPath.row == 0) {
+    if (indexPath.row == 0 && indexPath.section == 0) {
         if (_badgeValue == 0) {
             cell.accessoryView = nil;
         } else {

@@ -17,6 +17,8 @@
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "OSCBlogDetail.h"
 #import "Utils.h"
+#import "OSCBlog.h"
+#import "OSCNewHotBlogDetails.h"
 
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
@@ -38,7 +40,12 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 //软键盘size
 @property (nonatomic, assign) CGFloat keyboardHeight;
 
+@property  (nonatomic,strong) OSCNewHotBlogDetails *detail;
+
 @end
+
+
+
 
 @implementation NewsBlogDetailTableViewController
 
@@ -266,7 +273,6 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 {
     switch (section) {
         case 0:
-            
             break;
         case 1:
             return 32;

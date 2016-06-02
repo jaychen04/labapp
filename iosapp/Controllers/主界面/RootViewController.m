@@ -22,6 +22,7 @@
     self.scaleMenuView = NO;
     self.contentViewShadowEnabled = YES;
     self.contentViewShadowRadius = 4.5;
+    self.panGestureEnabled = NO;
     
     self.contentViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"contentViewController"];
     self.leftMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"leftMenuViewController"];

@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *bottomImageView;
 @property (nonatomic, assign) NSInteger currentIndex;
+@property NSTimer *timer;
 
 @end
 
@@ -29,7 +30,7 @@
     return self;
 }
 
-- (void)setUpScrollView:(NSArray *)bannners
+- (void)setUpScrollView:(NSMutableArray *)bannners
 {
     _banners = bannners;
     
@@ -55,11 +56,14 @@
         [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTopImage:)]];
     }
     if (arrayCount > 1) {
-        [NSTimer scheduledTimerWithTimeInterval:10.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
+        if(!self.timer) {
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
+            [self.timer fire];
+        }
     }
 }
 
-- (void)setBanners:(NSArray *)banners
+- (void)setBanners:(NSMutableArray *)banners
 {
     [self setUpScrollView:banners];
 }
@@ -68,7 +72,7 @@
 - (void)scrollToNextPage:(NSTimer *)timer
 {
     _currentIndex++;
-    if (_currentIndex == _banners.count) {
+    if (_currentIndex >= _banners.count) {
         _currentIndex = 0;
     }
     [_scrollView setContentOffset:CGPointMake(_currentIndex*CGRectGetWidth(_scrollView.frame), 0) animated:YES];
@@ -77,7 +81,6 @@
 #pragma mark - /*点击滚动图片*/
 - (void)clickTopImage:(UITapGestureRecognizer *)tap
 {
-    NSLog(@"tag = %ld", tap.view.tag);
     [delegate clickScrollViewBanner:tap.view.tag-1];
 }
 
@@ -165,7 +168,6 @@
 - (void)setContentForTopImages:(OSCBanner *)banner
 {
     _bottomImage.image = [self blurredImageView:banner.img];
-    
     [_subImageView loadPortrait:[NSURL URLWithString:banner.img]];
     _titleLable.text = banner.name;
     _descLable.text = banner.detail;
@@ -179,7 +181,7 @@
     // create gaussian blur filter
     CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
     [filter setValue:inputImage forKey:kCIInputImageKey];
-    [filter setValue:[NSNumber numberWithFloat:0.5] forKey:@"inputRadius"];//模糊
+    [filter setValue:[NSNumber numberWithFloat:5] forKey:@"inputRadius"];//模糊
     
     // blur image
     CIImage *result = [filter valueForKey:kCIOutputImageKey];

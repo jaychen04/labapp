@@ -37,6 +37,8 @@
 
 @property (nonatomic, strong) MBProgressHUD *HUD;
 
+@property NSDateFormatter *formatter;
+
 @end
 
 @implementation ActivityDetailsViewController
@@ -46,6 +48,8 @@
     self = [super init];
     if (self) {
         _activityID = activityID;
+        self.formatter = [[NSDateFormatter alloc] init];
+        [self.formatter setDateFormat:@"YYYY-MM-dd HH:mm"];
     }
     
     return self;
@@ -129,7 +133,7 @@
             CGFloat height = [label sizeThatFits:CGSizeMake(width, MAXFLOAT)].height;
             
             label.font = [UIFont systemFontOfSize:13];
-            label.text = [NSString stringWithFormat:@"开始：%@\n结束：%@", _activity.startTime, _activity.endTime];
+            label.text = [NSString stringWithFormat:@"开始：%@\n结束：%@",[self.formatter stringFromDate:_activity.startTime], [self.formatter stringFromDate:_activity.endTime]];
             height += [label sizeThatFits:CGSizeMake(width, MAXFLOAT)].height;
             
             label.text = _activity.location;
@@ -152,7 +156,7 @@
             ActivityBasicInfoCell *cell = [ActivityBasicInfoCell new];
             cell.titleLabel.text = _activity.title;
             cell.titleLabel.textColor = [UIColor titleColor];
-            cell.timeLabel.text = [NSString stringWithFormat:@"开始：%@\n结束：%@", _activity.startTime, _activity.endTime];
+            cell.timeLabel.text = [NSString stringWithFormat:@"开始：%@\n结束：%@", [self.formatter stringFromDate:_activity.startTime], [self.formatter stringFromDate:_activity.endTime]];
             cell.locationLabel.text = [NSString stringWithFormat:@"地点：%@ %@", _activity.city, _activity.location];
             
             if (_postDetails.applyStatus == 0) {

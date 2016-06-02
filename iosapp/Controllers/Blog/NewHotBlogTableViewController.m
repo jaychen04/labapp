@@ -68,13 +68,10 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     _newestBlogObjects = [NSMutableArray new];
     _hottestBlogObjects = [NSMutableArray new];
     
-    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NewHotBlogTableViewCell class])
-                                               bundle:[NSBundle mainBundle]]
-     
-         forCellReuseIdentifier:reuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NewHotBlogTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:reuseIdentifier];
     self.tableView.separatorColor = [UIColor separatorColor];
     
-    _newblogParaDic = @{@"catalog":@2};
+    _newblogParaDic = @{@"catalog":@1};
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,7 +94,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 //    NSLog(@"hotPara:%@",@{@"catalog":@1});
     
     [self.manager GET:self.generateUrl()
-           parameters:@{@"catalog":@1}
+           parameters:@{@"catalog":@2}
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
 //                  NSLog(@"hotres:%ld",[[responseObject[@"result"] objectForKey:@"items"] count]);
                   if ([responseObject[@"code"]integerValue] == 1) {
@@ -118,7 +115,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 - (void)getNewBlogIsRefresh:(BOOL)isRefresh
 {
     if (isRefresh) {
-        _newblogParaDic = @{@"catalog":@2};
+        _newblogParaDic = @{@"catalog":@1};
     }
 //    NSLog(@"newPara:%@",_newblogParaDic);
     
@@ -134,7 +131,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                       }
                       [_newestBlogObjects addObjectsFromArray:blogModels];
                       self.lastCell.status = blogModels.count<20?LastCellStatusFinished:LastCellStatusMore;
-                      _newblogParaDic = @{@"catalog":@2,
+                      _newblogParaDic = @{@"catalog":@1,
                                           @"pageToken":resultDic[@"nextPageToken"]?:@""};
                   }
                   

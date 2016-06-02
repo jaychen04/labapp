@@ -17,7 +17,7 @@ typedef NS_ENUM(NSUInteger, InformationType)
     InformationTypeBlog,//博客
     InformationTypeTranslation,//翻译文章
     InformationTypeActivity,//活动类型
-    InformationTypeOther//外链
+    InformationTypeInfo//资讯
 };
 
 #endif /* enumList_h */
