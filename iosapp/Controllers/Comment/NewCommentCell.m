@@ -95,7 +95,7 @@
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
-    [self setLayOutForRefer];
+//    [self setLayOutForRefer];
 }
 
 #pragma mark - contentData

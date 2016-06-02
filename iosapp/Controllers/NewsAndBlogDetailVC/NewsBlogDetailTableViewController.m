@@ -178,11 +178,11 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         }
         case 2://讨论
         {
-//            if (_blogDetailComments.count > 0) {
-//                return _blogDetailComments.count+1;
-//            }
-//            return 1;
-            return 3;
+            if (_blogDetailComments.count > 0) {
+                return _blogDetailComments.count+1;
+            }
+            return 1;
+//            return 3;
             break;
         }
         default:
@@ -253,13 +253,17 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         }
         case 2:
         {
-//            if (_blogDetailComments.count > 0) {
-//                return [tableView fd_heightForCellWithIdentifier:newCommentReuseIdentifier configuration:^(NewCommentCell *cell) {
-//                    OSCBlogDetailComment *blogComment = _blogDetailComments[indexPath.row];
-//                    cell.comment = blogComment;
-//                }];
-//            }
-//            return 54;
+            if (_blogDetailComments.count > 0) {
+                if (indexPath.row == _blogDetailComments.count) {
+                    return 44;
+                } else {
+                    return [tableView fd_heightForCellWithIdentifier:newCommentReuseIdentifier configuration:^(NewCommentCell *cell) {
+                        OSCBlogDetailComment *blogComment = _blogDetailComments[indexPath.row];
+                        cell.comment = blogComment;
+                    }];
+                }
+            }
+            return 44;
             return 200;
             break;
         }
@@ -364,37 +368,35 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
             break;
         case 2:
         {
-//            if (_blogDetailComments.count == 0) {
-//                UITableViewCell *cell = [UITableViewCell new];
-//                cell.textLabel.text = @"还没有评论";
-//                cell.textLabel.textAlignment = NSTextAlignmentCenter;
-//                cell.textLabel.font = [UIFont systemFontOfSize:14];
-//                cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
-//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//                
-//                return cell;
-//            }
-            NewCommentCell *commentBlogCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
-            
-//            if (_blogDetailComments.count > 0) {
-//                OSCBlogDetailComment *detailComment = _blogDetailComments[indexPath.row];
-//                commentBlogCell.comment = detailComment;
-//                commentBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
-//                [commentBlogCell.commentButton addTarget:self action:@selector(selectedToComment) forControlEvents:UIControlEventTouchUpInside];
-//                
-//                if (indexPath.row == _blogDetailComments.count) {
-//                    UITableViewCell *cell = [UITableViewCell new];
-//                    cell.textLabel.text = @"更多评论";
-//                    cell.textLabel.textAlignment = NSTextAlignmentCenter;
-//                    cell.textLabel.font = [UIFont systemFontOfSize:14];
-//                    cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
-//                    
-//                    return cell;
-//                }
-//                
-//                return commentBlogCell;
-//            }
-            return commentBlogCell;
+            if (_blogDetailComments.count > 0) {
+                if (indexPath.row == _blogDetailComments.count) {
+                    UITableViewCell *cell = [UITableViewCell new];
+                    cell.textLabel.text = @"更多评论";
+                    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                    cell.textLabel.font = [UIFont systemFontOfSize:14];
+                    cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                    
+                    return cell;
+                } else {
+                    NewCommentCell *commentBlogCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
+                    OSCBlogDetailComment *detailComment = _blogDetailComments[indexPath.row];
+                    commentBlogCell.comment = detailComment;
+                    commentBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                    [commentBlogCell.commentButton addTarget:self action:@selector(selectedToComment) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    return commentBlogCell;
+                }
+                
+            } else {
+                UITableViewCell *cell = [UITableViewCell new];
+                cell.textLabel.text = @"还没有评论";
+                cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                cell.textLabel.font = [UIFont systemFontOfSize:14];
+                cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                
+                return cell;
+            }
             
         }
             break;
