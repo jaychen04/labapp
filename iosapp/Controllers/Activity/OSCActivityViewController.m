@@ -103,7 +103,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
             NSArray* responseArr = resultDic[@"items"];
             NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
             self.bannerModels = bannerModels.mutableCopy;
-            self.bannerView.banners = self.bannerModels.copy;
+            self.bannerView.banners = self.bannerModels.mutableCopy;
         }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             NSLog(@"%@",error);
@@ -131,7 +131,11 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 
 #pragma mark -- networking Delegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
-
+    
+    if(isRefresh) {
+        [self getBannerData];
+    }
+    
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
     if (!isRefresh && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];

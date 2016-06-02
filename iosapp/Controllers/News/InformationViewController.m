@@ -67,6 +67,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         self.parametersDic = @{};
         self.needAutoRefresh = YES;
         self.refreshInterval = 21600;
+        [self.cycleScrollView setAutoScrollTimeInterval:4.0f];
         self.kLastRefreshTime = @"NewsRefreshInterval";
     }
     return self;

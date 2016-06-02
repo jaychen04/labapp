@@ -14,6 +14,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UIImageView *bottomImageView;
 @property (nonatomic, assign) NSInteger currentIndex;
+@property NSTimer *timer;
 
 @end
 
@@ -55,7 +56,10 @@
         [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickTopImage:)]];
     }
     if (arrayCount > 1) {
-        [NSTimer scheduledTimerWithTimeInterval:5.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
+        if(!self.timer) {
+            self.timer = [NSTimer scheduledTimerWithTimeInterval:4.0f target:self selector:@selector(scrollToNextPage:) userInfo:nil repeats:YES];
+            [self.timer fire];
+        }
     }
 }
 
