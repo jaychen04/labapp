@@ -250,6 +250,8 @@
 		EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */; };
 		EE82D0431C43B1E30066FDC9 /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE82D0411C43B1E30066FDC9 /* FeedBackViewController.m */; };
 		EE82D0441C43B1E30066FDC9 /* FeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE82D0421C43B1E30066FDC9 /* FeedBackViewController.xib */; };
+		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
+		EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 		EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED81D5C1CF54F88000ACFBC /* OSCQuestion.m */; };
@@ -741,6 +743,9 @@
 		EE82D0401C43B1E30066FDC9 /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
 		EE82D0411C43B1E30066FDC9 /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
 		EE82D0421C43B1E30066FDC9 /* FeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedBackViewController.xib; sourceTree = "<group>"; };
+		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
+		EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
+		EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
 		EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
@@ -1075,6 +1080,7 @@
 			children = (
 				31D699561CFC28D200B48BB0 /* NewsBlogDetailTableViewController.h */,
 				31D699571CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m */,
+				EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */,
 				31D6995C1CFC29B500B48BB0 /* FollowAuthorTableViewCell.h */,
 				31D6995D1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m */,
 				31D6995E1CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib */,
@@ -1910,6 +1916,8 @@
 				C5EF89151BE318E800B5FA46 /* CommentsBottomBarViewController.m */,
 				C5EF89161BE318E800B5FA46 /* CommentsViewController.h */,
 				C5EF89171BE318E800B5FA46 /* CommentsViewController.m */,
+				EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */,
+				EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -2156,6 +2164,7 @@
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
+				EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
 				31D699601CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib in Resources */,
 				C5E4B17E1B57B715008E7463 /* Login.storyboard in Resources */,
@@ -2360,6 +2369,7 @@
 				38EAF1B61AE0A85F00397E2A /* TeamActivity.m in Sources */,
 				C5EF89221BE3194800B5FA46 /* SoftwareCatalogVC.m in Sources */,
 				0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */,
+				EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */,
 				0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,

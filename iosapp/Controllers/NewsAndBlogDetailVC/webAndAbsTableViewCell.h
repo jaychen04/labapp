@@ -11,8 +11,6 @@
 
 @interface webAndAbsTableViewCell : UITableViewCell
 
-@property (nonatomic, copy) NSString *cellType;/* cell类型 */
-
 @property (nonatomic, weak) IBOutlet UILabel *abstractLabel;
 @property (nonatomic, weak) IBOutlet UIWebView *bodyWebView;
 

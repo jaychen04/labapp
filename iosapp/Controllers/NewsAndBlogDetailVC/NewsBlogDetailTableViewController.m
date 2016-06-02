@@ -11,6 +11,7 @@
 #import "TitleInfoTableViewCell.h"
 #import "webAndAbsTableViewCell.h"
 #import "RecommandBlogTableViewCell.h"
+#import "NewCommentCell.h"
 #import "UIColor+Util.h"
 #import "OSCAPI.h"
 #import "AFHTTPRequestOperationManager+Util.h"
@@ -26,12 +27,16 @@ static NSString *followAuthorReuseIdentifier = @"FollowAuthorTableViewCell";
 static NSString *titleInfoReuseIdentifier = @"TitleInfoTableViewCell";
 static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
 static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
+static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 
-@interface NewsBlogDetailTableViewController () <UIWebViewDelegate>
+@interface NewsBlogDetailTableViewController () <UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (nonatomic, strong) OSCBlogDetail *blogDetails;
 @property (nonatomic, strong) NSMutableArray *blogDetailComments;
 @property (nonatomic, strong) NSMutableArray *blogDetailRecommends;
+
+//软键盘size
+@property (nonatomic, assign) CGFloat keyboardHeight;
 
 @end
 
@@ -52,19 +57,38 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.commentTextField.delegate = self;
+    
     [self.tableView registerNib:[UINib nibWithNibName:@"FollowAuthorTableViewCell" bundle:nil] forCellReuseIdentifier:followAuthorReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TitleInfoTableViewCell" bundle:nil] forCellReuseIdentifier:titleInfoReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"webAndAbsTableViewCell" bundle:nil] forCellReuseIdentifier:webAndAbsReuseIdentifier];
     
+    [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"NewCommentCell" bundle:nil] forCellReuseIdentifier:newCommentReuseIdentifier];
+    
     self.tableView.tableFooterView = [UIView new];
     
     [self getBlogData];
+    
+    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHiden:)]];
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+#pragma mark - 软键盘隐藏
+- (void)keyBoardHiden:(UITapGestureRecognizer *)tap
+{
+    [_commentTextField resignFirstResponder];
+}
+
+#pragma mark - 获取数据
 
 -(void)getBlogData{
     NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@/blog?id=%lld", OSCAPI_V2_PREFIX, self.blogId];
@@ -147,7 +171,11 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
         }
         case 2://讨论
         {
-            return 2;
+//            if (_blogDetailComments.count > 0) {
+//                return _blogDetailComments.count+1;
+//            }
+//            return 1;
+            return 3;
             break;
         }
         default:
@@ -189,19 +217,16 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
                 {
                     if (_blogDetails.abstract.length > 0) {
                         return [tableView fd_heightForCellWithIdentifier:webAndAbsReuseIdentifier configuration:^(webAndAbsTableViewCell *cell) {
+
                             cell.blogDetail = _blogDetails;
                         }];
                     } else if (_blogDetails.abstract.length == 0) {
-                        return [tableView fd_heightForCellWithIdentifier:webAndAbsReuseIdentifier configuration:^(webAndAbsTableViewCell *cell) {
-                            cell.blogDetail = _blogDetails;
-                        }];
+                        return 200;
                     }
                     break;
                 }
                 case 3:
-                    return [tableView fd_heightForCellWithIdentifier:webAndAbsReuseIdentifier configuration:^(webAndAbsTableViewCell *cell) {
-                        cell.blogDetail = _blogDetails;
-                    }];
+                    return 200;
                     break;
                 default:
                     break;
@@ -221,7 +246,14 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
         }
         case 2:
         {
-            return 50;
+//            if (_blogDetailComments.count > 0) {
+//                return [tableView fd_heightForCellWithIdentifier:newCommentReuseIdentifier configuration:^(NewCommentCell *cell) {
+//                    OSCBlogDetailComment *blogComment = _blogDetailComments[indexPath.row];
+//                    cell.comment = blogComment;
+//                }];
+//            }
+//            return 54;
+            return 200;
             break;
         }
         default:
@@ -273,8 +305,7 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
                 if (_blogDetails.abstract.length > 0) {
                     if (indexPath.row == 2) {
                         webAndAbsTableViewCell *abstractCell = [tableView dequeueReusableCellWithIdentifier:webAndAbsReuseIdentifier forIndexPath:indexPath];
-                        
-                        abstractCell.cellType = @"abstractType";
+
                         abstractCell.blogDetail = _blogDetails;
                         
                         abstractCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -282,10 +313,12 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
                         return abstractCell;
                     } else if (indexPath.row == 3) {
                         webAndAbsTableViewCell *websCell = [tableView dequeueReusableCellWithIdentifier:webAndAbsReuseIdentifier forIndexPath:indexPath];
-                        
-                        websCell.cellType = @"bodyType";
+
+                        websCell.abstractLabel.hidden = YES;
+                        websCell.bodyWebView.hidden = NO;
                         websCell.bodyWebView.delegate = self;
                         websCell.blogDetail = _blogDetails;
+                        [websCell.bodyWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
                         
                         websCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
@@ -295,9 +328,11 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
                     if (indexPath.row == 2) {
                         webAndAbsTableViewCell *websCell = [tableView dequeueReusableCellWithIdentifier:webAndAbsReuseIdentifier forIndexPath:indexPath];
 
-                        websCell.cellType = @"bodyType";
+                        websCell.abstractLabel.hidden = YES;
+                        websCell.bodyWebView.hidden = NO;
                         websCell.bodyWebView.delegate = self;
                         websCell.blogDetail = _blogDetails;
+                        [websCell.bodyWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
                         
                         websCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
@@ -323,6 +358,38 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
             break;
         case 2:
         {
+//            if (_blogDetailComments.count == 0) {
+//                UITableViewCell *cell = [UITableViewCell new];
+//                cell.textLabel.text = @"还没有评论";
+//                cell.textLabel.textAlignment = NSTextAlignmentCenter;
+//                cell.textLabel.font = [UIFont systemFontOfSize:14];
+//                cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//                
+//                return cell;
+//            }
+            NewCommentCell *commentBlogCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
+            
+//            if (_blogDetailComments.count > 0) {
+//                OSCBlogDetailComment *detailComment = _blogDetailComments[indexPath.row];
+//                commentBlogCell.comment = detailComment;
+//                commentBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+//                [commentBlogCell.commentButton addTarget:self action:@selector(selectedToComment) forControlEvents:UIControlEventTouchUpInside];
+//                
+//                if (indexPath.row == _blogDetailComments.count) {
+//                    UITableViewCell *cell = [UITableViewCell new];
+//                    cell.textLabel.text = @"更多评论";
+//                    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+//                    cell.textLabel.font = [UIFont systemFontOfSize:14];
+//                    cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+//                    
+//                    return cell;
+//                }
+//                
+//                return commentBlogCell;
+//            }
+            return commentBlogCell;
+            
         }
             break;
         default:
@@ -340,7 +407,72 @@ static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
 #pragma mark - fav
 - (void)favSelected
 {
+    NSLog(@"fav");
+}
+
+#pragma mark - 评论
+- (void)selectedToComment
+{
+    _commentTextField.placeholder = @"commentAuthor";
+}
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //软键盘
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+//    _bottmTextFiled.constant = 0;
+    
+    return YES;
+}
+
+- (void)keyboardDidShow:(NSNotification *)nsNotification
+{
+    
+    //获取键盘的高度
+    
+    NSDictionary *userInfo = [nsNotification userInfo];
+    
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect = [aValue CGRectValue];
+    
+    _keyboardHeight = keyboardRect.size.height;
+    
+    _bottmTextFiled.constant = _keyboardHeight;
     
 }
+
+- (void)keyboardWillHide:(NSNotification *)aNotification
+{
+    _bottmTextFiled.constant = 0;
+}
+
+#pragma mark - collect
+- (IBAction)collected:(UIButton *)sender {
+    NSLog(@"collect");
+}
+
+
+#pragma mark - share
+- (IBAction)share:(UIButton *)sender {
+    NSLog(@"share");
+}
+
+
 
 @end
