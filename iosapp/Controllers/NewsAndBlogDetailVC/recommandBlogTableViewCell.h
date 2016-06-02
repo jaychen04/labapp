@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OSCBlogDetail.h"
 
 @interface RecommandBlogTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *viewCountLabel;
+
+@property (nonatomic, strong) OSCBlogDetailRecommend *abouts;
 
 @end

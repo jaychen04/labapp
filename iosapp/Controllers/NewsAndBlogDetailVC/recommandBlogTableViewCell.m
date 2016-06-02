@@ -21,4 +21,11 @@
     // Configure the view for the selected state
 }
 
+- (void)setAbouts:(OSCBlogDetailRecommend *)abouts
+{
+    _titleLabel.text = abouts.title;
+    _viewCountLabel.text = [NSString stringWithFormat:@"%ld", (long)abouts.viewCount];
+    _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)abouts.commentCount];;
+}
+
 @end

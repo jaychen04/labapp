@@ -9,7 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "OSCNewHotBlog.h"
 
-@interface NewsBlogDetailTableViewController : UITableViewController
+@interface NewsBlogDetailTableViewController : UIViewController
+
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottmTextFiled;
+@property (weak, nonatomic) IBOutlet UITextField *commentTextField;
+@property (weak, nonatomic) IBOutlet UIButton *favButton;
 
 @property (nonatomic)BOOL isBlogDetail;
 @property (nonatomic)int64_t blogId;

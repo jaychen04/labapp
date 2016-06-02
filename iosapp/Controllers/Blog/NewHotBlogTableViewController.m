@@ -248,20 +248,6 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-//    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
-//    OSCNewHotBlog *blog;
-//    
-//    if (array.count > 0) {
-//        blog = array[indexPath.row];
-//    }
-//    
-//    NewsBlogDetailTableViewController *newsBlogDetailVc = [NewsBlogDetailTableViewController new];
-//    newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
-//    newsBlogDetailVc.blogId = blog.id;
-//    [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
-    
-
-
     NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
     OSCNewHotBlog *blog;
     
@@ -269,8 +255,22 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
         blog = array[indexPath.row];
     }
     
-    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNewHotBlog:blog];
-    [self.navigationController pushViewController:detailsViewController animated:YES];
+    NewsBlogDetailTableViewController *newsBlogDetailVc = [NewsBlogDetailTableViewController new];
+    newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
+    newsBlogDetailVc.blogId = blog.id;
+    [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+    
+
+//旧博客详情页面
+//    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+//    OSCNewHotBlog *blog;
+//    
+//    if (array.count > 0) {
+//        blog = array[indexPath.row];
+//    }
+//    
+//    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNewHotBlog:blog];
+//    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 @end
