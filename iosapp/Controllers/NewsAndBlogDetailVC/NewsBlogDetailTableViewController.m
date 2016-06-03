@@ -48,6 +48,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 @property (nonatomic,strong) OSCNewHotBlogDetails *detail;
 @property (nonatomic, copy) NSString *mURL;
 @property (nonatomic, assign) BOOL isReply;
+@property (nonatomic, assign) NSInteger selectIndexPath;
 
 @end
 
@@ -551,12 +552,24 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 {
     OSCBlogDetailComment *comment = _blogDetailComments[button.tag];
     
-    _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+    if (_selectIndexPath == button.tag) {
+        _isReply = !_isReply;
+    } else {
+        _isReply = YES;
+    }
+    _selectIndexPath = button.tag;
+    
+    if (_isReply) {
+        _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+    } else {
+        _commentTextField.placeholder = @"发表评论";
+    }
+    
 
 }
 
 #pragma mark - 发评论
-- (void)sendComment
+- (void)sendComment:(NSInteger)replyID authorID:(NSInteger)authorID
 {
     //
     MBProgressHUD *HUD = [Utils createHUD];
@@ -570,9 +583,11 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         NSDictionary *parameters =  @{
-                                      @"blog"   : @(_blogDetails.id),
-                                      @"uid"    : @([Config getOwnID]),
-                                      @"content": _commentTextField.text,
+                                      @"blog"     : @(_blogDetails.id),
+                                      @"uid"      : @([Config getOwnID]),
+                                      @"content"  : _commentTextField.text,
+                                      @"reply_id" : @(replyID),
+                                      @"objuid"   : @(authorID),
                                       };
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB]
            parameters:parameters
@@ -603,6 +618,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                   
                   [HUD hide:YES afterDelay:1];
               }];
+
     }
 }
 
@@ -622,7 +638,13 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 {
     NSLog(@"send mesage");
     
-    [self sendComment];
+    if (_isReply) {
+        OSCBlogDetailComment *comment = _blogDetailComments[_selectIndexPath];
+        [self sendComment:comment.id authorID:comment.authorId];
+    } else {
+        [self sendComment:0 authorID:0];
+    }
+    
     [textField resignFirstResponder];
     
     return YES;
