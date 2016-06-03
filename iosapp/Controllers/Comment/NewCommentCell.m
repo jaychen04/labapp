@@ -106,10 +106,14 @@
     _nameLabel.text = comment.author;
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];
     _conentLabel.text = comment.content;
+    
+    if (comment.refer != nil) {
+        [self setLayOutForRefer:comment.refer];
+    }
 }
 
 #pragma mark - refer
-- (void)setLayOutForRefer
+- (void)setLayOutForRefer:(NSDictionary *)refer
 {
     CommentSuperView *commentSuperView = [CommentSuperView new];
     [self.contentView addSubview:commentSuperView];
@@ -117,17 +121,17 @@
     commentSuperView.translatesAutoresizingMaskIntoConstraints = NO;
     NSDictionary *views = NSDictionaryOfVariableBindings(_nameLabel, _timeLabel, commentSuperView, _conentLabel);
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-2-[_timeLabel]-7-[commentSuperView]-7-[_conentLabel]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-2-[_timeLabel]-7-[commentSuperView(100)]-7-[_conentLabel]"
                                                                              options:0
                                                                              metrics:nil views:views]];
     
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[commentSuperView]-16-|"
-//                                                                             options:0
-//                                                                             metrics:nil
-//                                                                               views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[commentSuperView]-16-|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:views]];
     
-    commentSuperView.nameLabel.text = @"贾婷Juno：";
-    commentSuperView.contentLabel.text = @"你可真能写啊";
+    commentSuperView.nameLabel.text = [refer objectForKey:@"author"];
+    commentSuperView.contentLabel.text = [refer objectForKey:@"content"];
 }
 
 @end
@@ -146,12 +150,12 @@
 {
     _nameLabel = [UILabel new];
     _contentLabel.font = [UIFont systemFontOfSize:14];
-    _contentLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
+    _contentLabel.textColor = [UIColor redColor];//colorWithHex:0x6a6a6a];
     [self addSubview:_nameLabel];
     
     _contentLabel = [UILabel new];
     _contentLabel.font = [UIFont systemFontOfSize:14];
-    _contentLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
+    _contentLabel.textColor = [UIColor redColor];//colorWithHex:0x6a6a6a];
     _contentLabel.numberOfLines = 0;
     _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
     [self addSubview:_contentLabel];
@@ -176,6 +180,11 @@
                                                                  options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                  metrics:nil
                                                                    views:views]];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_nameLabel]|"
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:views]];
+    
     
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[leftLine(1)]-8-[_nameLabel]|"
                                                                  options:0

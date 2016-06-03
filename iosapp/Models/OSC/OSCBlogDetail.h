@@ -84,6 +84,6 @@
 
 @property (nonatomic, copy) NSString *authorPortrait;
 
-@property (nonatomic, strong) NSArray *refer;
+@property (nonatomic, strong) NSDictionary *refer;
 
 @end
