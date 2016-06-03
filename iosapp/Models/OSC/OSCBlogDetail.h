@@ -46,6 +46,8 @@
 
 @property (nonatomic,strong) NSArray<OSCBlogDetailComment* >* comments;
 
+@property (nonatomic, assign) BOOL favorite;
+
 @property (nonatomic, copy) NSString *abstract;//摘要
 
 @end
