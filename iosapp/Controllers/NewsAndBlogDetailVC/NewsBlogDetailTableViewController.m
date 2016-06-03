@@ -83,6 +83,16 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHiden:)]];
     
+    //软键盘
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -382,7 +392,8 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                     OSCBlogDetailComment *detailComment = _blogDetailComments[indexPath.row];
                     commentBlogCell.comment = detailComment;
                     commentBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
-                    [commentBlogCell.commentButton addTarget:self action:@selector(selectedToComment) forControlEvents:UIControlEventTouchUpInside];
+                    commentBlogCell.commentButton.tag = indexPath.row;
+                    [commentBlogCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
                     
                     return commentBlogCell;
                 }
@@ -419,31 +430,37 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 }
 
 #pragma mark - 评论
-- (void)selectedToComment
+- (void)selectedToComment:(UIButton *)button
 {
-    _commentTextField.placeholder = @"commentAuthor";
+    OSCBlogDetailComment *comment = _blogDetailComments[button.tag];
+    
+    _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+
+}
+
+#pragma mark - 发评论
+- (void)sendComment:(NSInteger)authorId
+{
+    //
 }
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    //软键盘
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardDidShow:)
-                                                 name:UIKeyboardDidShowNotification
-                                               object:nil];
-    
     return YES;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide:)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
     
-//    _bottmTextFiled.constant = 0;
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSLog(@"send mesage");
+    
+    [textField resignFirstResponder];
     
     return YES;
 }
@@ -468,6 +485,11 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 - (void)keyboardWillHide:(NSNotification *)aNotification
 {
     _bottmTextFiled.constant = 0;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - collect
