@@ -12,7 +12,6 @@
 @interface webAndAbsTableViewCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *abstractLabel;
-@property (nonatomic, weak) IBOutlet UIWebView *bodyWebView;
 
 @property (nonatomic, strong) OSCBlogDetail *blogDetail;
 

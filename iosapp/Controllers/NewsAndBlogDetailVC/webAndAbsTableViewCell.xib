@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,34 +11,25 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g48-Mg-XQv">
-                        <rect key="frame" x="16" y="8" width="288" height="27.5"/>
+                        <rect key="frame" x="16" y="8" width="288" height="27"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.41568627450980389" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ko-5Q-Mp9">
-                        <rect key="frame" x="16" y="12" width="288" height="19.5"/>
-                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                    </webView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="g48-Mg-XQv" secondAttribute="trailing" constant="16" id="0an-Ka-XvG"/>
-                    <constraint firstItem="7ko-5Q-Mp9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="45i-Ov-w4D"/>
-                    <constraint firstItem="7ko-5Q-Mp9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="UBu-zp-Trl"/>
                     <constraint firstAttribute="bottom" secondItem="g48-Mg-XQv" secondAttribute="bottom" constant="8" id="XH4-H2-hyR"/>
                     <constraint firstItem="g48-Mg-XQv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="YKO-bv-tw3"/>
-                    <constraint firstAttribute="bottom" secondItem="7ko-5Q-Mp9" secondAttribute="bottom" constant="12" id="gMi-TK-eXw"/>
-                    <constraint firstAttribute="trailing" secondItem="7ko-5Q-Mp9" secondAttribute="trailing" constant="16" id="gU1-9q-5gL"/>
                     <constraint firstItem="g48-Mg-XQv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="wx5-ft-cfs"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="abstractLabel" destination="g48-Mg-XQv" id="KE4-0k-tq0"/>
-                <outlet property="bodyWebView" destination="7ko-5Q-Mp9" id="rcT-dW-6ev"/>
             </connections>
         </tableViewCell>
     </objects>
