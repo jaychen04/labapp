@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    // Initialization code
+    _contentWebView.scalesPageToFit = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

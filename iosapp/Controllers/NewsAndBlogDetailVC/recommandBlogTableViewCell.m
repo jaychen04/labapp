@@ -25,7 +25,7 @@
 {
     _titleLabel.text = abouts.title;
     _viewCountLabel.text = [NSString stringWithFormat:@"%ld", (long)abouts.viewCount];
-    _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)abouts.commentCount];;
+    _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)abouts.commentCount];
 }
 
 @end
