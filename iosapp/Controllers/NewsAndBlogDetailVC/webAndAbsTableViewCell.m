@@ -14,7 +14,7 @@
     [super awakeFromNib];
     // Initialization code
     _abstractLabel.hidden = NO;
-    _bodyWebView.hidden = YES;
+    _bodyWebView.hidden = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

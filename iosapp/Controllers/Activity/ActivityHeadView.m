@@ -119,14 +119,14 @@
     _titleLable.font = [UIFont systemFontOfSize:18];
     _titleLable.numberOfLines = 0;
     _titleLable.lineBreakMode = NSLineBreakByWordWrapping;
-    _titleLable.textColor = [UIColor newCellColor];
+    _titleLable.textColor = [UIColor colorWithHex:0xffffff];
     [_bottomImage addSubview:_titleLable];
     
     _descLable = [[UILabel alloc] init];
     _descLable.font = [UIFont systemFontOfSize:14];
     _descLable.numberOfLines = 0;
     _descLable.lineBreakMode = NSLineBreakByWordWrapping;
-    _descLable.textColor = [UIColor newCellColor];
+    _descLable.textColor = [UIColor colorWithHex:0xffffff];
     [_bottomImage addSubview:_descLable];
     
     [self setLayout];
