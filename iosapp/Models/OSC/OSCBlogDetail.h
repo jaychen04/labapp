@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class OSCBlogDetailRecommend , OSCBlogDetailComment;
+@class OSCBlogDetailRecommend , OSCBlogDetailComment, OSCBlogCommentRefer;
 
 @interface OSCBlogDetail : NSObject
 
@@ -84,6 +84,27 @@
 
 @property (nonatomic, copy) NSString *authorPortrait;
 
-@property (nonatomic, strong) NSDictionary *refer;
+@property (nonatomic, strong) OSCBlogCommentRefer *refer;
 
 @end
+
+
+@interface OSCBlogCommentRefer : NSObject
+
+@property (nonatomic, copy) NSString *author;
+@property (nonatomic, copy) NSString *content;
+@property (nonatomic, copy) NSString *pubDate;
+@property (nonatomic, strong) OSCBlogCommentRefer *refer;
+
+//@property (nonatomic, copy) NSMutableString *trimmedContent;
+//@property (nonatomic, strong) NSMutableArray *hrefs;
+
+@end
+
+
+//@interface HrefMark :NSObject
+//
+//@property (nonatomic, strong) NSURL *href;
+//@property (nonatomic, assign) NSRange range;
+//
+//@end

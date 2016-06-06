@@ -13,8 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    _abstractLabel.hidden = NO;
-    _bodyWebView.hidden = NO;
+//    _abstractLabel.hidden = NO;
+//    _bodyWebView.hidden = NO;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
