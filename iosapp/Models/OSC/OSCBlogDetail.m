@@ -31,5 +31,15 @@
 
 @implementation OSCBlogDetailComment
 
+//+(NSDictionary *)mj_objectClassInArray{
+//    return @{
+//             @"refer" : [OSCBlogComment class]
+//             };
+//}
+
+@end
+
+@implementation OSCBlogCommentRefer
+
 
 @end
