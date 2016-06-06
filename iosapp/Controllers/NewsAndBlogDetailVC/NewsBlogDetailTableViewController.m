@@ -11,6 +11,7 @@
 #import "TitleInfoTableViewCell.h"
 #import "webAndAbsTableViewCell.h"
 #import "RecommandBlogTableViewCell.h"
+#import "ContentWebViewCell.h"
 #import "NewCommentCell.h"
 #import "UIColor+Util.h"
 #import "OSCAPI.h"
@@ -28,7 +29,8 @@
 static NSString *followAuthorReuseIdentifier = @"FollowAuthorTableViewCell";
 static NSString *titleInfoReuseIdentifier = @"TitleInfoTableViewCell";
 static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
-static NSString *webAndAbsReuseIdentifier = @"webAndAbsTableViewCell";
+static NSString *abstractReuseIdentifier = @"abstractTableViewCell";
+static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
 static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 
 @interface NewsBlogDetailTableViewController () <UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
@@ -72,7 +74,8 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"FollowAuthorTableViewCell" bundle:nil] forCellReuseIdentifier:followAuthorReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TitleInfoTableViewCell" bundle:nil] forCellReuseIdentifier:titleInfoReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"webAndAbsTableViewCell" bundle:nil] forCellReuseIdentifier:webAndAbsReuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"webAndAbsTableViewCell" bundle:nil] forCellReuseIdentifier:abstractReuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
     
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
 //    [self.tableView registerNib:[UINib nibWithNibName:@"NewCommentCell" bundle:nil] forCellReuseIdentifier:newCommentReuseIdentifier];
@@ -109,11 +112,12 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                 _blogDetailRecommends = [OSCBlogDetailRecommend mj_objectArrayWithKeyValuesArray:_blogDetails.abouts];
                 _blogDetailComments = [OSCBlogDetailComment mj_objectArrayWithKeyValuesArray:_blogDetails.comments];
                 
-                _blogDetails.body = [Utils HTMLWithData:@{
-                                              @"content" : _blogDetails.body,
-//                                              @"night"   : @([Config getMode]),
-                                              }
-                              usingTemplate:@"activity"];
+                NSDictionary *data = @{
+                                       @"content":  _blogDetails.body,
+                                       };
+                _blogDetails.body = [Utils HTMLWithData:data
+                              usingTemplate:@"blog"];//activity
+                
                 
                 NSLog(@"blogDetail = %@", _blogDetails);
                 
@@ -218,14 +222,15 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                 case 1:
                     return [tableView fd_heightForCellWithIdentifier:titleInfoReuseIdentifier configuration:^(TitleInfoTableViewCell *cell) {
                         cell.blogDetail = _blogDetails;
+                        
                     }];
                     break;
                 case 2:
                 {
                     if (_blogDetails.abstract.length > 0) {
-                        return [tableView fd_heightForCellWithIdentifier:webAndAbsReuseIdentifier configuration:^(webAndAbsTableViewCell *cell) {
-
-                            cell.blogDetail = _blogDetails;
+                        return [tableView fd_heightForCellWithIdentifier:abstractReuseIdentifier configuration:^(webAndAbsTableViewCell *cell) {
+//                            cell.blogDetail = _blogDetails;
+                            cell.abstractLabel.text = _blogDetails.abstract;
                         }];
                     } else if (_blogDetails.abstract.length == 0) {
                         return 200;
@@ -275,20 +280,20 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    CGFloat headerViewHeight = 0.001;
     switch (section) {
         case 0:
             break;
         case 1:
-            return 32;
+            headerViewHeight = 32;
             break;
         case 2:
-            return 32;
+            headerViewHeight = 32;
             break;
         default:
             break;
     }
-    
-    return 0.001;
+    return headerViewHeight;
 }
 
 
@@ -314,39 +319,28 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
             } else{
                 if (_blogDetails.abstract.length > 0) {
                     if (indexPath.row == 2) {
-                        webAndAbsTableViewCell *abstractCell = [tableView dequeueReusableCellWithIdentifier:webAndAbsReuseIdentifier forIndexPath:indexPath];
-
-                        abstractCell.blogDetail = _blogDetails;
-                        
+                        webAndAbsTableViewCell *abstractCell = [tableView dequeueReusableCellWithIdentifier:abstractReuseIdentifier forIndexPath:indexPath];
+                        abstractCell.abstractLabel.text = _blogDetails.abstract;
+                        abstractCell.abstractLabel.backgroundColor = [UIColor redColor];
                         abstractCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
                         return abstractCell;
                     } else if (indexPath.row == 3) {
-                        webAndAbsTableViewCell *websCell = [tableView dequeueReusableCellWithIdentifier:webAndAbsReuseIdentifier forIndexPath:indexPath];
+                        ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+                        webViewCell.contentWebView.delegate = self;
+                        [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                        webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-                        websCell.abstractLabel.hidden = YES;
-                        websCell.bodyWebView.hidden = NO;
-                        websCell.bodyWebView.delegate = self;
-                        websCell.blogDetail = _blogDetails;
-                        [websCell.bodyWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
-                        
-                        websCell.selectionStyle = UITableViewCellSelectionStyleNone;
-                        
-                        return websCell;
+                        return webViewCell;
                     }
                 } else {
                     if (indexPath.row == 2) {
-                        webAndAbsTableViewCell *websCell = [tableView dequeueReusableCellWithIdentifier:webAndAbsReuseIdentifier forIndexPath:indexPath];
-
-                        websCell.abstractLabel.hidden = YES;
-                        websCell.bodyWebView.hidden = NO;
-                        websCell.bodyWebView.delegate = self;
-                        websCell.blogDetail = _blogDetails;
-                        [websCell.bodyWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                        ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+                        webViewCell.contentWebView.delegate = self;
+                        [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                        webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
-                        websCell.selectionStyle = UITableViewCellSelectionStyleNone;
-                        
-                        return websCell;
+                        return webViewCell;
                     }
                 }
             }
@@ -411,6 +405,30 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
+#pragma mark - UIWebViewDelegate
+
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+//{
+//    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+//    
+//    [self.navigationController pushViewController:[[TOWebViewController alloc] initWithURL:request.URL]
+//                                         animated:YES];
+//    
+//    return NO;
+//}
+
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+//    if (_webViewHeight == webViewHeight) {return;}
+//    
+//    _webViewHeight = webViewHeight;
+//    
+//
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.tableView reloadData];
+//    });
+//}
 
 #pragma mark - fav
 - (void)favSelected

@@ -255,9 +255,9 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
         blog = array[indexPath.row];
     }
     
-    NewsBlogDetailTableViewController *newsBlogDetailVc = [NewsBlogDetailTableViewController new];
+    NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithBlogId:blog.id isBlogDetail:YES];
     newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
-    newsBlogDetailVc.blogId = blog.id;
+//    newsBlogDetailVc.blogId = blog.id;
     [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
     
 

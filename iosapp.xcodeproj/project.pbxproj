@@ -66,6 +66,8 @@
 		31697BCB1B16FB0E001FE346 /* MZDayPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 31697BC71B16FB0E001FE346 /* MZDayPicker.m */; };
 		31697BCC1B16FB0E001FE346 /* MZDayPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31697BC91B16FB0E001FE346 /* MZDayPickerCell.m */; };
 		317AD9C91C96AD68008356DE /* recommend_tag.png in Resources */ = {isa = PBXBuildFile; fileRef = 317AD9C81C96AD68008356DE /* recommend_tag.png */; };
+		317F889C1D05698800BD931F /* ContentWebViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 317F889A1D05698800BD931F /* ContentWebViewCell.m */; };
+		317F889D1D05698800BD931F /* ContentWebViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317F889B1D05698800BD931F /* ContentWebViewCell.xib */; };
 		31A338F11AF8683E0037B37F /* TeamActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */; };
 		31ABF5811B0F1B5300663C08 /* JKAlertDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 31ABF5801B0F1B5300663C08 /* JKAlertDialog.m */; };
 		31B6F1921AF78A8B00DC28FE /* TeamIssueDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F1911AF78A8B00DC28FE /* TeamIssueDetailCell.m */; };
@@ -372,6 +374,9 @@
 		31697BC81B16FB0E001FE346 /* MZDayPickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZDayPickerCell.h; sourceTree = "<group>"; };
 		31697BC91B16FB0E001FE346 /* MZDayPickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZDayPickerCell.m; sourceTree = "<group>"; };
 		317AD9C81C96AD68008356DE /* recommend_tag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = recommend_tag.png; sourceTree = "<group>"; };
+		317F88991D05698700BD931F /* ContentWebViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentWebViewCell.h; sourceTree = "<group>"; };
+		317F889A1D05698800BD931F /* ContentWebViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentWebViewCell.m; sourceTree = "<group>"; };
+		317F889B1D05698800BD931F /* ContentWebViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContentWebViewCell.xib; sourceTree = "<group>"; };
 		31A338EF1AF8683E0037B37F /* TeamActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamActivityDetailViewController.h; sourceTree = "<group>"; };
 		31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamActivityDetailViewController.m; sourceTree = "<group>"; };
 		31ABF57F1B0F1B5300663C08 /* JKAlertDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAlertDialog.h; sourceTree = "<group>"; };
@@ -1093,6 +1098,9 @@
 				31D699661CFC4F8600B48BB0 /* RecommandBlogTableViewCell.h */,
 				31D699671CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m */,
 				31D699681CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib */,
+				317F88991D05698700BD931F /* ContentWebViewCell.h */,
+				317F889A1D05698800BD931F /* ContentWebViewCell.m */,
+				317F889B1D05698800BD931F /* ContentWebViewCell.xib */,
 			);
 			path = NewsAndBlogDetailVC;
 			sourceTree = "<group>";
@@ -2156,6 +2164,7 @@
 				EEE241AA1CFD65710088FFB3 /* ActivityDetailViewController.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
+				317F889D1D05698800BD931F /* ContentWebViewCell.xib in Resources */,
 				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
 				EEFFA6431CFEDAC000A8701C /* webAndAbsTableViewCell.xib in Resources */,
 				EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */,
@@ -2256,6 +2265,7 @@
 				0422BC581CEDA390007DB140 /* TADotView.m in Sources */,
 				386825A51A70A3B3008F5706 /* SearchViewController.m in Sources */,
 				04EC96A71CF48E8C0004B54E /* OSCBanner.m in Sources */,
+				317F889C1D05698800BD931F /* ContentWebViewCell.m in Sources */,
 				C5EF89311BE319A300B5FA46 /* BlogCell.m in Sources */,
 				3874EC281A08E957000D2894 /* LoginViewController.m in Sources */,
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
