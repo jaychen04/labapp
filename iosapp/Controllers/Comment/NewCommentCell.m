@@ -68,7 +68,7 @@
     _currentContainer.hidden = YES;
     
     _commentButton = [UIButton new];
-    [_commentButton setImage:[UIImage imageNamed:@"ic_comment"] forState:UIControlStateNormal];
+    [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
     [self.contentView addSubview:_commentButton];
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
@@ -128,7 +128,6 @@
 #pragma mark - refer
 - (void)setLayOutForRefer:(OSCBlogCommentRefer *)refer
 {
-    
     while (refer.author.length > 0) {
         
         UIView *subContainer = [UIView new];
