@@ -20,3 +20,5 @@ pod 'DTCoreText'
 pod 'MJExtension'
 pod 'UMengSocial' , '~>4.4’
 pod 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
+
+pod 'Myhpple'

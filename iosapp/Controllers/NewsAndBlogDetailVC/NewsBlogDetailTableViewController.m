@@ -175,6 +175,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 #pragma mark - 获取数据
 
 -(void)getBlogData{
+    //@"http://192.168.1.15:8000/action/apiv2/blog?id=179590"
     NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@/blog?id=%lld", OSCAPI_V2_PREFIX, self.blogId];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:blogDetailUrlStr
@@ -321,10 +322,29 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                 if (indexPath.row == _blogDetailComments.count) {
                     return 44;
                 } else {
-                    return [tableView fd_heightForCellWithIdentifier:newCommentReuseIdentifier configuration:^(NewCommentCell *cell) {
-                        OSCBlogDetailComment *blogComment = _blogDetailComments[indexPath.row];
-                        cell.comment = blogComment;
-                    }];
+                    UILabel *label = [UILabel new];
+                    label.font = [UIFont systemFontOfSize:14];
+                    label.numberOfLines = 0;
+                    label.lineBreakMode = NSLineBreakByWordWrapping;
+                    
+                    OSCBlogDetailComment *blogComment = _blogDetailComments[indexPath.row];
+                     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
+                    label.attributedText = contentString;
+                    
+                    CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+                    
+                    
+                    height += 7;
+                    OSCBlogCommentRefer *refer = blogComment.refer;
+                    int i = 0;
+                    while (refer.author.length > 0) {
+                        label.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
+                        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
+                        i++;
+                        refer = refer.refer;
+                    }
+                    
+                    return height + 71;
                 }
             }
             return 44;
@@ -366,7 +386,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                 [followAuthorCell.followBtn addTarget:self action:@selector(favSelected) forControlEvents:UIControlEventTouchUpInside];
                 
                 return followAuthorCell;
-            }else if (indexPath.row==1) {
+            } else if (indexPath.row==1) {
                 TitleInfoTableViewCell *titleInfoCell = [tableView dequeueReusableCellWithIdentifier:titleInfoReuseIdentifier forIndexPath:indexPath];
                 titleInfoCell.blogDetail = _blogDetails;
                 
@@ -380,6 +400,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                     abstractCell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     return abstractCell;
+
                 } else {
                     ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
                     webViewCell.contentWebView.delegate = self;
@@ -461,7 +482,6 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         if (_blogDetailComments.count > 0) {
             if (indexPath.row == _blogDetailComments.count) {
                 //评论列表
-                NSLog(@"评论列表");
                 CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:5 andObjectID:_blogDetails.id];
                 [self.navigationController pushViewController:commentsBVC animated:YES];
             }
@@ -597,6 +617,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                       HUD.labelText = @"评论发表成功";
                       
                       [self.tableView reloadData];
+                      _commentTextField.text = @"";
                   } else {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                       HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
