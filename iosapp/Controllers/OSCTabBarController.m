@@ -195,7 +195,7 @@
                              homepageNav,
                              ];
     
-    NSArray *titles = @[@"综合", @"动弹", @"", @"发现", @"我"];
+    NSArray *titles = @[@"综合", @"动弹", @"", @"发现", @"我的"];
     NSArray *images = @[@"tabbar-news", @"tabbar-tweet", @"", @"tabbar-discover", @"tabbar-me"];
     [self.tabBar.items enumerateObjectsUsingBlock:^(UITabBarItem *item, NSUInteger idx, BOOL *stop) {
         [item setTitle:titles[idx]];
