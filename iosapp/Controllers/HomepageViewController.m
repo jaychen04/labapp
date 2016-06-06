@@ -310,7 +310,7 @@
     cell.backgroundColor = [UIColor cellsColor];//colorWithHex:0xF9F9F9
     
     if (indexPath.section == 0) {
-        cell.textLabel.text = @[@"消息", @"博客", @"团队", @"活动"][indexPath.row];
+        cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的团队", @"我的活动"][indexPath.row];
         cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"discover-activities"][indexPath.row]];
     } else {
         cell.textLabel.text = @[@"反馈", @"设置"][indexPath.row];
