@@ -96,15 +96,15 @@
 @property (nonatomic, copy) NSString *pubDate;
 @property (nonatomic, strong) OSCBlogCommentRefer *refer;
 
-@property (nonatomic, copy) NSMutableString *trimmedContent;
-@property (nonatomic, strong) NSMutableArray *hrefs;
+//@property (nonatomic, copy) NSMutableString *trimmedContent;
+//@property (nonatomic, strong) NSMutableArray *hrefs;
 
 @end
 
 
-@interface HrefMark :NSObject
-
-@property (nonatomic, strong) NSURL *href;
-@property (nonatomic, assign) NSRange range;
-
-@end
+//@interface HrefMark :NSObject
+//
+//@property (nonatomic, strong) NSURL *href;
+//@property (nonatomic, assign) NSRange range;
+//
+//@end

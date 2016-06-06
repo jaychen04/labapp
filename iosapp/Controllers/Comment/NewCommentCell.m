@@ -187,7 +187,7 @@
                                                                                       metrics:nil
                                                                                         views:views]];
         }
-        contentLabel.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
+        contentLabel.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, [refer.content deleteHTMLTag]];
         refer = refer.refer;
         
     }
