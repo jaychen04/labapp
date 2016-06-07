@@ -29,6 +29,7 @@
 
 #pragma mark - theme colors
 
+/* 列表整体背景色 */
 + (UIColor *)themeColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
@@ -37,12 +38,13 @@
     return [UIColor colorWithHex:0xebebf3];
 }
 
+/* 用户名颜色 */
 + (UIColor *)nameColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         return [UIColor colorWithHex:0x25933a];
     }
-    return [UIColor colorWithHex:0x087221];
+    return [UIColor colorWithHex:0x087221];//0x24CF5F
 }
 
 + (UIColor *)titleColor
@@ -95,12 +97,13 @@
     return [UIColor colorWithHex:0xE1E1E1];
 }
 
+/* 导航栏背景色 */
 + (UIColor *)navigationbarColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         return [UIColor colorWithHex:0x114818];
     }
-    return [UIColor colorWithHex:0x15A230];//0x009000
+    return [UIColor colorWithHex:0x24cf5f];//colorWithHex:0x15A230
 }
 
 + (UIColor *)selectCellSColor
