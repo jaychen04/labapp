@@ -201,7 +201,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 
 -(void)getBlogData{
     //@"http://192.168.1.15:8000/action/apiv2/blog?id=179590"
-    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@/blog?id=%lld", OSCAPI_V2_PREFIX, self.blogId];
+    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@blog?id=%lld", OSCAPI_V2_PREFIX, self.blogId];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:blogDetailUrlStr
      parameters:nil
