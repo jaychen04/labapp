@@ -101,7 +101,7 @@
 + (UIColor *)navigationbarColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        return [UIColor colorWithHex:0x114818];
+        return [UIColor colorWithHex:0x114818];//0x13822E];//
     }
     return [UIColor colorWithHex:0x24cf5f];//colorWithHex:0x15A230
 }

@@ -15,6 +15,7 @@
 #import "Utils.h"
 #import "HomepageViewController.h"
 #import "ImageViewerController.h"
+#import "AppDelegate.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <AFNetworking.h>
@@ -68,16 +69,14 @@
     header.clipsToBounds = YES;
     header.userInteractionEnabled = YES;
     header.contentMode = UIViewContentModeScaleAspectFill;
-//    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
-//    NSString *imageName = @"bg_my";
-//    if (screenWidth.intValue < 400) {
-//        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];
-//    }
     header.image = [UIImage imageNamed:@"bg_my"];
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        header.image = [UIImage imageNamed:@"bg_my_dark"];
+    }
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, header.image.size.width, header.image.size.height)];
-    view.backgroundColor = [UIColor infosBackViewColor];
-    [header addSubview:view];
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, header.image.size.width, header.image.size.height)];
+//    view.backgroundColor = [UIColor infosBackViewColor];
+//    [header addSubview:view];
     
     _portrait = [UIImageView new];
     _portrait.contentMode = UIViewContentModeScaleAspectFit;
