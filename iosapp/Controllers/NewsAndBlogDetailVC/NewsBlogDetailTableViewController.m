@@ -44,6 +44,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 @property (nonatomic, strong) NSMutableArray *blogDetailComments;
 @property (nonatomic, strong) NSMutableArray *blogDetailRecommends;
 @property (nonatomic, assign) CGFloat webViewHeight;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 //软键盘size
 @property (nonatomic, assign) CGFloat keyboardHeight;
@@ -73,7 +74,23 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     }
     return self;
 }
-
+- (void)showHubView {
+    UIView *coverView = [[UIView alloc]initWithFrame:self.view.bounds];
+    coverView.backgroundColor = [UIColor whiteColor];
+    coverView.tag = 10;
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    [window addSubview:_hud];
+    [self.view addSubview:coverView];
+    [_hud show:YES];
+    _hud.removeFromSuperViewOnHide = YES;
+    _hud.userInteractionEnabled = NO;
+}
+- (void)hideHubView {
+    [_hud hide:YES];
+    [[self.view viewWithTag:10] removeFromSuperview];
+}
 - (void)viewDidLoad {
     
     [super viewDidLoad];
@@ -90,6 +107,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     
     self.tableView.tableFooterView = [UIView new];
+    
+    // 添加等待动画
+    [self showHubView];
     
     [self getBlogData];
     
@@ -108,6 +128,12 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                                                                              target:self
                                                                              action:@selector(rightBarButtonClicked)];
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self hideHubView];
+    [super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -300,12 +326,12 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                             cell.abstractLabel.text = _blogDetails.abstract;
                         }];
                     } else if (_blogDetails.abstract.length == 0) {
-                        return _webViewHeight;
+                        return _webViewHeight+30;
                     }
                     break;
                 }
                 case 3:
-                    return _webViewHeight;
+                    return _webViewHeight+30;
                     break;
                 default:
                     break;
@@ -536,6 +562,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
+        [self hideHubView];
     });
 }
 
@@ -673,7 +700,6 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
-    
     return YES;
 }
 

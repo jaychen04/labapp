@@ -12,7 +12,8 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-    _contentWebView.scalesPageToFit = YES;
+    [(UIScrollView *)[[_contentWebView subviews] objectAtIndex:0] setBounces:NO];
+    [(UIScrollView *)[[_contentWebView subviews] objectAtIndex:0] setScrollEnabled:NO];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
