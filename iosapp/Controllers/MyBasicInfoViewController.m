@@ -68,12 +68,12 @@
     header.clipsToBounds = YES;
     header.userInteractionEnabled = YES;
     header.contentMode = UIViewContentModeScaleAspectFill;
-    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
-    NSString *imageName = @"user-background";
-    if (screenWidth.intValue < 400) {
-        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];
-    }
-    header.image = [UIImage imageNamed:imageName];
+//    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
+//    NSString *imageName = @"bg_my";
+//    if (screenWidth.intValue < 400) {
+//        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];
+//    }
+    header.image = [UIImage imageNamed:@"bg_my"];
     
     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, header.image.size.width, header.image.size.height)];
     view.backgroundColor = [UIColor infosBackViewColor];

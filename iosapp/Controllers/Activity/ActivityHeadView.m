@@ -9,9 +9,11 @@
 #import "ActivityHeadView.h"
 #import "Utils.h"
 
-@interface ActivityHeadView ()
+@interface ActivityHeadView () <UIScrollViewDelegate>
 
 @property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UIPageControl *pageCtl;
+
 @property (nonatomic, strong) UIImageView *bottomImageView;
 @property (nonatomic, assign) NSInteger currentIndex;
 @property NSTimer *timer;
@@ -40,8 +42,17 @@
     _scrollView.pagingEnabled = YES;
     _scrollView.showsVerticalScrollIndicator = NO;
     _scrollView.showsHorizontalScrollIndicator = NO;
+    _scrollView.delegate = self;
     _scrollView.backgroundColor = [UIColor blackColor];
     [self addSubview:_scrollView];
+    
+    _pageCtl = [[UIPageControl alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.frame)-27, CGRectGetWidth(self.frame), 27)];
+    _pageCtl.backgroundColor = [UIColor clearColor];
+    _pageCtl.currentPage = 0;
+    _pageCtl.numberOfPages = arrayCount;
+    _pageCtl.currentPageIndicatorTintColor = [UIColor sectionButtonSelectedColor];
+    _pageCtl.pageIndicatorTintColor = [UIColor whiteColor];
+    [self addSubview:_pageCtl];
     
     CGFloat imageViewWidth = CGRectGetWidth(_scrollView.frame);
     CGFloat imageViewHeight = CGRectGetHeight(_scrollView.frame);
@@ -75,7 +86,15 @@
     if (_currentIndex >= _banners.count) {
         _currentIndex = 0;
     }
+    _pageCtl.currentPage = _currentIndex;
     [_scrollView setContentOffset:CGPointMake(_currentIndex*CGRectGetWidth(_scrollView.frame), 0) animated:YES];
+}
+
+#pragma mark - UIScrollViewDelegate
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    _currentIndex = scrollView.contentOffset.x/CGRectGetWidth(self.frame);
+    _pageCtl.currentPage = _currentIndex;
 }
 
 #pragma mark - /*点击滚动图片*/
@@ -151,11 +170,11 @@
     for (UIView *view in _bottomImage.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *subViews = NSDictionaryOfVariableBindings(_subImageView, _titleLable, _descLable);
     
-    [_bottomImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_subImageView]-16-|"
+    [_bottomImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_subImageView(180)]"
                                                                  options:0
                                                                  metrics:nil
                                                                    views:subViews]];
-    [_bottomImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_titleLable]-16-[_descLable]-16-|"
+    [_bottomImage addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_titleLable]-16-[_descLable]-27-|"
                                                                  options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                  metrics:nil
                                                                    views:subViews]];
