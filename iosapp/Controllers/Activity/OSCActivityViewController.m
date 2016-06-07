@@ -68,7 +68,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];    
-    self.bannerView = [[ActivityHeadView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 212)];
+    self.bannerView = [[ActivityHeadView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), 223)];
     self.bannerView.delegate = self;
     [self getBannerData];
     [self layoutUI];
