@@ -278,15 +278,15 @@
 
 - (void)setCoverImage
 {
-    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
-    NSString *imageName = @"user-background";
-    if (screenWidth.intValue < 400) {
-        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];;
-    }
-    
-    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
-        imageName = [NSString stringWithFormat:@"%@-dark", imageName];
-    }
+//    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
+    NSString *imageName = @"bg_my";
+//    if (screenWidth.intValue < 400) {
+//        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];;
+//    }
+//    
+//    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+//        imageName = [NSString stringWithFormat:@"%@-dark", imageName];
+//    }
     
     if (!self.tableView.scalableCover) {
         [self.tableView addScalableCoverWithImage:[UIImage imageNamed:imageName]];

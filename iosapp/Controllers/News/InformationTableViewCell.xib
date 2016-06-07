@@ -35,7 +35,7 @@ Get unlimited private repositories
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_label_recommend" translatesAutoresizingMaskIntoConstraints="NO" id="mUW-Sg-ecP">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_label_new" translatesAutoresizingMaskIntoConstraints="NO" id="mUW-Sg-ecP">
                         <rect key="frame" x="15" y="8" width="16" height="18"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="18" id="4EI-hH-LtD"/>
@@ -107,6 +107,6 @@ Get unlimited private repositories
     </objects>
     <resources>
         <image name="ic_comment" width="10" height="10"/>
-        <image name="ic_label_recommend" width="16" height="18"/>
+        <image name="ic_label_new" width="16" height="18"/>
     </resources>
 </document>

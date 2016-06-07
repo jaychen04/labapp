@@ -15,6 +15,7 @@
 #import "OSCNews.h"
 #import "OSCBlog.h"
 #import "OSCSoftware.h"
+#import "NewsBlogDetailTableViewController.h"
 
 #import <CoreMotion/CoreMotion.h>
 #import <AFNetworking.h>
@@ -274,7 +275,13 @@ static const double accelerationThreshold = 2.0f;
         case RandomTypeBlog: {
             OSCBlog *blog = [OSCBlog new];
             blog.blogID = _randomMessage.randomMessageID;
-            [self.navigationController pushViewController:[[DetailsViewController alloc] initWithBlog:blog] animated:YES];
+            
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithBlogId:blog.blogID isBlogDetail:YES];
+            newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            
+            /* 旧博客详情页面 */
+//            [self.navigationController pushViewController:[[DetailsViewController alloc] initWithBlog:blog] animated:YES];
             break;
         }
         case RandomTypeSoftware: {

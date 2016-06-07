@@ -11,6 +11,7 @@
 #import "OSCBlog.h"
 #import "Config.h"
 #import "DetailsViewController.h"
+#import "NewsBlogDetailTableViewController.h"
 
 static NSString *kBlogCellID = @"BlogCell";
 
@@ -117,8 +118,15 @@ static NSString *kBlogCellID = @"BlogCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCBlog *blog = self.objects[indexPath.row];
-    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithBlog:blog];
-    [self.navigationController pushViewController:detailsViewController animated:YES];
+    
+    
+    NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithBlogId:blog.blogID isBlogDetail:YES];
+    newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+    
+    /* 旧博客详情页面 */
+//    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithBlog:blog];
+//    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 
