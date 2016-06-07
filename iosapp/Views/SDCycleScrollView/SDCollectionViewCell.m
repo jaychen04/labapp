@@ -12,6 +12,7 @@
 @implementation SDCollectionViewCell
 {
     __weak UILabel *_titleLabel;
+    __weak UILabel *_titleTextLabel;
 }
 
 
@@ -33,14 +34,17 @@
 
 - (void)setTitleLabelTextColor:(UIColor *)titleLabelTextColor
 {
+//    _titleLabelTextColor = titleLabelTextColor;
+//    _titleLabel.textColor = titleLabelTextColor;
+    
     _titleLabelTextColor = titleLabelTextColor;
-    _titleLabel.textColor = titleLabelTextColor;
+    _titleTextLabel.textColor = titleLabelTextColor;
 }
 
 - (void)setTitleLabelTextFont:(UIFont *)titleLabelTextFont
 {
     _titleLabelTextFont = titleLabelTextFont;
-    _titleLabel.font = titleLabelTextFont;
+    _titleTextLabel.font = titleLabelTextFont;
 }
 
 - (void)setupImageView
@@ -54,14 +58,22 @@
 {
     UILabel *titleLabel = [[UILabel alloc] init];
     _titleLabel = titleLabel;
-    _titleLabel.hidden = YES;
+//    _titleLabel.hidden = YES;
     [self.contentView addSubview:titleLabel];
+    
+    UILabel *titleTextLabel = [[UILabel alloc] init];
+    _titleTextLabel = titleTextLabel;
+    _titleTextLabel.backgroundColor = [UIColor clearColor];
+//    _titleTextLabel.hidden = YES;
+    [self.contentView addSubview:titleTextLabel];
+    
 }
 
 - (void)setTitle:(NSString *)title
 {
     _title = [title copy];
-    _titleLabel.text = [NSString stringWithFormat:@"   %@", title];
+//    _titleLabel.text = [NSString stringWithFormat:@"   %@", title];
+    _titleTextLabel.text = [NSString stringWithFormat:@"   %@", title];
 }
 
 
@@ -76,7 +88,9 @@
     CGFloat titleLabelX = 0;
     CGFloat titleLabelY = self.sd_height - titleLabelH;
     _titleLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
-    _titleLabel.hidden = !_titleLabel.text;
+//    _titleLabel.hidden = !_titleLabel.text;
+    
+    _titleTextLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW-60, titleLabelH);
 }
 
 @end

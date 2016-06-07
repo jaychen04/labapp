@@ -377,8 +377,12 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 - (SDCycleScrollView *)cycleScrollView {
 	if(_cycleScrollView == nil) {
         _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:(CGRect){{0,0},{OSC_SCREEN_WIDTH,OSC_BANNER_HEIGHT}} delegate:self placeholderImage:[UIImage imageNamed:@""]];
-        _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleNone;
-        
+        _cycleScrollView.pageControlDotSize = CGSizeMake(5, 5);
+        _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
+        _cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
+        _cycleScrollView.pageDotColor = [UIColor whiteColor];
+        _cycleScrollView.currentPageDotColor = [UIColor navigationbarColor];
+        _cycleScrollView.showPageControl = YES;
 	}
 	return _cycleScrollView;
 }
