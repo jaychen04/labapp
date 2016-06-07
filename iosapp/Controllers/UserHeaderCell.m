@@ -9,6 +9,7 @@
 #import "UserHeaderCell.h"
 #import "Utils.h"
 #import "OSCUser.h"
+#import "AppDelegate.h"
 
 @implementation UserHeaderCell
 
@@ -28,17 +29,18 @@
 - (void)setLayout
 {
     UIImageView *backgroundImage = [UIImageView new];
-//    NSNumber *screenWidth = @([UIScreen mainScreen].bounds.size.width);
     NSString *imageName = @"bg_my";
-//    if (screenWidth.intValue < 400) {
-//        imageName = [NSString stringWithFormat:@"%@-%@", imageName, screenWidth];;
-//    }
+    
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        imageName = @"bg_my_dark";
+    }
+    
     backgroundImage.image = [UIImage imageNamed:imageName];
     self.backgroundView = backgroundImage;
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, backgroundImage.image.size.width, backgroundImage.image.size.height)];
-    view.backgroundColor = [UIColor infosBackViewColor];
-    [backgroundImage addSubview:view];
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, backgroundImage.image.size.width, backgroundImage.image.size.height)];
+//    view.backgroundColor = [UIColor infosBackViewColor];
+//    [backgroundImage addSubview:view];
     
     _imageBackView = [UIView new];
     _imageBackView.backgroundColor = [UIColor colorWithHex:0xEEEEEE];
