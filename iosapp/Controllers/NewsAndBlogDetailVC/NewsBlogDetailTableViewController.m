@@ -25,10 +25,12 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 
+
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
 #import <UITableView+FDTemplateLayoutCell.h>
+#import <TOWebViewController.h>
 #import "UMSocial.h"
 
 static NSString *followAuthorReuseIdentifier = @"FollowAuthorTableViewCell";
@@ -543,15 +545,21 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 }
 #pragma mark - UIWebViewDelegate
 
-//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-//{
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
+    [self.navigationController handleURL:request.URL];
+    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+    
 //    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
 //
 //    [self.navigationController pushViewController:[[TOWebViewController alloc] initWithURL:request.URL]
 //                                         animated:YES];
 //
 //    return NO;
-//}
+}
 
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
