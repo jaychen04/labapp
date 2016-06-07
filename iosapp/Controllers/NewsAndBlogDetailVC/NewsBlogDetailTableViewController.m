@@ -85,9 +85,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"webAndAbsTableViewCell" bundle:nil] forCellReuseIdentifier:abstractReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
-    
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
-    //    [self.tableView registerNib:[UINib nibWithNibName:@"NewCommentCell" bundle:nil] forCellReuseIdentifier:newCommentReuseIdentifier];
     
     self.tableView.tableFooterView = [UIView new];
     
@@ -453,7 +451,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                     
                     return cell;
                 } else {
-                    NewCommentCell *commentBlogCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
+                    NewCommentCell *commentBlogCell = [NewCommentCell new];
+                    commentBlogCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
                     OSCBlogDetailComment *detailComment = _blogDetailComments[indexPath.row];
                     commentBlogCell.comment = detailComment;
                     
@@ -463,7 +463,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                         commentBlogCell.currentContainer.hidden = YES;
                     }
                     
-                    commentBlogCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
                     commentBlogCell.commentButton.tag = indexPath.row;
                     [commentBlogCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
                     
