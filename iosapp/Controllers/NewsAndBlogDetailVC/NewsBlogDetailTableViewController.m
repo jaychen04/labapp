@@ -53,6 +53,8 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 @property (nonatomic, assign) BOOL isReply;
 @property (nonatomic, assign) NSInteger selectIndexPath;
 
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+
 @end
 
 
@@ -90,8 +92,6 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     self.tableView.tableFooterView = [UIView new];
     
     [self getBlogData];
-    
-    //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHiden:)]];
     
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -168,6 +168,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 - (void)keyBoardHiden:(UITapGestureRecognizer *)tap
 {
     [_commentTextField resignFirstResponder];
+    [self.view removeGestureRecognizer:_tap];
 }
 
 #pragma mark - 获取数据
@@ -415,7 +416,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                     
                     return webViewCell;
                 }
-            }else if (indexPath.row == 3) {
+            } else if (indexPath.row == 3) {
                 ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
                 webViewCell.contentWebView.delegate = self;
                 [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
@@ -492,6 +493,16 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    if (indexPath.section == 1) {
+        if (_blogDetailRecommends.count > 0) {
+            OSCBlogDetailRecommend *detailRecommend = _blogDetailRecommends[indexPath.row];
+            
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithBlogId:detailRecommend.id
+                                                                                                              isBlogDetail:YES];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+    }
     
     if (indexPath.section == 2) {
         if (_blogDetailComments.count > 0) {
@@ -696,6 +707,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     _keyboardHeight = keyboardRect.size.height;
     
     _bottmTextFiled.constant = _keyboardHeight;
+    
+    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHiden:)];
+    [self.view addGestureRecognizer:_tap];
     
 }
 

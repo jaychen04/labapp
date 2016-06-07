@@ -127,8 +127,6 @@
         return;
     }
     while (refer.author.length > 0) {
-        NSLog(@"===== authorName = %@", refer.author);
-        
         UIView *subContainer = [UIView new];
         [_currentContainer addSubview:subContainer];
         
