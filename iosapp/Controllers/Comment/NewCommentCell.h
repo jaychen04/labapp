@@ -17,6 +17,8 @@
 @property (strong, nonatomic) UILabel *contentLabel;
 @property (strong, nonatomic) UIButton *commentButton;
 
+@property (nonatomic, strong) UIView *currentContainer;
+
 @property (nonatomic, strong) OSCBlogDetailComment *comment;
 
 @end

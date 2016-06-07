@@ -9,12 +9,6 @@
 #import "NewCommentCell.h"
 #import "Utils.h"
 
-@interface NewCommentCell ()
-
-@property (nonatomic, strong) UIView *currentContainer;
-
-@end
-
 @implementation NewCommentCell
 
 - (void)awakeFromNib {
@@ -65,8 +59,7 @@
     
     _currentContainer = [UIView new];
     [self.contentView addSubview:_currentContainer];
-    _currentContainer.hidden = YES;
-    
+
     _commentButton = [UIButton new];
     [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
     [self.contentView addSubview:_commentButton];
@@ -118,9 +111,11 @@
      NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
     _contentLabel.attributedText = contentString;
     
-    if (comment.refer != nil) {
+    if (comment.refer.author.length > 0) {
         _currentContainer.hidden = NO;
         [self setLayOutForRefer:comment.refer];
+    } else {
+        _currentContainer.hidden = YES;
     }
     
 }
@@ -128,8 +123,10 @@
 #pragma mark - refer
 - (void)setLayOutForRefer:(OSCBlogCommentRefer *)refer
 {
+    if (refer.author.length  <= 0) {
+        return;
+    }
     while (refer.author.length > 0) {
-        
         UIView *subContainer = [UIView new];
         [_currentContainer addSubview:subContainer];
         
@@ -139,6 +136,7 @@
         contentLabel.numberOfLines = 0;
         contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [_currentContainer addSubview:contentLabel];
+        contentLabel.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, [refer.content deleteHTMLTag]];
         
         UIView *leftLine = [UIView new];
         leftLine.backgroundColor = [UIColor colorWithHex:0xd7d6da];
@@ -151,6 +149,7 @@
         for (UIView *view in _currentContainer.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
         NSDictionary *views = NSDictionaryOfVariableBindings(subContainer, contentLabel, leftLine, bottomLine);
         if (refer.refer.author.length > 0) {
+            subContainer.hidden = NO;
             [_currentContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[leftLine]|"
                                                                                       options:0
                                                                                       metrics:nil
@@ -167,7 +166,7 @@
                                                                                       metrics:nil
                                                                                         views:views]];
             
-            _currentContainer = subContainer;
+            
         } else {
             subContainer.hidden = YES;
             [_currentContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[leftLine]|"
@@ -186,7 +185,7 @@
                                                                                       metrics:nil
                                                                                         views:views]];
         }
-        contentLabel.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, [refer.content deleteHTMLTag]];
+        _currentContainer = subContainer;
         refer = refer.refer;
         
     }

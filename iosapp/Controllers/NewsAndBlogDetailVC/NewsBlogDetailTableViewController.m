@@ -54,6 +54,8 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 @property (nonatomic, assign) BOOL isReply;
 @property (nonatomic, assign) NSInteger selectIndexPath;
 
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+
 @end
 
 
@@ -102,9 +104,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"webAndAbsTableViewCell" bundle:nil] forCellReuseIdentifier:abstractReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
-    
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
-    //    [self.tableView registerNib:[UINib nibWithNibName:@"NewCommentCell" bundle:nil] forCellReuseIdentifier:newCommentReuseIdentifier];
     
     self.tableView.tableFooterView = [UIView new];
     
@@ -112,8 +112,6 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [self showHubView];
     
     [self getBlogData];
-    
-    //    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHiden:)]];
     
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -196,6 +194,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 - (void)keyBoardHiden:(UITapGestureRecognizer *)tap
 {
     [_commentTextField resignFirstResponder];
+    [self.view removeGestureRecognizer:_tap];
 }
 
 #pragma mark - 获取数据
@@ -256,7 +255,15 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    NSInteger sectionNumber = 1;
+    if (_blogDetailComments.count > 0) {
+        sectionNumber += 1;
+    }
+    if (_blogDetailRecommends.count > 0) {
+        sectionNumber += 1;
+    }
+    
+    return sectionNumber;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -435,7 +442,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                     
                     return webViewCell;
                 }
-            }else if (indexPath.row == 3) {
+            } else if (indexPath.row == 3) {
                 ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
                 webViewCell.contentWebView.delegate = self;
                 [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
@@ -471,10 +478,19 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                     
                     return cell;
                 } else {
-                    NewCommentCell *commentBlogCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
+                    NewCommentCell *commentBlogCell = [NewCommentCell new];
+                    commentBlogCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
                     OSCBlogDetailComment *detailComment = _blogDetailComments[indexPath.row];
                     commentBlogCell.comment = detailComment;
-                    commentBlogCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    if (detailComment.refer.author.length > 0) {
+                        commentBlogCell.currentContainer.hidden = NO;
+                    } else {
+                        commentBlogCell.currentContainer.hidden = YES;
+                    }
+                    
+                    
                     commentBlogCell.commentButton.tag = indexPath.row;
                     [commentBlogCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
                     
@@ -504,6 +520,16 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    if (indexPath.section == 1) {
+        if (_blogDetailRecommends.count > 0) {
+            OSCBlogDetailRecommend *detailRecommend = _blogDetailRecommends[indexPath.row];
+            
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithBlogId:detailRecommend.id
+                                                                                                              isBlogDetail:YES];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+    }
+    
     if (indexPath.section == 2) {
         if (_blogDetailComments.count > 0) {
             if (indexPath.row == _blogDetailComments.count) {
@@ -528,8 +554,6 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-
-    
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
     if (_webViewHeight == webViewHeight) {return;}
 
@@ -546,7 +570,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 - (void)favSelected
 {
     if ([Config getOwnID] == 0) {
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
     } else {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
@@ -618,7 +644,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     
     
     if ([Config getOwnID] == 0) {
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
     } else {
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -706,6 +734,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     
     _bottmTextFiled.constant = _keyboardHeight;
     
+    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHiden:)];
+    [self.view addGestureRecognizer:_tap];
+    
 }
 
 - (void)keyboardWillHide:(NSNotification *)aNotification
@@ -732,7 +763,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     NSLog(@"collect");
     
     if ([Config getOwnID] == 0) {
-        [self.navigationController pushViewController:[LoginViewController new] animated:YES];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
     } else {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
@@ -778,6 +811,8 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 #pragma mark - share
 - (IBAction)share:(UIButton *)sender {
     NSLog(@"share");
+    
+    [_commentTextField resignFirstResponder];
     
     NSString *trimmedHTML = [_blogDetails.body deleteHTMLTag];
     NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
