@@ -95,6 +95,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     
     [super viewDidLoad];
     
+    self.title = @"博文";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.commentTextField.delegate = self;
@@ -240,13 +241,13 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [headerView addSubview:titleLabel];
     
     
-    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
-    topLineView.backgroundColor = [UIColor separatorColor];
-    [headerView addSubview:topLineView];
-    
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
-    bottomLineView.backgroundColor = [UIColor separatorColor];
-    [headerView addSubview:bottomLineView];
+//    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+//    topLineView.backgroundColor = [UIColor separatorColor];
+//    [headerView addSubview:topLineView];
+//    
+//    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+//    bottomLineView.backgroundColor = [UIColor separatorColor];
+//    [headerView addSubview:bottomLineView];
     
     return headerView;
 }
@@ -552,14 +553,12 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 //    return NO;
 //}
 
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
     if (_webViewHeight == webViewHeight) {return;}
-
     _webViewHeight = webViewHeight;
-
-
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
         [self hideHubView];

@@ -65,6 +65,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    
     _newestBlogObjects = [NSMutableArray new];
     _hottestBlogObjects = [NSMutableArray new];
     
