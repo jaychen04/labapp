@@ -184,7 +184,7 @@
 }
 
 ///* 新section 问答 按钮选中颜色*/
-+ (UIColor *)sectionButtonSelectedColor
++ (UIColor *)newSectionButtonSelectedColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         return [UIColor colorWithHex:0x25933a];
@@ -192,6 +192,27 @@
     return [UIColor colorWithHex:0x24CF5F];
 }
 
-/* 新 */
+/* 新 分割线*/
++ (UIColor *)newSeparatorColor
+{
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        return [UIColor colorWithHex:0x129069 alpha:0.6];
+    }
+    return [UIColor colorWithHex:0xC8C7CC];
+}
+
+/* 次要文字颜色 */
++ (UIColor *)newSecondTextColor
+{
+    return [UIColor colorWithHex:0x6A6A6A];
+}
+
+/* 辅助文字颜色 */
++ (UIColor *)newAssistTextColor
+{
+    return [UIColor colorWithHex:0x9D9D9D];
+}
+
+
 
 @end
