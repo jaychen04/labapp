@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *viewCountLabel;
 
-- (void)setNewHotBlogContent:(OSCNewHotBlog *)blog;
+@property (nonatomic, strong) OSCNewHotBlog *blog;
+
+//- (void)setNewHotBlogContent:(OSCNewHotBlog *)blog;
 
 @end
