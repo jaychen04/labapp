@@ -24,8 +24,7 @@
 
     // Configure the view for the selected state
 }
-
-- (void)setNewHotBlogContent:(OSCNewHotBlog *)blog
+- (void)setBlog:(OSCNewHotBlog *)blog
 {
     _titleLabel.attributedText = blog.attributedTitleString;
     _descLabel.text = blog.body;

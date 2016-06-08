@@ -17,6 +17,8 @@
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
 #import "NewsBlogDetailTableViewController.h"
+#import <UITableView+FDTemplateLayoutCell.h>
+
 static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 @interface NewHotBlogTableViewController ()<networkingJsonDataDelegate>
@@ -216,7 +218,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     if (array.count > 0) {
         OSCNewHotBlog *blog = array[indexPath.row];
         
-        [cell setNewHotBlogContent:blog];
+        cell.blog = blog;
     }
     
     return cell;
@@ -224,24 +226,13 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
-    UILabel *label = [UILabel new];
-    label.numberOfLines = 2;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    if (array.count > 0) {
+    return [tableView fd_heightForCellWithIdentifier:reuseIdentifier configuration:^(NewHotBlogTableViewCell *cell) {
+        NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
         OSCNewHotBlog *blog = array[indexPath.row];
         
-        label.font = [UIFont boldSystemFontOfSize:15];
-        [label setAttributedText:blog.attributedTitleString];
-        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-        
-        label.text = blog.body;
-        label.font = [UIFont systemFontOfSize:13];
-        height += [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-        
-        return height + 51;
-    }
+        cell.blog = blog;
+    }];
+    
     return 87;
 }
 
