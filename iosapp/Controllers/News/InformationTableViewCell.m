@@ -56,25 +56,25 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    
-    NSDate *date = [formatter dateFromString:viewModel.pubDate];
+    NSDate* date = [formatter dateFromString:viewModel.pubDate];
     NSDate *systemDate = [formatter dateFromString:_systemTimeDate];
+    NSDate *subDate = [formatter dateFromString:[NSString stringWithFormat:@"%@ 00:00:00", [_systemTimeDate componentsSeparatedByString:@" "][0]]];
     
-    NSTimeInterval late = [date timeIntervalSince1970];
-    NSTimeInterval system = [systemDate timeIntervalSince1970];
+    int timeSecond = [systemDate timeIntervalSince1970] - [date timeIntervalSince1970];
+    int subTime = [systemDate timeIntervalSince1970] - [subDate timeIntervalSince1970];
     
-    NSTimeInterval chaNumber = system - late;
-    
-    if (chaNumber/86400 < 1) {
+    if (timeSecond < subTime) {//"推荐"新闻
         _recommendImageView.hidden = NO;
         _titleLabel.text = [NSString stringWithFormat:@"     %@",viewModel.title];
-    } else {
+    } else{//不是"推荐"新闻 普通新闻
         _recommendImageView.hidden = YES;
         _titleLabel.text = viewModel.title;
     }
     
     _descLabel.text = viewModel.body;
     _commentLabel.text = [NSString stringWithFormat:@"%ld",(long)viewModel.commentCount];
+    
+    
     
     [_timeDistanceLabel setAttributedText:[Utils attributedTimeString:date]];
 }
