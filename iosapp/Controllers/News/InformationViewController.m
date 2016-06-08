@@ -42,6 +42,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 @property (nonatomic,strong) NSMutableArray* dataModels;
 @property (nonatomic,strong) NSString* nextToken;
 
+@property (nonatomic, strong) NSString *systemDate;
+
 @end
 
 
@@ -166,7 +168,11 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
     cell.contentView.backgroundColor = [UIColor newCellColor];
-    cell.viewModel = self.dataModels[indexPath.row];
+    cell.systemTimeDate = _systemDate;
+    
+    if (self.dataModels.count > 0) {
+        cell.viewModel = self.dataModels[indexPath.row];
+    }
     
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
@@ -177,6 +183,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return [tableView fd_heightForCellWithIdentifier:informationReuseIdentifier configuration:^(InformationTableViewCell* cell) {
+        cell.systemTimeDate = _systemDate;
         cell.viewModel = self.dataModels[indexPath.row];
     }];
 }
@@ -268,8 +275,9 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     [self.manager GET:self.generateUrl()
        parameters:paraMutableDic.copy
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
-
               if([responseObject[@"code"]integerValue] == 1) {
+                  _systemDate = responseObject[@"time"];
+                  
                   NSDictionary* resultDic = responseObject[@"result"];
                   NSArray* items = resultDic[@"items"];
                   NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];

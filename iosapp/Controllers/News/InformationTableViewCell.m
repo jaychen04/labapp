@@ -56,11 +56,14 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    NSDate* date = [formatter dateFromString:viewModel.pubDate];
+    
+    NSDate *date = [formatter dateFromString:viewModel.pubDate];
+    NSDate *systemDate = [formatter dateFromString:_systemTimeDate];
+    
     NSTimeInterval late = [date timeIntervalSince1970];
-    NSDate *dat = [NSDate dateWithTimeIntervalSinceNow:0];
-    NSTimeInterval now=[dat timeIntervalSince1970]*1;
-    NSTimeInterval chaNumber = now - late;
+    NSTimeInterval system = [systemDate timeIntervalSince1970];
+    
+    NSTimeInterval chaNumber = system - late;
     
     if (chaNumber/3600 > 1 && chaNumber/86400 < 1) {
         _recommendImageView.hidden = NO;
