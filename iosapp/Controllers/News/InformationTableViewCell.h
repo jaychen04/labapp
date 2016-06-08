@@ -18,6 +18,7 @@ extern NSString* InformationTableViewCell_IdentifierString;
                                  identifier:(NSString *)identifierString;
 
 @property (nonatomic,strong) OSCInformation* viewModel;
+@property (nonatomic, copy) NSString *systemTimeDate;
 
 @end
 
