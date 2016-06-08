@@ -53,20 +53,25 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     _viewModel = viewModel;
 
     _titleLabel.textColor = [UIColor newTitleColor];
-    if (viewModel.recommend) {//"推荐"新闻
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    NSDate* date = [formatter dateFromString:viewModel.pubDate];
+    NSTimeInterval late = [date timeIntervalSince1970];
+    NSDate *dat = [NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval now=[dat timeIntervalSince1970]*1;
+    NSTimeInterval chaNumber = now - late;
+    
+    if (chaNumber/3600 > 1 && chaNumber/86400 < 1) {
         _recommendImageView.hidden = NO;
         _titleLabel.text = [NSString stringWithFormat:@"     %@",viewModel.title];
-    }else{//不是"推荐"新闻 普通新闻
+    } else {
         _recommendImageView.hidden = YES;
         _titleLabel.text = viewModel.title;
     }
     
     _descLabel.text = viewModel.body;
     _commentLabel.text = [NSString stringWithFormat:@"%ld",(long)viewModel.commentCount];
-    
-    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
-    NSDate* date = [formatter dateFromString:viewModel.pubDate];
     
     [_timeDistanceLabel setAttributedText:[Utils attributedTimeString:date]];
 }
