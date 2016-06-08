@@ -65,7 +65,7 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     
     NSTimeInterval chaNumber = system - late;
     
-    if (chaNumber/3600 > 1 && chaNumber/86400 < 1) {
+    if (chaNumber/86400 < 1) {
         _recommendImageView.hidden = NO;
         _titleLabel.text = [NSString stringWithFormat:@"     %@",viewModel.title];
     } else {
