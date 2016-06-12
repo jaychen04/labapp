@@ -241,8 +241,8 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 {
     if (isSelected) {
         button.layer.borderWidth = 1.0;
-        button.layer.borderColor = [UIColor sectionButtonSelectedColor].CGColor;
-        [button setTitleColor:[UIColor sectionButtonSelectedColor] forState:UIControlStateNormal];
+        button.layer.borderColor = [UIColor newSectionButtonSelectedColor].CGColor;
+        [button setTitleColor:[UIColor newSectionButtonSelectedColor] forState:UIControlStateNormal];
     } else {
         button.layer.borderWidth = 0;
         button.layer.borderColor = [UIColor colorWithHex:0xF6F6F6].CGColor;

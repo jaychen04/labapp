@@ -204,7 +204,7 @@
     }];
     [self.tabBar.items[2] setEnabled:NO];
     
-    [self addCenterButtonWithImage:[UIImage imageNamed:@"tabbar-more"]];
+    [self addCenterButtonWithImage:[UIImage imageNamed:@"ic_nav_add"]];//@"tabbar-more"]];
     
     [self.tabBar addObserver:self
                   forKeyPath:@"selectedItem"
@@ -257,8 +257,9 @@
     _centerButton.frame = CGRectMake(origin.x - buttonSize.height/2, origin.y - buttonSize.height/2, buttonSize.height, buttonSize.height);
     
     [_centerButton setCornerRadius:buttonSize.height/2];
-    [_centerButton setBackgroundColor:[UIColor colorWithHex:0x24a83d]];
+//    [_centerButton setBackgroundColor:[UIColor colorWithHex:0x24a83d]];
     [_centerButton setImage:buttonImage forState:UIControlStateNormal];
+    [_centerButton setImage:[UIImage imageNamed:@"ic_nav_add_actived"] forState:UIControlStateHighlighted];
     [_centerButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
     
     [self.tabBar addSubview:_centerButton];

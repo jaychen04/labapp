@@ -119,8 +119,8 @@ NSString* OSCActivityTableViewCell_IdentifierString = @"OSCActivityTableViewCell
 {
     if (isSelected) {
         _activityStatusLabel.layer.borderWidth = 1.0;
-        _activityStatusLabel.layer.borderColor = [UIColor sectionButtonSelectedColor].CGColor;
-        _activityStatusLabel.textColor = [UIColor sectionButtonSelectedColor];
+        _activityStatusLabel.layer.borderColor = [UIColor newSectionButtonSelectedColor].CGColor;
+        _activityStatusLabel.textColor = [UIColor newSectionButtonSelectedColor];
     } else {
         _activityStatusLabel.layer.borderWidth = 0;
         _activityStatusLabel.textColor = [UIColor colorWithHex:0x9d9d9d];
