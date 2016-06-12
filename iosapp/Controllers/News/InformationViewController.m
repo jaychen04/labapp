@@ -27,6 +27,7 @@
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
+#import <TOWebViewController.h>
 
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define OSC_BANNER_HEIGHT 120
@@ -239,7 +240,10 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeTranslation:{
-            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:[NSURL URLWithString:model.href]];
+            webViewController.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:webViewController animated:YES];
+//            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
             break;
         }
             
