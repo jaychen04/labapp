@@ -10,16 +10,15 @@
 #import "OSCUser.h"
 #import "Utils.h"
 #import "Config.h"
-#import "BlogsViewController.h"
 #import "SwipableViewController.h"
 #import "FriendsViewController.h"
 #import "OSCEvent.h"
 #import "EventCell.h"
 #import "UserHeaderCell.h"
 #import "UserOperationCell.h"
-#import "BlogsViewController.h"
 #import "BubbleChatViewController.h"
 #import "LoginViewController.h"
+#import "NewHotBlogTableViewController.h"
 
 #import <MBProgressHUD.h>
 
@@ -229,7 +228,7 @@
 
 - (void)pushBlogsVC
 {
-    [self.navigationController pushViewController:[[BlogsViewController alloc] initWithUserID:_user.userID]
+    [self.navigationController pushViewController:[[NewHotBlogTableViewController alloc] initWithUserID:_user.userID]
                                          animated:YES];
 }
 

@@ -11,7 +11,6 @@
 #import "TweetsViewController.h"
 #import "PostsViewController.h"
 #import "NewsViewController.h"
-#import "BlogsViewController.h"
 #import "LoginViewController.h"
 #import "HomepageViewController.h"
 #import "DiscoverViewcontroller.h"
@@ -39,8 +38,6 @@
 {
     InformationViewController *newsViewCtl;
     NewHotBlogTableViewController *newHotBlogCtl;
-//    BlogsViewController *blogViewCtl;
-//    BlogsViewController *recommendBlogViewCtl;
     QuesAnsViewController *quesViewCtl;
     OSCActivityViewController *activitiesViewCtl;
     

@@ -11,7 +11,6 @@
 #import "Config.h"
 #import "OSCAPI.h"
 #import "OSCUser.h"
-#import "BlogsViewController.h"
 #import "SwipableViewController.h"
 #import "FriendsViewController.h"
 #import "FavoritesViewController.h"
