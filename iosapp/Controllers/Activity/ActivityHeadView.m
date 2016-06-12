@@ -50,7 +50,7 @@
     _pageCtl.backgroundColor = [UIColor clearColor];
     _pageCtl.currentPage = 0;
     _pageCtl.numberOfPages = arrayCount;
-    _pageCtl.currentPageIndicatorTintColor = [UIColor sectionButtonSelectedColor];
+    _pageCtl.currentPageIndicatorTintColor = [UIColor newSectionButtonSelectedColor];
     _pageCtl.pageIndicatorTintColor = [UIColor whiteColor];
     [self addSubview:_pageCtl];
     

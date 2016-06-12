@@ -51,11 +51,11 @@
     [[UINavigationBar appearance] setTitleTextAttributes:navbarTitleTextAttributes];
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     
-    [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x15A230]];
+    [[UITabBar appearance] setTintColor:[UIColor colorWithHex:0x24CF5F]];
     [[UITabBarItem appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHex:0x15A230]} forState:UIControlStateSelected];
     
     [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
-    [[UITabBar appearance] setBarTintColor:[UIColor titleBarColor]];
+//    [[UITabBar appearance] setBarTintColor:[UIColor titleBarColor]];
     
     [UISearchBar appearance].tintColor = [UIColor colorWithHex:0x15A230];
     [[UITextField appearanceWhenContainedIn:[UISearchBar class], nil] setCornerRadius:14.0];
