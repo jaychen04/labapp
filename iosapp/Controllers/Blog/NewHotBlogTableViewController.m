@@ -26,30 +26,54 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 @property (nonatomic, strong) NSMutableArray *newestBlogObjects;
 @property (nonatomic, strong) NSMutableArray *hottestBlogObjects;
 @property (nonatomic, strong) NSDictionary *newblogParaDic;
+@property (nonatomic, strong) NSMutableArray *blogObjects;
+@property (nonatomic, assign) NewBlogsType blogType;
+
 @end
 
 @implementation NewHotBlogTableViewController
+
+- (instancetype)initWithUserID:(NSInteger)userID
+{
+    self = [super init];
+    if (self) {
+        __weak NewHotBlogTableViewController *weakSelf = self;
+        self.generateUrl = ^NSString * () {
+            return [NSString stringWithFormat:@"%@blog?userId=%ld",OSCAPI_V2_PREFIX, (long)userID];
+        };
+        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+            (weakSelf.lastCell.status = LastCellStatusMore);
+        };
+        
+        self.netWorkingDelegate = self;
+        self.isJsonDataVc = YES;
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 21600;
+        self.kLastRefreshTime = @"NewsRefreshInterval";
+        self.blogType = NewBlogsTypeUserBlogs;
+    }
+    return self;
+}
 
 -(instancetype)init{
     self = [super init];
     if (self) {
         __weak NewHotBlogTableViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-//            return @"http://192.168.1.15:8000/action/apiv2/blog";
             return [NSString stringWithFormat:@"%@blog",OSCAPI_V2_PREFIX];
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
             responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
             (weakSelf.lastCell.status = LastCellStatusMore);
         };
-        //        self.objClass = [OSCInformation class];
         
         self.netWorkingDelegate = self;
         self.isJsonDataVc = YES;
-//        self.parametersDic = @{@"catalog":@1};
         self.needAutoRefresh = YES;
         self.refreshInterval = 21600;
         self.kLastRefreshTime = @"NewsRefreshInterval";
+        self.blogType = NewBlogsTypeOtherBlogs;
     }
     return self;
 }
@@ -70,6 +94,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     
     _newestBlogObjects = [NSMutableArray new];
     _hottestBlogObjects = [NSMutableArray new];
+    _blogObjects = [NSMutableArray new];
     
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NewHotBlogTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:reuseIdentifier];
     self.tableView.separatorColor = [UIColor separatorColor];
@@ -87,9 +112,32 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     if (isRefresh) {
         [self getHotBlogIsRefresh:isRefresh];
         [self getNewBlogIsRefresh:isRefresh];
+        [self getBlogsObjectIsRefresh:isRefresh];
     }else {
         [self getNewBlogIsRefresh:isRefresh];
+        [self getBlogsObjectIsRefresh:isRefresh];
     }
+}
+
+#pragma mark - 获取具体用户博客
+- (void)getBlogsObjectIsRefresh:(BOOL)isRefresh
+{
+    [self.manager GET:self.generateUrl()
+           parameters:nil
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  if ([responseObject[@"code"]integerValue] == 1) {
+                      NSArray* blogModels = [OSCNewHotBlog mj_objectArrayWithKeyValuesArray:[responseObject[@"result"] objectForKey:@"items"]];
+                      if (isRefresh) {
+                          [_blogObjects removeAllObjects];
+                      }
+                      [_blogObjects addObjectsFromArray:blogModels];
+                  }
+                  [self.tableView reloadData];
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  
+              }
+     ];
 }
 
 #pragma mark - 获取最热博客
@@ -185,23 +233,45 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    if (_blogType == NewBlogsTypeUserBlogs) {
+        return 1;
+    } else if (_blogType == NewBlogsTypeOtherBlogs) {
+        return 2;
+    }
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSMutableArray *array = section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+    NSMutableArray *array;
+    if (_blogType == NewBlogsTypeUserBlogs) {
+        array = self.blogObjects;
+        
+    } else if (_blogType == NewBlogsTypeOtherBlogs) {
+        array = section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+    }
+//    NSMutableArray *array = section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
     
     return array.count;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    NSString *seriesTitle = section==0?@"最热":@"最新";
-    NSURL *seriesUrl = section==0?nil:nil;
-    return [self setUpHeaderViewWithSectionTitle:seriesTitle iconUrl:seriesUrl];
+    if (_blogType == NewBlogsTypeUserBlogs) {
+        return nil;
+    } else if (_blogType == NewBlogsTypeOtherBlogs) {
+        NSString *seriesTitle = section==0?@"最热":@"最新";
+        NSURL *seriesUrl = section==0?nil:nil;
+        return [self setUpHeaderViewWithSectionTitle:seriesTitle iconUrl:seriesUrl];
+    }
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 32;
+    if (_blogType == NewBlogsTypeUserBlogs) {
+        return 0.001;
+    } else if (_blogType == NewBlogsTypeOtherBlogs) {
+        return 32;
+    }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -213,7 +283,15 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
-    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+    
+    NSMutableArray *array;
+    if (_blogType == NewBlogsTypeUserBlogs) {
+        array = self.blogObjects;
+        
+    } else if (_blogType == NewBlogsTypeOtherBlogs) {
+        array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+    }
+//    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
     
     if (array.count > 0) {
         OSCNewHotBlog *blog = array[indexPath.row];
@@ -227,7 +305,13 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return [tableView fd_heightForCellWithIdentifier:reuseIdentifier configuration:^(NewHotBlogTableViewCell *cell) {
-        NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+        NSMutableArray *array;
+        if (_blogType == NewBlogsTypeUserBlogs) {
+            array = self.blogObjects;
+            
+        } else if (_blogType == NewBlogsTypeOtherBlogs) {
+            array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+        }
         OSCNewHotBlog *blog = array[indexPath.row];
         
         cell.blog = blog;
@@ -240,8 +324,16 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+//    NSMutableArray *array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+    
+    NSMutableArray *array;
     OSCNewHotBlog *blog;
+    if (_blogType == NewBlogsTypeUserBlogs) {
+        array = self.blogObjects;
+        
+    } else if (_blogType == NewBlogsTypeOtherBlogs) {
+        array = indexPath.section == 0 ? self.hottestBlogObjects : self.newestBlogObjects;
+    }
     
     if (array.count > 0) {
         blog = array[indexPath.row];
