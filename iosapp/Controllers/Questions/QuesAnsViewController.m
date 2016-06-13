@@ -141,6 +141,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
             NSDictionary* result = responseObject[@"result"];
             NSArray* JsonItems = result[@"items"];
             NSArray* models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
+            self.tokens[index] = result[@"nextPageToken"];
             if (isRefresh) {
                 self.dataModels[index] = models;
             }else {

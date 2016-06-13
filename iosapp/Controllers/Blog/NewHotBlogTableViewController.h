@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "OSCObjsViewController.h"
+
+typedef NS_ENUM(NSUInteger, NewBlogsType)
+{
+    NewBlogsTypeOtherBlogs,
+    NewBlogsTypeUserBlogs,
+};
+
 @interface NewHotBlogTableViewController : OSCObjsViewController
 
 - (void)dawnAndNightMode;
+
+- (instancetype)initWithUserID:(NSInteger)userID;
 
 @end
