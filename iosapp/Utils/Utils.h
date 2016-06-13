@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSDictionary *)emojiDict;
 
 + (NSAttributedString *)getAppclient:(int)clientType;
++ (NSAttributedString *)getAppclientName:(int)clientType;
 
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 + (NSString *)generateTags:(NSArray *)tags;

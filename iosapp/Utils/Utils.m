@@ -44,6 +44,20 @@
     return attributedClientString;
 }
 
++ (NSAttributedString *)getAppclientName:(int)clientType
+{
+    NSMutableAttributedString *attributedClientString;
+    if (clientType > 1 && clientType <= 6) {
+        NSArray *clients = @[@"", @"", @"手机", @"Android", @"iPhone", @"Windows Phone", @"微信"];
+        
+        attributedClientString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", clients[clientType]]];
+    } else {
+        attributedClientString = [[NSMutableAttributedString alloc] initWithString:@""];
+    }
+    
+    return attributedClientString;
+}
+
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews
 {
     if (relativeNews == nil || [relativeNews count] == 0) {

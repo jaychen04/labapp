@@ -28,7 +28,7 @@
 #import "QuesAnsViewController.h"
 #import "InformationViewController.h"
 #import "NewHotBlogTableViewController.h"
-
+#import "TweetTableViewController.h"
 
 #import "UIBarButtonItem+Badge.h"
 #import <RESideMenu/RESideMenu.h>
@@ -44,6 +44,7 @@
     TweetsViewController *newTweetViewCtl;
     TweetsViewController *hotTweetViewCtl;
     TweetsViewController *myTweetViewCtl;
+    TweetTableViewController *friendsTweetViewCtl;//好友动弹
 }
 
 @property (nonatomic, strong) UIView *dimView;
@@ -154,6 +155,7 @@
     newTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets];
     hotTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets];
     myTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets];
+    friendsTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
     
     newsViewCtl.needCache = YES;
     newHotBlogCtl.needCache = YES;
@@ -171,8 +173,8 @@
                                                                         underTabbar:YES];
     
     SwipableViewController *tweetsSVC = [[SwipableViewController alloc] initWithTitle:@"动弹"
-                                                                         andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
-                                                                       andControllers:@[newTweetViewCtl, hotTweetViewCtl, myTweetViewCtl]
+                                                                         andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹", @"好友动弹"]
+                                                                       andControllers:@[newTweetViewCtl, hotTweetViewCtl, myTweetViewCtl, friendsTweetViewCtl]
                                                                           underTabbar:YES];
     
     UIStoryboard *discoverSB = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];

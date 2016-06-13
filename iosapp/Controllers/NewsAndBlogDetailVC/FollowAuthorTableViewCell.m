@@ -7,7 +7,7 @@
 //
 
 #import "FollowAuthorTableViewCell.h"
-#import "Config.h"
+//#import "Config.h"
 #import "Utils.h"
 
 @implementation FollowAuthorTableViewCell
