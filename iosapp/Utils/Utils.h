@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSDictionary *)emojiDict;
 
 + (NSAttributedString *)getAppclient:(int)clientType;
++ (NSAttributedString *)newTweetGetAppclient:(int)clientType;
 
 + (NSString *)generateRelativeNewsString:(NSArray *)relativeNews;
 + (NSString *)generateTags:(NSArray *)tags;
@@ -53,6 +54,8 @@ typedef NS_ENUM(NSUInteger, hudType) {
 
 + (NSAttributedString *)attributedTimeString:(NSDate *)date;
 + (NSAttributedString *)attributedCommentCount:(int)commentCount;
+
++ (NSAttributedString *)newTweetAttributedTimeString:(NSDate *)date;
 
 + (NSString *)HTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName;
 

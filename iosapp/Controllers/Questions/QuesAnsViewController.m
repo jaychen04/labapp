@@ -144,7 +144,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
             self.tokens[index] = result[@"nextPageToken"];
             if (isRefresh) {
                 self.dataModels[index] = models;
-            }else{
+            }else {
                 [self.dataModels[index] addObjectsFromArray:models];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
