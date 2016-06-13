@@ -44,7 +44,7 @@
     
     TweetTableViewController *newTweetViewCtl;
     TweetTableViewController *hotTweetViewCtl;
-    EventsViewController *myFriendTweetViewCtl;
+    TweetTableViewController *myFriendTweetViewCtl;
 //    TweetTableViewController *friendsTweetViewCtl;//好友动弹
 }
 
@@ -155,7 +155,7 @@
     
     newTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeAllTweets];
     hotTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
-    myFriendTweetViewCtl = [EventsViewController new];
+    myFriendTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeOwnTweets];
 //    friendsTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
     
     newsViewCtl.needCache = YES;
@@ -174,7 +174,7 @@
                                                                         underTabbar:YES];
     
     SwipableViewController *tweetsSVC = [[SwipableViewController alloc] initWithTitle:@"动弹"
-                                                                         andSubTitles:@[@"最新动弹", @"热门动弹", @"好友动弹"]
+                                                                         andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
                                                                        andControllers:@[newTweetViewCtl, hotTweetViewCtl, myFriendTweetViewCtl]
                                                                           underTabbar:YES];
     
