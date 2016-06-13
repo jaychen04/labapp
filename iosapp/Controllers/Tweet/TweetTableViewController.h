@@ -20,5 +20,8 @@ typedef NS_ENUM(NSUInteger, NewTweetsType)
 @property (nonatomic, copy) void (^didScroll)();
 
 - (instancetype)initWithTweetsType:(NewTweetsType)type;
+- (instancetype)initWithUserID:(int64_t)userID;
+- (instancetype)initWithSoftwareID:(int64_t)softwareID;
+- (instancetype)initWithTopic:(NSString *)topic;
 
 @end

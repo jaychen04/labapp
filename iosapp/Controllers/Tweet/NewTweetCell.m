@@ -15,6 +15,13 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        self.backgroundColor = [UIColor themeColor];
+        
+        UIView *selectedBackground = [UIView new];
+        selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
+        [self setSelectedBackgroundView:selectedBackground];
+        
         [self initWithSubViews];
         [self setLayout];
     }
@@ -32,7 +39,6 @@
     
     _nameLabel = [UILabel new];
     _nameLabel.font = [UIFont boldSystemFontOfSize:15];
-//    _nameLabel.userInteractionEnabled = YES;
     _nameLabel.textColor = [UIColor newTitleColor];
     [self.contentView addSubview:_nameLabel];
     
@@ -51,10 +57,6 @@
     _timeLabel.textColor = [UIColor newAssistTextColor];
     [self.contentView addSubview:_timeLabel];
     
-//    _likeImage = [UIImageView new];
-//    _likeImage.image = [UIImage imageNamed:@"ic_thumbup_normal"];
-//    [self.contentView addSubview:_likeImage];
-    
     _likeCountLabel = [UILabel new];
     _likeCountLabel.font = [UIFont systemFontOfSize:12];
     _likeCountLabel.textColor = [UIColor newAssistTextColor];
@@ -62,6 +64,7 @@
     
     _likeCountButton = [UIButton new];
     [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
+    [_likeCountButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 2, 0)];
     [self.contentView addSubview:_likeCountButton];
 
     _commentImage = [UIImageView new];
@@ -89,10 +92,11 @@
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-5-[_descTextView]-<=8-[_tweetImageView]-<=6-[_timeLabel]-16-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_likeCountButton(15)]" options:0 metrics:nil views:views]];
+    
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_commentImage(15)]" options:0 metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel(150)]->=5-[_likeCountButton(20)]-4-[_likeCountLabel]-8-[_commentImage(15)]-5-[_commentCountLabel]-16-|"
-                                                                             options:NSLayoutFormatAlignAllCenterY metrics:nil views:views]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]->=5-[_likeCountButton(20)]-2-[_likeCountLabel]-16-[_commentImage(15)]-5-[_commentCountLabel]-16-|"
+                                                                             options:NSLayoutFormatAlignAllCenterY
+                                                                             metrics:nil views:views]];
     
     
     [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_nameLabel
@@ -108,14 +112,13 @@
 {
     textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
     textView.backgroundColor = [UIColor clearColor];
-//    textView.font = [UIFont fontWithName:@"font-family:PingFangSC-Light" size:14];
     textView.font = [UIFont boldSystemFontOfSize:14.0];
     textView.editable = NO;
     textView.scrollEnabled = NO;
     [textView setTextContainerInset:UIEdgeInsetsZero];
     textView.textContainer.lineFragmentPadding = 0;
     textView.linkTextAttributes = @{
-                                    NSFontAttributeName : @"PingFangSC-Light",
+//                                    NSFontAttributeName : @"PingFangSC-Light",
                                     NSForegroundColorAttributeName: [UIColor newTitleColor],
                                     NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
                                     };
@@ -180,7 +183,7 @@
          [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
          
      }
-//    [_likeCountButton setTitle:[NSString stringWithFormat:@"%d", tweet.likeCount] forState:UIControlStateNormal];
+
     _likeCountLabel.text = [NSString stringWithFormat:@"%d", tweet.likeCount];
     _commentCountLabel.text = [NSString stringWithFormat:@"%d", tweet.commentCount];
     

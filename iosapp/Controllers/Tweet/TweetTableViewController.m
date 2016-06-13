@@ -14,6 +14,7 @@
 #import "TweetEditingVC.h"
 #import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
+#import "UserDetailsViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
@@ -62,6 +63,31 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
     return self;
 }
 
+- (instancetype)initWithUserID:(int64_t)userID
+{
+    self = [super init];
+    if (!self) {return nil;}
+    
+    _uid = userID;
+    [self setBlockAndClass];
+    
+    return self;
+}
+
+- (instancetype)initWithSoftwareID:(int64_t)softwareID
+{
+    self = [super init];
+    if (self) {
+        self.generateURL = ^NSString * (NSUInteger page) {
+            return [NSString stringWithFormat:@"%@%@?project=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_SOFTWARE_TWEET_LIST, softwareID, (unsigned long)page, OSCAPI_SUFFIX];
+        };
+        
+        self.objClass = [OSCTweet class];
+    }
+    
+    return self;
+}
+
 - (instancetype)initWithTopic:(NSString *)topic
 {
     self = [super init];
@@ -85,6 +111,25 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
     
 }
 
+
+
+- (void)setBlockAndClass
+{
+    __weak TweetTableViewController *weakSelf = self;
+    self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+        if (weakSelf.uid == -1) {weakSelf.lastCell.status = LastCellStatusFinished;}
+        else {responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+            (weakSelf.lastCell.status = LastCellStatusMore);}
+    };
+    
+    self.generateURL = ^NSString * (NSUInteger page) {
+        return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
+    };
+    
+    self.objClass = [OSCTweet class];
+}
+
+
 - (NSArray *)parseXML:(ONOXMLDocument *)xml
 {
     return [[xml.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
@@ -93,9 +138,7 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NewTweetCell class]) bundle:[NSBundle mainBundle]]
-//         forCellReuseIdentifier:reuseIdentifier];
+
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
@@ -115,22 +158,9 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
     _uid = [Config getOwnID];
 }
 
-
-#pragma mark - 获取数据
-- (void)setBlockAndClass
+- (void)dealloc
 {
-    __weak TweetTableViewController *weakSelf = self;
-    self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-        if (weakSelf.uid == -1) {weakSelf.lastCell.status = LastCellStatusFinished;}
-        else {responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
-            (weakSelf.lastCell.status = LastCellStatusMore);}
-    };
-    
-    self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
-    };
-    
-    self.objClass = [OSCTweet class];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Table view data source
@@ -209,7 +239,7 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
         cell.likeCountButton.tag = indexPath.row;
         cell.descTextView.textColor = [UIColor newTitleColor];
     
-        
+        [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
         [cell.tweetImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
         [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
         
@@ -231,6 +261,16 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
     OSCTweet *tweet = self.objects[indexPath.row];
     TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
     [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
+{
+    return action == @selector(copyText:);
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -326,14 +366,14 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
 }
 
 
-//#pragma mark - 跳转到用户详情页
-//
-//- (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
-//{
-//    OSCTweet *tweet = self.objects[recognizer.view.tag];
-//    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
-//    [self.navigationController pushViewController:userDetailsVC animated:YES];
-//}
+#pragma mark - 跳转到用户详情页
+
+- (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
+{
+    OSCTweet *tweet = self.objects[recognizer.view.tag];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
 
 #pragma mark - 编辑话题动弹
 
