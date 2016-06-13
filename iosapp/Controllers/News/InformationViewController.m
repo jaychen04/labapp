@@ -240,10 +240,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeTranslation:{
-            TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:[NSURL URLWithString:model.href]];
-            webViewController.hidesBottomBarWhenPushed = YES;
-            [self.navigationController pushViewController:webViewController animated:YES];
-//            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
             break;
         }
             

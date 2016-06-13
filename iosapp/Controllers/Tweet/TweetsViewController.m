@@ -18,6 +18,7 @@
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
 #import "TweetEditingVC.h"
+#import "TweetDetailNewTableViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
@@ -251,8 +252,16 @@ static NSString * const kTweetCellID = @"TweetCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCTweet *tweet = self.objects[indexPath.row];
-    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
-    [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
+    TweetDetailNewTableViewController *tweetDetailNewVc = [[TweetDetailNewTableViewController alloc]init];
+    [tweetDetailNewVc setTweetID:tweet.tweetID];
+    tweetDetailNewVc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:tweetDetailNewVc animated:YES];
+
+    
+    
+//    OSCTweet *tweet = self.objects[indexPath.row];
+//    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+//    [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
 }
 
 

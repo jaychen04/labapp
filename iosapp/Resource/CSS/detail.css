@@ -136,4 +136,8 @@ pre {
 #software_information tr td {
     word-break: break-all;
 }
-
+/*** newTweetDetail ***/
+.newTweetBgColor {
+    background-color: #000000;
+    color: #CCC;
+}

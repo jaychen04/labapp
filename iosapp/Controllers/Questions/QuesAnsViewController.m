@@ -143,7 +143,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
             NSArray* models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
             if (isRefresh) {
                 self.dataModels[index] = models;
-            }else{
+            }else {
                 [self.dataModels[index] addObjectsFromArray:models];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
