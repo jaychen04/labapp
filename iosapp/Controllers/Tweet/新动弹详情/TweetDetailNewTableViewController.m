@@ -369,7 +369,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         NSString *likeImgNameStr = _tweet.isLike?@"ic_thumbup_actived":@"ic_thumbup_normal";
         [cell.likeTagIv setImage:[UIImage imageNamed:likeImgNameStr]];
         
-        [cell.platformLabel setAttributedText:[Utils newTweetGetAppclient:_tweet.appclient]];
+        [cell.platformLabel setAttributedText:[Utils getAppclientName:_tweet.appclient]];
         cell.contentWebView.delegate = self;
         [cell.contentWebView loadHTMLString:_tweet.body baseURL:[NSBundle mainBundle].resourceURL];
     }
