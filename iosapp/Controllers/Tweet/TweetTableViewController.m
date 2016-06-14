@@ -15,6 +15,7 @@
 #import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "UserDetailsViewController.h"
+#import "TweetDetailNewTableViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
@@ -259,7 +260,11 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCTweet *tweet = self.objects[indexPath.row];
-    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+    
+//    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+    TweetDetailNewTableViewController *tweetDetailsBVC = [TweetDetailNewTableViewController new];
+    tweetDetailsBVC.hidesBottomBarWhenPushed = YES;
+    tweetDetailsBVC.tweetID = tweet.tweetID;
     [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
 }
 
@@ -271,6 +276,10 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
 - (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender
 {
     return action == @selector(copyText:);
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    // required
 }
 
 #pragma mark - UIScrollViewDelegate
