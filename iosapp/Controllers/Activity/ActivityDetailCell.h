@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OSCPostDetails.h"
-#import "OSCActivity.h"
+#import "OSCActivities.h"
 
 @interface ActivityDetailCell : UITableViewCell
 
@@ -16,8 +15,9 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 @property (weak, nonatomic) IBOutlet UILabel *label;
-@property (weak, nonatomic) IBOutlet UIWebView *ActivityWebView;
 
-@property (nonatomic,strong) OSCActivity *eventDetail;
+@property (weak, nonatomic) IBOutlet UIWebView *activityBodyView;
+
+@property (nonatomic, strong) OSCActivities *activity;
 
 @end
