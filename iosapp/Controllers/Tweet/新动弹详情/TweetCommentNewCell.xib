@@ -28,7 +28,7 @@
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Uo3-JL-wWQ" userLabel="commentTagIv">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_comment_30" translatesAutoresizingMaskIntoConstraints="NO" id="Uo3-JL-wWQ" userLabel="commentTagIv">
                         <rect key="frame" x="317" y="17" width="18" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="3Xv-B0-IH5"/>
@@ -41,10 +41,10 @@
                         <color key="textColor" red="0.61568627450980395" green="0.61568627450980395" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHe-pd-xia" userLabel="contentLabel">
-                        <rect key="frame" x="16" y="53" width="319" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHe-pd-xia" userLabel="contentLabel">
+                        <rect key="frame" x="16" y="53" width="319" height="20"/>
+                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="14"/>
+                        <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
@@ -63,6 +63,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="commentTagIv" destination="Uo3-JL-wWQ" id="hu1-wp-FmQ"/>
                 <outlet property="contentLabel" destination="RHe-pd-xia" id="QLy-ZG-0B4"/>
                 <outlet property="interalTimeLabel" destination="xIW-Af-15L" id="adp-HI-irv"/>
                 <outlet property="nameLabel" destination="D3Y-2g-zVw" id="e9e-sI-h3N"/>
@@ -71,4 +72,7 @@
             <point key="canvasLocation" x="329.5" y="377.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="ic_comment_30" width="15" height="14"/>
+    </resources>
 </document>
