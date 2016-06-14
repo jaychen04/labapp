@@ -16,6 +16,7 @@
 #import "UserDetailsViewController.h"
 #import "Config.h"
 #import "OSCUser.h"
+#import "OSCComment.h"
 #import "NSString+FontAwesome.h"
 
 #import <AFNetworking.h>
@@ -42,6 +43,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 @property (nonatomic)NSInteger likeListPage;
 @property (nonatomic)NSInteger commentListPage;
 
+@property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) OSCTweet *tweet;
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, strong) MBProgressHUD *HUD;
@@ -59,15 +61,17 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     
     _tweetLikeList = [NSMutableArray new];
     _tweetCommentList = [NSMutableArray new];
+    _label = [[UILabel alloc]init];
+    _label.numberOfLines = 0;
     
-//    self.tableView.mj_header = ({
-//        MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refresh)];
-//        header.lastUpdatedTimeLabel.hidden = YES;
-//        header.stateLabel.hidden = YES;
-//        header;
-//    });
+    //上拉刷新
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self loadTweetLikeListIsrefresh:NO];
+        [self loadTweetCommentListIsrefresh:NO];
+    }];
     [self loadTweetDetails];
-    [self loadTweetLikeList:YES];
+    [self loadTweetLikeListIsrefresh:YES];
+    [self loadTweetCommentListIsrefresh:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -122,6 +126,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         NSMutableAttributedString *attr = [self getSubBtnAttributedStringWithTitle:@"赞" isSelected:NO];
         [((UIButton*)[_headerView viewWithTag:1]) setAttributedTitle:attr forState:UIControlStateNormal];
     }
+    [self.tableView reloadData];
 }
 - (void)loadTweetDetails
 {
@@ -153,7 +158,10 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
              [_HUD hide:YES];
          }];
 }
--(void)loadTweetLikeList:(BOOL)refresh {
+-(void)loadTweetLikeListIsrefresh:(BOOL)isRefresh {
+    if (isRefresh) {
+        _likeListPage = 0;
+    }
     NSDictionary *paraDic = @{@"tweetid":@(_tweetID),
                               @"pageIndex":@(_likeListPage),
                               @"pageSize":@(20)
@@ -163,59 +171,94 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
        parameters:paraDic
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
               NSArray *objectsXML = [[responseDocument.rootElement firstChildWithTag:@"likeList"] childrenWithTag:@"user"];
-              
-              if (refresh) {
-                  _likeListPage = 0;
+              if (isRefresh && objectsXML.count > 0) {
                   [_tweetLikeList removeAllObjects];
               }
               
-//              if (_parseExtraInfo) {_parseExtraInfo(responseDocument);}
-              
-              for (ONOXMLElement *objectXML in objectsXML) {
-                  OSCUser *obj = [[OSCUser alloc] initWithXML:objectXML];
-                  [_tweetLikeList addObject:obj];
+              if (objectsXML.count == 0) {
                   
-
+              }else {
+                  if (objectsXML.count < 20) {
+                      [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                  }else {
+                      _likeListPage++;
+                  }
+                  for (ONOXMLElement *objectXML in objectsXML) {
+                      OSCUser *obj = [[OSCUser alloc] initWithXML:objectXML];
+                      [_tweetLikeList addObject:obj];
+                  }
               }
               
-//              if (_needAutoRefresh) {
-//                  [_userDefaults setObject:_lastRefreshTime forKey:_kLastRefreshTime];
-//              }
-              
-              dispatch_async(dispatch_get_main_queue(), ^{
-//                  if (self.tableWillReload) {self.tableWillReload(objectsXML.count);}
-//                  else {
-//                      if (_page == 0 && objectsXML.count == 0) {
-//                          _lastCell.status = LastCellStatusEmpty;
-//                      } else if (objectsXML.count == 0 || (_page == 0 && objectsXML.count < 20)) {
-//                          _lastCell.status = LastCellStatusFinished;
-//                      } else {
-//                          _lastCell.status = LastCellStatusMore;
-//                      }
-//                  }
-                  
-                  if (self.tableView.mj_header.isRefreshing) {
-                      [self.tableView.mj_header endRefreshing];
-                  }
-                  
-                  [self.tableView reloadData];
-              });
+              if (self.tableView.mj_footer.isRefreshing) {
+                  [self.tableView.mj_footer endRefreshing];
+              }
+              if (!_isShowCommentList) {
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
+              }
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              MBProgressHUD *HUD = [Utils createHUD];
-              HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
-              
-              [HUD hide:YES afterDelay:1];
-              
-//              _lastCell.status = LastCellStatusError;
-              if (self.tableView.mj_header.isRefreshing) {
-                  [self.tableView.mj_header endRefreshing];
-              }
-              [self.tableView reloadData];
+              [self networkingError:error];
           }
      ];
+}
+-(void)loadTweetCommentListIsrefresh:(BOOL)isRefresh {
+    if (isRefresh) {
+        _commentListPage = 0;
+    }
+    NSDictionary *paraDic = @{@"id":@(_tweetID),
+                              @"catalog":@(3),
+                              @"pageIndex":@(_commentListPage),
+                              @"pageSize":@(20)
+                              };
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST]
+      parameters:paraDic
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+             NSArray *objectsXML = [[responseDocument.rootElement firstChildWithTag:@"comments"] childrenWithTag:@"comment"];
+             if (isRefresh && objectsXML.count > 0) {
+                 [_tweetCommentList removeAllObjects];
+             }
+             
+             if (objectsXML.count == 0) {
+                 
+             }else {
+                 if (objectsXML.count < 20) {
+                     [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                 }else {
+                     _commentListPage++;
+                 }
+                 for (ONOXMLElement *objectXML in objectsXML) {
+                     OSCComment *obj = [[OSCComment alloc] initWithXML:objectXML];
+                     [_tweetCommentList addObject:obj];
+                 }
+             }
+             if (self.tableView.mj_footer.isRefreshing) {
+                 [self.tableView.mj_footer endRefreshing];
+             }
+             if (_isShowCommentList) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadData];
+                 });
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [self networkingError:error];
+         }
+     ];
+}
+-(void)networkingError:(NSError*)error {
+    MBProgressHUD *HUD = [Utils createHUD];
+    HUD.mode = MBProgressHUDModeCustomView;
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+    HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+    [HUD hide:YES afterDelay:1];
+    
+    if (self.tableView.mj_footer.isRefreshing) {
+        [self.tableView.mj_footer endRefreshing];
+    }
+    [self.tableView reloadData];
 }
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -245,11 +288,42 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         if (!_isShowCommentList) {
             return 56;
         }else {
-            return [tableView fd_heightForCellWithIdentifier:tDetailReuseIdentifier configuration:^(TweetCommentNewCell *cell) {
+            
+            OSCComment *comment = self.tweetCommentList[indexPath.row];
+            
+            if (comment.cellHeight) {return comment.cellHeight;}
+            
+            self.label.font = [UIFont boldSystemFontOfSize:14];
+            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
+            if (comment.replies.count > 0) {
+                [contentString appendAttributedString:[OSCComment attributedTextFromReplies:comment.replies]];
+            }
+            
+            self.label.font = [UIFont boldSystemFontOfSize:15];
+            [self.label setAttributedText:contentString];
+            __block CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
+            
+            
+            CGFloat width = self.tableView.frame.size.width - 60;
+            NSArray *references = comment.references;
+            if (references.count > 0) {height += 3;}
+            
+            self.label.font = [UIFont systemFontOfSize:13];
+            [references enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(OSCReference *reference, NSUInteger idx, BOOL *stop) {
+                self.label.text = [NSString stringWithFormat:@"%@\n%@", reference.title, reference.body];
+                height += [self.label sizeThatFits:CGSizeMake(width - (references.count-idx)*8, MAXFLOAT)].height + 13;
             }];
+            comment.cellHeight = height + 61;
+            return comment.cellHeight;
+            
+            
+            
+//            return [tableView fd_heightForCellWithIdentifier:tCommentReuseIdentifier configuration:^(TweetCommentNewCell *cell) {
+//                cell.commentModel = _tweetCommentList[indexPath.row];
+//            }];
         }
     }
-    return 30;
+    return 0;
     
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -260,12 +334,18 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     }else if (indexPath.section == 1) {
         if (_isShowCommentList) {
             TweetCommentNewCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:tCommentReuseIdentifier forIndexPath:indexPath];
+            if (indexPath.row < _tweetCommentList.count) {
+                OSCComment *commentModel = _tweetCommentList[indexPath.row];
+                [commentCell setCommentModel:commentModel];
+            }
             return commentCell;
         }else {
             TweetLikeNewCell *likeCell = [self.tableView dequeueReusableCellWithIdentifier:tLikeReuseIdentifier forIndexPath:indexPath];
-            OSCUser *likedUser = [_tweetLikeList objectAtIndex:indexPath.row];
-            [likeCell.portraitIv loadPortrait:likedUser.portraitURL];
-            likeCell.nameLabel.text = likedUser.name;
+            if (indexPath.row < _tweetLikeList.count) {
+                OSCUser *likedUser = [_tweetLikeList objectAtIndex:indexPath.row];
+                [likeCell.portraitIv loadPortrait:likedUser.portraitURL];
+                likeCell.nameLabel.text = likedUser.name;
+            }
             return likeCell;
         }
     }
