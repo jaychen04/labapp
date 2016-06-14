@@ -221,7 +221,9 @@ static NSString * const EventCellID = @"EventCell";
             OSCTweet *tweet = [OSCTweet new];
             tweet.tweetID = event.objectID;
             
-            TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+//            TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+            
+            TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweet:tweet];
             [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
             
             break;

@@ -96,7 +96,10 @@ pre {
     background-color: #2B2B2B !important;
     color: #CCC !important;
 }
-
+/*** newTweet ***/
+.newTweetDetail {
+    background-color: #FFFFFF;
+}
 
 /*** software ***/
 
@@ -137,7 +140,6 @@ pre {
     word-break: break-all;
 }
 /*** newTweetDetail ***/
-.newTweetBgColor {
-    background-color: #000000;
-    color: #CCC;
-}
+/*#newTweetBgColor {*/
+/*    background-color: #087221;*/
+/*}*/

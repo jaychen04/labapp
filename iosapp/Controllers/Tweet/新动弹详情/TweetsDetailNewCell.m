@@ -12,6 +12,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
     _portraitIv.userInteractionEnabled = YES;
     _likeTagIv.userInteractionEnabled = YES;
     _commentTagIv.userInteractionEnabled = YES;

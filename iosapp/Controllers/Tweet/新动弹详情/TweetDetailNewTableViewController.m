@@ -10,13 +10,11 @@
 #import "UIColor+Util.h"
 #import <UITableView+FDTemplateLayoutCell.h>
 //#import "AFHTTPRequestOperationManager+Util.h"
-#import "OSCTweet.h"
 #import "UserDetailsViewController.h"
 #import "ImageViewerController.h"
 #import "UserDetailsViewController.h"
 #import "Config.h"
 #import "OSCUser.h"
-#import "OSCComment.h"
 #import "NSString+FontAwesome.h"
 
 #import <AFNetworking.h>
@@ -37,7 +35,6 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 @interface TweetDetailNewTableViewController ()<UIWebViewDelegate>
 @property (nonatomic, strong)UIView *headerView;
 @property (nonatomic)BOOL isShowCommentList;
-//@property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
 @property (nonatomic, strong)NSMutableArray *tweetLikeList;
 @property (nonatomic, strong)NSMutableArray *tweetCommentList;
 @property (nonatomic)NSInteger likeListPage;
@@ -64,6 +61,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     _label = [[UILabel alloc]init];
     _label.numberOfLines = 0;
     
+    _isShowCommentList = YES;       //默认展示评论列表
     //上拉刷新
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
         [self loadTweetLikeListIsrefresh:NO];
@@ -88,7 +86,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             UIButton* subBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             subBtn.tag = k+1;
             NSString* likeBtnTitle = subBtn.tag==1?@"赞":@"评论";
-            BOOL isSelected = subBtn.tag==1;
+            BOOL isSelected = subBtn.tag==2;
             NSMutableAttributedString *att = [self getSubBtnAttributedStringWithTitle:likeBtnTitle isSelected:isSelected];
             [subBtn setAttributedTitle:att forState:UIControlStateNormal];
             
@@ -140,12 +138,10 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                  [self.navigationController popViewControllerAnimated:YES];
              } else {
                  _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
-//                 self.objectAuthorID = _tweet.authorID;
                  NSDictionary *data = @{
                                         @"content": _tweet.body,
                                         @"imageURL": _tweet.bigImgURL.absoluteString,
                                         @"audioURL": _tweet.attach ?: @"",
-                                        @"newTweetBgColor":@(YES)
                                         };
                  
                  _tweet.body = [Utils HTMLWithData:data usingTemplate:@"newTweet"];
@@ -337,6 +333,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             if (indexPath.row < _tweetCommentList.count) {
                 OSCComment *commentModel = _tweetCommentList[indexPath.row];
                 [commentCell setCommentModel:commentModel];
+                
+                commentCell.commentTagIv.tag = indexPath.row;
+                [commentCell.commentTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(replyReviewer:)]];
+                
+                commentCell.portraitIv.tag = commentModel.authorID;
+                [commentCell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
             }
             return commentCell;
         }else {
@@ -345,6 +347,9 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                 OSCUser *likedUser = [_tweetLikeList objectAtIndex:indexPath.row];
                 [likeCell.portraitIv loadPortrait:likedUser.portraitURL];
                 likeCell.nameLabel.text = likedUser.name;
+                
+                likeCell.portraitIv.tag = likedUser.userID;
+                [likeCell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
             }
             return likeCell;
         }
@@ -356,13 +361,13 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 
 -(void)setUpTweetDetailCell:(TweetsDetailNewCell*)cell {
     
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (_tweet) {
         [cell.portraitIv loadPortrait:_tweet.portraitURL];
         [cell.nameLabel setText:_tweet.author];
         
-        [cell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails)]];
-        [cell.likeTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(likeThisTweet)]];
+        cell.portraitIv.tag = _tweet.authorID;
+        [cell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
+        [cell.likeTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(likeThisTweet:)]];
         [cell.commentTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(commentTweet)]];
         
         [cell.intervalTimeLabel setAttributedText:[Utils newTweetAttributedTimeString:_tweet.pubDate]];
@@ -374,14 +379,103 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         [cell.contentWebView loadHTMLString:_tweet.body baseURL:[NSBundle mainBundle].resourceURL];
     }
 }
--(void)pushUserDetails {
-    NSLog(@"pushUserDetails");
+-(void)pushUserDetails:(UITapGestureRecognizer*)tap {
+    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:tap.view.tag] animated:YES];
 }
--(void)likeThisTweet {
-    NSLog(@"likeThisTweet");
+-(void)likeThisTweet:(UITapGestureRecognizer*)tap {
+    UIImageView *likeTagIv = (UIImageView*)tap.view;
+    [self praiseTweetAndUpdateTagIv:likeTagIv];
 }
 -(void)commentTweet {
-    NSLog(@"commentTweet");
+    if (self.didActivatedInputBar) {
+        self.didActivatedInputBar();
+    }
+}
+-(void)replyReviewer:(UITapGestureRecognizer*)tap {
+    OSCComment *comment = _tweetCommentList[tap.view.tag];
+    if (self.didCommentSelected) {
+        self.didCommentSelected(comment);
+    }
+}
+
+- (void)praiseTweetAndUpdateTagIv:(UIImageView*)likeTagIv {
+    if (_currentTweet.tweetID == 0) {
+        return;
+    }
+    
+    NSString *postUrl;
+    if (_currentTweet.isLike) {
+        postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_UNLIKE];
+    } else {
+        postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
+    }
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    
+    [manager POST:postUrl
+       parameters:@{
+                    @"uid": @([Config getOwnID]),
+                    @"tweetid": @(_currentTweet.tweetID),
+                    @"ownerOfTweet": @( _currentTweet.authorID)
+                    }
+          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+              ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
+              int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
+              NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
+
+              if (errorCode == 1) {
+                  if (_currentTweet.isLike) {
+                      //取消点赞
+                      _currentTweet.likeCount--;
+                      [likeTagIv setImage:[UIImage imageNamed:@"ic_thumbup_normal"]];
+                      for (OSCUser *likeUser in _tweetLikeList) {
+                          OSCUser *currentUser = [Config myProfile];
+                          if (currentUser.userID == likeUser.userID) {
+                              [_tweetLikeList removeObject:likeUser];
+                              break;
+                          }
+                      }
+                      _tweet.isLike = NO;
+                  } else {
+                      //点赞
+                      _currentTweet.likeCount++;
+                      [likeTagIv setImage:[UIImage imageNamed:@"ic_thumbup_actived"]];
+                      [_tweetLikeList insertObject:[Config myProfile] atIndex:0];
+                      _tweet.isLike = YES;
+                  }
+                  _currentTweet.isLike = !_currentTweet.isLike;
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                  });
+                  
+              } else {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  
+                  [HUD hide:YES afterDelay:1];
+              }
+              
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              MBProgressHUD *HUD = [Utils createHUD];
+              HUD.mode = MBProgressHUDModeCustomView;
+              
+              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              
+              [HUD hide:YES afterDelay:1];
+          }];
+}
+
+#pragma mark - scrollView
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView == self.tableView && self.didScroll) {
+        self.didScroll();
+    }
 }
 
 #pragma mark - UIWebViewDelegate

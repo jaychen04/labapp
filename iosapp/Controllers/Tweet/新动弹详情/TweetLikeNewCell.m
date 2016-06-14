@@ -13,6 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [_portraitIv.layer setCornerRadius:16];
+    _portraitIv.userInteractionEnabled = YES;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
