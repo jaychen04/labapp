@@ -112,16 +112,17 @@
 {
     textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
     textView.backgroundColor = [UIColor clearColor];
-    textView.font = [UIFont boldSystemFontOfSize:14.0];
+    textView.font = [UIFont fontWithName:@"PingFangSC-Light" size:14.0];
+    textView.textColor = [UIColor newTitleColor];
     textView.editable = NO;
     textView.scrollEnabled = NO;
     [textView setTextContainerInset:UIEdgeInsetsZero];
     textView.textContainer.lineFragmentPadding = 0;
-    textView.linkTextAttributes = @{
-//                                    NSFontAttributeName : @"PingFangSC-Light",
-                                    NSForegroundColorAttributeName: [UIColor newTitleColor],
-                                    NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
-                                    };
+//    textView.linkTextAttributes = @{
+////                                    NSFontAttributeName : @"PingFangSC-Light",
+//                                    NSForegroundColorAttributeName: [UIColor newTitleColor],
+//                                    NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
+//                                    };
 }
 
 /*
@@ -205,7 +206,7 @@
     
     NSAttributedString *attrString = [Utils attributedStringFromHTML:rawString];
     NSMutableAttributedString *mutableAttrString = [[Utils emojiStringFromAttrString:attrString] mutableCopy];
-    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:14.0] range:NSMakeRange(0, mutableAttrString.length)];
+    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Light" size:14.0] range:NSMakeRange(0, mutableAttrString.length)];
     
     // remove under line style
     [mutableAttrString beginEditing];
