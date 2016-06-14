@@ -79,6 +79,7 @@
     return [UIColor colorWithHex:0xf6f6f6];
 }
 
+/* 动弹列表内容字体颜色 */
 + (UIColor *)contentTextColor
 {
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {

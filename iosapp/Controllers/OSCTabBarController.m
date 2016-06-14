@@ -28,7 +28,8 @@
 #import "QuesAnsViewController.h"
 #import "InformationViewController.h"
 #import "NewHotBlogTableViewController.h"
-
+#import "TweetTableViewController.h"
+#import "EventsViewController.h"
 
 #import "UIBarButtonItem+Badge.h"
 #import <RESideMenu/RESideMenu.h>
@@ -41,9 +42,10 @@
     QuesAnsViewController *quesViewCtl;
     OSCActivityViewController *activitiesViewCtl;
     
-    TweetsViewController *newTweetViewCtl;
-    TweetsViewController *hotTweetViewCtl;
-    TweetsViewController *myTweetViewCtl;
+    TweetTableViewController *newTweetViewCtl;
+    TweetTableViewController *hotTweetViewCtl;
+    TweetTableViewController *myFriendTweetViewCtl;
+//    TweetTableViewController *friendsTweetViewCtl;//好友动弹
 }
 
 @property (nonatomic, strong) UIView *dimView;
@@ -78,7 +80,7 @@
     
     newTweetViewCtl.view.backgroundColor = [UIColor themeColor];
     hotTweetViewCtl.view.backgroundColor = [UIColor themeColor];
-    myTweetViewCtl.view.backgroundColor = [UIColor themeColor];
+    myFriendTweetViewCtl.view.backgroundColor = [UIColor themeColor];
 
     [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
     [[UITabBar appearance] setBarTintColor:[UIColor titleBarColor]];
@@ -151,9 +153,10 @@
     quesViewCtl = [QuesAnsViewController new];
     activitiesViewCtl = [OSCActivityViewController new];
     
-    newTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeAllTweets];
-    hotTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeHotestTweets];
-    myTweetViewCtl = [[TweetsViewController alloc] initWithTweetsType:TweetsTypeOwnTweets];
+    newTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeAllTweets];
+    hotTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
+    myFriendTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeOwnTweets];
+//    friendsTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
     
     newsViewCtl.needCache = YES;
     newHotBlogCtl.needCache = YES;
@@ -163,7 +166,7 @@
     
     newTweetViewCtl.needCache = YES;
     hotTweetViewCtl.needCache = YES;
-    myTweetViewCtl.needCache = YES;
+    myFriendTweetViewCtl.needCache = YES;
     
     SwipableViewController *newsSVC = [[SwipableViewController alloc] initWithTitle:@"综合"
                                                                        andSubTitles:@[@"资讯", @"博客", @"问答", @"活动"]
@@ -172,7 +175,7 @@
     
     SwipableViewController *tweetsSVC = [[SwipableViewController alloc] initWithTitle:@"动弹"
                                                                          andSubTitles:@[@"最新动弹", @"热门动弹", @"我的动弹"]
-                                                                       andControllers:@[newTweetViewCtl, hotTweetViewCtl, myTweetViewCtl]
+                                                                       andControllers:@[newTweetViewCtl, hotTweetViewCtl, myFriendTweetViewCtl]
                                                                           underTabbar:YES];
     
     UIStoryboard *discoverSB = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];

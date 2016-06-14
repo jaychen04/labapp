@@ -251,6 +251,8 @@
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
 		EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */; };
+		EE6FB5DD1D0D1050006A11A4 /* NewTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6FB5DA1D0D1050006A11A4 /* NewTweetCell.m */; };
+		EE6FB5DE1D0D1050006A11A4 /* TweetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6FB5DC1D0D1050006A11A4 /* TweetTableViewController.m */; };
 		EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */; };
 		EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */; };
 		EE7AC7F21AD38E5C00E850CB /* TweetsLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7F01AD38E5C00E850CB /* TweetsLikeListViewController.m */; };
@@ -749,6 +751,10 @@
 		EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTweetLikeListCell.m; sourceTree = "<group>"; };
 		EE6DB94C1AD68140004FCF3C /* OSCMyTweetLikeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMyTweetLikeList.h; sourceTree = "<group>"; };
 		EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMyTweetLikeList.m; sourceTree = "<group>"; };
+		EE6FB5D91D0D1050006A11A4 /* NewTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTweetCell.h; sourceTree = "<group>"; };
+		EE6FB5DA1D0D1050006A11A4 /* NewTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTweetCell.m; sourceTree = "<group>"; };
+		EE6FB5DB1D0D1050006A11A4 /* TweetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetTableViewController.h; sourceTree = "<group>"; };
+		EE6FB5DC1D0D1050006A11A4 /* TweetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetTableViewController.m; sourceTree = "<group>"; };
 		EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = libNBSAppAgent.framework; sourceTree = "<group>"; };
 		EE713BA11AB2C12600D318AF /* iosapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosapp-Prefix.pch"; sourceTree = "<group>"; };
 		EE7A55571AEDD82C00DF10D3 /* VoiceTweetEditingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceTweetEditingVC.h; sourceTree = "<group>"; };
@@ -917,6 +923,7 @@
 		00D6BD3219ECD73B00E8754E /* Tweet */ = {
 			isa = PBXGroup;
 			children = (
+				EE6FB5D81D0D0D29006A11A4 /* NewTweet */,
 				00D6BD2F19ECD71B00E8754E /* TweetsViewController.h */,
 				00D6BD3019ECD71B00E8754E /* TweetsViewController.m */,
 				387639FB1A807918008E6805 /* SoftwareCommentsViewController.h */,
@@ -1123,8 +1130,8 @@
 				31D699561CFC28D200B48BB0 /* NewsBlogDetailTableViewController.h */,
 				31D699571CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m */,
 				EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */,
-				31D6995D1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m */,
 				31D6995C1CFC29B500B48BB0 /* FollowAuthorTableViewCell.h */,
+				31D6995D1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m */,
 				31D6995E1CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib */,
 				31D699611CFC352300B48BB0 /* TitleInfoTableViewCell.h */,
 				31D699621CFC352300B48BB0 /* TitleInfoTableViewCell.m */,
@@ -2083,6 +2090,17 @@
 			name = "点赞列表";
 			sourceTree = "<group>";
 		};
+		EE6FB5D81D0D0D29006A11A4 /* NewTweet */ = {
+			isa = PBXGroup;
+			children = (
+				EE6FB5D91D0D1050006A11A4 /* NewTweetCell.h */,
+				EE6FB5DA1D0D1050006A11A4 /* NewTweetCell.m */,
+				EE6FB5DB1D0D1050006A11A4 /* TweetTableViewController.h */,
+				EE6FB5DC1D0D1050006A11A4 /* TweetTableViewController.m */,
+			);
+			name = NewTweet;
+			sourceTree = "<group>";
+		};
 		EE7A55561AEDD77000DF10D3 /* 语音动弹 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2424,6 +2442,7 @@
 				0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */,
 				EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */,
 				0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */,
+				EE6FB5DD1D0D1050006A11A4 /* NewTweetCell.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,
 				0422BC2E1CEDA2A7007DB140 /* InformationViewController.m in Sources */,
@@ -2439,6 +2458,7 @@
 				384A112C1ADE565200856A7C /* TeamMember.m in Sources */,
 				387794251A0B60C700C41C78 /* Config.m in Sources */,
 				38B0BF8B1A39C68B00A2FDB0 /* FriendsViewController.m in Sources */,
+				EE6FB5DE1D0D1050006A11A4 /* TweetTableViewController.m in Sources */,
 				383B9FD91AB416F000C03C47 /* ActivityDetailsWithBarViewController.m in Sources */,
 				C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */,
 				0422BC5A1CEDA390007DB140 /* SDCollectionViewCell.m in Sources */,
