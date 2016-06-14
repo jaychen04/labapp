@@ -14,6 +14,9 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [_portraitIv.layer setCornerRadius:16];
+    _commentTagIv.userInteractionEnabled = YES;
+    _portraitIv.userInteractionEnabled = YES;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 -(void)setCommentModel:(OSCComment *)commentModel {
