@@ -55,6 +55,8 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSAttributedString *)attributedTimeString:(NSDate *)date;
 + (NSAttributedString *)attributedCommentCount:(int)commentCount;
 
++ (NSAttributedString *)newTweetAttributedTimeString:(NSDate *)date;
+
 + (NSString *)HTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName;
 
 

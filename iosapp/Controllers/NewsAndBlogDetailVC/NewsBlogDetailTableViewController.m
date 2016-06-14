@@ -552,13 +552,6 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     
     [self.navigationController handleURL:request.URL];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
-    
-//    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
-//
-//    [self.navigationController pushViewController:[[TOWebViewController alloc] initWithURL:request.URL]
-//                                         animated:YES];
-//
-//    return NO;
 }
 
 

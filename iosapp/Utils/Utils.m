@@ -44,13 +44,16 @@
     return attributedClientString;
 }
 
+
 + (NSAttributedString *)getAppclientName:(int)clientType
 {
     NSMutableAttributedString *attributedClientString;
     if (clientType > 1 && clientType <= 6) {
         NSArray *clients = @[@"", @"", @"手机", @"Android", @"iPhone", @"Windows Phone", @"微信"];
         
-        attributedClientString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@", clients[clientType]]];
+        
+        attributedClientString = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", clients[clientType]]];
+
     } else {
         attributedClientString = [[NSMutableAttributedString alloc] initWithString:@""];
     }
@@ -119,6 +122,17 @@
     return attributedTime;
 }
 
++ (NSAttributedString *)newTweetAttributedTimeString:(NSDate *)date
+{
+//    NSString *rawString = [NSString stringWithFormat:@"%@ %@", [NSString fontAwesomeIconStringForEnum:FAClockO], ];
+    
+    NSAttributedString *attributedTime = [[NSAttributedString alloc] initWithString:[date timeAgoSinceNow]
+                                                                         attributes:@{
+                                                                                      NSFontAttributeName: [UIFont fontAwesomeFontOfSize:12],
+                                                                                      }];
+    
+    return attributedTime;
+}
 
 // 参考 http://www.cnblogs.com/ludashi/p/3962573.html
 
