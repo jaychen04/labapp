@@ -260,7 +260,7 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCTweet *tweet = self.objects[indexPath.row];
-    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweet:tweet];
+    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
     [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
     
 //    TweetDetailNewTableViewController *tweetDetailsBVC = [TweetDetailNewTableViewController new];

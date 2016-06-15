@@ -1,19 +1,11 @@
-{{< html/base }}
+{{< html/newTweet }}
     {{$ body }}
     
-    <style>
-    a {color: #087221;}
-    body {
-    font-family:PingFangSC-Light;
-    font-size:16px;
-    color:#111111;
-    letter-spacing:0px;
-    line-height:25px;
-    text-align:left;
-    }
-    </style>
-    
-    <div class="newTweetDetail">
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <link href="css/detail.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body class="newTweetDetail {{# night }}night{{/}}">
     {{{ content }}}
     <br />
 
@@ -28,6 +20,6 @@
         <source src="{{audioURL}}?avthumb.mp3" type="audio/mpeg">
             </audio>
     {{/}}
-    </div>
+    </body>
     {{/}}
     {{/}}

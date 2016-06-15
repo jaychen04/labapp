@@ -34,37 +34,29 @@
 
 @implementation TweetDetailsWithBottomBarViewController
 
-//旧的
 - (instancetype)initWithTweetID:(int64_t)tweetID
 {
     self = [super initWithModeSwitchButton:NO];
     if (self) {
+//        self.hidesBottomBarWhenPushed = YES;
+//        _tweetID = tweetID;
+//        _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweetID:tweetID];
+//        [self addChildViewController:_tweetDetailsVC];
+//        [self setUpBlock];
+        
         self.hidesBottomBarWhenPushed = YES;
         _tweetID = tweetID;
-        _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweetID:tweetID];
-        [self addChildViewController:_tweetDetailsVC];
-        [self setUpBlock];
-    }
-    
-    return self;
-}
-//新的
-- (instancetype)initWithTweet:(OSCTweet*)tweet
-{
-    self = [super initWithModeSwitchButton:NO];
-    if (self) {
-        self.hidesBottomBarWhenPushed = YES;
-        _tweetID = tweet.tweetID;
         _tweetDetailsNewVC = [[TweetDetailNewTableViewController alloc]init];
         _tweetDetailsNewVC.tweetID = _tweetID;
-        _tweetDetailsNewVC.currentTweet = tweet;
         [self addChildViewController:_tweetDetailsNewVC];
-
+        
         [self setUpBlock];
     }
     
     return self;
 }
+
+
 
 - (void)setUpBlock
 {
@@ -166,7 +158,7 @@
 //                  [_tweetDetailsVC refresh];
                   
                   [_tweetDetailsNewVC.tableView setContentOffset:CGPointZero animated:NO];
-                  [_tweetDetailsNewVC loadTweetCommentListIsrefresh:YES];
+                  [_tweetDetailsNewVC reloadCommentList];
                   
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
