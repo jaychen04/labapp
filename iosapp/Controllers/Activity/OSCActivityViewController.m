@@ -243,8 +243,13 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 {
     if (_bannerModels.count > 0) {
         OSCBanner *banner = _bannerModels[bannerTag];
-        ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:banner.id];
-        [self.navigationController pushViewController:activityVC animated:YES];
+        //新活动详情页面
+        ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:banner.id];
+        activityDetailCtl.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:activityDetailCtl animated:YES];
+        
+//        ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:banner.id];
+//        [self.navigationController pushViewController:activityVC animated:YES];
     }
     
 }

@@ -96,6 +96,9 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
              if ([responseObject[@"code"]integerValue] == 1) {
                  _activityDetail = [OSCActivities mj_objectWithKeyValues:responseObject[@"result"]];
                  
+                 _activityDetail.body = [Utils HTMLWithData:@{@"content":  _activityDetail.body}
+                                              usingTemplate:@"blog"];
+                 
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self setFavButtonAction:_activityDetail.favorite];
                      [self.tableView reloadData];
@@ -154,11 +157,11 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
         return 204;
     } else {
         if (indexPath.row == 4) {
-            UITextView *bodyView = [UITextView new];
-            bodyView.font = [UIFont boldSystemFontOfSize:14];
-            bodyView.text = _activityDetail.body;
-            CGFloat height = [bodyView sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-            return height + 40;
+//            UITextView *bodyView = [UITextView new];
+//            bodyView.font = [UIFont boldSystemFontOfSize:14];
+//            bodyView.text = _activityDetail.body;
+//            CGFloat height = [bodyView sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+            return _webViewHeight + 40;
         } else {
             return [tableView fd_heightForCellWithIdentifier:activityDetailReuseIdentifier configuration:^(ActivityDetailCell *cell) {
                 cell.activity = _activityDetail;
@@ -168,31 +171,54 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
     }
 }
 
+//#pragma mark - UIWebViewDelegate
+//
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    if (_HTML == nil) {return;}
+//    if (_isLoadingFinished) {
+//        webView.hidden = NO;
+//        return;
+//    }
+//    
+//    _webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+//    _isLoadingFinished = YES;
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.tableView reloadData];
+//    });
+//}
+//
+//
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+//{
+//    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+//    
+////    [self.bottomBarVC.navigationController handleURL:request.URL];
+//    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+//}
+
+
 #pragma mark - UIWebViewDelegate
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    if (_HTML == nil) {return;}
-    if (_isLoadingFinished) {
-        webView.hidden = NO;
-        return;
-    }
-    
-    _webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-    _isLoadingFinished = YES;
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-    });
-}
-
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    
     if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
     
-//    [self.bottomBarVC.navigationController handleURL:request.URL];
+    [self.navigationController handleURL:request.URL];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    if (_webViewHeight == webViewHeight) {return;}
+    _webViewHeight = webViewHeight;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
 }
 
 #pragma mark - right BarButton

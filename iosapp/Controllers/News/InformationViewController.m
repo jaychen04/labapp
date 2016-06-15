@@ -16,6 +16,7 @@
 #import "InformationTableViewCell.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "NewsBlogDetailTableViewController.h"
+#import "ActivityDetailViewController.h"
 
 #import "OSCInformation.h"
 #import "OSCBanner.h"
@@ -245,8 +246,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeActivity:{
-            ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:model.id];
-            [self.navigationController pushViewController:activityVC animated:YES];
+            //新活动详情页面
+            ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:model.id];
+            activityDetailCtl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:activityDetailCtl animated:YES];
+            
+//            ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:model.id];
+//            [self.navigationController pushViewController:activityVC animated:YES];
             break;
         }
         case InformationTypeInfo:{
@@ -363,8 +369,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeActivity:{
-            ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:model.id];
-            [self.navigationController pushViewController:activityVC animated:YES];
+            //新活动详情页面
+            ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:model.id];
+            activityDetailCtl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:activityDetailCtl animated:YES];
+            
+//            ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:model.id];
+//            [self.navigationController pushViewController:activityVC animated:YES];
             break;
         }
         case InformationTypeInfo:{
