@@ -1,4 +1,4 @@
-# 开源中国 iOS [客户端](http://www.oschina.net/app/)
+# 开源中国 iOS 客户端
 
 **源代码请切换置对应的分支，master分支中今后不再放源代码。**
 
