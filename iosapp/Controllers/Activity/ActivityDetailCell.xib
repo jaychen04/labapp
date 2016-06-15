@@ -29,7 +29,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6cL-Ek-f8G">
-                        <rect key="frame" x="16" y="16" width="288" height="22.5"/>
+                        <rect key="frame" x="6" y="3" width="308" height="48.5"/>
                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                     </webView>
                 </subviews>
@@ -37,13 +37,13 @@
                     <constraint firstItem="S0A-ZG-CvY" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="4Sv-aS-pj2"/>
                     <constraint firstItem="S0A-ZG-CvY" firstAttribute="top" secondItem="RnX-oW-ftv" secondAttribute="top" id="8fN-xU-1DR"/>
                     <constraint firstAttribute="trailing" secondItem="S0A-ZG-CvY" secondAttribute="trailing" constant="16" id="Mcu-0I-934"/>
-                    <constraint firstAttribute="trailing" secondItem="6cL-Ek-f8G" secondAttribute="trailing" constant="16" id="NvL-PG-uHX"/>
+                    <constraint firstAttribute="trailing" secondItem="6cL-Ek-f8G" secondAttribute="trailing" constant="6" id="NvL-PG-uHX"/>
                     <constraint firstItem="S0A-ZG-CvY" firstAttribute="leading" secondItem="RnX-oW-ftv" secondAttribute="trailing" constant="8" id="W19-Zj-RoS"/>
                     <constraint firstAttribute="bottomMargin" secondItem="S0A-ZG-CvY" secondAttribute="bottom" constant="10" id="dYX-gU-tZi"/>
-                    <constraint firstItem="6cL-Ek-f8G" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="fru-GZ-EJj"/>
-                    <constraint firstAttribute="bottom" secondItem="6cL-Ek-f8G" secondAttribute="bottom" constant="16" id="jGc-6x-kSE"/>
+                    <constraint firstItem="6cL-Ek-f8G" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="3" id="fru-GZ-EJj"/>
+                    <constraint firstAttribute="bottom" secondItem="6cL-Ek-f8G" secondAttribute="bottom" constant="3" id="jGc-6x-kSE"/>
                     <constraint firstItem="RnX-oW-ftv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="mr4-YW-dTq"/>
-                    <constraint firstItem="6cL-Ek-f8G" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="wBz-ua-not"/>
+                    <constraint firstItem="6cL-Ek-f8G" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="wBz-ua-not"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

@@ -97,7 +97,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
                  _activityDetail = [OSCActivities mj_objectWithKeyValues:responseObject[@"result"]];
                  
                  _activityDetail.body = [Utils HTMLWithData:@{@"content":  _activityDetail.body}
-                                              usingTemplate:@"blog"];
+                                              usingTemplate:@"newTweet"];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self setFavButtonAction:_activityDetail.favorite];
