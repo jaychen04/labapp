@@ -7,11 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OSCPostDetails.h"
-#import "OSCActivity.h"
+#import "OSCActivities.h"
 
 @interface ActivityHeadCell : UITableViewCell
 
-- (void)setContentForHeadCell:(OSCPostDetails *)detailPost activity:(OSCActivity *)activity;
+@property (nonatomic, strong) OSCActivities *activity;
 
 @end

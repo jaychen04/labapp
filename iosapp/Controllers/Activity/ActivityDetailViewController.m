@@ -20,9 +20,10 @@
 #import <Ono.h>
 #import <MBProgressHUD.h>
 #import <UITableView+FDTemplateLayoutCell.h>
+#import <MJExtension.h>
+#import "UMSocial.h"
 
-#import "OSCActivity.h"
-#import "OSCPostDetails.h"
+#import "OSCActivities.h"
 
 static NSString * const activityHeadDetailReuseIdentifier = @"ActivityHeadCell";
 static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
@@ -34,8 +35,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 
 @property (nonatomic, strong) NSArray *cellTypes;
 
-@property (nonatomic, strong) OSCPostDetails *postDetails;
-@property (nonatomic, strong) OSCActivity *activity;
+@property (nonatomic, strong) OSCActivities *activityDetail;
 @property (nonatomic, assign) int64_t     activityID;
 @property (nonatomic, copy)   NSString *HTML;
 @property (nonatomic, assign) BOOL      isLoadingFinished;
@@ -51,8 +51,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 {
     self = [super init];
     if (self) {
-//        _activityID = activityID;
-        _activityID = 2180196;
+        _activityID = activityID;
     }
     
     return self;
@@ -76,7 +75,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
                                                                              action:@selector(shareForActivity:)];
     
     [self fetchForActivityDetailDate];
-    _cellTypes = @[@"timeType", @"addressType", @"descType"];
+    _cellTypes = @[@"priceType", @"timeType", @"addressType", @"descType"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -87,63 +86,68 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 #pragma mark - 获取数据
 - (void)fetchForActivityDetailDate
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-//    NSString *str= [NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, _activityID];
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
+    NSString *activityDetailUrlStr= [NSString stringWithFormat:@"%@event?id=%lld", OSCAPI_V2_PREFIX, _activityID];
     
-    [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_POST_DETAIL, _activityID]
+    [manager GET:activityDetailUrlStr
       parameters:nil
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             ONOXMLElement *postXML = [responseObject.rootElement firstChildWithTag:@"post"];
-             _postDetails = [[OSCPostDetails alloc] initWithXML:postXML];
-             _activity = [[OSCActivity alloc] initWithXML:[postXML firstChildWithTag:@"event"]];
+         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
              
-             _HTML = [Utils HTMLWithData:@{
-                                           @"content": _postDetails.body,
-                                           @"night": @([Config getMode]),
-                                           }
-                           usingTemplate:@"activity"];
-             
-             [self setFavButtonAction:_postDetails.isFavorite];
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 [self.tableView reloadData];
-             });
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             MBProgressHUD *HUD = [MBProgressHUD new];
-             HUD.mode = MBProgressHUDModeCustomView;
-             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             HUD.labelText = @"网络异常，加载失败";
-             
-             [HUD hide:YES afterDelay:1];
-         }];
+             if ([responseObject[@"code"]integerValue] == 1) {
+                 _activityDetail = [OSCActivities mj_objectWithKeyValues:responseObject[@"result"]];
+                 
+                 _activityDetail.body = [Utils HTMLWithData:@{@"content":  _activityDetail.body}
+                                              usingTemplate:@"newTweet"];
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self setFavButtonAction:_activityDetail.favorite];
+                     [self.tableView reloadData];
+                 });
+             }
+         } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            MBProgressHUD *HUD = [MBProgressHUD new];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+            HUD.labelText = @"网络异常，加载失败";
+
+            [HUD hide:YES afterDelay:1];
+    }];
+
 }
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return 5;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
         ActivityHeadCell *cell = [_tableView dequeueReusableCellWithIdentifier:activityHeadDetailReuseIdentifier forIndexPath:indexPath];
         
-        [cell setContentForHeadCell:_postDetails activity:_activity];
+        cell.activity = _activityDetail;
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
     } else if (indexPath.row > 0){
         ActivityDetailCell *cell = [_tableView dequeueReusableCellWithIdentifier:activityDetailReuseIdentifier forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.cellType = _cellTypes[indexPath.row-1];
         
-        if (indexPath.row == 3) {
-            cell.ActivityWebView.delegate = self;
-            [cell.ActivityWebView loadHTMLString:_HTML baseURL:[NSBundle mainBundle].resourceURL];
-        } else {
+        if (indexPath.row == 4) {
+            cell.label.hidden = YES;
+            cell.iconImageView.hidden = YES;
             
-            cell.eventDetail = _activity;
+            cell.activityBodyView.hidden = NO;
+            cell.activityBodyView.delegate = self;
+            [cell.activityBodyView loadHTMLString:_activityDetail.body baseURL:[NSBundle mainBundle].resourceURL];
+            
+        } else {
+            cell.activity = _activityDetail;
         }
-        
         return cell;
     }
+    
     return [UITableViewCell new];
 }
 
@@ -151,47 +155,102 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 {
     if (indexPath.row == 0) {
         return 204;
-    }else if (indexPath.row == 3) {
-        return _isLoadingFinished? _webViewHeight + 30 : 400;
     } else {
-        return [tableView fd_heightForCellWithIdentifier:activityDetailReuseIdentifier configuration:^(ActivityDetailCell *cell) {
-            cell.eventDetail = _activity;
-        }];
+        if (indexPath.row == 4) {
+//            UITextView *bodyView = [UITextView new];
+//            bodyView.font = [UIFont boldSystemFontOfSize:14];
+//            bodyView.text = _activityDetail.body;
+//            CGFloat height = [bodyView sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+            return _webViewHeight + 40;
+        } else {
+            return [tableView fd_heightForCellWithIdentifier:activityDetailReuseIdentifier configuration:^(ActivityDetailCell *cell) {
+                cell.activity = _activityDetail;
+            }];
+        }
+        
     }
 }
 
+//#pragma mark - UIWebViewDelegate
+//
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    if (_HTML == nil) {return;}
+//    if (_isLoadingFinished) {
+//        webView.hidden = NO;
+//        return;
+//    }
+//    
+//    _webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+//    _isLoadingFinished = YES;
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.tableView reloadData];
+//    });
+//}
+//
+//
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+//{
+//    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+//    
+////    [self.bottomBarVC.navigationController handleURL:request.URL];
+//    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+//}
+
+
 #pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
+    [self.navigationController handleURL:request.URL];
+    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    if (_HTML == nil) {return;}
-    if (_isLoadingFinished) {
-        webView.hidden = NO;
-        return;
-    }
-    
-    _webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-    _isLoadingFinished = YES;
-    
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    if (_webViewHeight == webViewHeight) {return;}
+    _webViewHeight = webViewHeight;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
 }
 
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
-    
-//    [self.bottomBarVC.navigationController handleURL:request.URL];
-    return [request.URL.absoluteString isEqualToString:@"about:blank"];
-}
-
 #pragma mark - right BarButton
 - (void)shareForActivity:(UIBarButtonItem *)barButton
 {
-    //share
     NSLog(@"share");
+    
+    NSString *trimmedHTML = [_activityDetail.body deleteHTMLTag];
+    NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
+    NSString *digest = [trimmedHTML substringToIndex:length];
+    
+    // 微信相关设置
+    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = _activityDetail.href;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = _activityDetail.href;
+    [UMSocialData defaultData].extConfig.title = _activityDetail.title;
+    
+    // 手机QQ相关设置
+    [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
+    [UMSocialData defaultData].extConfig.qqData.title = _activityDetail.title;
+    //[UMSocialData defaultData].extConfig.qqData.shareText = weakSelf.objectTitle;
+    [UMSocialData defaultData].extConfig.qqData.url = _activityDetail.href;
+    
+    // 新浪微博相关设置
+    [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:_activityDetail.href];
+    
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"54c9a412fd98c5779c000752"
+                                      shareText:[NSString stringWithFormat:@"%@...分享来自 %@", digest, _activityDetail.href]
+                                     shareImage:[UIImage imageNamed:@"logo"]
+                                shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
+                                       delegate:nil];
 }
 
 #pragma mark - button clicked
@@ -264,17 +323,19 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 
 - (void)enrollActivity
 {
-    if (_postDetails.category == 4) {
-        [[UIApplication sharedApplication] openURL:_postDetails.signUpUrl];
+    if (_activityDetail.type == ActivityTypeBelow) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_activityDetail.href]];
     } else {
-        if (_postDetails.applyStatus == 2) {
-            PresentMembersViewController *presentMembersViewController = [[PresentMembersViewController alloc] initWithEventID:_postDetails.postID];
+        if (_activityDetail.type == ActivityTypeTechnical) {
+            PresentMembersViewController *presentMembersViewController = [[PresentMembersViewController alloc] initWithEventID:_activityDetail.id];
             [self.navigationController pushViewController:presentMembersViewController animated:YES];
         } else {
             ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
-            signUpViewController.eventId = _postDetails.postID;
-            signUpViewController.remarkTipStr = _activity.remarkTip;
-            signUpViewController.remarkCitys = _activity.remarkCitys;
+            signUpViewController.eventId = _activityDetail.id;
+            
+            signUpViewController.remarkTipStr = _activityDetail.remark[@"tip"];
+            NSString *citys = _activityDetail.remark[@"select"];
+            signUpViewController.remarkCitys = [citys componentsSeparatedByString:@","];
             [self.navigationController pushViewController:signUpViewController animated:YES];
         }
     }

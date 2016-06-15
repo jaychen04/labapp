@@ -16,32 +16,43 @@
     
     _label.hidden = NO;
     _iconImageView.hidden = NO;
-    _ActivityWebView.hidden = YES;
     
-    _ActivityWebView.scrollView.bounces = NO;
-    _ActivityWebView.scrollView.scrollEnabled = NO;
-    _ActivityWebView.opaque = NO;
-    _ActivityWebView.backgroundColor = [UIColor themeColor];
+    _activityBodyView.hidden = YES;
+    
+    _activityBodyView.scrollView.bounces = NO;
+    _activityBodyView.scrollView.scrollEnabled = NO;
+    _activityBodyView.opaque = NO;
+    _activityBodyView.backgroundColor = [UIColor themeColor];
 }
 
 - (void)dequeueReusableCellWithIdentifier:(NSString *)identifier
 {
-    if ([identifier isEqualToString:@"timeType"]) {
+    if ([identifier isEqualToString:@"priceType"]) {
         _label.hidden = NO;
         _iconImageView.hidden = NO;
-        _ActivityWebView.hidden = YES;
         
-        _iconImageView.image = [UIImage imageNamed:@"ic_ calendar"];
+        _activityBodyView.hidden = YES;
+        
+        _iconImageView.image = [UIImage imageNamed:@"ic_ticket"];
+    } else if ([identifier isEqualToString:@"timeType"]) {
+        _label.hidden = NO;
+        _iconImageView.hidden = NO;
+        
+        _activityBodyView.hidden = YES;
+        
+        _iconImageView.image = [UIImage imageNamed:@"ic_calendar"];
     } else if ([identifier isEqualToString:@"addressType"]) {
         _label.hidden = NO;
         _iconImageView.hidden = NO;
-        _ActivityWebView.hidden = YES;
+        
+        _activityBodyView.hidden = YES;
         
         _iconImageView.image = [UIImage imageNamed:@"ic_location"];
     } else if ([identifier isEqualToString:@"descType"]) {
         _label.hidden = YES;
         _iconImageView.hidden = YES;
-        _ActivityWebView.hidden = NO;
+        
+        _activityBodyView.hidden = NO;
     }
 }
 
@@ -53,14 +64,19 @@
 
 #pragma mark - CONTENT
 
-- (void)setEventDetail:(OSCActivity *)eventDetail
+- (void)setActivity:(OSCActivities *)activity
 {
     [self dequeueReusableCellWithIdentifier:_cellType];
     
-    if ([_cellType isEqualToString:@"timeType"]) {
-        _label.text = [NSString stringWithFormat:@"%@", eventDetail.startTime];
+    if ([_cellType isEqualToString:@"priceType"]) {
+        _label.text = activity.costDesc;
+        
+    } else if ([_cellType isEqualToString:@"timeType"]) {
+        _label.text = activity.startDate;
+        
     } else if ([_cellType isEqualToString:@"addressType"]) {
-        _label.text = eventDetail.location;
+        _label.text = activity.spot;
+        
     }
 }
 

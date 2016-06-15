@@ -112,6 +112,7 @@ static NSString *kNewsCellID = @"NewsCell";
     
     OSCNews *news = self.objects[indexPath.row];
     if (news.eventURL.absoluteString.length > 0) {
+        
         ActivityDetailsWithBarViewController *activityBVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:[news.attachment longLongValue]];
         [self.navigationController pushViewController:activityBVC animated:YES];
     } else if (news.url.absoluteString.length > 0) {

@@ -15,7 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLable;
 @property (weak, nonatomic) IBOutlet UILabel *authorLabel;
 @property (weak, nonatomic) IBOutlet UILabel *catalogLabel;
-@property (weak, nonatomic) IBOutlet UILabel *priceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *applyLabel;
 @property (weak, nonatomic) IBOutlet UIButton *typeButton;
 
@@ -38,42 +37,39 @@
     // Configure the view for the selected state
 }
 
-- (void)setContentForHeadCell:(OSCPostDetails *)detailPost activity:(OSCActivity *)activity
+- (void)setActivity:(OSCActivities *)activity
 {
-    [_activityImageView loadPortrait:activity.coverURL];
-    _titleLable.text = detailPost.title;
-    _authorLabel.text = [NSString stringWithFormat:@"发起人：%@", detailPost.author];
+    [_activityImageView loadPortrait:[NSURL URLWithString:activity.img]];
+    _titleLable.text = activity.title;
+    _authorLabel.text = [NSString stringWithFormat:@"发起人：%@", activity.author];
     _catalogLabel.text = [self categoryString:activity];
-    _priceLabel.text = @"";
-    _applyLabel.text = [NSString stringWithFormat:@"%d人参与", detailPost.viewCount];
+    _applyLabel.text = [NSString stringWithFormat:@"%ld人参与", (long)activity.viewCount];
     
     [self typeActivityStatus:activity];
 }
 
 /* 活动状态按钮 */
-- (void)typeActivityStatus:(OSCActivity *)activity
+- (void)typeActivityStatus:(OSCActivities *)activity
 {
-    NSString *string = @"";
-    if (activity.status == ActivityStatusActivityFinished) {
-        string = @"源创会";
-    } else if (activity.status == ActivityStatusGoing) {
-        string = @"技术交流";
-    } else if (activity.status == ActivityStatusSignUpClosing) {
-        string = @"其他";
+    if (activity.status == ActivityStatusEnd) {
+        _typeButton.hidden = YES;
+    } else if (activity.status == ActivityStatusHaveInHand) {
+        [_typeButton setTitle:@"正在报名" forState:UIControlStateNormal];
+    } else if (activity.status == ActivityStatusClose) {
+        _typeButton.hidden = YES;
     }
-    [_typeButton setTitle:string forState:UIControlStateNormal];
 }
 /* 活动类型 */
-- (NSString *)categoryString:(OSCActivity *)activity
+- (NSString *)categoryString:(OSCActivities *)activity
 {
     NSString *string = @"";
-    if (activity.category == ActivityCategoryStatusOSChinaMeeting) {
+    if (activity.type == ActivityTypeOSChinaMeeting) {
         string = @"源创会";
-    } else if (activity.category == ActivityCategoryStatusTechnical) {
+    } else if (activity.type == ActivityTypeTechnical) {
         string = @"技术交流";
-    } else if (activity.category == ActivityCategoryStatusOther) {
+    } else if (activity.type == ActivityTypeOther) {
         string = @"其他";
-    } else if (activity.category == ActivityCategoryStatuseBelow) {
+    } else if (activity.type == ActivityTypeBelow) {
         string = @"站外活动";
     }
     
