@@ -13,6 +13,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    self.backgroundColor = [UIColor themeColor];
     
     _label.hidden = NO;
     _iconImageView.hidden = NO;

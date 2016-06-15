@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ActivityDetailViewController">
             <connections>
                 <outlet property="addButton" destination="neQ-uL-NOh" id="jIi-U2-CtW"/>
+                <outlet property="bottomView" destination="DSP-wG-i2s" id="6vp-0v-ixc"/>
                 <outlet property="favButton" destination="t4r-gk-srh" id="50Y-Oa-b65"/>
                 <outlet property="tableView" destination="lSh-tz-Rch" id="lIW-pB-fcO"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>

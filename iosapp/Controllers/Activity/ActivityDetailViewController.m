@@ -30,6 +30,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 @interface ActivityDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet UIButton *favButton;
 @property (weak, nonatomic) IBOutlet UIButton *addButton;
 
@@ -76,6 +77,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
     
     [self fetchForActivityDetailDate];
     _cellTypes = @[@"priceType", @"timeType", @"addressType", @"descType"];
+    self.bottomView.backgroundColor = [UIColor newCellColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -128,6 +130,9 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
         cell.activity = _activityDetail;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        cell.backgroundColor = [UIColor navigationbarColor];
+        cell.contentView.backgroundColor = [UIColor navigationbarColor];
+        
         return cell;
     } else if (indexPath.row > 0){
         ActivityDetailCell *cell = [_tableView dequeueReusableCellWithIdentifier:activityDetailReuseIdentifier forIndexPath:indexPath];
@@ -145,6 +150,11 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
         } else {
             cell.activity = _activityDetail;
         }
+        
+        cell.backgroundColor = [UIColor newCellColor];
+        cell.contentView.backgroundColor = [UIColor newCellColor];
+        cell.backgroundColor = [UIColor themeColor];
+        
         return cell;
     }
     
