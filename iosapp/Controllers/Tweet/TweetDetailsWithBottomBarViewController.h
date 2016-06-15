@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "BottomBarViewController.h"
-
+#import "OSCTweet.h"
 
 @interface TweetDetailsWithBottomBarViewController : BottomBarViewController
 
 - (instancetype)initWithTweetID:(int64_t)tweetID;
-
+//新的初始化方法
+- (instancetype)initWithTweet:(OSCTweet*)tweet;
 @end

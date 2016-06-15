@@ -260,12 +260,13 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCTweet *tweet = self.objects[indexPath.row];
-    
-//    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
-    TweetDetailNewTableViewController *tweetDetailsBVC = [TweetDetailNewTableViewController new];
-    tweetDetailsBVC.hidesBottomBarWhenPushed = YES;
-    tweetDetailsBVC.tweetID = tweet.tweetID;
+    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweet:tweet];
     [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
+    
+//    TweetDetailNewTableViewController *tweetDetailsBVC = [TweetDetailNewTableViewController new];
+//    tweetDetailsBVC.hidesBottomBarWhenPushed = YES;
+//    tweetDetailsBVC.tweetID = tweet.tweetID;
+//    [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath

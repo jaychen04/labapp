@@ -13,9 +13,10 @@
     }
     </style>
     
+    <div class="newTweetDetail">
     {{{ content }}}
     <br />
-    
+
     {{# imageURL }}
     <a href="{{imageURL}}">
         <img src="{{imageURL}}"/>
@@ -27,5 +28,6 @@
         <source src="{{audioURL}}?avthumb.mp3" type="audio/mpeg">
             </audio>
     {{/}}
+    </div>
     {{/}}
     {{/}}

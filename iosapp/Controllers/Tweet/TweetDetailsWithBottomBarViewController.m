@@ -17,6 +17,8 @@
 #import "Config.h"
 #import "Utils.h"
 
+#import "TweetDetailNewTableViewController.h"
+
 #import <objc/runtime.h>
 #import <MBProgressHUD.h>
 
@@ -24,6 +26,7 @@
 @interface TweetDetailsWithBottomBarViewController () <UIWebViewDelegate>
 
 @property (nonatomic, strong) TweetDetailsViewController *tweetDetailsVC;
+@property (nonatomic, strong) TweetDetailNewTableViewController *tweetDetailsNewVC;
 @property (nonatomic, assign) int64_t tweetID;
 @property (nonatomic, assign) BOOL isReply;
 
@@ -31,17 +34,32 @@
 
 @implementation TweetDetailsWithBottomBarViewController
 
+//旧的
 - (instancetype)initWithTweetID:(int64_t)tweetID
 {
     self = [super initWithModeSwitchButton:NO];
     if (self) {
         self.hidesBottomBarWhenPushed = YES;
-        
         _tweetID = tweetID;
-        
         _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweetID:tweetID];
         [self addChildViewController:_tweetDetailsVC];
-        
+        [self setUpBlock];
+    }
+    
+    return self;
+}
+//新的
+- (instancetype)initWithTweet:(OSCTweet*)tweet
+{
+    self = [super initWithModeSwitchButton:NO];
+    if (self) {
+        self.hidesBottomBarWhenPushed = YES;
+        _tweetID = tweet.tweetID;
+        _tweetDetailsNewVC = [[TweetDetailNewTableViewController alloc]init];
+        _tweetDetailsNewVC.tweetID = _tweetID;
+        _tweetDetailsNewVC.currentTweet = tweet;
+        [self addChildViewController:_tweetDetailsNewVC];
+
         [self setUpBlock];
     }
     
@@ -52,7 +70,21 @@
 {
     __weak TweetDetailsWithBottomBarViewController *weakSelf = self;
     
-    _tweetDetailsVC.didCommentSelected = ^(OSCComment *comment) {
+//    _tweetDetailsVC.didCommentSelected = ^(OSCComment *comment) {
+//        NSString *authorString = [NSString stringWithFormat:@"@%@ ", comment.author];
+//        
+//        if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {
+//            [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:authorString];
+//            [weakSelf.editingBar.editView becomeFirstResponder];
+//        }
+//    };
+//    
+//    _tweetDetailsVC.didScroll = ^ {
+//        [weakSelf.editingBar.editView resignFirstResponder];
+//        [weakSelf hideEmojiPageView];
+    
+    
+    _tweetDetailsNewVC.didCommentSelected = ^(OSCComment *comment) {
         NSString *authorString = [NSString stringWithFormat:@"@%@ ", comment.author];
         
         if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {
@@ -61,10 +93,16 @@
         }
     };
     
-    _tweetDetailsVC.didScroll = ^ {
+    _tweetDetailsNewVC.didScroll = ^ {
         [weakSelf.editingBar.editView resignFirstResponder];
         [weakSelf hideEmojiPageView];
     };
+    _tweetDetailsNewVC.didActivatedInputBar = ^ {
+        [weakSelf.editingBar.editView becomeFirstResponder];
+    };
+//    _tweetDetailsNewVC.didRegisterInputBar = ^ {
+//        [weakSelf.editingBar.editView resignFirstResponder];
+//    };
 }
 
 
@@ -81,10 +119,12 @@
 
 - (void)setLayout
 {
-    [self.view addSubview:_tweetDetailsVC.view];
+//    [self.view addSubview:_tweetDetailsVC.view];
+    [self.view addSubview:_tweetDetailsNewVC.view];
     
     for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = @{@"tableView": _tweetDetailsVC.view, @"editingBar": self.editingBar};
+//    NSDictionary *views = @{@"tableView": _tweetDetailsVC.view, @"editingBar": self.editingBar};
+    NSDictionary *views = @{@"tableView": _tweetDetailsNewVC.view, @"editingBar": self.editingBar};
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[tableView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tableView][editingBar]"
@@ -122,8 +162,12 @@
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                   HUD.labelText = @"评论发表成功";
                   
-                  [_tweetDetailsVC.tableView setContentOffset:CGPointZero animated:NO];
-                  [_tweetDetailsVC refresh];
+//                  [_tweetDetailsVC.tableView setContentOffset:CGPointZero animated:NO];
+//                  [_tweetDetailsVC refresh];
+                  
+                  [_tweetDetailsNewVC.tableView setContentOffset:CGPointZero animated:NO];
+                  [_tweetDetailsNewVC loadTweetCommentListIsrefresh:YES];
+                  
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];

@@ -251,11 +251,11 @@ static NSString * const kTweetCellID = @"TweetCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    OSCTweet *tweet = self.objects[indexPath.row];
-    TweetDetailNewTableViewController *tweetDetailNewVc = [[TweetDetailNewTableViewController alloc]init];
-    [tweetDetailNewVc setTweetID:tweet.tweetID];
-    tweetDetailNewVc.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:tweetDetailNewVc animated:YES];
+//    OSCTweet *tweet = self.objects[indexPath.row];
+//    TweetDetailNewTableViewController *tweetDetailNewVc = [[TweetDetailNewTableViewController alloc]init];
+//    [tweetDetailNewVc setTweetID:tweet.tweetID];
+//    tweetDetailNewVc.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:tweetDetailNewVc animated:YES];
 
     
     
