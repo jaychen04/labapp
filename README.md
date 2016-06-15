@@ -1,6 +1,15 @@
 # 开源中国 iOS [客户端](http://www.oschina.net/app/)
 
-------
+**源代码请切换置对应的分支，master分支中今后不再放源代码。**
+
+
+##历史分支
+
+编号 | 分支名 | 发布版本 |  备注
+------- | ------- | ------- | ------- | -------
+1 | v3.7.0 | v3.7.0 (1606131024) |  当前最新版
+
+
 
 ## 编译环境
 Xcode 6＋
@@ -13,6 +22,7 @@ Xcode 6＋
 
 
 ## 目录简介
+
 * Application：  存放AppDelegate和API定义
 * Models：       数据实体类
 * Controllers：  存放所有的view controller
@@ -24,6 +34,7 @@ Xcode 6＋
 
 
 ## 项目用到的开源类库、组件
+
 * AFNetworking：                         网络请求
 * AFOnoSerializer：                      序列化XML和HTML
 * DateTools：                            时间计算
@@ -42,9 +53,29 @@ Xcode 6＋
 * TTTAttributedLabel：                   支持富文本显示的label
 
 
-## API 文档
-[http://osc_api.mydoc.io/](http://osc_api.mydoc.io/)
-
-
 ## 开源协议
-OSChina iOS app is under the GPL license. See the LICENSE file for more details.
+
+	The MIT License (MIT)
+	
+	Copyright (c) 2016 OSChina.net
+	
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+	
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+	
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
+	
+
+
