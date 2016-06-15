@@ -97,9 +97,27 @@ pre {
     color: #CCC !important;
 }
 /*** newTweet ***/
+
 .newTweetDetail {
     background-color: #FFFFFF;
+    background: #FFFFFF;
+    a {color: #087221;}
+    body {
+        font-family:PingFangSC-Light;
+        font-size:16px;
+        color:#111111;
+        letter-spacing:0px;
+        line-height:25px;
+        text-align:left;
+    }
 }
+.newTweetDetail a {
+    color: #24cf5f;
+}
+/*.newTweetDetail.night {*/
+/*    */
+/*}*/
+
 
 /*** software ***/
 

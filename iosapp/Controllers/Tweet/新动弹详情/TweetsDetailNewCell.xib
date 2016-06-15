@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bR1-kd-sg2" userLabel="intervalTimeLabel">
-                        <rect key="frame" x="8" y="114" width="31" height="17"/>
+                        <rect key="frame" x="16" y="114" width="31" height="17"/>
                         <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
                         <color key="textColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -53,7 +53,7 @@
                         <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
                     </webView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o6f-2t-HvF" userLabel="platformLabel">
-                        <rect key="frame" x="50" y="114" width="31" height="17"/>
+                        <rect key="frame" x="58" y="114" width="31" height="17"/>
                         <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="12"/>
                         <color key="textColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -70,6 +70,7 @@
                     <constraint firstAttribute="bottomMargin" secondItem="bR1-kd-sg2" secondAttribute="bottom" constant="6" id="IYX-NK-cUY"/>
                     <constraint firstAttribute="trailingMargin" secondItem="wZC-OR-R5b" secondAttribute="trailing" id="Qmj-YE-wpu"/>
                     <constraint firstItem="o6f-2t-HvF" firstAttribute="centerY" secondItem="bR1-kd-sg2" secondAttribute="centerY" id="Shu-p4-qTI"/>
+                    <constraint firstItem="bR1-kd-sg2" firstAttribute="leading" secondItem="E3U-tb-gaa" secondAttribute="leading" id="Tr1-y0-gi3"/>
                     <constraint firstItem="lQf-lL-JOf" firstAttribute="centerY" secondItem="E3U-tb-gaa" secondAttribute="centerY" id="jOb-sT-GWP"/>
                     <constraint firstItem="wZC-OR-R5b" firstAttribute="leading" secondItem="E3U-tb-gaa" secondAttribute="leading" id="jww-Cy-UsP"/>
                     <constraint firstAttribute="trailingMargin" secondItem="2A5-x5-QAC" secondAttribute="trailing" constant="8" id="lA7-FF-eqw"/>
@@ -83,6 +84,7 @@
                 <variation key="default">
                     <mask key="constraints">
                         <exclude reference="jww-Cy-UsP"/>
+                        <exclude reference="9dE-tj-zkV"/>
                         <exclude reference="3DF-c5-0XY"/>
                         <exclude reference="sPC-9R-CQ7"/>
                     </mask>
