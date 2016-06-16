@@ -16,4 +16,10 @@
 @property (weak, nonatomic) IBOutlet UIImageView *commentTagIv;
 
 @property (nonatomic, strong)OSCComment *commentModel;
+
+@property (nonatomic, copy) BOOL (^canPerformAction)(UITableViewCell *cell, SEL action);
+@property (nonatomic, copy) void (^deleteObject)(UITableViewCell *cell);
+
+- (void)copyText:(id)sender;
+- (void)deleteObject:(id)sender;
 @end
