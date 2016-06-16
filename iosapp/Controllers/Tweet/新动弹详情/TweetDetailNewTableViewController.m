@@ -332,12 +332,6 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             }];
             comment.cellHeight = height + 61;
             return comment.cellHeight;
-            
-            
-            
-//            return [tableView fd_heightForCellWithIdentifier:tCommentReuseIdentifier configuration:^(TweetCommentNewCell *cell) {
-//                cell.commentModel = _tweetCommentList[indexPath.row];
-//            }];
         }
     }
     return 0;
@@ -354,6 +348,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             if (indexPath.row < _tweetCommentList.count) {
                 OSCComment *commentModel = _tweetCommentList[indexPath.row];
                 [commentCell setCommentModel:commentModel];
+                
+                [self setBlockForCommentCell:commentCell];
                 
                 commentCell.commentTagIv.tag = indexPath.row;
                 [commentCell.commentTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(replyReviewer:)]];
@@ -379,7 +375,21 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     return [UITableViewCell new];
 }
 
+#pragma mark -- Copy/Paste.  All three methods must be implemented by the delegate.
 
+- (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return indexPath.section != 0;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canPerformAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+    return indexPath.section != 0;
+}
+
+- (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender {
+    NSLog(@".....");
+}
+
+#pragma mark -- 设置动弹详情cell
 -(void)setUpTweetDetailCell:(TweetsDetailNewCell*)cell {
     
     if (_tweet) {
@@ -520,5 +530,76 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     
     [self.navigationController handleURL:request.URL];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+#pragma mark -- 删除动弹
+- (void)setBlockForCommentCell:(TweetCommentNewCell *)cell
+{
+    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
+        if (action == @selector(copyText:)) {
+            return YES;
+        } else if (action == @selector(deleteObject:)) {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            
+            OSCComment *comment = self.tweetCommentList[indexPath.row];
+            int64_t ownID = [Config getOwnID];
+            
+            return (comment.authorID == ownID || _tweet.authorID == ownID);
+        }
+        
+        return NO;
+    };
+    
+    cell.deleteObject = ^ (UITableViewCell *cell) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        OSCComment *comment = self.tweetCommentList[indexPath.row];
+        
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.labelText = @"正在删除评论";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        
+        [manager POST:[NSString stringWithFormat:@"%@%@?", OSCAPI_PREFIX, OSCAPI_COMMENT_DELETE]
+           parameters:@{
+                        @"catalog": @(3),
+                        @"id": @(_tweet.tweetID),
+                        @"replyid": @(comment.commentID),
+                        @"authorid": @(comment.authorID)
+                        }
+              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                  ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
+                  int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
+                  NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
+                  
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  
+                  if (errorCode == 1) {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                      HUD.labelText = @"评论删除成功";
+                      
+                      [self.tweetCommentList removeObjectAtIndex:indexPath.row];
+//                      self.allCount--;
+                      if (self.tweetCommentList.count > 0) {
+                          [self.tableView beginUpdates];
+                          [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                          [self.tableView endUpdates];
+                      }
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.tableView reloadData];
+                      });
+                  } else {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  }
+                  
+                  [HUD hide:YES afterDelay:1];
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.labelText = @"网络异常，操作失败";
+                  
+                  [HUD hide:YES afterDelay:1];
+              }];
+    };
 }
 @end

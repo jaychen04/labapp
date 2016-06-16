@@ -30,10 +30,24 @@
     [self.contentLabel setAttributedText:contentString];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+#pragma mark - 处理长按操作
 
-
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    return _canPerformAction(self, action);
 }
+
+- (BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+- (void)copyText:(id)sender {
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:_contentLabel.text];
+}
+
+- (void)deleteObject:(id)sender {
+    _deleteObject(self);
+}
+
 
 @end
