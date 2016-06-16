@@ -238,19 +238,19 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
         cell.nameLabel.tag = indexPath.row;
         cell.tweetImageView.tag = indexPath.row;
         cell.likeCountButton.tag = indexPath.row;
+        cell.nameLabel.textColor = [UIColor newTitleColor];
         cell.descTextView.textColor = [UIColor newTitleColor];
     
         [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
         [cell.tweetImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
         [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
         
+        cell.contentView.backgroundColor = [UIColor newCellColor];
+        cell.backgroundColor = [UIColor themeColor];
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
         cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
         
     }
-    
-    
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
     return cell;
 }

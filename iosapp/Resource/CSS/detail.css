@@ -114,6 +114,13 @@ pre {
 .newTweetDetail a {
     color: #24cf5f;
 }
+.newTweetDetail h1 {
+    font-family:PingFangSC-Regular;
+    font-size:18px;
+    color:#111111;
+    text-align:left;
+}
+
 /*.newTweetDetail.night {*/
 /*    */
 /*}*/
