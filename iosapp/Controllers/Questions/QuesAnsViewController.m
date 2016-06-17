@@ -14,6 +14,8 @@
 #import "OSCQuestion.h"
 #import "DetailsViewController.h"
 #import "OSCAPI.h"
+#import "QuesAnsDetailViewController.h"
+
 #import <AFNetworking.h>
 #import <MJRefresh.h>
 #import <MJExtension.h>
@@ -204,13 +206,19 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    /* 问答旧详情 */
     NSInteger currentIndex = self.selectedBtn.tag;
     NSArray* dataSource = self.dataModels[currentIndex];
     OSCQuestion* question = dataSource[indexPath.row];
     OSCPost* post = [OSCPost new];
     post.postID = question.Id;
-    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
-    [self.navigationController pushViewController:detailsViewController animated:YES];
+//    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+//    [self.navigationController pushViewController:detailsViewController animated:YES];
+    
+    QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
+    detailVC.hidesBottomBarWhenPushed = YES;
+    detailVC.questionID = question.Id;
+    [self.navigationController pushViewController:detailVC animated:YES];
 }
 
 #pragma mark - 改变selected Btn && 切换数据源 && 选择性发送请求

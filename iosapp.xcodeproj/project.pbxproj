@@ -261,6 +261,10 @@
 		EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */; };
 		EE82D0431C43B1E30066FDC9 /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE82D0411C43B1E30066FDC9 /* FeedBackViewController.m */; };
 		EE82D0441C43B1E30066FDC9 /* FeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE82D0421C43B1E30066FDC9 /* FeedBackViewController.xib */; };
+		EE88C4061D127CE6000FE427 /* QuesAnsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE88C4041D127CE6000FE427 /* QuesAnsDetailViewController.m */; };
+		EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C4051D127CE6000FE427 /* QuesAnsDetailViewController.xib */; };
+		EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */; };
+		EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */; };
 		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
 		EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
@@ -772,6 +776,12 @@
 		EE82D0401C43B1E30066FDC9 /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
 		EE82D0411C43B1E30066FDC9 /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
 		EE82D0421C43B1E30066FDC9 /* FeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedBackViewController.xib; sourceTree = "<group>"; };
+		EE88C4031D127CE6000FE427 /* QuesAnsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsDetailViewController.h; path = Questions/QuesAnsDetailViewController.h; sourceTree = "<group>"; };
+		EE88C4041D127CE6000FE427 /* QuesAnsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsDetailViewController.m; path = Questions/QuesAnsDetailViewController.m; sourceTree = "<group>"; };
+		EE88C4051D127CE6000FE427 /* QuesAnsDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsDetailViewController.xib; path = Questions/QuesAnsDetailViewController.xib; sourceTree = "<group>"; };
+		EE88C4081D128138000FE427 /* QuesAnsDetailHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsDetailHeadCell.h; path = Questions/QuesAnsDetailHeadCell.h; sourceTree = "<group>"; };
+		EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsDetailHeadCell.m; path = Questions/QuesAnsDetailHeadCell.m; sourceTree = "<group>"; };
+		EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsDetailHeadCell.xib; path = Questions/QuesAnsDetailHeadCell.xib; sourceTree = "<group>"; };
 		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
 		EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
 		EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
@@ -2075,6 +2085,12 @@
 				0473259A1CF821A700460658 /* QuesAnsTableViewCell.h */,
 				0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */,
 				0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */,
+				EE88C4031D127CE6000FE427 /* QuesAnsDetailViewController.h */,
+				EE88C4041D127CE6000FE427 /* QuesAnsDetailViewController.m */,
+				EE88C4051D127CE6000FE427 /* QuesAnsDetailViewController.xib */,
+				EE88C4081D128138000FE427 /* QuesAnsDetailHeadCell.h */,
+				EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */,
+				EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */,
 			);
 			name = Questions;
 			sourceTree = "<group>";
@@ -2218,6 +2234,7 @@
 			files = (
 				EEE241AA1CFD65710088FFB3 /* ActivityDetailViewController.xib in Resources */,
 				31212ECC1D0E670100FA17B1 /* TweetsDetailNewCell.xib in Resources */,
+				EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				317F889D1D05698800BD931F /* ContentWebViewCell.xib in Resources */,
@@ -2227,6 +2244,7 @@
 				EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */,
 				04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
+				EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */,
 				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */,
@@ -2431,6 +2449,7 @@
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
 				31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */,
 				38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */,
+				EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */,
 				C5F3D77A1AF0C40B0032F775 /* WeeklyReportTableViewController.m in Sources */,
 				38EAF1C11AE0E6B100397E2A /* TeamIssue.m in Sources */,
 				31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */,
@@ -2486,6 +2505,7 @@
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
 				38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */,
 				EEE241B01CFD6ECC0088FFB3 /* ActivityHeadCell.m in Sources */,
+				EE88C4061D127CE6000FE427 /* QuesAnsDetailViewController.m in Sources */,
 				0422BC5B1CEDA390007DB140 /* SDCycleScrollView.m in Sources */,
 				38B0BFA91A42AF5500A2FDB0 /* TweetEditingVC.m in Sources */,
 				31ABF5811B0F1B5300663C08 /* JKAlertDialog.m in Sources */,

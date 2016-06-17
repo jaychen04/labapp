@@ -165,7 +165,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        return 204;
+        return 210;
     } else {
         if (indexPath.row == 4) {
 //            UITextView *bodyView = [UITextView new];
