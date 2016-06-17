@@ -30,13 +30,13 @@
     _pubTimeLabel.text = [NSString stringWithFormat:@"发表于%@", [[NSDate dateFromString:blogDetail.pubDate] timeAgoSinceNow]];
     switch (blogDetail.authorRelation) {
         case 1://双方互为粉丝
-        case 2://已单方面关注
+        case 2://你单方面关注他
             [_followBtn setTitle:@"已关注" forState:UIControlStateNormal];
             break;
-        case 3://互不关注
-            [_followBtn setTitle:@"关注" forState:UIControlStateNormal];
-            break;
-            
+        case 3://他单方面关注我
+		case 4: //互不关注
+			[_followBtn setTitle:@"关注" forState:UIControlStateNormal];
+			break;
         default:
             break;
     }
