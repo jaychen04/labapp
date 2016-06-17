@@ -11,6 +11,7 @@
 #import "NewCommentCell.h"
 #import "OSCQuestion.h"
 #import "OSCBlogDetail.h"
+#import "CommentDetailViewController.h"
 
 #import "Utils.h"
 #import "OSCAPI.h"
@@ -194,6 +195,14 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
             break;
     }
     return headerViewHeight;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1) {
+        CommentDetailViewController *commentDetailVC = [CommentDetailViewController new];
+        [self.navigationController pushViewController:commentDetailVC animated:YES];
+    }
 }
 
 #pragma mark - UIWebViewDelegate

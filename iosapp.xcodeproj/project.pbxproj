@@ -267,6 +267,12 @@
 		EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */; };
 		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
 		EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */; };
+		EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */; };
+		EEB3D7AA1D13A86200164EF5 /* CommentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB3D7A81D13A86200164EF5 /* CommentDetailViewController.xib */; };
+		EEB3D7AE1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7AC1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m */; };
+		EEB3D7AF1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB3D7AD1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib */; };
+		EEB3D7B31D13E5D500164EF5 /* SoftWareDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7B11D13E5D500164EF5 /* SoftWareDetailCell.m */; };
+		EEB3D7B41D13E5D500164EF5 /* SoftWareDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB3D7B21D13E5D500164EF5 /* SoftWareDetailCell.xib */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 		EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED81D5C1CF54F88000ACFBC /* OSCQuestion.m */; };
@@ -785,6 +791,15 @@
 		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
 		EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
 		EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
+		EEB3D7A61D13A86200164EF5 /* CommentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentDetailViewController.h; path = Questions/CommentDetailViewController.h; sourceTree = "<group>"; };
+		EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentDetailViewController.m; path = Questions/CommentDetailViewController.m; sourceTree = "<group>"; };
+		EEB3D7A81D13A86200164EF5 /* CommentDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentDetailViewController.xib; path = Questions/CommentDetailViewController.xib; sourceTree = "<group>"; };
+		EEB3D7AB1D13CE2300164EF5 /* QuestCommentHeadDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuestCommentHeadDetailCell.h; path = Questions/QuestCommentHeadDetailCell.h; sourceTree = "<group>"; };
+		EEB3D7AC1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuestCommentHeadDetailCell.m; path = Questions/QuestCommentHeadDetailCell.m; sourceTree = "<group>"; };
+		EEB3D7AD1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuestCommentHeadDetailCell.xib; path = Questions/QuestCommentHeadDetailCell.xib; sourceTree = "<group>"; };
+		EEB3D7B01D13E5D400164EF5 /* SoftWareDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareDetailCell.h; sourceTree = "<group>"; };
+		EEB3D7B11D13E5D500164EF5 /* SoftWareDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftWareDetailCell.m; sourceTree = "<group>"; };
+		EEB3D7B21D13E5D500164EF5 /* SoftWareDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoftWareDetailCell.xib; sourceTree = "<group>"; };
 		EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+Badge.h"; sourceTree = "<group>"; };
 		EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
@@ -1993,6 +2008,9 @@
 				C5EF891F1BE3194800B5FA46 /* SoftwareCell.m */,
 				C5EF89201BE3194800B5FA46 /* SoftwareListVC.h */,
 				C5EF89211BE3194800B5FA46 /* SoftwareListVC.m */,
+				EEB3D7B01D13E5D400164EF5 /* SoftWareDetailCell.h */,
+				EEB3D7B11D13E5D500164EF5 /* SoftWareDetailCell.m */,
+				EEB3D7B21D13E5D500164EF5 /* SoftWareDetailCell.xib */,
 			);
 			path = Software;
 			sourceTree = "<group>";
@@ -2091,6 +2109,12 @@
 				EE88C4081D128138000FE427 /* QuesAnsDetailHeadCell.h */,
 				EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */,
 				EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */,
+				EEB3D7A61D13A86200164EF5 /* CommentDetailViewController.h */,
+				EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */,
+				EEB3D7A81D13A86200164EF5 /* CommentDetailViewController.xib */,
+				EEB3D7AB1D13CE2300164EF5 /* QuestCommentHeadDetailCell.h */,
+				EEB3D7AC1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m */,
+				EEB3D7AD1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib */,
 			);
 			name = Questions;
 			sourceTree = "<group>";
@@ -2249,10 +2273,13 @@
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
+				EEB3D7B41D13E5D500164EF5 /* SoftWareDetailCell.xib in Resources */,
 				31D699601CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib in Resources */,
 				C5E4B17E1B57B715008E7463 /* Login.storyboard in Resources */,
 				EEE241B11CFD6ECC0088FFB3 /* ActivityHeadCell.xib in Resources */,
 				0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */,
+				EEB3D7AA1D13A86200164EF5 /* CommentDetailViewController.xib in Resources */,
+				EEB3D7AF1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
 				EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */,
 				C5B1231D1B316830000B29D2 /* html in Resources */,
@@ -2361,6 +2388,7 @@
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */,
 				EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */,
+				EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				38EAF1CA1AE112A200397E2A /* TeamIssueCell.m in Sources */,
 				0422BC591CEDA390007DB140 /* TAPageControl.m in Sources */,
@@ -2378,6 +2406,7 @@
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				3838D1AD1A6F463E00CC7913 /* RandomMessageCell.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
+				EEB3D7B31D13E5D500164EF5 /* SoftWareDetailCell.m in Sources */,
 				C52BF4E71AF9AAA000E53508 /* TeamWeeklyReportDetail.m in Sources */,
 				38A9EEA91AA95AB4006C95BD /* AboutPage.m in Sources */,
 				38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */,
@@ -2522,6 +2551,7 @@
 				C5A89C3A1B09C34B00798B1C /* UIImage+FontAwesome.m in Sources */,
 				C5F3D7761AF0C2A50032F775 /* WeeklyReportViewController.m in Sources */,
 				31FF2F951CF2F36600C7A0B6 /* NewHotBlogTableViewController.m in Sources */,
+				EEB3D7AE1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				EEE241A91CFD65710088FFB3 /* ActivityDetailViewController.m in Sources */,
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
