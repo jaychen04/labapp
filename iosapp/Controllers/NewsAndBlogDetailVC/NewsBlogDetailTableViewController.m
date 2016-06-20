@@ -799,43 +799,72 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController pushViewController:loginVC animated:YES];
     } else {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
         
-        NSString *API = _blogDetails.favorite? OSCAPI_FAVORITE_DELETE: OSCAPI_FAVORITE_ADD;
-        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
-           parameters:@{
-                        @"uid":   @([Config getOwnID]),
-                        @"objid": @(_blogDetails.id),
-                        @"type":  @(3)
-                        }
-              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-                  ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
-                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-                  
-                  MBProgressHUD *HUD = [Utils createHUD];
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  
-                  if (errorCode == 1) {
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.labelText = _blogDetails.favorite? @"删除收藏成功": @"添加收藏成功";
-                      
-                      _blogDetails.favorite = !_blogDetails.favorite;
-                  } else {
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                  }
-                  
-                  [self favButtonImage];
-                  [HUD hide:YES afterDelay:1];
-              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  MBProgressHUD *HUD = [Utils createHUD];
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = @"网络异常，操作失败";
-                  
-                  [HUD hide:YES afterDelay:1];
-              }];
+        [manger POST:[NSString stringWithFormat:@"%@/favorite_reverse", OSCAPI_V2_PREFIX]
+          parameters:@{
+                       @"id"   : @(_blogDetails.id),
+                       @"type" : @(3)
+                       }
+            success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                
+                _blogDetails.favorite = [responseObject[@"favorite"] boolValue];
+                MBProgressHUD *HUD = [Utils createHUD];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.labelText = _blogDetails.favorite? @"收藏成功": @"取消收藏";
+
+                [HUD hide:YES afterDelay:1];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self favButtonImage];
+                    [self.tableView reloadData];
+                });
+            }
+            failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                MBProgressHUD *HUD = [Utils createHUD];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                HUD.labelText = @"网络异常，操作失败";
+
+                [HUD hide:YES afterDelay:1];
+            }];
+        /* 旧版收藏 */
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+//        
+//        NSString *API = _blogDetails.favorite? OSCAPI_FAVORITE_DELETE: OSCAPI_FAVORITE_ADD;
+//        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
+//           parameters:@{
+//                        @"uid":   @([Config getOwnID]),
+//                        @"objid": @(_blogDetails.id),
+//                        @"type":  @(3)
+//                        }
+//              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+//                  ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+//                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+//                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+//                  
+//                  MBProgressHUD *HUD = [Utils createHUD];
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  
+//                  if (errorCode == 1) {
+//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+//                      HUD.labelText = _blogDetails.favorite? @"删除收藏成功": @"添加收藏成功";
+//                      
+//                      _blogDetails.favorite = !_blogDetails.favorite;
+//                  } else {
+//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+//                  }
+//                  
+//                  [self favButtonImage];
+//                  [HUD hide:YES afterDelay:1];
+//              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  MBProgressHUD *HUD = [Utils createHUD];
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.labelText = @"网络异常，操作失败";
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//              }];
     }
 }
 

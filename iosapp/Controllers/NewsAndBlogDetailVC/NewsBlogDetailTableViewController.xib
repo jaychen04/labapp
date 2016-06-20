@@ -42,17 +42,6 @@
                                 <outlet property="delegate" destination="iN0-l3-epB" id="umh-tv-oP8"/>
                             </connections>
                         </textField>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahw-Hk-pPc">
-                            <rect key="frame" x="564" y="13" width="20" height="20"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="20" id="XOp-rr-jgY"/>
-                                <constraint firstAttribute="width" constant="20" id="xT7-Bv-1dI"/>
-                            </constraints>
-                            <state key="normal" image="ic_share_black_pressed"/>
-                            <connections>
-                                <action selector="share:" destination="-1" eventType="touchUpInside" id="Kr2-QO-u5t"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L81-8N-ycw">
                             <rect key="frame" x="528" y="13" width="20" height="20"/>
                             <constraints>
@@ -62,6 +51,17 @@
                             <state key="normal" image="ic_fav_pressed"/>
                             <connections>
                                 <action selector="collected:" destination="-1" eventType="touchUpInside" id="oKl-XP-ftH"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ahw-Hk-pPc">
+                            <rect key="frame" x="564" y="13" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="XOp-rr-jgY"/>
+                                <constraint firstAttribute="width" constant="20" id="xT7-Bv-1dI"/>
+                            </constraints>
+                            <state key="normal" image="ic_share_black_pressed"/>
+                            <connections>
+                                <action selector="share:" destination="-1" eventType="touchUpInside" id="Kr2-QO-u5t"/>
                             </connections>
                         </button>
                     </subviews>

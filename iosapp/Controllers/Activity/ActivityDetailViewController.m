@@ -11,6 +11,7 @@
 #import "ActivityDetailCell.h"
 #import "PresentMembersViewController.h"
 #import "ActivitySignUpViewController.h"
+#import "LoginViewController.h"
 
 #import "Utils.h"
 #import "Config.h"
@@ -164,7 +165,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
-        return 204;
+        return 210;
     } else {
         if (indexPath.row == 4) {
 //            UITextView *bodyView = [UITextView new];
@@ -266,14 +267,21 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 #pragma mark - button clicked
 
 - (IBAction)clickedButton:(UIButton *)sender {
-    if (sender.tag == 1) {
-        //收藏
-        [self postFav];
-    } else if (sender.tag == 2){
-        //报名
-        NSLog(@"add");
-        [self enrollActivity];
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    } else {
+        if (sender.tag == 1) {
+            //收藏
+            [self postFav];
+        } else if (sender.tag == 2){
+            //报名
+            NSLog(@"add");
+            [self enrollActivity];
+        }
     }
+    
 }
 
 - (void)setFavButtonAction:(BOOL)isStarted
@@ -292,41 +300,70 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 #pragma mark - fav
 - (void)postFav
 {
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     
-    NSString *API = self.isFav? OSCAPI_FAVORITE_DELETE: OSCAPI_FAVORITE_ADD;
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
-       parameters:@{
-                    @"uid":   @([Config getOwnID]),
-                    @"objid": @(self.activityID),
-                    @"type":  @(2)
-                    }
-          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
-              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-              NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-              
-              MBProgressHUD *HUD = [Utils createHUD];
-              HUD.mode = MBProgressHUDModeCustomView;
-              
-              if (errorCode == 1) {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = self.isFav? @"删除收藏成功": @"添加收藏成功";
-                  self.isFav = !self.isFav;
-              } else {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-              }
-              [self setFavButtonAction:self.isFav];
-              [HUD hide:YES afterDelay:1];
-          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              MBProgressHUD *HUD = [Utils createHUD];
-              HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.labelText = @"网络异常，操作失败";
-              
-              [HUD hide:YES afterDelay:1];
-          }];
+    [manger POST:[NSString stringWithFormat:@"%@/favorite_reverse", OSCAPI_V2_PREFIX]
+      parameters:@{
+                   @"id"   : @(_activityDetail.id),
+                   @"type" : @(5)
+                   }
+         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+             
+             _activityDetail.favorite = [responseObject[@"favorite"] boolValue];
+             MBProgressHUD *HUD = [Utils createHUD];
+             HUD.mode = MBProgressHUDModeCustomView;
+             HUD.labelText = _activityDetail.favorite? @"收藏成功": @"取消收藏";
+             
+             [HUD hide:YES afterDelay:1];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self setFavButtonAction:_activityDetail.favorite];
+                 [self.tableView reloadData];
+             });
+         }
+         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+             MBProgressHUD *HUD = [Utils createHUD];
+             HUD.mode = MBProgressHUDModeCustomView;
+             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+             HUD.labelText = @"网络异常，操作失败";
+             
+             [HUD hide:YES afterDelay:1];
+         }];
+    /* 旧版收藏 */
+//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+//    
+//    NSString *API = self.isFav? OSCAPI_FAVORITE_DELETE: OSCAPI_FAVORITE_ADD;
+//    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
+//       parameters:@{
+//                    @"uid":   @([Config getOwnID]),
+//                    @"objid": @(self.activityID),
+//                    @"type":  @(2)
+//                    }
+//          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+//              ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
+//              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+//              NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+//              
+//              MBProgressHUD *HUD = [Utils createHUD];
+//              HUD.mode = MBProgressHUDModeCustomView;
+//              
+//              if (errorCode == 1) {
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+//                  HUD.labelText = self.isFav? @"删除收藏成功": @"添加收藏成功";
+//                  self.isFav = !self.isFav;
+//              } else {
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+//              }
+//              [self setFavButtonAction:self.isFav];
+//              [HUD hide:YES afterDelay:1];
+//          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//              MBProgressHUD *HUD = [Utils createHUD];
+//              HUD.mode = MBProgressHUDModeCustomView;
+//              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              HUD.labelText = @"网络异常，操作失败";
+//              
+//              [HUD hide:YES afterDelay:1];
+//          }];
 }
 
 #pragma mark - 报名
