@@ -19,6 +19,7 @@
 
 @property (nonatomic, strong) UIView *currentContainer;
 
+@property (nonatomic, assign) BOOL isQuestion;
 @property (nonatomic, strong) OSCBlogDetailComment *comment;
 
 @end

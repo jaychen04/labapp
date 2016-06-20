@@ -61,8 +61,12 @@
     [self.contentView addSubview:_currentContainer];
 
     _commentButton = [UIButton new];
-    [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
     [self.contentView addSubview:_commentButton];
+    if (_isQuestion) {
+        [_commentButton setImage:[UIImage imageNamed:@"label_best_answer"] forState:UIControlStateNormal];
+    } else {
+        [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
+    }
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _currentContainer, _contentLabel, _commentButton);
@@ -79,15 +83,21 @@
                                                                              metrics:nil views:views]];
     
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentButton(20)]"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentButton]"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
-    
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(30)]-10-|"
+    if (_isQuestion) {
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(67)]|"
+                                                                                 options:0
+                                                                                 metrics:nil
+                                                                                   views:views]];
+    } else {
+        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(30)]-10-|"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
+    }
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_currentContainer]-16-|"
                                                                              options:0

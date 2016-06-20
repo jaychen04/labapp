@@ -28,4 +28,10 @@
 
 @property (nonatomic, assign) NSInteger viewCount;
 
+@property (nonatomic, copy) NSString *href;
+
+@property (nonatomic, assign) BOOL favorite;
+
+@property (nonatomic, strong) NSArray *tags;
+
 @end
