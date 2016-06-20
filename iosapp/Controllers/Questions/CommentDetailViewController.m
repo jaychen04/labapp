@@ -9,7 +9,7 @@
 #import "CommentDetailViewController.h"
 #import "QuestCommentHeadDetailCell.h"
 
-
+#import "Utils.h"
 static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetailCell";
 @interface CommentDetailViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -18,6 +18,11 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 @property (weak, nonatomic) IBOutlet UIButton *commentButton;
 @property (weak, nonatomic) IBOutlet UIButton *favButton;
 
+@property (nonatomic, strong) UIView *popUpBoxView;
+@property (nonatomic, strong) UIButton *upImageView;
+@property (nonatomic, strong) UILabel *upLabel;
+@property (nonatomic, strong) UIButton *downImageView;
+@property (nonatomic, strong) UILabel *downLabel;
 @end
 
 @implementation CommentDetailViewController
@@ -44,14 +49,108 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 #pragma mark - 右导航栏按钮
 - (void)rightBarButtonClicked
 {
-    //右侧踩或者赞
+    //
+    NSLog(@"右导航栏按钮");
 }
 
-#pragma makr- UITableViewDelegate
+#pragma mark - 自定义弹出框
+- (void)customPopUpBoxView
+{
+    UIWindow *selfWindow = [UIApplication sharedApplication].keyWindow;
+    _popUpBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    _popUpBoxView.backgroundColor = [UIColor colorWithHex:0x000000 alpha:0.5];
+    [selfWindow addSubview:_popUpBoxView];
+    
+    UIView *subView = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-240)/2, (CGRectGetHeight(self.view.frame)-200)/2, 240, 120)];
+    subView.backgroundColor = [UIColor whiteColor];
+    [subView setCornerRadius:3.0];
+    [_popUpBoxView addSubview:subView];
+    
+    UILabel *label = [UILabel new];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.font = [UIFont systemFontOfSize:15];
+    label.textColor = [UIColor newSecondTextColor];
+    label.text = @"为这个回答投票";
+    [subView addSubview:label];
+    
+    _upImageView = [UIButton new];
+    [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_normal"] forState:UIControlStateNormal];
+    [subView addSubview:_upImageView];
+    [_upImageView addTarget:self action:@selector(voteUpQuestions:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _upLabel = [UILabel new];
+    _upLabel.textAlignment = NSTextAlignmentCenter;
+    _upLabel.font = [UIFont systemFontOfSize:13];
+    _upLabel.textColor = [UIColor newAssistTextColor];
+    _upLabel.text = @"顶";
+    [subView addSubview:_upLabel];
+    
+    _downImageView = [UIButton new];
+    [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_normal"] forState:UIControlStateNormal];
+    [subView addSubview:_downImageView];
+    [_downImageView addTarget:self action:@selector(voteDownQuestions:) forControlEvents:UIControlEventTouchUpInside];
+    
+    _downLabel = [UILabel new];
+    _downLabel.textAlignment = NSTextAlignmentCenter;
+    _downLabel.font = [UIFont systemFontOfSize:13];
+    _downLabel.textColor = [UIColor newAssistTextColor];
+    _downLabel.text = @"踩";
+    [subView addSubview:_downLabel];
+    
+    
+    for (UIView *view in subView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+    NSDictionary *views = NSDictionaryOfVariableBindings(label, _upImageView, _upLabel, _downImageView, _downLabel);
+    [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[label]"
+                                                                    options:NSLayoutFormatAlignAllCenterY
+                                                                    metrics:nil views:views]];
+    [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[label]-16-|"
+                                                                    options:0
+                                                                    metrics:nil views:views]];
+    
+    [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label]-10-[_upImageView(45)]-10-[_upLabel]"
+                                                                    options:0
+                                                                    metrics:nil views:views]];
+    
+    [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[label]-10-[_downImageView(45)]-10-[_downLabel]"
+                                                                    options:0
+                                                                    metrics:nil views:views]];
+    
+    [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-55-[_upImageView(45)]-40-[_downImageView(45)]"
+                                                                             options:0
+                                                                             metrics:nil views:views]];
+    [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-55-[_upLabel(45)]-40-[_downLabel(45)]"
+                                                                    options:0
+                                                                    metrics:nil views:views]];
+}
+
+#pragma mark - 顶
+
+- (void)voteUpQuestions:(UIButton *)button
+{
+    NSLog(@"顶");
+    [_popUpBoxView removeFromSuperview];
+}
+
+#pragma mark - 踩
+- (void)voteDownQuestions:(UIButton *)button
+{
+    NSLog(@"踩");
+    
+    [_popUpBoxView removeFromSuperview];
+}
+
+#pragma MARK - 踩/顶
+- (void)roteUpOrDown
+{
+    [self customPopUpBoxView];
+}
+
+#pragma mark - UITableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
         QuestCommentHeadDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:CommentHeadDetailCellIdentifier forIndexPath:indexPath];
+        [cell.downOrUpButton addTarget:self action:@selector(roteUpOrDown) forControlEvents:UIControlEventTouchUpInside];
         
         return cell;
     }

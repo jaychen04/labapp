@@ -46,6 +46,9 @@
                                 <constraint firstAttribute="width" constant="20" id="Fjc-IR-g8P"/>
                             </constraints>
                             <state key="normal" image="ic_fav_pressed"/>
+                            <connections>
+                                <action selector="buttonClick:" destination="-1" eventType="touchUpInside" id="07J-xX-zBY"/>
+                            </connections>
                         </button>
                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cpn-Zo-eXx">
                             <rect key="frame" x="564" y="14" width="20" height="20"/>
@@ -54,6 +57,9 @@
                                 <constraint firstAttribute="width" constant="20" id="BAZ-c9-C7E"/>
                             </constraints>
                             <state key="normal" image="ic_share_black_pressed"/>
+                            <connections>
+                                <action selector="buttonClick:" destination="-1" eventType="touchUpInside" id="scP-XS-0TI"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
