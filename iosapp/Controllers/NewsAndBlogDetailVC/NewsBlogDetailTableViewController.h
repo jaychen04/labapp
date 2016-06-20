@@ -18,6 +18,7 @@
 
 @property (nonatomic)BOOL isBlogDetail;
 @property (nonatomic)int64_t blogId;
+@property (nonatomic)int64_t newsId;
 
 - (instancetype)initWithBlogId:(NSInteger) blogId isBlogDetail:(BOOL) isBlogDetail;
 

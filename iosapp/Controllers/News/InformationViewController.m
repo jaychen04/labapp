@@ -58,7 +58,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     if (self) {
         __weak InformationViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-//            OSCAPI_PREFIX_15
             return [NSString stringWithFormat:@"%@news",OSCAPI_V2_PREFIX];
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
@@ -112,7 +111,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 
 -(void)getBannerData{
-//    OSCAPI_PREFIX_15
     NSString* urlStr = [NSString stringWithFormat:@"%@banner",OSCAPI_V2_PREFIX];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:urlStr
@@ -183,7 +181,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [tableView fd_heightForCellWithIdentifier:informationReuseIdentifier configuration:^(InformationTableViewCell* cell) {
         cell.systemTimeDate = _systemDate;
         cell.viewModel = self.dataModels[indexPath.row];
@@ -260,6 +258,12 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             info.id = model.id;
             DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithInfo:info];
             [self.navigationController pushViewController:detailsViewController animated:YES];
+            
+            //新版资讯详情界面
+//            NewsBlogDetailTableViewController *newsBlogDetailVc =[NewsBlogDetailTableViewController new];
+//            newsBlogDetailVc.newsId = info.id;
+//            newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             break;
         }
        

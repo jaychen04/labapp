@@ -76,6 +76,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     }
     return self;
 }
+
 - (void)showHubView {
     UIView *coverView = [[UIView alloc]initWithFrame:self.view.bounds];
     coverView.backgroundColor = [UIColor whiteColor];
@@ -113,9 +114,16 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     
     // 添加等待动画
     [self showHubView];
-    
-    [self getBlogData];
-    
+    //只有博客才提供举报功能，新闻不提供
+    if (_isBlogDetail) {
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more_normal"]
+                                                                                  style:UIBarButtonItemStylePlain
+                                                                                 target:self
+                                                                                 action:@selector(rightBarButtonClicked)];
+        [self getBlogData];
+    }else {
+        [self getNewsData];
+    }
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShow:)
@@ -125,11 +133,6 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more_normal"]
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(rightBarButtonClicked)];
     
 }
 
@@ -200,13 +203,42 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [self.view removeGestureRecognizer:_tap];
 }
 
-#pragma mark - 获取数据
+#pragma mark - 获取博客详情
 
 -(void)getBlogData{
     //@"http://192.168.1.15:8000/action/apiv2/blog?id=179590"
     NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@blog?id=%lld", OSCAPI_V2_PREFIX, self.blogId];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:blogDetailUrlStr
+     parameters:nil
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            
+            if ([responseObject[@"code"]integerValue] == 1) {
+                _blogDetails = [OSCBlogDetail mj_objectWithKeyValues:responseObject[@"result"]];
+                _blogDetailRecommends = [OSCBlogDetailRecommend mj_objectArrayWithKeyValuesArray:_blogDetails.abouts];
+                _blogDetailComments = [OSCBlogDetailComment mj_objectArrayWithKeyValuesArray:_blogDetails.comments];
+                
+                NSDictionary *data = @{@"content":  _blogDetails.body};
+                _blogDetails.body = [Utils HTMLWithData:data
+                                          usingTemplate:@"blog"];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self favButtonImage];
+                [self.tableView reloadData];
+            });
+        }
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+        }];
+}
+
+#pragma mark - 获取资讯详情
+
+-(void)getNewsData{
+    //@"http://192.168.1.15:8000/action/apiv2/blog?id=179590"
+    NSString *newsDetailUrlStr = [NSString stringWithFormat:@"%@news?id=%lld", OSCAPI_V2_PREFIX, self.newsId];
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manger GET:newsDetailUrlStr
      parameters:nil
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             
