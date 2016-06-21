@@ -17,6 +17,7 @@
 #import "UserDetailsViewController.h"
 #import "TweetDetailNewTableViewController.h"
 
+#import <UITableView+FDTemplateLayoutCell.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
 

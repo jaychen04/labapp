@@ -104,6 +104,9 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
             NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
             self.bannerModels = bannerModels.mutableCopy;
             self.bannerView.banners = self.bannerModels.mutableCopy;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+            });
         }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             NSLog(@"%@",error);
@@ -180,12 +183,12 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 #pragma mark - tableView datasource && delegate 
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _activitys.count;
+    return self.activitys.count;
 }
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OSCActivityTableViewCell* cell = [OSCActivityTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:activityReuseIdentifier];
     
-    cell.viewModel = _activitys[indexPath.row];
+    cell.viewModel = self.activitys[indexPath.row];
     
     cell.contentView.backgroundColor = [UIColor newCellColor];
     cell.backgroundColor = [UIColor themeColor];
@@ -197,7 +200,11 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return [tableView fd_heightForCellWithIdentifier:activityReuseIdentifier configuration:^(OSCActivityTableViewCell *cell) {
-        cell.viewModel = _activitys[indexPath.row];
+        cell.viewModel = self.activitys[indexPath.row];
+        cell.contentView.backgroundColor = [UIColor newCellColor];
+        cell.backgroundColor = [UIColor themeColor];
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     }];
 }
 
