@@ -104,6 +104,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self setFavButtonAction:_activityDetail.favorite];
+                     [self setApplyButton:_activityDetail.applyStatus];
                      [self.tableView reloadData];
                  });
              }
@@ -297,6 +298,50 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
     }
 }
 
+- (void)setApplyButton:(ApplyStatus)appStatus
+{
+    switch (appStatus) {
+        case ApplyStatusUnSignUp://未报名
+        {
+            [_addButton setTitle:@"报名" forState:UIControlStateNormal];
+            _addButton.enabled = YES;
+            break;
+        }
+        case ApplyStatusAudited://审核中
+        {
+            [_addButton setTitle:@"审核中" forState:UIControlStateNormal];
+            _addButton.enabled = NO;
+            break;
+        }
+        case ApplyStatusDetermined://已经确认
+        {
+            [_addButton setTitle:@"已确认" forState:UIControlStateNormal];
+            _addButton.enabled = NO;
+            break;
+        }
+        case ApplyStatusAttended://已经出席
+        {
+            [_addButton setTitle:@"已出席" forState:UIControlStateNormal];
+            _addButton.enabled = NO;
+            break;
+        }
+        case ApplyStatusCanceled://已取消
+        {
+            [_addButton setTitle:@"已取消" forState:UIControlStateNormal];
+            _addButton.enabled = NO;
+            break;
+        }
+        case ApplyStatusRejected://已拒绝
+        {
+            [_addButton setTitle:@"已拒绝" forState:UIControlStateNormal];
+            _addButton.enabled = NO;
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 #pragma mark - fav
 - (void)postFav
 {
@@ -309,7 +354,11 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
                    }
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
              
-             _activityDetail.favorite = [responseObject[@"favorite"] boolValue];
+             if ([responseObject[@"code"] integerValue]== 1) {
+                 _activityDetail.favorite = [responseObject[@"result"][@"favorite"] boolValue];
+             }
+             
+             
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
              HUD.labelText = _activityDetail.favorite? @"收藏成功": @"取消收藏";
@@ -373,7 +422,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
     if (_activityDetail.type == ActivityTypeBelow) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_activityDetail.href]];
     } else {
-        if (_activityDetail.type == ActivityTypeTechnical) {
+        if (_activityDetail.applyStatus == ApplyStatusAttended) {
             PresentMembersViewController *presentMembersViewController = [[PresentMembersViewController alloc] initWithEventID:_activityDetail.id];
             [self.navigationController pushViewController:presentMembersViewController animated:YES];
         } else {

@@ -76,7 +76,7 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
                                                                              target:self
                                                                              action:@selector(rightBarButtonClicked)];
     [self getDetailForQuestion];
-//    [self getCommentsForQuestion:NO];/* 待调试 */
+    [self getCommentsForQuestion:NO];/* 待调试 */
 }
 
 - (void)didReceiveMemoryWarning {
@@ -127,7 +127,7 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
                 //
                 NSDictionary* result = responseObject[@"result"];
                 NSArray* JsonItems = result[@"items"];
-                NSArray *models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
+                NSArray *models = [OSCBlogDetailComment mj_objectArrayWithKeyValuesArray:JsonItems];
                 _nextPageToken = result[@"nextPageToken"];
                 if (isRefresh) {
                     [_comments removeAllObjects];
@@ -165,9 +165,9 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
         QuesAnsDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:quesAnsDetailHeadReuseIdentifier forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-//        cell.questioinDetail = _questionDetail;
-//        cell.contentWebView.delegate = self;
-//        [cell.contentWebView loadHTMLString:_questionDetail.body baseURL:[NSBundle mainBundle].resourceURL];
+        cell.questioinDetail = _questionDetail;
+        cell.contentWebView.delegate = self;
+        [cell.contentWebView loadHTMLString:_questionDetail.body baseURL:[NSBundle mainBundle].resourceURL];
         
         return cell;
         
@@ -202,10 +202,9 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
         
         label.text = _questionDetail.title;
         CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-        
         height += _webViewHeight;
         
-        return 80 + height;
+        return 83 + height;
     } else if (indexPath.section == 1) {
         return 100;
     }
@@ -252,7 +251,7 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 {
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
     if (_webViewHeight == webViewHeight) {return;}
-    _webViewHeight = webViewHeight;
+    _webViewHeight = webViewHeight + 5;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
@@ -409,14 +408,21 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
     //收藏
     NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@favorite_reverse", OSCAPI_V2_PREFIX];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
-    [manger GET:blogDetailUrlStr
+    [manger POST:blogDetailUrlStr
      parameters:@{
                   @"id"  : @(self.questionID),
                   @"type"      : @(2),
                   }
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            NSLog(@"respons = %@", responseObject);
-            _questionDetail.favorite = [responseObject[@"favorite"] boolValue];
+            if ([responseObject[@"code"] integerValue]== 1) {
+                _questionDetail.favorite = [responseObject[@"result"][@"favorite"] boolValue];
+            }
+            
+            MBProgressHUD *HUD = [Utils createHUD];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.labelText = _questionDetail.favorite? @"收藏成功": @"取消收藏";
+            
+            [HUD hide:YES afterDelay:1];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self setFavButtonImage:_questionDetail.favorite];
