@@ -30,6 +30,7 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"QuestCommentHeadDetailCell" bundle:nil] forCellReuseIdentifier:CommentHeadDetailCellIdentifier];
@@ -57,11 +58,11 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 - (void)customPopUpBoxView
 {
     UIWindow *selfWindow = [UIApplication sharedApplication].keyWindow;
-    _popUpBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame))];
+    _popUpBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(selfWindow.frame), CGRectGetHeight(selfWindow.frame))];
     _popUpBoxView.backgroundColor = [UIColor colorWithHex:0x000000 alpha:0.5];
     [selfWindow addSubview:_popUpBoxView];
     
-    UIView *subView = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame)-240)/2, (CGRectGetHeight(self.view.frame)-200)/2, 240, 120)];
+    UIView *subView = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(selfWindow.frame)-240)/2, (CGRectGetHeight(selfWindow.frame)-200)/2, 240, 120)];
     subView.backgroundColor = [UIColor whiteColor];
     [subView setCornerRadius:3.0];
     [_popUpBoxView addSubview:subView];
