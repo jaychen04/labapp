@@ -54,6 +54,9 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
 
     _titleLabel.textColor = [UIColor newTitleColor];
     
+//    NSString *pubDateString = [viewModel.pubDate componentsSeparatedByString:@" "][0];
+//    NSString *systemDateString = [_systemTimeDate componentsSeparatedByString:@" "][0];
+    
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSDate* date = [formatter dateFromString:viewModel.pubDate];
@@ -63,7 +66,7 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     int timeSecond = [systemDate timeIntervalSince1970] - [date timeIntervalSince1970];
     int subTime = [systemDate timeIntervalSince1970] - [subDate timeIntervalSince1970];
     
-    if (timeSecond < subTime) {//"推荐"新闻
+    if (timeSecond <= subTime) {//"推荐"新闻
         _recommendImageView.hidden = NO;
         _titleLabel.text = [NSString stringWithFormat:@"     %@",viewModel.title];
     } else{//不是"推荐"新闻 普通新闻

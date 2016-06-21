@@ -43,7 +43,7 @@
     _titleLable.text = activity.title;
     _authorLabel.text = [NSString stringWithFormat:@"发起人：%@", activity.author];
     _catalogLabel.text = [self categoryString:activity];
-    _applyLabel.text = [NSString stringWithFormat:@"%ld人参与", (long)activity.viewCount];
+    _applyLabel.text = [NSString stringWithFormat:@"%ld人参与", activity.applyCount];
     
     [self typeActivityStatus:activity];
 }
