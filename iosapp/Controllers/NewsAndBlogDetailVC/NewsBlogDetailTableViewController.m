@@ -776,7 +776,10 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                        }
             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                 
-                _blogDetails.favorite = [responseObject[@"favorite"] boolValue];
+                if ([responseObject[@"code"] integerValue]== 1) {
+                    _blogDetails.favorite = [responseObject[@"result"][@"favorite"] boolValue];
+                }
+                
                 MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.labelText = _blogDetails.favorite? @"收藏成功": @"取消收藏";

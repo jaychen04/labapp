@@ -127,7 +127,7 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
                 //
                 NSDictionary* result = responseObject[@"result"];
                 NSArray* JsonItems = result[@"items"];
-                NSArray *models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
+                NSArray *models = [OSCBlogDetailComment mj_objectArrayWithKeyValuesArray:JsonItems];
                 _nextPageToken = result[@"nextPageToken"];
                 if (isRefresh) {
                     [_comments removeAllObjects];
@@ -415,8 +415,15 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
                   @"type"      : @(2),
                   }
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            NSLog(@"respons = %@", responseObject);
-            _questionDetail.favorite = [responseObject[@"favorite"] boolValue];
+            if ([responseObject[@"code"] integerValue]== 1) {
+                _questionDetail.favorite = [responseObject[@"result"][@"favorite"] boolValue];
+            }
+            
+            MBProgressHUD *HUD = [Utils createHUD];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.labelText = _questionDetail.favorite? @"收藏成功": @"取消收藏";
+            
+            [HUD hide:YES afterDelay:1];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self setFavButtonImage:_questionDetail.favorite];

@@ -309,7 +309,11 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
                    }
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
              
-             _activityDetail.favorite = [responseObject[@"favorite"] boolValue];
+             if ([responseObject[@"code"] integerValue]== 1) {
+                 _activityDetail.favorite = [responseObject[@"result"][@"favorite"] boolValue];
+             }
+             
+             
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
              HUD.labelText = _activityDetail.favorite? @"收藏成功": @"取消收藏";
