@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -28,11 +28,18 @@
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O1m-u6-rD9">
+                        <rect key="frame" x="0.0" y="0.0" width="342" height="57"/>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="O1m-u6-rD9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="7bM-9e-U2L"/>
                     <constraint firstItem="44s-Km-JNc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="DY7-NT-xRw"/>
                     <constraint firstAttribute="trailingMargin" secondItem="QRE-VA-nxe" secondAttribute="trailing" constant="8" id="HdJ-Fc-uyX"/>
                     <constraint firstItem="QRE-VA-nxe" firstAttribute="centerY" secondItem="44s-Km-JNc" secondAttribute="centerY" id="Sj1-WD-USQ"/>
+                    <constraint firstAttribute="bottom" secondItem="O1m-u6-rD9" secondAttribute="bottom" id="TTp-5m-kf4"/>
+                    <constraint firstItem="O1m-u6-rD9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="anl-tw-vr4"/>
+                    <constraint firstAttribute="trailing" secondItem="O1m-u6-rD9" secondAttribute="trailing" id="bmn-yo-yBP"/>
                     <constraint firstItem="44s-Km-JNc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="iXn-3P-rx3"/>
                     <constraint firstItem="QRE-VA-nxe" firstAttribute="leading" secondItem="44s-Km-JNc" secondAttribute="trailing" constant="8" id="r6c-Xg-kXH"/>
                 </constraints>
@@ -40,6 +47,7 @@
             <connections>
                 <outlet property="nameLabel" destination="QRE-VA-nxe" id="3Zp-f2-i5m"/>
                 <outlet property="portraitIv" destination="44s-Km-JNc" id="NnZ-4w-R1A"/>
+                <outlet property="touchButton" destination="O1m-u6-rD9" id="074-8o-YIK"/>
             </connections>
             <point key="canvasLocation" x="325" y="364"/>
         </tableViewCell>
