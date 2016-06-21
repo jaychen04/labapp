@@ -200,13 +200,13 @@
     } else {
         if (_postDetails.applyStatus == 2) {
             PresentMembersViewController *presentMembersViewController = [[PresentMembersViewController alloc] initWithEventID:_postDetails.postID];
-            [_bottomBarVC.navigationController pushViewController:presentMembersViewController animated:YES];
+            [self.navigationController pushViewController:presentMembersViewController animated:YES];
         } else {
             ActivitySignUpViewController *signUpViewController = [ActivitySignUpViewController new];
             signUpViewController.eventId = _postDetails.postID;
             signUpViewController.remarkTipStr = _activity.remarkTip;
             signUpViewController.remarkCitys = _activity.remarkCitys;
-            [_bottomBarVC.navigationController pushViewController:signUpViewController animated:YES];
+            [self.navigationController pushViewController:signUpViewController animated:YES];
         }
     }
 }
