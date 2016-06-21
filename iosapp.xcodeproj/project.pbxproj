@@ -75,6 +75,9 @@
 		31855C8B1D0E621F00C8F8B8 /* TweetDetailNewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31855C821D0E621F00C8F8B8 /* TweetDetailNewTableViewController.m */; };
 		31855C8C1D0E621F00C8F8B8 /* TweetLikeNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31855C841D0E621F00C8F8B8 /* TweetLikeNewCell.m */; };
 		31855C8D1D0E621F00C8F8B8 /* TweetLikeNewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31855C851D0E621F00C8F8B8 /* TweetLikeNewCell.xib */; };
+		31A06E961D18E34600E2DB8F /* OSCInformationDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A06E951D18E34600E2DB8F /* OSCInformationDetails.m */; };
+		31A06E9A1D192D7300E2DB8F /* RelatedSoftWareCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A06E981D192D7300E2DB8F /* RelatedSoftWareCell.m */; };
+		31A06E9B1D192D7300E2DB8F /* RelatedSoftWareCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31A06E991D192D7300E2DB8F /* RelatedSoftWareCell.xib */; };
 		31A338F11AF8683E0037B37F /* TeamActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */; };
 		31ABF5811B0F1B5300663C08 /* JKAlertDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 31ABF5801B0F1B5300663C08 /* JKAlertDialog.m */; };
 		31B6F1921AF78A8B00DC28FE /* TeamIssueDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F1911AF78A8B00DC28FE /* TeamIssueDetailCell.m */; };
@@ -407,6 +410,11 @@
 		31855C831D0E621F00C8F8B8 /* TweetLikeNewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetLikeNewCell.h; sourceTree = "<group>"; };
 		31855C841D0E621F00C8F8B8 /* TweetLikeNewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetLikeNewCell.m; sourceTree = "<group>"; };
 		31855C851D0E621F00C8F8B8 /* TweetLikeNewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetLikeNewCell.xib; sourceTree = "<group>"; };
+		31A06E941D18E34600E2DB8F /* OSCInformationDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformationDetails.h; sourceTree = "<group>"; };
+		31A06E951D18E34600E2DB8F /* OSCInformationDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformationDetails.m; sourceTree = "<group>"; };
+		31A06E971D192D7300E2DB8F /* RelatedSoftWareCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RelatedSoftWareCell.h; sourceTree = "<group>"; };
+		31A06E981D192D7300E2DB8F /* RelatedSoftWareCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RelatedSoftWareCell.m; sourceTree = "<group>"; };
+		31A06E991D192D7300E2DB8F /* RelatedSoftWareCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RelatedSoftWareCell.xib; sourceTree = "<group>"; };
 		31A338EF1AF8683E0037B37F /* TeamActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamActivityDetailViewController.h; sourceTree = "<group>"; };
 		31A338F01AF8683E0037B37F /* TeamActivityDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamActivityDetailViewController.m; sourceTree = "<group>"; };
 		31ABF57F1B0F1B5300663C08 /* JKAlertDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JKAlertDialog.h; sourceTree = "<group>"; };
@@ -1170,6 +1178,9 @@
 				317F88991D05698700BD931F /* ContentWebViewCell.h */,
 				317F889A1D05698800BD931F /* ContentWebViewCell.m */,
 				317F889B1D05698800BD931F /* ContentWebViewCell.xib */,
+				31A06E971D192D7300E2DB8F /* RelatedSoftWareCell.h */,
+				31A06E981D192D7300E2DB8F /* RelatedSoftWareCell.m */,
+				31A06E991D192D7300E2DB8F /* RelatedSoftWareCell.xib */,
 			);
 			path = NewsAndBlogDetailVC;
 			sourceTree = "<group>";
@@ -1689,6 +1700,8 @@
 				04D47F3F1CF312D200F14EF2 /* OSCInformation.m */,
 				382F5EB41A036EE500A8EF11 /* OSCNewsDetails.h */,
 				382F5EB51A036EE500A8EF11 /* OSCNewsDetails.m */,
+				31A06E941D18E34600E2DB8F /* OSCInformationDetails.h */,
+				31A06E951D18E34600E2DB8F /* OSCInformationDetails.m */,
 			);
 			name = News;
 			sourceTree = "<group>";
@@ -2260,6 +2273,7 @@
 				31212ECC1D0E670100FA17B1 /* TweetsDetailNewCell.xib in Resources */,
 				EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
+				31A06E9B1D192D7300E2DB8F /* RelatedSoftWareCell.xib in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				317F889D1D05698800BD931F /* ContentWebViewCell.xib in Resources */,
 				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
@@ -2403,6 +2417,7 @@
 				C5FB95851AEA1D51006918CD /* TeamDiscussionViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
 				31697BCA1B16FB0E001FE346 /* MZDay.m in Sources */,
+				31A06E9A1D192D7300E2DB8F /* RelatedSoftWareCell.m in Sources */,
 				38590C1D1A1240E5008E2CFA /* UIImageView+Util.m in Sources */,
 				3838D1AD1A6F463E00CC7913 /* RandomMessageCell.m in Sources */,
 				38BC204D1A07643A00B8BB16 /* OSCPostDetails.m in Sources */,
@@ -2428,6 +2443,7 @@
 				00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */,
 				C5E56F4E1B56AFB50059924C /* RootViewController.m in Sources */,
 				38A93FA91AA31DB400A515E8 /* MessageCenter.m in Sources */,
+				31A06E961D18E34600E2DB8F /* OSCInformationDetails.m in Sources */,
 				31697BC21B16E496001FE346 /* TeamCalendarView.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */,

@@ -17,9 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *favButton;
 
 @property (nonatomic)BOOL isBlogDetail;
-@property (nonatomic)int64_t blogId;
-@property (nonatomic)int64_t newsId;
 
-- (instancetype)initWithBlogId:(NSInteger) blogId isBlogDetail:(BOOL) isBlogDetail;
 
+//- (instancetype)initWithBlogId:(NSInteger) blogId isBlogDetail:(BOOL) isBlogDetail;
+- (instancetype)initWithObjectId:(NSInteger) objectId isBlogDetail:(BOOL) isBlogDetail;
 @end

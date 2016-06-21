@@ -276,7 +276,7 @@ static const double accelerationThreshold = 2.0f;
             OSCBlog *blog = [OSCBlog new];
             blog.blogID = _randomMessage.randomMessageID;
             
-            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithBlogId:blog.blogID isBlogDetail:YES];
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:blog.blogID isBlogDetail:YES];
             newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             
