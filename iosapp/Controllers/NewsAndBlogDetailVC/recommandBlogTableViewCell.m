@@ -28,4 +28,7 @@
     _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)abouts.commentCount];
 }
 
+- (void)setNewsRelatedSoftWareStr:(NSString *)newsRelatedSoftWareStr {
+    _titleLabel.text = newsRelatedSoftWareStr;
+}
 @end

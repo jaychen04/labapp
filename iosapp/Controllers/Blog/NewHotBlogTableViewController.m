@@ -181,7 +181,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                           [_newestBlogObjects removeAllObjects];
                       }
                       [_newestBlogObjects addObjectsFromArray:blogModels];
-                      self.lastCell.status = blogModels.count<20?LastCellStatusFinished:LastCellStatusMore;
+                      self.lastCell.status = blogModels.count<1?LastCellStatusFinished:LastCellStatusMore;
                       _newblogParaDic = @{@"catalog":@1,
                                           @"pageToken":resultDic[@"nextPageToken"]?:@""};
                   }
@@ -339,7 +339,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
         blog = array[indexPath.row];
     }
     
-    NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithBlogId:blog.id isBlogDetail:YES];
+    NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:blog.id isBlogDetail:YES];
     newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
 //    newsBlogDetailVc.blogId = blog.id;
     [self.navigationController pushViewController:newsBlogDetailVc animated:YES];

@@ -386,7 +386,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 
 - (void)tableView:(UITableView *)tableView performAction:(SEL)action forRowAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender {
-    NSLog(@".....");
+//    NSLog(@".....");
 }
 
 #pragma mark -- 设置动弹详情cell

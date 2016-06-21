@@ -45,4 +45,11 @@
     _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)blogDetail.commentCount];
 }
 
+- (void)setNewsDetail:(OSCInformationDetails *)newsDetail {
+    _propertyTagIv.hidden = YES;
+    _recommendTagIv.hidden = YES;
+    _TitleLabel.text = newsDetail.title;
+    _viewCountLabel.text = [NSString stringWithFormat:@"%ld", (long)newsDetail.viewCount];
+    _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)newsDetail.commentCount];
+}
 @end
