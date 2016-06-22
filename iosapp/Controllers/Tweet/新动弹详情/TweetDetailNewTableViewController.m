@@ -188,11 +188,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
               if (objectsXML.count == 0) {
                   
               }else {
-                  if (objectsXML.count < 20) {
-                      [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                  }else {
-                      _likeListPage++;
-                  }
+//                  if (objectsXML.count < 20) {
+//                      [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//                  }else {
+//                      _likeListPage++;
+//                  }
+                  _likeListPage++;
                   for (ONOXMLElement *objectXML in objectsXML) {
                       OSCUser *obj = [[OSCUser alloc] initWithXML:objectXML];
                       [_tweetLikeList addObject:obj];
@@ -240,11 +241,13 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
              if (objectsXML.count == 0) {
                  
              }else {
-                 if (objectsXML.count < 20) {
-                     [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                 }else {
-                     _commentListPage++;
-                 }
+//                 if (objectsXML.count < 20) {
+//                     [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//                 }else {
+//                     _commentListPage++;
+//                 }
+                 
+                 _commentListPage++;
                  for (ONOXMLElement *objectXML in objectsXML) {
                      OSCComment *obj = [[OSCComment alloc] initWithXML:objectXML];
                      [_tweetCommentList addObject:obj];
