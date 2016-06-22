@@ -2,6 +2,9 @@ platform :ios, '7.0'
 inhibit_all_warnings!
 source 'https://github.com/CocoaPods/Specs.git'
 
+
+target 'iosapp' do
+
 pod 'AFOnoResponseSerializer'
 pod 'SDWebImage'
 pod 'SSKeychain'
@@ -20,5 +23,6 @@ pod 'DTCoreText'
 pod 'MJExtension'
 pod 'UMengSocial' , '~>4.4’
 pod 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
-
 pod 'Myhpple'
+
+end
