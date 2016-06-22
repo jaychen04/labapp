@@ -14,6 +14,7 @@
 #import "PostsViewController.h"
 #import "TweetsViewController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
+#import "NewsBlogDetailTableViewController.h"
 
 #import "OSCNews.h"
 #import "OSCPost.h"
@@ -89,11 +90,16 @@
                     // www.oschina.net/news/27259/mobile-internet-market-is-small
                     
                     int64_t newsID = [urlComponents[2] longLongValue];
-                    OSCNews *news = [OSCNews new];
-                    news.type = NewsTypeStandardNews;
-                    news.newsID = newsID;
-                    viewController = [[DetailsViewController alloc] initWithNews:news];
-                    viewController.navigationItem.title = @"资讯详情";
+//                    OSCNews *news = [OSCNews new];
+//                    news.type = NewsTypeStandardNews;
+//                    news.newsID = newsID;
+//                    viewController = [[DetailsViewController alloc] initWithNews:news];
+//                    viewController.navigationItem.title = @"资讯详情";
+                    
+                    //新版资讯界面
+                    viewController =[[NewsBlogDetailTableViewController alloc]initWithObjectId:newsID isBlogDetail:NO];
+                    viewController.hidesBottomBarWhenPushed = YES;
+                    
                 } else if ([type isEqualToString:@"p"]) {
                     // 软件 www.oschina.net/p/jx
                     

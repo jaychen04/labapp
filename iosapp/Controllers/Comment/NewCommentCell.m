@@ -118,7 +118,7 @@
     _nameLabel.text = comment.author;
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];
     
-     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
+    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
     _contentLabel.attributedText = contentString;
     
     if (comment.refer.author.length > 0) {
@@ -127,7 +127,6 @@
     } else {
         _currentContainer.hidden = YES;
     }
-    
 }
 
 - (void)setDataForQuestionComment:(OSCNewComment *)questComment
