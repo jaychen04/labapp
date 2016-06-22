@@ -172,7 +172,7 @@
     [_userPortrait loadPortrait:tweet.portraitURL];
     _nameLabel.text = tweet.author;
     _descTextView.attributedText = [NewTweetCell contentStringFromRawString:tweet.body];
-    
+//    <a href='http://my.oschina.net/javayou' class='referer' target='_blank'>@红薯</a>  真粉，有木有？
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:tweet.pubDateString] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     [att appendAttributedString:[Utils getAppclientName:tweet.appclient]];
