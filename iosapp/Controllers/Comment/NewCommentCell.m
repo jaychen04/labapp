@@ -62,7 +62,7 @@
 
     _commentButton = [UIButton new];
     [self.contentView addSubview:_commentButton];
-    if (_isQuestion) {
+    if (_quesComment.best) {
         [_commentButton setImage:[UIImage imageNamed:@"label_best_answer"] forState:UIControlStateNormal];
     } else {
         [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
@@ -87,7 +87,7 @@
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
-    if (_isQuestion) {
+    if (_quesComment.best) {
         [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(67)]|"
                                                                                  options:0
                                                                                  metrics:nil
@@ -128,6 +128,33 @@
         _currentContainer.hidden = YES;
     }
     
+}
+
+- (void)setDataForQuestionComment:(OSCNewComment *)questComment
+{
+    [self setLayOutForSubView];
+    [_commentPortrait loadPortrait:[NSURL URLWithString:questComment.authorPortrait]];
+    _nameLabel.text = questComment.author;
+    _timeLabel.text = [[NSDate dateFromString:questComment.pubDate] timeAgoSinceNow];
+    
+    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:questComment.content]];
+    _contentLabel.attributedText = contentString;
+    
+    if (questComment.best) {
+        [_commentButton setImage:[UIImage imageNamed:@"label_best_answer"] forState:UIControlStateNormal];
+    } else {
+        [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
+    }
+}
+
+- (void)setDataForQuestionCommentReply:(OSCNewCommentReply *)commentReply
+{
+    [_commentPortrait loadPortrait:[NSURL URLWithString:commentReply.authorPortrait]];
+    _nameLabel.text = commentReply.author;
+    _timeLabel.text = [[NSDate dateFromString:commentReply.pubDate] timeAgoSinceNow];
+    
+    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentReply.content]];
+    _contentLabel.attributedText = contentString;
 }
 
 #pragma mark - refer

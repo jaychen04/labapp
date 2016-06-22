@@ -21,6 +21,11 @@
                             <constraint firstAttribute="height" constant="36" id="Ljm-AV-tBe"/>
                             <constraint firstAttribute="width" constant="36" id="ZIN-4O-63R"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="18"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1天前 (2016-06-24 20:12:01)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m31-xf-2Ln">
                         <rect key="frame" x="60" y="32" width="252" height="15"/>

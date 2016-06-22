@@ -8,10 +8,20 @@
 
 #import "CommentDetailViewController.h"
 #import "QuestCommentHeadDetailCell.h"
+#import "NewCommentCell.h"
+#import "ContentWebViewCell.h"
 
 #import "Utils.h"
+#import "OSCAPI.h"
+
+#import <MJExtension.h>
+
+
 static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetailCell";
-@interface CommentDetailViewController () <UITableViewDelegate, UITableViewDataSource>
+static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
+static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
+
+@interface CommentDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
@@ -29,17 +39,24 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 
+@property (nonatomic, assign) CGFloat webViewHeight;
+@property (nonatomic, copy) OSCNewComment *commentDetail;
+
 @end
 
 @implementation CommentDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"回答详情";
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerNib:[UINib nibWithNibName:@"QuestCommentHeadDetailCell" bundle:nil] forCellReuseIdentifier:CommentHeadDetailCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
+    [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more_normal"]
                                                                               style:UIBarButtonItemStylePlain
@@ -55,12 +72,44 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    
+    [self getDataForCommentDetail];
 
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - 获取数据
+- (void)getDataForCommentDetail
+{
+    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@comment", OSCAPI_V2_PREFIX];
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manger GET:blogDetailUrlStr
+     parameters:@{
+                  @"id"  : @(self.commentId),
+                  @"type"      : @(2),
+                  }
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            
+            if ([responseObject[@"code"] integerValue] == 1) {
+                _commentDetail = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
+                NSDictionary *data = @{@"content":  _commentDetail.content};
+                _commentDetail.content = [Utils HTMLWithData:data
+                                             usingTemplate:@"newTweet"];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                });
+            }
+            
+        }
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+
+            NSLog(@"error = %@",error);
+        }];
 }
 
 #pragma mark - 右导航栏按钮
@@ -165,28 +214,140 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 #pragma mark - UITableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        QuestCommentHeadDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:CommentHeadDetailCellIdentifier forIndexPath:indexPath];
-        [cell.downOrUpButton addTarget:self action:@selector(roteUpOrDown) forControlEvents:UIControlEventTouchUpInside];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            QuestCommentHeadDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:CommentHeadDetailCellIdentifier forIndexPath:indexPath];
+            [cell.downOrUpButton addTarget:self action:@selector(roteUpOrDown) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.commentDetail = _commentDetail;
+            
+            return cell;
+        } else {
+            ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+            webViewCell.contentWebView.delegate = self;
+            [webViewCell.contentWebView loadHTMLString:_commentDetail.content baseURL:[NSBundle mainBundle].resourceURL];
+            webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return webViewCell;
+        }
+    } else if (indexPath.section == 1) {
+        NewCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
+        if (_commentDetail.reply.count > 0) {
+            OSCNewCommentReply *reply = _commentDetail.reply[indexPath.row];
+            [commentCell setDataForQuestionCommentReply:reply];
+        }
         
-        return cell;
+        return commentCell;
     }
+    
     return [UITableViewCell new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 60;
-    } else {
-        return 200;
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            return 60;
+        } else {
+            return _webViewHeight+30;
+        }
+    } else if (indexPath.section == 1) {
+        if (_commentDetail.reply.count > 0) {
+            UILabel *label = [UILabel new];
+            label.font = [UIFont systemFontOfSize:14];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            OSCNewCommentReply *quesCommentReply = _commentDetail.reply[indexPath.row];
+            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesCommentReply.content]];
+            label.attributedText = contentString;
+            
+            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+            
+            return height + 71;
+        } else {
+            return 0;
+        }
     }
+    return 0;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (_commentDetail.reply.count > 0) {
+        return 2;
+    }
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    if (section == 0) {
+        return 2;
+    } else if (section == 1) {
+        return _commentDetail.reply.count;
+    }
+    return 0;
 }
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat headerViewHeight = 0.001;
+    if (section != 0) {
+        headerViewHeight = 32;
+    }
+    return headerViewHeight;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        if (_commentDetail.reply.count > 0) {
+            return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_commentDetail.reply.count]];
+        }
+        return [self headerViewWithSectionTitle:@"评论"];
+    }
+    
+    return [UIView new];
+}
+
+#pragma mark -- DIY_headerView
+- (UIView *)headerViewWithSectionTitle:(NSString *)title {
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
+    headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
+    titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
+    titleLabel.tag = 8;
+    titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
+    titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
+    titleLabel.text = title;
+    [headerView addSubview:titleLabel];
+    
+    return headerView;
+}
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
+    [self.navigationController handleURL:request.URL];
+    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    if (_webViewHeight == webViewHeight) {return;}
+    _webViewHeight = webViewHeight;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
 
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
