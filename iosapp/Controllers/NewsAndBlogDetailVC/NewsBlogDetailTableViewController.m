@@ -422,7 +422,15 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 return [self headerViewWithSectionTitle:@"相关资讯"];
             }
         }else if (section == 2) {
-            return [self headerViewWithSectionTitle:@"相关资讯"];
+            if (_isExistRelatedSoftware) {
+                return [self headerViewWithSectionTitle:@"相关资讯"];
+            }else {
+                if (_newsDetails.commentCount > 0) {
+                    return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_newsDetails.commentCount]];
+                }
+                return [self headerViewWithSectionTitle:@"评论"];
+            }
+            
         }else if (section == 3) {
             if (_newsDetails.commentCount > 0) {
                 return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_newsDetails.commentCount]];
@@ -543,18 +551,56 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     return 45;
                 }else {
                     return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
-                        OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
-                        cell.abouts = newsRecommend;
+                        if(indexPath.row < _newsDetailRecommends.count) {
+                            OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
+                            cell.abouts = newsRecommend;
+                        }
                     }];
                 }
                 break;
             }
             case 2:
             {
-                return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
-                    OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
-                    cell.abouts = newsRecommend;
-                }];
+                if (_isExistRelatedSoftware) {
+                    return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
+                        if(indexPath.row < _newsDetailRecommends.count) {
+                            OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
+                            cell.abouts = newsRecommend;
+                        }
+                    }];
+                }else {
+                    if (_newsDetailComments.count > 0) {
+                        if (indexPath.row == _newsDetailComments.count) {
+                            return 44;
+                        } else {
+                            UILabel *label = [UILabel new];
+                            label.font = [UIFont systemFontOfSize:14];
+                            label.numberOfLines = 0;
+                            label.lineBreakMode = NSLineBreakByWordWrapping;
+                            
+                            OSCBlogDetailComment *blogComment = _newsDetailComments[indexPath.row];
+                            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
+                            
+                            label.attributedText = contentString;
+                            
+                            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+                            
+                            
+                            height += 7;
+                            OSCBlogCommentRefer *refer = blogComment.refer;
+                            int i = 0;
+                            while (refer.author.length > 0) {
+                                label.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
+                                height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
+                                i++;
+                                refer = refer.refer;
+                            }
+                            
+                            return height + 71;
+                        }
+                    }
+                }
+                
                 break;
             }
             case 3: {
@@ -569,6 +615,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         
                         OSCBlogDetailComment *blogComment = _newsDetailComments[indexPath.row];
                         NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
+                        
                         label.attributedText = contentString;
                         
                         CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
@@ -751,13 +798,55 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }
                 break;
             case 2: {
-                RecommandBlogTableViewCell *recommandNewsCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
-                if (_newsDetailRecommends.count > 0) {
-                    OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
-                    recommandNewsCell.abouts = about;
+                if (_isExistRelatedSoftware) {
+                    RecommandBlogTableViewCell *recommandNewsCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
+                    if (indexPath.row < _newsDetailRecommends.count) {
+                        OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
+                        recommandNewsCell.abouts = about;
+                    }
+                    recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                    return recommandNewsCell;
+                }else {
+                    if (_newsDetailComments.count > 0) {
+                        if (indexPath.row == _newsDetailComments.count) {
+                            UITableViewCell *cell = [UITableViewCell new];
+                            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                            cell.textLabel.text = @"更多评论";
+                            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                            cell.textLabel.font = [UIFont systemFontOfSize:14];
+                            cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                            
+                            return cell;
+                        } else {
+                            NewCommentCell *commentNewsCell = [NewCommentCell new];
+                            commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                            
+                            OSCBlogDetailComment *detailComment = _newsDetailComments[indexPath.row];
+                            commentNewsCell.comment = detailComment;
+                            
+                            if (detailComment.refer.author.length > 0) {
+                                commentNewsCell.currentContainer.hidden = NO;
+                            } else {
+                                commentNewsCell.currentContainer.hidden = YES;
+                            }
+                            commentNewsCell.commentButton.tag = indexPath.row;
+                            [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
+                            
+                            return commentNewsCell;
+                        }
+                        
+                    } else {
+                        UITableViewCell *cell = [UITableViewCell new];
+                        cell.textLabel.text = @"还没有评论";
+                        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                        cell.textLabel.font = [UIFont systemFontOfSize:14];
+                        cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        return cell;
+                    }
                 }
-                recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
-                return recommandNewsCell;
+                
             }
                 break;
             case 3: {
@@ -842,10 +931,24 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             }
         }else if (indexPath.section == 2) {
-            OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
-            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
-                                                                                                              isBlogDetail:NO];
-            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            if (_isExistRelatedSoftware) {
+                OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
+                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
+                                                                                                                    isBlogDetail:NO];
+                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            }else {
+                //资讯评论列表
+                if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
+                        CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
+                        [self.navigationController pushViewController:commentsBVC animated:YES];
+                }
+            }
+        }else if (indexPath.section == 3) {
+            if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
+                //资讯评论列表
+                CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
+                [self.navigationController pushViewController:commentsBVC animated:YES];
+            }
         }
     }
     
@@ -945,7 +1048,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #pragma mark - 评论
 - (void)selectedToComment:(UIButton *)button
 {
-    OSCBlogDetailComment *comment = _blogDetailComments[button.tag];
+    OSCBlogDetailComment *comment = _isBlogDetail ? _blogDetailComments[button.tag] : _newsDetailComments[button.tag];
     
     if (_selectIndexPath == button.tag) {
         _isReply = !_isReply;
@@ -978,15 +1081,24 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     } else {
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        
-        NSDictionary *parameters =  @{
+
+        NSString *urlStr = _isBlogDetail ? [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB]:[NSString stringWithFormat:@"%@%@",OSCAPI_PREFIX,OSCAPI_COMMENT_PUB];
+        NSDictionary *parameters =  _isBlogDetail ? @{
                                       @"blog"     : @(_blogDetails.id),
                                       @"uid"      : @([Config getOwnID]),
                                       @"content"  : _commentTextField.text,
                                       @"reply_id" : @(replyID),
                                       @"objuid"   : @(authorID),
-                                      };
-        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB]
+                                      } : @{
+                                            @"catalog": @(1),
+                                            @"id": @(_newsDetails.id),
+                                            @"uid": @([Config getOwnID]),
+                                            @"replyid": @(replyID),
+                                            @"authorid": @(authorID),
+                                            @"content": _commentTextField.text,
+                                            @"isPostToMyZone": @(0)
+                                            };
+        [manager POST:urlStr
            parameters:parameters
               success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
                   ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
@@ -1036,7 +1148,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     NSLog(@"send mesage");
     
     if (_isReply) {
-        OSCBlogDetailComment *comment = _blogDetailComments[_selectIndexPath];
+        OSCBlogDetailComment *comment = _isBlogDetail ? _blogDetailComments[_selectIndexPath] : _newsDetailComments[_selectIndexPath];
         [self sendComment:comment.id authorID:comment.authorId];
     } else {
         [self sendComment:0 authorID:0];
