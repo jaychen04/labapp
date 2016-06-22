@@ -140,7 +140,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [subView addSubview:label];
     
     _upImageView = [UIButton new];
-    [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_normal"] forState:UIControlStateNormal];
+    
     [subView addSubview:_upImageView];
     [_upImageView addTarget:self action:@selector(voteUpQuestions:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -152,7 +152,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [subView addSubview:_upLabel];
     
     _downImageView = [UIButton new];
-    [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_normal"] forState:UIControlStateNormal];
+    
     [subView addSubview:_downImageView];
     [_downImageView addTarget:self action:@selector(voteDownQuestions:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -163,7 +163,10 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     _downLabel.text = @"踩";
     [subView addSubview:_downLabel];
     
+    //按钮状态样式
+    [self judgeVoteState];
     
+    //布局
     for (UIView *view in subView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(label, _upImageView, _upLabel, _downImageView, _downLabel);
     [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[label]"
@@ -187,6 +190,32 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-55-[_upLabel(45)]-40-[_downLabel(45)]"
                                                                     options:0
                                                                     metrics:nil views:views]];
+}
+
+- (void)judgeVoteState
+{
+    switch (_commentDetail.voteState) {
+        case 0:
+        {
+            [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_normal"] forState:UIControlStateNormal];
+            [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_normal"] forState:UIControlStateNormal];
+            break;
+        }
+        case 1://已顶
+        {
+            [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_actived"] forState:UIControlStateNormal];
+            [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_normal"] forState:UIControlStateNormal];
+            break;
+        }
+        case 2://已踩
+        {
+            [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_normal"] forState:UIControlStateNormal];
+            [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_actived"] forState:UIControlStateNormal];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 #pragma mark - 顶
@@ -217,6 +246,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             QuestCommentHeadDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:CommentHeadDetailCellIdentifier forIndexPath:indexPath];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
             [cell.downOrUpButton addTarget:self action:@selector(roteUpOrDown) forControlEvents:UIControlEventTouchUpInside];
             
             cell.commentDetail = _commentDetail;
@@ -224,6 +254,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
             return cell;
         } else {
             ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+            webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
             webViewCell.contentWebView.delegate = self;
             [webViewCell.contentWebView loadHTMLString:_commentDetail.content baseURL:[NSBundle mainBundle].resourceURL];
             webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -232,6 +264,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         }
     } else if (indexPath.section == 1) {
         NewCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
+        commentCell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
         if (_commentDetail.reply.count > 0) {
             OSCNewCommentReply *reply = _commentDetail.reply[indexPath.row];
             [commentCell setDataForQuestionCommentReply:reply];
