@@ -38,8 +38,6 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     self.tableView.dataSource = self;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SoftWareDetailCell" bundle:nil] forCellReuseIdentifier:softWareDetailReuseIdentifier];
-//    [self.tableView registerNib:[UINib nibWithNibName:@"NewCommentCell" bundle:nil] forCellReuseIdentifier:newCommentReuseIdentifier];
-    
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     
 }
