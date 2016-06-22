@@ -270,6 +270,9 @@
 		EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C4051D127CE6000FE427 /* QuesAnsDetailViewController.xib */; };
 		EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */; };
 		EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */; };
+		EE953A201D1A2B2C00CB731D /* SoftWareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE953A1E1D1A2B2C00CB731D /* SoftWareViewController.m */; };
+		EE953A211D1A2B2C00CB731D /* SoftWareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE953A1F1D1A2B2C00CB731D /* SoftWareViewController.xib */; };
+		EE953A241D1A40A000CB731D /* OSCNewSoftWare.m in Sources */ = {isa = PBXBuildFile; fileRef = EE953A231D1A40A000CB731D /* OSCNewSoftWare.m */; };
 		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
 		EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */; };
 		EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */; };
@@ -802,6 +805,11 @@
 		EE88C4081D128138000FE427 /* QuesAnsDetailHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsDetailHeadCell.h; path = Questions/QuesAnsDetailHeadCell.h; sourceTree = "<group>"; };
 		EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsDetailHeadCell.m; path = Questions/QuesAnsDetailHeadCell.m; sourceTree = "<group>"; };
 		EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsDetailHeadCell.xib; path = Questions/QuesAnsDetailHeadCell.xib; sourceTree = "<group>"; };
+		EE953A1D1D1A2B2C00CB731D /* SoftWareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareViewController.h; sourceTree = "<group>"; };
+		EE953A1E1D1A2B2C00CB731D /* SoftWareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftWareViewController.m; sourceTree = "<group>"; };
+		EE953A1F1D1A2B2C00CB731D /* SoftWareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoftWareViewController.xib; sourceTree = "<group>"; };
+		EE953A221D1A40A000CB731D /* OSCNewSoftWare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewSoftWare.h; sourceTree = "<group>"; };
+		EE953A231D1A40A000CB731D /* OSCNewSoftWare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewSoftWare.m; sourceTree = "<group>"; };
 		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
 		EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
 		EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
@@ -1652,6 +1660,8 @@
 				38BD3D031A36A3E500682D1F /* OSCSoftwareCatalog.m */,
 				38BD3D051A36A97400682D1F /* OSCSoftware.h */,
 				38BD3D061A36A97400682D1F /* OSCSoftware.m */,
+				EE953A221D1A40A000CB731D /* OSCNewSoftWare.h */,
+				EE953A231D1A40A000CB731D /* OSCNewSoftWare.m */,
 			);
 			name = Software;
 			sourceTree = "<group>";
@@ -2034,6 +2044,9 @@
 				EEB3D7B01D13E5D400164EF5 /* SoftWareDetailCell.h */,
 				EEB3D7B11D13E5D500164EF5 /* SoftWareDetailCell.m */,
 				EEB3D7B21D13E5D500164EF5 /* SoftWareDetailCell.xib */,
+				EE953A1D1D1A2B2C00CB731D /* SoftWareViewController.h */,
+				EE953A1E1D1A2B2C00CB731D /* SoftWareViewController.m */,
+				EE953A1F1D1A2B2C00CB731D /* SoftWareViewController.xib */,
 			);
 			path = Software;
 			sourceTree = "<group>";
@@ -2296,6 +2309,7 @@
 				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */,
+				EE953A211D1A2B2C00CB731D /* SoftWareViewController.xib in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
 				EEB3D7B41D13E5D500164EF5 /* SoftWareDetailCell.xib in Resources */,
 				31D699601CFC29B500B48BB0 /* FollowAuthorTableViewCell.xib in Resources */,
@@ -2402,6 +2416,7 @@
 				EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */,
 				C5D7C1111B14508E003EFE9B /* TableViewCell.m in Sources */,
 				3838D15C1A6C9D0900CC7913 /* OperationBar.m in Sources */,
+				EE953A201D1A2B2C00CB731D /* SoftWareViewController.m in Sources */,
 				382A95BB1A29D2C300AAAFEA /* EventsViewController.m in Sources */,
 				31697BCB1B16FB0E001FE346 /* MZDayPicker.m in Sources */,
 				38763A071A85E591008E6805 /* UserHeaderCell.m in Sources */,
@@ -2554,6 +2569,7 @@
 				C5D7F6561B0DDCC900AB01CC /* TeamRepliesBVC.m in Sources */,
 				31855C891D0E621F00C8F8B8 /* TweetCommentNewCell.m in Sources */,
 				38A9EEBC1AA998A7006C95BD /* OSLicensePage.m in Sources */,
+				EE953A241D1A40A000CB731D /* OSCNewSoftWare.m in Sources */,
 				042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */,
 				38EAF1C71AE0FCE400397E2A /* TeamProjectAuthority.m in Sources */,
 				38A93FA61AA2B51100A515E8 /* OSCThread.m in Sources */,

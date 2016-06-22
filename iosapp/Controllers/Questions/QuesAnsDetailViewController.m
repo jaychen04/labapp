@@ -173,7 +173,7 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
         
     } else if (indexPath.section == 1) {
         NewCommentCell *commentBlogCell = [NewCommentCell new];
-        
+        commentBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
         commentBlogCell.isQuestion = YES;
         
         return commentBlogCell;

@@ -15,14 +15,20 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
-@property (weak, nonatomic) IBOutlet UIButton *commentButton;
-@property (weak, nonatomic) IBOutlet UIButton *favButton;
+@property (weak, nonatomic) IBOutlet UITextField *commentField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstrait;
+
 
 @property (nonatomic, strong) UIView *popUpBoxView;
 @property (nonatomic, strong) UIButton *upImageView;
 @property (nonatomic, strong) UILabel *upLabel;
 @property (nonatomic, strong) UIButton *downImageView;
 @property (nonatomic, strong) UILabel *downLabel;
+
+//软键盘size
+@property (nonatomic, assign) CGFloat keyboardHeight;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+
 @end
 
 @implementation CommentDetailViewController
@@ -39,6 +45,16 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(rightBarButtonClicked)];
+    
+    //软键盘
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
 
 }
 
@@ -172,16 +188,68 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
     return 2;
 }
 
-#pragma mark - 评论
-- (IBAction)commentClick:(UIButton *)sender {
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
 }
 
-#pragma mark - 收藏
-- (IBAction)favClick:(UIButton *)sender {
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    return YES;
 }
 
-#pragma mark - 分享
-- (IBAction)shareClick:(UIButton *)sender {
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSLog(@"send mesage");
+    
+//    if (_isReply) {
+//        OSCBlogDetailComment *comment = _blogDetailComments[_selectIndexPath];
+//        [self sendComment:comment.id authorID:comment.authorId];
+//    } else {
+//        [self sendComment:0 authorID:0];
+//    }
+    
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (void)keyboardDidShow:(NSNotification *)nsNotification
+{
+    
+    //获取键盘的高度
+    
+    NSDictionary *userInfo = [nsNotification userInfo];
+    
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect = [aValue CGRectValue];
+    
+    _keyboardHeight = keyboardRect.size.height;
+    
+    _bottomConstrait.constant = _keyboardHeight;
+    
+    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHiden:)];
+    [self.view addGestureRecognizer:_tap];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotification
+{
+    _bottomConstrait.constant = 0;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - 软键盘隐藏
+- (void)keyBoardHiden:(UITapGestureRecognizer *)tap
+{
+    [_commentField resignFirstResponder];
+    [self.view removeGestureRecognizer:_tap];
 }
 
 @end
