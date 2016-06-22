@@ -16,4 +16,5 @@
 
 @property (nonatomic, strong) OSCBlogDetailRecommend *abouts;
 
+@property (nonatomic, strong) NSString *newsRelatedSoftWareStr;
 @end

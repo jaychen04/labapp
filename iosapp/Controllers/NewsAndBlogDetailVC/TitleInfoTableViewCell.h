@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "OSCBlogDetail.h"
-
+#import "OSCInformationDetails.h"
 @interface TitleInfoTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *recommendTagIv;
 @property (weak, nonatomic) IBOutlet UIImageView *propertyTagIv;
@@ -17,5 +17,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
 
 @property (nonatomic, strong) OSCBlogDetail *blogDetail;
-
+@property (nonatomic, strong) OSCInformationDetails *newsDetail;
 @end
