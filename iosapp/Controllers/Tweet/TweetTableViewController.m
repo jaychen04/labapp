@@ -17,6 +17,7 @@
 #import "UserDetailsViewController.h"
 #import "TweetDetailNewTableViewController.h"
 
+#import <UITableView+FDTemplateLayoutCell.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
 
@@ -199,6 +200,55 @@ static NSString * const reuseIdentifier = @"NewTweetCell";
         return tweet.cellHeight;
     }
     return 0;
+    
+    
+//    return [tableView fd_heightForCellWithIdentifier:reuseIdentifier configuration:^(NewTweetCell* cell) {
+//        if (self.objects.count > 0) {
+//            OSCTweet *tweet = self.objects[indexPath.row];
+//            
+//            if (!cell.descTextView.delegate) {
+//                cell.descTextView.delegate = self;
+//                [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
+//            }
+//            cell.descTextView.tag = indexPath.row;
+//            
+//            cell.backgroundColor = [UIColor newCellColor];
+//            
+//            [self setBlockForCommentCell:cell];
+//            cell.tweet = tweet;
+//            
+//            if (tweet.hasAnImage) {
+//                cell.tweetImageView.hidden = NO;
+//                
+//                UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
+//                
+//                // 有图就加载，无图则下载并reload tableview
+//                if (!image) {
+//                    [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
+//                    [self downloadThumbnailImageThenReload:tweet];
+//                } else {
+//                    [cell.tweetImageView setImage:image];
+//                }
+//            } else {cell.tweetImageView.hidden = YES;}
+//            
+//            cell.userPortrait.tag = indexPath.row;
+//            cell.nameLabel.tag = indexPath.row;
+//            cell.tweetImageView.tag = indexPath.row;
+//            cell.likeCountButton.tag = indexPath.row;
+//            cell.nameLabel.textColor = [UIColor newTitleColor];
+//            cell.descTextView.textColor = [UIColor newTitleColor];
+//            
+//            [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
+//            [cell.tweetImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
+//            [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
+//            
+//            cell.contentView.backgroundColor = [UIColor newCellColor];
+//            cell.backgroundColor = [UIColor themeColor];
+//            cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+//            cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+//            
+//        }
+//    }];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

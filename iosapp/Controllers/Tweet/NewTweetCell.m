@@ -64,7 +64,7 @@
     
     _likeCountButton = [UIButton new];
     [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
-    [_likeCountButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 2, 0)];
+    [_likeCountButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 2, 0)];
     [self.contentView addSubview:_likeCountButton];
 
     _commentImage = [UIImageView new];
@@ -94,7 +94,7 @@
                                                                              metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_commentImage(15)]" options:0 metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]->=5-[_likeCountButton(20)]-2-[_likeCountLabel]-16-[_commentImage(15)]-5-[_commentCountLabel]-16-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]->=5-[_likeCountButton(40)]-2-[_likeCountLabel]-16-[_commentImage(15)]-5-[_commentCountLabel]-16-|"
                                                                              options:NSLayoutFormatAlignAllCenterY
                                                                              metrics:nil views:views]];
     

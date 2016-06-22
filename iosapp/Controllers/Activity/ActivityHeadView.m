@@ -7,6 +7,7 @@
 //
 
 #import "ActivityHeadView.h"
+#import "UIImageView+LBBlurredImage.h"
 #import "Utils.h"
 
 @interface ActivityHeadView () <UIScrollViewDelegate>
@@ -186,29 +187,12 @@
 
 - (void)setContentForTopImages:(OSCBanner *)banner
 {
-    _bottomImage.image = [self blurredImageView:banner.img];
     [_subImageView loadPortrait:[NSURL URLWithString:banner.img]];
+    [_bottomImage setImageToBlur:_subImageView.image blurRadius:kLBBlurredImageDefaultBlurRadius completionBlock:^{
+        
+    }];
     _titleLable.text = banner.name;
     _descLable.text = banner.detail;
-}
-
-- (UIImage *)blurredImageView:(NSString *)imageUrl
-{
-    CIContext *context = [CIContext contextWithOptions:nil];
-    CIImage *inputImage = [[CIImage alloc] initWithImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]]];
-    
-    // create gaussian blur filter
-    CIFilter *filter = [CIFilter filterWithName:@"CIGaussianBlur"];
-    [filter setValue:inputImage forKey:kCIInputImageKey];
-    [filter setValue:[NSNumber numberWithFloat:5] forKey:@"inputRadius"];//模糊
-    
-    // blur image
-    CIImage *result = [filter valueForKey:kCIOutputImageKey];
-    CGImageRef cgImage = [context createCGImage:result fromRect:[result extent]];
-    UIImage *image = [UIImage imageWithCGImage:cgImage];
-    CGImageRelease(cgImage);
-    
-    return image;
 }
 
 

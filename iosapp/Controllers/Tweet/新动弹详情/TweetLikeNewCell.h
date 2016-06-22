@@ -12,4 +12,5 @@
 @property (weak, nonatomic) IBOutlet UIImageView *portraitIv;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *touchButton;
 @end
