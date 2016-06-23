@@ -1,31 +1,31 @@
 //
-//  NewTweetCell.m
+//  newTweetTextCell.m
 //  iosapp
 //
-//  Created by 李萍 on 16/5/21.
+//  Created by Graphic-one on 16/6/23.
 //  Copyright © 2016年 oschina. All rights reserved.
 //
 
-#import "NewTweetCell.h"
+#import "NewTweetTextCell.h"
 #import "Utils.h"
+#import "OSCTweet.h"
 
-@implementation NewTweetCell
+@implementation NewTweetTextCell
 
 #pragma mark - 留白处理frame算高
 /**
--(CGSize)sizeThatFits:(CGSize)size{
-    CGFloat cellRowHeight = 0;
-    
-    cellRowHeight += [self.nameLabel sizeThatFits:size].height;
-    cellRowHeight += [self.descTextView sizeThatFits:size].height;
-    cellRowHeight += [self.tweetImageView sizeThatFits:size].height;
-    cellRowHeight += 61;
-    cellRowHeight += 13;
-
-    return CGSizeMake(size.width, cellRowHeight);
-}
+ -(CGSize)sizeThatFits:(CGSize)size{
+ CGFloat cellRowHeight = 0;
+ 
+ cellRowHeight += [self.nameLabel sizeThatFits:size].height;
+ cellRowHeight += [self.descTextView sizeThatFits:size].height;
+ cellRowHeight += [self.tweetImageView sizeThatFits:size].height;
+ cellRowHeight += 61;
+ cellRowHeight += 13;
+ 
+ return CGSizeMake(size.width, cellRowHeight);
+ }
  */
-
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -59,14 +59,8 @@
     [self.contentView addSubview:_nameLabel];
     
     _descTextView = [[UITextView alloc] initWithFrame:CGRectZero];
-    [NewTweetCell initContetTextView:_descTextView];
+    [NewTweetTextCell initContetTextView:_descTextView];
     [self.contentView addSubview:_descTextView];
-    
-    _tweetImageView = [UIImageView new];
-    _tweetImageView.contentMode = UIViewContentModeScaleAspectFill;
-    _tweetImageView.clipsToBounds = YES;
-    _tweetImageView.userInteractionEnabled = YES;
-    [self.contentView addSubview:_tweetImageView];
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:12];
@@ -82,7 +76,7 @@
     [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
     [_likeCountButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 2, 0)];
     [self.contentView addSubview:_likeCountButton];
-
+    
     _commentImage = [UIImageView new];
     _commentImage.image = [UIImage imageNamed:@"ic_comment_30"];
     [self.contentView addSubview:_commentImage];
@@ -96,11 +90,11 @@
 - (void)setLayout
 {
     
-#pragma mark - using Masnory add Constraints 
+#pragma mark - using Masnory add Constraints
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_userPortrait, _nameLabel, _descTextView, _tweetImageView, _timeLabel, _likeCountButton, _likeCountLabel, _commentImage, _commentCountLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_userPortrait, _nameLabel, _descTextView, _timeLabel, _likeCountButton, _likeCountLabel, _commentImage, _commentCountLabel);
     
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_userPortrait(45)]" options:0 metrics:nil views:views]];
@@ -137,85 +131,34 @@
     textView.scrollEnabled = NO;
     [textView setTextContainerInset:UIEdgeInsetsZero];
     textView.textContainer.lineFragmentPadding = 0;
-//    textView.linkTextAttributes = @{
-////                                    NSFontAttributeName : @"PingFangSC-Light",
-//                                    NSForegroundColorAttributeName: [UIColor newTitleColor],
-//                                    NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
-//                                    };
+    //    textView.linkTextAttributes = @{
+    ////                                    NSFontAttributeName : @"PingFangSC-Light",
+    //                                    NSForegroundColorAttributeName: [UIColor newTitleColor],
+    //                                    NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
+    //                                    };
 }
 
-/*
-#pragma mark -  数组图片集
-- (void)initImagesSubview
-{
-    
-    int arrayCount = 1;
-    
-    int x = (int)(arrayCount-1)%3;//_images.count/3;
-    int y = (int)(arrayCount-1)/3;//_images.count%3;
-    
-    if (arrayCount > 2) {
-        x = 2;
-        
-    } else {
-        x = arrayCount;
-    }
-    
-    for (int i = 0; i <= x; i++) {
-        for (int j = 0; j <= y; j++) {
-            NSLog(@"(%d:%d)", i, j);
-            UIImageView *image = [UIImageView new];
-            image.frame = CGRectMake(68*i, 68*j, 60, 60);
-//            image.backgroundColor = [UIColor yellowColor];
-            [image loadPortrait:_tweet.smallImgURL];
-            [self.imageBackView addSubview:image];
-            if (j*3+i+1 > arrayCount) {
-                image.hidden = YES;
-            } else {
-                image.hidden = NO;
-            }
-            image.tag = 3*i+j;
-            [image addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickImage:)]];
-        }
-    }
-}
-
-- (void)clickImage:(UITapGestureRecognizer *)tap
-{
-    NSLog(@"tap");
-}
-*/
 #pragma mark - set Tweet
 - (void)setTweet:(OSCTweet *)tweet
 {
     [_userPortrait loadPortrait:tweet.portraitURL];
     _nameLabel.text = tweet.author;
-    _descTextView.attributedText = [NewTweetCell contentStringFromRawString:tweet.body];
-//    <a href='http://my.oschina.net/javayou' class='referer' target='_blank'>@红薯</a>  真粉，有木有？
+    _descTextView.attributedText = [NewTweetTextCell contentStringFromRawString:tweet.body];
+    //    <a href='http://my.oschina.net/javayou' class='referer' target='_blank'>@红薯</a>  真粉，有木有？
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:tweet.pubDateString] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     [att appendAttributedString:[Utils getAppclientName:tweet.appclient]];
     _timeLabel.attributedText = att;
     
-     if (tweet.isLike) {
-         [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_actived"] forState:UIControlStateNormal];
-     } else {
-         [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
-         
-     }
-
+    if (tweet.isLike) {
+        [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_actived"] forState:UIControlStateNormal];
+    } else {
+        [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
+        
+    }
+    
     _likeCountLabel.text = [NSString stringWithFormat:@"%d", tweet.likeCount];
     _commentCountLabel.text = [NSString stringWithFormat:@"%d", tweet.commentCount];
-    
-    
-    if (tweet.hasAnImage) {
-        _tweetImageView.hidden = NO;
-        [_tweetImageView loadPortrait:tweet.smallImgURL];
-//        [self initImagesSubview];
-    } else {
-        _imageBackView.hidden = YES;
-        _tweetImageView.hidden = YES;
-    }
     
 }
 
@@ -271,7 +214,7 @@
 {
     [super prepareForReuse];
     
-    _tweetImageView.image = nil;
 }
+
 
 @end
