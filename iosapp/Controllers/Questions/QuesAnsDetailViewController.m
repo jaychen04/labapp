@@ -31,6 +31,8 @@
 #import <MJRefresh.h>
 
 static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
+static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
+
 @interface QuesAnsDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -66,17 +68,16 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsDetailHeadCell" bundle:nil] forCellReuseIdentifier:quesAnsDetailHeadReuseIdentifier];
-    
+    [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:quesAnsCommentHeadReuseIdentifier];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-//        [self.tableView.mj_header beginRefreshing];
+        [self.tableView.mj_footer beginRefreshing];
         [self getCommentsForQuestion:YES];
     }];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self.tableView.mj_footer beginRefreshing];
         [self getCommentsForQuestion:NO];
     }];
-    [self.tableView.mj_header beginRefreshing];
-    
 
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -211,13 +212,17 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
         return cell;
         
     } else if (indexPath.section == 1) {
+//        NewCommentCell *commentQuestCell = [tableView dequeueReusableCellWithIdentifier:quesAnsCommentHeadReuseIdentifier forIndexPath:indexPath];
+
         NewCommentCell *commentQuestCell = [NewCommentCell new];
-        
-        if (_comments.count > 0) {
-            OSCNewComment *comment = _comments[indexPath.row];
-            commentQuestCell.quesComment = comment;
-            [commentQuestCell setDataForQuestionComment:comment];
-            commentQuestCell.commentButton.enabled = NO;
+        if (commentQuestCell != nil) {
+            if (_comments.count > 0) {
+                OSCNewComment *comment = _comments[indexPath.row];
+                commentQuestCell.quesComment = comment;
+                [commentQuestCell setDataForQuestionComment:comment];
+                commentQuestCell.commentButton.enabled = NO;
+            }
+
         }
         
         return commentQuestCell;
@@ -284,16 +289,20 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
     }
     return headerViewHeight;
 }
-
+#pragma mark - tableView delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 1) {
-        OSCNewComment *comment = _comments[indexPath.row];
+//        if (_comments.count > indexPath.row) {
+            OSCNewComment *comment = _comments[indexPath.row];
+            
+            CommentDetailViewController *commentDetailVC = [CommentDetailViewController new];
+            commentDetailVC.commentId = comment.id;
+            [self.navigationController pushViewController:commentDetailVC animated:YES];
+//        }
         
-        CommentDetailViewController *commentDetailVC = [CommentDetailViewController new];
-        commentDetailVC.commentId = comment.id;
-        [self.navigationController pushViewController:commentDetailVC animated:YES];
     }
 }
 

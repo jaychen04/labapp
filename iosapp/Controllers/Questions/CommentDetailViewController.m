@@ -320,6 +320,14 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     return 0;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 1) {
+        NSLog(@"click = %ld", (long)indexPath.row);
+    }
+    
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (_commentDetail.reply.count > 0) {
