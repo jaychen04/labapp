@@ -62,12 +62,7 @@
 
     _commentButton = [UIButton new];
     [self.contentView addSubview:_commentButton];
-    if (_quesComment.best) {
-        [_commentButton setImage:[UIImage imageNamed:@"label_best_answer"] forState:UIControlStateNormal];
-    } else {
-        [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
-    }
-    
+
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _currentContainer, _contentLabel, _commentButton);
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentPortrait(32)]-<=7-[_currentContainer]-7-[_contentLabel]-16-|"
@@ -118,6 +113,8 @@
     _nameLabel.text = comment.author;
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];
     
+    [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
+    
     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
     _contentLabel.attributedText = contentString;
     
@@ -151,6 +148,8 @@
     [_commentPortrait loadPortrait:[NSURL URLWithString:commentReply.authorPortrait]];
     _nameLabel.text = commentReply.author;
     _timeLabel.text = [[NSDate dateFromString:commentReply.pubDate] timeAgoSinceNow];
+    
+    [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
     
     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentReply.content]];
     _contentLabel.attributedText = contentString;

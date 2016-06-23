@@ -13,6 +13,8 @@
 
 #import "Utils.h"
 #import "OSCAPI.h"
+#import "Config.h"
+#import "LoginViewController.h"
 
 #import <MJExtension.h>
 
@@ -38,6 +40,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 //软键盘size
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property (nonatomic, assign) BOOL isReply;
+@property (nonatomic, assign) NSInteger selectIndexPath;
 
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, copy) OSCNewComment *commentDetail;
@@ -117,6 +121,47 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 {
     //
     NSLog(@"右导航栏按钮");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
+                                                        message:@"message"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView textFieldAtIndex:0].placeholder = @"举报原因";
+    [alertView show];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != [alertView cancelButtonIndex]) {
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+//        
+//        [manager POST:@"http://www.oschina.net/action/communityManage/report"
+//           parameters:@{
+//                        @"memo":        [alertView textFieldAtIndex:0].text.length == 0? @"其他原因": [alertView textFieldAtIndex:0].text,
+//                        @"obj_id":      @(_blogDetails.id),
+//                        @"obj_type":    @"2",
+//                        @"reason":      @"4",
+//                        @"url":         _blogDetails.href
+//                        }
+//              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+//                  MBProgressHUD *HUD = [Utils createHUD];
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+//                  HUD.labelText = @"举报成功";
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  MBProgressHUD *HUD = [Utils createHUD];
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.labelText = @"网络异常，操作失败";
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//              }];
+    }
 }
 
 #pragma mark - 自定义弹出框
@@ -125,6 +170,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     UIWindow *selfWindow = [UIApplication sharedApplication].keyWindow;
     _popUpBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(selfWindow.frame), CGRectGetHeight(selfWindow.frame))];
     _popUpBoxView.backgroundColor = [UIColor colorWithHex:0x000000 alpha:0.5];
+    _popUpBoxView.userInteractionEnabled = YES;
+    [_popUpBoxView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidenPopUpBoxView)]];
     [selfWindow addSubview:_popUpBoxView];
     
     UIView *subView = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(selfWindow.frame)-240)/2, (CGRectGetHeight(selfWindow.frame)-200)/2, 240, 120)];
@@ -234,6 +281,11 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [_popUpBoxView removeFromSuperview];
 }
 
+- (void)hidenPopUpBoxView
+{
+    [_popUpBoxView removeFromSuperview];
+}
+
 #pragma MARK - 踩/顶
 - (void)roteUpOrDown
 {
@@ -269,6 +321,9 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         if (_commentDetail.reply.count > 0) {
             OSCNewCommentReply *reply = _commentDetail.reply[indexPath.row];
             [commentCell setDataForQuestionCommentReply:reply];
+            
+            commentCell.commentButton.tag = indexPath.row;
+            [commentCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
         }
         
         return commentCell;
@@ -445,6 +500,87 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 {
     [_commentField resignFirstResponder];
     [self.view removeGestureRecognizer:_tap];
+}
+
+#pragma mark - 评论
+- (void)selectedToComment:(UIButton *)button
+{
+    OSCNewCommentReply *reply = _commentDetail.reply[button.tag];
+    
+    if (_selectIndexPath == button.tag) {
+        _isReply = !_isReply;
+    } else {
+        _isReply = YES;
+    }
+    _selectIndexPath = button.tag;
+    
+    if (_isReply) {
+        _commentField.placeholder = [NSString stringWithFormat:@"@%@", reply.author];
+    } else {
+        _commentField.placeholder = @"我要评论";
+    }
+    
+    
+}
+
+#pragma mark - 发评论
+- (void)sendComment:(NSInteger)replyID authorID:(NSInteger)authorID
+{
+    //
+    MBProgressHUD *HUD = [Utils createHUD];
+    //    HUD.labelText = @"评论发送中";
+    
+    
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    } else {
+        
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+//        
+//        NSString *urlStr = [NSString stringWithFormat:@"%@%@",OSCAPI_PREFIX,OSCAPI_COMMENT_PUB];
+//        NSDictionary *parameters =  @{
+//                                        @"catalog": @(1),
+//                                        @"id": @(_commentDetail.id),
+//                                        @"uid": @([Config getOwnID]),
+//                                        @"replyid": @(replyID),
+//                                        @"authorid": @(authorID),
+//                                        @"content": _commentField.text,
+//                                        @"isPostToMyZone": @(0)
+//                                        };
+//        [manager POST:urlStr
+//           parameters:parameters
+//              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+//                  ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
+//                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+//                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+//                  
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  
+//                  if (errorCode == 1) {
+//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+//                      HUD.labelText = @"评论发表成功";
+//                      
+//                      [self.tableView reloadData];
+//                      _commentTextField.text = @"";
+//                  } else {
+//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+//                  }
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//                  
+//                  
+//              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.labelText = @"网络异常，动弹发送失败";
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//              }];
+        
+    }
 }
 
 @end
