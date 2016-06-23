@@ -10,6 +10,7 @@
 #import "OSCSoftware.h"
 #import "SoftwareCell.h"
 #import "DetailsViewController.h"
+#import "SoftWareViewController.h"
 
 static NSString * const kSoftwareCellID = @"SoftwareCell";
 
@@ -104,6 +105,12 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCSoftware *software = self.objects[indexPath.row];
+    
+    /* 新版软件详情 */
+//    SoftWareViewController *detailSoftwareVC = [SoftWareViewController new];
+//    [self.navigationController pushViewController:detailSoftwareVC animated:YES];
+    
+    /* 旧版软件详情 */
     DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:software];
     [self.navigationController pushViewController:detailsViewController animated:YES];
 }

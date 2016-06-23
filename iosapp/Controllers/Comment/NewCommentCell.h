@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "OSCBlogDetail.h"
+#import "OSCNewComment.h"
 
 @interface NewCommentCell : UITableViewCell
 
@@ -19,8 +20,12 @@
 
 @property (nonatomic, strong) UIView *currentContainer;
 
-@property (nonatomic, assign) BOOL isQuestion;
 @property (nonatomic, strong) OSCBlogDetailComment *comment;
+@property (nonatomic, strong) OSCNewComment *quesComment;
+
+- (void)setDataForQuestionComment:(OSCNewComment *)questComment;
+
+- (void)setDataForQuestionCommentReply:(OSCNewCommentReply *)commentReply;
 
 @end
 

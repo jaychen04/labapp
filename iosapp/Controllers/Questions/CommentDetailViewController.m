@@ -8,43 +8,108 @@
 
 #import "CommentDetailViewController.h"
 #import "QuestCommentHeadDetailCell.h"
+#import "NewCommentCell.h"
+#import "ContentWebViewCell.h"
 
 #import "Utils.h"
+#import "OSCAPI.h"
+
+#import <MJExtension.h>
+
+
 static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetailCell";
-@interface CommentDetailViewController () <UITableViewDelegate, UITableViewDataSource>
+static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
+static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
+
+@interface CommentDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
-@property (weak, nonatomic) IBOutlet UIButton *commentButton;
-@property (weak, nonatomic) IBOutlet UIButton *favButton;
+@property (weak, nonatomic) IBOutlet UITextField *commentField;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstrait;
+
 
 @property (nonatomic, strong) UIView *popUpBoxView;
 @property (nonatomic, strong) UIButton *upImageView;
 @property (nonatomic, strong) UILabel *upLabel;
 @property (nonatomic, strong) UIButton *downImageView;
 @property (nonatomic, strong) UILabel *downLabel;
+
+//软键盘size
+@property (nonatomic, assign) CGFloat keyboardHeight;
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+
+@property (nonatomic, assign) CGFloat webViewHeight;
+@property (nonatomic, copy) OSCNewComment *commentDetail;
+
 @end
 
 @implementation CommentDetailViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"回答详情";
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerNib:[UINib nibWithNibName:@"QuestCommentHeadDetailCell" bundle:nil] forCellReuseIdentifier:CommentHeadDetailCellIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
+    [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more_normal"]
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(rightBarButtonClicked)];
+    
+    //软键盘
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShow:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    
+    [self getDataForCommentDetail];
 
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - 获取数据
+- (void)getDataForCommentDetail
+{
+    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@comment", OSCAPI_V2_PREFIX];
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manger GET:blogDetailUrlStr
+     parameters:@{
+                  @"id"  : @(self.commentId),
+                  @"type"      : @(2),
+                  }
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            
+            if ([responseObject[@"code"] integerValue] == 1) {
+                _commentDetail = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
+                NSDictionary *data = @{@"content":  _commentDetail.content};
+                _commentDetail.content = [Utils HTMLWithData:data
+                                             usingTemplate:@"newTweet"];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                });
+            }
+            
+        }
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+
+            NSLog(@"error = %@",error);
+        }];
 }
 
 #pragma mark - 右导航栏按钮
@@ -75,7 +140,7 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
     [subView addSubview:label];
     
     _upImageView = [UIButton new];
-    [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_normal"] forState:UIControlStateNormal];
+    
     [subView addSubview:_upImageView];
     [_upImageView addTarget:self action:@selector(voteUpQuestions:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -87,7 +152,7 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
     [subView addSubview:_upLabel];
     
     _downImageView = [UIButton new];
-    [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_normal"] forState:UIControlStateNormal];
+    
     [subView addSubview:_downImageView];
     [_downImageView addTarget:self action:@selector(voteDownQuestions:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -98,7 +163,10 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
     _downLabel.text = @"踩";
     [subView addSubview:_downLabel];
     
+    //按钮状态样式
+    [self judgeVoteState];
     
+    //布局
     for (UIView *view in subView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = NSDictionaryOfVariableBindings(label, _upImageView, _upLabel, _downImageView, _downLabel);
     [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[label]"
@@ -122,6 +190,32 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
     [subView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-55-[_upLabel(45)]-40-[_downLabel(45)]"
                                                                     options:0
                                                                     metrics:nil views:views]];
+}
+
+- (void)judgeVoteState
+{
+    switch (_commentDetail.voteState) {
+        case 0:
+        {
+            [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_normal"] forState:UIControlStateNormal];
+            [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_normal"] forState:UIControlStateNormal];
+            break;
+        }
+        case 1://已顶
+        {
+            [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_actived"] forState:UIControlStateNormal];
+            [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_normal"] forState:UIControlStateNormal];
+            break;
+        }
+        case 2://已踩
+        {
+            [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_normal"] forState:UIControlStateNormal];
+            [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_actived"] forState:UIControlStateNormal];
+            break;
+        }
+        default:
+            break;
+    }
 }
 
 #pragma mark - 顶
@@ -149,39 +243,208 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 #pragma mark - UITableViewDelegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        QuestCommentHeadDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:CommentHeadDetailCellIdentifier forIndexPath:indexPath];
-        [cell.downOrUpButton addTarget:self action:@selector(roteUpOrDown) forControlEvents:UIControlEventTouchUpInside];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            QuestCommentHeadDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:CommentHeadDetailCellIdentifier forIndexPath:indexPath];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.downOrUpButton addTarget:self action:@selector(roteUpOrDown) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.commentDetail = _commentDetail;
+            
+            return cell;
+        } else {
+            ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+            webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            webViewCell.contentWebView.delegate = self;
+            [webViewCell.contentWebView loadHTMLString:_commentDetail.content baseURL:[NSBundle mainBundle].resourceURL];
+            webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            return webViewCell;
+        }
+    } else if (indexPath.section == 1) {
+        NewCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
+        commentCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        return cell;
+        if (_commentDetail.reply.count > 0) {
+            OSCNewCommentReply *reply = _commentDetail.reply[indexPath.row];
+            [commentCell setDataForQuestionCommentReply:reply];
+        }
+        
+        return commentCell;
     }
+    
     return [UITableViewCell new];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 0) {
-        return 60;
-    } else {
-        return 200;
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            return 60;
+        } else {
+            return _webViewHeight+30;
+        }
+    } else if (indexPath.section == 1) {
+        if (_commentDetail.reply.count > 0) {
+            UILabel *label = [UILabel new];
+            label.font = [UIFont systemFontOfSize:14];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            OSCNewCommentReply *quesCommentReply = _commentDetail.reply[indexPath.row];
+            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesCommentReply.content]];
+            label.attributedText = contentString;
+            
+            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+            
+            return height + 71;
+        } else {
+            return 0;
+        }
     }
+    return 0;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if (_commentDetail.reply.count > 0) {
+        return 2;
+    }
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    if (section == 0) {
+        return 2;
+    } else if (section == 1) {
+        return _commentDetail.reply.count;
+    }
+    return 0;
 }
 
-#pragma mark - 评论
-- (IBAction)commentClick:(UIButton *)sender {
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    CGFloat headerViewHeight = 0.001;
+    if (section != 0) {
+        headerViewHeight = 32;
+    }
+    return headerViewHeight;
 }
 
-#pragma mark - 收藏
-- (IBAction)favClick:(UIButton *)sender {
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if (section == 1) {
+        if (_commentDetail.reply.count > 0) {
+            return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_commentDetail.reply.count]];
+        }
+        return [self headerViewWithSectionTitle:@"评论"];
+    }
+    
+    return [UIView new];
 }
 
-#pragma mark - 分享
-- (IBAction)shareClick:(UIButton *)sender {
+#pragma mark -- DIY_headerView
+- (UIView *)headerViewWithSectionTitle:(NSString *)title {
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
+    headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
+    titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
+    titleLabel.tag = 8;
+    titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
+    titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
+    titleLabel.text = title;
+    [headerView addSubview:titleLabel];
+    
+    return headerView;
+}
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
+    [self.navigationController handleURL:request.URL];
+    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    if (_webViewHeight == webViewHeight) {return;}
+    _webViewHeight = webViewHeight;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+    });
+}
+
+
+#pragma mark - UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    NSLog(@"send mesage");
+    
+//    if (_isReply) {
+//        OSCBlogDetailComment *comment = _blogDetailComments[_selectIndexPath];
+//        [self sendComment:comment.id authorID:comment.authorId];
+//    } else {
+//        [self sendComment:0 authorID:0];
+//    }
+    
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (void)keyboardDidShow:(NSNotification *)nsNotification
+{
+    
+    //获取键盘的高度
+    
+    NSDictionary *userInfo = [nsNotification userInfo];
+    
+    NSValue *aValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+    
+    CGRect keyboardRect = [aValue CGRectValue];
+    
+    _keyboardHeight = keyboardRect.size.height;
+    
+    _bottomConstrait.constant = _keyboardHeight;
+    
+    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(keyBoardHiden:)];
+    [self.view addGestureRecognizer:_tap];
+    
+}
+
+- (void)keyboardWillHide:(NSNotification *)aNotification
+{
+    _bottomConstrait.constant = 0;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - 软键盘隐藏
+- (void)keyBoardHiden:(UITapGestureRecognizer *)tap
+{
+    [_commentField resignFirstResponder];
+    [self.view removeGestureRecognizer:_tap];
 }
 
 @end

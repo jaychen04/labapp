@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "OSCNewComment.h"
 
 @interface QuestCommentHeadDetailCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *portraitView;
@@ -14,4 +15,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *downOrUpButton;
+
+@property (nonatomic, strong) OSCNewComment *commentDetail;
 @end

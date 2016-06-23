@@ -9,7 +9,7 @@
 #import "QuesAnsDetailViewController.h"
 #import "QuesAnsDetailHeadCell.h"
 #import "NewCommentCell.h"
-#import "OSCQuestion.h"
+#import "OSCNewComment.h"
 #import "OSCBlogDetail.h"
 #import "CommentDetailViewController.h"
 #import "AppDelegate.h"
@@ -19,6 +19,7 @@
 #import "OSCAPI.h"
 #import "LoginViewController.h"
 
+
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
@@ -27,6 +28,7 @@
 #import "UMSocial.h"
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
+#import <MJRefresh.h>
 
 static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 @interface QuesAnsDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UITextFieldDelegate>
@@ -54,14 +56,27 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"问答详情";
+    
     _comments = [NSMutableArray new];
+    _nextPageToken = @"";
+    self.commentTextField.delegate = self;
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [UIView new];
     [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsDetailHeadCell" bundle:nil] forCellReuseIdentifier:quesAnsDetailHeadReuseIdentifier];
     
-    self.commentTextField.delegate = self;
     
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getCommentsForQuestion:YES];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self getCommentsForQuestion:NO];
+    }];
+    [self.tableView.mj_header beginRefreshing];
+    
+
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShow:)
@@ -113,50 +128,73 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 #pragma mark - 获取评论数组
 - (void)getCommentsForQuestion:(BOOL)isRefresh
 {
+    
     NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@comment", OSCAPI_V2_PREFIX];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:blogDetailUrlStr
      parameters:@{
                   @"sourceId"  : @(self.questionID),
                   @"type"      : @(2),
-//                  @"parts"     : @"refer,replay",
                   @"pageToken" : _nextPageToken,
                   }
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            if ([responseObject[@"code"]integerValue] == 1) {
-                //
-                NSDictionary* result = responseObject[@"result"];
-                NSArray* JsonItems = result[@"items"];
-                NSArray *models = [OSCBlogDetailComment mj_objectArrayWithKeyValuesArray:JsonItems];
+            
+            if ([responseObject[@"code"] integerValue] == 1) {
+                NSDictionary *result = responseObject[@"result"];
+                NSArray *jsonItems = result[@"items"];
+                NSArray *array = [OSCNewComment mj_objectArrayWithKeyValuesArray:jsonItems];
                 _nextPageToken = result[@"nextPageToken"];
+                
                 if (isRefresh) {
                     [_comments removeAllObjects];
                 }
-                [_comments addObjectsFromArray:models];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
+                [_comments addObjectsFromArray:array];
                 
-                [self.tableView reloadData];
-            });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (isRefresh) {
+                        [self.tableView.mj_header endRefreshing];
+                    }else{
+                        if (array.count < 20) {
+                            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                        }else{
+                            [self.tableView.mj_footer endRefreshing];
+                        }
+                    }
+                    [self.tableView reloadData];
+                });
+            }
+            
         }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
+            if (isRefresh) {
+                [self.tableView.mj_header endRefreshing];
+            }else{
+                [self.tableView.mj_footer endRefreshing];
+            }
+            NSLog(@"error = %@",error);
         }];
 }
 
 #pragma mark - Table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    if (_comments.count > 0) {
+        return 2;
+    }
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0) {
         return 1;
-    } else {
-        return 3;
+    } else if (section == 1){
+        if (_comments.count > 0) {
+            return _comments.count;
+        }
+        return 0;
     }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -174,7 +212,11 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
     } else if (indexPath.section == 1) {
         NewCommentCell *commentBlogCell = [NewCommentCell new];
         
-        commentBlogCell.isQuestion = YES;
+        if (_comments.count > 0) {
+            OSCNewComment *comment = _comments[indexPath.row];
+            commentBlogCell.quesComment = comment;
+            [commentBlogCell setDataForQuestionComment:comment];
+        }
         
         return commentBlogCell;
     }
@@ -206,11 +248,26 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
         
         return 83 + height;
     } else if (indexPath.section == 1) {
-        return 100;
+        if (_comments.count > 0) {
+            UILabel *label = [UILabel new];
+            label.font = [UIFont systemFontOfSize:14];
+            label.numberOfLines = 0;
+            label.lineBreakMode = NSLineBreakByWordWrapping;
+            
+            OSCNewComment *quesComment = _comments[indexPath.row];
+            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesComment.content]];
+            label.attributedText = contentString;
+            
+            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+            
+            return height + 71;
+        } else {
+            return 0;
+        }
     }
     return 0;
 }
-                
+
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     CGFloat headerViewHeight = 0.001;
@@ -230,7 +287,10 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (indexPath.section == 1) {
+        OSCNewComment *comment = _comments[indexPath.row];
+        
         CommentDetailViewController *commentDetailVC = [CommentDetailViewController new];
+        commentDetailVC.commentId = comment.id;
         [self.navigationController pushViewController:commentDetailVC animated:YES];
     }
 }
