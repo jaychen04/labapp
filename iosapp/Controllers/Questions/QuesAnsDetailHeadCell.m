@@ -28,11 +28,34 @@
 - (void)setQuestioinDetail:(OSCQuestion *)questioinDetail
 {
     _titleLabel.text = questioinDetail.title;
-    _tagLabel.text = @"标签、标签、标签、标签";
+    _tagLabel.attributedText = [self setTagAttributedString:questioinDetail.tags];
     
     _timeLabel.text = [NSString stringWithFormat:@"%@ %@", questioinDetail.author, [[NSDate dateFromString:questioinDetail.pubDate] timeAgoSinceNow]];
     _viewCountLabel.text = [NSString stringWithFormat:@"%ld", (long)questioinDetail.viewCount];
     _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)questioinDetail.commentCount];
+}
+
+- (NSAttributedString *)setTagAttributedString:(NSArray *)array
+{
+    NSMutableAttributedString *attributedString = [NSMutableAttributedString new];
+    __block NSUInteger stringLength = 0;
+    [array enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@" %@ ", obj]]];
+        
+        [attributedString addAttributes:@{
+                                          NSBackgroundColorAttributeName : [UIColor colorWithHex:0xf6f6f6],
+                                          NSForegroundColorAttributeName : [UIColor newAssistTextColor],
+                                          NSFontAttributeName            : [UIFont systemFontOfSize:10]
+                                          }
+                                  range:NSMakeRange(stringLength, obj.length+2)];
+        
+        [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+        
+        stringLength += obj.length + 3;
+        
+    }];
+    
+    return attributedString;
 }
 
 @end

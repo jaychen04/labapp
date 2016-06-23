@@ -69,6 +69,7 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
     
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        [self.tableView.mj_header beginRefreshing];
         [self getCommentsForQuestion:YES];
     }];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
@@ -210,15 +211,16 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
         return cell;
         
     } else if (indexPath.section == 1) {
-        NewCommentCell *commentBlogCell = [NewCommentCell new];
+        NewCommentCell *commentQuestCell = [NewCommentCell new];
         
         if (_comments.count > 0) {
             OSCNewComment *comment = _comments[indexPath.row];
-            commentBlogCell.quesComment = comment;
-            [commentBlogCell setDataForQuestionComment:comment];
+            commentQuestCell.quesComment = comment;
+            [commentQuestCell setDataForQuestionComment:comment];
+            commentQuestCell.commentButton.enabled = NO;
         }
         
-        return commentBlogCell;
+        return commentQuestCell;
     }
     
     return [UITableViewCell new];
