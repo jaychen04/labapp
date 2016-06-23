@@ -252,6 +252,8 @@
 		C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95931AEE129F006918CD /* TeamCenter.m */; };
 		C5FB95971AEE14FC006918CD /* TeamTeam.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FB95961AEE14FC006918CD /* TeamTeam.m */; };
 		ED58396CC87CDE86A1586227 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E428D41171BE2DEA0108EE49 /* libPods-iosapp.a */; };
+		EE01F8F71D1AAAD700F7DA2F /* OSCNewComment.m in Sources */ = {isa = PBXBuildFile; fileRef = EE01F8F41D1AAAD700F7DA2F /* OSCNewComment.m */; };
+		EE01F8F81D1AAAD700F7DA2F /* OSCNewSoftWare.m in Sources */ = {isa = PBXBuildFile; fileRef = EE01F8F61D1AAAD700F7DA2F /* OSCNewSoftWare.m */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
 		EE53F74F1D0048C800083D9D /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
@@ -771,6 +773,10 @@
 		C5FB95961AEE14FC006918CD /* TeamTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTeam.m; sourceTree = "<group>"; };
 		E428D41171BE2DEA0108EE49 /* libPods-iosapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50FD03E01F2716AFACD8E30 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE01F8F31D1AAAD700F7DA2F /* OSCNewComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewComment.h; sourceTree = "<group>"; };
+		EE01F8F41D1AAAD700F7DA2F /* OSCNewComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewComment.m; sourceTree = "<group>"; };
+		EE01F8F51D1AAAD700F7DA2F /* OSCNewSoftWare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewSoftWare.h; sourceTree = "<group>"; };
+		EE01F8F61D1AAAD700F7DA2F /* OSCNewSoftWare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewSoftWare.m; sourceTree = "<group>"; };
 		EE2023291CFBE675002756E4 /* ActivityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadView.h; sourceTree = "<group>"; };
 		EE20232A1CFBE675002756E4 /* ActivityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadView.m; sourceTree = "<group>"; };
 		EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
@@ -1353,6 +1359,10 @@
 				380FD2221A74E702003C4021 /* OSCActivity.m */,
 				EE7D33001AA986AB00ABFE58 /* OSCEventPersonInfo.h */,
 				EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */,
+				EE01F8F31D1AAAD700F7DA2F /* OSCNewComment.h */,
+				EE01F8F41D1AAAD700F7DA2F /* OSCNewComment.m */,
+				EE01F8F51D1AAAD700F7DA2F /* OSCNewSoftWare.h */,
+				EE01F8F61D1AAAD700F7DA2F /* OSCNewSoftWare.m */,
 				38BD3D1B1A38345B00682D1F /* News */,
 				38BD3D1A1A38344E00682D1F /* Post */,
 				38BD3D191A38343F00682D1F /* Blog */,
@@ -2584,6 +2594,7 @@
 				31855C891D0E621F00C8F8B8 /* TweetCommentNewCell.m in Sources */,
 				38A9EEBC1AA998A7006C95BD /* OSLicensePage.m in Sources */,
 				042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */,
+				EE01F8F81D1AAAD700F7DA2F /* OSCNewSoftWare.m in Sources */,
 				38EAF1C71AE0FCE400397E2A /* TeamProjectAuthority.m in Sources */,
 				38A93FA61AA2B51100A515E8 /* OSCThread.m in Sources */,
 				38B0BF991A3AFED800A2FDB0 /* MessageCell.m in Sources */,
@@ -2622,6 +2633,7 @@
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
 				C5EF89181BE318E800B5FA46 /* CommentCell.m in Sources */,
 				0422BC601CEDAAD3007DB140 /* InformationTableViewCell.m in Sources */,
+				EE01F8F71D1AAAD700F7DA2F /* OSCNewComment.m in Sources */,
 				04EC96A11CF469FF0004B54E /* OSCActivities.m in Sources */,
 				EE82D0431C43B1E30066FDC9 /* FeedBackViewController.m in Sources */,
 				C52BF4EC1AF9C03700E53508 /* WeeklyReportDetailViewController.m in Sources */,

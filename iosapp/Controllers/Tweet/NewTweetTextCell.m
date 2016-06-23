@@ -94,14 +94,15 @@
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_userPortrait, _nameLabel, _descTextView, _timeLabel, _likeCountButton, _likeCountLabel, _commentImage, _commentCountLabel);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_userPortrait, _nameLabel, _descTextView,_timeLabel, _likeCountButton, _likeCountLabel, _commentImage, _commentCountLabel);
     
-    
+
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_userPortrait(45)]" options:0 metrics:nil views:views]];
-    
+
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_userPortrait(45)]-8-[_nameLabel]-16-|"
                                                                              options:0 metrics:nil views:views]];
     
+
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-5-[_descTextView]-<=8-[_tweetImageView]-<=6-[_timeLabel]-16-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];

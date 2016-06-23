@@ -8,6 +8,7 @@
 
 #import "NewTweetCell.h"
 #import "Utils.h"
+#import <Masonry.h>
 
 @implementation NewTweetCell
 
@@ -74,6 +75,7 @@
     [self.contentView addSubview:_timeLabel];
     
     _likeCountLabel = [UILabel new];
+    _likeCountLabel.textAlignment = NSTextAlignmentRight;
     _likeCountLabel.font = [UIFont systemFontOfSize:12];
     _likeCountLabel.textColor = [UIColor newAssistTextColor];
     [self.contentView addSubview:_likeCountLabel];
@@ -88,6 +90,7 @@
     [self.contentView addSubview:_commentImage];
     
     _commentCountLabel = [UILabel new];
+    _commentCountLabel.textAlignment = NSTextAlignmentRight;
     _commentCountLabel.font = [UIFont systemFontOfSize:12];
     _commentCountLabel.textColor = [UIColor newAssistTextColor];
     [self.contentView addSubview:_commentCountLabel];
@@ -96,35 +99,58 @@
 - (void)setLayout
 {
     
-#pragma mark - using Masnory add Constraints 
+#pragma mark - change using Masnory add Constraints
     
-    for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+    [_userPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.top.equalTo(self.contentView).with.offset(16);
+        make.width.and.height.equalTo(@45);
+    }];
     
-    NSDictionary *views = NSDictionaryOfVariableBindings(_userPortrait, _nameLabel, _descTextView, _tweetImageView, _timeLabel, _likeCountButton, _likeCountLabel, _commentImage, _commentCountLabel);
+    [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.equalTo(self.contentView).with.offset(16);
+        make.left.equalTo(_userPortrait.mas_right).with.offset(8);
+    }];
     
+    [_descTextView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).with.offset(69);
+        make.top.equalTo(_nameLabel.mas_bottom).with.offset(5);
+        make.right.equalTo(self.contentView).with.offset(-8);
+    }];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_userPortrait(45)]" options:0 metrics:nil views:views]];
+    [_tweetImageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).with.offset(69);
+        make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
+//        右约束
+    }];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_userPortrait(45)]-8-[_nameLabel]-16-|"
-                                                                             options:0 metrics:nil views:views]];
+    [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).with.offset(69);
+        make.top.equalTo(_tweetImageView.mas_bottom).with.offset(6);
+        make.bottom.equalTo(self.contentView).with.offset(-16);
+    }];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-5-[_descTextView]-<=8-[_tweetImageView]-<=6-[_timeLabel]-16-|"
-                                                                             options:NSLayoutFormatAlignAllLeft
-                                                                             metrics:nil views:views]];
+    [_commentCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.and.bottom.equalTo(self.contentView).with.offset(-16);
+    }];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_commentImage(15)]" options:0 metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_timeLabel]->=5-[_likeCountButton(40)]-2-[_likeCountLabel]-16-[_commentImage(15)]-5-[_commentCountLabel]-16-|"
-                                                                             options:NSLayoutFormatAlignAllCenterY
-                                                                             metrics:nil views:views]];
+    [_commentImage mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.and.height.equalTo(@15);
+        make.right.equalTo(_commentCountLabel.mas_left).with.offset(-5);
+        make.bottom.equalTo(self.contentView).with.offset(-16);
+    }];
     
+    [_likeCountLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.bottom.equalTo(self.contentView).with.offset(-16);
+        make.right.equalTo(_commentImage.mas_left).with.offset(-16);
+    }];
     
-    [self.contentView addConstraint:[NSLayoutConstraint constraintWithItem:_nameLabel
-                                                                 attribute:NSLayoutAttributeRight
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_descTextView
-                                                                 attribute:NSLayoutAttributeRight
-                                                                multiplier:1.0
-                                                                  constant:0]];
+    [_likeCountButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.equalTo(@40);
+        make.height.equalTo(@15);
+        make.bottom.equalTo(self.contentView).with.offset(-16);
+        make.right.equalTo(_likeCountLabel.mas_left).with.offset(-5);
+    }];
+
 }
 
 + (void)initContetTextView:(UITextView*)textView
@@ -137,54 +163,8 @@
     textView.scrollEnabled = NO;
     [textView setTextContainerInset:UIEdgeInsetsZero];
     textView.textContainer.lineFragmentPadding = 0;
-//    textView.linkTextAttributes = @{
-////                                    NSFontAttributeName : @"PingFangSC-Light",
-//                                    NSForegroundColorAttributeName: [UIColor newTitleColor],
-//                                    NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
-//                                    };
 }
 
-/*
-#pragma mark -  数组图片集
-- (void)initImagesSubview
-{
-    
-    int arrayCount = 1;
-    
-    int x = (int)(arrayCount-1)%3;//_images.count/3;
-    int y = (int)(arrayCount-1)/3;//_images.count%3;
-    
-    if (arrayCount > 2) {
-        x = 2;
-        
-    } else {
-        x = arrayCount;
-    }
-    
-    for (int i = 0; i <= x; i++) {
-        for (int j = 0; j <= y; j++) {
-            NSLog(@"(%d:%d)", i, j);
-            UIImageView *image = [UIImageView new];
-            image.frame = CGRectMake(68*i, 68*j, 60, 60);
-//            image.backgroundColor = [UIColor yellowColor];
-            [image loadPortrait:_tweet.smallImgURL];
-            [self.imageBackView addSubview:image];
-            if (j*3+i+1 > arrayCount) {
-                image.hidden = YES;
-            } else {
-                image.hidden = NO;
-            }
-            image.tag = 3*i+j;
-            [image addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickImage:)]];
-        }
-    }
-}
-
-- (void)clickImage:(UITapGestureRecognizer *)tap
-{
-    NSLog(@"tap");
-}
-*/
 #pragma mark - set Tweet
 - (void)setTweet:(OSCTweet *)tweet
 {

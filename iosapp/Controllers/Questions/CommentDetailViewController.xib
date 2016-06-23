@@ -7,9 +7,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CommentDetailViewController">
             <connections>
-                <outlet property="bottomView" destination="wpd-0x-bjP" id="c7D-B3-Cuj"/>
-                <outlet property="commentButton" destination="tCl-7T-kIo" id="H2I-yq-8oF"/>
-                <outlet property="favButton" destination="80g-WW-0Fl" id="YRn-r0-FFZ"/>
+                <outlet property="bottomConstrait" destination="D1j-6M-JL5" id="3UE-bj-acb"/>
+                <outlet property="bottomView" destination="uSB-Tw-DFH" id="uqg-fL-VwL"/>
+                <outlet property="commentField" destination="70C-Pl-3k8" id="PKG-cw-nNB"/>
                 <outlet property="tableView" destination="fPk-Aa-iOy" id="SDI-7s-WUg"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -29,59 +29,21 @@
                                 <constraint firstAttribute="height" constant="1" id="EIs-oa-d40"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80g-WW-0Fl">
-                            <rect key="frame" x="200" y="12.5" width="200" height="20"/>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="我要评论" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="70C-Pl-3k8">
+                            <rect key="frame" x="6" y="9" width="588" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                            <state key="normal" title="收藏" image="ic_fav_pressed">
-                                <color key="titleColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="favClick:" destination="-1" eventType="touchUpInside" id="545-kx-h4Q"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UVa-Zw-gCm">
-                            <rect key="frame" x="400" y="12.5" width="200" height="20"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                            <state key="normal" title="分享" image="ic_share_black_pressed">
-                                <color key="titleColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="shareClick:" destination="-1" eventType="touchUpInside" id="wET-Da-21O"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tCl-7T-kIo">
-                            <rect key="frame" x="0.0" y="1" width="200" height="44"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="10" maxY="0.0"/>
-                            <state key="normal" title="评论(11)" image="ic_comment_30">
-                                <color key="titleColor" red="0.61568627450980395" green="0.61568627450980395" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="commentClick:" destination="-1" eventType="touchUpInside" id="c4y-Hb-cBn"/>
-                            </connections>
-                        </button>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="UVa-Zw-gCm" firstAttribute="width" secondItem="tCl-7T-kIo" secondAttribute="width" id="9x3-hJ-a3y"/>
+                        <constraint firstItem="70C-Pl-3k8" firstAttribute="leading" secondItem="uSB-Tw-DFH" secondAttribute="leading" constant="6" id="Ew0-4Q-6kd"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="45" id="FaE-48-fg2"/>
-                        <constraint firstAttribute="bottom" secondItem="tCl-7T-kIo" secondAttribute="bottom" id="GCU-vM-9e0"/>
-                        <constraint firstAttribute="trailing" secondItem="UVa-Zw-gCm" secondAttribute="trailing" id="Ngj-sS-bXq"/>
-                        <constraint firstItem="80g-WW-0Fl" firstAttribute="leading" secondItem="tCl-7T-kIo" secondAttribute="trailing" id="RDJ-gp-Okh"/>
-                        <constraint firstItem="UVa-Zw-gCm" firstAttribute="leading" secondItem="80g-WW-0Fl" secondAttribute="trailing" id="RYf-7d-lEl"/>
-                        <constraint firstItem="80g-WW-0Fl" firstAttribute="width" secondItem="tCl-7T-kIo" secondAttribute="width" id="bmz-gH-v5a"/>
-                        <constraint firstItem="80g-WW-0Fl" firstAttribute="centerY" secondItem="tCl-7T-kIo" secondAttribute="centerY" id="cMv-Q9-q4h"/>
-                        <constraint firstItem="tCl-7T-kIo" firstAttribute="top" secondItem="wpd-0x-bjP" secondAttribute="bottom" id="fQl-dr-Pnw"/>
+                        <constraint firstItem="70C-Pl-3k8" firstAttribute="top" secondItem="wpd-0x-bjP" secondAttribute="bottom" constant="8" symbolic="YES" id="IGr-s7-fds"/>
                         <constraint firstAttribute="trailing" secondItem="wpd-0x-bjP" secondAttribute="trailing" id="lzc-aK-cPF"/>
-                        <constraint firstItem="tCl-7T-kIo" firstAttribute="leading" secondItem="uSB-Tw-DFH" secondAttribute="leading" id="pW7-ga-NhH"/>
+                        <constraint firstAttribute="trailing" secondItem="70C-Pl-3k8" secondAttribute="trailing" constant="6" id="pLa-gk-uKO"/>
                         <constraint firstItem="wpd-0x-bjP" firstAttribute="leading" secondItem="uSB-Tw-DFH" secondAttribute="leading" id="tIS-aR-qfc"/>
                         <constraint firstItem="wpd-0x-bjP" firstAttribute="top" secondItem="uSB-Tw-DFH" secondAttribute="top" id="ugT-F4-wsU"/>
-                        <constraint firstItem="UVa-Zw-gCm" firstAttribute="centerY" secondItem="tCl-7T-kIo" secondAttribute="centerY" id="woa-z4-FUK"/>
                         <constraint firstAttribute="height" constant="45" id="z7K-Bx-CxS"/>
                     </constraints>
                 </view>
@@ -103,9 +65,4 @@
             <point key="canvasLocation" x="372" y="291"/>
         </view>
     </objects>
-    <resources>
-        <image name="ic_comment_30" width="15" height="14"/>
-        <image name="ic_fav_pressed" width="20" height="20"/>
-        <image name="ic_share_black_pressed" width="20" height="20"/>
-    </resources>
 </document>

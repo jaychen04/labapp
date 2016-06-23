@@ -21,6 +21,11 @@
                             <constraint firstAttribute="height" constant="36" id="Ljm-AV-tBe"/>
                             <constraint firstAttribute="width" constant="36" id="ZIN-4O-63R"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                <integer key="value" value="18"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1天前 (2016-06-24 20:12:01)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m31-xf-2Ln">
                         <rect key="frame" x="60" y="32" width="252" height="15"/>
@@ -29,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="luW-r4-QKD">
-                        <rect key="frame" x="227" y="10" width="1" height="44"/>
+                        <rect key="frame" x="256" y="10" width="1" height="44"/>
                         <color key="backgroundColor" red="0.82352941176470584" green="0.82352941176470584" blue="0.82352941176470584" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="CVm-ev-XNs"/>
@@ -37,10 +42,7 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pgd-kK-8WZ">
-                        <rect key="frame" x="228" y="16" width="76" height="23"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="76" id="teG-1w-10m"/>
-                        </constraints>
+                        <rect key="frame" x="267" y="16" width="37" height="23"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="15" maxY="0.0"/>
                         <state key="normal" title="36" image="ic_vote">
@@ -48,7 +50,7 @@
                         </state>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="梦想岛" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4kf-7o-rR2">
-                        <rect key="frame" x="60" y="10" width="167" height="17"/>
+                        <rect key="frame" x="60" y="10" width="42" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -56,15 +58,14 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="m31-xf-2Ln" firstAttribute="top" secondItem="4kf-7o-rR2" secondAttribute="bottom" constant="5" id="07I-tD-djx"/>
+                    <constraint firstItem="Pgd-kK-8WZ" firstAttribute="leading" secondItem="luW-r4-QKD" secondAttribute="trailing" constant="10" id="BVz-fp-Lp2"/>
                     <constraint firstItem="Yxm-rc-f5R" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="EZ7-Pq-Oz5"/>
                     <constraint firstAttribute="trailing" secondItem="Pgd-kK-8WZ" secondAttribute="trailing" constant="16" id="IzL-L1-FPL"/>
-                    <constraint firstItem="luW-r4-QKD" firstAttribute="leading" secondItem="4kf-7o-rR2" secondAttribute="trailing" id="M1w-6Y-TER"/>
                     <constraint firstItem="Pgd-kK-8WZ" firstAttribute="centerY" secondItem="Yxm-rc-f5R" secondAttribute="centerY" id="OMH-Bk-9vC"/>
                     <constraint firstItem="4kf-7o-rR2" firstAttribute="top" secondItem="Yxm-rc-f5R" secondAttribute="top" id="RNd-BZ-bMP"/>
                     <constraint firstItem="Yxm-rc-f5R" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="TQX-yg-fQd"/>
                     <constraint firstItem="luW-r4-QKD" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="UvJ-As-Bdx"/>
                     <constraint firstAttribute="trailingMargin" secondItem="m31-xf-2Ln" secondAttribute="trailing" id="VNc-Nl-cVz"/>
-                    <constraint firstItem="Pgd-kK-8WZ" firstAttribute="leading" secondItem="luW-r4-QKD" secondAttribute="trailing" id="lNd-Jf-yui"/>
                     <constraint firstItem="4kf-7o-rR2" firstAttribute="leading" secondItem="Yxm-rc-f5R" secondAttribute="trailing" constant="8" id="oy8-vO-C2f"/>
                     <constraint firstItem="m31-xf-2Ln" firstAttribute="leading" secondItem="4kf-7o-rR2" secondAttribute="leading" id="s3V-J5-44F"/>
                 </constraints>
@@ -75,7 +76,7 @@
                 <outlet property="portraitView" destination="Yxm-rc-f5R" id="o4J-kd-a4f"/>
                 <outlet property="timeLabel" destination="m31-xf-2Ln" id="C5e-dx-f7Z"/>
             </connections>
-            <point key="canvasLocation" x="357" y="294.5"/>
+            <point key="canvasLocation" x="355" y="294.5"/>
         </tableViewCell>
     </objects>
     <resources>
