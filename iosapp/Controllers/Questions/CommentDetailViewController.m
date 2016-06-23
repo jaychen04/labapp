@@ -121,6 +121,47 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 {
     //
     NSLog(@"右导航栏按钮");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
+                                                        message:@"message"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView textFieldAtIndex:0].placeholder = @"举报原因";
+    [alertView show];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != [alertView cancelButtonIndex]) {
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+//        
+//        [manager POST:@"http://www.oschina.net/action/communityManage/report"
+//           parameters:@{
+//                        @"memo":        [alertView textFieldAtIndex:0].text.length == 0? @"其他原因": [alertView textFieldAtIndex:0].text,
+//                        @"obj_id":      @(_blogDetails.id),
+//                        @"obj_type":    @"2",
+//                        @"reason":      @"4",
+//                        @"url":         _blogDetails.href
+//                        }
+//              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+//                  MBProgressHUD *HUD = [Utils createHUD];
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+//                  HUD.labelText = @"举报成功";
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  MBProgressHUD *HUD = [Utils createHUD];
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.labelText = @"网络异常，操作失败";
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//              }];
+    }
 }
 
 #pragma mark - 自定义弹出框
@@ -318,14 +359,6 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         }
     }
     return 0;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 1) {
-        NSLog(@"click = %ld", (long)indexPath.row);
-    }
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
