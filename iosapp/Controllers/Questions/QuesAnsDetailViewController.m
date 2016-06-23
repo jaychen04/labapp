@@ -212,16 +212,18 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
         return cell;
         
     } else if (indexPath.section == 1) {
+        
+        NewCommentCell *commentCell = [NewCommentCell new];//[tableView dequeueReusableCellWithIdentifier:quesAnsCommentHeadReuseIdentifier forIndexPath:indexPath];
+        
         if (_comments.count > 0) {
-            NewCommentCell *commentQuestCell = [NewCommentCell new];
-            
             OSCNewComment *comment = _comments[indexPath.row];
-            commentQuestCell.quesComment = comment;
-            [commentQuestCell setDataForQuestionComment:comment];
-            commentQuestCell.commentButton.enabled = NO;
+            commentCell.quesComment = comment;
             
-            return commentQuestCell;
+            [commentCell setDataForQuestionComment:comment];
+            commentCell.commentButton.enabled = NO;
         }
+        
+        return commentCell;
     }
     
     return [UITableViewCell new];
