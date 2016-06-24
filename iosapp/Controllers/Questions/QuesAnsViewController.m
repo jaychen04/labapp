@@ -199,7 +199,9 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     return [tableView fd_heightForCellWithIdentifier:QuesAnsCellIdentifier configuration:^(QuesAnsTableViewCell* cell) {
         NSInteger currentIndex = self.selectedBtn.tag;
         NSArray* dataSource = self.dataModels[currentIndex];
-        cell.viewModel = dataSource[indexPath.row];
+        if (dataSource.count > indexPath.row) {
+            cell.viewModel = dataSource[indexPath.row];
+        }
     }];
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
