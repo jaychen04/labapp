@@ -53,6 +53,7 @@
 //回复
 @interface OSCNewCommentReply : NSObject
 
+@property (nonatomic, assign) NSInteger id;
 @property (nonatomic, copy) NSString *author;
 @property (nonatomic, assign) NSInteger authorId;
 @property (nonatomic, copy) NSString *authorPortrait;
