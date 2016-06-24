@@ -17,11 +17,11 @@
 @property (strong, nonatomic) UILabel *timeLabel;
 @property (strong, nonatomic) UILabel *contentLabel;
 @property (strong, nonatomic) UIButton *commentButton;
+@property (nonatomic, strong) UIImageView *bestImageView;
 
 @property (nonatomic, strong) UIView *currentContainer;
 
 @property (nonatomic, strong) OSCBlogDetailComment *comment;
-@property (nonatomic, strong) OSCNewComment *quesComment;
 
 - (void)setDataForQuestionComment:(OSCNewComment *)questComment;
 

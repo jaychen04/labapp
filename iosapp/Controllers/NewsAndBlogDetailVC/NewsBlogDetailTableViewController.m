@@ -511,7 +511,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         OSCBlogCommentRefer *refer = blogComment.refer;
                         int i = 0;
                         while (refer.author.length > 0) {
-                            label.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
+                            NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
+                            [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
+                            label.attributedText = replyContent;
                             height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
                             i++;
                             refer = refer.refer;

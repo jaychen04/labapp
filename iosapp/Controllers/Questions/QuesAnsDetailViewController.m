@@ -213,11 +213,10 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
         
     } else if (indexPath.section == 1) {
         
-        NewCommentCell *commentCell = [NewCommentCell new];//[tableView dequeueReusableCellWithIdentifier:quesAnsCommentHeadReuseIdentifier forIndexPath:indexPath];
+        NewCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:quesAnsCommentHeadReuseIdentifier forIndexPath:indexPath];//[NewCommentCell new];//
         
         if (_comments.count > 0) {
             OSCNewComment *comment = _comments[indexPath.row];
-            commentCell.quesComment = comment;
             
             [commentCell setDataForQuestionComment:comment];
             commentCell.commentButton.enabled = NO;
@@ -446,6 +445,36 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - sendMessage
+- (void)sendMessage
+{
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manger POST:[NSString stringWithFormat:@"%@comment_pub", OSCAPI_V2_PREFIX]
+     parameters:@{
+                  @"sourceId" : @(self.questionID),
+                  @"type" : @(2),
+                  @"content" : _commentTextField.text,
+                  
+                  }
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            
+            if ([responseObject[@"code"]integerValue] == 1) {
+                _questionDetail = [OSCQuestion mj_objectWithKeyValues:responseObject[@"result"]];
+                NSDictionary *data = @{@"content":  _questionDetail.body};
+                _questionDetail.body = [Utils HTMLWithData:data
+                                             usingTemplate:@"newTweet"];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setFavButtonImage:_questionDetail.favorite];
+                
+                [self.tableView reloadData];
+            });
+        }
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+        }];
 }
 
 #pragma mark - 软键盘隐藏
