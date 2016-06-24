@@ -513,7 +513,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         OSCBlogCommentRefer *refer = blogComment.refer;
                         int i = 0;
                         while (refer.author.length > 0) {
-                            label.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
+                            NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
+                            [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
+                            label.attributedText = replyContent;
                             height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
                             i++;
                             refer = refer.refer;
@@ -1083,6 +1085,38 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         [self.navigationController pushViewController:loginVC animated:YES];
     } else {
         
+        /* 新 发评论
+        
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+        
+        [manger POST:[NSString stringWithFormat:@"%@comment_pub", OSCAPI_V2_PREFIX]
+          parameters:@{
+                       @"sourceId"   : @(_blogDetails.id),
+                       @"type"       : @(2),
+                       @"content"    : _commentTextField.text,
+                       @"replyId"    : @(replyID),
+                       @"reAuthorId" : @(authorID),
+                       }
+             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 if ([responseObject[@"code"]integerValue] == 1) {
+                     MBProgressHUD *HUD = [Utils createHUD];
+                     HUD.mode = MBProgressHUDModeCustomView;
+                     HUD.labelText = @"评论成功";
+                     
+                     [HUD hide:YES afterDelay:1];
+                 }
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     
+                     [self.tableView reloadData];
+                 });
+             }
+             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                 NSLog(@"%@",error);
+             }];
+        */
+        
+        
+        //旧 发评论
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
 
         NSString *urlStr = _isBlogDetail ? [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB]:[NSString stringWithFormat:@"%@%@",OSCAPI_PREFIX,OSCAPI_COMMENT_PUB];
