@@ -17,7 +17,7 @@
 #import "LoginViewController.h"
 
 #import <MJExtension.h>
-
+#import <MBProgressHUD.h>
 
 static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetailCell";
 static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
@@ -136,6 +136,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [alertView cancelButtonIndex]) {
+        //旧 举报接口
 //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
 //        
 //        [manager POST:@"http://www.oschina.net/action/communityManage/report"
@@ -161,6 +162,34 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 //                  
 //                  [HUD hide:YES afterDelay:1];
 //              }];
+        
+        /* 新举报接口 */
+//        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+//        
+//        [manger POST:[NSString stringWithFormat:@"%@report", OSCAPI_V2_PREFIX]
+//          parameters:@{
+//                       @"sourceId"   : @(self.commentId),
+//                       @"type"       : @(2),
+//                       //@"href"       : @(),//举报的文章地址
+//                       @"reason"     : @(0), //0 其他原因 1 广告 2 色情 3 翻墙 4 非IT话题
+//                      // @"memo"       : @(authorID),//当reason为其他原因时，该字段不能为空
+//                       }
+//             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+//                 if ([responseObject[@"code"]integerValue] == 1) {
+//                     MBProgressHUD *HUD = [Utils createHUD];
+//                     HUD.mode = MBProgressHUDModeCustomView;
+//                     HUD.labelText = @"评论成功";
+//                     
+//                     [HUD hide:YES afterDelay:1];
+//                 }
+//                 dispatch_async(dispatch_get_main_queue(), ^{
+//                     
+//                     [self.tableView reloadData];
+//                 });
+//             }
+//             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+//                 NSLog(@"%@",error);
+//             }];
     }
 }
 
@@ -451,14 +480,13 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"send mesage");
-    
-//    if (_isReply) {
-//        OSCBlogDetailComment *comment = _blogDetailComments[_selectIndexPath];
-//        [self sendComment:comment.id authorID:comment.authorId];
-//    } else {
-//        [self sendComment:0 authorID:0];
-//    }
+    //send message
+    if (_isReply) {
+        OSCNewCommentReply *quesCommentReply = _commentDetail.reply[_selectIndexPath];
+        [self sendComment:quesCommentReply.id authorID:quesCommentReply.authorId];
+    } else {
+        [self sendComment:0 authorID:0];
+    }
     
     [textField resignFirstResponder];
     
@@ -526,59 +554,38 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 #pragma mark - 发评论
 - (void)sendComment:(NSInteger)replyID authorID:(NSInteger)authorID
 {
-    //
-    MBProgressHUD *HUD = [Utils createHUD];
-    //    HUD.labelText = @"评论发送中";
-    
-    
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController pushViewController:loginVC animated:YES];
     } else {
         
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-//        
-//        NSString *urlStr = [NSString stringWithFormat:@"%@%@",OSCAPI_PREFIX,OSCAPI_COMMENT_PUB];
-//        NSDictionary *parameters =  @{
-//                                        @"catalog": @(1),
-//                                        @"id": @(_commentDetail.id),
-//                                        @"uid": @([Config getOwnID]),
-//                                        @"replyid": @(replyID),
-//                                        @"authorid": @(authorID),
-//                                        @"content": _commentField.text,
-//                                        @"isPostToMyZone": @(0)
-//                                        };
-//        [manager POST:urlStr
-//           parameters:parameters
-//              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-//                  ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
-//                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-//                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-//                  
-//                  HUD.mode = MBProgressHUDModeCustomView;
-//                  
-//                  if (errorCode == 1) {
-//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-//                      HUD.labelText = @"评论发表成功";
-//                      
-//                      [self.tableView reloadData];
-//                      _commentTextField.text = @"";
-//                  } else {
-//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-//                  }
-//                  
-//                  [HUD hide:YES afterDelay:1];
-//                  
-//                  
-//              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                  HUD.mode = MBProgressHUDModeCustomView;
-//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//                  HUD.labelText = @"网络异常，动弹发送失败";
-//                  
-//                  [HUD hide:YES afterDelay:1];
-//              }];
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+        
+        [manger POST:[NSString stringWithFormat:@"%@comment_pub", OSCAPI_V2_PREFIX]
+          parameters:@{
+                       @"sourceId"   : @(self.commentId),
+                       @"type"       : @(2),
+                       @"content"    : _commentField.text,
+                       @"replyId"    : @(replyID),
+                       @"reAuthorId" : @(authorID),
+                       }
+             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 if ([responseObject[@"code"]integerValue] == 1) {
+                     MBProgressHUD *HUD = [Utils createHUD];
+                     HUD.mode = MBProgressHUDModeCustomView;
+                     HUD.labelText = @"评论成功";
+                     
+                     [HUD hide:YES afterDelay:1];
+                 }
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     
+                     [self.tableView reloadData];
+                 });
+             }
+             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                 NSLog(@"%@",error);
+             }];
         
     }
 }
