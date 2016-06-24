@@ -26,6 +26,7 @@
 - (void)setDataForQuestionComment:(OSCNewComment *)questComment;
 
 - (void)setDataForQuestionCommentReply:(OSCNewCommentReply *)commentReply;
++ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
 
 @end
 

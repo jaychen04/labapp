@@ -124,8 +124,8 @@
     
     _bestImageView.hidden = YES;
     
-    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
-    _contentLabel.attributedText = contentString;
+//    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];//commentReply.content
+    _contentLabel.attributedText =[NewCommentCell contentStringFromRawString:comment.content];
     
     if (comment.refer.author.length > 0) {
         _currentContainer.hidden = NO;
@@ -141,8 +141,10 @@
     _nameLabel.text = questComment.author;
     _timeLabel.text = [[NSDate dateFromString:questComment.pubDate] timeAgoSinceNow];
     
-    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:questComment.content]];
-    _contentLabel.attributedText = contentString;
+//    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:questComment.content]];
+//    _contentLabel.attributedText = contentString;
+    
+    _contentLabel.attributedText = [NewCommentCell contentStringFromRawString:questComment.content];
     
     if (questComment.best) {
         _commentButton.hidden = YES;
@@ -163,8 +165,32 @@
     
     _bestImageView.hidden = YES;
     
-    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentReply.content]];
-    _contentLabel.attributedText = contentString;
+//    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentReply.content]];
+    _contentLabel.attributedText = [NewCommentCell contentStringFromRawString:commentReply.content];
+}
+
+#pragma mark - 处理字符串
++ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString
+{
+    if (!rawString || rawString.length == 0) return [[NSAttributedString alloc] initWithString:@""];
+    
+    NSAttributedString *attrString = [Utils attributedStringFromHTML:rawString];
+    NSMutableAttributedString *mutableAttrString = [[Utils emojiStringFromAttrString:attrString] mutableCopy];
+    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Light" size:14.0] range:NSMakeRange(0, mutableAttrString.length)];
+    
+    // remove under line style
+    [mutableAttrString beginEditing];
+    [mutableAttrString enumerateAttribute:NSUnderlineStyleAttributeName
+                                  inRange:NSMakeRange(0, mutableAttrString.length)
+                                  options:0
+                               usingBlock:^(id value, NSRange range, BOOL *stop) {
+                                   if (value) {
+                                       [mutableAttrString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:range];
+                                   }
+                               }];
+    [mutableAttrString endEditing];
+    
+    return mutableAttrString;
 }
 
 #pragma mark - refer

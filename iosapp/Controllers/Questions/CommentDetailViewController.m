@@ -377,8 +377,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
             label.lineBreakMode = NSLineBreakByWordWrapping;
             
             OSCNewCommentReply *quesCommentReply = _commentDetail.reply[indexPath.row];
-            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesCommentReply.content]];
-            label.attributedText = contentString;
+//            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesCommentReply.content]];
+            label.attributedText = [NewCommentCell contentStringFromRawString:quesCommentReply.content];
             
             CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
             
