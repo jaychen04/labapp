@@ -65,6 +65,7 @@
     
     _tweetImageView = [UIImageView new];
     _tweetImageView.contentMode = UIViewContentModeScaleAspectFill;
+//    _tweetImageView.contentMode = UIViewContentModeLeft;
     _tweetImageView.clipsToBounds = YES;
     _tweetImageView.userInteractionEnabled = YES;
     [self.contentView addSubview:_tweetImageView];
@@ -120,7 +121,7 @@
     [_tweetImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(69);
         make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
-//        右约束
+//        make.right.equalTo(@(-16));
     }];
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
