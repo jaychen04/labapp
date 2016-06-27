@@ -329,8 +329,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger POST:blogDetailUrlStr
      parameters:@{
-                  @"sourceId"   : @(self.commentId),
-                  @"commmentId" : @(self.questDetailId),
+                  @"sourceId"   : @(self.questDetailId),
+                  @"commmentId" : @(self.commentId),
                   @"voteOpt"    : @(voteType),
                   }
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
