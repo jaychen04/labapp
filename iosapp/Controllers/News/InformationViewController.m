@@ -134,6 +134,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 
 -(void)layoutUI{
+    self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
     self.tableView.tableHeaderView = self.cycleScrollView;
     self.tableView.estimatedRowHeight = 132;

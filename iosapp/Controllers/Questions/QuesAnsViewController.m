@@ -92,7 +92,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 
 - (void)setColorForSubViews
 {
-    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     self.tableView.separatorColor = [UIColor separatorColor];
     self.buttonViewLine.backgroundColor = [UIColor separatorColor];
     self.buttonView.backgroundColor = [UIColor newCellColor];
