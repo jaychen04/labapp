@@ -21,10 +21,6 @@
                         <color key="textColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2DI-HP-3rr">
-                        <rect key="frame" x="8" y="63" width="304" height="44"/>
-                        <color key="backgroundColor" red="0.36078431372549019" green="0.38823529411764707" blue="0.40392156862745099" alpha="1" colorSpace="deviceRGB"/>
-                    </webView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="风宇冲 6分钟前" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nIm-qr-g8l">
                         <rect key="frame" x="16" y="115" width="84" height="15"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -63,6 +59,10 @@
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2DI-HP-3rr">
+                        <rect key="frame" x="8" y="63" width="304" height="44"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </webView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Jhv-bp-pF3" firstAttribute="leading" secondItem="4ZL-2n-BKG" secondAttribute="trailing" constant="5" id="2sh-09-H0b"/>

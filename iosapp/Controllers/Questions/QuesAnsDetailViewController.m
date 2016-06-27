@@ -52,6 +52,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 @property (nonatomic, assign) CGFloat keyboardHeight;
 
 @property (nonatomic, copy) NSString *commentString;
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 @end
 
@@ -64,8 +65,16 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     _commentTextField.text = _commentString;
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self hideHubView];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     
     self.title = @"问答详情";
     
@@ -106,11 +115,31 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                                                                              action:@selector(rightBarButtonClicked)];
     [self getDetailForQuestion];
     [self getCommentsForQuestion:NO];/* 待调试 */
+    
+    [self showHubView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)showHubView {
+    UIView *coverView = [[UIView alloc]initWithFrame:self.view.bounds];
+    coverView.backgroundColor = [UIColor whiteColor];
+    coverView.tag = 10;
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    [window addSubview:_hud];
+    [self.view addSubview:coverView];
+    [_hud show:YES];
+    _hud.removeFromSuperViewOnHide = YES;
+    _hud.userInteractionEnabled = NO;
+}
+- (void)hideHubView {
+    [_hud hide:YES];
+    [[self.view viewWithTag:10] removeFromSuperview];
 }
 
 #pragma mark - 获取数据
@@ -271,8 +300,8 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
             label.lineBreakMode = NSLineBreakByWordWrapping;
             
             OSCNewComment *quesComment = _comments[indexPath.row];
-            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesComment.content]];
-            label.attributedText = contentString;
+            
+            label.attributedText = [NewCommentCell contentStringFromRawString:quesComment.content];
             
             CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
             
@@ -334,6 +363,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     _webViewHeight = webViewHeight + 5;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
+        [self hideHubView];
     });
 }
 
