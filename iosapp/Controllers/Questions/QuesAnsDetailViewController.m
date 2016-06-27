@@ -31,6 +31,8 @@
 #import <MJRefresh.h>
 
 static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
+static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
+
 @interface QuesAnsDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -49,9 +51,18 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 //软键盘size
 @property (nonatomic, assign) CGFloat keyboardHeight;
 
+@property (nonatomic, copy) NSString *commentString;
+
 @end
 
 @implementation QuesAnsDetailViewController
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    _commentTextField.text = _commentString;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -60,22 +71,25 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
     
     _comments = [NSMutableArray new];
     _nextPageToken = @"";
+    _commentString = @"";
+    _commentTextField.text = _commentString;
+    
     self.commentTextField.delegate = self;
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
     [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsDetailHeadCell" bundle:nil] forCellReuseIdentifier:quesAnsDetailHeadReuseIdentifier];
-    
+    [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:quesAnsCommentHeadReuseIdentifier];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self.tableView.mj_footer beginRefreshing];
         [self getCommentsForQuestion:YES];
     }];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self.tableView.mj_footer beginRefreshing];
         [self getCommentsForQuestion:NO];
     }];
-    [self.tableView.mj_header beginRefreshing];
-    
 
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -210,15 +224,17 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
         return cell;
         
     } else if (indexPath.section == 1) {
-        NewCommentCell *commentBlogCell = [NewCommentCell new];
+        
+        NewCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:quesAnsCommentHeadReuseIdentifier forIndexPath:indexPath];//[NewCommentCell new];//
         
         if (_comments.count > 0) {
             OSCNewComment *comment = _comments[indexPath.row];
-            commentBlogCell.quesComment = comment;
-            [commentBlogCell setDataForQuestionComment:comment];
+            
+            [commentCell setDataForQuestionComment:comment];
+            commentCell.commentButton.enabled = NO;
         }
         
-        return commentBlogCell;
+        return commentCell;
     }
     
     return [UITableViewCell new];
@@ -282,16 +298,20 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
     }
     return headerViewHeight;
 }
-
+#pragma mark - tableView delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (indexPath.section == 1) {
-        OSCNewComment *comment = _comments[indexPath.row];
+        if (_comments.count > indexPath.row) {
+            OSCNewComment *comment = _comments[indexPath.row];
+            
+            CommentDetailViewController *commentDetailVC = [CommentDetailViewController new];
+            commentDetailVC.commentId = comment.id;
+            [self.navigationController pushViewController:commentDetailVC animated:YES];
+        }
         
-        CommentDetailViewController *commentDetailVC = [CommentDetailViewController new];
-        commentDetailVC.commentId = comment.id;
-        [self.navigationController pushViewController:commentDetailVC animated:YES];
     }
 }
 
@@ -356,6 +376,7 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [alertView cancelButtonIndex]) {
+        /*
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
         [manager POST:@"http://www.oschina.net/action/communityManage/report"
@@ -381,6 +402,37 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
                   
                   [HUD hide:YES afterDelay:1];
               }];
+         */
+        //新举报接口
+        
+        /* 新举报接口 */
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+
+        [manger POST:[NSString stringWithFormat:@"%@report", OSCAPI_V2_PREFIX]
+          parameters:@{
+                       @"sourceId"   : @(self.questionID),
+                       @"type"       : @(2),
+                       @"href"       : _questionDetail.href,//举报的文章地址
+                       @"reason"     : @(0), //0 其他原因 1 广告 2 色情 3 翻墙 4 非IT话题
+                      // @"memo"       : @(authorID),//当reason为其他原因时，该字段不能为空
+                       }
+             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 if ([responseObject[@"code"]integerValue] == 1) {
+                     MBProgressHUD *HUD = [Utils createHUD];
+                     HUD.mode = MBProgressHUDModeCustomView;
+                     HUD.labelText = @"评论成功";
+
+                     [HUD hide:YES afterDelay:1];
+                 }
+                 dispatch_async(dispatch_get_main_queue(), ^{
+
+                     [self.tableView reloadData];
+                 });
+             }
+             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                 NSLog(@"%@",error);
+             }];
+
     }
 }
 
@@ -397,12 +449,25 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"send mesage");
-    
-    
-    /* 
+    /*
      发评论
      */
+    if (_commentTextField.text.length > 0) {
+        if ([Config getOwnID] == 0) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else {
+            [self sendMessage];
+        }
+    } else {
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.labelText = @"评论不能为空";
+        
+        [HUD hide:YES afterDelay:1];
+    }
+    
     
     [textField resignFirstResponder];
     
@@ -437,6 +502,37 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - sendMessage
+- (void)sendMessage
+{
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    
+    [manger POST:[NSString stringWithFormat:@"%@comment_pub", OSCAPI_V2_PREFIX]
+     parameters:@{
+                  @"sourceId"   : @(self.questionID),
+                  @"type"       : @(2),
+                  @"content"    : _commentTextField.text,
+//                  @"replyId"    : @(0),
+//                  @"reAuthorId" : @(0),
+                  }
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            if ([responseObject[@"code"]integerValue] == 1) {
+                MBProgressHUD *HUD = [Utils createHUD];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.labelText = @"评论成功";
+                
+                [HUD hide:YES afterDelay:1];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [self.tableView reloadData];
+            });
+        }
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
+        }];
 }
 
 #pragma mark - 软键盘隐藏
@@ -476,13 +572,13 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             if ([responseObject[@"code"] integerValue]== 1) {
                 _questionDetail.favorite = [responseObject[@"result"][@"favorite"] boolValue];
+                
+                MBProgressHUD *HUD = [Utils createHUD];
+                HUD.mode = MBProgressHUDModeCustomView;
+                HUD.labelText = _questionDetail.favorite? @"收藏成功": @"取消收藏";
+                
+                [HUD hide:YES afterDelay:1];
             }
-            
-            MBProgressHUD *HUD = [Utils createHUD];
-            HUD.mode = MBProgressHUDModeCustomView;
-            HUD.labelText = _questionDetail.favorite? @"收藏成功": @"取消收藏";
-            
-            [HUD hide:YES afterDelay:1];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self setFavButtonImage:_questionDetail.favorite];

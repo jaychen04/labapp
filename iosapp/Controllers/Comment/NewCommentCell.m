@@ -13,7 +13,7 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
-
+    
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -28,7 +28,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-
+    
     // Configure the view for the selected state
 }
 
@@ -59,20 +59,20 @@
     
     _currentContainer = [UIView new];
     [self.contentView addSubview:_currentContainer];
-
+    
     _commentButton = [UIButton new];
+    [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
     [self.contentView addSubview:_commentButton];
-    if (_quesComment.best) {
-        [_commentButton setImage:[UIImage imageNamed:@"label_best_answer"] forState:UIControlStateNormal];
-    } else {
-        [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
-    }
+    
+    _bestImageView = [UIImageView new];
+    _bestImageView.image = [UIImage imageNamed:@"label_best_answer"];
+    [self.contentView addSubview:_bestImageView];
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _currentContainer, _contentLabel, _commentButton);
+    NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _currentContainer, _contentLabel, _commentButton, _bestImageView);
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentPortrait(32)]-<=7-[_currentContainer]-7-[_contentLabel]-16-|"
-                                                                 options:NSLayoutFormatAlignAllLeft
-                                                                 metrics:nil views:views]];
+                                                                             options:NSLayoutFormatAlignAllLeft
+                                                                             metrics:nil views:views]];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-2-[_timeLabel]"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
@@ -87,17 +87,21 @@
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
-    if (_quesComment.best) {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(67)]|"
-                                                                                 options:0
-                                                                                 metrics:nil
-                                                                                   views:views]];
-    } else {
-        [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(30)]-10-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_bestImageView(20)]"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
-    }
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(30)]-10-|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:views]];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_bestImageView(67)]|"
+                                                                             options:0
+                                                                             metrics:nil
+                                                                               views:views]];
+    
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_currentContainer]-16-|"
                                                                              options:0
@@ -118,6 +122,8 @@
     _nameLabel.text = comment.author;
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];
     
+    _bestImageView.hidden = YES;
+    
     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
     _contentLabel.attributedText = contentString;
     
@@ -131,7 +137,6 @@
 
 - (void)setDataForQuestionComment:(OSCNewComment *)questComment
 {
-    [self setLayOutForSubView];
     [_commentPortrait loadPortrait:[NSURL URLWithString:questComment.authorPortrait]];
     _nameLabel.text = questComment.author;
     _timeLabel.text = [[NSDate dateFromString:questComment.pubDate] timeAgoSinceNow];
@@ -140,9 +145,13 @@
     _contentLabel.attributedText = contentString;
     
     if (questComment.best) {
-        [_commentButton setImage:[UIImage imageNamed:@"label_best_answer"] forState:UIControlStateNormal];
+        _commentButton.hidden = YES;
+        _bestImageView.hidden = NO;
+        
     } else {
-        [_commentButton setImage:[UIImage imageNamed:@"ic_comment_30"] forState:UIControlStateNormal];
+        _commentButton.hidden = NO;
+        _bestImageView.hidden = YES;
+
     }
 }
 
@@ -151,6 +160,8 @@
     [_commentPortrait loadPortrait:[NSURL URLWithString:commentReply.authorPortrait]];
     _nameLabel.text = commentReply.author;
     _timeLabel.text = [[NSDate dateFromString:commentReply.pubDate] timeAgoSinceNow];
+    
+    _bestImageView.hidden = YES;
     
     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentReply.content]];
     _contentLabel.attributedText = contentString;
@@ -172,7 +183,10 @@
         contentLabel.numberOfLines = 0;
         contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
         [_currentContainer addSubview:contentLabel];
-        contentLabel.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, [refer.content deleteHTMLTag]];
+        
+        NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
+        [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
+        contentLabel.attributedText = replyContent;
         
         UIView *leftLine = [UIView new];
         leftLine.backgroundColor = [UIColor colorWithHex:0xd7d6da];

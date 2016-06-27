@@ -13,9 +13,11 @@
 
 #import "Utils.h"
 #import "OSCAPI.h"
+#import "Config.h"
+#import "LoginViewController.h"
 
 #import <MJExtension.h>
-
+#import <MBProgressHUD.h>
 
 static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetailCell";
 static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
@@ -38,6 +40,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 //软键盘size
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
+@property (nonatomic, assign) BOOL isReply;
+@property (nonatomic, assign) NSInteger selectIndexPath;
 
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, copy) OSCNewComment *commentDetail;
@@ -117,6 +121,76 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 {
     //
     NSLog(@"右导航栏按钮");
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
+                                                        message:@"message"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView textFieldAtIndex:0].placeholder = @"举报原因";
+    [alertView show];
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex != [alertView cancelButtonIndex]) {
+        //旧 举报接口
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+//        
+//        [manager POST:@"http://www.oschina.net/action/communityManage/report"
+//           parameters:@{
+//                        @"memo":        [alertView textFieldAtIndex:0].text.length == 0? @"其他原因": [alertView textFieldAtIndex:0].text,
+//                        @"obj_id":      @(_blogDetails.id),
+//                        @"obj_type":    @"2",
+//                        @"reason":      @"4",
+//                        @"url":         _blogDetails.href
+//                        }
+//              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+//                  MBProgressHUD *HUD = [Utils createHUD];
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+//                  HUD.labelText = @"举报成功";
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                  MBProgressHUD *HUD = [Utils createHUD];
+//                  HUD.mode = MBProgressHUDModeCustomView;
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.labelText = @"网络异常，操作失败";
+//                  
+//                  [HUD hide:YES afterDelay:1];
+//              }];
+        
+        /* 新举报接口 */
+//        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+//        
+//        [manger POST:[NSString stringWithFormat:@"%@report", OSCAPI_V2_PREFIX]
+//          parameters:@{
+//                       @"sourceId"   : @(self.commentId),
+//                       @"type"       : @(2),
+//                       //@"href"       : @(),//举报的文章地址
+//                       @"reason"     : @(0), //0 其他原因 1 广告 2 色情 3 翻墙 4 非IT话题
+//                      // @"memo"       : @(authorID),//当reason为其他原因时，该字段不能为空
+//                       }
+//             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+//                 if ([responseObject[@"code"]integerValue] == 1) {
+//                     MBProgressHUD *HUD = [Utils createHUD];
+//                     HUD.mode = MBProgressHUDModeCustomView;
+//                     HUD.labelText = @"评论成功";
+//                     
+//                     [HUD hide:YES afterDelay:1];
+//                 }
+//                 dispatch_async(dispatch_get_main_queue(), ^{
+//                     
+//                     [self.tableView reloadData];
+//                 });
+//             }
+//             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+//                 NSLog(@"%@",error);
+//             }];
+    }
 }
 
 #pragma mark - 自定义弹出框
@@ -125,6 +199,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     UIWindow *selfWindow = [UIApplication sharedApplication].keyWindow;
     _popUpBoxView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(selfWindow.frame), CGRectGetHeight(selfWindow.frame))];
     _popUpBoxView.backgroundColor = [UIColor colorWithHex:0x000000 alpha:0.5];
+    _popUpBoxView.userInteractionEnabled = YES;
+    [_popUpBoxView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hidenPopUpBoxView)]];
     [selfWindow addSubview:_popUpBoxView];
     
     UIView *subView = [[UIView alloc] initWithFrame:CGRectMake((CGRectGetWidth(selfWindow.frame)-240)/2, (CGRectGetHeight(selfWindow.frame)-200)/2, 240, 120)];
@@ -234,6 +310,11 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [_popUpBoxView removeFromSuperview];
 }
 
+- (void)hidenPopUpBoxView
+{
+    [_popUpBoxView removeFromSuperview];
+}
+
 #pragma MARK - 踩/顶
 - (void)roteUpOrDown
 {
@@ -269,6 +350,9 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         if (_commentDetail.reply.count > 0) {
             OSCNewCommentReply *reply = _commentDetail.reply[indexPath.row];
             [commentCell setDataForQuestionCommentReply:reply];
+            
+            commentCell.commentButton.tag = indexPath.row;
+            [commentCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
         }
         
         return commentCell;
@@ -396,14 +480,13 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"send mesage");
-    
-//    if (_isReply) {
-//        OSCBlogDetailComment *comment = _blogDetailComments[_selectIndexPath];
-//        [self sendComment:comment.id authorID:comment.authorId];
-//    } else {
-//        [self sendComment:0 authorID:0];
-//    }
+    //send message
+    if (_isReply) {
+        OSCNewCommentReply *quesCommentReply = _commentDetail.reply[_selectIndexPath];
+        [self sendComment:quesCommentReply.id authorID:quesCommentReply.authorId];
+    } else {
+        [self sendComment:0 authorID:0];
+    }
     
     [textField resignFirstResponder];
     
@@ -445,6 +528,66 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 {
     [_commentField resignFirstResponder];
     [self.view removeGestureRecognizer:_tap];
+}
+
+#pragma mark - 评论
+- (void)selectedToComment:(UIButton *)button
+{
+    OSCNewCommentReply *reply = _commentDetail.reply[button.tag];
+    
+    if (_selectIndexPath == button.tag) {
+        _isReply = !_isReply;
+    } else {
+        _isReply = YES;
+    }
+    _selectIndexPath = button.tag;
+    
+    if (_isReply) {
+        _commentField.placeholder = [NSString stringWithFormat:@"@%@", reply.author];
+    } else {
+        _commentField.placeholder = @"我要评论";
+    }
+    
+    
+}
+
+#pragma mark - 发评论
+- (void)sendComment:(NSInteger)replyID authorID:(NSInteger)authorID
+{
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    } else {
+        
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+        
+        [manger POST:[NSString stringWithFormat:@"%@comment_pub", OSCAPI_V2_PREFIX]
+          parameters:@{
+                       @"sourceId"   : @(self.commentId),
+                       @"type"       : @(2),
+                       @"content"    : _commentField.text,
+                       @"replyId"    : @(replyID),
+                       @"reAuthorId" : @(authorID),
+                       }
+             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 if ([responseObject[@"code"]integerValue] == 1) {
+                     MBProgressHUD *HUD = [Utils createHUD];
+                     HUD.mode = MBProgressHUDModeCustomView;
+                     HUD.labelText = @"评论成功";
+                     
+                     [HUD hide:YES afterDelay:1];
+                 }
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     
+                     [self.tableView reloadData];
+                 });
+             }
+             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                 NSLog(@"%@",error);
+             }];
+        
+    }
 }
 
 @end
