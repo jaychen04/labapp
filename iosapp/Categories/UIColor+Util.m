@@ -112,7 +112,8 @@
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         return [UIColor colorWithHex:0x171717];
     }
-    return [UIColor colorWithHex:0xcbcbcb];
+//    return [UIColor colorWithHex:0xcbcbcb];
+    return [UIColor colorWithHex:0xfcfcfc];
 }
 
 + (UIColor *)labelTextColor

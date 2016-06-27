@@ -83,7 +83,7 @@
     
     _likeCountButton = [UIButton new];
     [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
-    [_likeCountButton setImageEdgeInsets:UIEdgeInsetsMake(0, 20, 2, 0)];
+    [_likeCountButton setImageEdgeInsets:UIEdgeInsetsMake(0, 25, 2, 0)];
     [self.contentView addSubview:_likeCountButton];
 
     _commentImage = [UIImageView new];
