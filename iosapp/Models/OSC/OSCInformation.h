@@ -19,6 +19,8 @@
 
 @property (nonatomic,assign) NSInteger commentCount;
 
+@property (nonatomic,assign) NSInteger viewCount;
+
 @property (nonatomic,strong) NSString* author;
 
 @property (nonatomic,assign) InformationType type;

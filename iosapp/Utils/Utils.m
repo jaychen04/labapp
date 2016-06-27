@@ -112,7 +112,8 @@
 
 + (NSAttributedString *)attributedTimeString:(NSDate *)date
 {
-    NSString *rawString = [NSString stringWithFormat:@"%@ %@", [NSString fontAwesomeIconStringForEnum:FAClockO], [date timeAgoSinceNow]];
+//    NSString *rawString = [NSString stringWithFormat:@"%@ %@", [NSString fontAwesomeIconStringForEnum:FAClockO], [date timeAgoSinceNow]];
+    NSString *rawString = [date timeAgoSinceNow];
     
     NSAttributedString *attributedTime = [[NSAttributedString alloc] initWithString:rawString
                                                                          attributes:@{
