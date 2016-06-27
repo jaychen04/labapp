@@ -337,6 +337,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
             OSCNewComment *comment = _comments[indexPath.row];
             
             CommentDetailViewController *commentDetailVC = [CommentDetailViewController new];
+            commentDetailVC.questDetailId = self.questionID;
             commentDetailVC.commentId = comment.id;
             [self.navigationController pushViewController:commentDetailVC animated:YES];
         }

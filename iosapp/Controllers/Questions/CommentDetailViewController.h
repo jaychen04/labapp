@@ -10,6 +10,7 @@
 
 @interface CommentDetailViewController : UIViewController
 
+@property (nonatomic, assign) NSInteger questDetailId;
 @property (nonatomic, assign) NSInteger commentId;
 
 @end
