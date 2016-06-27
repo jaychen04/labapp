@@ -71,6 +71,19 @@ Get unlimited private repositories
                             <constraint firstAttribute="width" constant="10" id="beK-yv-DQL"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w2C-hq-rcM">
+                        <rect key="frame" x="342" y="110" width="11" height="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.61568627450980395" green="0.61568627450980395" blue="0.61568627450980395" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_view" translatesAutoresizingMaskIntoConstraints="NO" id="t7f-uB-Z5u">
+                        <rect key="frame" x="324" y="112" width="14" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="14" id="Zfc-6f-hth"/>
+                            <constraint firstAttribute="height" constant="10" id="z0c-JW-rDN"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="8FT-wl-zCN" secondAttribute="trailing" constant="15" id="0Du-bH-o90"/>
@@ -78,12 +91,16 @@ Get unlimited private repositories
                     <constraint firstItem="8FT-wl-zCN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="7Cc-So-Xqk"/>
                     <constraint firstItem="18U-0S-ZOh" firstAttribute="centerY" secondItem="cad-Fc-PRK" secondAttribute="centerY" id="7nK-Ds-XEU"/>
                     <constraint firstItem="FEM-l8-ccm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="ACi-60-kVM"/>
+                    <constraint firstItem="w2C-hq-rcM" firstAttribute="top" secondItem="8FT-wl-zCN" secondAttribute="bottom" constant="8" id="B4M-RL-H56"/>
                     <constraint firstItem="18U-0S-ZOh" firstAttribute="top" secondItem="8FT-wl-zCN" secondAttribute="bottom" constant="8" id="DVh-Zt-c7E"/>
                     <constraint firstItem="uVu-bK-RJp" firstAttribute="top" secondItem="18U-0S-ZOh" secondAttribute="bottom" constant="15" id="IrI-90-qoJ"/>
                     <constraint firstItem="mUW-Sg-ecP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="J9X-io-SVg"/>
                     <constraint firstAttribute="bottom" secondItem="uVu-bK-RJp" secondAttribute="bottom" id="JUJ-Cr-mag"/>
                     <constraint firstItem="18U-0S-ZOh" firstAttribute="leading" secondItem="cad-Fc-PRK" secondAttribute="trailing" constant="4" id="UZf-63-zGJ"/>
+                    <constraint firstItem="uVu-bK-RJp" firstAttribute="top" secondItem="w2C-hq-rcM" secondAttribute="bottom" constant="15" id="Vcw-yp-ylf"/>
+                    <constraint firstItem="cad-Fc-PRK" firstAttribute="leading" secondItem="w2C-hq-rcM" secondAttribute="trailing" constant="10" id="Z10-Wt-HsZ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="FEM-l8-ccm" secondAttribute="trailing" constant="15" id="ZVN-ql-P5l"/>
+                    <constraint firstItem="w2C-hq-rcM" firstAttribute="centerY" secondItem="t7f-uB-Z5u" secondAttribute="centerY" id="cTm-bv-15b"/>
                     <constraint firstItem="8FT-wl-zCN" firstAttribute="top" secondItem="FEM-l8-ccm" secondAttribute="bottom" constant="5" id="fFA-3h-wEc"/>
                     <constraint firstItem="Jky-cd-gOn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="fze-aU-QZ1"/>
                     <constraint firstItem="FEM-l8-ccm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="jPB-5Y-Vc6"/>
@@ -91,6 +108,7 @@ Get unlimited private repositories
                     <constraint firstItem="uVu-bK-RJp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="qe8-yz-4nT"/>
                     <constraint firstItem="mUW-Sg-ecP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="t9o-cF-Ocq"/>
                     <constraint firstItem="Jky-cd-gOn" firstAttribute="top" secondItem="8FT-wl-zCN" secondAttribute="bottom" constant="8" id="vea-d6-GkA"/>
+                    <constraint firstItem="w2C-hq-rcM" firstAttribute="leading" secondItem="t7f-uB-Z5u" secondAttribute="trailing" constant="4" id="wCe-Sz-f5g"/>
                     <constraint firstItem="uVu-bK-RJp" firstAttribute="top" secondItem="Jky-cd-gOn" secondAttribute="bottom" constant="15" id="xyh-8o-Wvb"/>
                 </constraints>
             </tableViewCellContentView>
@@ -101,6 +119,7 @@ Get unlimited private repositories
                 <outlet property="recommendImageView" destination="mUW-Sg-ecP" id="JAD-Va-lNG"/>
                 <outlet property="timeDistanceLabel" destination="Jky-cd-gOn" id="2R1-12-aA2"/>
                 <outlet property="titleLabel" destination="FEM-l8-ccm" id="rtF-kT-ISz"/>
+                <outlet property="viewCountLabel" destination="w2C-hq-rcM" id="CKD-58-efI"/>
             </connections>
             <point key="canvasLocation" x="22.5" y="314.5"/>
         </tableViewCell>
@@ -108,5 +127,6 @@ Get unlimited private repositories
     <resources>
         <image name="ic_comment" width="10" height="10"/>
         <image name="ic_label_today" width="16" height="18"/>
+        <image name="ic_view" width="14" height="10"/>
     </resources>
 </document>
