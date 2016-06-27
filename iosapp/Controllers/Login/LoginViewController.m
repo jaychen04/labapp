@@ -155,8 +155,9 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     _hud.userInteractionEnabled = NO;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX, OSCAPI_LOGIN_VALIDATE]
+
+//    OSCAPI_HTTPS_PREFIX
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX_LOGIN, OSCAPI_LOGIN_VALIDATE]
        parameters:@{@"username" : _accountField.text, @"pwd" : _passwordField.text, @"keep_login" : @(1)}
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
