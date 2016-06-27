@@ -19,6 +19,8 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeDistanceLabel;
+
+@property (weak, nonatomic) IBOutlet UILabel *viewCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentLabel;
 
 @property (weak, nonatomic) IBOutlet UIImageView *commentImageView;
@@ -76,7 +78,7 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     
     _descLabel.text = viewModel.body;
     _commentLabel.text = [NSString stringWithFormat:@"%ld",(long)viewModel.commentCount];
-    
+    _viewCountLabel.text = [NSString stringWithFormat:@"%ld",(long)viewModel.viewCount];
     
     
     [_timeDistanceLabel setAttributedText:[Utils attributedTimeString:date]];
