@@ -178,6 +178,7 @@
                                                                        andControllers:@[newTweetViewCtl, hotTweetViewCtl, myFriendTweetViewCtl]
                                                                           underTabbar:YES];
     
+    
     UIStoryboard *discoverSB = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];
     UINavigationController *discoverNav = [discoverSB instantiateViewControllerWithIdentifier:@"Nav"];
     
