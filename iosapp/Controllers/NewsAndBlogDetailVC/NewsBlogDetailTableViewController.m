@@ -21,6 +21,8 @@
 #import "Utils.h"
 #import "Config.h"
 #import "OSCBlog.h"
+#import "OSCSoftware.h"
+#import "DetailsViewController.h"
 #import "OSCNewHotBlogDetails.h"
 #import "OSCInformationDetails.h"
 #import "CommentsBottomBarViewController.h"
@@ -647,13 +649,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    CGFloat headerViewHeight = 0.001;
-    if (section != 0) {
-        headerViewHeight = 32;
-    }
-    return headerViewHeight;
+    return section != 0 ? 32 : 0.001;
 }
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (_isBlogDetail) {
@@ -925,7 +922,13 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     }else {     //资讯详情
         if (indexPath.section == 1) {
             if (_isExistRelatedSoftware) {      //相关的软件详情
-                
+                OSCSoftware* softWare = [OSCSoftware new];
+                softWare.name = _newsDetails.software[@"name"];
+                softWare.url = [NSURL URLWithString:_newsDetails.software[@"href"]?:@""];
+                softWare.softId = [_newsDetails.software[@"id"] integerValue];
+                DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
+                [self.navigationController pushViewController:detailsViewController animated:YES];
+
             }else {     //相关推荐的资讯详情
                 OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
                 NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
@@ -1142,6 +1145,17 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                   HUD.mode = MBProgressHUDModeCustomView;
                   
                   if (errorCode == 1) {
+                      ONOXMLElement *postXML = [responseDocument.rootElement firstChildWithTag:@"comment"];
+                      OSCNewComment *postedComment = [[OSCNewComment alloc] initWithXML:postXML];
+                      
+                      if (postedComment) {
+                          if(_isBlogDetail) {
+                              [_blogDetailComments insertObject:postedComment atIndex:0];
+                          }else {
+                              [_newsDetailComments insertObject:postedComment atIndex:0];
+                          }
+                      }
+                      
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                       HUD.labelText = @"评论发表成功";
                       
@@ -1242,7 +1256,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     }
 }
 - (IBAction)collected:(UIButton *)sender {
-    NSLog(@"collect");
+//    NSLog(@"collect");
     
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
@@ -1368,12 +1382,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     if (_mURL) {
         return _mURL;
     } else {
-        NSMutableString *strUrl = [NSMutableString stringWithFormat:@"%@", _blogDetails.href];
-        //        if (_commentType == CommentTypeBlog) {
-        strUrl = [NSMutableString stringWithFormat:@"http://m.oschina.net/blog/%ld", (long)_blogDetails.id];
-        //        } else {
-        //            [strUrl replaceCharactersInRange:NSMakeRange(7, 3) withString:@"m"];
-        //        }
+        NSString *objId = [NSString stringWithFormat:@"%lld", _isBlogDetail? _blogDetails.id:_newsDetails.id];
+        NSString *preUrl = _isBlogDetail?@"http://m.oschina.net/blog/":@"http://m.oschina.net/news/";
+       NSString *strUrl = [NSString stringWithFormat:@"%@%@", preUrl,objId];
         _mURL = [strUrl copy];
         return _mURL;
     }
