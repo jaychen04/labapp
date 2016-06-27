@@ -583,9 +583,10 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             label.lineBreakMode = NSLineBreakByWordWrapping;
                             
                             OSCBlogDetailComment *blogComment = _newsDetailComments[indexPath.row];
-                            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
-                            
-                            label.attributedText = contentString;
+//                            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
+//                            
+//                            label.attributedText = contentString;
+                            label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
                             
                             CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
                             
@@ -618,9 +619,10 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         label.lineBreakMode = NSLineBreakByWordWrapping;
                         
                         OSCBlogDetailComment *blogComment = _newsDetailComments[indexPath.row];
-                        NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
-                        
-                        label.attributedText = contentString;
+//                        NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
+//                        
+//                        label.attributedText = contentString;
+                        label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
                         
                         CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
                         

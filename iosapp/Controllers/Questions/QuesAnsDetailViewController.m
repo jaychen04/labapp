@@ -337,6 +337,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
             OSCNewComment *comment = _comments[indexPath.row];
             
             CommentDetailViewController *commentDetailVC = [CommentDetailViewController new];
+            commentDetailVC.questDetailId = self.questionID;
             commentDetailVC.commentId = comment.id;
             [self.navigationController pushViewController:commentDetailVC animated:YES];
         }
@@ -482,22 +483,23 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     /*
      发评论
      */
-    if (_commentTextField.text.length > 0) {
-        if ([Config getOwnID] == 0) {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            [self.navigationController pushViewController:loginVC animated:YES];
+    if (textField == _commentTextField) {
+        if (_commentTextField.text.length > 0) {
+            if ([Config getOwnID] == 0) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                [self.navigationController pushViewController:loginVC animated:YES];
+            } else {
+                [self sendMessage];
+            }
         } else {
-            [self sendMessage];
+            MBProgressHUD *HUD = [Utils createHUD];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.labelText = @"评论不能为空";
+            
+            [HUD hide:YES afterDelay:1];
         }
-    } else {
-        MBProgressHUD *HUD = [Utils createHUD];
-        HUD.mode = MBProgressHUDModeCustomView;
-        HUD.labelText = @"评论不能为空";
-        
-        [HUD hide:YES afterDelay:1];
     }
-    
     
     [textField resignFirstResponder];
     

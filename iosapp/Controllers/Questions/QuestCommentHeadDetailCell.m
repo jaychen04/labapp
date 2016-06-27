@@ -26,7 +26,7 @@
 {
     [_portraitView loadPortrait:[NSURL URLWithString:commentDetail.authorPortrait]];
     _nameLabel.text = commentDetail.author;
-    _timeLabel.text = [NSString stringWithFormat:@"%@(%@)", [[NSDate dateFromString:commentDetail.pubDate] timeAgoSinceNow], commentDetail.pubDate];
+    _timeLabel.text = [[NSDate dateFromString:commentDetail.pubDate] timeAgoSinceNow];//[NSString stringWithFormat:@"%@(%@)", [[NSDate dateFromString:commentDetail.pubDate] timeAgoSinceNow], commentDetail.pubDate];
     
     [_downOrUpButton setTitle:[NSString stringWithFormat:@"%ld", (long)commentDetail.vote] forState:UIControlStateNormal];
     

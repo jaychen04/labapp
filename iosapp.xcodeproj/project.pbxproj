@@ -274,6 +274,8 @@
 		EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C4051D127CE6000FE427 /* QuesAnsDetailViewController.xib */; };
 		EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */; };
 		EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */; };
+		EE8B7CD91D21171F0097824B /* NewCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8B7CD71D21171F0097824B /* NewCommentsViewController.m */; };
+		EE8B7CDA1D21171F0097824B /* NewCommentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE8B7CD81D21171F0097824B /* NewCommentsViewController.xib */; };
 		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
 		EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */; };
 		EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */; };
@@ -815,6 +817,9 @@
 		EE88C4081D128138000FE427 /* QuesAnsDetailHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsDetailHeadCell.h; path = Questions/QuesAnsDetailHeadCell.h; sourceTree = "<group>"; };
 		EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsDetailHeadCell.m; path = Questions/QuesAnsDetailHeadCell.m; sourceTree = "<group>"; };
 		EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsDetailHeadCell.xib; path = Questions/QuesAnsDetailHeadCell.xib; sourceTree = "<group>"; };
+		EE8B7CD61D2117170097824B /* NewCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentsViewController.h; sourceTree = "<group>"; };
+		EE8B7CD71D21171F0097824B /* NewCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentsViewController.m; sourceTree = "<group>"; };
+		EE8B7CD81D21171F0097824B /* NewCommentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCommentsViewController.xib; sourceTree = "<group>"; };
 		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
 		EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
 		EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
@@ -2039,6 +2044,9 @@
 				C5EF89171BE318E800B5FA46 /* CommentsViewController.m */,
 				EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */,
 				EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */,
+				EE8B7CD61D2117170097824B /* NewCommentsViewController.h */,
+				EE8B7CD71D21171F0097824B /* NewCommentsViewController.m */,
+				EE8B7CD81D21171F0097824B /* NewCommentsViewController.xib */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -2308,6 +2316,7 @@
 				EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
 				31A06E9B1D192D7300E2DB8F /* RelatedSoftWareCell.xib in Resources */,
+				EE8B7CDA1D21171F0097824B /* NewCommentsViewController.xib in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				317F889D1D05698800BD931F /* ContentWebViewCell.xib in Resources */,
 				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
@@ -2447,6 +2456,7 @@
 				380FD22A1A7612E8003C4021 /* ActivityBasicInfoCell.m in Sources */,
 				384364201AC5532900743CB0 /* TeamMemberViewController.m in Sources */,
 				380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */,
+				EE8B7CD91D21171F0097824B /* NewCommentsViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */,
