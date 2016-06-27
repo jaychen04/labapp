@@ -210,6 +210,18 @@
                   forKeyPath:@"selectedItem"
                      options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                      context:nil];
+//    去掉tabbar顶部的灰色条 iOS10失效！！！
+//    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+//    UIGraphicsBeginImageContext(rect.size);
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextSetFillColorWithColor(context, [[UIColor clearColor] CGColor]);
+//    CGContextFillRect(context, rect);
+//    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    [self.tabBar setBackgroundImage:img];
+//    [self.tabBar setShadowImage:img];
+//    
+//    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"tabbarbg3.jpg"]];
     
     // 功能键相关
     _optionButtons = [NSMutableArray new];
