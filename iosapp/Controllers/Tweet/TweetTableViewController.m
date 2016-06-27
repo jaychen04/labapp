@@ -177,36 +177,9 @@ static NSString* const reuseIdentifier_text = @"NewTweetTextCell";
     if (self.objects.count > 0) {
         return self.objects.count;
     }
-    return 10;
+    return 0;
 }
-#pragma mark --- 去掉算高 实现华丽自适应
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if (self.objects.count > 0) {
-//        OSCTweet *tweet = self.objects[indexPath.row];
-//
-//        if (tweet.cellHeight) {return tweet.cellHeight;}
-//        
-//        self.label.font = [UIFont boldSystemFontOfSize:15];
-//        [self.label setText:tweet.author];
-//        CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 85, MAXFLOAT)].height;
-//        
-//        self.textView.font = [UIFont boldSystemFontOfSize:14];
-//        [self.textView setAttributedText:[NewTweetCell contentStringFromRawString:tweet.body]];
-//        height += [self.textView sizeThatFits:CGSizeMake(tableView.frame.size.width - 85, MAXFLOAT)].height;
-//        
-//        if (tweet.hasAnImage) {
-//            height += 13;
-//            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
-////            if (!image) {image = [UIImage imageNamed:@"loading"];}
-//            height += image.size.height;
-//        }
-//        tweet.cellHeight = height + 61;
-//        
-//        return tweet.cellHeight;
-//    }
-//    return 0;
-//}
+
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NewTweetCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     
