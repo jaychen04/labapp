@@ -193,6 +193,12 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     }
 }
 
+#pragma MARK - 踩/顶
+- (void)roteUpOrDown
+{
+    [self customPopUpBoxView];
+}
+
 #pragma mark - 自定义弹出框
 - (void)customPopUpBoxView
 {
@@ -268,6 +274,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
                                                                     metrics:nil views:views]];
 }
 
+// 顶/踩 按钮样式
 - (void)judgeVoteState
 {
     switch (_commentDetail.voteState) {
@@ -299,6 +306,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 - (void)voteUpQuestions:(UIButton *)button
 {
     NSLog(@"顶");
+    [self postToVote:1];
     [_popUpBoxView removeFromSuperview];
 }
 
@@ -306,7 +314,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 - (void)voteDownQuestions:(UIButton *)button
 {
     NSLog(@"踩");
-    
+    [self postToVote:2];
     [_popUpBoxView removeFromSuperview];
 }
 
@@ -315,10 +323,34 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [_popUpBoxView removeFromSuperview];
 }
 
-#pragma MARK - 踩/顶
-- (void)roteUpOrDown
+- (void)postToVote:(NSInteger)voteType
 {
-    [self customPopUpBoxView];
+    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@question_vote", OSCAPI_V2_PREFIX];
+    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manger POST:blogDetailUrlStr
+     parameters:@{
+                  @"sourceId"   : @(self.questDetailId),
+                  @"commmentId" : @(self.commentId),
+                  @"voteOpt"    : @(voteType),
+                  }
+        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            
+            if ([responseObject[@"code"] integerValue] == 1) {
+                NSDictionary *result = responseObject[@"result"];
+                _commentDetail.voteState = [result[@"voteState"] integerValue];
+                _commentDetail.vote = [result[@"vote"] integerValue];
+                
+                [self judgeVoteState];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                });
+            }
+            
+        }
+        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            
+            NSLog(@"error = %@",error);
+        }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -377,8 +409,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
             label.lineBreakMode = NSLineBreakByWordWrapping;
             
             OSCNewCommentReply *quesCommentReply = _commentDetail.reply[indexPath.row];
-            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesCommentReply.content]];
-            label.attributedText = contentString;
+//            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesCommentReply.content]];
+            label.attributedText = [NewCommentCell contentStringFromRawString:quesCommentReply.content];
             
             CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
             
