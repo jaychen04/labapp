@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="433" height="121"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="433" height="120.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="433" height="120"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="最有营养的云知识讲堂——青云QingCloud 实践课堂(第2季)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JnJ-9t-N72">
@@ -22,7 +22,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2015-06-13 13:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ycT-od-Wlf">
-                        <rect key="frame" x="113" y="78" width="118" height="24"/>
+                        <rect key="frame" x="113" y="78" width="118" height="31"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.41568627450980389" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -83,12 +83,18 @@
                     <constraint firstAttribute="trailing" secondItem="JnJ-9t-N72" secondAttribute="trailing" constant="15" id="UcA-AX-cFh"/>
                     <constraint firstItem="cuO-5d-ucw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="axO-Ik-zvI"/>
                     <constraint firstItem="Qgb-O7-pVV" firstAttribute="leading" secondItem="dYc-BE-v9p" secondAttribute="trailing" constant="4" id="bhq-A3-UTJ"/>
+                    <constraint firstItem="8fG-o2-xe8" firstAttribute="centerY" secondItem="ycT-od-Wlf" secondAttribute="centerY" id="c8Z-1B-ewz"/>
                     <constraint firstItem="ycT-od-Wlf" firstAttribute="top" secondItem="dYc-BE-v9p" secondAttribute="bottom" constant="4" id="drw-7d-pE3"/>
                     <constraint firstItem="JnJ-9t-N72" firstAttribute="leading" secondItem="cuO-5d-ucw" secondAttribute="trailing" constant="8" id="qQe-jT-jUS"/>
                     <constraint firstAttribute="bottomMargin" secondItem="cuO-5d-ucw" secondAttribute="bottom" constant="8" id="vSM-dY-YvD"/>
                     <constraint firstItem="dYc-BE-v9p" firstAttribute="top" secondItem="JnJ-9t-N72" secondAttribute="bottom" constant="5" id="xFn-Yx-bkT"/>
                     <constraint firstItem="cuO-5d-ucw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="xd0-pz-XC9"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="97D-Jw-NmD"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="activityAreaLabel" destination="Qgb-O7-pVV" id="f3Z-Yw-zrT"/>

@@ -22,7 +22,7 @@
 
 
 //#define OSCAPI_V2_PREFIX                   @"http://192.168.1.15:8000/action/apiv2/"
-//#define OSCAPI_PREFIX_15                   @"http://192.168.1.15:8000/action/apiv2/"
+#define OSCAPI_PREFIX_LOGIN             @"http://192.168.1.15:8000/action/api/"
 
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 

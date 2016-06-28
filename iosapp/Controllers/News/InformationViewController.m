@@ -134,6 +134,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 
 -(void)layoutUI{
+    self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
     self.tableView.tableHeaderView = self.cycleScrollView;
     self.tableView.estimatedRowHeight = 132;
@@ -382,10 +383,15 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             break;
         }
         case InformationTypeInfo:{
-            OSCInformation* info = [[OSCInformation alloc]init];
-            info.id = model.id;
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithInfo:info];
-            [self.navigationController pushViewController:detailsViewController animated:YES];
+//            OSCInformation* info = [[OSCInformation alloc]init];
+//            info.id = model.id;
+//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithInfo:info];
+//            [self.navigationController pushViewController:detailsViewController animated:YES];
+            
+            //新版资讯详情界面
+            NewsBlogDetailTableViewController *newsBlogDetailVc =[[NewsBlogDetailTableViewController alloc]initWithObjectId:model.id isBlogDetail:NO];
+            newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             break;
         }
         default:
@@ -412,6 +418,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         _cycleScrollView.pageDotColor = [UIColor whiteColor];
         _cycleScrollView.currentPageDotColor = [UIColor navigationbarColor];
         _cycleScrollView.showPageControl = YES;
+        _cycleScrollView.titleLabelBackgroundColor = [UIColor clearColor];
 	}
 	return _cycleScrollView;
 }

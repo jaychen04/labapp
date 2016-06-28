@@ -13,6 +13,7 @@
 {
     __weak UILabel *_titleLabel;
     __weak UILabel *_titleTextLabel;
+    __weak UIImageView *_colorImageView;
 }
 
 
@@ -61,6 +62,10 @@
 //    _titleLabel.hidden = YES;
     [self.contentView addSubview:titleLabel];
     
+    UIImageView* imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"bg_banner_title"]];
+    _colorImageView = imageView;
+    [self.contentView addSubview:imageView];
+    
     UILabel *titleTextLabel = [[UILabel alloc] init];
     _titleTextLabel = titleTextLabel;
     _titleTextLabel.backgroundColor = [UIColor clearColor];
@@ -89,7 +94,7 @@
     CGFloat titleLabelY = self.sd_height - titleLabelH;
     _titleLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
 //    _titleLabel.hidden = !_titleLabel.text;
-    
+    _colorImageView.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
     _titleTextLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW-60, titleLabelH);
 }
 

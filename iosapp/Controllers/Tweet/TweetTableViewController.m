@@ -142,7 +142,8 @@ static NSString* const reuseIdentifier_text = @"NewTweetTextCell";
 #pragma mark - life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
+    self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerClass:[NewTweetTextCell class] forCellReuseIdentifier:reuseIdentifier_text];
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     self.tableView.estimatedRowHeight = 160;

@@ -7,8 +7,15 @@
 //
 
 #import "OSCNewSoftWare.h"
+#import <MJExtension.h>
 
 @implementation OSCNewSoftWare
+
++(NSDictionary *)mj_objectClassInArray{
+    return @{
+             @"abouts" : [OSCNewSoftWareAbouts class]
+             };
+}
 
 @end
 

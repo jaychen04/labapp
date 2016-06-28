@@ -116,6 +116,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 #pragma mark - layout UI
 
 -(void)layoutUI{
+    self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerNib:[UINib nibWithNibName:@"OSCActivityTableViewCell" bundle:nil] forCellReuseIdentifier:activityReuseIdentifier];
     self.tableView.tableHeaderView = self.bannerView;
     self.tableView.estimatedRowHeight = 132;

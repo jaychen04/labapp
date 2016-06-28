@@ -178,6 +178,7 @@
                                                                        andControllers:@[newTweetViewCtl, hotTweetViewCtl, myFriendTweetViewCtl]
                                                                           underTabbar:YES];
     
+    
     UIStoryboard *discoverSB = [UIStoryboard storyboardWithName:@"Discover" bundle:nil];
     UINavigationController *discoverNav = [discoverSB instantiateViewControllerWithIdentifier:@"Nav"];
     
@@ -199,8 +200,8 @@
     NSArray *images = @[@"tabbar-news", @"tabbar-tweet", @"", @"tabbar-discover", @"tabbar-me"];
     [self.tabBar.items enumerateObjectsUsingBlock:^(UITabBarItem *item, NSUInteger idx, BOOL *stop) {
         [item setTitle:titles[idx]];
-        [item setImage:[UIImage imageNamed:images[idx]]];
-        [item setSelectedImage:[UIImage imageNamed:[images[idx] stringByAppendingString:@"-selected"]]];
+        item.image = [[UIImage imageNamed:images[idx]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+        item.selectedImage = [[UIImage imageNamed:[images[idx] stringByAppendingString:@"-selected"]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     }];
     [self.tabBar.items[2] setEnabled:NO];
     
@@ -210,6 +211,18 @@
                   forKeyPath:@"selectedItem"
                      options:NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew
                      context:nil];
+//    去掉tabbar顶部的灰色条 iOS10失效！！！
+//    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+//    UIGraphicsBeginImageContext(rect.size);
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    CGContextSetFillColorWithColor(context, [[UIColor clearColor] CGColor]);
+//    CGContextFillRect(context, rect);
+//    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+//    UIGraphicsEndImageContext();
+//    [self.tabBar setBackgroundImage:img];
+//    [self.tabBar setShadowImage:img];
+//    
+//    [self.tabBar setBackgroundImage:[UIImage imageNamed:@"tabbarbg3.jpg"]];
     
     // 功能键相关
     _optionButtons = [NSMutableArray new];
