@@ -57,6 +57,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.title = @"评论列表";
     _comments = [NSMutableArray new];
     _nextPageToken = @"";
     
@@ -68,13 +69,14 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     [self getCommentData:NO];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self.tableView.mj_footer beginRefreshing];
+//        [self.tableView.mj_header beginRefreshing];
         [self getCommentData:YES];
     }];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self.tableView.mj_footer beginRefreshing];
+//        [self.tableView.mj_header beginRefreshing];
         [self getCommentData:NO];
     }];
+    
     
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -116,19 +118,27 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                     [_comments removeAllObjects];
                 }
                 [_comments addObjectsFromArray:array];
-                
+                if (isRefresh) {
+                    [self.tableView.mj_header endRefreshing];
+                }else{
+                    [self.tableView.mj_footer endRefreshing];
+                }
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (isRefresh) {
-                        [self.tableView.mj_header endRefreshing];
-                    }else{
-                        if (array.count < 20) {
-                            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                        }else{
-                            [self.tableView.mj_footer endRefreshing];
-                        }
-                    }
+                    
                     [self.tableView reloadData];
                 });
+            } else {
+                MBProgressHUD *hud = [Utils createHUD];
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.labelText = responseObject[@"message"];
+                
+                [hud hide:YES afterDelay:1];
+                
+                if (isRefresh) {
+                    [self.tableView.mj_header endRefreshing];
+                }else{
+                    [self.tableView.mj_footer endRefreshing];
+                }
             }
             
         }
