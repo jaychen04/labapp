@@ -116,15 +116,14 @@
 
 #pragma mark - contentData
 
-- (void)setComment:(OSCBlogDetailComment *)comment
+- (void)setComment:(OSCNewComment *)comment
 {
     [_commentPortrait loadPortrait:[NSURL URLWithString:comment.authorPortrait]];
-    _nameLabel.text = comment.author;
+    _nameLabel.text = comment.author.length > 0 ? comment.author : @"匿名";
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];
     
     _bestImageView.hidden = YES;
     
-//    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];//commentReply.content
     _contentLabel.attributedText =[NewCommentCell contentStringFromRawString:comment.content];
     
     if (comment.refer.author.length > 0) {
@@ -140,9 +139,6 @@
     [_commentPortrait loadPortrait:[NSURL URLWithString:questComment.authorPortrait]];
     _nameLabel.text = questComment.author;
     _timeLabel.text = [[NSDate dateFromString:questComment.pubDate] timeAgoSinceNow];
-    
-//    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:questComment.content]];
-//    _contentLabel.attributedText = contentString;
     
     _contentLabel.attributedText = [NewCommentCell contentStringFromRawString:questComment.content];
     
@@ -165,7 +161,6 @@
     
     _bestImageView.hidden = YES;
     
-//    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentReply.content]];
     _contentLabel.attributedText = [NewCommentCell contentStringFromRawString:commentReply.content];
 }
 
@@ -194,7 +189,7 @@
 }
 
 #pragma mark - refer
-- (void)setLayOutForRefer:(OSCBlogCommentRefer *)refer
+- (void)setLayOutForRefer:(OSCNewCommentRefer *)refer
 {
     if (refer.author.length  <= 0) {
         return;

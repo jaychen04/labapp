@@ -21,7 +21,7 @@
 
 @property (nonatomic, strong) UIView *currentContainer;
 
-@property (nonatomic, strong) OSCBlogDetailComment *comment;
+@property (nonatomic, strong) OSCNewComment *comment;
 
 - (void)setDataForQuestionComment:(OSCNewComment *)questComment;
 
