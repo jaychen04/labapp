@@ -220,18 +220,30 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     
     if (_isReply) {
         OSCNewComment *comment = _comments[_selectIndexPath];
-        if (comment.authorId > 0) {
-            _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+        if ([Config getOwnID] == 0) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self.navigationController pushViewController:loginVC animated:YES];
         } else {
-            MBProgressHUD *hud = [Utils createHUD];
-            hud.mode = MBProgressHUDModeCustomView;
-            hud.labelText = @"该用户不存在，不可引用回复";
-            [hud hide:YES afterDelay:1];
+            [self sendComment:comment.id authorID:comment.authorId];
         }
         
-        [self sendComment:comment.id authorID:comment.authorId];
     } else {
-        [self sendComment:0 authorID:0];
+        if (_commentTextField.text.length > 0) {
+            if ([Config getOwnID] == 0) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                [self.navigationController pushViewController:loginVC animated:YES];
+            } else {
+                [self sendComment:0 authorID:0];
+            }
+        } else {
+            MBProgressHUD *HUD = [Utils createHUD];
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.labelText = @"评论不能为空";
+            
+            [HUD hide:YES afterDelay:1];
+        }
     }
     
     [textField resignFirstResponder];
@@ -279,7 +291,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 #pragma mark - 评论
 - (void)selectedToComment:(UIButton *)button
 {
-    OSCNewComment *blogComment = _comments[button.tag];
+    OSCNewComment *comment = _comments[button.tag];
 
     if (_selectIndexPath == button.tag) {
         _isReply = !_isReply;
@@ -289,9 +301,18 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     _selectIndexPath = button.tag;
 
     if (_isReply) {
-        _commentTextField.text = [NSString stringWithFormat:@"@%@", blogComment.author];
-        _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", blogComment.author];
+        if (comment.authorId > 0) {
+            _commentTextField.text = [NSString stringWithFormat:@"@%@", comment.author];
+            _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+        } else {
+            MBProgressHUD *hud = [Utils createHUD];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.labelText = @"该用户不存在，不可引用回复";
+            [hud hide:YES afterDelay:1];
+        }
+        
     } else {
+        _commentTextField.text = @"";
         _commentTextField.placeholder = @"我要评论";
     }
     
