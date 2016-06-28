@@ -28,7 +28,7 @@
 #import "CommentsBottomBarViewController.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
-
+#import "NewCommentListViewController.h"//新评论列表
 
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
@@ -236,7 +236,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             if ([responseObject[@"code"]integerValue] == 1) {
                 _blogDetails = [OSCBlogDetail mj_objectWithKeyValues:responseObject[@"result"]];
                 _blogDetailRecommends = [OSCBlogDetailRecommend mj_objectArrayWithKeyValuesArray:_blogDetails.abouts];
-                _blogDetailComments = [OSCBlogDetailComment mj_objectArrayWithKeyValuesArray:_blogDetails.comments];
+                _blogDetailComments = [OSCNewComment mj_objectArrayWithKeyValuesArray:_blogDetails.comments];
                 
                 NSDictionary *data = @{@"content":  _blogDetails.body};
                 _blogDetails.body = [Utils HTMLWithData:data
@@ -291,7 +291,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                   }
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             if ([responseObject[@"code"]integerValue] == 1) {
-                _newsDetailComments = [OSCBlogDetailComment mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"items"]];
+                _newsDetailComments = [OSCNewComment mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"items"]];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
@@ -502,15 +502,14 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         label.numberOfLines = 0;
                         label.lineBreakMode = NSLineBreakByWordWrapping;
                         
-                        OSCBlogDetailComment *blogComment = _blogDetailComments[indexPath.row];
-//                        NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
+                        OSCNewComment *blogComment = _blogDetailComments[indexPath.row];
                         label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
                         
                         CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
                         
                         
                         height += 7;
-                        OSCBlogCommentRefer *refer = blogComment.refer;
+                        OSCNewCommentRefer *refer = blogComment.refer;
                         int i = 0;
                         while (refer.author.length > 0) {
                             NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
@@ -577,25 +576,25 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         if (indexPath.row == _newsDetailComments.count) {
                             return 44;
                         } else {
+                            
                             UILabel *label = [UILabel new];
                             label.font = [UIFont systemFontOfSize:14];
                             label.numberOfLines = 0;
                             label.lineBreakMode = NSLineBreakByWordWrapping;
                             
-                            OSCBlogDetailComment *blogComment = _newsDetailComments[indexPath.row];
-//                            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
-//                            
-//                            label.attributedText = contentString;
+                            OSCNewComment *blogComment = _newsDetailComments[indexPath.row];
                             label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
                             
                             CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
                             
                             
                             height += 7;
-                            OSCBlogCommentRefer *refer = blogComment.refer;
+                            OSCNewCommentRefer *refer = blogComment.refer;
                             int i = 0;
                             while (refer.author.length > 0) {
-                                label.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
+                                NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
+                                [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
+                                label.attributedText = replyContent;
                                 height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
                                 i++;
                                 refer = refer.refer;
@@ -618,20 +617,19 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         label.numberOfLines = 0;
                         label.lineBreakMode = NSLineBreakByWordWrapping;
                         
-                        OSCBlogDetailComment *blogComment = _newsDetailComments[indexPath.row];
-//                        NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
-//                        
-//                        label.attributedText = contentString;
+                        OSCNewComment *blogComment = _newsDetailComments[indexPath.row];
                         label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
                         
                         CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
                         
                         
                         height += 7;
-                        OSCBlogCommentRefer *refer = blogComment.refer;
+                        OSCNewCommentRefer *refer = blogComment.refer;
                         int i = 0;
                         while (refer.author.length > 0) {
-                            label.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
+                            NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
+                            [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
+                            label.attributedText = replyContent;
                             height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
                             i++;
                             refer = refer.refer;
@@ -728,7 +726,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         NewCommentCell *commentBlogCell = [NewCommentCell new];
                         commentBlogCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
-                        OSCBlogDetailComment *detailComment = _blogDetailComments[indexPath.row];
+                        OSCNewComment *detailComment = _blogDetailComments[indexPath.row];
                         commentBlogCell.comment = detailComment;
                         
                         if (detailComment.refer.author.length > 0) {
@@ -822,7 +820,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             NewCommentCell *commentNewsCell = [NewCommentCell new];
                             commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
                             
-                            OSCBlogDetailComment *detailComment = _newsDetailComments[indexPath.row];
+                            OSCNewComment *detailComment = _newsDetailComments[indexPath.row];
                             commentNewsCell.comment = detailComment;
                             
                             if (detailComment.refer.author.length > 0) {
@@ -865,7 +863,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         NewCommentCell *commentNewsCell = [NewCommentCell new];
                         commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
-                        OSCBlogDetailComment *detailComment = _newsDetailComments[indexPath.row];
+                        OSCNewComment *detailComment = _newsDetailComments[indexPath.row];
                         commentNewsCell.comment = detailComment;
                         
                         if (detailComment.refer.author.length > 0) {
@@ -912,12 +910,16 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                                                                                                                   isBlogDetail:YES];
                 [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             }
-        }else if (indexPath.section == 2) {
+        } else if (indexPath.section == 2) {
             if (_blogDetailComments.count > 0) {
                 if (indexPath.row == _blogDetailComments.count) {
-                    //评论列表
-                    CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:5 andObjectID:_blogDetails.id];
-                    [self.navigationController pushViewController:commentsBVC animated:YES];
+                    //新评论列表
+                    NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForBlog sourceID:_blogDetails.id];
+                    
+                    [self.navigationController pushViewController:newCommentVC animated:YES];
+                    
+//                    CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:5 andObjectID:_blogDetails.id];
+//                    [self.navigationController pushViewController:commentsBVC animated:YES];
                 }
             }
         }
@@ -946,15 +948,26 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }else {
                 //资讯评论列表
                 if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
-                        CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
-                        [self.navigationController pushViewController:commentsBVC animated:YES];
+                    
+                    //新评论列表
+                    NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForNews sourceID:_newsDetails.id];
+                    
+                    [self.navigationController pushViewController:newCommentVC animated:YES];
+                    
+//                    CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
+//                    [self.navigationController pushViewController:commentsBVC animated:YES];
                 }
             }
         }else if (indexPath.section == 3) {
             if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
+                
+                //新评论列表
+                NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForNews sourceID:_newsDetails.id];
+                
+                [self.navigationController pushViewController:newCommentVC animated:YES];
                 //资讯评论列表
-                CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
-                [self.navigationController pushViewController:commentsBVC animated:YES];
+//                CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
+//                [self.navigationController pushViewController:commentsBVC animated:YES];
             }
         }
     }
@@ -1055,7 +1068,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #pragma mark - 评论
 - (void)selectedToComment:(UIButton *)button
 {
-    OSCBlogDetailComment *comment = _isBlogDetail ? _blogDetailComments[button.tag] : _newsDetailComments[button.tag];
+    OSCNewComment *comment = _isBlogDetail ? _blogDetailComments[button.tag] : _newsDetailComments[button.tag];
     
     if (_selectIndexPath == button.tag) {
         _isReply = !_isReply;
@@ -1065,7 +1078,15 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     _selectIndexPath = button.tag;
     
     if (_isReply) {
-        _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+        if (comment.authorId > 0) {
+            _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+        } else {
+            MBProgressHUD *hud = [Utils createHUD];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.labelText = @"该用户不存在，不可引用回复";
+            [hud hide:YES afterDelay:1];
+        }
+        
     } else {
         _commentTextField.placeholder = @"发表评论";
     }
@@ -1198,7 +1219,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     NSLog(@"send mesage");
     
     if (_isReply) {
-        OSCBlogDetailComment *comment = _isBlogDetail ? _blogDetailComments[_selectIndexPath] : _newsDetailComments[_selectIndexPath];
+        OSCNewComment *comment = _isBlogDetail ? _blogDetailComments[_selectIndexPath] : _newsDetailComments[_selectIndexPath];
         [self sendComment:comment.id authorID:comment.authorId];
     } else {
         [self sendComment:0 authorID:0];
