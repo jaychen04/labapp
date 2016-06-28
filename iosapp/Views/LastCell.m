@@ -36,7 +36,7 @@
 {
     _textLabel.textColor = [UIColor titleColor];
     _textLabel = [[UILabel alloc] initWithFrame:self.bounds];
-    _textLabel.backgroundColor = [UIColor themeColor];
+    _textLabel.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     _textLabel.textAlignment = NSTextAlignmentCenter;
     _textLabel.font = [UIFont boldSystemFontOfSize:14];
     [self addSubview:_textLabel];

@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class OSCNewSoftWareAbouts;
+
 @interface OSCNewSoftWare : NSObject
 
 @property (nonatomic, assign) NSInteger id;
@@ -52,7 +54,9 @@
 
 @property (nonatomic, assign) BOOL favorite;
 
-@property (nonatomic, strong) NSArray *abouts;
+@property (nonatomic,assign) BOOL recommend;
+
+@property (nonatomic, strong) NSArray<OSCNewSoftWareAbouts* > *abouts;
 
 @end
 
