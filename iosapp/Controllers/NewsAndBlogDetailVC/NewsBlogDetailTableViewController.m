@@ -59,6 +59,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 @property (nonatomic, strong) NSMutableArray *newsDetailComments;
 @property (nonatomic) BOOL isExistRelatedSoftware;      //存在相关软件的信息
 
+@property (nonatomic, strong) OSCBlogDetailComment *beRepledComment;   //被评论的某条评论
+
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, strong) MBProgressHUD *hud;
 
@@ -80,7 +82,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 @implementation NewsBlogDetailTableViewController
 
 -(instancetype) initWithObjectId:(NSInteger)objectId
-                  isBlogDetail:(BOOL)isBlogDetail {
+                    isBlogDetail:(BOOL)isBlogDetail {
     if(self) {
         if (isBlogDetail) {
             self.blogId = objectId;
@@ -254,7 +256,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark - 获取资讯详情
 -(void)getNewsData{
-//    74510
+    //    74510
     NSString *newsDetailUrlStr = [NSString stringWithFormat:@"%@news?id=%lld", OSCAPI_V2_PREFIX, self.newsId];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:newsDetailUrlStr
@@ -266,7 +268,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 NSDictionary *data = @{@"content":  _newsDetails.body?:@""};
                 _newsDetails.body = [Utils HTMLWithData:data
                                           usingTemplate:@"blog"];
-
+                
                 _isExistRelatedSoftware = _newsDetails.software.allKeys.count > 0;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -385,12 +387,19 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }
             case 1://与资讯有关的软件信息
             {
-                return _isExistRelatedSoftware?1:_newsDetails.abouts.count;
+                NSInteger rows = 0;
+                if (_isExistRelatedSoftware) {
+                    return rows = 1;
+                }else if (_newsDetails.abouts.count > 0){
+                    return rows = _newsDetails.abouts.count;
+                }else if (_newsDetailComments.count > 0) {
+                    return _newsDetailComments.count+1;
+                }
                 break;
             }
             case 2://相关资讯
             {
-                return _isExistRelatedSoftware?_newsDetails.abouts.count:_newsDetailComments.count+1;
+                return _isExistRelatedSoftware && _newsDetails.abouts.count > 0?_newsDetails.abouts.count:_newsDetailComments.count+1;
                 break;
             }
             case 3://评论
@@ -420,11 +429,13 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         if (section == 1) {
             if (_isExistRelatedSoftware) {
                 return [self headerViewWithSectionTitle:@"相关软件"];
-            }else {
+            }else if (_newsDetails.abouts.count > 0){
                 return [self headerViewWithSectionTitle:@"相关资讯"];
+            }else if (_newsDetailComments.count > 0) {
+                return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_newsDetails.commentCount]];
             }
         }else if (section == 2) {
-            if (_isExistRelatedSoftware) {
+            if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
                 return [self headerViewWithSectionTitle:@"相关资讯"];
             }else {
                 if (_newsDetails.commentCount > 0) {
@@ -503,7 +514,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         label.lineBreakMode = NSLineBreakByWordWrapping;
                         
                         OSCBlogDetailComment *blogComment = _blogDetailComments[indexPath.row];
-//                        NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
+                        //                        NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
                         label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
                         
                         CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
@@ -553,19 +564,51 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             {
                 if (_isExistRelatedSoftware) {
                     return 45;
-                }else {
+                }else if (_newsDetails.abouts.count > 0){
                     return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
                         if(indexPath.row < _newsDetailRecommends.count) {
                             OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
                             cell.abouts = newsRecommend;
                         }
                     }];
+                }else if (_newsDetailComments.count > 0) {
+                    if (_newsDetailComments.count > 0) {
+                        if (indexPath.row == _newsDetailComments.count) {
+                            return 44;
+                        } else {
+                            UILabel *label = [UILabel new];
+                            label.font = [UIFont systemFontOfSize:14];
+                            label.numberOfLines = 0;
+                            label.lineBreakMode = NSLineBreakByWordWrapping;
+                            
+                            OSCBlogDetailComment *blogComment = _newsDetailComments[indexPath.row];
+                            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
+                            
+                            label.attributedText = contentString;
+                            
+                            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+                            
+                            
+                            height += 7;
+                            OSCBlogCommentRefer *refer = blogComment.refer;
+                            int i = 0;
+                            while (refer.author.length > 0) {
+                                label.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
+                                height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
+                                i++;
+                                refer = refer.refer;
+                            }
+                            
+                            return height + 71;
+                        }
+                    }
                 }
+                
                 break;
             }
             case 2:
             {
-                if (_isExistRelatedSoftware) {
+                if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
                     return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
                         if(indexPath.row < _newsDetailRecommends.count) {
                             OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
@@ -787,7 +830,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     softWareCell.titleLabel.text = _newsDetails.software?[_newsDetails.software objectForKey:@"name"]:@"";
                     softWareCell.selectionStyle = UITableViewCellSelectionStyleDefault;
                     return softWareCell;
-                }else {
+                }else if (_newsDetails.abouts.count > 0){
                     RecommandBlogTableViewCell *recommandNewsCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
                     if (_newsDetailRecommends.count > 0) {
                         OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
@@ -795,11 +838,50 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     }
                     recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
                     return recommandNewsCell;
+                }else if (_newsDetailComments.count > 0) {
+                    if (_newsDetailComments.count > 0) {
+                        if (indexPath.row == _newsDetailComments.count) {
+                            UITableViewCell *cell = [UITableViewCell new];
+                            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                            cell.textLabel.text = @"更多评论";
+                            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                            cell.textLabel.font = [UIFont systemFontOfSize:14];
+                            cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                            
+                            return cell;
+                        } else {
+                            NewCommentCell *commentNewsCell = [NewCommentCell new];
+                            commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                            
+                            OSCBlogDetailComment *detailComment = _newsDetailComments[indexPath.row];
+                            commentNewsCell.comment = detailComment;
+                            
+                            if (detailComment.refer.author.length > 0) {
+                                commentNewsCell.currentContainer.hidden = NO;
+                            } else {
+                                commentNewsCell.currentContainer.hidden = YES;
+                            }
+                            commentNewsCell.commentButton.tag = indexPath.row;
+                            [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
+                            
+                            return commentNewsCell;
+                        }
+                        
+                    } else {
+                        UITableViewCell *cell = [UITableViewCell new];
+                        cell.textLabel.text = @"还没有评论";
+                        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                        cell.textLabel.font = [UIFont systemFontOfSize:14];
+                        cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        return cell;
+                    }
                 }
             }
                 break;
             case 2: {
-                if (_isExistRelatedSoftware) {
+                if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
                     RecommandBlogTableViewCell *recommandNewsCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
                     if (indexPath.row < _newsDetailRecommends.count) {
                         OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
@@ -909,7 +991,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 OSCBlogDetailRecommend *detailRecommend = _blogDetailRecommends[indexPath.row];
                 
                 NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
-                                                                                                                  isBlogDetail:YES];
+                                                                                                                    isBlogDetail:YES];
                 [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             }
         }else if (indexPath.section == 2) {
@@ -923,6 +1005,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         }
     }else {     //资讯详情
         if (indexPath.section == 1) {
+            
             if (_isExistRelatedSoftware) {      //相关的软件详情
                 OSCSoftware* softWare = [OSCSoftware new];
                 softWare.name = _newsDetails.software[@"name"];
@@ -930,15 +1013,21 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 softWare.softId = [_newsDetails.software[@"id"] integerValue];
                 DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
                 [self.navigationController pushViewController:detailsViewController animated:YES];
-
-            }else {     //相关推荐的资讯详情
+                
+            }else if (_newsDetails.abouts.count > 0) {     //相关推荐的资讯详情
                 OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
                 NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
-                                                                                                                  isBlogDetail:NO];
+                                                                                                                    isBlogDetail:NO];
                 [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            }else if (_newsDetailComments.count > 0) {
+                //资讯评论列表
+                if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
+                    CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
+                    [self.navigationController pushViewController:commentsBVC animated:YES];
+                }
             }
         }else if (indexPath.section == 2) {
-            if (_isExistRelatedSoftware) {
+            if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
                 OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
                 NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
                                                                                                                     isBlogDetail:NO];
@@ -946,8 +1035,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }else {
                 //资讯评论列表
                 if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
-                        CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
-                        [self.navigationController pushViewController:commentsBVC animated:YES];
+                    CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
+                    [self.navigationController pushViewController:commentsBVC animated:YES];
                 }
             }
         }else if (indexPath.section == 3) {
@@ -995,59 +1084,59 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@user_relation_reverse", OSCAPI_V2_PREFIX];
         AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
         [manger POST:blogDetailUrlStr
-         parameters:@{
-                      @"id"  : @(_blogDetails.authorId),
-                      }
-            success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-                if ([responseObject[@"code"] integerValue]== 1) {
-                    _blogDetails.authorRelation = [responseObject[@"result"][@"relation"] integerValue];
-                }
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
-                                                                     withRowAnimation:UITableViewRowAnimationNone];
-                });
-            } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-                NSLog(@"%@",error);
-            }];
+          parameters:@{
+                       @"id"  : @(_blogDetails.authorId),
+                       }
+             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 if ([responseObject[@"code"] integerValue]== 1) {
+                     _blogDetails.authorRelation = [responseObject[@"result"][@"relation"] integerValue];
+                 }
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+                                           withRowAnimation:UITableViewRowAnimationNone];
+                 });
+             } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                 NSLog(@"%@",error);
+             }];
         
         /* 旧关注 */
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-//        
-//        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_UPDATERELATION]
-//           parameters:@{
-//                        @"uid":             @([Config getOwnID]),
-//                        @"hisuid":          @(_blogDetails.authorId),
-//                        @"newrelation":     _blogDetails.authorRelation <= 2? @(0) : @(1)
-//                        }
-//              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
-//                  ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
-//                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-//                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-//                  
-//                  if (errorCode == 1) {
-//                      _blogDetails.authorRelation = [[[responseDoment.rootElement firstChildWithTag:@"relation"] numberValue] intValue];
-//                      dispatch_async(dispatch_get_main_queue(), ^{
-//                          [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
-//                                                withRowAnimation:UITableViewRowAnimationNone];
-//                      });
-//                  } else {
-//                      MBProgressHUD *HUD = [Utils createHUD];
-//                      HUD.mode = MBProgressHUDModeCustomView;
-//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//                      HUD.labelText = errorMessage;
-//                      
-//                      [HUD hide:YES afterDelay:1];
-//                  }
-//                  
-//              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                  MBProgressHUD *HUD = [Utils createHUD];
-//                  HUD.mode = MBProgressHUDModeCustomView;
-//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//                  HUD.labelText = @"网络异常，操作失败";
-//                  
-//                  [HUD hide:YES afterDelay:1];
-//              }];
+        //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        //
+        //        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_UPDATERELATION]
+        //           parameters:@{
+        //                        @"uid":             @([Config getOwnID]),
+        //                        @"hisuid":          @(_blogDetails.authorId),
+        //                        @"newrelation":     _blogDetails.authorRelation <= 2? @(0) : @(1)
+        //                        }
+        //              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
+        //                  ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
+        //                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+        //                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+        //
+        //                  if (errorCode == 1) {
+        //                      _blogDetails.authorRelation = [[[responseDoment.rootElement firstChildWithTag:@"relation"] numberValue] intValue];
+        //                      dispatch_async(dispatch_get_main_queue(), ^{
+        //                          [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
+        //                                                withRowAnimation:UITableViewRowAnimationNone];
+        //                      });
+        //                  } else {
+        //                      MBProgressHUD *HUD = [Utils createHUD];
+        //                      HUD.mode = MBProgressHUDModeCustomView;
+        //                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+        //                      HUD.labelText = errorMessage;
+        //
+        //                      [HUD hide:YES afterDelay:1];
+        //                  }
+        //
+        //              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        //                  MBProgressHUD *HUD = [Utils createHUD];
+        //                  HUD.mode = MBProgressHUDModeCustomView;
+        //                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+        //                  HUD.labelText = @"网络异常，操作失败";
+        //
+        //                  [HUD hide:YES afterDelay:1];
+        //              }];
     }
     
 }
@@ -1066,6 +1155,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     
     if (_isReply) {
         _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+        _beRepledComment = comment;
     } else {
         _commentTextField.placeholder = @"发表评论";
     }
@@ -1074,38 +1164,54 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 }
 
 #pragma mark - 发评论
-- (void)sendComment:(NSInteger)replyID authorID:(NSInteger)authorID
-{
-    //
-    MBProgressHUD *HUD = [Utils createHUD];
-    //    HUD.labelText = @"评论发送中";
-    
-    
+- (void)sendComment {
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController pushViewController:loginVC animated:YES];
     } else {
         
-        /* 新 发评论
-        
+        MBProgressHUD *HUD = [Utils createHUD];
+        [HUD show:YES];
+        //新 发评论
         AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
         
-        [manger POST:[NSString stringWithFormat:@"%@comment_pub", OSCAPI_V2_PREFIX]
-          parameters:@{
-                       @"sourceId"   : @(_blogDetails.id),
-                       @"type"       : @(2),
-                       @"content"    : _commentTextField.text,
-                       @"replyId"    : @(replyID),
-                       @"reAuthorId" : @(authorID),
-                       }
+        NSInteger sourceId = _isBlogDetail ? _blogDetails.id : _newsDetails.id;
+        NSInteger type = _isBlogDetail ? 3 : 6;
+        NSMutableDictionary *paraDic = [NSMutableDictionary dictionaryWithDictionary:
+                                        @{
+                                          @"sourceId":@(sourceId),
+                                          @"type":@(type),                          @"content":_commentTextField.text
+                                          }
+                                        ];
+        if (_isReply) {
+            [paraDic addEntriesFromDictionary:
+             @{@"reAuthorId": @(_beRepledComment.authorId),
+               @"replyId": @(_beRepledComment.id)
+               }];
+        }
+        
+        [manger POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX,OSCAPI_COMMENT_PUB]
+          parameters:paraDic
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 
+                 HUD.mode = MBProgressHUDModeCustomView;
+                 
                  if ([responseObject[@"code"]integerValue] == 1) {
-                     MBProgressHUD *HUD = [Utils createHUD];
                      HUD.mode = MBProgressHUDModeCustomView;
                      HUD.labelText = @"评论成功";
                      
+                     OSCNewComment *postedComment = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
+                     if(_isBlogDetail) {
+                         [_blogDetailComments insertObject:postedComment atIndex:0];
+                     }else {
+                         [_newsDetailComments insertObject:postedComment atIndex:0];
+                     }
                      [HUD hide:YES afterDelay:1];
+                     _commentTextField.text = @"";
+                 }else {
+                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                     HUD.labelText = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
                      
@@ -1113,73 +1219,77 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                  });
              }
              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-                 NSLog(@"%@",error);
+                 HUD.mode = MBProgressHUDModeCustomView;
+                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                 HUD.labelText = @"网络异常，评论发送失败";
+                 [HUD hide:YES afterDelay:1];
              }];
-        */
         
         
-        //旧 发评论
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-
-        NSString *urlStr = _isBlogDetail ? [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB]:[NSString stringWithFormat:@"%@%@",OSCAPI_PREFIX,OSCAPI_COMMENT_PUB];
-        NSDictionary *parameters =  _isBlogDetail ? @{
-                                      @"blog"     : @(_blogDetails.id),
-                                      @"uid"      : @([Config getOwnID]),
-                                      @"content"  : _commentTextField.text,
-                                      @"reply_id" : @(replyID),
-                                      @"objuid"   : @(authorID),
-                                      } : @{
-                                            @"catalog": @(1),
-                                            @"id": @(_newsDetails.id),
-                                            @"uid": @([Config getOwnID]),
-                                            @"replyid": @(replyID),
-                                            @"authorid": @(authorID),
-                                            @"content": _commentTextField.text,
-                                            @"isPostToMyZone": @(0)
-                                            };
-        [manager POST:urlStr
-           parameters:parameters
-              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-                  ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
-                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-                  
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  
-                  if (errorCode == 1) {
-                      ONOXMLElement *postXML = [responseDocument.rootElement firstChildWithTag:@"comment"];
-                      OSCNewComment *postedComment = [[OSCNewComment alloc] initWithXML:postXML];
-                      
-                      if (postedComment) {
-                          if(_isBlogDetail) {
-                              [_blogDetailComments insertObject:postedComment atIndex:0];
-                          }else {
-                              [_newsDetailComments insertObject:postedComment atIndex:0];
-                          }
-                      }
-                      
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.labelText = @"评论发表成功";
-                      
-                      [self.tableView reloadData];
-                      _commentTextField.text = @"";
-                  } else {
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
-                  }
-                  
-                  [HUD hide:YES afterDelay:1];
-                  
-                  
-              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = @"网络异常，动弹发送失败";
-                  
-                  [HUD hide:YES afterDelay:1];
-              }];
-        
+        /*
+         //旧 发评论
+         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+         
+         NSString *urlStr = _isBlogDetail ? [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB]:[NSString stringWithFormat:@"%@%@",OSCAPI_PREFIX,OSCAPI_COMMENT_PUB];
+         NSDictionary *parameters =  _isBlogDetail ? @{
+         @"blog"     : @(_blogDetails.id),
+         @"uid"      : @([Config getOwnID]),
+         @"content"  : _commentTextField.text,
+         @"reply_id" : @(replyID),
+         @"objuid"   : @(authorID),
+         } : @{
+         @"catalog": @(1),
+         @"id": @(_newsDetails.id),
+         @"uid": @([Config getOwnID]),
+         @"replyid": @(replyID),
+         @"authorid": @(authorID),
+         @"content": _commentTextField.text,
+         @"isPostToMyZone": @(0)
+         };
+         [manager POST:urlStr
+         parameters:parameters
+         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+         ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
+         int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+         NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
+         
+         HUD.mode = MBProgressHUDModeCustomView;
+         
+         if (errorCode == 1) {
+         ONOXMLElement *postXML = [responseDocument.rootElement firstChildWithTag:@"comment"];
+         OSCNewComment *postedComment = [[OSCNewComment alloc] initWithXML:postXML];
+         
+         if (postedComment) {
+         if(_isBlogDetail) {
+         [_blogDetailComments insertObject:postedComment atIndex:0];
+         }else {
+         [_newsDetailComments insertObject:postedComment atIndex:0];
+         }
+         }
+         
+         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+         HUD.labelText = @"评论发表成功";
+         
+         [self.tableView reloadData];
+         _commentTextField.text = @"";
+         } else {
+         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+         HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+         }
+         
+         [HUD hide:YES afterDelay:1];
+         
+         
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+         HUD.mode = MBProgressHUDModeCustomView;
+         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+         HUD.labelText = @"网络异常，动弹发送失败";
+         
+         [HUD hide:YES afterDelay:1];
+         }];
+         */
     }
+    
 }
 
 #pragma mark - UITextFieldDelegate
@@ -1197,13 +1307,14 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 {
     NSLog(@"send mesage");
     
-    if (_isReply) {
-        OSCBlogDetailComment *comment = _isBlogDetail ? _blogDetailComments[_selectIndexPath] : _newsDetailComments[_selectIndexPath];
-        [self sendComment:comment.id authorID:comment.authorId];
-    } else {
-        [self sendComment:0 authorID:0];
-    }
-    
+//    if (_isReply) {
+//        OSCBlogDetailComment *comment = _isBlogDetail ? _blogDetailComments[_selectIndexPath] : _newsDetailComments[_selectIndexPath];
+//        [self sendComment];
+//    } else {
+//        [self sendComment:0 authorID:0];
+//    }
+
+    [self sendComment];
     [textField resignFirstResponder];
     
     return YES;
@@ -1258,7 +1369,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     }
 }
 - (IBAction)collected:(UIButton *)sender {
-//    NSLog(@"collect");
+    //    NSLog(@"collect");
     
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
@@ -1299,7 +1410,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                  [HUD hide:YES afterDelay:1];
              }];
         
-
+        
         /* 旧版收藏 */
         //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         //
@@ -1386,7 +1497,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     } else {
         NSString *objId = [NSString stringWithFormat:@"%lld", _isBlogDetail? _blogDetails.id:_newsDetails.id];
         NSString *preUrl = _isBlogDetail?@"http://m.oschina.net/blog/":@"http://m.oschina.net/news/";
-       NSString *strUrl = [NSString stringWithFormat:@"%@%@", preUrl,objId];
+        NSString *strUrl = [NSString stringWithFormat:@"%@%@", preUrl,objId];
         _mURL = [strUrl copy];
         return _mURL;
     }
