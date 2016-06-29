@@ -23,7 +23,7 @@ static NSString* const CommentHeadDetailCellIdentifier = @"QuestCommentHeadDetai
 static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
 static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
-@interface CommentDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
+@interface CommentDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate,UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
@@ -45,7 +45,9 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, copy) OSCNewComment *commentDetail;
-
+@property (nonatomic) NSInteger replyId;
+@property (nonatomic) NSInteger reAuthorId;
+@property (nonatomic, strong) NSMutableArray *commentReplies;
 @end
 
 @implementation CommentDetailViewController
@@ -53,6 +55,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"回答详情";
+    self.commentField.delegate = self;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.tableView.delegate = self;
@@ -100,6 +103,9 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
             
             if ([responseObject[@"code"] integerValue] == 1) {
                 _commentDetail = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
+                _commentReplies = [OSCNewCommentReply mj_objectArrayWithKeyValuesArray:_commentDetail.reply];
+                _replyId = _commentDetail.id;
+                _reAuthorId = _commentDetail.authorId;
                 NSDictionary *data = @{@"content":  _commentDetail.content};
                 _commentDetail.content = [Utils HTMLWithData:data
                                              usingTemplate:@"newTweet"];
@@ -410,8 +416,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         NewCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:newCommentReuseIdentifier forIndexPath:indexPath];
         commentCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
-        if (_commentDetail.reply.count > 0) {
-            OSCNewCommentReply *reply = _commentDetail.reply[indexPath.row];
+        if (_commentReplies.count > 0) {
+            OSCNewCommentReply *reply = _commentReplies[indexPath.row];
             [commentCell setDataForQuestionCommentReply:reply];
             
             commentCell.commentButton.tag = indexPath.row;
@@ -433,13 +439,13 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
             return _webViewHeight+30;
         }
     } else if (indexPath.section == 1) {
-        if (_commentDetail.reply.count > 0) {
+        if (_commentReplies.count > 0) {
             UILabel *label = [UILabel new];
             label.font = [UIFont systemFontOfSize:14];
             label.numberOfLines = 0;
             label.lineBreakMode = NSLineBreakByWordWrapping;
             
-            OSCNewCommentReply *quesCommentReply = _commentDetail.reply[indexPath.row];
+            OSCNewCommentReply *quesCommentReply = _commentReplies[indexPath.row];
 //            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesCommentReply.content]];
             label.attributedText = [NewCommentCell contentStringFromRawString:quesCommentReply.content];
             
@@ -455,7 +461,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if (_commentDetail.reply.count > 0) {
+    if (_commentReplies.count > 0) {
         return 2;
     }
     return 1;
@@ -466,7 +472,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     if (section == 0) {
         return 2;
     } else if (section == 1) {
-        return _commentDetail.reply.count;
+        return _commentReplies.count;
     }
     return 0;
 }
@@ -482,8 +488,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (section == 1) {
-        if (_commentDetail.reply.count > 0) {
-            return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_commentDetail.reply.count]];
+        if (_commentReplies.count > 0) {
+            return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_commentReplies.count]];
         }
         return [self headerViewWithSectionTitle:@"评论"];
     }
@@ -545,7 +551,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 {
     //send message
     if (_isReply) {
-        OSCNewCommentReply *quesCommentReply = _commentDetail.reply[_selectIndexPath];
+        OSCNewCommentReply *quesCommentReply = _commentReplies[_selectIndexPath];
         [self sendComment:quesCommentReply.id authorID:quesCommentReply.authorId];
     } else {
         [self sendComment:0 authorID:0];
@@ -596,7 +602,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 #pragma mark - 评论
 - (void)selectedToComment:(UIButton *)button
 {
-    OSCNewCommentReply *reply = _commentDetail.reply[button.tag];
+    OSCNewCommentReply *reply = _commentReplies[button.tag];
     
     if (_selectIndexPath == button.tag) {
         _isReply = !_isReply;
@@ -606,11 +612,14 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     _selectIndexPath = button.tag;
     
     if (_isReply) {
+        _replyId = reply.id;
+        _reAuthorId = reply.authorId;
         _commentField.placeholder = [NSString stringWithFormat:@"@%@", reply.author];
     } else {
+        _replyId = _commentDetail.id;
+        _reAuthorId = _commentDetail.authorId;
         _commentField.placeholder = @"我要评论";
     }
-    
     
 }
 
@@ -623,26 +632,33 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         [self.navigationController pushViewController:loginVC animated:YES];
     } else {
         
+        NSDictionary *paraDic = @{@"sourceId"   : @(self.questDetailId),
+                                  @"type"       : @(2),
+                                  @"content"    : _commentField.text,
+                                  @"replyId"    : @(_replyId),
+                                  @"reAuthorId" : @(_reAuthorId)
+                                  };
+
+        NSLog(@"paraDic:%@",paraDic);
         AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
-        
         [manger POST:[NSString stringWithFormat:@"%@comment_pub", OSCAPI_V2_PREFIX]
-          parameters:@{
-                       @"sourceId"   : @(self.commentId),
-                       @"type"       : @(2),
-                       @"content"    : _commentField.text,
-                       @"replyId"    : @(replyID),
-                       @"reAuthorId" : @(authorID),
-                       }
+          parameters:paraDic
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 
                  if ([responseObject[@"code"]integerValue] == 1) {
                      MBProgressHUD *HUD = [Utils createHUD];
                      HUD.mode = MBProgressHUDModeCustomView;
                      HUD.labelText = @"评论成功";
                      
+                     OSCNewCommentReply *postedComment = [OSCNewCommentReply mj_objectWithKeyValues:responseObject[@"result"]];
+                     if (postedComment) {
+                         [_commentReplies insertObject:postedComment atIndex:0];
+                     }
                      [HUD hide:YES afterDelay:1];
+                     _commentField.text = @"";
+                     _commentField.placeholder = @"";
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     
                      [self.tableView reloadData];
                  });
              }
