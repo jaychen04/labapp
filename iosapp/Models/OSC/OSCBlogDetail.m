@@ -15,7 +15,7 @@
 +(NSDictionary *)mj_objectClassInArray{
     return @{
              @"about" : [OSCBlogDetailRecommend class],
-             @"comments" : [OSCBlogDetailComment class]
+             @"comments" : [OSCNewComment class]
              };
 }
 
@@ -28,14 +28,14 @@
 
 @end
 
+//////
+//@implementation OSCBlogDetailComment
+//
+//@end
+
+
 ////
-@implementation OSCBlogDetailComment
-
-@end
-
-
-////
-@implementation OSCBlogCommentRefer
+//@implementation OSCBlogCommentRefer
 
 //- (NSString *)trimmedContent
 //{
@@ -86,7 +86,7 @@
 //}
 //
 
-@end
+//@end
 
 ////
 //@implementation HrefMark

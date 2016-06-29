@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "OSCNewComment.h"
 
-@class OSCBlogDetailRecommend , OSCBlogDetailComment, OSCBlogCommentRefer;
+@class OSCBlogDetailRecommend , OSCNewComment, OSCNewCommentRefer;
 
 @interface OSCBlogDetail : NSObject
 
@@ -44,7 +45,7 @@
 
 @property (nonatomic,strong) NSArray<OSCBlogDetailRecommend* >* abouts;
 
-@property (nonatomic,strong) NSArray<OSCBlogDetailComment* >* comments;
+@property (nonatomic,strong) NSArray<OSCNewComment* >* comments;
 
 @property (nonatomic, assign) BOOL favorite;
 
@@ -68,38 +69,38 @@
 
 
 
-@interface OSCBlogDetailComment : NSObject
-
-@property (nonatomic, copy) NSString *author;
-
-@property (nonatomic, copy) NSString *content;
-
-@property (nonatomic, assign) NSInteger appClient;
-
-@property (nonatomic, assign) NSInteger id;
-
-@property (nonatomic, assign) NSInteger authorId;
-
-@property (nonatomic, copy) NSString *pubDate;
-
-@property (nonatomic, copy) NSString *authorPortrait;
-
-@property (nonatomic, strong) OSCBlogCommentRefer *refer;
-
-@end
-
-
-@interface OSCBlogCommentRefer : NSObject
-
-@property (nonatomic, copy) NSString *author;
-@property (nonatomic, copy) NSString *content;
-@property (nonatomic, copy) NSString *pubDate;
-@property (nonatomic, strong) OSCBlogCommentRefer *refer;
-
-//@property (nonatomic, copy) NSMutableString *trimmedContent;
-//@property (nonatomic, strong) NSMutableArray *hrefs;
-
-@end
+//@interface OSCBlogDetailComment : NSObject
+//
+//@property (nonatomic, copy) NSString *author;
+//
+//@property (nonatomic, copy) NSString *content;
+//
+//@property (nonatomic, assign) NSInteger appClient;
+//
+//@property (nonatomic, assign) NSInteger id;
+//
+//@property (nonatomic, assign) NSInteger authorId;
+//
+//@property (nonatomic, copy) NSString *pubDate;
+//
+//@property (nonatomic, copy) NSString *authorPortrait;
+//
+//@property (nonatomic, strong) OSCBlogCommentRefer *refer;
+//
+//@end
+//
+//
+//@interface OSCBlogCommentRefer : NSObject
+//
+//@property (nonatomic, copy) NSString *author;
+//@property (nonatomic, copy) NSString *content;
+//@property (nonatomic, copy) NSString *pubDate;
+//@property (nonatomic, strong) OSCBlogCommentRefer *refer;
+//
+////@property (nonatomic, copy) NSMutableString *trimmedContent;
+////@property (nonatomic, strong) NSMutableArray *hrefs;
+//
+//@end
 
 
 //@interface HrefMark :NSObject

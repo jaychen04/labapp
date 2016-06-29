@@ -113,16 +113,18 @@
 
 #pragma mark - contentData
 
-- (void)setComment:(OSCBlogDetailComment *)comment
+- (void)setComment:(OSCNewComment *)comment
 {
     [_commentPortrait loadPortrait:[NSURL URLWithString:comment.authorPortrait]];
-    _nameLabel.text = comment.author;
+    _nameLabel.text = comment.author.length > 0 ? comment.author : @"匿名";
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];
     
     _bestImageView.hidden = YES;
     
+
 //    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];//commentReply.content
     _contentTextView.attributedText =[NewCommentCell contentStringFromRawString:comment.content];
+
     
     if (comment.refer.author.length > 0) {
         _currentContainer.hidden = NO;
@@ -180,6 +182,7 @@
                                     NSForegroundColorAttributeName: [UIColor nameColor],
                                     NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
                                     };
+
 }
 
 #pragma mark - 处理字符串
@@ -207,7 +210,7 @@
 }
 
 #pragma mark - refer
-- (void)setLayOutForRefer:(OSCBlogCommentRefer *)refer
+- (void)setLayOutForRefer:(OSCNewCommentRefer *)refer
 {
     if (refer.author.length  <= 0) {
         return;

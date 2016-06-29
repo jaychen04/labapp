@@ -52,6 +52,11 @@
 		042E8D121CF595FC00364BD7 /* libNBSAppAgent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE713B9F1AB2BBF100D318AF /* libNBSAppAgent.framework */; };
 		042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D141CF6A3F000364BD7 /* TokenManager.m */; };
 		042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */; };
+		043568671D221D7100CC511C /* SoftWareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568651D221D7100CC511C /* SoftWareViewController.m */; };
+		043568681D221D7100CC511C /* SoftWareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043568661D221D7100CC511C /* SoftWareViewController.xib */; };
+		043568701D22272F00CC511C /* SoftWareDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435686F1D22272F00CC511C /* SoftWareDetailHeaderView.m */; };
+		043568761D225D2100CC511C /* SoftWareDetailBodyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */; };
+		043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */; };
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
@@ -274,8 +279,6 @@
 		EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C4051D127CE6000FE427 /* QuesAnsDetailViewController.xib */; };
 		EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */; };
 		EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */; };
-		EE8B7CD91D21171F0097824B /* NewCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8B7CD71D21171F0097824B /* NewCommentsViewController.m */; };
-		EE8B7CDA1D21171F0097824B /* NewCommentsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE8B7CD81D21171F0097824B /* NewCommentsViewController.xib */; };
 		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
 		EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */; };
 		EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */; };
@@ -286,6 +289,8 @@
 		EEB3D7B41D13E5D500164EF5 /* SoftWareDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB3D7B21D13E5D500164EF5 /* SoftWareDetailCell.xib */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
+		EED7C71C1D222667001B565C /* NewCommentListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EED7C71A1D222667001B565C /* NewCommentListViewController.m */; };
+		EED7C71D1D222667001B565C /* NewCommentListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EED7C71B1D222667001B565C /* NewCommentListViewController.xib */; };
 		EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED81D5C1CF54F88000ACFBC /* OSCQuestion.m */; };
 		EEE241A91CFD65710088FFB3 /* ActivityDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEE241A71CFD65710088FFB3 /* ActivityDetailViewController.m */; };
 		EEE241AA1CFD65710088FFB3 /* ActivityDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE241A81CFD65710088FFB3 /* ActivityDetailViewController.xib */; };
@@ -378,6 +383,14 @@
 		042E8D141CF6A3F000364BD7 /* TokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenManager.m; sourceTree = "<group>"; };
 		042E8D1C1CF7038600364BD7 /* OSCBlogDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetail.h; sourceTree = "<group>"; };
 		042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetail.m; sourceTree = "<group>"; };
+		043568641D221D7100CC511C /* SoftWareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareViewController.h; sourceTree = "<group>"; };
+		043568651D221D7100CC511C /* SoftWareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftWareViewController.m; sourceTree = "<group>"; };
+		043568661D221D7100CC511C /* SoftWareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoftWareViewController.xib; sourceTree = "<group>"; };
+		0435686E1D22272F00CC511C /* SoftWareDetailHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareDetailHeaderView.h; sourceTree = "<group>"; };
+		0435686F1D22272F00CC511C /* SoftWareDetailHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftWareDetailHeaderView.m; sourceTree = "<group>"; };
+		043568731D225D2100CC511C /* SoftWareDetailBodyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareDetailBodyCell.h; sourceTree = "<group>"; };
+		043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftWareDetailBodyCell.m; sourceTree = "<group>"; };
+		043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoftWareDetailBodyCell.xib; sourceTree = "<group>"; };
 		0473259A1CF821A700460658 /* QuesAnsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuesAnsTableViewCell.h; sourceTree = "<group>"; };
 		0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuesAnsTableViewCell.m; sourceTree = "<group>"; };
 		0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuesAnsTableViewCell.xib; sourceTree = "<group>"; };
@@ -817,9 +830,6 @@
 		EE88C4081D128138000FE427 /* QuesAnsDetailHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsDetailHeadCell.h; path = Questions/QuesAnsDetailHeadCell.h; sourceTree = "<group>"; };
 		EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsDetailHeadCell.m; path = Questions/QuesAnsDetailHeadCell.m; sourceTree = "<group>"; };
 		EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsDetailHeadCell.xib; path = Questions/QuesAnsDetailHeadCell.xib; sourceTree = "<group>"; };
-		EE8B7CD61D2117170097824B /* NewCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentsViewController.h; sourceTree = "<group>"; };
-		EE8B7CD71D21171F0097824B /* NewCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentsViewController.m; sourceTree = "<group>"; };
-		EE8B7CD81D21171F0097824B /* NewCommentsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCommentsViewController.xib; sourceTree = "<group>"; };
 		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
 		EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
 		EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
@@ -836,6 +846,9 @@
 		EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+Badge.m"; sourceTree = "<group>"; };
 		EED55F6F1A80AB13004E6371 /* UIButton+Badge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+Badge.h"; sourceTree = "<group>"; };
 		EED55F701A80AB13004E6371 /* UIButton+Badge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+Badge.m"; sourceTree = "<group>"; };
+		EED7C7191D222667001B565C /* NewCommentListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentListViewController.h; sourceTree = "<group>"; };
+		EED7C71A1D222667001B565C /* NewCommentListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentListViewController.m; sourceTree = "<group>"; };
+		EED7C71B1D222667001B565C /* NewCommentListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewCommentListViewController.xib; sourceTree = "<group>"; };
 		EED81D5B1CF54F88000ACFBC /* OSCQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCQuestion.h; sourceTree = "<group>"; };
 		EED81D5C1CF54F88000ACFBC /* OSCQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCQuestion.m; sourceTree = "<group>"; };
 		EEE241A61CFD65710088FFB3 /* ActivityDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityDetailViewController.h; sourceTree = "<group>"; };
@@ -2044,9 +2057,9 @@
 				C5EF89171BE318E800B5FA46 /* CommentsViewController.m */,
 				EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */,
 				EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */,
-				EE8B7CD61D2117170097824B /* NewCommentsViewController.h */,
-				EE8B7CD71D21171F0097824B /* NewCommentsViewController.m */,
-				EE8B7CD81D21171F0097824B /* NewCommentsViewController.xib */,
+				EED7C7191D222667001B565C /* NewCommentListViewController.h */,
+				EED7C71A1D222667001B565C /* NewCommentListViewController.m */,
+				EED7C71B1D222667001B565C /* NewCommentListViewController.xib */,
 			);
 			path = Comment;
 			sourceTree = "<group>";
@@ -2063,6 +2076,14 @@
 				EEB3D7B01D13E5D400164EF5 /* SoftWareDetailCell.h */,
 				EEB3D7B11D13E5D500164EF5 /* SoftWareDetailCell.m */,
 				EEB3D7B21D13E5D500164EF5 /* SoftWareDetailCell.xib */,
+				043568731D225D2100CC511C /* SoftWareDetailBodyCell.h */,
+				043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */,
+				043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */,
+				0435686E1D22272F00CC511C /* SoftWareDetailHeaderView.h */,
+				0435686F1D22272F00CC511C /* SoftWareDetailHeaderView.m */,
+				043568641D221D7100CC511C /* SoftWareViewController.h */,
+				043568651D221D7100CC511C /* SoftWareViewController.m */,
+				043568661D221D7100CC511C /* SoftWareViewController.xib */,
 			);
 			path = Software;
 			sourceTree = "<group>";
@@ -2316,15 +2337,16 @@
 				EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
 				31A06E9B1D192D7300E2DB8F /* RelatedSoftWareCell.xib in Resources */,
-				EE8B7CDA1D21171F0097824B /* NewCommentsViewController.xib in Resources */,
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				317F889D1D05698800BD931F /* ContentWebViewCell.xib in Resources */,
 				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
 				31855C8D1D0E621F00C8F8B8 /* TweetLikeNewCell.xib in Resources */,
 				EEFFA6431CFEDAC000A8701C /* webAndAbsTableViewCell.xib in Resources */,
 				EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */,
+				043568681D221D7100CC511C /* SoftWareViewController.xib in Resources */,
 				04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */,
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
+				EED7C71D1D222667001B565C /* NewCommentListViewController.xib in Resources */,
 				EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */,
 				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
@@ -2349,6 +2371,7 @@
 				317AD9C91C96AD68008356DE /* recommend_tag.png in Resources */,
 				C5E92FDE1B59FAC300EFE47E /* Homepage.storyboard in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
+				043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2430,6 +2453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38763A441A9048D0008E6805 /* BubbleChatViewController.m in Sources */,
+				043568671D221D7100CC511C /* SoftWareViewController.m in Sources */,
 				0422BC561CEDA390007DB140 /* TAAbstractDotView.m in Sources */,
 				C52BF4FE1AFCB6EE00E53508 /* TeamReply.m in Sources */,
 				38EAF1BA1AE0E20E00397E2A /* TeamActivityCell.m in Sources */,
@@ -2456,7 +2480,6 @@
 				380FD22A1A7612E8003C4021 /* ActivityBasicInfoCell.m in Sources */,
 				384364201AC5532900743CB0 /* TeamMemberViewController.m in Sources */,
 				380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */,
-				EE8B7CD91D21171F0097824B /* NewCommentsViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
 				3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */,
@@ -2494,6 +2517,7 @@
 				C5A89C371B09C34B00798B1C /* FAImageView.m in Sources */,
 				04EC96961CF436B10004B54E /* OSCActivityViewController.m in Sources */,
 				EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */,
+				EED7C71C1D222667001B565C /* NewCommentListViewController.m in Sources */,
 				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,
 				EEE241B51CFD79C00088FFB3 /* ActivityDetailCell.m in Sources */,
 				C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */,
@@ -2556,6 +2580,7 @@
 				38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */,
 				EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */,
 				C5F3D77A1AF0C40B0032F775 /* WeeklyReportTableViewController.m in Sources */,
+				043568701D22272F00CC511C /* SoftWareDetailHeaderView.m in Sources */,
 				38EAF1C11AE0E6B100397E2A /* TeamIssue.m in Sources */,
 				31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */,
 				C52BF4F01AF9FE8800E53508 /* TimeLineNodeCell.m in Sources */,
@@ -2596,6 +2621,7 @@
 				C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
 				EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */,
+				043568761D225D2100CC511C /* SoftWareDetailBodyCell.m in Sources */,
 				380FD2231A74E702003C4021 /* OSCActivity.m in Sources */,
 				00FF954519F2B37E002F4737 /* UIColor+Util.m in Sources */,
 				C5F3D7731AEFA0140032F775 /* TeamCell.m in Sources */,

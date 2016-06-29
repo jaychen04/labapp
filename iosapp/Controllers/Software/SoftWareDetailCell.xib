@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -11,17 +11,17 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="75.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="75"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tuS-n7-M6u">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_label_recommend-1" translatesAutoresizingMaskIntoConstraints="NO" id="tuS-n7-M6u">
                         <rect key="frame" x="0.0" y="0.0" width="16" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="cbr-IU-Z75"/>
                             <constraint firstAttribute="width" constant="16" id="dUY-gB-Pyv"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="portrait_loading" translatesAutoresizingMaskIntoConstraints="NO" id="RSI-eR-wDa">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_software_default" translatesAutoresizingMaskIntoConstraints="NO" id="RSI-eR-wDa">
                         <rect key="frame" x="16" y="16" width="45" height="45"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="45" id="SND-19-Gwg"/>
@@ -29,12 +29,13 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VaZ-1H-DoH">
-                        <rect key="frame" x="73" y="16" width="231" height="21"/>
+                        <rect key="frame" x="73" y="16" width="231" height="22"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" red="0.9882352941176471" green="0.9882352941176471" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
                 <constraints>
                     <constraint firstItem="RSI-eR-wDa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="36L-xu-Osz"/>
                     <constraint firstItem="VaZ-1H-DoH" firstAttribute="top" secondItem="RSI-eR-wDa" secondAttribute="top" id="Aty-pQ-SfS"/>
@@ -54,6 +55,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="portrait_loading" width="57" height="57"/>
+        <image name="ic_label_recommend-1" width="16" height="18"/>
+        <image name="logo_software_default" width="45" height="44"/>
     </resources>
 </document>

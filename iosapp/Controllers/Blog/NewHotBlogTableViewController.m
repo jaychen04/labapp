@@ -99,7 +99,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
 
     [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([NewHotBlogTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:reuseIdentifier];
-    self.tableView.separatorColor = [UIColor separatorColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _newblogParaDic = @{@"catalog":@1};
 }

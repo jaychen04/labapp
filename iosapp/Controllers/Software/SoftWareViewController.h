@@ -10,4 +10,6 @@
 
 @interface SoftWareViewController : UIViewController
 
+- (instancetype)initWithSoftWareID:(NSInteger)softWareID;
+
 @end
