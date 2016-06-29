@@ -15,7 +15,7 @@
 #define PADDING_BOTTOM PADDING_TOP
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SPACE_BUTTON 16
-#define HEIGHT_BUTTON 50
+#define HEIGHT_BUTTON 37
 
 @implementation SoftWareDetailHeaderView{
     __weak UIButton* _leftButton;
@@ -34,22 +34,32 @@
 #pragma mark --- setting subViews
 -(void)setupSubViews{
     UIButton* leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.layer.borderWidth = 3;
+    leftBtn.layer.masksToBounds = YES;
+    leftBtn.layer.cornerRadius = 3;
+    leftBtn.layer.borderWidth = 1;
     leftBtn.layer.borderColor = [UIColor colorWithHex:0xd6d6d6].CGColor;
     leftBtn.tag = 100;
     [leftBtn setTitle:@"软件官网" forState:UIControlStateNormal];
+    [leftBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    leftBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [leftBtn setImage:[UIImage imageNamed:@"ic_website"] forState:UIControlStateNormal];
+    [leftBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
     [leftBtn addTarget:self action:@selector(buttonDidClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:leftBtn];
     _leftButton = leftBtn;
     
     
     UIButton* rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.layer.borderWidth = 3;
+    rightBtn.layer.masksToBounds = YES;
+    rightBtn.layer.cornerRadius = 3;
+    rightBtn.layer.borderWidth = 1;
     rightBtn.layer.borderColor = [UIColor colorWithHex:0xd6d6d6].CGColor;
     rightBtn.tag = 200;
     [rightBtn setTitle:@"软件文档" forState:UIControlStateNormal];
+    [rightBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    rightBtn.titleLabel.font = [UIFont systemFontOfSize:15];
     [rightBtn setImage:[UIImage imageNamed:@"ic_documents"] forState:UIControlStateNormal];
+    [rightBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
     [rightBtn addTarget:self action:@selector(buttonDidClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:rightBtn];
     _rightButton = rightBtn;
