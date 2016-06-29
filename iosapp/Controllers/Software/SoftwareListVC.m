@@ -107,12 +107,12 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
     OSCSoftware *software = self.objects[indexPath.row];
     
     /* 新版软件详情 */
-    SoftWareViewController *detailSoftwareVC = [[SoftWareViewController alloc]initWithSoftWareID:software.softId];
-    [self.navigationController pushViewController:detailSoftwareVC animated:YES];
+//    SoftWareViewController *detailSoftwareVC = [[SoftWareViewController alloc]initWithSoftWareID:software.softId];
+//    [self.navigationController pushViewController:detailSoftwareVC animated:YES];
     
     /* 旧版软件详情 */
-//    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:software];
-//    [self.navigationController pushViewController:detailsViewController animated:YES];
+    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:software];
+    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 
