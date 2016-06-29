@@ -59,7 +59,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 @property (nonatomic, strong) NSMutableArray *newsDetailComments;
 @property (nonatomic) BOOL isExistRelatedSoftware;      //存在相关软件的信息
 
-@property (nonatomic, strong) OSCNewComment *beRepledComment;   //被评论的某条评论
+//被评论的某条评论的信息
+@property (nonatomic) NSInteger beRepliedCommentAuthorId;
+@property (nonatomic) NSInteger beRepliedCommentId;
 
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, strong) MBProgressHUD *hud;
@@ -186,6 +188,31 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [alertView show];
 }
 
+#pragma mark -- 获取评论cell的高度
+- (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
+    UILabel *label = [UILabel new];
+    label.font = [UIFont systemFontOfSize:14];
+    label.numberOfLines = 0;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
+    
+    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height;
+
+//    height += 7;
+    OSCNewCommentRefer *refer = comment.refer;
+    int i = 0;
+    while (refer.author.length > 0) {
+        NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
+        [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
+        label.attributedText = replyContent;
+        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
+        i++;
+        refer = refer.refer;
+    }
+    
+    return height + 71;
+}
 #pragma mark - UIAlertViewDelegate
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -245,7 +272,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                                           usingTemplate:@"blog"];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self favButtonImage];
+                [self updateFavButtonWithIsCollected:_blogDetails.favorite];
                 [self.tableView reloadData];
             });
         }
@@ -272,7 +299,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 _isExistRelatedSoftware = _newsDetails.software.allKeys.count > 0;
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self favButtonImage];
+                [self updateFavButtonWithIsCollected:_newsDetails.favorite];
                 [self.tableView reloadData];
             });
         }
@@ -317,15 +344,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
     titleLabel.text = title;
     [headerView addSubview:titleLabel];
-    
-    
-    //    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
-    //    topLineView.backgroundColor = [UIColor separatorColor];
-    //    [headerView addSubview:topLineView];
-    //
-    //    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
-    //    bottomLineView.backgroundColor = [UIColor separatorColor];
-    //    [headerView addSubview:bottomLineView];
     
     return headerView;
 }
@@ -508,30 +526,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (indexPath.row == _blogDetailComments.count) {
                         return 44;
                     } else {
-                        UILabel *label = [UILabel new];
-                        label.font = [UIFont systemFontOfSize:14];
-                        label.numberOfLines = 0;
-                        label.lineBreakMode = NSLineBreakByWordWrapping;
-
-                        OSCNewComment *blogComment = _blogDetailComments[indexPath.row];
-                        label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
-                        
-                        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-                        
-                        
-                        height += 7;
-                        OSCNewCommentRefer *refer = blogComment.refer;
-                        int i = 0;
-                        while (refer.author.length > 0) {
-                            NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
-                            [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
-                            label.attributedText = replyContent;
-                            height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
-                            i++;
-                            refer = refer.refer;
-                        }
-                        
-                        return height + 71;
+                        return [self getCommentCellHeightWithComment:_blogDetailComments[indexPath.row]];
                     }
                 }
                 return 44;
@@ -575,30 +570,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         if (indexPath.row == _newsDetailComments.count) {
                             return 44;
                         } else {
-                            UILabel *label = [UILabel new];
-                            label.font = [UIFont systemFontOfSize:14];
-                            label.numberOfLines = 0;
-                            label.lineBreakMode = NSLineBreakByWordWrapping;
-                            
-                            OSCNewComment *blogComment = _newsDetailComments[indexPath.row];
-                            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:blogComment.content]];
-                            
-                            label.attributedText = contentString;
-                            
-                            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-                            
-                            
-                            height += 7;
-                            OSCNewCommentRefer *refer = blogComment.refer;
-                            int i = 0;
-                            while (refer.author.length > 0) {
-                                label.text = [NSString stringWithFormat:@"%@:\n%@", refer.author, refer.content];
-                                height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
-                                i++;
-                                refer = refer.refer;
-                            }
-                            
-                            return height + 71;
+                            return [self getCommentCellHeightWithComment:_newsDetailComments[indexPath.row]];
                         }
                     }
                 }
@@ -619,31 +591,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         if (indexPath.row == _newsDetailComments.count) {
                             return 44;
                         } else {
-                            
-                            UILabel *label = [UILabel new];
-                            label.font = [UIFont systemFontOfSize:14];
-                            label.numberOfLines = 0;
-                            label.lineBreakMode = NSLineBreakByWordWrapping;
-                            
-                            OSCNewComment *blogComment = _newsDetailComments[indexPath.row];
-                            label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
-                            
-                            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-                            
-                            
-                            height += 7;
-                            OSCNewCommentRefer *refer = blogComment.refer;
-                            int i = 0;
-                            while (refer.author.length > 0) {
-                                NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
-                                [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
-                                label.attributedText = replyContent;
-                                height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
-                                i++;
-                                refer = refer.refer;
-                            }
-                            
-                            return height + 71;
+                            return [self getCommentCellHeightWithComment:_newsDetailComments[indexPath.row]];
                         }
                     }
                 }
@@ -655,30 +603,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (indexPath.row == _newsDetailComments.count) {
                         return 44;
                     } else {
-                        UILabel *label = [UILabel new];
-                        label.font = [UIFont systemFontOfSize:14];
-                        label.numberOfLines = 0;
-                        label.lineBreakMode = NSLineBreakByWordWrapping;
-                        
-                        OSCNewComment *blogComment = _newsDetailComments[indexPath.row];
-                        label.attributedText = [NewCommentCell contentStringFromRawString:blogComment.content];
-                        
-                        CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-                        
-                        
-                        height += 7;
-                        OSCNewCommentRefer *refer = blogComment.refer;
-                        int i = 0;
-                        while (refer.author.length > 0) {
-                            NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
-                            [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
-                            label.attributedText = replyContent;
-                            height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
-                            i++;
-                            refer = refer.refer;
-                        }
-                        
-                        return height + 71;
+                        return [self getCommentCellHeightWithComment:_newsDetailComments[indexPath.row]];
                     }
                 }
             }
@@ -1066,7 +991,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 
                 //新评论列表
                 NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForNews sourceID:_newsDetails.id];
-                
                 [self.navigationController pushViewController:newCommentVC animated:YES];
                 //资讯评论列表
 //                CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
@@ -1183,6 +1107,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     if (_isReply) {
         if (comment.authorId > 0) {
             _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+            _beRepliedCommentId = comment.id;
+            _beRepliedCommentAuthorId = comment.authorId;
         } else {
             MBProgressHUD *hud = [Utils createHUD];
             hud.mode = MBProgressHUDModeCustomView;
@@ -1215,16 +1141,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                                         @{
                                           @"sourceId":@(sourceId),
                                           @"type":@(type),
-                                          @"content":_commentTextField.text
+                                          @"content":_commentTextField.text,
+                                          @"reAuthorId": @(_beRepliedCommentAuthorId),
+                                          @"replyId": @(_beRepliedCommentId)
                                           }
                                         ];
-        if (_isReply) {
-            [paraDic addEntriesFromDictionary:
-             @{@"reAuthorId": @(_beRepledComment.authorId),
-               @"replyId": @(_beRepledComment.id)
-               }
-             ];
-        }
         AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
         [manger POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX,OSCAPI_COMMENT_PUB]
           parameters:paraDic
@@ -1244,6 +1165,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                      }
                      [HUD hide:YES afterDelay:1];
                      _commentTextField.text = @"";
+                     _commentTextField.placeholder = @"";
                  }else {
                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
@@ -1340,7 +1262,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    NSLog(@"send mesage");
+//    NSLog(@"send mesage");
     [self sendComment];
 
     [textField resignFirstResponder];
@@ -1380,21 +1302,26 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark - collect 收藏
 
-- (void)favButtonImage
+- (void)updateFavButtonWithIsCollected:(BOOL)isCollected
 {
-    if (_isBlogDetail) {
-        if (_blogDetails.favorite) {
-            [_favButton setImage:[UIImage imageNamed:@"ic_faved_pressed"] forState:UIControlStateNormal];
-        } else {
-            [_favButton setImage:[UIImage imageNamed:@"ic_fav_pressed"] forState:UIControlStateNormal];
-        }
+    if (isCollected) {
+        [_favButton setImage:[UIImage imageNamed:@"ic_faved_pressed"] forState:UIControlStateNormal];
     }else {
-        if (_newsDetails.favorite) {
-            [_favButton setImage:[UIImage imageNamed:@"ic_faved_pressed"] forState:UIControlStateNormal];
-        } else {
-            [_favButton setImage:[UIImage imageNamed:@"ic_fav_pressed"] forState:UIControlStateNormal];
-        }
+        [_favButton setImage:[UIImage imageNamed:@"ic_fav_pressed"] forState:UIControlStateNormal];
     }
+//    if (_isBlogDetail) {
+//        if (_blogDetails.favorite) {
+//            [_favButton setImage:[UIImage imageNamed:@"ic_faved_pressed"] forState:UIControlStateNormal];
+//        } else {
+//            [_favButton setImage:[UIImage imageNamed:@"ic_fav_pressed"] forState:UIControlStateNormal];
+//        }
+//    }else {
+//        if (_newsDetails.favorite) {
+//            [_favButton setImage:[UIImage imageNamed:@"ic_faved_pressed"] forState:UIControlStateNormal];
+//        } else {
+//            [_favButton setImage:[UIImage imageNamed:@"ic_fav_pressed"] forState:UIControlStateNormal];
+//        }
+//    }
 }
 - (IBAction)collected:(UIButton *)sender {
     //    NSLog(@"collect");
@@ -1404,28 +1331,29 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController pushViewController:loginVC animated:YES];
     } else {
-        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
         NSDictionary *parameterDic = _isBlogDetail? @{@"id"   : @(_blogDetails.id),
                                                       @"type" : @(3)}
         :
         @{@"id"  : @(_newsDetails.id),
           @"type": @(6)};
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
         
         [manger POST:[NSString stringWithFormat:@"%@/favorite_reverse", OSCAPI_V2_PREFIX]
           parameters:parameterDic
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                  
+                 BOOL isCollected = NO;
                  if ([responseObject[@"code"] integerValue]== 1) {
-                     _blogDetails.favorite = [responseObject[@"result"][@"favorite"] boolValue];
+                     isCollected = [responseObject[@"result"][@"favorite"] boolValue];
                  }
                  
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
-                 HUD.labelText = _blogDetails.favorite? @"收藏成功": @"取消收藏";
+                 HUD.labelText = isCollected? @"收藏成功": @"取消收藏";
                  
                  [HUD hide:YES afterDelay:1];
                  dispatch_async(dispatch_get_main_queue(), ^{
-                     [self favButtonImage];
+                     [self updateFavButtonWithIsCollected:isCollected];
                      [self.tableView reloadData];
                  });
              }
