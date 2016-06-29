@@ -624,7 +624,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         _reAuthorId = _commentDetail.authorId;
         _commentField.placeholder = @"我要评论";
     }
-    
+    [_commentField becomeFirstResponder];
 }
 
 #pragma mark - 发评论

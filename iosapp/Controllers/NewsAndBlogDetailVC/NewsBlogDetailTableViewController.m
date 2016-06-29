@@ -139,7 +139,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     
     // 添加等待动画
     [self showHubView];
-    //只有博客才提供举报功能，新闻不提供
+    
     if (_isBlogDetail) {
         [self getBlogData];
     }else {
@@ -147,6 +147,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         [self getNewsComments];
     }
     _rightBarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _rightBarBtn.userInteractionEnabled = YES;
     _rightBarBtn.frame  = CGRectMake(0, 0, 27, 20);
     _rightBarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     _rightBarBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -154,8 +155,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-3, 0, 0, 0);
     [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarBtn];
-//    self.navigationItem.rightBarButtonItem.target = self;
-//    self.navigationItem.rightBarButtonItem.action = @selector(rightBarButtonClicked);
+    self.navigationItem.rightBarButtonItem.target = self;
+    self.navigationItem.rightBarButtonItem.action = @selector(rightBarButtonClicked);
 
     
     //软键盘
@@ -183,18 +184,21 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #pragma mark - 右导航栏按钮
 - (void)rightBarButtonClicked
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
-                                                        message:[NSString stringWithFormat:@"链接地址：%@", _blogDetails.href]
-                                                       delegate:self
-                                              cancelButtonTitle:@"取消"
-                                              otherButtonTitles:@"确定", nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alertView textFieldAtIndex:0].placeholder = @"举报原因";
-    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
-    {
-        [alertView textFieldAtIndex:0].keyboardAppearance = UIKeyboardAppearanceDark;
-    }
-    [alertView show];
+    NSIndexPath *targetIndexPath = [NSIndexPath indexPathWithIndex:1];
+    [self.tableView selectRowAtIndexPath:targetIndexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
+//                                                        message:[NSString stringWithFormat:@"链接地址：%@", _blogDetails.href]
+//                                                       delegate:self
+//                                              cancelButtonTitle:@"取消"
+//                                              otherButtonTitles:@"确定", nil];
+//    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [alertView textFieldAtIndex:0].placeholder = @"举报原因";
+//    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
+//    {
+//        [alertView textFieldAtIndex:0].keyboardAppearance = UIKeyboardAppearanceDark;
+//    }
+//    [alertView show];
 }
 
 #pragma mark -- 获取评论cell的高度
@@ -1131,7 +1135,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         _commentTextField.placeholder = @"发表评论";
     }
     
-    
+    [_commentTextField becomeFirstResponder];
 }
 
 #pragma mark - 发评论
@@ -1273,7 +1277,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-//    NSLog(@"send mesage");
     [self sendComment];
 
     [textField resignFirstResponder];
@@ -1320,19 +1323,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     }else {
         [_favButton setImage:[UIImage imageNamed:@"ic_fav_pressed"] forState:UIControlStateNormal];
     }
-//    if (_isBlogDetail) {
-//        if (_blogDetails.favorite) {
-//            [_favButton setImage:[UIImage imageNamed:@"ic_faved_pressed"] forState:UIControlStateNormal];
-//        } else {
-//            [_favButton setImage:[UIImage imageNamed:@"ic_fav_pressed"] forState:UIControlStateNormal];
-//        }
-//    }else {
-//        if (_newsDetails.favorite) {
-//            [_favButton setImage:[UIImage imageNamed:@"ic_faved_pressed"] forState:UIControlStateNormal];
-//        } else {
-//            [_favButton setImage:[UIImage imageNamed:@"ic_fav_pressed"] forState:UIControlStateNormal];
-//        }
-//    }
 }
 - (IBAction)collected:(UIButton *)sender {
     //    NSLog(@"collect");
