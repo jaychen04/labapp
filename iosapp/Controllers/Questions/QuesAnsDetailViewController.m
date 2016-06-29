@@ -172,20 +172,25 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (void)getCommentsForQuestion:(BOOL)isRefresh
 {
     
-    NSString *blogDetailUrlStr = [NSString stringWithFormat:@"%@comment", OSCAPI_V2_PREFIX];
+    NSString *qCommentUrlStr = [NSString stringWithFormat:@"%@comment", OSCAPI_V2_PREFIX];
+    NSDictionary *paramDic = @{
+                               @"sourceId"  : @(self.questionID),
+                               @"type"      : @(2),
+                               @"pageToken" : _nextPageToken,
+                               @"parts"     : @"refer,reply"
+                               };
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
-    [manger GET:blogDetailUrlStr
-     parameters:@{
-                  @"sourceId"  : @(self.questionID),
-                  @"type"      : @(2),
-                  @"pageToken" : _nextPageToken,
-                  }
+    [manger GET:qCommentUrlStr
+     parameters:paramDic
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             
             if ([responseObject[@"code"] integerValue] == 1) {
                 NSDictionary *result = responseObject[@"result"];
-                NSArray *jsonItems = result[@"items"];
-                NSArray *array = [OSCNewComment mj_objectArrayWithKeyValuesArray:jsonItems];
+                NSArray *jsonItems = result[@"items"]?:@[];
+                NSArray *array;
+                if (jsonItems.count > 0) {
+                    array = [OSCNewComment mj_objectArrayWithKeyValuesArray:jsonItems];
+                }
                 _nextPageToken = result[@"nextPageToken"];
                 
                 if (isRefresh) {
@@ -197,7 +202,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                     if (isRefresh) {
                         [self.tableView.mj_header endRefreshing];
                     }else{
-                        if (array.count < 20) {
+                        if (array.count == 0) {
                             [self.tableView.mj_footer endRefreshingWithNoMoreData];
                         }else{
                             [self.tableView.mj_footer endRefreshing];
@@ -205,6 +210,12 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                     }
                     [self.tableView reloadData];
                 });
+            }else {
+                if (isRefresh) {
+                    [self.tableView.mj_header endRefreshing];
+                }else{
+                    [self.tableView.mj_footer endRefreshing];
+                }
             }
             
         }
@@ -555,6 +566,12 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.labelText = @"评论成功";
                 
+                OSCNewComment *postedComment = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
+                if (postedComment) {
+                    [_comments insertObject:postedComment atIndex:0];
+                }
+                
+                _commentTextField.text = @"";
                 [HUD hide:YES afterDelay:1];
             }
             dispatch_async(dispatch_get_main_queue(), ^{

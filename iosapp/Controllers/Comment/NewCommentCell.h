@@ -15,7 +15,8 @@
 @property (strong, nonatomic) UIImageView *commentPortrait;
 @property (strong, nonatomic) UILabel *nameLabel;
 @property (strong, nonatomic) UILabel *timeLabel;
-@property (strong, nonatomic) UILabel *contentLabel;
+//@property (strong, nonatomic) UILabel *contentLabel;
+@property (strong, nonatomic) UITextView *contentTextView;
 @property (strong, nonatomic) UIButton *commentButton;
 @property (nonatomic, strong) UIImageView *bestImageView;
 
