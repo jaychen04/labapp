@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="luW-r4-QKD">
-                        <rect key="frame" x="256" y="10" width="1" height="44"/>
+                        <rect key="frame" x="250" y="10" width="1" height="44"/>
                         <color key="backgroundColor" red="0.82352941176470584" green="0.82352941176470584" blue="0.82352941176470584" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="44" id="CVm-ev-XNs"/>
@@ -44,7 +44,8 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pgd-kK-8WZ">
                         <rect key="frame" x="267" y="16" width="37" height="23"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="15" maxY="0.0"/>
+                        <inset key="titleEdgeInsets" minX="-5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="imageEdgeInsets" minX="-2" minY="0.0" maxX="10" maxY="0.0"/>
                         <state key="normal" title="36" image="ic_vote">
                             <color key="titleColor" red="0.41568627450980389" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
@@ -58,7 +59,7 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="m31-xf-2Ln" firstAttribute="top" secondItem="4kf-7o-rR2" secondAttribute="bottom" constant="5" id="07I-tD-djx"/>
-                    <constraint firstItem="Pgd-kK-8WZ" firstAttribute="leading" secondItem="luW-r4-QKD" secondAttribute="trailing" constant="10" id="BVz-fp-Lp2"/>
+                    <constraint firstItem="Pgd-kK-8WZ" firstAttribute="leading" secondItem="luW-r4-QKD" secondAttribute="trailing" constant="16" id="BVz-fp-Lp2"/>
                     <constraint firstItem="Yxm-rc-f5R" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="EZ7-Pq-Oz5"/>
                     <constraint firstAttribute="trailing" secondItem="Pgd-kK-8WZ" secondAttribute="trailing" constant="16" id="IzL-L1-FPL"/>
                     <constraint firstItem="Pgd-kK-8WZ" firstAttribute="centerY" secondItem="Yxm-rc-f5R" secondAttribute="centerY" id="OMH-Bk-9vC"/>
