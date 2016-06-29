@@ -18,6 +18,7 @@
 #import "NewsBlogDetailTableViewController.h"
 #import "ActivityDetailViewController.h"
 #import "SoftWareViewController.h"
+#import "QuesAnsDetailViewController.h"
 
 #import "OSCInformation.h"
 #import "OSCBanner.h"
@@ -222,10 +223,17 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeForum:{
-            OSCPost* post = [OSCPost new];
-            post.postID = model.id;
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
-            [self.navigationController pushViewController:detailsViewController animated:YES];
+            
+            QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
+            detailVC.hidesBottomBarWhenPushed = YES;
+            detailVC.questionID = model.id;
+            detailVC.commentCount = model.commentCount;
+            [self.navigationController pushViewController:detailVC animated:YES];
+            
+//            OSCPost* post = [OSCPost new];
+//            post.postID = model.id;
+//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+//            [self.navigationController pushViewController:detailsViewController animated:YES];
             break;
         }
             
@@ -352,16 +360,22 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeForum:{
-            OSCPost* post = [OSCPost new];
-            post.postID = model.id;
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
-            [self.navigationController pushViewController:detailsViewController animated:YES];
+            QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
+            detailVC.hidesBottomBarWhenPushed = YES;
+            detailVC.questionID = model.id;
+            [self.navigationController pushViewController:detailVC animated:YES];
+            
+//            OSCPost* post = [OSCPost new];
+//            post.postID = model.id;
+//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
+//            [self.navigationController pushViewController:detailsViewController animated:YES];
             break;
         }
             
         case InformationTypeBlog:{
             //轮播：博客详情
             NewsBlogDetailTableViewController *detailViewController = [[NewsBlogDetailTableViewController alloc] initWithObjectId:model.id isBlogDetail:YES];
+            detailViewController.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:detailViewController animated:YES];
             
              
