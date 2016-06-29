@@ -111,8 +111,8 @@ static NSString * const kSoftwareCellID = @"SoftwareCell";
     [self.navigationController pushViewController:detailSoftwareVC animated:YES];
     
     /* 旧版软件详情 */
-    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:software];
-    [self.navigationController pushViewController:detailsViewController animated:YES];
+//    DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithSoftware:software];
+//    [self.navigationController pushViewController:detailsViewController animated:YES];
 }
 
 

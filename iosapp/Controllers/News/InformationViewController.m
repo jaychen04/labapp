@@ -17,6 +17,7 @@
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "NewsBlogDetailTableViewController.h"
 #import "ActivityDetailViewController.h"
+#import "SoftWareViewController.h"
 
 #import "OSCInformation.h"
 #import "OSCBanner.h"
@@ -207,13 +208,16 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeSoftWare:{
-            OSCSoftware* softWare = [OSCSoftware new];
-            softWare.name = model.title;
-            softWare.url = [NSURL URLWithString:model.href];
-            softWare.softId = model.id;
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
+//            OSCSoftware* softWare = [OSCSoftware new];
+//            softWare.name = model.title;
+//            softWare.url = [NSURL URLWithString:model.href];
+//            softWare.softId = model.id;
+//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
+//            [self.navigationController pushViewController:detailsViewController animated:YES];
+
+            SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:model.id];
+            [detailsViewController setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:detailsViewController animated:YES];
-            
             break;
         }
             
@@ -341,11 +345,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeSoftWare:{
-            OSCSoftware* softWare = [OSCSoftware new];
-            softWare.name = model.name;
-            softWare.url = [NSURL URLWithString:model.href];
-            softWare.softId = model.id;
-            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
+            SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:model.id];
+            [detailsViewController setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:detailsViewController animated:YES];
             break;
         }
