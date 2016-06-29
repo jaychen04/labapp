@@ -314,6 +314,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 - (void)voteUpQuestions:(UIButton *)button
 {
     if ([Config getOwnID] == 0) {
+        [_popUpBoxView removeFromSuperview];
+        
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController pushViewController:loginVC animated:YES];
@@ -334,6 +336,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 - (void)voteDownQuestions:(UIButton *)button
 {
     if ([Config getOwnID] == 0) {
+        [_popUpBoxView removeFromSuperview];
+        
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController pushViewController:loginVC animated:YES];
