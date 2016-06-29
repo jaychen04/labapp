@@ -11,7 +11,7 @@
 
 #define PADDING_LEFT 16
 #define PADDING_RIGHT PADDING_LEFT
-#define PADDING_TOP 16
+#define PADDING_TOP 8
 #define PADDING_BOTTOM PADDING_TOP
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SPACE_BUTTON 16
@@ -25,6 +25,7 @@
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
+        self.backgroundColor = [UIColor whiteColor];
         [self setupSubViews];
         [self setLayoutSubViews];
     }
@@ -34,6 +35,7 @@
 #pragma mark --- setting subViews
 -(void)setupSubViews{
     UIButton* leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.backgroundColor = [UIColor whiteColor];
     leftBtn.layer.masksToBounds = YES;
     leftBtn.layer.cornerRadius = 3;
     leftBtn.layer.borderWidth = 1;
@@ -50,6 +52,7 @@
     
     
     UIButton* rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.backgroundColor = [UIColor whiteColor];
     rightBtn.layer.masksToBounds = YES;
     rightBtn.layer.cornerRadius = 3;
     rightBtn.layer.borderWidth = 1;

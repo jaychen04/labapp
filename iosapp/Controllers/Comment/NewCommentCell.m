@@ -50,12 +50,9 @@
     _timeLabel.textColor = [UIColor colorWithHex:0x9d9d9d];
     [self.contentView addSubview:_timeLabel];
     
-    _contentLabel = [UILabel new];
-    _contentLabel.font = [UIFont systemFontOfSize:14];
-    _contentLabel.textColor = [UIColor colorWithHex:0x111111];
-    _contentLabel.numberOfLines = 0;
-    _contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    [self.contentView addSubview:_contentLabel];
+    _contentTextView = [UITextView new];
+    [self setUpContetTextView:_contentTextView];
+    [self.contentView addSubview:_contentTextView];
     
     _currentContainer = [UIView new];
     [self.contentView addSubview:_currentContainer];
@@ -69,8 +66,8 @@
     [self.contentView addSubview:_bestImageView];
     
     for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _currentContainer, _contentLabel, _commentButton, _bestImageView);
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentPortrait(32)]-<=7-[_currentContainer]-7-[_contentLabel]-16-|"
+    NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _currentContainer, _contentTextView, _commentButton, _bestImageView);
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentPortrait(32)]-<=7-[_currentContainer]-7-[_contentTextView]-16-|"
                                                                              options:NSLayoutFormatAlignAllLeft
                                                                              metrics:nil views:views]];
     
@@ -78,7 +75,7 @@
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                              metrics:nil views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]-<=7-[_currentContainer]-7-[_contentLabel]-16-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]-<=7-[_currentContainer]-7-[_contentTextView]-16-|"
                                                                              options:0
                                                                              metrics:nil views:views]];
     
@@ -108,7 +105,7 @@
                                                                              metrics:nil
                                                                                views:views]];
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_contentLabel]-16-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_contentTextView]-16-|"
                                                                              options:0
                                                                              metrics:nil
                                                                                views:views]];
@@ -116,16 +113,18 @@
 
 #pragma mark - contentData
 
-- (void)setComment:(OSCBlogDetailComment *)comment
+- (void)setComment:(OSCNewComment *)comment
 {
     [_commentPortrait loadPortrait:[NSURL URLWithString:comment.authorPortrait]];
-    _nameLabel.text = comment.author;
+    _nameLabel.text = comment.author.length > 0 ? comment.author : @"匿名";
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];
     
     _bestImageView.hidden = YES;
     
+
 //    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];//commentReply.content
-    _contentLabel.attributedText =[NewCommentCell contentStringFromRawString:comment.content];
+    _contentTextView.attributedText =[NewCommentCell contentStringFromRawString:comment.content];
+
     
     if (comment.refer.author.length > 0) {
         _currentContainer.hidden = NO;
@@ -144,7 +143,7 @@
 //    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:questComment.content]];
 //    _contentLabel.attributedText = contentString;
     
-    _contentLabel.attributedText = [NewCommentCell contentStringFromRawString:questComment.content];
+    _contentTextView.attributedText = [NewCommentCell contentStringFromRawString:questComment.content];
     
     if (questComment.best) {
         _commentButton.hidden = YES;
@@ -166,7 +165,24 @@
     _bestImageView.hidden = YES;
     
 //    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentReply.content]];
-    _contentLabel.attributedText = [NewCommentCell contentStringFromRawString:commentReply.content];
+    _contentTextView.attributedText = [NewCommentCell contentStringFromRawString:commentReply.content];
+}
+
+
+- (void)setUpContetTextView:(UITextView*)textView
+{
+    textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+    textView.font = [UIFont systemFontOfSize:14];
+    textView.textColor = [UIColor colorWithHex:0x111111];
+    textView.editable = NO;
+    textView.scrollEnabled = NO;
+    [textView setTextContainerInset:UIEdgeInsetsZero];
+    textView.textContainer.lineFragmentPadding = 0;
+    textView.linkTextAttributes = @{
+                                    NSForegroundColorAttributeName: [UIColor nameColor],
+                                    NSUnderlineStyleAttributeName: @(NSUnderlineStyleNone)
+                                    };
+
 }
 
 #pragma mark - 处理字符串
@@ -194,7 +210,7 @@
 }
 
 #pragma mark - refer
-- (void)setLayOutForRefer:(OSCBlogCommentRefer *)refer
+- (void)setLayOutForRefer:(OSCNewCommentRefer *)refer
 {
     if (refer.author.length  <= 0) {
         return;

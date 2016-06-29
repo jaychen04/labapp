@@ -11,6 +11,7 @@
 #import "SoftWareDetailCell.h"
 #import "SoftWareDetailBodyCell.h"
 #import "SoftWareDetailHeaderView.h"
+#import "TweetTableViewController.h"
 
 #import "OSCAPI.h"
 #import "Utils.h"
@@ -22,6 +23,7 @@
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
 
+#define HEADERVIEW_HEIGHT 52
 static NSString * const softWareDetailCellReuseIdentifier = @"SoftWareDetailCell";
 static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetailBodyCell";
 
@@ -63,11 +65,11 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
     
 }
 -(void)dealloc{
-    _HUD.hidden = YES;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    _HUD.hidden = YES;
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
 }
 
 
@@ -77,6 +79,7 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SoftWareDetailCell" bundle:nil] forCellReuseIdentifier:softWareDetailCellReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"SoftWareDetailBodyCell" bundle:nil] forCellReuseIdentifier:softWareDetailBodyCellReuseIdentifier];
@@ -130,6 +133,7 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
               }else{
                   _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   _HUD.labelText = @"网络异常";
+                  [_HUD hide:YES afterDelay:1];
               }
 
               dispatch_async(dispatch_get_main_queue(), ^{
@@ -163,10 +167,12 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
         }
         softWareCell.titleLabel.text = self.model.extName;
         softWareCell.tagImageView.hidden = !self.model.recommend;
+        softWareCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return softWareCell;
     }else{
         SoftWareDetailBodyCell* cell = [tableView dequeueReusableCellWithIdentifier:softWareDetailBodyCellReuseIdentifier forIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.webView.delegate = self;
         [cell.webView loadHTMLString:self.model.body baseURL:[NSBundle mainBundle].resourceURL];
         
@@ -177,7 +183,7 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 #pragma mark - headerView and height method
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
-        return 82;
+        return HEADERVIEW_HEIGHT;
     }else{
         return 0;
     }
@@ -194,7 +200,7 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
     if (indexPath.section == 0 && indexPath.row == 0) {
         return 80;
     } else {
-        return _webHeight + 40;
+        return _webHeight + 30;
     }
 }
 #pragma mark - WebView delegate 
@@ -223,17 +229,21 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 
 - (IBAction)buttonClick:(UIButton *)sender {
     switch (sender.tag) {
-        case 1://评论
-            
+        case 1:{//评论{
+            TweetTableViewController* commentVC = [[TweetTableViewController alloc]initWithSoftwareID:self.model.id];
+            [self.navigationController pushViewController:commentVC animated:YES];
             break;
+        }
             
-        case 2://收藏
+        case 2:{//收藏
             [self sendFavoriteRequest];
             break;
+        }
             
-        case 3://share按钮
+        case 3:{//share按钮
             [self share];
             break;
+        }
             
         default:
             break;
@@ -282,7 +292,8 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 #pragma mark --- lazy loading
 - (SoftWareDetailHeaderView *)headerView {
 	if(_headerView == nil) {
-		SoftWareDetailHeaderView* headerView = [[SoftWareDetailHeaderView alloc] initWithFrame:(CGRect){{0,0},{self.view.bounds.size.width,55}}];
+		SoftWareDetailHeaderView* headerView = [[SoftWareDetailHeaderView alloc] initWithFrame:(CGRect){{0,0},{self.view.bounds.size.width,HEADERVIEW_HEIGHT}}];
+//        headerView.backgroundColor = [UIColor redColor];
         headerView.delegate = self;
         _headerView = headerView;
     }
