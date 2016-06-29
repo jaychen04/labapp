@@ -326,7 +326,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         _commentTextField.placeholder = @"我要评论";
     }
     
-    
+    [_commentTextField becomeFirstResponder];
 }
 
 #pragma mark - 发评论
