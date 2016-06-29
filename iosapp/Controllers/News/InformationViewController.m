@@ -19,6 +19,7 @@
 #import "ActivityDetailViewController.h"
 #import "SoftWareViewController.h"
 #import "QuesAnsDetailViewController.h"
+#import "TranslationViewController.h"
 
 #import "OSCInformation.h"
 #import "OSCBanner.h"
@@ -252,7 +253,12 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeTranslation:{
-            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            TranslationViewController *translationVc = [TranslationViewController new];
+            translationVc.hidesBottomBarWhenPushed = YES;
+            translationVc.translationId = model.id;
+            [self.navigationController pushViewController:translationVc animated:YES];
+            
+//            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
             break;
         }
             
@@ -383,7 +389,12 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeTranslation:{
-            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            TranslationViewController *translationVc = [TranslationViewController new];
+            translationVc.hidesBottomBarWhenPushed = YES;
+            translationVc.translationId = model.id;
+            [self.navigationController pushViewController:translationVc animated:YES];
+            
+//            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
             break;
         }
             
