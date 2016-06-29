@@ -46,7 +46,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 
-@interface NewsBlogDetailTableViewController () <UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate>
+@interface NewsBlogDetailTableViewController () <UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate,UITextViewDelegate>
 
 @property (nonatomic)int64_t blogId;
 @property (nonatomic, strong) OSCBlogDetail *blogDetails;
@@ -851,6 +851,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             NewCommentCell *commentNewsCell = [NewCommentCell new];
                             commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
                             
+                            if (!commentNewsCell.contentTextView.delegate) {
+                                commentNewsCell.contentTextView.delegate = self;
+                            }
+                            
+//                            OSCBlogDetailComment *detailComment = _newsDetailComments[indexPath.row];
                             OSCNewComment *detailComment = _newsDetailComments[indexPath.row];
                             commentNewsCell.comment = detailComment;
                             
@@ -902,6 +907,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             NewCommentCell *commentNewsCell = [NewCommentCell new];
                             commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
                             
+                            if (!commentNewsCell.contentTextView.delegate) {
+                                commentNewsCell.contentTextView.delegate = self;
+                            }
+                            
+//                            OSCBlogDetailComment *detailComment = _newsDetailComments[indexPath.row];
                             OSCNewComment *detailComment = _newsDetailComments[indexPath.row];
                             commentNewsCell.comment = detailComment;
                             
@@ -944,6 +954,10 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     } else {
                         NewCommentCell *commentNewsCell = [NewCommentCell new];
                         commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        if (!commentNewsCell.contentTextView.delegate) {
+                            commentNewsCell.contentTextView.delegate = self;
+                        }
                         
                         OSCNewComment *detailComment = _newsDetailComments[indexPath.row];
                         commentNewsCell.comment = detailComment;
@@ -1202,14 +1216,16 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         NSMutableDictionary *paraDic = [NSMutableDictionary dictionaryWithDictionary:
                                         @{
                                           @"sourceId":@(sourceId),
-                                          @"type":@(type),                          @"content":_commentTextField.text
+                                          @"type":@(type),
+                                          @"content":_commentTextField.text
                                           }
                                         ];
         if (_isReply) {
             [paraDic addEntriesFromDictionary:
              @{@"reAuthorId": @(_beRepledComment.authorId),
                @"replyId": @(_beRepledComment.id)
-               }];
+               }
+             ];
         }
         
         [manger POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX,OSCAPI_COMMENT_PUB]
@@ -1502,6 +1518,15 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                                      shareImage:[UIImage imageNamed:@"logo"]
                                 shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
                                        delegate:nil];
+}
+
+
+#pragma mark - UITableViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+    [self.navigationController handleURL:URL];
+    return NO;
 }
 
 - (NSString *)mURL
