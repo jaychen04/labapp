@@ -83,6 +83,10 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [self getDataForCommentDetail];
 
 }
+-(void)viewWillAppear:(BOOL)animated {
+
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -553,14 +557,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    //send message
-    if (_isReply) {
-        OSCNewCommentReply *quesCommentReply = _commentReplies[_selectIndexPath];
-        [self sendComment];
-    } else {
-        [self sendComment];
-    }
-    
+    [self sendComment];
     [textField resignFirstResponder];
     
     return YES;
