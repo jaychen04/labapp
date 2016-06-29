@@ -151,12 +151,13 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     _rightBarBtn.frame  = CGRectMake(0, 0, 27, 20);
     _rightBarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
     _rightBarBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+    [_rightBarBtn addTarget:self action:@selector(rightBarButtonScrollToCommitSection) forControlEvents:UIControlEventTouchUpInside];
     [_rightBarBtn setTitle:@"" forState:UIControlStateNormal];
     _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-3, 0, 0, 0);
     [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarBtn];
-    self.navigationItem.rightBarButtonItem.target = self;
-    self.navigationItem.rightBarButtonItem.action = @selector(rightBarButtonClicked);
+//    self.navigationItem.rightBarButtonItem.target = self;
+//    self.navigationItem.rightBarButtonItem.action = @selector(rightBarButtonClicked);
 
     
     //软键盘
@@ -182,10 +183,14 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 }
 
 #pragma mark - 右导航栏按钮
-- (void)rightBarButtonClicked
+- (void)rightBarButtonScrollToCommitSection
 {
-    NSIndexPath *targetIndexPath = [NSIndexPath indexPathWithIndex:1];
-    [self.tableView selectRowAtIndexPath:targetIndexPath animated:YES scrollPosition:UITableViewScrollPositionTop];
+    NSUInteger commentCount = _isBlogDetail ? _blogDetails.commentCount : _newsDetails.commentCount;
+    if (commentCount > 0) {
+        NSIndexPath* lastSectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:(self.tableView.numberOfSections - 1)];
+        [self.tableView scrollToRowAtIndexPath:lastSectionIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }
+
     
 //    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
 //                                                        message:[NSString stringWithFormat:@"链接地址：%@", _blogDetails.href]
@@ -400,10 +405,14 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }
             case 1://相关文章
             {
-                return _blogDetailRecommends.count;
+                if (_blogDetailRecommends.count > 0) {
+                    return _blogDetailRecommends.count;
+                }else {
+                    return _blogDetailComments.count;
+                }
                 break;
             }
-            case 2://讨论
+            case 2://评论
             {
                 return _blogDetailComments.count+1;
                 break;
@@ -451,7 +460,12 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     if (_isBlogDetail) {    //博客详情
         if (section == 1) {
-            return [self headerViewWithSectionTitle:@"相关文章"];
+            if (_blogDetailRecommends.count > 0) {
+                return [self headerViewWithSectionTitle:@"相关文章"];
+            }else {
+                return [self headerViewWithSectionTitle:@"评论"];
+            }
+            
         }else if (section == 2) {
             if (_blogDetailComments.count > 0) {
                 return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_blogDetailComments.count]];
@@ -531,8 +545,15 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         OSCBlogDetailRecommend *blogRecommend = _blogDetailRecommends[indexPath.row];
                         cell.abouts = blogRecommend;
                     }];
+                }else {
+                    if (_blogDetailComments.count > 0) {
+                        if (indexPath.row == _blogDetailComments.count) {
+                            return 44;
+                        } else {
+                            return [self getCommentCellHeightWithComment:_blogDetailComments[indexPath.row]];
+                        }
+                    }
                 }
-                return 54;
                 break;
             }
             case 2:
@@ -682,16 +703,60 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }
                 break;
             case 1: {
-                RecommandBlogTableViewCell *recommandBlogCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
-                
                 if (_blogDetailRecommends.count > 0) {
-                    OSCBlogDetailRecommend *about = _blogDetailRecommends[indexPath.row];
-                    recommandBlogCell.abouts = about;
+                    RecommandBlogTableViewCell *recommandBlogCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
+                    
+                    if (_blogDetailRecommends.count > 0) {
+                        OSCBlogDetailRecommend *about = _blogDetailRecommends[indexPath.row];
+                        recommandBlogCell.abouts = about;
+                    }
+                    
+                    recommandBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                    
+                    return recommandBlogCell;
+                }else {
+                    if (_blogDetailComments.count > 0) {
+                        if (indexPath.row == _blogDetailComments.count) {
+                            UITableViewCell *cell = [UITableViewCell new];
+                            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                            cell.textLabel.text = @"更多评论";
+                            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                            cell.textLabel.font = [UIFont systemFontOfSize:14];
+                            cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                            
+                            return cell;
+                        } else {
+                            NewCommentCell *commentBlogCell = [NewCommentCell new];
+                            commentBlogCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                            
+                            OSCNewComment *detailComment = _blogDetailComments[indexPath.row];
+                            commentBlogCell.comment = detailComment;
+                            
+                            if (detailComment.refer.author.length > 0) {
+                                commentBlogCell.currentContainer.hidden = NO;
+                            } else {
+                                commentBlogCell.currentContainer.hidden = YES;
+                            }
+                            
+                            
+                            commentBlogCell.commentButton.tag = indexPath.row;
+                            [commentBlogCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
+                            
+                            return commentBlogCell;
+                        }
+                        
+                    } else {
+                        UITableViewCell *cell = [UITableViewCell new];
+                        cell.textLabel.text = @"还没有评论";
+                        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                        cell.textLabel.font = [UIFont systemFontOfSize:14];
+                        cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        return cell;
+                    }
                 }
                 
-                recommandBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
-                
-                return recommandBlogCell;
             }
                 break;
             case 2: {
@@ -945,6 +1010,15 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
                                                                                                                     isBlogDetail:YES];
                 [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            }else {
+                if (_blogDetailComments.count > 0) {
+                    if (indexPath.row == _blogDetailComments.count) {
+                        //新评论列表
+                        NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForBlog sourceID:_blogDetails.id];
+                        
+                        [self.navigationController pushViewController:newCommentVC animated:YES];
+                    }
+                }
             }
         } else if (indexPath.section == 2) {
             if (_blogDetailComments.count > 0) {
@@ -953,9 +1027,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForBlog sourceID:_blogDetails.id];
                     
                     [self.navigationController pushViewController:newCommentVC animated:YES];
-                    
-//                    CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:5 andObjectID:_blogDetails.id];
-//                    [self.navigationController pushViewController:commentsBVC animated:YES];
                 }
             }
         }
