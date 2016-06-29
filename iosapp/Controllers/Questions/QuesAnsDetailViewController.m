@@ -59,6 +59,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    
     [self hideHubView];
 }
 
@@ -77,11 +78,9 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:quesAnsCommentHeadReuseIdentifier];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [self.tableView.mj_footer beginRefreshing];
         [self getCommentsForQuestion:YES];
     }];
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self.tableView.mj_footer beginRefreshing];
         [self getCommentsForQuestion:NO];
     }];
 
@@ -100,8 +99,14 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                                                                              action:@selector(rightBarButtonClicked)];
     [self getDetailForQuestion];
     [self getCommentsForQuestion:NO];/* 待调试 */
+    [self.tableView.mj_footer beginRefreshing];
     
     [self showHubView];
+    
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
+                                                                             style:UIBarButtonItemStylePlain
+                                                                            target:self
+                                                                            action:nil];
 }
 
 - (void)didReceiveMemoryWarning {
