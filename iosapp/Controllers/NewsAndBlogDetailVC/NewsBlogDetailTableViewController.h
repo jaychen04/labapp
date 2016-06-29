@@ -18,7 +18,5 @@
 
 @property (nonatomic)BOOL isBlogDetail;
 
-
-//- (instancetype)initWithBlogId:(NSInteger) blogId isBlogDetail:(BOOL) isBlogDetail;
 - (instancetype)initWithObjectId:(NSInteger) objectId isBlogDetail:(BOOL) isBlogDetail;
 @end

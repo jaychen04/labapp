@@ -76,6 +76,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 
+@property (nonatomic, strong) UIButton *rightBarBtn;
 @end
 
 
@@ -140,15 +141,23 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [self showHubView];
     //只有博客才提供举报功能，新闻不提供
     if (_isBlogDetail) {
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more_normal"]
-                                                                                  style:UIBarButtonItemStylePlain
-                                                                                 target:self
-                                                                                 action:@selector(rightBarButtonClicked)];
         [self getBlogData];
     }else {
         [self getNewsData];
         [self getNewsComments];
     }
+    _rightBarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _rightBarBtn.frame  = CGRectMake(0, 0, 27, 20);
+    _rightBarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    _rightBarBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+    [_rightBarBtn setTitle:@"" forState:UIControlStateNormal];
+    _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-3, 0, 0, 0);
+    [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarBtn];
+//    self.navigationItem.rightBarButtonItem.target = self;
+//    self.navigationItem.rightBarButtonItem.action = @selector(rightBarButtonClicked);
+
+    
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShow:)
@@ -273,6 +282,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateFavButtonWithIsCollected:_blogDetails.favorite];
+                [_rightBarBtn setTitle:[NSString stringWithFormat:@"%ld",_blogDetails.commentCount] forState:UIControlStateNormal];
                 [self.tableView reloadData];
             });
         }
@@ -300,6 +310,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateFavButtonWithIsCollected:_newsDetails.favorite];
+                [_rightBarBtn setTitle:[NSString stringWithFormat:@"%d",_newsDetails.commentCount] forState:UIControlStateNormal];
                 [self.tableView reloadData];
             });
         }

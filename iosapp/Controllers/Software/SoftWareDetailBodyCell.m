@@ -7,13 +7,18 @@
 //
 
 #import "SoftWareDetailBodyCell.h"
-
+#import "Utils.h"
 
 @interface SoftWareDetailBodyCell ()
 
 @end
 
 @implementation SoftWareDetailBodyCell
-
+-(void)awakeFromNib{
+    _webView.scrollView.bounces = NO;
+    _webView.scrollView.scrollEnabled = NO;
+    _webView.opaque = NO;
+    _webView.backgroundColor = [UIColor whiteColor];
+}
 
 @end

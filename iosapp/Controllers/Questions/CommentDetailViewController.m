@@ -292,12 +292,14 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         }
         case 1://已顶
         {
+//            _downImageView.enabled = NO;
             [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_actived"] forState:UIControlStateNormal];
             [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_normal"] forState:UIControlStateNormal];
             break;
         }
         case 2://已踩
         {
+//            _upImageView.enabled = NO;
             [_upImageView setImage:[UIImage imageNamed:@"ic_vote_up_big_normal"] forState:UIControlStateNormal];
             [_downImageView setImage:[UIImage imageNamed:@"ic_vote_down_big_actived"] forState:UIControlStateNormal];
             break;
@@ -311,17 +313,41 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
 - (void)voteUpQuestions:(UIButton *)button
 {
-    NSLog(@"顶");
-    [self postToVote:1];
-    [_popUpBoxView removeFromSuperview];
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    } else {
+        if (_commentDetail.voteState == 2) {
+            MBProgressHUD *hud = [Utils createHUD];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.labelText = @"已经踩过了，不可以同时进行顶哦！";
+            [hud hide:YES afterDelay:1];
+        } else {
+            [self postToVote:1];
+            [_popUpBoxView removeFromSuperview];
+        }
+    }
 }
 
 #pragma mark - 踩
 - (void)voteDownQuestions:(UIButton *)button
 {
-    NSLog(@"踩");
-    [self postToVote:2];
-    [_popUpBoxView removeFromSuperview];
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    } else {
+        if (_commentDetail.voteState == 1) {
+            MBProgressHUD *hud = [Utils createHUD];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.labelText = @"已经顶过了，不可以同时进行踩哦！";
+            [hud hide:YES afterDelay:1];
+        } else {
+            [self postToVote:2];
+            [_popUpBoxView removeFromSuperview];
+        }
+    }
 }
 
 - (void)hidenPopUpBoxView
@@ -350,6 +376,11 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData];
                 });
+            } else {
+                MBProgressHUD *hud = [Utils createHUD];
+                hud.mode = MBProgressHUDModeCustomView;
+                hud.labelText = responseObject[@"message"];
+                [hud hide:YES afterDelay:1];
             }
             
         }
