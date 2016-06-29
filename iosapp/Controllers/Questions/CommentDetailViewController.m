@@ -54,7 +54,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = @"回答详情";
+
     self.commentField.delegate = self;
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
