@@ -556,9 +556,9 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     //send message
     if (_isReply) {
         OSCNewCommentReply *quesCommentReply = _commentReplies[_selectIndexPath];
-        [self sendComment:quesCommentReply.id authorID:quesCommentReply.authorId];
+        [self sendComment];
     } else {
-        [self sendComment:0 authorID:0];
+        [self sendComment];
     }
     
     [textField resignFirstResponder];
@@ -628,7 +628,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 }
 
 #pragma mark - 发评论
-- (void)sendComment:(NSInteger)replyID authorID:(NSInteger)authorID
+- (void)sendComment
 {
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
@@ -643,7 +643,6 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
                                   @"reAuthorId" : @(_reAuthorId)
                                   };
 
-        NSLog(@"paraDic:%@",paraDic);
         AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
         [manger POST:[NSString stringWithFormat:@"%@comment_pub", OSCAPI_V2_PREFIX]
           parameters:paraDic
