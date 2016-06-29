@@ -1168,7 +1168,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     
 }
 
-#pragma mark - 评论
+#pragma mark - 回复某条评论
 - (void)selectedToComment:(UIButton *)button
 {
     OSCNewComment *comment = _isBlogDetail ? _blogDetailComments[button.tag] : _newsDetailComments[button.tag];
@@ -1209,8 +1209,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         MBProgressHUD *HUD = [Utils createHUD];
         [HUD show:YES];
         //新 发评论
-        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
-        
         NSInteger sourceId = _isBlogDetail ? _blogDetails.id : _newsDetails.id;
         NSInteger type = _isBlogDetail ? 3 : 6;
         NSMutableDictionary *paraDic = [NSMutableDictionary dictionaryWithDictionary:
@@ -1227,7 +1225,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                }
              ];
         }
-        
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
         [manger POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX,OSCAPI_COMMENT_PUB]
           parameters:paraDic
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
