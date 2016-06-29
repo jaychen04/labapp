@@ -50,20 +50,11 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 //软键盘size
 @property (nonatomic, assign) CGFloat keyboardHeight;
-
-@property (nonatomic, copy) NSString *commentString;
 @property (nonatomic, strong) MBProgressHUD *hud;
 
 @end
 
 @implementation QuesAnsDetailViewController
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    _commentTextField.text = _commentString;
-}
 
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -74,15 +65,9 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    
-    self.title = @"问答详情";
-    
+    self.title = [NSString stringWithFormat:@"%ld个回答",self.commentCount];
     _comments = [NSMutableArray new];
     _nextPageToken = @"";
-    _commentString = @"";
-    _commentTextField.text = _commentString;
-    
     self.commentTextField.delegate = self;
     
     self.tableView.delegate = self;
@@ -159,7 +144,6 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self setFavButtonImage:_questionDetail.favorite];
-                
                 [self.tableView reloadData];
             });
         }
