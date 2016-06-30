@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -36,10 +36,10 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="发表评论" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OSQ-ch-1Wb">
                             <rect key="frame" x="8" y="7" width="504" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="send"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BqO-Qf-cjg">
-                            <rect key="frame" x="564" y="12.5" width="20" height="20"/>
+                            <rect key="frame" x="564" y="13" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="Qmc-Q0-Kb6"/>
                                 <constraint firstAttribute="width" constant="20" id="ptN-wO-UMh"/>
@@ -50,7 +50,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iXj-YG-JFU">
-                            <rect key="frame" x="528" y="12.5" width="20" height="20"/>
+                            <rect key="frame" x="528" y="13" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="8cU-o7-mfq"/>
                                 <constraint firstAttribute="width" constant="20" id="NDG-1m-6UY"/>
