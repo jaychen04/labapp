@@ -35,10 +35,11 @@
                         </view>
                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neQ-uL-NOh">
                             <rect key="frame" x="300" y="1" width="300" height="43"/>
+                            <color key="backgroundColor" red="0.094117647058823528" green="0.73333333333333328" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
-                            <state key="normal" title="报名" image="ic_user_add">
-                                <color key="titleColor" red="0.41568627450980389" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="我要报名" image="ic_user_add-1">
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
                             <connections>
                                 <action selector="clickedButton:" destination="-1" eventType="touchUpInside" id="yAH-ax-QOb"/>
@@ -47,7 +48,7 @@
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4r-gk-srh">
                             <rect key="frame" x="0.0" y="1" width="300" height="43"/>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="-2" maxX="30" maxY="0.0"/>
                             <state key="normal" title="已收藏" image="ic_faved_pressed">
                                 <color key="titleColor" red="0.41568627450980389" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
                             </state>
@@ -90,6 +91,6 @@
     </objects>
     <resources>
         <image name="ic_faved_pressed" width="20" height="20"/>
-        <image name="ic_user_add" width="16" height="21"/>
+        <image name="ic_user_add-1" width="16" height="21"/>
     </resources>
 </document>

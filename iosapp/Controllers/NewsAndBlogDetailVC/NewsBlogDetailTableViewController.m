@@ -78,6 +78,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 
 @property (nonatomic, strong) UIButton *rightBarBtn;
+
+@property (nonatomic,assign) CGPoint readingOffest;
+@property (nonatomic,assign) BOOL isReboundTop;
 @end
 
 
@@ -186,12 +189,20 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #pragma mark - 右导航栏按钮
 - (void)rightBarButtonScrollToCommitSection
 {
-    NSUInteger commentCount = _isBlogDetail ? _blogDetails.commentCount : _newsDetails.commentCount;
-    if (commentCount > 0) {
-        NSIndexPath* lastSectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:(self.tableView.numberOfSections - 1)];
-        [self.tableView scrollToRowAtIndexPath:lastSectionIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    if (self.isReboundTop == NO) {
+        self.readingOffest = self.tableView.contentOffset;
+        NSUInteger commentCount = _isBlogDetail ? _blogDetails.commentCount : _newsDetails.commentCount;
+        if (commentCount > 0) {
+            NSIndexPath* lastSectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:(self.tableView.numberOfSections - 1)];
+            [self.tableView scrollToRowAtIndexPath:lastSectionIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        }
+    }else{
+        [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
+//        跳转到reading位置
+//        [self.tableView setContentOffset:self.readingOffest animated:YES];
     }
-
+    
+    self.isReboundTop = !self.isReboundTop;
     
 //    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
 //                                                        message:[NSString stringWithFormat:@"链接地址：%@", _blogDetails.href]
@@ -1581,5 +1592,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         return _mURL;
     }
 }
+
+
 
 @end
