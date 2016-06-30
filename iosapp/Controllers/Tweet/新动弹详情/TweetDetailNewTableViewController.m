@@ -44,9 +44,35 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 @property (nonatomic, strong) OSCTweet *tweet;
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, strong) MBProgressHUD *HUD;
+
+@property (nonatomic, strong) MBProgressHUD *hud;
 @end
 
 @implementation TweetDetailNewTableViewController
+
+- (void)showHubView {
+    UIView *coverView = [[UIView alloc]initWithFrame:self.view.bounds];
+    coverView.backgroundColor = [UIColor whiteColor];
+    coverView.tag = 10;
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    [window addSubview:_hud];
+    [self.tableView addSubview:coverView];
+    [_hud show:YES];
+    _hud.removeFromSuperViewOnHide = YES;
+    _hud.userInteractionEnabled = NO;
+}
+- (void)hideHubView {
+    [_hud hide:YES];
+    [[self.tableView viewWithTag:10] removeFromSuperview];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self hideHubView];
+    [super viewWillDisappear:animated];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -67,6 +93,10 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         [self loadTweetLikeListIsrefresh:NO];
         [self loadTweetCommentListIsrefresh:NO];
     }];
+    
+    // 添加等待动画
+    [self showHubView];
+    
     [self loadTweetDetails];
     [self loadTweetLikeListIsrefresh:YES];
     [self loadTweetCommentListIsrefresh:YES];
@@ -523,6 +553,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
+        [self hideHubView];
     });
 }
 

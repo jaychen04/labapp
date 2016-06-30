@@ -257,12 +257,12 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     } else if (indexPath.section == 1) {
         
         NewCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:quesAnsCommentHeadReuseIdentifier forIndexPath:indexPath];//[NewCommentCell new];//
-        
         if (_comments.count > 0) {
             OSCNewComment *comment = _comments[indexPath.row];
             
             [commentCell setDataForQuestionComment:comment];
             commentCell.commentButton.enabled = NO;
+            commentCell.contentTextView.userInteractionEnabled = NO;
         }
         
         return commentCell;
