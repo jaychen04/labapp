@@ -171,12 +171,13 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
                   HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
                   
                   [HUD hide:YES afterDelay:1];
-                  
-                  self.lastCell.status = LastCellStatusError;
-                  if (self.tableView.mj_header.isRefreshing) {
-                      [self.tableView.mj_header endRefreshing];
-                  }
-                  [self.tableView reloadData];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      self.lastCell.status = LastCellStatusError;
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      [self.tableView reloadData];
+                  });
               }
      ];
 }

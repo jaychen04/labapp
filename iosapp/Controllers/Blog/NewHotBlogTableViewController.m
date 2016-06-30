@@ -134,7 +134,9 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                       }
                       [_blogObjects addObjectsFromArray:blogModels];
                   }
-                  [self.tableView reloadData];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   
@@ -157,10 +159,12 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                       }
                       [_hottestBlogObjects addObjectsFromArray:blogModels];
                   }
-                  [self.tableView reloadData];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  
+                  NSLog(@"lebron ");
               }
      ];
 }
@@ -183,17 +187,17 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                           [_newestBlogObjects removeAllObjects];
                       }
                       [_newestBlogObjects addObjectsFromArray:blogModels];
-                      self.lastCell.status = blogModels.count<1?LastCellStatusFinished:LastCellStatusMore;
+                      self.lastCell.status = blogModels.count< 1 ? LastCellStatusFinished:LastCellStatusMore;
                       _newblogParaDic = @{@"catalog":@1,
                                           @"pageToken":resultDic[@"nextPageToken"]?:@""};
                   }
-                  
-                  if (self.tableView.mj_header.isRefreshing) {
-                      [self.tableView.mj_header endRefreshing];
-                  }
-                  
-                  [self.tableView reloadData];
-                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      
+                      [self.tableView reloadData];
+                  });
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
@@ -202,12 +206,13 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                   HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
                   
                   [HUD hide:YES afterDelay:1];
-                  
-                  self.lastCell.status = LastCellStatusError;
-                  if (self.tableView.mj_header.isRefreshing) {
-                      [self.tableView.mj_header endRefreshing];
-                  }
-                  [self.tableView reloadData];
+
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      [self.tableView reloadData];
+                  });
               }
      ];
 }

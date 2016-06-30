@@ -303,37 +303,55 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
     switch (appStatus) {
         case ApplyStatusUnSignUp://未报名
         {
-            [_addButton setTitle:@"报名" forState:UIControlStateNormal];
+            _addButton.backgroundColor = [UIColor colorWithHex:0x18BB50];
+            [_addButton setTitle:@"我要报名" forState:UIControlStateNormal];
+            [_addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [_addButton setImage:[UIImage imageNamed:@"ic_user_add-1"] forState:UIControlStateNormal];
             _addButton.enabled = YES;
             break;
         }
         case ApplyStatusAudited://审核中
         {
+            _addButton.backgroundColor = [UIColor colorWithHex:0xeeeeee];
             [_addButton setTitle:@"审核中" forState:UIControlStateNormal];
+            [_addButton setTitleColor:[UIColor colorWithHex:0xd5d5d5] forState:UIControlStateNormal];
+            [_addButton setImage:[UIImage imageNamed:@"ic_user_add"] forState:UIControlStateNormal];
             _addButton.enabled = NO;
             break;
         }
         case ApplyStatusDetermined://已经确认
         {
+            _addButton.backgroundColor = [UIColor colorWithHex:0xeeeeee];
             [_addButton setTitle:@"已确认" forState:UIControlStateNormal];
+            [_addButton setTitleColor:[UIColor colorWithHex:0xd5d5d5] forState:UIControlStateNormal];
+            [_addButton setImage:[UIImage imageNamed:@"ic_user_add"] forState:UIControlStateNormal];
             _addButton.enabled = NO;
             break;
         }
         case ApplyStatusAttended://已经出席
         {
+            _addButton.backgroundColor = [UIColor colorWithHex:0xeeeeee];
             [_addButton setTitle:@"已出席" forState:UIControlStateNormal];
+            [_addButton setTitleColor:[UIColor colorWithHex:0xd5d5d5] forState:UIControlStateNormal];
+            [_addButton setImage:[UIImage imageNamed:@"ic_user_add"] forState:UIControlStateNormal];
             _addButton.enabled = NO;
             break;
         }
         case ApplyStatusCanceled://已取消
         {
+            _addButton.backgroundColor = [UIColor colorWithHex:0xeeeeee];
             [_addButton setTitle:@"已取消" forState:UIControlStateNormal];
+            [_addButton setTitleColor:[UIColor colorWithHex:0xd5d5d5] forState:UIControlStateNormal];
+            [_addButton setImage:[UIImage imageNamed:@"ic_user_add"] forState:UIControlStateNormal];
             _addButton.enabled = NO;
             break;
         }
         case ApplyStatusRejected://已拒绝
         {
+            _addButton.backgroundColor = [UIColor colorWithHex:0xeeeeee];
             [_addButton setTitle:@"已拒绝" forState:UIControlStateNormal];
+            [_addButton setTitleColor:[UIColor colorWithHex:0xd5d5d5] forState:UIControlStateNormal];
+            [_addButton setImage:[UIImage imageNamed:@"ic_user_add"] forState:UIControlStateNormal];
             _addButton.enabled = NO;
             break;
         }
