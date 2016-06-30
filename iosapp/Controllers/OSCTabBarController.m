@@ -522,7 +522,7 @@
         }];
         if ([objsViewController isKindOfClass:[UITableViewController class]]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [objsViewController refresh];
+//                [objsViewController refresh];
             });
         }
     }

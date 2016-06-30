@@ -266,6 +266,12 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 }
 
 #pragma mark - button clicked
+- (IBAction)settingTouchDownColor:(UIButton *)sender {
+    sender.backgroundColor = [UIColor colorWithHex:0x188E50];
+}
+- (IBAction)settingTouchUp:(UIButton *)sender {
+    sender.backgroundColor = [UIColor colorWithHex:0x18BB50];
+}
 
 - (IBAction)clickedButton:(UIButton *)sender {
     if ([Config getOwnID] == 0) {

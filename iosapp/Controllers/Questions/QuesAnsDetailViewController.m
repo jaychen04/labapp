@@ -162,15 +162,17 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 {
     
     NSString *qCommentUrlStr = [NSString stringWithFormat:@"%@comment", OSCAPI_V2_PREFIX];
-    NSDictionary *paramDic = @{
+    NSMutableDictionary *mutableParamDic = @{
                                @"sourceId"  : @(self.questionID),
                                @"type"      : @(2),
-                               @"pageToken" : _nextPageToken,
                                @"parts"     : @"refer,reply"
-                               };
+                               }.mutableCopy;
+    if (!isRefresh) {//上拉刷新
+        [mutableParamDic setValue:_nextPageToken forKey:@"pageToken"];
+    }
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:qCommentUrlStr
-     parameters:paramDic
+     parameters:mutableParamDic.copy
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             
             if ([responseObject[@"code"] integerValue] == 1) {

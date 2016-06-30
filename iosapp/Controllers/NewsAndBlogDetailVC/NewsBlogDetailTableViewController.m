@@ -191,11 +191,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 {
     if (self.isReboundTop == NO) {
         self.readingOffest = self.tableView.contentOffset;
-        NSUInteger commentCount = _isBlogDetail ? _blogDetails.commentCount : _newsDetails.commentCount;
-        if (commentCount > 0) {
+//        NSUInteger commentCount = _isBlogDetail ? _blogDetails.commentCount : _newsDetails.commentCount;
+//        if (commentCount > 0) {
             NSIndexPath* lastSectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:(self.tableView.numberOfSections - 1)];
             [self.tableView scrollToRowAtIndexPath:lastSectionIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        }
+//        }
     }else{
         [self.tableView setContentOffset:CGPointMake(0, 0) animated:YES];
 //        跳转到reading位置
