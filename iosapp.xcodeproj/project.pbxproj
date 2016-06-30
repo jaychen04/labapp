@@ -259,6 +259,8 @@
 		ED58396CC87CDE86A1586227 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E428D41171BE2DEA0108EE49 /* libPods-iosapp.a */; };
 		EE01F8F71D1AAAD700F7DA2F /* OSCNewComment.m in Sources */ = {isa = PBXBuildFile; fileRef = EE01F8F41D1AAAD700F7DA2F /* OSCNewComment.m */; };
 		EE01F8F81D1AAAD700F7DA2F /* OSCNewSoftWare.m in Sources */ = {isa = PBXBuildFile; fileRef = EE01F8F61D1AAAD700F7DA2F /* OSCNewSoftWare.m */; };
+		EE0DA3951D23D60200DD2C13 /* TranslationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0DA3931D23D60200DD2C13 /* TranslationViewController.m */; };
+		EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
 		EE53F74F1D0048C800083D9D /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
@@ -792,6 +794,9 @@
 		EE01F8F41D1AAAD700F7DA2F /* OSCNewComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewComment.m; sourceTree = "<group>"; };
 		EE01F8F51D1AAAD700F7DA2F /* OSCNewSoftWare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewSoftWare.h; sourceTree = "<group>"; };
 		EE01F8F61D1AAAD700F7DA2F /* OSCNewSoftWare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewSoftWare.m; sourceTree = "<group>"; };
+		EE0DA3921D23D60200DD2C13 /* TranslationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslationViewController.h; sourceTree = "<group>"; };
+		EE0DA3931D23D60200DD2C13 /* TranslationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranslationViewController.m; sourceTree = "<group>"; };
+		EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationViewController.xib; sourceTree = "<group>"; };
 		EE2023291CFBE675002756E4 /* ActivityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadView.h; sourceTree = "<group>"; };
 		EE20232A1CFBE675002756E4 /* ActivityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadView.m; sourceTree = "<group>"; };
 		EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
@@ -1220,6 +1225,9 @@
 				31A06E971D192D7300E2DB8F /* RelatedSoftWareCell.h */,
 				31A06E981D192D7300E2DB8F /* RelatedSoftWareCell.m */,
 				31A06E991D192D7300E2DB8F /* RelatedSoftWareCell.xib */,
+				EE0DA3921D23D60200DD2C13 /* TranslationViewController.h */,
+				EE0DA3931D23D60200DD2C13 /* TranslationViewController.m */,
+				EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */,
 			);
 			path = NewsAndBlogDetailVC;
 			sourceTree = "<group>";
@@ -2348,6 +2356,7 @@
 				38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */,
 				EED7C71D1D222667001B565C /* NewCommentListViewController.xib in Resources */,
 				EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */,
+				EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */,
 				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */,
@@ -2524,6 +2533,7 @@
 				EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */,
 				38EAF1C41AE0EA6D00397E2A /* TeamProject.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */,
+				EE0DA3951D23D60200DD2C13 /* TranslationViewController.m in Sources */,
 				C5E56F4E1B56AFB50059924C /* RootViewController.m in Sources */,
 				38A93FA91AA31DB400A515E8 /* MessageCenter.m in Sources */,
 				31A06E961D18E34600E2DB8F /* OSCInformationDetails.m in Sources */,
