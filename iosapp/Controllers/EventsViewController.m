@@ -19,6 +19,10 @@
 #import "UserDetailsViewController.h"
 #import "ImageViewerController.h"
 
+#import "SoftWareViewController.h"
+#import "NewsBlogDetailTableViewController.h"
+#import "QuesAnsDetailViewController.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const EventCellID = @"EventCell";
@@ -203,18 +207,28 @@ static NSString * const EventCellID = @"EventCell";
     OSCEvent *event = self.objects[row];
     switch (event.catalog) {
         case 1: {
-            OSCNews *news = [OSCNews new];
-            news.newsID = event.objectID;
-            news.type = event.objectCatalog;
-            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithNews:news];
-            [self.navigationController pushViewController:detailsVC animated:YES];
+//            OSCNews *news = [OSCNews new];
+//            news.newsID = event.objectID;
+//            news.type = event.objectCatalog;
+//            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithNews:news];
+//            [self.navigationController pushViewController:detailsVC animated:YES];
+            
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:event.objectID
+                                                                                                            isBlogDetail:NO];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            
             break;
         }
         case 2: {
-            OSCPost *post = [OSCPost new];
-            post.postID = event.objectID;
-            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithPost:post];
-            [self.navigationController pushViewController:detailsVC animated:YES];
+//            OSCPost *post = [OSCPost new];
+//            post.postID = event.objectID;
+//            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithPost:post];
+//            [self.navigationController pushViewController:detailsVC animated:YES];
+            
+            QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
+            detailVC.hidesBottomBarWhenPushed = YES;
+            detailVC.questionID = event.objectID;
+            [self.navigationController pushViewController:detailVC animated:YES];
             break;
         }
         case 3: {
@@ -227,10 +241,14 @@ static NSString * const EventCellID = @"EventCell";
             break;
         }
         case 4: {
-            OSCBlog *blog = [OSCBlog new];
-            blog.blogID = event.objectID;
-            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithBlog:blog];
-            [self.navigationController pushViewController:detailsVC animated:YES];
+//            OSCBlog *blog = [OSCBlog new];
+//            blog.blogID = event.objectID;
+//            DetailsViewController *detailsVC = [[DetailsViewController alloc] initWithBlog:blog];
+//            [self.navigationController pushViewController:detailsVC animated:YES];
+            
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:event.objectID
+                                                                                                                isBlogDetail:YES];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             break;
         }
         default:

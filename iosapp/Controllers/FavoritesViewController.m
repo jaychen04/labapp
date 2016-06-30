@@ -14,6 +14,9 @@
 #import "OSCPost.h"
 #import "DetailsViewController.h"
 
+#import "SoftWareViewController.h"
+#import "NewsBlogDetailTableViewController.h"
+#import "QuesAnsDetailViewController.h"
 
 static NSString * const kFavoriteCellID = @"FavoriteCell";
 
@@ -72,8 +75,38 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+
     OSCFavorite *favorite = self.objects[indexPath.row];
-    [self.navigationController handleURL:favorite.url];
+    switch (favorite.type) {
+        case FavoritesTypeSoftware: {        //软件详情
+            SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:favorite.objectID];
+            [detailsViewController setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+        }
+            break;
+        case FavoritesTypeTopic: {           //问答详情
+            QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
+            detailVC.hidesBottomBarWhenPushed = YES;
+            detailVC.questionID = favorite.objectID;
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+            break;
+        case FavoritesTypeBlog: {            //博客详情
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:favorite.objectID
+                                                                                                                isBlogDetail:YES];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+            break;
+        case FavoritesTypeNews: {            //资讯详情
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:favorite.objectID
+                                                                                                                isBlogDetail:NO];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+            break;
+        default:
+            [self.navigationController handleURL:favorite.url];
+            break;
+    }
 }
 
 
