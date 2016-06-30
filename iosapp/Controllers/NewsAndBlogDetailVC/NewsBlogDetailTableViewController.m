@@ -29,6 +29,7 @@
 #import "LoginViewController.h"
 #import "AppDelegate.h"
 #import "NewCommentListViewController.h"//新评论列表
+#import "SoftWareViewController.h"      //软件详情
 
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
@@ -1006,10 +1007,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         if (indexPath.section == 1) {
             if (_blogDetailRecommends.count > 0) {
                 OSCBlogDetailRecommend *detailRecommend = _blogDetailRecommends[indexPath.row];
+                [self pushDetailsVcWithDetailModel:detailRecommend];
                 
-                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
-                                                                                                                    isBlogDetail:YES];
-                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+//                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
+//                                                                                                                    isBlogDetail:YES];
+//                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             }else {
                 if (_blogDetailComments.count > 0) {
                     if (indexPath.row == _blogDetailComments.count) {
@@ -1034,18 +1036,24 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         if (indexPath.section == 1) {
             
             if (_isExistRelatedSoftware) {      //相关的软件详情
-                OSCSoftware* softWare = [OSCSoftware new];
-                softWare.name = _newsDetails.software[@"name"];
-                softWare.url = [NSURL URLWithString:_newsDetails.software[@"href"]?:@""];
-                softWare.softId = [_newsDetails.software[@"id"] integerValue];
-                DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
+                SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:[_newsDetails.software[@"id"] integerValue]];
+                [detailsViewController setHidesBottomBarWhenPushed:YES];
                 [self.navigationController pushViewController:detailsViewController animated:YES];
+                
+//                OSCSoftware* softWare = [OSCSoftware new];
+//                softWare.name = _newsDetails.software[@"name"];
+//                softWare.url = [NSURL URLWithString:_newsDetails.software[@"href"]?:@""];
+//                softWare.softId = [_newsDetails.software[@"id"] integerValue];
+//                DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
+//                [self.navigationController pushViewController:detailsViewController animated:YES];
                 
             }else if (_newsDetails.abouts.count > 0) {     //相关推荐的资讯详情
                 OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
-                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
-                                                                                                                    isBlogDetail:NO];
-                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+                [self pushDetailsVcWithDetailModel:detailRecommend];
+                
+//                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
+//                                                                                                                    isBlogDetail:NO];
+//                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             }else if (_newsDetailComments.count > 0) {
                 //资讯评论列表
                 if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
@@ -1056,9 +1064,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         }else if (indexPath.section == 2) {
             if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
                 OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
-                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
-                                                                                                                    isBlogDetail:NO];
-                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+                [self pushDetailsVcWithDetailModel:detailRecommend];
+                
+//                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
+//                                                                                                                    isBlogDetail:NO];
+//                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             }else {
                 //资讯评论列表
                 if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
@@ -1086,6 +1096,38 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     }
     
 }
+#pragma  mark -- 相关推荐跳转
+-(void)pushDetailsVcWithDetailModel:(OSCBlogDetailRecommend*)detailModel {
+
+    NSInteger pushType = detailModel.type;
+    if (pushType == 0) {
+        pushType = _isBlogDetail ? 3 : 6;
+    }
+    switch (pushType) {
+        case 1:{        //软件详情
+            SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:detailModel.id];
+            [detailsViewController setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+        }
+            break;
+        case 3:{        //博客详情
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailModel.id
+                                                                                                                isBlogDetail:YES];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+            break;
+        case 6:{        //资讯详情
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailModel.id
+                                                                                                                isBlogDetail:NO];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
 #pragma mark - UIWebViewDelegate
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
