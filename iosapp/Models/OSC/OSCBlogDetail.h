@@ -65,6 +65,8 @@
 
 @property (nonatomic, assign) NSInteger viewCount;
 
+@property (nonatomic, assign) NSInteger type;
+
 @end
 
 
