@@ -26,16 +26,19 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DSP-wG-i2s">
                     <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Llh-6n-hlc">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Llh-6n-hlc" userLabel="color_View">
+                            <rect key="frame" x="0.0" y="0.0" width="300" height="1"/>
                             <color key="backgroundColor" red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="1" id="gv0-MD-4wh"/>
+                                <constraint firstAttribute="height" constant="1" id="YMx-Gb-2a3"/>
                             </constraints>
                         </view>
                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neQ-uL-NOh">
-                            <rect key="frame" x="300" y="1" width="300" height="43"/>
+                            <rect key="frame" x="300" y="0.0" width="300" height="44"/>
                             <color key="backgroundColor" red="0.094117647058823528" green="0.73333333333333328" blue="0.31372549019607843" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="YSr-3V-nq0"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="30" maxY="0.0"/>
                             <state key="normal" title="我要报名" image="ic_user_add-1">
@@ -50,6 +53,9 @@
                         </button>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t4r-gk-srh">
                             <rect key="frame" x="0.0" y="1" width="300" height="43"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="43" id="5L0-Z3-d9q"/>
+                            </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                             <inset key="imageEdgeInsets" minX="0.0" minY="-2" maxX="30" maxY="0.0"/>
                             <state key="normal" title="已收藏" image="ic_faved_pressed">
@@ -62,19 +68,18 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstItem="neQ-uL-NOh" firstAttribute="top" secondItem="Llh-6n-hlc" secondAttribute="bottom" id="0WX-IY-zeg"/>
                         <constraint firstItem="neQ-uL-NOh" firstAttribute="leading" secondItem="t4r-gk-srh" secondAttribute="trailing" id="DCg-Lj-Hwd"/>
+                        <constraint firstItem="neQ-uL-NOh" firstAttribute="top" secondItem="DSP-wG-i2s" secondAttribute="top" id="F9J-k1-Tyn"/>
                         <constraint firstItem="neQ-uL-NOh" firstAttribute="width" secondItem="t4r-gk-srh" secondAttribute="width" id="G7Y-3z-ke9"/>
                         <constraint firstItem="neQ-uL-NOh" firstAttribute="leading" secondItem="t4r-gk-srh" secondAttribute="trailing" id="Gly-um-CAk"/>
                         <constraint firstAttribute="height" constant="44" id="IRY-Vz-0Xq"/>
                         <constraint firstAttribute="bottom" secondItem="neQ-uL-NOh" secondAttribute="bottom" id="IlH-LK-ZKd"/>
-                        <constraint firstAttribute="trailing" secondItem="Llh-6n-hlc" secondAttribute="trailing" id="QpY-8Q-hd2"/>
                         <constraint firstAttribute="trailing" secondItem="neQ-uL-NOh" secondAttribute="trailing" id="W92-mM-QVV"/>
                         <constraint firstItem="t4r-gk-srh" firstAttribute="leading" secondItem="DSP-wG-i2s" secondAttribute="leading" id="X9U-TS-Me5"/>
-                        <constraint firstItem="Llh-6n-hlc" firstAttribute="leading" secondItem="DSP-wG-i2s" secondAttribute="leading" id="Ylc-cc-s2T"/>
-                        <constraint firstItem="Llh-6n-hlc" firstAttribute="top" secondItem="DSP-wG-i2s" secondAttribute="top" id="Zva-I0-GLc"/>
-                        <constraint firstItem="t4r-gk-srh" firstAttribute="top" secondItem="Llh-6n-hlc" secondAttribute="bottom" id="dyl-hf-K0n"/>
                         <constraint firstAttribute="bottom" secondItem="t4r-gk-srh" secondAttribute="bottom" id="f25-Mg-I4u"/>
+                        <constraint firstItem="Llh-6n-hlc" firstAttribute="leading" secondItem="DSP-wG-i2s" secondAttribute="leading" id="flN-UE-LNg"/>
+                        <constraint firstItem="Llh-6n-hlc" firstAttribute="width" secondItem="t4r-gk-srh" secondAttribute="width" id="jzM-lo-pV0"/>
+                        <constraint firstItem="Llh-6n-hlc" firstAttribute="top" secondItem="DSP-wG-i2s" secondAttribute="top" id="wHv-FD-mKC"/>
                     </constraints>
                 </view>
             </subviews>

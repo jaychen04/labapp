@@ -49,6 +49,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 
 @implementation ActivityDetailViewController
 
+
 - (instancetype)initWithActivityID:(int64_t)activityID
 {
     self = [super init];
