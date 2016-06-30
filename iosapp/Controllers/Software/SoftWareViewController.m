@@ -165,7 +165,7 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
         if (self.model.logo.length > 0) {
             [softWareCell.softImageView sd_setImageWithURL:[NSURL URLWithString:self.model.logo] placeholderImage:[UIImage imageNamed:@"logo_software_default"]];
         }
-        softWareCell.titleLabel.text = self.model.extName;
+        softWareCell.titleLabel.text = [NSString stringWithFormat:@"%@%@",self.model.extName?:@"",self.model.name?:@""];
         softWareCell.tagImageView.hidden = !self.model.recommend;
         softWareCell.selectionStyle = UITableViewCellSelectionStyleNone;
         

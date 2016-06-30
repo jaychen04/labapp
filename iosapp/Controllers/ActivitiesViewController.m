@@ -11,6 +11,8 @@
 #import "ActivityCell.h"
 #import "ActivityDetailsWithBarViewController.h"
 
+#import "ActivityDetailViewController.h"
+
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const kActivtyCellID = @"ActivityCell";
@@ -115,8 +117,14 @@ static NSString * const kActivtyCellID = @"ActivityCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCActivity *activity = self.objects[indexPath.row];
-    ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:activity.activityID];
-    [self.navigationController pushViewController:activityVC animated:YES];
+    
+    //新活动详情页面
+    ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:activity.activityID];
+    activityDetailCtl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:activityDetailCtl animated:YES];
+    
+//    ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:activity.activityID];
+//    [self.navigationController pushViewController:activityVC animated:YES];
 }
 
 
