@@ -44,7 +44,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 @property (nonatomic, assign) CGFloat   webViewHeight;
 
 @property (nonatomic, assign) BOOL isFav;
-
+@property (nonatomic,strong) MBProgressHUD* HUD;
 @end
 
 @implementation ActivityDetailViewController
@@ -90,6 +90,10 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 #pragma mark - 获取数据
 - (void)fetchForActivityDetailDate
 {
+    
+    _HUD = [Utils createHUD];
+    _HUD.userInteractionEnabled = NO;
+    
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
     NSString *activityDetailUrlStr= [NSString stringWithFormat:@"%@event?id=%lld", OSCAPI_V2_PREFIX, _activityID];
     
@@ -107,6 +111,7 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
                      [self setFavButtonAction:_activityDetail.favorite];
                      [self setApplyButton:_activityDetail.applyStatus];
                      [self.tableView reloadData];
+                     [_HUD hide:YES afterDelay:0.5];
                  });
              }
          } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
