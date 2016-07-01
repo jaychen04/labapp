@@ -70,6 +70,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UIButton *rightBarBtn;
 
+@property (nonatomic,assign) BOOL isReboundTop;
+@property (nonatomic,assign) CGPoint readingOffest;
+
 @end
 
 @implementation TranslationViewController
@@ -148,11 +151,16 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #pragma mark - 右导航栏按钮
 - (void)rightBarButtonScrollToCommitSection
 {
-    if (_translationDetails.commentCount > 0) {
+    if (self.isReboundTop == NO) {
+        self.readingOffest = self.tableView.contentOffset;
         NSIndexPath* lastSectionIndexPath = [NSIndexPath indexPathForRow:0 inSection:(self.tableView.numberOfSections - 1)];
         [self.tableView scrollToRowAtIndexPath:lastSectionIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    }else{
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+//        跳转到reading位置
+//        [self.tableView setContentOffset:self.readingOffest animated:YES];
     }
-    
+    self.isReboundTop = !self.isReboundTop;
 }
 #pragma mark - 获取翻译详情
 - (void)getTranslationData {
@@ -288,7 +296,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         return [self headerViewWithSectionTitle:@"评论"];
     }
     
-    return [UIView new];
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -411,7 +419,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     }
     
     
-    return [UITableViewCell new];
+    return nil;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
