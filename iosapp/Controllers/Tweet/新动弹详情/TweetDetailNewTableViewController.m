@@ -408,6 +408,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     return [UITableViewCell new];
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    OSCComment *comment = _tweetCommentList[indexPath.row];
+    if (self.didCommentSelected) {
+        self.didCommentSelected(comment);
+    }
+}
 #pragma mark -- Copy/Paste.  All three methods must be implemented by the delegate.
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {

@@ -428,7 +428,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     if (indexPath.section == 1) {
         if (_translationDetailComments.count > 0 && indexPath.row == _translationDetailComments.count) {
             //评论列表
-            NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForNews sourceID:_translationDetails.id];
+            NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForTranslate sourceID:_translationDetails.id];
             [self.navigationController pushViewController:newCommentVC animated:YES];
         }
     }
