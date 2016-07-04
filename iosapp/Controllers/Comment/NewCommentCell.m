@@ -65,7 +65,7 @@
     _bestImageView.image = [UIImage imageNamed:@"label_best_answer"];
     [self.contentView addSubview:_bestImageView];
     
-    
+    //masonry
     [_commentPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.equalTo(self.contentView).with.offset(16);
         make.width.and.height.equalTo(@32);
@@ -93,6 +93,51 @@
         make.right.equalTo(self.contentView).offset(-16);
         make.bottom.equalTo(self.contentView).offset(-16);
     }];
+    
+//    for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
+//    NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _referCommentView, _contentTextView, _commentButton, _bestImageView);
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentPortrait(32)]-<=7-[_referCommentView]-7-[_contentTextView]-16-|"
+//                                                                             options:NSLayoutFormatAlignAllLeft
+//                                                                             metrics:nil views:views]];
+//    
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-2-[_timeLabel]"
+//                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
+//                                                                             metrics:nil views:views]];
+//    
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]-<=7-[_referCommentView]-7-[_contentTextView]-16-|"
+//                                                                             options:0
+//                                                                             metrics:nil views:views]];
+//    
+//    
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentButton]"
+//                                                                             options:0
+//                                                                             metrics:nil
+//                                                                               views:views]];
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_bestImageView(20)]"
+//                                                                             options:0
+//                                                                             metrics:nil
+//                                                                               views:views]];
+//    
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(30)]-10-|"
+//                                                                             options:0
+//                                                                             metrics:nil
+//                                                                               views:views]];
+//    
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_bestImageView(67)]|"
+//                                                                             options:0
+//                                                                             metrics:nil
+//                                                                               views:views]];
+//    
+//    
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_referCommentView]-16-|"
+//                                                                             options:0
+//                                                                             metrics:nil
+//                                                                               views:views]];
+//    
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_contentTextView]-16-|"
+//                                                                             options:0
+//                                                                             metrics:nil
+//                                                                               views:views]];
 }
 
 #pragma mark - contentData
@@ -110,6 +155,7 @@
     
 
 //    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];//commentReply.contentd
+
     _contentTextView.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
 
     
