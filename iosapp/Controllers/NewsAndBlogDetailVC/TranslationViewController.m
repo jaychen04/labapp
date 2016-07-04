@@ -389,9 +389,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     commentNewsCell.comment = detailComment;
                     
                     if (detailComment.refer.author.length > 0) {
-                        commentNewsCell.currentContainer.hidden = NO;
+                        commentNewsCell.referCommentView.hidden = NO;
                     } else {
-                        commentNewsCell.currentContainer.hidden = YES;
+                        commentNewsCell.referCommentView.hidden = YES;
                     }
                     commentNewsCell.commentButton.tag = indexPath.row;
                     [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];

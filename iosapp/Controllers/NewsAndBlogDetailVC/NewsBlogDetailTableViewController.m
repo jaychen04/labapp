@@ -138,7 +138,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RelatedSoftWareCell" bundle:nil] forCellReuseIdentifier:relatedSoftWareReuseIdentifier];
-    
+    self.tableView.estimatedRowHeight = 250;
     self.tableView.tableFooterView = [UIView new];
     
     // 添加等待动画
@@ -220,6 +220,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark -- 获取评论cell的高度
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
+    return UITableViewAutomaticDimension;
+    
     UILabel *label = [UILabel new];
     label.font = [UIFont systemFontOfSize:14];
     label.numberOfLines = 0;
@@ -745,9 +747,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             commentBlogCell.comment = detailComment;
                             
                             if (detailComment.refer.author.length > 0) {
-                                commentBlogCell.currentContainer.hidden = NO;
+                                commentBlogCell.referCommentView.hidden = NO;
                             } else {
-                                commentBlogCell.currentContainer.hidden = YES;
+                                commentBlogCell.referCommentView.hidden = YES;
                             }
                             
                             
@@ -790,9 +792,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         commentBlogCell.comment = detailComment;
                         
                         if (detailComment.refer.author.length > 0) {
-                            commentBlogCell.currentContainer.hidden = NO;
+                            commentBlogCell.referCommentView.hidden = NO;
                         } else {
-                            commentBlogCell.currentContainer.hidden = YES;
+                            commentBlogCell.referCommentView.hidden = YES;
                         }
                         
                         
@@ -877,9 +879,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             commentNewsCell.comment = detailComment;
                             
                             if (detailComment.refer.author.length > 0) {
-                                commentNewsCell.currentContainer.hidden = NO;
+                                commentNewsCell.referCommentView.hidden = NO;
                             } else {
-                                commentNewsCell.currentContainer.hidden = YES;
+                                commentNewsCell.referCommentView.hidden = YES;
                             }
                             commentNewsCell.commentButton.tag = indexPath.row;
                             [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
@@ -933,9 +935,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             commentNewsCell.comment = detailComment;
                             
                             if (detailComment.refer.author.length > 0) {
-                                commentNewsCell.currentContainer.hidden = NO;
+                                commentNewsCell.referCommentView.hidden = NO;
                             } else {
-                                commentNewsCell.currentContainer.hidden = YES;
+                                commentNewsCell.referCommentView.hidden = YES;
                             }
                             commentNewsCell.commentButton.tag = indexPath.row;
                             [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
@@ -980,9 +982,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         commentNewsCell.comment = detailComment;
                         
                         if (detailComment.refer.author.length > 0) {
-                            commentNewsCell.currentContainer.hidden = NO;
+                            commentNewsCell.referCommentView.hidden = NO;
                         } else {
-                            commentNewsCell.currentContainer.hidden = YES;
+                            commentNewsCell.referCommentView.hidden = YES;
                         }
                         commentNewsCell.commentButton.tag = indexPath.row;
                         [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
