@@ -29,7 +29,12 @@
     _titleLabel.attributedText = blog.attributedTitleString;
     _descLabel.text = blog.body;
     _authorLabel.text = blog.author;
-    _timeLabel.attributedText = [Utils attributedTimeString:[NSDate dateFromString:blog.pubDate]];
+    
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils attributedTimeString:[NSDate dateFromString:blog.pubDate]]];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Light" size:10.0] range:NSMakeRange(0, attributedString.length)];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor newAssistTextColor] range:NSMakeRange(0, attributedString.length)];
+    _timeLabel.attributedText = attributedString;
+    
     _commentCountLabel.text = [NSString stringWithFormat:@"%d", blog.commentCount];
     _viewCountLabel.text = [NSString stringWithFormat:@"%d", blog.viewCount];
 }

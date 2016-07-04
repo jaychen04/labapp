@@ -140,6 +140,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"RelatedSoftWareCell" bundle:nil] forCellReuseIdentifier:relatedSoftWareReuseIdentifier];
     self.tableView.estimatedRowHeight = 250;
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     // 添加等待动画
     [self showHubView];
@@ -222,7 +223,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
 //    return UITableViewAutomaticDimension;
     
-    UILabel *label = [UILabel new];
+    UILabel *label = [UILabel alloc];
     label.font = [UIFont systemFontOfSize:14];
     label.numberOfLines = 0;
     label.lineBreakMode = NSLineBreakByWordWrapping;
