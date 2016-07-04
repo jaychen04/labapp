@@ -171,9 +171,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         cell.comment = comment;
         
         if (comment.refer.author.length > 0) {
-            cell.currentContainer.hidden = NO;
+            cell.referCommentView.hidden = NO;
         } else {
-            cell.currentContainer.hidden = YES;
+            cell.referCommentView.hidden = YES;
         }
         
         cell.commentButton.tag = indexPath.row;

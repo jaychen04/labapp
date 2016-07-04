@@ -65,10 +65,10 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more_normal"]
-                                                                              style:UIBarButtonItemStylePlain
-                                                                             target:self
-                                                                             action:@selector(rightBarButtonClicked)];
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more_normal"]
+//                                                                              style:UIBarButtonItemStylePlain
+//                                                                             target:self
+//                                                                             action:@selector(rightBarButtonClicked)];
     
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -107,7 +107,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
             
             if ([responseObject[@"code"] integerValue] == 1) {
                 _commentDetail = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
-                _commentReplies = [OSCNewCommentReply mj_objectArrayWithKeyValuesArray:_commentDetail.reply];
+                _commentReplies = [OSCNewCommentReply mj_objectArrayWithKeyValuesArray:responseObject[@"result"][@"reply"]];
                 _replyId = _commentDetail.id;
                 _reAuthorId = _commentDetail.authorId;
                 NSDictionary *data = @{@"content":  _commentDetail.content};
@@ -613,12 +613,13 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     _selectIndexPath = button.tag;
     
     if (_isReply) {
-        _replyId = reply.id;
-        _reAuthorId = reply.authorId;
-        _commentField.placeholder = [NSString stringWithFormat:@"@%@", reply.author];
+//        _replyId = reply.id;
+//        _reAuthorId = reply.authorId;
+//        _commentField.placeholder = [NSString stringWithFormat:@"@%@", reply.author];
+        _commentField.text = [NSString stringWithFormat:@"回复：@%@ ",reply.author];
     } else {
-        _replyId = _commentDetail.id;
-        _reAuthorId = _commentDetail.authorId;
+//        _replyId = _commentDetail.id;
+//        _reAuthorId = _commentDetail.authorId;
         _commentField.placeholder = @"我要评论";
     }
     [_commentField becomeFirstResponder];
@@ -636,8 +637,8 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
         NSDictionary *paraDic = @{@"sourceId"   : @(self.questDetailId),
                                   @"type"       : @(2),
                                   @"content"    : _commentField.text,
-                                  @"replyId"    : @(_replyId),
-                                  @"reAuthorId" : @(_reAuthorId)
+                                  @"replyId"    : @(_commentDetail.id),
+                                  @"reAuthorId" : @(_commentDetail.authorId)
                                   };
 
         AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];

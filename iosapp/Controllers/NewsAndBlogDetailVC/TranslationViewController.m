@@ -389,9 +389,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     commentNewsCell.comment = detailComment;
                     
                     if (detailComment.refer.author.length > 0) {
-                        commentNewsCell.currentContainer.hidden = NO;
+                        commentNewsCell.referCommentView.hidden = NO;
                     } else {
-                        commentNewsCell.currentContainer.hidden = YES;
+                        commentNewsCell.referCommentView.hidden = YES;
                     }
                     commentNewsCell.commentButton.tag = indexPath.row;
                     [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
@@ -428,7 +428,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     if (indexPath.section == 1) {
         if (_translationDetailComments.count > 0 && indexPath.row == _translationDetailComments.count) {
             //评论列表
-            NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForNews sourceID:_translationDetails.id];
+            NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForTranslate sourceID:_translationDetails.id];
             [self.navigationController pushViewController:newCommentVC animated:YES];
         }
     }

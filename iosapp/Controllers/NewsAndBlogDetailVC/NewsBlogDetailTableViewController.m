@@ -138,7 +138,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RelatedSoftWareCell" bundle:nil] forCellReuseIdentifier:relatedSoftWareReuseIdentifier];
-    
+    self.tableView.estimatedRowHeight = 250;
     self.tableView.tableFooterView = [UIView new];
     self.tableView.estimatedRowHeight = 250;
     
@@ -221,31 +221,30 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark -- 获取评论cell的高度
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
-//    UILabel *label = [UILabel new];
-//    label.font = [UIFont systemFontOfSize:14];
-//    label.numberOfLines = 0;
-//    label.lineBreakMode = NSLineBreakByWordWrapping;
-//    
-//    label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
-//    
-//    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height;
-//
-////    height += 7;
-//    OSCNewCommentRefer *refer = comment.refer;
-//    int i = 0;
-//    while (refer.author.length > 0) {
-//        NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
-//        [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
-//        label.attributedText = replyContent;
-//        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
-//        i++;
-//        refer = refer.refer;
-//    }
-//    
-//    return height + 71;
-    return 200;
+    return UITableViewAutomaticDimension;
+    
+    UILabel *label = [UILabel new];
+    label.font = [UIFont systemFontOfSize:14];
+    label.numberOfLines = 0;
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    
+    label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
+    
+    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height;
 
-//    return UITableViewAutomaticDimension;
+//    height += 7;
+    OSCNewCommentRefer *refer = comment.refer;
+    int i = 0;
+    while (refer.author.length > 0) {
+        NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
+        [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
+        label.attributedText = replyContent;
+        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
+        i++;
+        refer = refer.refer;
+    }
+    
+    return height + 71;
 }
 #pragma mark - UIAlertViewDelegate
 
@@ -749,9 +748,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             commentBlogCell.comment = detailComment;
                             
                             if (detailComment.refer.author.length > 0) {
-                                commentBlogCell.currentContainer.hidden = NO;
+                                commentBlogCell.referCommentView.hidden = NO;
                             } else {
-                                commentBlogCell.currentContainer.hidden = YES;
+                                commentBlogCell.referCommentView.hidden = YES;
                             }
                             
                             
@@ -794,9 +793,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         commentBlogCell.comment = detailComment;
                         
                         if (detailComment.refer.author.length > 0) {
-                            commentBlogCell.currentContainer.hidden = NO;
+                            commentBlogCell.referCommentView.hidden = NO;
                         } else {
-                            commentBlogCell.currentContainer.hidden = YES;
+                            commentBlogCell.referCommentView.hidden = YES;
                         }
                         
                         
@@ -881,9 +880,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             commentNewsCell.comment = detailComment;
                             
                             if (detailComment.refer.author.length > 0) {
-                                commentNewsCell.currentContainer.hidden = NO;
+                                commentNewsCell.referCommentView.hidden = NO;
                             } else {
-                                commentNewsCell.currentContainer.hidden = YES;
+                                commentNewsCell.referCommentView.hidden = YES;
                             }
                             commentNewsCell.commentButton.tag = indexPath.row;
                             [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
@@ -937,9 +936,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                             commentNewsCell.comment = detailComment;
                             
                             if (detailComment.refer.author.length > 0) {
-                                commentNewsCell.currentContainer.hidden = NO;
+                                commentNewsCell.referCommentView.hidden = NO;
                             } else {
-                                commentNewsCell.currentContainer.hidden = YES;
+                                commentNewsCell.referCommentView.hidden = YES;
                             }
                             commentNewsCell.commentButton.tag = indexPath.row;
                             [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
@@ -984,9 +983,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         commentNewsCell.comment = detailComment;
                         
                         if (detailComment.refer.author.length > 0) {
-                            commentNewsCell.currentContainer.hidden = NO;
+                            commentNewsCell.referCommentView.hidden = NO;
                         } else {
-                            commentNewsCell.currentContainer.hidden = YES;
+                            commentNewsCell.referCommentView.hidden = YES;
                         }
                         commentNewsCell.commentButton.tag = indexPath.row;
                         [commentNewsCell.commentButton addTarget:self action:@selector(selectedToComment:) forControlEvents:UIControlEventTouchUpInside];
