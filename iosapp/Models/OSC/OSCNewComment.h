@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Ono.h>
+//#import <Ono.h>
 @class OSCNewCommentRefer, OSCNewCommentReply;
 
 @interface OSCNewComment : NSObject
@@ -36,7 +36,6 @@
 
 @property (nonatomic, strong) NSArray *reply;
 
-- (instancetype)initWithXML:(ONOXMLElement *)xml;
 @end
 
 

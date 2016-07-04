@@ -140,6 +140,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"RelatedSoftWareCell" bundle:nil] forCellReuseIdentifier:relatedSoftWareReuseIdentifier];
     
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.estimatedRowHeight = 250;
     
     // 添加等待动画
     [self showHubView];
@@ -220,28 +221,31 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark -- 获取评论cell的高度
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
-    UILabel *label = [UILabel new];
-    label.font = [UIFont systemFontOfSize:14];
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
-    
-    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height;
+//    UILabel *label = [UILabel new];
+//    label.font = [UIFont systemFontOfSize:14];
+//    label.numberOfLines = 0;
+//    label.lineBreakMode = NSLineBreakByWordWrapping;
+//    
+//    label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
+//    
+//    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height;
+//
+////    height += 7;
+//    OSCNewCommentRefer *refer = comment.refer;
+//    int i = 0;
+//    while (refer.author.length > 0) {
+//        NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
+//        [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
+//        label.attributedText = replyContent;
+//        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
+//        i++;
+//        refer = refer.refer;
+//    }
+//    
+//    return height + 71;
+    return 200;
 
-//    height += 7;
-    OSCNewCommentRefer *refer = comment.refer;
-    int i = 0;
-    while (refer.author.length > 0) {
-        NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
-        [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
-        label.attributedText = replyContent;
-        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
-        i++;
-        refer = refer.refer;
-    }
-    
-    return height + 71;
+//    return UITableViewAutomaticDimension;
 }
 #pragma mark - UIAlertViewDelegate
 
