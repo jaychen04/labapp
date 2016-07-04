@@ -220,7 +220,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark -- 获取评论cell的高度
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
-    return UITableViewAutomaticDimension;
+//    return UITableViewAutomaticDimension;
     
     UILabel *label = [UILabel new];
     label.font = [UIFont systemFontOfSize:14];
