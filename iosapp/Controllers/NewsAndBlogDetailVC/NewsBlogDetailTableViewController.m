@@ -243,6 +243,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         i++;
         refer = refer.refer;
     }
+    objc_class
+    objc_object
+    
     
     return height + 71;
 }
