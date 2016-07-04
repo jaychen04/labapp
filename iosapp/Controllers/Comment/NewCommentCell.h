@@ -20,7 +20,7 @@
 @property (strong, nonatomic) UIButton *commentButton;
 @property (nonatomic, strong) UIImageView *bestImageView;
 
-@property (nonatomic, strong) UIView *currentContainer;
+@property (nonatomic, strong) UIView *referCommentView;
 
 @property (nonatomic, strong) OSCNewComment *comment;
 
