@@ -68,7 +68,6 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     NSLog(@"button index %ld",self.selectedBtn.tag);
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        self.tableView.separatorColor = [UIColor separatorColor];
         [self.tableView reloadData];
     });
 }
@@ -82,7 +81,6 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     [self setButtonBoradWidthAndColor:_askQuesButton isSelected:YES];
     [self.tableView.mj_header beginRefreshing];
     
-    self.tableView.separatorColor = [UIColor separatorColor];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
 
 }
@@ -92,8 +90,8 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 
 - (void)setColorForSubViews
 {
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
-    self.tableView.separatorColor = [UIColor separatorColor];
     self.buttonViewLine.backgroundColor = [UIColor separatorColor];
     self.buttonView.backgroundColor = [UIColor newCellColor];
     

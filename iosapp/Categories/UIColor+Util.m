@@ -60,7 +60,7 @@
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
         return [UIColor colorWithHex:0x3c3c3c];
     }
-    return [UIColor colorWithHex:0xd9d9df];
+    return [UIColor colorWithHex:0xC8C7CC];//0xd9d9df];
 }
 
 + (UIColor *)cellsColor
