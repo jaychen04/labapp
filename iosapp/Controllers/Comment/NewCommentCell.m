@@ -65,7 +65,7 @@
     _bestImageView.image = [UIImage imageNamed:@"label_best_answer"];
     [self.contentView addSubview:_bestImageView];
     
-    
+    //masonry
     [_commentPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.equalTo(self.contentView).with.offset(16);
         make.width.and.height.equalTo(@32);
@@ -85,7 +85,7 @@
     [_referCommentView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_timeLabel.mas_bottom).offset(2);
         make.left.equalTo(_commentPortrait);
-        make.right.equalTo(self.contentView).offset(16);
+        make.right.equalTo(self.contentView).offset(-16);
     }];
     [_contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(_referCommentView.mas_bottom).offset(2);
@@ -95,8 +95,8 @@
     }];
     
 //    for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-//    NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _currentContainer, _contentTextView, _commentButton, _bestImageView);
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentPortrait(32)]-<=7-[_currentContainer]-7-[_contentTextView]-16-|"
+//    NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _referCommentView, _contentTextView, _commentButton, _bestImageView);
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentPortrait(32)]-<=7-[_referCommentView]-7-[_contentTextView]-16-|"
 //                                                                             options:NSLayoutFormatAlignAllLeft
 //                                                                             metrics:nil views:views]];
 //    
@@ -104,7 +104,7 @@
 //                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
 //                                                                             metrics:nil views:views]];
 //    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]-<=7-[_currentContainer]-7-[_contentTextView]-16-|"
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]-<=7-[_referCommentView]-7-[_contentTextView]-16-|"
 //                                                                             options:0
 //                                                                             metrics:nil views:views]];
 //    
@@ -129,7 +129,7 @@
 //                                                                               views:views]];
 //    
 //    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_currentContainer]-16-|"
+//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_referCommentView]-16-|"
 //                                                                             options:0
 //                                                                             metrics:nil
 //                                                                               views:views]];
@@ -155,6 +155,7 @@
     
 
 //    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];//commentReply.contentd
+
     _contentTextView.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
 
     
@@ -273,14 +274,12 @@
         
         
         
-//        [subContainer mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.and.left.equalTo(_referCommentView);
-//        }];
-//
-//        [leftLine mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.and.left.equalTo(_referCommentView);
-//            make.width.mas_equalTo(8);
-//        }];
+        
+
+        [leftLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.and.left.equalTo(_referCommentView);
+            make.width.mas_equalTo(8);
+        }];
 
         
         
@@ -298,13 +297,10 @@
                                                                                       metrics:nil
                                                                                         views:views]];
             
-            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[leftLine(1)]-8-[contentLabel]|"
-                                                                                      options:0
-                                                                                      metrics:nil
-                                                                                        views:views]];
+
             
             
-            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[leftLine(1)]-8-[subContainer]|"
+            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[leftLine(1)]-8-[subContainer]-8-|"
                                                                                       options:0
                                                                                       metrics:nil
                                                                                         views:views]];
