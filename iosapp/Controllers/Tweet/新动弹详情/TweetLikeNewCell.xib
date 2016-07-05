@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="44s-Km-JNc" userLabel="portraitIv">
-                        <rect key="frame" x="16" y="14" width="32" height="32"/>
+                        <rect key="frame" x="16" y="13" width="32" height="32"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="32" id="Qsv-Gd-wrG"/>
                             <constraint firstAttribute="height" constant="32" id="vjV-kX-aie"/>
@@ -35,6 +35,7 @@
                 <constraints>
                     <constraint firstItem="O1m-u6-rD9" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="7bM-9e-U2L"/>
                     <constraint firstItem="44s-Km-JNc" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="DY7-NT-xRw"/>
+                    <constraint firstItem="44s-Km-JNc" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="GQg-CB-gC1"/>
                     <constraint firstAttribute="trailingMargin" secondItem="QRE-VA-nxe" secondAttribute="trailing" constant="8" id="HdJ-Fc-uyX"/>
                     <constraint firstItem="QRE-VA-nxe" firstAttribute="centerY" secondItem="44s-Km-JNc" secondAttribute="centerY" id="Sj1-WD-USQ"/>
                     <constraint firstAttribute="bottom" secondItem="O1m-u6-rD9" secondAttribute="bottom" id="TTp-5m-kf4"/>
@@ -43,6 +44,11 @@
                     <constraint firstItem="44s-Km-JNc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="iXn-3P-rx3"/>
                     <constraint firstItem="QRE-VA-nxe" firstAttribute="leading" secondItem="44s-Km-JNc" secondAttribute="trailing" constant="8" id="r6c-Xg-kXH"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="DY7-NT-xRw"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="nameLabel" destination="QRE-VA-nxe" id="3Zp-f2-i5m"/>

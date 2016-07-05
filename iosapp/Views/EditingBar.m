@@ -24,8 +24,8 @@
 {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor grayColor];
-        
+//        self.backgroundColor = [UIColor grayColor];
+        self.backgroundColor = [UIColor colorWithHex:0xffffff];
         [self addBorder];
         [self setLayoutWithModeSwitchButton:hasAModeSwitchButton];
     }
@@ -40,7 +40,8 @@
     [_modeSwitchButton setImage:[UIImage imageNamed:@"toolbar-barSwitch"] forState:UIControlStateNormal];
     
     _inputViewButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [_inputViewButton setImage:[UIImage imageNamed:@"toolbar-emoji2"] forState:UIControlStateNormal];
+    [_inputViewButton setImage:[UIImage imageNamed:@"btn_emoji_normal"] forState:UIControlStateNormal];
+    [_inputViewButton setImage:[UIImage imageNamed:@"btn_emoji_pressed"] forState:UIControlStateHighlighted];
     
     _editView = [[GrowingTextView alloc] initWithPlaceholder:@"说点什么"];
     _editView.returnKeyType = UIReturnKeySend;
@@ -86,12 +87,14 @@
 - (void)addBorder
 {
     UIView *upperBorder = [UIView new];
-    upperBorder.backgroundColor = [UIColor borderColor];
+    upperBorder.backgroundColor = [UIColor colorWithHex:0xc7c7cc];
+//    [UIColor borderColor];
     upperBorder.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:upperBorder];
     
     UIView *bottomBorder = [UIView new];
-    bottomBorder.backgroundColor = [UIColor borderColor];
+    bottomBorder.backgroundColor = [UIColor colorWithHex:0xc7c7cc];
+//    [UIColor borderColor];
     bottomBorder.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:bottomBorder];
     
