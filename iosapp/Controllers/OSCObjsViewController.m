@@ -14,10 +14,10 @@
 
 @interface OSCObjsViewController ()
 
-
-
 @property (nonatomic, strong) NSUserDefaults *userDefaults;
 @property (nonatomic, strong) NSDate *lastRefreshTime;
+
+@property (nonatomic, strong) UIImageView * imageView;
 
 @end
 
@@ -38,12 +38,27 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    _imageView.hidden = YES;
+    
+    if (_needAutoRefresh) {
+        NSDate *currentTime = [NSDate date];
+        if ([currentTime timeIntervalSinceDate:_lastRefreshTime] > _refreshInterval) {
+            _lastRefreshTime = currentTime;
+            
+            [self refresh];
+        }
+    }
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
+    _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dawnAndNightMode:) name:@"dawnAndNight" object:nil];
     
@@ -102,27 +117,23 @@
     
 }
 
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    
-    if (_needAutoRefresh) {
-        NSDate *currentTime = [NSDate date];
-        if ([currentTime timeIntervalSinceDate:_lastRefreshTime] > _refreshInterval) {
-            _lastRefreshTime = currentTime;
-            
-            [self refresh];
-        }
-    }
-}
-
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+        return (UIImageView *)view;
+    }
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    return nil;
+}
 
 - (void)dealloc
 {
