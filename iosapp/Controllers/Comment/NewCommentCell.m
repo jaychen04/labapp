@@ -279,11 +279,11 @@
         contentLabel.attributedText = replyContent;
         
         UIView *leftLine = [UIView new];
-        leftLine.backgroundColor = [UIColor colorWithHex:0xd7d6da];
+        leftLine.backgroundColor = [UIColor separatorColor];
         [_referCommentView addSubview:leftLine];
         
         UIView *bottomLine = [UIView new];
-        bottomLine.backgroundColor = [UIColor colorWithHex:0xd7d6da];
+        bottomLine.backgroundColor = [UIColor separatorColor];
         [_referCommentView addSubview:bottomLine];
         
         
@@ -296,7 +296,7 @@
                                                                                       metrics:nil
                                                                                         views:views]];
             
-            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[subContainer]-6-[contentLabel]-5-[bottomLine(1)]|"
+            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[subContainer]-6-[contentLabel]-5-[bottomLine(0.5)]|"
                                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                                       metrics:nil
                                                                                         views:views]];
@@ -317,7 +317,7 @@
                                                                                       metrics:nil
                                                                                         views:views]];
             
-            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-2-[contentLabel]-5-[bottomLine(1)]|"
+            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-2-[contentLabel]-5-[bottomLine(0.5)]|"
                                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                                       metrics:nil
                                                                                         views:views]];

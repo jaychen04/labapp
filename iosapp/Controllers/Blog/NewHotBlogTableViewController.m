@@ -81,7 +81,6 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 - (void)dawnAndNightMode
 {
     self.tableView.backgroundColor = [UIColor themeColor];
-    self.tableView.separatorColor = [UIColor separatorColor];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -230,7 +229,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     titleLabel.text = title;
     [headerView addSubview:titleLabel];
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
     lineView.backgroundColor = [UIColor separatorColor];
     [headerView addSubview:lineView];
     

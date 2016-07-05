@@ -64,6 +64,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.commentTextField.delegate = self;
+    self.tableView.separatorColor = [UIColor separatorColor];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
     [self getCommentData:NO];
