@@ -129,6 +129,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     self.title = _isBlogDetail?@"博文":@"资讯";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.commentTextField.delegate = self;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"FollowAuthorTableViewCell" bundle:nil] forCellReuseIdentifier:followAuthorReuseIdentifier];
@@ -372,6 +373,14 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (UIView*)headerViewWithSectionTitle:(NSString*)title {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
     headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
+    
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    topLineView.backgroundColor = [UIColor separatorColor];
+    [headerView addSubview:topLineView];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    bottomLineView.backgroundColor = [UIColor separatorColor];
+    [headerView addSubview:bottomLineView];
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
     titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
