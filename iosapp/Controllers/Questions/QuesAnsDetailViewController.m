@@ -266,6 +266,11 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
             commentCell.contentTextView.userInteractionEnabled = NO;
         }
         
+        commentCell.contentView.backgroundColor = [UIColor newCellColor];
+        commentCell.backgroundColor = [UIColor themeColor];
+        commentCell.selectedBackgroundView = [[UIView alloc] initWithFrame:commentCell.frame];
+        commentCell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+        
         return commentCell;
     }
     
