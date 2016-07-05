@@ -54,6 +54,8 @@
 @property (nonatomic, strong) NSMutableArray *noticeCounts;
 @property (nonatomic, assign) int badgeValue;
 
+@property (nonatomic, strong) UIImageView * imageView;
+
 @end
 
 @implementation HomepageViewController
@@ -78,6 +80,13 @@
     _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    _imageView.hidden = YES;
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -86,7 +95,7 @@
 //    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
 //    [self.navigationController.navigationBar setTranslucent:YES];
     
-    
+     _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
     
@@ -104,6 +113,20 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+        return (UIImageView *)view;
+    }
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    return nil;
+}
+
 
 - (void)refresh
 {
