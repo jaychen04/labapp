@@ -60,6 +60,7 @@
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
+		04EC802F1D2A505E009D8025 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC802E1D2A505E009D8025 /* NewCommentCell.m */; };
 		04EC96961CF436B10004B54E /* OSCActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96951CF436B10004B54E /* OSCActivityViewController.m */; };
 		04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC969B1CF436FB0004B54E /* OSCActivityTableViewCell.m */; };
 		04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EC969C1CF436FB0004B54E /* OSCActivityTableViewCell.xib */; };
@@ -282,7 +283,6 @@
 		EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */; };
 		EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */; };
 		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
-		EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */; };
 		EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */; };
 		EEB3D7AA1D13A86200164EF5 /* CommentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB3D7A81D13A86200164EF5 /* CommentDetailViewController.xib */; };
 		EEB3D7AE1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7AC1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m */; };
@@ -399,6 +399,8 @@
 		047325A21CF8612B00460658 /* enumList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enumList.h; path = OSC/enumList.h; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
+		04EC802D1D2A505E009D8025 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
+		04EC802E1D2A505E009D8025 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
 		04EC96941CF436B10004B54E /* OSCActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCActivityViewController.h; sourceTree = "<group>"; };
 		04EC96951CF436B10004B54E /* OSCActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCActivityViewController.m; sourceTree = "<group>"; };
 		04EC969A1CF436FB0004B54E /* OSCActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -836,8 +838,6 @@
 		EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsDetailHeadCell.m; path = Questions/QuesAnsDetailHeadCell.m; sourceTree = "<group>"; };
 		EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsDetailHeadCell.xib; path = Questions/QuesAnsDetailHeadCell.xib; sourceTree = "<group>"; };
 		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
-		EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
-		EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
 		EEB3D7A61D13A86200164EF5 /* CommentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentDetailViewController.h; path = Questions/CommentDetailViewController.h; sourceTree = "<group>"; };
 		EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentDetailViewController.m; path = Questions/CommentDetailViewController.m; sourceTree = "<group>"; };
 		EEB3D7A81D13A86200164EF5 /* CommentDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CommentDetailViewController.xib; path = Questions/CommentDetailViewController.xib; sourceTree = "<group>"; };
@@ -2063,8 +2063,8 @@
 				C5EF89151BE318E800B5FA46 /* CommentsBottomBarViewController.m */,
 				C5EF89161BE318E800B5FA46 /* CommentsViewController.h */,
 				C5EF89171BE318E800B5FA46 /* CommentsViewController.m */,
-				EEB2A56C1D0013A7006DB3B9 /* NewCommentCell.h */,
-				EEB2A56D1D0013A7006DB3B9 /* NewCommentCell.m */,
+				04EC802D1D2A505E009D8025 /* NewCommentCell.h */,
+				04EC802E1D2A505E009D8025 /* NewCommentCell.m */,
 				EED7C7191D222667001B565C /* NewCommentListViewController.h */,
 				EED7C71A1D222667001B565C /* NewCommentListViewController.m */,
 				EED7C71B1D222667001B565C /* NewCommentListViewController.xib */,
@@ -2518,6 +2518,7 @@
 				38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */,
 				C5EF89231BE3194800B5FA46 /* SoftwareCell.m in Sources */,
 				38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */,
+				04EC802F1D2A505E009D8025 /* NewCommentCell.m in Sources */,
 				31212ECB1D0E670100FA17B1 /* TweetsDetailNewCell.m in Sources */,
 				C5EF89321BE319A300B5FA46 /* BlogsViewController.m in Sources */,
 				38963EB61AD7D11D00DE9479 /* NSTextAttachment+Util.m in Sources */,
@@ -2599,7 +2600,6 @@
 				38EAF1B61AE0A85F00397E2A /* TeamActivity.m in Sources */,
 				C5EF89221BE3194800B5FA46 /* SoftwareCatalogVC.m in Sources */,
 				0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */,
-				EEB2A56F1D0013A7006DB3B9 /* NewCommentCell.m in Sources */,
 				0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */,
 				EE6FB5DD1D0D1050006A11A4 /* NewTweetCell.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,

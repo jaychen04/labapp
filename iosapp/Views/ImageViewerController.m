@@ -151,6 +151,8 @@
 
 - (CGRect)frameForImage:(UIImage *)image
 {
+//    if (!image) {return CGRectZero;}
+    
     CGFloat width = self.view.bounds.size.width;
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     

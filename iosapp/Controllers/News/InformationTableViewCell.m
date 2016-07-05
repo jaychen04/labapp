@@ -44,7 +44,7 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
 {
     InformationTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifierString
                                                                      forIndexPath:indexPath];
-    
+//    objc_class 
 
     return cell;
 }

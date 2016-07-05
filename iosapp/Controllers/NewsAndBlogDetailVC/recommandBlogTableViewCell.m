@@ -8,17 +8,13 @@
 
 #import "RecommandBlogTableViewCell.h"
 
-@implementation RecommandBlogTableViewCell
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    // Initialization code
+@implementation RecommandBlogTableViewCell{
+    __weak IBOutlet UIView *_colorLine;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
-
-    // Configure the view for the selected state
+-(void)setHiddenLine:(BOOL)hiddenLine{
+    _hiddenLine = hiddenLine;
+    _colorLine.hidden = hiddenLine;
 }
 
 - (void)setAbouts:(OSCBlogDetailRecommend *)abouts
