@@ -74,6 +74,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.separatorColor = [UIColor separatorColor];
     [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsDetailHeadCell" bundle:nil] forCellReuseIdentifier:quesAnsDetailHeadReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:quesAnsCommentHeadReuseIdentifier];
     
@@ -264,6 +265,11 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
             commentCell.commentButton.enabled = NO;
             commentCell.contentTextView.userInteractionEnabled = NO;
         }
+        
+        commentCell.contentView.backgroundColor = [UIColor newCellColor];
+        commentCell.backgroundColor = [UIColor themeColor];
+        commentCell.selectedBackgroundView = [[UIView alloc] initWithFrame:commentCell.frame];
+        commentCell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
         
         return commentCell;
     }

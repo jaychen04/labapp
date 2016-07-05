@@ -129,6 +129,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     self.title = _isBlogDetail?@"博文":@"资讯";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.commentTextField.delegate = self;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"FollowAuthorTableViewCell" bundle:nil] forCellReuseIdentifier:followAuthorReuseIdentifier];
@@ -140,6 +141,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"RelatedSoftWareCell" bundle:nil] forCellReuseIdentifier:relatedSoftWareReuseIdentifier];
     self.tableView.estimatedRowHeight = 250;
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.separatorColor = [UIColor separatorColor];
     
     // 添加等待动画
     [self showHubView];
@@ -222,7 +224,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
 //    return UITableViewAutomaticDimension;
     
-    UILabel *label = [UILabel new];
+    UILabel *label = [UILabel alloc];
     label.font = [UIFont systemFontOfSize:14];
     label.numberOfLines = 0;
     label.lineBreakMode = NSLineBreakByWordWrapping;
@@ -242,6 +244,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         i++;
         refer = refer.refer;
     }
+    
     
     return height + 71;
 }
@@ -370,6 +373,14 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (UIView*)headerViewWithSectionTitle:(NSString*)title {
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
     headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
+    
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    topLineView.backgroundColor = [UIColor separatorColor];
+    [headerView addSubview:topLineView];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    bottomLineView.backgroundColor = [UIColor separatorColor];
+    [headerView addSubview:bottomLineView];
     
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
     titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
@@ -555,10 +566,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             case 1:
             {
                 if (_blogDetailRecommends.count > 0) {
-                    return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
-                        OSCBlogDetailRecommend *blogRecommend = _blogDetailRecommends[indexPath.row];
-                        cell.abouts = blogRecommend;
-                    }];
+                    return 60;
                 }else {
                     if (_blogDetailComments.count > 0) {
                         if (indexPath.row == _blogDetailComments.count) {
@@ -609,12 +617,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 if (_isExistRelatedSoftware) {
                     return 45;
                 }else if (_newsDetails.abouts.count > 0){
-                    return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
-                        if(indexPath.row < _newsDetailRecommends.count) {
-                            OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
-                            cell.abouts = newsRecommend;
-                        }
-                    }];
+                    return 60;
                 }else if (_newsDetailComments.count > 0) {
                     if (_newsDetailComments.count > 0) {
                         if (indexPath.row == _newsDetailComments.count) {
@@ -723,6 +726,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (_blogDetailRecommends.count > 0) {
                         OSCBlogDetailRecommend *about = _blogDetailRecommends[indexPath.row];
                         recommandBlogCell.abouts = about;
+                        recommandBlogCell.hiddenLine = _blogDetailRecommends.count - 1 == indexPath.row ? YES : NO;
                     }
                     
                     recommandBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
@@ -852,6 +856,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (_newsDetailRecommends.count > 0) {
                         OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
                         recommandNewsCell.abouts = about;
+                        recommandNewsCell.hiddenLine = _blogDetailRecommends.count - 1 == indexPath.row ? YES : NO;
                     }
                     recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
                     return recommandNewsCell;

@@ -56,7 +56,10 @@
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSDate* date = [formatter dateFromString:viewModel.pubDate];
     
-    [_timeLabel setAttributedText:[Utils attributedTimeString:date]];
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils attributedTimeString:date]];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Light" size:10.0] range:NSMakeRange(0, attributedString.length)];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor newAssistTextColor] range:NSMakeRange(0, attributedString.length)];
+    [_timeLabel setAttributedText:attributedString];
 }
 
 @end

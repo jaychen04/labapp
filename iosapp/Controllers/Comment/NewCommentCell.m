@@ -9,7 +9,11 @@
 #import "NewCommentCell.h"
 #import "Utils.h"
 #import <Masonry.h>
-@implementation NewCommentCell
+
+
+@implementation NewCommentCell{
+    __weak UIView* _colorView;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -65,6 +69,11 @@
     _bestImageView.image = [UIImage imageNamed:@"label_best_answer"];
     [self.contentView addSubview:_bestImageView];
     
+    UIView* colorView = [[UIView alloc]init];
+    colorView.backgroundColor = [UIColor colorWithHex:0xc8c7cc];
+    [self.contentView addSubview:colorView];
+    _colorView = colorView;
+    
     //masonry
     [_commentPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.equalTo(self.contentView).with.offset(16);
@@ -92,6 +101,11 @@
         make.left.equalTo(_commentPortrait);
         make.right.equalTo(self.contentView).offset(-16);
         make.bottom.equalTo(self.contentView).offset(-16);
+    }];
+    [_colorView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(16);
+        make.right.and.bottom.equalTo(self.contentView);
+        make.height.equalTo(@1);
     }];
     
 //    for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
@@ -265,22 +279,12 @@
         contentLabel.attributedText = replyContent;
         
         UIView *leftLine = [UIView new];
-        leftLine.backgroundColor = [UIColor colorWithHex:0xd7d6da];
+        leftLine.backgroundColor = [UIColor separatorColor];
         [_referCommentView addSubview:leftLine];
         
         UIView *bottomLine = [UIView new];
-        bottomLine.backgroundColor = [UIColor colorWithHex:0xd7d6da];
+        bottomLine.backgroundColor = [UIColor separatorColor];
         [_referCommentView addSubview:bottomLine];
-        
-        
-        
-        
-
-        [leftLine mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.and.left.equalTo(_referCommentView);
-            make.width.mas_equalTo(8);
-        }];
-
         
         
         for (UIView *view in _referCommentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
@@ -292,7 +296,7 @@
                                                                                       metrics:nil
                                                                                         views:views]];
             
-            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[subContainer]-6-[contentLabel]-5-[bottomLine(1)]|"
+            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[subContainer]-6-[contentLabel]-5-[bottomLine(0.5)]|"
                                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                                       metrics:nil
                                                                                         views:views]];
@@ -313,7 +317,7 @@
                                                                                       metrics:nil
                                                                                         views:views]];
             
-            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-2-[contentLabel]-5-[bottomLine(1)]|"
+            [_referCommentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-2-[contentLabel]-5-[bottomLine(0.5)]|"
                                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
                                                                                       metrics:nil
                                                                                         views:views]];

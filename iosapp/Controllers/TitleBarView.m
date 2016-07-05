@@ -45,8 +45,8 @@
         self.contentSize = CGSizeMake(frame.size.width, 25);
         self.showsHorizontalScrollIndicator = NO;
         UIButton *firstTitle = _titleButtons[0];
-        [firstTitle setTitleColor:[UIColor colorWithHex:0x009000] forState:UIControlStateNormal];
-        firstTitle.transform = CGAffineTransformMakeScale(1.15, 1.15);
+        [firstTitle setTitleColor:[UIColor newSectionButtonSelectedColor] forState:UIControlStateNormal];
+//        firstTitle.transform = CGAffineTransformMakeScale(1.15, 1.15);
     }
     
     return self;
@@ -59,10 +59,10 @@
         UIButton *preTitle = _titleButtons[_currentIndex];
         
         [preTitle setTitleColor:[UIColor colorWithHex:0x909090] forState:UIControlStateNormal];
-        preTitle.transform = CGAffineTransformIdentity;
+//        preTitle.transform = CGAffineTransformIdentity;
         
-        [button setTitleColor:[UIColor colorWithHex:0x009000] forState:UIControlStateNormal];
-        button.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        [button setTitleColor:[UIColor newSectionButtonSelectedColor] forState:UIControlStateNormal];
+//        button.transform = CGAffineTransformMakeScale(1.2, 1.2);
         
         _currentIndex = button.tag;
         _titleButtonClicked(button.tag);

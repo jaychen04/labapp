@@ -15,6 +15,7 @@
 {
     self.layer.cornerRadius = cornerRadius;
     self.layer.masksToBounds = YES;
+    self.layer.shouldRasterize = YES;
 }
 
 - (void)setBorderWidth:(CGFloat)width andColor:(UIColor *)color

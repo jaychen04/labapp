@@ -19,6 +19,13 @@
 #import "SwipableViewController.h"
 #import "SoftwareCatalogVC.h"
 #import "SoftwareListVC.h"
+
+@interface DiscoverViewController ()
+
+@property (nonatomic, strong) UIImageView * imageView;
+
+@end
+
 @implementation DiscoverViewController
 
 - (void)dawnAndNightMode
@@ -31,6 +38,12 @@
     });
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    _imageView.hidden = YES;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,10 +51,25 @@
     self.view.backgroundColor = [UIColor colorWithHex:0xF5F5F5];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
+    
+    _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
+    if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
+        return (UIImageView *)view;
+    }
+    for (UIView *subview in view.subviews) {
+        UIImageView *imageView = [self findHairlineImageViewUnder:subview];
+        if (imageView) {
+            return imageView;
+        }
+    }
+    return nil;
 }
 
 #pragma mark - Table view data source
