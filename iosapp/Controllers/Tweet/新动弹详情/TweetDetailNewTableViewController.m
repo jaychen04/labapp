@@ -405,7 +405,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
     _lastSelectedCell.backgroundColor = [UIColor whiteColor];
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.backgroundColor = [UIColor selectCellSColor]; //selectCellSColor
+    cell.backgroundColor = [UIColor selectCellSColor];
     _lastSelectedCell = cell;
     
     return indexPath.section != 0;
