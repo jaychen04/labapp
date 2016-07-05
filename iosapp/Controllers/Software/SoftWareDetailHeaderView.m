@@ -66,6 +66,13 @@
     [rightBtn addTarget:self action:@selector(buttonDidClick:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:rightBtn];
     _rightButton = rightBtn;
+    
+//    update BG Color
+    [_leftButton addTarget:self action:@selector(updateButtonsTouchDownBgColor:) forControlEvents:UIControlEventTouchDown];
+    [_leftButton addTarget:self action:@selector(updateButtonsTouchUpBgColor:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
+    [_rightButton addTarget:self action:@selector(updateButtonsTouchDownBgColor:) forControlEvents:UIControlEventTouchDown];
+    [_rightButton addTarget:self action:@selector(updateButtonsTouchUpBgColor:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchUpOutside];
+    
 }
 
 -(void)setLayoutSubViews{
@@ -88,5 +95,14 @@
         }
     }
 }
+
+#pragma mark --- change BG color 
+-(void)updateButtonsTouchDownBgColor:(UIButton* )btn{
+    btn.backgroundColor = [UIColor colorWithHex:0xeeeeee];
+}
+-(void)updateButtonsTouchUpBgColor:(UIButton* )btn{
+    btn.backgroundColor = [UIColor whiteColor];
+}
+
 
 @end

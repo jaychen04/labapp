@@ -12,6 +12,7 @@
 #import "SoftWareDetailBodyCell.h"
 #import "SoftWareDetailHeaderView.h"
 #import "TweetTableViewController.h"
+#import "recommandBlogTableViewCell.h"
 
 #import "OSCAPI.h"
 #import "Utils.h"
@@ -23,11 +24,18 @@
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
 
+#define SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
+#define RECOMMENDED_HEADERVIEW_HEIGHT 32
 #define HEADERVIEW_HEIGHT 52
+#define Nomal_SoftWare_Logo @"http://www.oschina.net/img/logo/default.gif?t=1451964198000"
+
 static NSString * const softWareDetailCellReuseIdentifier = @"SoftWareDetailCell";
 static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetailBodyCell";
+static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandBlogTableViewCell";
 
-@interface SoftWareViewController () <UITableViewDelegate, UITableViewDataSource,SoftWareDetailHeaderViewDelegate,UIWebViewDelegate>
+@interface SoftWareViewController () <UITableViewDelegate, UITableViewDataSource,SoftWareDetailHeaderViewDelegate,UIWebViewDelegate>{
+    __weak UILabel* _recommandSectionLb;
+}
 
 @property (nonatomic,assign) NSInteger id;
 @property (nonatomic,strong) NSString* networkURL;
@@ -36,6 +44,7 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 @property (nonatomic,weak) MBProgressHUD* HUD;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) SoftWareDetailHeaderView* headerView;
+@property (strong,nonatomic) UIView* recommendedHeaderView;
 @property (nonatomic,assign) CGFloat webHeight;
 
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
@@ -83,6 +92,7 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
     
     [self.tableView registerNib:[UINib nibWithNibName:@"SoftWareDetailCell" bundle:nil] forCellReuseIdentifier:softWareDetailCellReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"SoftWareDetailBodyCell" bundle:nil] forCellReuseIdentifier:softWareDetailBodyCellReuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogTableViewCellReuseIdentifier];
 }
 
 
@@ -94,15 +104,18 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
     [manager GET:_networkURL parameters:nil
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-             NSDictionary* resultDic = responseObject[@"result"];
-             _model = [OSCNewSoftWare mj_objectWithKeyValues:resultDic];
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 _HUD.hidden = YES;
-                 [self.tableView reloadData];
-                 [self updateBottomBtns];
-             });
-    }
+             if ([responseObject[@"code"] integerValue] == 1) {
+                 NSDictionary* resultDic = responseObject[@"result"];
+                 _model = [OSCNewSoftWare mj_objectWithKeyValues:resultDic];
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     _HUD.hidden = YES;
+                     [self.tableView reloadData];
+                     [self updateBottomBtns];
+                 });
+
+             }
+        }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
              _HUD.hidden = YES;
     }];
@@ -151,11 +164,15 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 #pragma mark - UITableViewDataSource
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 2;
+    return self.model.abouts.count > 0 ? 3 : 2;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    if (section == 2) {
+        return self.model.abouts.count;
+    }else{
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,20 +180,48 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
     if (indexPath.section == 0) {
         SoftWareDetailCell *softWareCell = [tableView dequeueReusableCellWithIdentifier:softWareDetailCellReuseIdentifier forIndexPath:indexPath];
         if (self.model.logo.length > 0) {
-            [softWareCell.softImageView sd_setImageWithURL:[NSURL URLWithString:self.model.logo] placeholderImage:[UIImage imageNamed:@"logo_software_default"]];
+            if ([self.model.logo isEqualToString:Nomal_SoftWare_Logo]) {
+                softWareCell.softImageView.image = [UIImage imageNamed:@"logo_software_default"];
+            }else{
+                [softWareCell.softImageView sd_setImageWithURL:[NSURL URLWithString:self.model.logo] placeholderImage:[UIImage imageNamed:@"logo_software_default"]];
+            }
         }
         softWareCell.titleLabel.text = [NSString stringWithFormat:@"%@%@",self.model.extName?:@"",self.model.name?:@""];
         softWareCell.tagImageView.hidden = !self.model.recommend;
         softWareCell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return softWareCell;
-    }else{
+    }else if(indexPath.section == 1){
         SoftWareDetailBodyCell* cell = [tableView dequeueReusableCellWithIdentifier:softWareDetailBodyCellReuseIdentifier forIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.webView.delegate = self;
         [cell.webView loadHTMLString:self.model.body baseURL:[NSBundle mainBundle].resourceURL];
+        [cell configurationRelatedInfo:self.model];
         
         return cell;
+    }else if(indexPath.section == 2){//相关推荐section
+        NSArray* recommandArray = self.model.abouts;
+        OSCNewSoftWareAbouts* currentModel = recommandArray[indexPath.row];
+        RecommandBlogTableViewCell* recommandCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogTableViewCellReuseIdentifier forIndexPath:indexPath];
+        recommandCell.titleLabel.text = currentModel.title;
+        recommandCell.commentCountLabel.text = [NSString stringWithFormat:@"%ld",currentModel.commentCount];
+        recommandCell.viewCountLabel.text = [NSString stringWithFormat:@"%ld",currentModel.viewCount];
+        recommandCell.hiddenLine = self.model.abouts.count - 1 == indexPath.row ? YES : NO;
+        recommandCell.selectedBackgroundView = [[UIView alloc] initWithFrame:recommandCell.frame];
+        recommandCell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+
+        return recommandCell;
+    }else{
+        return nil;
+    }
+}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 2) {
+        NSArray* recommandArray = self.model.abouts;
+        OSCNewSoftWareAbouts* currentModel = recommandArray[indexPath.row];
+        SoftWareViewController* softWareVC =[[SoftWareViewController alloc]initWithSoftWareID:currentModel.id];
+        [self.navigationController pushViewController:softWareVC animated:YES];
     }
 }
 
@@ -184,6 +229,8 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         return HEADERVIEW_HEIGHT;
+    }else if (section == 2){
+        return RECOMMENDED_HEADERVIEW_HEIGHT;
     }else{
         return 0;
     }
@@ -191,6 +238,8 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     if (section == 1) {
         return self.headerView;
+    }else if (section == 2){
+        return self.recommendedHeaderView;
     }else{
         return nil;
     }
@@ -199,8 +248,10 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
         return 80;
-    } else {
-        return _webHeight + 30;
+    }else if(indexPath.section == 1){
+        return _webHeight + 30 + 134;
+    }else{
+        return 60;
     }
 }
 #pragma mark - WebView delegate 
@@ -221,7 +272,9 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
 -(void)updateBottomBtns{
     [_commentButton setTitle:[NSString stringWithFormat:@"评论（%ld）",self.model.commentCount] forState:UIControlStateNormal];
     UIImage* image = self.model.favorite ? [UIImage imageNamed:@"toolbar-starred"] : [UIImage imageNamed:@"ic_fav_normal"];
+    NSString* collectTitle = self.model.favorite ? @"已收藏" : @"收藏" ;
     [_collectButton setImage:image forState:UIControlStateNormal];
+    [_collectButton setTitle:collectTitle forState:UIControlStateNormal];
     
     [self.view setNeedsLayout];
     [self.view layoutIfNeeded];
@@ -298,6 +351,29 @@ static NSString * const softWareDetailBodyCellReuseIdentifier = @"SoftWareDetail
         _headerView = headerView;
     }
 	return _headerView;
+}
+
+- (UIView *)recommendedHeaderView {
+	if(_recommendedHeaderView == nil) {
+        _recommendedHeaderView = [[UIView alloc] initWithFrame:(CGRect){{0,0},{SCREEN_WIDTH,32}}];
+        _recommendedHeaderView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
+        
+        UIView* topLine = [[UIView alloc]initWithFrame:(CGRect){{0,0},{SCREEN_WIDTH,1}}];
+        topLine.backgroundColor = [UIColor colorWithHex:0xc8c7cc];
+        [_recommendedHeaderView addSubview:topLine];
+        UIView* bottomLine = [[UIView alloc]initWithFrame:(CGRect){{0,31},{SCREEN_WIDTH,1}}];
+        bottomLine.backgroundColor = [UIColor colorWithHex:0xc8c7cc];
+        [_recommendedHeaderView addSubview:bottomLine];
+        
+        UILabel* textLabel = [[UILabel alloc]initWithFrame:(CGRect){{16,8},{200,16}}];
+        textLabel.text = @"相关推荐";
+        textLabel.textAlignment = NSTextAlignmentLeft;
+        textLabel.font = [UIFont systemFontOfSize:15];
+        textLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
+        [_recommendedHeaderView addSubview:textLabel];
+        _recommandSectionLb = textLabel;
+	}
+	return _recommendedHeaderView;
 }
 
 @end

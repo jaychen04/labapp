@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+@class OSCNewSoftWare;
 @interface SoftWareDetailBodyCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 
+-(void)configurationRelatedInfo:(OSCNewSoftWare* )softWareModel;
 
 @end

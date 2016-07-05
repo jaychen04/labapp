@@ -89,6 +89,7 @@
                 </variation>
             </tableViewCellContentView>
             <connections>
+                <outlet property="_colorLine" destination="l5w-Cv-K6R" id="egr-UO-2UL"/>
                 <outlet property="commentCountLabel" destination="RQp-mi-216" id="8GY-ml-Rsm"/>
                 <outlet property="titleLabel" destination="BZb-aH-zdu" id="Jk6-Ti-2RQ"/>
                 <outlet property="viewCountLabel" destination="Vt2-6k-JYn" id="8Dw-u8-edY"/>

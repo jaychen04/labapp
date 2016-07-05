@@ -566,10 +566,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             case 1:
             {
                 if (_blogDetailRecommends.count > 0) {
-                    return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
-                        OSCBlogDetailRecommend *blogRecommend = _blogDetailRecommends[indexPath.row];
-                        cell.abouts = blogRecommend;
-                    }];
+                    return 60;
                 }else {
                     if (_blogDetailComments.count > 0) {
                         if (indexPath.row == _blogDetailComments.count) {
@@ -620,12 +617,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 if (_isExistRelatedSoftware) {
                     return 45;
                 }else if (_newsDetails.abouts.count > 0){
-                    return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
-                        if(indexPath.row < _newsDetailRecommends.count) {
-                            OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
-                            cell.abouts = newsRecommend;
-                        }
-                    }];
+                    return 60;
                 }else if (_newsDetailComments.count > 0) {
                     if (_newsDetailComments.count > 0) {
                         if (indexPath.row == _newsDetailComments.count) {
@@ -734,6 +726,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (_blogDetailRecommends.count > 0) {
                         OSCBlogDetailRecommend *about = _blogDetailRecommends[indexPath.row];
                         recommandBlogCell.abouts = about;
+                        recommandBlogCell.hiddenLine = _blogDetailRecommends.count - 1 == indexPath.row ? YES : NO;
                     }
                     
                     recommandBlogCell.selectionStyle = UITableViewCellSelectionStyleDefault;
@@ -863,6 +856,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (_newsDetailRecommends.count > 0) {
                         OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
                         recommandNewsCell.abouts = about;
+                        recommandNewsCell.hiddenLine = _blogDetailRecommends.count - 1 == indexPath.row ? YES : NO;
                     }
                     recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
                     return recommandNewsCell;
