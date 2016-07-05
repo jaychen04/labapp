@@ -20,6 +20,7 @@
 }
 
 -(void)setCommentModel:(OSCComment *)commentModel {
+    self.backgroundColor = [UIColor whiteColor];
     [self.portraitIv loadPortrait:commentModel.portraitURL];
     [self.nameLabel setText:commentModel.author];
     self.interalTimeLabel.attributedText = [Utils newTweetAttributedTimeString:commentModel.pubDate];
@@ -41,11 +42,13 @@
 }
 
 - (void)copyText:(id)sender {
+    self.backgroundColor = [UIColor whiteColor];
     UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
     [pasteBoard setString:_contentLabel.text];
 }
 
 - (void)deleteObject:(id)sender {
+    self.backgroundColor = [UIColor whiteColor];
     _deleteObject(self);
 }
 

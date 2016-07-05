@@ -47,7 +47,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor themeColor];
+    self.view.backgroundColor = [UIColor whiteColor];//[UIColor themeColor]
     
     EmojiPanelVC *emojiPanelVC = [[EmojiPanelVC alloc] initWithPageIndex:0];
     emojiPanelVC.didSelectEmoji = _didSelectEmoji;

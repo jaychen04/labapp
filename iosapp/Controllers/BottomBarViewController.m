@@ -120,7 +120,8 @@
         _emojiPageVC.view.hidden = YES;
         [_editingBar.editView becomeFirstResponder];
         
-        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"toolbar-emoji2"] forState:UIControlStateNormal];
+        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"btn_emoji_normal"] forState:UIControlStateNormal];
+        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"btn_emoji_pressed"] forState:UIControlStateHighlighted];
         _isEmojiPageOnScreen = NO;
     } else {
         [_editingBar.editView resignFirstResponder];
@@ -193,8 +194,8 @@
     
     _emojiPageVC.view.hidden = YES;
     _isEmojiPageOnScreen = NO;
-    [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"toolbar-emoji2"] forState:UIControlStateNormal];
-    
+    [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"btn_emoji_normal"] forState:UIControlStateNormal];
+    [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"btn_emoji_pressed"] forState:UIControlStateHighlighted];
     [self setBottomBarHeight];
 }
 
@@ -291,7 +292,8 @@
         _emojiPageVC.view.hidden = YES;
         _isEmojiPageOnScreen = NO;
         
-        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"toolbar-emoji2"] forState:UIControlStateNormal];
+        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"btn_emoji_normal"] forState:UIControlStateNormal];
+        [_editingBar.inputViewButton setImage:[UIImage imageNamed:@"btn_emoji_pressed"] forState:UIControlStateHighlighted];
         _editingBarYConstraint.constant = 0;
         [self setBottomBarHeight];
     }

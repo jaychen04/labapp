@@ -45,6 +45,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, strong) MBProgressHUD *HUD;
 
+@property (nonatomic, strong) UITableViewCell *lastSelectedCell;
 @property (nonatomic, strong) MBProgressHUD *hud;
 @end
 
@@ -81,6 +82,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetLikeNewCell" bundle:nil] forCellReuseIdentifier:tLikeReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCommentNewCell" bundle:nil] forCellReuseIdentifier:tCommentReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.estimatedRowHeight = 250;
     
     _tweetLikeList = [NSMutableArray new];
     _tweetCommentList = [NSMutableArray new];
@@ -129,12 +131,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     }else {
         if (_tweet.likeCount > 0) {
             UIButton *likeBtn = [(UIButton*)_headerView viewWithTag:1];
-            NSMutableAttributedString *att = [self getSubBtnAttributedStringWithTitle:[NSString stringWithFormat:@"赞(%d)",_tweet.likeCount] isSelected:!_isShowCommentList];
+            NSMutableAttributedString *att = [self getSubBtnAttributedStringWithTitle:[NSString stringWithFormat:@"赞 (%d)",_tweet.likeCount] isSelected:!_isShowCommentList];
             [likeBtn setAttributedTitle:att forState:UIControlStateNormal];
         }
         if (_tweet.commentCount > 0) {
             UIButton *commentBtn = [(UIButton*)_headerView viewWithTag:2];
-            NSMutableAttributedString *att = [self getSubBtnAttributedStringWithTitle:[NSString stringWithFormat:@"评论(%d)",_tweet.commentCount] isSelected:_isShowCommentList];
+            NSMutableAttributedString *att = [self getSubBtnAttributedStringWithTitle:[NSString stringWithFormat:@"评论 (%d)",_tweet.commentCount] isSelected:_isShowCommentList];
             [commentBtn setAttributedTitle:att forState:UIControlStateNormal];
         }
 
@@ -338,33 +340,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         if (!_isShowCommentList) {
             return 56;
         }else {
-            
-            OSCComment *comment = self.tweetCommentList[indexPath.row];
-            
-            if (comment.cellHeight) {return comment.cellHeight;}
-            
-            self.label.font = [UIFont boldSystemFontOfSize:14];
-            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];
-            if (comment.replies.count > 0) {
-                [contentString appendAttributedString:[OSCComment attributedTextFromReplies:comment.replies]];
-            }
-            
-            self.label.font = [UIFont boldSystemFontOfSize:15];
-            [self.label setAttributedText:contentString];
-            __block CGFloat height = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)].height;
-            
-            
-            CGFloat width = self.tableView.frame.size.width - 60;
-            NSArray *references = comment.references;
-            if (references.count > 0) {height += 3;}
-            
-            self.label.font = [UIFont systemFontOfSize:13];
-            [references enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(OSCReference *reference, NSUInteger idx, BOOL *stop) {
-                self.label.text = [NSString stringWithFormat:@"%@\n%@", reference.title, reference.body];
-                height += [self.label sizeThatFits:CGSizeMake(width - (references.count-idx)*8, MAXFLOAT)].height + 13;
-            }];
-            comment.cellHeight = height + 61;
-            return comment.cellHeight;
+            return UITableViewAutomaticDimension;
         }
     }
     return 0;
@@ -398,8 +374,11 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                 [likeCell.portraitIv loadPortrait:likedUser.portraitURL];
                 likeCell.nameLabel.text = likedUser.name;
                 
-                likeCell.portraitIv.tag = likedUser.userID;
-                [likeCell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
+                likeCell.touchButton.tag = likedUser.userID;
+                [likeCell.touchButton addTarget:self action:@selector(likedUserDetails:) forControlEvents:UIControlEventTouchUpInside];
+                
+//                likeCell.portraitIv.tag = likedUser.userID;
+//                [likeCell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
             }
             return likeCell;
         }
@@ -409,14 +388,26 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    OSCComment *comment = _tweetCommentList[indexPath.row];
-    if (self.didCommentSelected) {
-        self.didCommentSelected(comment);
+    if (_isShowCommentList) {
+        OSCComment *comment = _tweetCommentList[indexPath.row];
+        if (self.didCommentSelected) {
+            self.didCommentSelected(comment);
+        }
     }
+//    else {
+//        OSCUser *likedUser = _tweetLikeList[indexPath.row];
+//        UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:likedUser.userID];
+//        [self.navigationController pushViewController:userDetailsVC animated:YES];
+//    }
 }
 #pragma mark -- Copy/Paste.  All three methods must be implemented by the delegate.
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
+    _lastSelectedCell.backgroundColor = [UIColor whiteColor];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor selectCellSColor]; //selectCellSColor
+    _lastSelectedCell = cell;
+    
     return indexPath.section != 0;
 }
 
@@ -449,9 +440,14 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         [cell.contentWebView loadHTMLString:_tweet.body baseURL:[NSBundle mainBundle].resourceURL];
     }
 }
+#pragma  mark -- 用户详情界面
 -(void)pushUserDetails:(UITapGestureRecognizer*)tap {
     [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:tap.view.tag] animated:YES];
 }
+- (void)likedUserDetails:(UIButton*)btn {
+    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:btn.tag] animated:YES];
+}
+
 -(void)likeThisTweet:(UITapGestureRecognizer*)tap {
     UIImageView *likeTagIv = (UIImageView*)tap.view;
     [self praiseTweetAndUpdateTagIv:likeTagIv];
@@ -467,7 +463,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         self.didCommentSelected(comment);
     }
 }
-
+#pragma mark -- 点赞
 - (void)praiseTweetAndUpdateTagIv:(UIImageView*)likeTagIv {
     if (_tweet.tweetID == 0) {
         return;
@@ -573,32 +569,25 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 
 #pragma mark -- 删除动弹
-- (void)setBlockForCommentCell:(TweetCommentNewCell *)cell
-{
+- (void)setBlockForCommentCell:(TweetCommentNewCell *)cell {
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
             return YES;
         } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            
             OSCComment *comment = self.tweetCommentList[indexPath.row];
             int64_t ownID = [Config getOwnID];
-            
             return (comment.authorID == ownID || _tweet.authorID == ownID);
         }
-        
         return NO;
     };
     
     cell.deleteObject = ^ (UITableViewCell *cell) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         OSCComment *comment = self.tweetCommentList[indexPath.row];
-        
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.labelText = @"正在删除评论";
-        
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        
         [manager POST:[NSString stringWithFormat:@"%@%@?", OSCAPI_PREFIX, OSCAPI_COMMENT_DELETE]
            parameters:@{
                         @"catalog": @(3),
