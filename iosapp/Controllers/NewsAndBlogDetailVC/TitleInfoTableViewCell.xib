@@ -61,6 +61,13 @@
                             <constraint firstAttribute="width" constant="10" id="bVZ-2q-3Wq"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l8x-kH-UwR" userLabel="color_View">
+                        <rect key="frame" x="16" y="72" width="318" height="1"/>
+                        <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="tDk-uZ-Y3y"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="3m0-P3-aEA" firstAttribute="leading" secondItem="9TD-Sq-pvv" secondAttribute="leading" id="1If-lf-MDt"/>
@@ -75,12 +82,15 @@
                     <constraint firstItem="9TD-Sq-pvv" firstAttribute="top" secondItem="PcZ-s2-pbT" secondAttribute="bottom" constant="1" id="VQz-sP-4yx"/>
                     <constraint firstItem="CfH-DQ-ehX" firstAttribute="leading" secondItem="3m0-P3-aEA" secondAttribute="trailing" constant="3" id="X5N-Sw-vKi"/>
                     <constraint firstItem="CfH-DQ-ehX" firstAttribute="centerY" secondItem="Gmf-XR-MbB" secondAttribute="centerY" id="aZO-sv-Veu"/>
+                    <constraint firstItem="l8x-kH-UwR" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="eNK-kg-bpj"/>
                     <constraint firstItem="Gmf-XR-MbB" firstAttribute="leading" secondItem="xG1-ne-Mre" secondAttribute="trailing" constant="3" id="ezF-1t-pbG"/>
                     <constraint firstAttribute="trailing" secondItem="9TD-Sq-pvv" secondAttribute="trailing" constant="16" id="h5f-QR-bv7"/>
                     <constraint firstItem="9TD-Sq-pvv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="qau-4j-SWH"/>
                     <constraint firstItem="CfH-DQ-ehX" firstAttribute="top" secondItem="9TD-Sq-pvv" secondAttribute="bottom" constant="5" id="ugx-rB-27R"/>
+                    <constraint firstAttribute="trailing" secondItem="l8x-kH-UwR" secondAttribute="trailing" id="vcD-hS-K3M"/>
                     <constraint firstAttribute="trailing" secondItem="9TD-Sq-pvv" secondAttribute="trailing" constant="16" id="ve1-bj-IN7"/>
                     <constraint firstAttribute="bottom" secondItem="CfH-DQ-ehX" secondAttribute="bottom" constant="16" id="yZ9-oE-u0O"/>
+                    <constraint firstAttribute="bottom" secondItem="l8x-kH-UwR" secondAttribute="bottom" id="zod-Ml-LSq"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -90,7 +100,7 @@
                 <outlet property="recommendTagIv" destination="zxJ-fn-pfm" id="CPe-wP-e67"/>
                 <outlet property="viewCountLabel" destination="CfH-DQ-ehX" id="BMx-ci-oZ3"/>
             </connections>
-            <point key="canvasLocation" x="324" y="365"/>
+            <point key="canvasLocation" x="175" y="352"/>
         </tableViewCell>
     </objects>
     <resources>

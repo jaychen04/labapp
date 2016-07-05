@@ -222,7 +222,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark -- 获取评论cell的高度
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
-//    return UITableViewAutomaticDimension;
+    return UITableViewAutomaticDimension;
     
     UILabel *label = [UILabel alloc];
     label.font = [UIFont systemFontOfSize:14];
@@ -633,12 +633,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             case 2:
             {
                 if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
-                    return [tableView fd_heightForCellWithIdentifier:recommandBlogReuseIdentifier configuration:^(RecommandBlogTableViewCell *cell) {
-                        if(indexPath.row < _newsDetailRecommends.count) {
-                            OSCBlogDetailRecommend *newsRecommend = _newsDetailRecommends[indexPath.row];
-                            cell.abouts = newsRecommend;
-                        }
-                    }];
+                    return 60;
                 }else {
                     if (_newsDetailComments.count > 0) {
                         if (indexPath.row == _newsDetailComments.count) {
@@ -856,7 +851,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (_newsDetailRecommends.count > 0) {
                         OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
                         recommandNewsCell.abouts = about;
-                        recommandNewsCell.hiddenLine = _blogDetailRecommends.count - 1 == indexPath.row ? YES : NO;
+                        recommandNewsCell.hiddenLine = _newsDetailRecommends.count - 1 == indexPath.row ? YES : NO;
                     }
                     recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
                     return recommandNewsCell;
@@ -913,6 +908,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (indexPath.row < _newsDetailRecommends.count) {
                         OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
                         recommandNewsCell.abouts = about;
+                        recommandNewsCell.hiddenLine = _newsDetailRecommends.count - 1 == indexPath.row ? YES : NO;
+
                     }
                     recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
                     return recommandNewsCell;
