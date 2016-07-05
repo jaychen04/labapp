@@ -42,7 +42,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RHe-pd-xia" userLabel="contentLabel">
-                        <rect key="frame" x="16" y="53" width="327" height="15"/>
+                        <rect key="frame" x="16" y="53" width="319" height="15"/>
                         <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="14"/>
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -55,7 +55,7 @@
                     <constraint firstItem="YlW-Be-4h2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="OFd-lN-NZl"/>
                     <constraint firstItem="RHe-pd-xia" firstAttribute="top" secondItem="YlW-Be-4h2" secondAttribute="bottom" constant="7" id="OHy-pW-6Ms"/>
                     <constraint firstAttribute="bottomMargin" secondItem="RHe-pd-xia" secondAttribute="bottom" constant="8" id="PZG-P3-IoF"/>
-                    <constraint firstItem="RHe-pd-xia" firstAttribute="trailing" secondItem="Uo3-JL-wWQ" secondAttribute="trailing" constant="8" id="QUQ-Ys-oEb"/>
+                    <constraint firstItem="RHe-pd-xia" firstAttribute="trailing" secondItem="Uo3-JL-wWQ" secondAttribute="trailing" id="QUQ-Ys-oEb"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Uo3-JL-wWQ" secondAttribute="trailing" constant="8" id="ZoV-Tp-9AE"/>
                     <constraint firstItem="D3Y-2g-zVw" firstAttribute="leading" secondItem="YlW-Be-4h2" secondAttribute="trailing" constant="8" id="cfH-J6-Atl"/>
                     <constraint firstItem="RHe-pd-xia" firstAttribute="leading" secondItem="YlW-Be-4h2" secondAttribute="leading" id="mMA-Yi-xrt"/>
