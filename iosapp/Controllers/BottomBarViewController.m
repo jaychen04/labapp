@@ -45,7 +45,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor themeColor];
+    self.view.backgroundColor = [UIColor whiteColor];  //themeColor
     
     [self setup];
 }
