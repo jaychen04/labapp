@@ -204,8 +204,8 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
         OSCNewSoftWareAbouts* currentModel = recommandArray[indexPath.row];
         RecommandBlogTableViewCell* recommandCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogTableViewCellReuseIdentifier forIndexPath:indexPath];
         recommandCell.titleLabel.text = currentModel.title;
-        recommandCell.commentCountLabel.text = [NSString stringWithFormat:@"%ld",currentModel.commentCount];
-        recommandCell.viewCountLabel.text = [NSString stringWithFormat:@"%ld",currentModel.viewCount];
+        recommandCell.commentCountLabel.text = [NSString stringWithFormat:@"%ld",(long)currentModel.commentCount];
+        recommandCell.viewCountLabel.text = [NSString stringWithFormat:@"%ld",(long)currentModel.viewCount];
         recommandCell.hiddenLine = self.model.abouts.count - 1 == indexPath.row ? YES : NO;
         recommandCell.selectedBackgroundView = [[UIView alloc] initWithFrame:recommandCell.frame];
         recommandCell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];

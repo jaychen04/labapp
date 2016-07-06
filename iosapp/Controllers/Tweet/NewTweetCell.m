@@ -126,7 +126,7 @@
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(69);
-        make.top.equalTo(_tweetImageView.mas_bottom).with.offset(6);
+        make.top.equalTo(_tweetImageView.mas_bottom).with.offset(3);
         make.bottom.equalTo(self.contentView).with.offset(-16);
     }];
     
@@ -192,9 +192,15 @@
         _tweetImageView.hidden = NO;
         [_tweetImageView loadPortrait:tweet.smallImgURL];
 //        [self initImagesSubview];
+        [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tweetImageView.mas_bottom).with.offset(8);
+        }];
     } else {
         _imageBackView.hidden = YES;
         _tweetImageView.hidden = YES;
+        [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tweetImageView.mas_bottom).with.offset(0);
+        }];
     }
     
 }
