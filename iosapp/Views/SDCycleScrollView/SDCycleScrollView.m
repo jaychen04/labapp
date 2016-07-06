@@ -446,7 +446,7 @@ NSString * const ID = @"cycleCell";
         }
         size = [pageControl sizeForNumberOfPages:self.imagePathsGroup.count];
     } else {
-        size = CGSizeMake(self.imagePathsGroup.count * self.pageControlDotSize.width * 1.2, self.pageControlDotSize.height);
+        size = CGSizeMake(self.imagePathsGroup.count * self.pageControlDotSize.width * 0.5, self.pageControlDotSize.height);
     }
     CGFloat x = (self.sd_width - size.width) * 0.5;
     if (self.pageControlAliment == SDCycleScrollViewPageContolAlimentRight) {
@@ -459,7 +459,8 @@ NSString * const ID = @"cycleCell";
         [pageControl sizeToFit];
     }
     
-    self.pageControl.frame = CGRectMake(x, y, size.width, size.height);
+    self.pageControl.frame = CGRectMake(x - 16, y, size.width, size.height);
+    NSLog(@"%f,%f",self.pageControl.sd_width,self.pageControl.sd_height);
     self.pageControl.hidden = !_showPageControl;
     
     if (self.backgroundImageView) {
