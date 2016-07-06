@@ -13,7 +13,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [_portraitIv.layer setCornerRadius:16];
-    _portraitIv.userInteractionEnabled = YES;
+//    _portraitIv.userInteractionEnabled = YES;
+//    _nameLabel.userInteractionEnabled = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 

@@ -32,7 +32,7 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor themeColor];
+    self.view.backgroundColor = [UIColor whiteColor]; //[UIColor themeColor]
     
     UICollectionViewFlowLayout *flowLayout = [UICollectionViewFlowLayout new];
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
@@ -42,7 +42,7 @@
     
     _emojiCollectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:flowLayout];
     [_emojiCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"EmojiCell"];
-    _emojiCollectionView.backgroundColor = [UIColor themeColor];
+    _emojiCollectionView.backgroundColor = [UIColor whiteColor]; //[UIColor themeColor]
     _emojiCollectionView.scrollEnabled = NO;
     _emojiCollectionView.dataSource = self;
     _emojiCollectionView.delegate = self;
