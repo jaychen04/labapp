@@ -148,6 +148,7 @@ static NSString* const reuseIdentifier_text = @"NewTweetTextCell";
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     self.tableView.estimatedRowHeight = 160;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
     [NewTweetCell initContetTextView:_textView];

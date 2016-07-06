@@ -10,7 +10,9 @@
 #import "Utils.h"
 #import <Masonry.h>
 
-@implementation NewTweetCell
+@implementation NewTweetCell{
+    __weak UIView* _colorLine;
+}
 
 #pragma mark - 留白处理frame算高
 /**
@@ -95,6 +97,11 @@
     _commentCountLabel.font = [UIFont systemFontOfSize:12];
     _commentCountLabel.textColor = [UIColor newAssistTextColor];
     [self.contentView addSubview:_commentCountLabel];
+    
+    UIView* colorView = [[UIView alloc]init];
+    colorView.backgroundColor = [UIColor separatorColor];
+    _colorLine = colorView;
+    [self.contentView addSubview:colorView];
 }
 
 - (void)setLayout
@@ -126,7 +133,7 @@
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(69);
-        make.top.equalTo(_tweetImageView.mas_bottom).with.offset(6);
+        make.top.equalTo(_tweetImageView.mas_bottom).with.offset(3);
         make.bottom.equalTo(self.contentView).with.offset(-16);
     }];
     
@@ -152,6 +159,11 @@
         make.right.equalTo(_likeCountLabel.mas_left).with.offset(-5);
     }];
 
+    [_colorLine mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(16);
+        make.bottom.and.right.equalTo(self.contentView);
+        make.height.equalTo(@0.5);
+    }];
 }
 
 + (void)initContetTextView:(UITextView*)textView
@@ -192,9 +204,15 @@
         _tweetImageView.hidden = NO;
         [_tweetImageView loadPortrait:tweet.smallImgURL];
 //        [self initImagesSubview];
+        [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tweetImageView.mas_bottom).with.offset(8);
+        }];
     } else {
         _imageBackView.hidden = YES;
         _tweetImageView.hidden = YES;
+        [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_tweetImageView.mas_bottom).with.offset(0);
+        }];
     }
     
 }
