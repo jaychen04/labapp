@@ -45,7 +45,7 @@
     
     _editView = [[GrowingTextView alloc] initWithPlaceholder:@"说点什么"];
     _editView.returnKeyType = UIReturnKeySend;
-    [_editView setCornerRadius:5.0];
+    [_editView setCornerRadius:4.0];
     
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
@@ -55,13 +55,13 @@
         _inputViewButton.backgroundColor = [UIColor clearColor];
         _editView.backgroundColor = [UIColor colorWithRed:0.17 green:0.17 blue:0.17 alpha:1.0];
     } else {
-        self.barTintColor = [UIColor colorWithRed:246.0/255 green:246.0/255 blue:246.0/255 alpha:1.0];
-        [_editView setBorderWidth:1.0f andColor:[UIColor colorWithHex:0xC8C8CD]];
+        self.barTintColor = [UIColor whiteColor];    
+        [_editView setBorderWidth:0.5f andColor:[UIColor colorWithHex:0xc7c7cc]];
         _modeSwitchButton.backgroundColor = [UIColor clearColor];
         _inputViewButton.backgroundColor = [UIColor clearColor];
-        _editView.backgroundColor = [UIColor colorWithHex:0xF5FAFA];
+        _editView.backgroundColor = [UIColor clearColor];    //0xF5FAFA
     }
-    _editView.textColor = [UIColor titleColor];
+    _editView.textColor = [UIColor blackColor];
     
     [self addSubview:_editView];
     [self addSubview:_modeSwitchButton];
