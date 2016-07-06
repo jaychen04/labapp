@@ -10,7 +10,9 @@
 #import "Utils.h"
 #import <Masonry.h>
 
-@implementation NewTweetCell
+@implementation NewTweetCell{
+    __weak UIView* _colorLine;
+}
 
 #pragma mark - 留白处理frame算高
 /**
@@ -95,6 +97,11 @@
     _commentCountLabel.font = [UIFont systemFontOfSize:12];
     _commentCountLabel.textColor = [UIColor newAssistTextColor];
     [self.contentView addSubview:_commentCountLabel];
+    
+    UIView* colorView = [[UIView alloc]init];
+    colorView.backgroundColor = [UIColor separatorColor];
+    _colorLine = colorView;
+    [self.contentView addSubview:colorView];
 }
 
 - (void)setLayout
@@ -152,6 +159,11 @@
         make.right.equalTo(_likeCountLabel.mas_left).with.offset(-5);
     }];
 
+    [_colorLine mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.contentView).offset(16);
+        make.bottom.and.right.equalTo(self.contentView);
+        make.height.equalTo(@0.5);
+    }];
 }
 
 + (void)initContetTextView:(UITextView*)textView
