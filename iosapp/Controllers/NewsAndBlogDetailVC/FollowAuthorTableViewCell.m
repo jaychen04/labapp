@@ -15,6 +15,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    _followBtn.layer.contentsScale = [UIScreen mainScreen].scale;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

@@ -34,7 +34,7 @@
 #import <TOWebViewController.h>
 
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
-#define OSC_BANNER_HEIGHT 120
+#define OSC_BANNER_HEIGHT 125
 
 static NSString * const informationReuseIdentifier = @"InformationTableViewCell";
 
@@ -438,7 +438,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 - (SDCycleScrollView *)cycleScrollView {
 	if(_cycleScrollView == nil) {
         _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:(CGRect){{0,0},{OSC_SCREEN_WIDTH,OSC_BANNER_HEIGHT}} delegate:self placeholderImage:[UIImage imageNamed:@""]];
-        _cycleScrollView.pageControlDotSize = CGSizeMake(5, 5);
+        _cycleScrollView.pageControlDotSize = CGSizeMake(3, 10);
         _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
         _cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
         _cycleScrollView.pageDotColor = [UIColor whiteColor];
