@@ -7,7 +7,7 @@
 //
 
 #import "PlaceholderTextView.h"
-
+#import "UIColor+Util.h"
 static NSString * const kTextKey = @"text";
 
 
@@ -68,7 +68,7 @@ static NSString * const kTextKey = @"text";
     _placeholderView.contentInset = self.contentInset;
     _placeholderView.contentOffset = self.contentOffset;
     _placeholderView.textContainerInset = self.textContainerInset;
-    _placeholderView.textColor = [UIColor lightGrayColor];
+    _placeholderView.textColor = [UIColor colorWithHex:0xc8c8ce];
     _placeholderView.backgroundColor = [UIColor clearColor];
     [self addSubview:_placeholderView];
     
