@@ -566,7 +566,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             case 1:
             {
                 if (_blogDetailRecommends.count > 0) {
-                    return 60;
+                    return indexPath.row == _blogDetailRecommends.count-1 ? 72 : 60;
                 }else {
                     if (_blogDetailComments.count > 0) {
                         if (indexPath.row == _blogDetailComments.count) {
@@ -617,7 +617,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 if (_isExistRelatedSoftware) {
                     return 45;
                 }else if (_newsDetails.abouts.count > 0){
-                    return 60;
+                    return indexPath.row == _newsDetails.abouts.count-1 ? 72 : 60;
                 }else if (_newsDetailComments.count > 0) {
                     if (_newsDetailComments.count > 0) {
                         if (indexPath.row == _newsDetailComments.count) {
@@ -633,7 +633,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             case 2:
             {
                 if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
-                    return 60;
+                    return indexPath.row == _newsDetails.abouts.count-1 ? 72 : 60;
                 }else {
                     if (_newsDetailComments.count > 0) {
                         if (indexPath.row == _newsDetailComments.count) {
