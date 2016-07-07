@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g48-Mg-XQv">
-                        <rect key="frame" x="16" y="8" width="288" height="27"/>
+                        <rect key="frame" x="16" y="16" width="288" height="11"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.41568627450980389" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -30,12 +30,12 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="g48-Mg-XQv" secondAttribute="trailing" constant="16" id="0an-Ka-XvG"/>
-                    <constraint firstAttribute="bottom" secondItem="g48-Mg-XQv" secondAttribute="bottom" constant="8" id="XH4-H2-hyR"/>
+                    <constraint firstAttribute="bottom" secondItem="g48-Mg-XQv" secondAttribute="bottom" constant="16" id="XH4-H2-hyR"/>
                     <constraint firstItem="g48-Mg-XQv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="YKO-bv-tw3"/>
                     <constraint firstAttribute="bottom" secondItem="tlL-4m-Grc" secondAttribute="bottom" id="YVc-8j-reu"/>
                     <constraint firstAttribute="trailing" secondItem="tlL-4m-Grc" secondAttribute="trailing" id="cW9-u2-jRt"/>
                     <constraint firstItem="tlL-4m-Grc" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="odY-ZZ-S1J"/>
-                    <constraint firstItem="g48-Mg-XQv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="wx5-ft-cfs"/>
+                    <constraint firstItem="g48-Mg-XQv" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="wx5-ft-cfs"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
