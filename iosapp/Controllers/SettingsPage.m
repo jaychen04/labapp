@@ -59,9 +59,9 @@ static BOOL isNightMode;
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if ([Config getOwnID] == 0) {
-        return 3;
+        return 2;
     }
-    return 4;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -70,7 +70,6 @@ static BOOL isNightMode;
         case 0: return 1;
         case 1: return 3;
         case 2: return 1;
-        case 3: return 1;
             
         default: return 0;
     }
@@ -80,11 +79,10 @@ static BOOL isNightMode;
 {
     UITableViewCell *cell = [UITableViewCell new];
 
-    NSString *nightModeStr = [Config getMode]?@"日间模式":@"夜间模式";
+//    NSString *nightModeStr = [Config getMode]?@"日间模式":@"夜间模式";
     NSArray *titles = @[
                         @[@"清除缓存", @"消息通知"],
                         @[@"给应用评分", @"关于", @"开源许可"],
-                        @[nightModeStr],
                         @[@"注销登录"],
                         ];
     cell.textLabel.text = titles[indexPath.section][indexPath.row];
@@ -121,23 +119,6 @@ static BOOL isNightMode;
             [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
         }
     }else if (section == 2) {
-        isNightMode = [Config getMode];
-        if (isNightMode) {
-            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = NO;
-        } else {
-            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = YES;
-        }
-        
-        self.tableView.backgroundColor = [UIColor themeColor];
-        self.tableView.separatorColor = [UIColor separatorColor];
-
-        [Config saveWhetherNightMode:!isNightMode];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"dawnAndNight" object:nil];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-        });
-        
-    }else if (section == 3) {
         [Config clearProfile];
         [Config removeTeamInfo];
         [Config clearCookie];
@@ -159,6 +140,26 @@ static BOOL isNightMode;
             [self.tableView reloadData];
         });
     }
+
+    //夜间模式
+//    else if (section == 2) {
+//        isNightMode = [Config getMode];
+//        if (isNightMode) {
+//            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = NO;
+//        } else {
+//            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = YES;
+//        }
+//        
+//        self.tableView.backgroundColor = [UIColor themeColor];
+//        self.tableView.separatorColor = [UIColor separatorColor];
+//        
+//        [Config saveWhetherNightMode:!isNightMode];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"dawnAndNight" object:nil];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.tableView reloadData];
+//        });
+//        
+//    }
 }
 
 -(void)viewDidLayoutSubviews

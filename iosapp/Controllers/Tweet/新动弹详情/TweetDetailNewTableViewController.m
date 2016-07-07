@@ -325,14 +325,13 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     }
     return 0;
 }
--(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
     return section==0?0:40;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return self.headerView;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         return [tableView fd_heightForCellWithIdentifier:tDetailReuseIdentifier configuration:^(TweetsDetailNewCell *cell) {
         }] + _webViewHeight + 10;
