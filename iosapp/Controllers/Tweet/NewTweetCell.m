@@ -58,6 +58,7 @@
     
     _nameLabel = [UILabel new];
     _nameLabel.font = [UIFont boldSystemFontOfSize:15];
+    _nameLabel.numberOfLines = 1;
     _nameLabel.textColor = [UIColor newTitleColor];
     [self.contentView addSubview:_nameLabel];
     
@@ -117,6 +118,7 @@
     [_nameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(self.contentView).with.offset(16);
         make.left.equalTo(_userPortrait.mas_right).with.offset(8);
+        make.right.equalTo(self.contentView).with.offset(-16);
     }];
     
     [_descTextView mas_makeConstraints:^(MASConstraintMaker *make) {

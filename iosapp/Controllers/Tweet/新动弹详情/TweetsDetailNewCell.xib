@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lQf-lL-JOf" userLabel="nameLabel">
-                        <rect key="frame" x="69" y="26" width="38" height="21"/>
+                        <rect key="frame" x="69" y="26" width="290" height="21"/>
                         <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="15"/>
                         <color key="textColor" red="0.066666666669999999" green="0.066666666669999999" blue="0.066666666669999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -63,6 +63,7 @@
                     <constraint firstItem="E3U-tb-gaa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="0vf-kp-k4Z"/>
                     <constraint firstItem="2A5-x5-QAC" firstAttribute="leading" secondItem="7zs-0w-DN4" secondAttribute="trailing" constant="20" id="48O-eP-YqL"/>
                     <constraint firstItem="o6f-2t-HvF" firstAttribute="leading" secondItem="bR1-kd-sg2" secondAttribute="trailing" constant="11" id="7LM-el-yfX"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="lQf-lL-JOf" secondAttribute="trailing" constant="16" id="FOC-WY-tPY"/>
                     <constraint firstItem="7zs-0w-DN4" firstAttribute="centerY" secondItem="2A5-x5-QAC" secondAttribute="centerY" id="GwC-To-bd0"/>
                     <constraint firstItem="wZC-OR-R5b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Gzq-Kn-El5"/>
                     <constraint firstAttribute="bottomMargin" secondItem="bR1-kd-sg2" secondAttribute="bottom" constant="8" id="IYX-NK-cUY"/>
