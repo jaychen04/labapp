@@ -28,8 +28,8 @@
                             <constraint firstAttribute="width" constant="45" id="Uok-u3-Feg"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VaZ-1H-DoH">
-                        <rect key="frame" x="73" y="16" width="231" height="22"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VaZ-1H-DoH">
+                        <rect key="frame" x="73" y="16" width="231" height="45"/>
                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <color key="textColor" red="0.066666666666666666" green="0.066666666666666666" blue="0.066666666666666666" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -39,11 +39,13 @@
                 <constraints>
                     <constraint firstItem="RSI-eR-wDa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="36L-xu-Osz"/>
                     <constraint firstItem="VaZ-1H-DoH" firstAttribute="top" secondItem="RSI-eR-wDa" secondAttribute="top" id="Aty-pQ-SfS"/>
+                    <constraint firstAttribute="bottom" secondItem="RSI-eR-wDa" secondAttribute="bottom" constant="14" id="BIJ-4O-h2t"/>
                     <constraint firstItem="VaZ-1H-DoH" firstAttribute="leading" secondItem="RSI-eR-wDa" secondAttribute="trailing" constant="12" id="DQX-Ys-Qm1"/>
                     <constraint firstItem="tuS-n7-M6u" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="Q3v-h1-IjU"/>
                     <constraint firstItem="tuS-n7-M6u" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="bcY-r5-Y2n"/>
                     <constraint firstItem="RSI-eR-wDa" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="hVj-H3-XpV"/>
                     <constraint firstAttribute="trailing" secondItem="VaZ-1H-DoH" secondAttribute="trailing" constant="16" id="sYd-zC-TIf"/>
+                    <constraint firstAttribute="bottom" secondItem="VaZ-1H-DoH" secondAttribute="bottom" constant="14" id="uBy-Qg-ezy"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

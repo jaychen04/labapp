@@ -64,7 +64,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.commentTextField.delegate = self;
-    self.tableView.separatorColor = [UIColor separatorColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
     [self getCommentData:NO];
@@ -188,7 +188,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 {
     if (_comments.count > indexPath.row) {
         UILabel *label = [UILabel new];
-        label.font = [UIFont systemFontOfSize:14];
+        label.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
         

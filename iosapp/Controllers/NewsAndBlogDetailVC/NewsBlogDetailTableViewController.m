@@ -225,13 +225,13 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     return UITableViewAutomaticDimension;
     
     UILabel *label = [UILabel alloc];
-    label.font = [UIFont systemFontOfSize:14];
+    label.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
     label.numberOfLines = 0;
     label.lineBreakMode = NSLineBreakByWordWrapping;
     
     label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
     
-    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height;
+    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height - 5;
 
 //    height += 7;
     OSCNewCommentRefer *refer = comment.refer;
@@ -549,6 +549,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         if (_blogDetails.abstract.length > 0) {
                             return [tableView fd_heightForCellWithIdentifier:abstractReuseIdentifier configuration:^(webAndAbsTableViewCell *cell) {
                                 cell.abstractLabel.text = _blogDetails.abstract;
+//                                [cell setAbstractText:_blogDetails.abstract];
                             }];
                         } else if (_blogDetails.abstract.length == 0) {
                             return _webViewHeight+30;
@@ -691,6 +692,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (_blogDetails.abstract.length > 0) {
                         webAndAbsTableViewCell *abstractCell = [tableView dequeueReusableCellWithIdentifier:abstractReuseIdentifier forIndexPath:indexPath];
                         abstractCell.abstractLabel.text = _blogDetails.abstract;
+//                        [abstractCell setAbstractText:_blogDetails.abstract];
                         abstractCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
                         return abstractCell;
