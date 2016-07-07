@@ -45,12 +45,12 @@
     [self.contentView addSubview:_commentPortrait];
     
     _nameLabel = [UILabel new];
-    _nameLabel.font = [UIFont systemFontOfSize:15];
+    _nameLabel.font = [UIFont fontWithName:@"PingFangSC-Light" size:15];
     _nameLabel.textColor = [UIColor colorWithHex:0x111111];
     [self.contentView addSubview:_nameLabel];
     
     _timeLabel = [UILabel new];
-    _timeLabel.font = [UIFont systemFontOfSize:10];
+    _timeLabel.font = [UIFont fontWithName:@"PingFangSC-Light" size:10];
     _timeLabel.textColor = [UIColor colorWithHex:0x9d9d9d];
     [self.contentView addSubview:_timeLabel];
     
@@ -70,7 +70,7 @@
     [self.contentView addSubview:_bestImageView];
     
     UIView* colorView = [[UIView alloc]init];
-    colorView.backgroundColor = [UIColor colorWithHex:0xc8c7cc];
+    colorView.backgroundColor = [UIColor newSeparatorColor];
     [self.contentView addSubview:colorView];
     _colorView = colorView;
     
@@ -92,12 +92,12 @@
         make.left.equalTo(_nameLabel);
     }];
     [_referCommentView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_timeLabel.mas_bottom).offset(2);
+        make.top.equalTo(_commentPortrait.mas_bottom).offset(7);
         make.left.equalTo(_commentPortrait);
         make.right.equalTo(self.contentView).offset(-16);
     }];
     [_contentTextView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(_referCommentView.mas_bottom).offset(2);
+        make.top.equalTo(_referCommentView.mas_bottom).offset(7);
         make.left.equalTo(_commentPortrait);
         make.right.equalTo(self.contentView).offset(-16);
         make.bottom.equalTo(self.contentView).offset(-16);
@@ -175,7 +175,7 @@
 - (void)setUpContetTextView:(UITextView*)textView
 {
     textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
-    textView.font = [UIFont systemFontOfSize:14];
+    textView.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
     textView.textColor = [UIColor colorWithHex:0x111111];
     textView.editable = NO;
     textView.scrollEnabled = NO;
@@ -224,7 +224,7 @@
         [_referCommentView addSubview:subContainer];
         
         UILabel *contentLabel = [UILabel new];
-        contentLabel.font = [UIFont systemFontOfSize:14];
+        contentLabel.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
         contentLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
         contentLabel.numberOfLines = 0;
         contentLabel.lineBreakMode = NSLineBreakByWordWrapping;
