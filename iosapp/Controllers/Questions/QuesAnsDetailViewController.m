@@ -382,6 +382,14 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
     headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
     
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    topLineView.backgroundColor = [UIColor separatorColor];
+    [headerView addSubview:topLineView];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    bottomLineView.backgroundColor = [UIColor separatorColor];
+    [headerView addSubview:bottomLineView];
+    
     UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
     titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
     titleLabel.tag = 8;
