@@ -287,9 +287,11 @@ NSString * const kTeamsArray = @"teams";
 }
 + (BOOL)getMode
 {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    return NO;      //去掉夜间模式
     
-    return [[userDefaults objectForKey:@"mode"] boolValue];
+//    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+//    
+//    return [[userDefaults objectForKey:@"mode"] boolValue];
 }
 
 @end
