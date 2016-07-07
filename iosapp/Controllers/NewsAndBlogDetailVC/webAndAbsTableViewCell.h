@@ -13,6 +13,8 @@
 
 @property (nonatomic, weak) IBOutlet UILabel *abstractLabel;
 
+- (void)setAbstractText:(NSString* )abstract;
+
 @property (nonatomic, strong) OSCBlogDetail *blogDetail;
 
 @end

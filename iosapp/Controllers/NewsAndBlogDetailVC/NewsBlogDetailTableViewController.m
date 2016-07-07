@@ -549,6 +549,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         if (_blogDetails.abstract.length > 0) {
                             return [tableView fd_heightForCellWithIdentifier:abstractReuseIdentifier configuration:^(webAndAbsTableViewCell *cell) {
                                 cell.abstractLabel.text = _blogDetails.abstract;
+//                                [cell setAbstractText:_blogDetails.abstract];
                             }];
                         } else if (_blogDetails.abstract.length == 0) {
                             return _webViewHeight+30;
@@ -691,6 +692,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     if (_blogDetails.abstract.length > 0) {
                         webAndAbsTableViewCell *abstractCell = [tableView dequeueReusableCellWithIdentifier:abstractReuseIdentifier forIndexPath:indexPath];
                         abstractCell.abstractLabel.text = _blogDetails.abstract;
+//                        [abstractCell setAbstractText:_blogDetails.abstract];
                         abstractCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
                         return abstractCell;

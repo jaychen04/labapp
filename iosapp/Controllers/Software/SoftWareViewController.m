@@ -271,7 +271,7 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
 
 -(void)updateBottomBtns{
     [_commentButton setTitle:[NSString stringWithFormat:@"评论（%ld）",self.model.commentCount] forState:UIControlStateNormal];
-    UIImage* image = self.model.favorite ? [UIImage imageNamed:@"toolbar-starred"] : [UIImage imageNamed:@"ic_fav_normal"];
+    UIImage* image = self.model.favorite ? [UIImage imageNamed:@"ic_faved_normal"] : [UIImage imageNamed:@"ic_fav_normal"];
     NSString* collectTitle = self.model.favorite ? @"已收藏" : @"收藏" ;
     [_collectButton setImage:image forState:UIControlStateNormal];
     [_collectButton setTitle:collectTitle forState:UIControlStateNormal];
