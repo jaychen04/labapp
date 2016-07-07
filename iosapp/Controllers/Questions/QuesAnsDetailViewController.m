@@ -74,7 +74,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
-    self.tableView.separatorColor = [UIColor separatorColor];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsDetailHeadCell" bundle:nil] forCellReuseIdentifier:quesAnsDetailHeadReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:quesAnsCommentHeadReuseIdentifier];
     
@@ -303,9 +303,9 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     } else if (indexPath.section == 1) {
         if (_comments.count > 0) {
             UILabel *label = [UILabel new];
-            label.font = [UIFont systemFontOfSize:14];
+            label.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
             label.numberOfLines = 0;
-            label.lineBreakMode = NSLineBreakByWordWrapping;
+            label.lineBreakMode = NSLineBreakByCharWrapping;
             
             OSCNewComment *quesComment = _comments[indexPath.row];
             
@@ -313,7 +313,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
             
             CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
             
-            return height + 71;
+            return height + 73;
         } else {
             return 0;
         }
