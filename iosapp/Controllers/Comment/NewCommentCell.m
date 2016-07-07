@@ -105,53 +105,9 @@
     [_colorView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(16);
         make.right.and.bottom.equalTo(self.contentView);
-        make.height.equalTo(@1);
+        make.height.equalTo(@0.5);
     }];
-    
-//    for (UIView *view in self.contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-//    NSDictionary *views = NSDictionaryOfVariableBindings(_commentPortrait, _nameLabel, _timeLabel, _referCommentView, _contentTextView, _commentButton, _bestImageView);
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentPortrait(32)]-<=7-[_referCommentView]-7-[_contentTextView]-16-|"
-//                                                                             options:NSLayoutFormatAlignAllLeft
-//                                                                             metrics:nil views:views]];
-//    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-2-[_timeLabel]"
-//                                                                             options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight
-//                                                                             metrics:nil views:views]];
-//    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_timeLabel]-<=7-[_referCommentView]-7-[_contentTextView]-16-|"
-//                                                                             options:0
-//                                                                             metrics:nil views:views]];
-//    
-//    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_commentButton]"
-//                                                                             options:0
-//                                                                             metrics:nil
-//                                                                               views:views]];
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_bestImageView(20)]"
-//                                                                             options:0
-//                                                                             metrics:nil
-//                                                                               views:views]];
-//    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_commentButton(30)]-10-|"
-//                                                                             options:0
-//                                                                             metrics:nil
-//                                                                               views:views]];
-//    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_commentPortrait(32)]-8-[_nameLabel]-8-[_bestImageView(67)]|"
-//                                                                             options:0
-//                                                                             metrics:nil
-//                                                                               views:views]];
-//    
-//    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_referCommentView]-16-|"
-//                                                                             options:0
-//                                                                             metrics:nil
-//                                                                               views:views]];
-//    
-//    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_contentTextView]-16-|"
-//                                                                             options:0
-//                                                                             metrics:nil
-//                                                                               views:views]];
+
 }
 
 #pragma mark - contentData
