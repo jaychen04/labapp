@@ -109,6 +109,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.commentTextField.delegate = self;
+    self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"TitleInfoTableViewCell" bundle:nil] forCellReuseIdentifier:titleInfoReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
