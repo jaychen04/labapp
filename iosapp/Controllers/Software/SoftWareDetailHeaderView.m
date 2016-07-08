@@ -11,7 +11,7 @@
 
 #define PADDING_LEFT 16
 #define PADDING_RIGHT PADDING_LEFT
-#define PADDING_TOP 8
+#define PADDING_TOP 16
 #define PADDING_BOTTOM PADDING_TOP
 #define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
 #define SPACE_BUTTON 16

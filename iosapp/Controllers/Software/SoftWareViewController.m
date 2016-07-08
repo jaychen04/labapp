@@ -25,8 +25,9 @@
 #import <MJExtension.h>
 
 #define SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
+#define SOFTWARE_TITLE_HEIGHT 77
 #define RECOMMENDED_HEADERVIEW_HEIGHT 32
-#define HEADERVIEW_HEIGHT 52
+#define HEADERVIEW_HEIGHT 60
 #define Nomal_SoftWare_Logo @"http://www.oschina.net/img/logo/default.gif?t=1451964198000"
 
 static NSString * const softWareDetailCellReuseIdentifier = @"SoftWareDetailCell";
@@ -247,7 +248,7 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
-        return 80;
+        return SOFTWARE_TITLE_HEIGHT;
     }else if(indexPath.section == 1){
         return _webHeight + 30 + 134;
     }else{
