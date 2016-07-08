@@ -20,6 +20,13 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
     line-height: 1.2em;
+    margin: 0;
+    margin-bottom:  0.8em;
+}
+
+p{
+    margin: 0;
+    margin-bottom: 0.8em;
 }
 
 table {
@@ -51,7 +58,7 @@ pre {
     padding: 8px 6px 6px 6px;
     line-height: 140%;
     overflow: auto;
-    word-wrap: break-word;
+    word-wrap: break-word; 
     word-break:break-all;
 }
 
