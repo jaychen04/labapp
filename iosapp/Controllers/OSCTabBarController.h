@@ -12,4 +12,5 @@
 
 @property (nonatomic, strong) UIButton *centerButton;
 
+@property (nonatomic, strong) UINavigationController *linkUtilNavController;
 @end

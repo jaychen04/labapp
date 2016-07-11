@@ -195,6 +195,7 @@
                              discoverNav,
                              homepageNav,
                              ];
+    _linkUtilNavController = [self.viewControllers objectAtIndex:0];
     
     NSArray *titles = @[@"综合", @"动弹", @"", @"发现", @"我的"];
     NSArray *images = @[@"tabbar-news", @"tabbar-tweet", @"", @"tabbar-discover", @"tabbar-me"];

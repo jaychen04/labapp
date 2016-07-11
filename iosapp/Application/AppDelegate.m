@@ -20,6 +20,15 @@
 #import "TweetEditingVC.h"
 #import "SwipableViewController.h"
 
+#import "RootViewController.h"
+#import "OSCTabBarController.h"
+#import "SoftWareViewController.h"
+#import "QuesAnsDetailViewController.h"
+#import "NewsBlogDetailTableViewController.h"
+#import "TranslationViewController.h"
+#import "ActivityDetailViewController.h"
+
+
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <UMSocial.h>
@@ -170,6 +179,84 @@
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation
 {
+    //外部链接打开相关详情界面
+    if ([[url scheme] isEqualToString:@"oscapp"]) {
+        NSLog(@"Calling Application Bundle ID: %@", sourceApplication);
+        NSLog(@"URL scheme:%@", [url scheme]);
+        NSLog(@"URL query: %@", [url query]);
+        
+        OSCTabBarController *tabBarVc = (OSCTabBarController*)((RootViewController*)self.window.rootViewController).contentViewController;
+        
+//        type=1&id=75112
+        
+        __block NSInteger type = 0;
+        __block NSInteger objId = 0;
+        UIViewController *detailVc;
+        NSArray *queryArray = [[url query] componentsSeparatedByString:@"&"];
+        [queryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            if ([obj containsString:@"type"]) {
+                NSCharacterSet* nonDigits =[[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+                type =[[obj stringByTrimmingCharactersInSet:nonDigits] integerValue];
+            } else if ([obj containsString:@"id"]) {
+                NSCharacterSet* nonDigits =[[NSCharacterSet decimalDigitCharacterSet] invertedSet];
+                objId =[[obj stringByTrimmingCharactersInSet:nonDigits] integerValue];
+            }
+        }];
+        switch (type) {
+             
+            case 1:{
+                //37059
+                SoftWareViewController *softWareDetailVc = [[SoftWareViewController alloc]initWithSoftWareID:objId];
+                detailVc = softWareDetailVc;
+                break;
+            }
+                
+            case 2:{
+                //2187587
+                QuesAnsDetailViewController *quesAnsDetailVC = [QuesAnsDetailViewController new];
+                quesAnsDetailVC.questionID = objId;
+                detailVc = quesAnsDetailVC;
+                break;
+            }
+                
+            case 3:{
+                //709321
+                NewsBlogDetailTableViewController *blogDetailVc =[[NewsBlogDetailTableViewController alloc]initWithObjectId:objId isBlogDetail:YES];
+                detailVc = blogDetailVc;
+                break;
+            }
+                
+            case 4:{
+                //10003462
+                TranslationViewController *translationVc = [TranslationViewController new];
+                translationVc.translationId = objId;
+                detailVc = translationVc;
+                break;
+            }
+                
+            case 5:{
+                //2185476
+                ActivityDetailViewController *activityDetailVc = [[ActivityDetailViewController alloc] initWithActivityID:objId];
+                detailVc = activityDetailVc;
+                break;
+            }
+            case 6:{
+                //75112
+                NewsBlogDetailTableViewController *newsDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:objId isBlogDetail:NO];
+                detailVc = newsDetailVc;
+                break;
+            }
+                
+            default:
+                break;
+        }
+        
+        if (detailVc) {
+            detailVc.hidesBottomBarWhenPushed = YES;
+            [tabBarVc.linkUtilNavController pushViewController:detailVc animated:YES];
+        }
+    }
+    
     return [UMSocialSnsService handleOpenURL:url]             ||
            [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
            [TencentOAuth HandleOpenURL:url]                   ||
