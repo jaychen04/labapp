@@ -18,7 +18,7 @@
 #import "UserOperationCell.h"
 #import "BubbleChatViewController.h"
 #import "LoginViewController.h"
-#import "NewHotBlogTableViewController.h"
+#import "MyBlogsViewController.h"
 
 #import <MBProgressHUD.h>
 
@@ -228,7 +228,7 @@
 
 - (void)pushBlogsVC
 {
-    [self.navigationController pushViewController:[[NewHotBlogTableViewController alloc] initWithUserID:_user.userID]
+    [self.navigationController pushViewController:[[MyBlogsViewController alloc] initWithUserID:_user.userID]
                                          animated:YES];
 }
 

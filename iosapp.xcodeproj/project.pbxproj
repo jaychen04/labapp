@@ -105,7 +105,6 @@
 		31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FA1AEF2685004DF445 /* ProjectCell.m */; };
 		31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */; };
 		31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */; };
-		31FF2F951CF2F36600C7A0B6 /* NewHotBlogTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */; };
 		3801789C1A2C1A7300922858 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3801789B1A2C1A7300922858 /* EventCell.m */; };
 		380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */; };
 		380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21F1A74DFEE003C4021 /* ActivityCell.m */; };
@@ -273,6 +272,9 @@
 		EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */; };
 		EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */; };
 		EE7AC7F21AD38E5C00E850CB /* TweetsLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7F01AD38E5C00E850CB /* TweetsLikeListViewController.m */; };
+		EE7B0AD21D3372E80070F196 /* NewBlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B0AD01D3372E70070F196 /* NewBlogsViewController.m */; };
+		EE7B0AD31D3372E80070F196 /* NewBlogsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE7B0AD11D3372E80070F196 /* NewBlogsViewController.xib */; };
+		EE7B0ADC1D3384AB0070F196 /* MyBlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B0ADB1D3384AB0070F196 /* MyBlogsViewController.m */; };
 		EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */; };
 		EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D32FE1AA95BF400ABFE58 /* PresentMembersViewController.m */; };
 		EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */; };
@@ -479,8 +481,6 @@
 		31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueList.m; sourceTree = "<group>"; };
 		31F8925C1B0DF179002E0838 /* NewTeamIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTeamIssueViewController.h; sourceTree = "<group>"; };
 		31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTeamIssueViewController.m; sourceTree = "<group>"; };
-		31FF2F931CF2F36600C7A0B6 /* NewHotBlogTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHotBlogTableViewController.h; sourceTree = "<group>"; };
-		31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHotBlogTableViewController.m; sourceTree = "<group>"; };
 		35E86033B4A726B04BF08A09 /* Pods-iosapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.release.xcconfig"; sourceTree = "<group>"; };
 		3801789A1A2C1A7300922858 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		3801789B1A2C1A7300922858 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
@@ -822,6 +822,11 @@
 		EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetLikeUserCell.m; sourceTree = "<group>"; };
 		EE7AC7EF1AD38E5C00E850CB /* TweetsLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetsLikeListViewController.h; sourceTree = "<group>"; };
 		EE7AC7F01AD38E5C00E850CB /* TweetsLikeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetsLikeListViewController.m; sourceTree = "<group>"; };
+		EE7B0ACF1D3372E70070F196 /* NewBlogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewBlogsViewController.h; sourceTree = "<group>"; };
+		EE7B0AD01D3372E70070F196 /* NewBlogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewBlogsViewController.m; sourceTree = "<group>"; };
+		EE7B0AD11D3372E80070F196 /* NewBlogsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewBlogsViewController.xib; sourceTree = "<group>"; };
+		EE7B0ADA1D3384AB0070F196 /* MyBlogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBlogsViewController.h; sourceTree = "<group>"; };
+		EE7B0ADB1D3384AB0070F196 /* MyBlogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBlogsViewController.m; sourceTree = "<group>"; };
 		EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBasicInfoViewController.h; sourceTree = "<group>"; };
 		EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBasicInfoViewController.m; sourceTree = "<group>"; };
 		EE7D32FD1AA95BF400ABFE58 /* PresentMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentMembersViewController.h; sourceTree = "<group>"; };
@@ -2114,8 +2119,11 @@
 				C5EF892E1BE319A300B5FA46 /* BlogCell.m */,
 				C5EF892F1BE319A300B5FA46 /* BlogsViewController.h */,
 				C5EF89301BE319A300B5FA46 /* BlogsViewController.m */,
-				31FF2F931CF2F36600C7A0B6 /* NewHotBlogTableViewController.h */,
-				31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */,
+				EE7B0ACF1D3372E70070F196 /* NewBlogsViewController.h */,
+				EE7B0AD01D3372E70070F196 /* NewBlogsViewController.m */,
+				EE7B0AD11D3372E80070F196 /* NewBlogsViewController.xib */,
+				EE7B0ADA1D3384AB0070F196 /* MyBlogsViewController.h */,
+				EE7B0ADB1D3384AB0070F196 /* MyBlogsViewController.m */,
 				31D56E841CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.h */,
 				31D56E851CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m */,
 				EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */,
@@ -2379,6 +2387,7 @@
 				EE82D0441C43B1E30066FDC9 /* FeedBackViewController.xib in Resources */,
 				317AD9C91C96AD68008356DE /* recommend_tag.png in Resources */,
 				C5E92FDE1B59FAC300EFE47E /* Homepage.storyboard in Resources */,
+				EE7B0AD31D3372E80070F196 /* NewBlogsViewController.xib in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
 				043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */,
 			);
@@ -2585,6 +2594,7 @@
 				31855C8B1D0E621F00C8F8B8 /* TweetDetailNewTableViewController.m in Sources */,
 				042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */,
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
+				EE7B0ADC1D3384AB0070F196 /* MyBlogsViewController.m in Sources */,
 				C5D7C10E1B12F8A8003EFE9B /* CheckboxTableCell.m in Sources */,
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
 				31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */,
@@ -2624,6 +2634,7 @@
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				31D699581CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m in Sources */,
 				C5F3D7801AF0C8BF0032F775 /* WeeklyReportCell.m in Sources */,
+				EE7B0AD21D3372E80070F196 /* NewBlogsViewController.m in Sources */,
 				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
 				04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */,
 				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,
@@ -2664,7 +2675,6 @@
 				EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */,
 				C5A89C3A1B09C34B00798B1C /* UIImage+FontAwesome.m in Sources */,
 				C5F3D7761AF0C2A50032F775 /* WeeklyReportViewController.m in Sources */,
-				31FF2F951CF2F36600C7A0B6 /* NewHotBlogTableViewController.m in Sources */,
 				EEB3D7AE1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				EEE241A91CFD65710088FFB3 /* ActivityDetailViewController.m in Sources */,
