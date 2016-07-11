@@ -374,11 +374,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
     headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
     
-    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
     topLineView.backgroundColor = [UIColor separatorColor];
     [headerView addSubview:topLineView];
     
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 1)];
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
     bottomLineView.backgroundColor = [UIColor separatorColor];
     [headerView addSubview:bottomLineView];
     

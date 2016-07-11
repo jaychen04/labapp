@@ -21,7 +21,7 @@
                             <constraint firstAttribute="width" constant="16" id="dUY-gB-Pyv"/>
                         </constraints>
                     </imageView>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_software_default" translatesAutoresizingMaskIntoConstraints="NO" id="RSI-eR-wDa">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_software_default" translatesAutoresizingMaskIntoConstraints="NO" id="RSI-eR-wDa">
                         <rect key="frame" x="16" y="16" width="45" height="45"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="45" id="SND-19-Gwg"/>
