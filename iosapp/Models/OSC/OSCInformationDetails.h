@@ -19,7 +19,7 @@
 @property (nonatomic, copy) NSString *authorPortrait;
 @property (nonatomic) NSInteger authorRelation;
 @property (nonatomic, strong) NSString *pubDate;
-@property (nonatomic, assign) int commentCount;
+@property (nonatomic, assign) NSInteger commentCount;
 @property (nonatomic, assign) int viewCount;
 @property (nonatomic, copy) NSString *href;
 @property (nonatomic, assign) BOOL favorite;

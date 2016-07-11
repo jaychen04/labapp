@@ -46,6 +46,10 @@ static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
 static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
+#define Large_Frame  (CGRect){{0,0},{40,25}}
+#define Medium_Frame (CGRect){{0,0},{30,25}}
+#define Small_Frame  (CGRect){{0,0},{25,25}}
+
 
 @interface NewsBlogDetailTableViewController () <UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate,UITextViewDelegate>
 
@@ -156,10 +160,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     _rightBarBtn.userInteractionEnabled = YES;
     _rightBarBtn.frame  = CGRectMake(0, 0, 27, 20);
     _rightBarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    _rightBarBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
     [_rightBarBtn addTarget:self action:@selector(rightBarButtonScrollToCommitSection) forControlEvents:UIControlEventTouchUpInside];
     [_rightBarBtn setTitle:@"" forState:UIControlStateNormal];
-    _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-3, 0, 0, 0);
+    _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-4, 0, 0, 0);
     [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarBtn];
 //    self.navigationItem.rightBarButtonItem.target = self;
@@ -223,30 +226,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #pragma mark -- 获取评论cell的高度
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
     return UITableViewAutomaticDimension;
-    
-    UILabel *label = [UILabel alloc];
-    label.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
-    
-    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height - 5;
-
-//    height += 7;
-    OSCNewCommentRefer *refer = comment.refer;
-    int i = 0;
-    while (refer.author.length > 0) {
-        NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
-        [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
-        label.attributedText = replyContent;
-        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
-        i++;
-        refer = refer.refer;
-    }
-    
-    
-    return height + 71;
 }
 #pragma mark - UIAlertViewDelegate
 
@@ -308,7 +287,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateFavButtonWithIsCollected:_blogDetails.favorite];
-                [_rightBarBtn setTitle:[NSString stringWithFormat:@"%ld",_blogDetails.commentCount] forState:UIControlStateNormal];
+                [self updateRightButton:_blogDetails.commentCount isNewsDetail:NO];
                 [self.tableView reloadData];
             });
         }
@@ -336,7 +315,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self updateFavButtonWithIsCollected:_newsDetails.favorite];
-                [_rightBarBtn setTitle:[NSString stringWithFormat:@"%d",_newsDetails.commentCount] forState:UIControlStateNormal];
+                [self updateRightButton:_newsDetails.commentCount isNewsDetail:YES];
                 [self.tableView reloadData];
             });
         }
@@ -1598,7 +1577,23 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         return _mURL;
     }
 }
-
+#pragma mark --- update RightButton
+-(void)updateRightButton:(NSInteger)commentCount isNewsDetail:(BOOL)isNewsDetail{
+    if (commentCount >= 999) {
+        _rightBarBtn.frame = Large_Frame;
+        [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_4_appbar"] forState:UIControlStateNormal];
+        [_rightBarBtn setTitle:@"999+" forState:UIControlStateNormal];
+    }else if (commentCount >= 100){
+        _rightBarBtn.frame = Medium_Frame;
+        [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_3_appbar"] forState:UIControlStateNormal];
+        NSString* titleStr = isNewsDetail ? [NSString stringWithFormat:@"%ld",_newsDetails.commentCount] : [NSString stringWithFormat:@"%ld",_blogDetails.commentCount];
+        [_rightBarBtn setTitle:titleStr forState:UIControlStateNormal];
+    }else{
+        _rightBarBtn.frame = Small_Frame;
+        [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
+        NSString* titleStr = isNewsDetail ? [NSString stringWithFormat:@"%ld",_newsDetails.commentCount] : [NSString stringWithFormat:@"%ld",_blogDetails.commentCount];
+        [_rightBarBtn setTitle:titleStr forState:UIControlStateNormal];    }
+}
 
 
 @end
