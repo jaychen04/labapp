@@ -34,7 +34,6 @@ static NSString *quesAnsDetailHeadReuseIdentifier = @"QuesAnsDetailHeadCell";
 static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 
 @interface QuesAnsDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate, UITextFieldDelegate>
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *bottomView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomLayoutConstraint;
@@ -66,17 +65,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.title = [NSString stringWithFormat:@"%ld个回答",self.commentCount];
-    _comments = [NSMutableArray new];
-    _nextPageToken = @"";
-    self.commentTextField.delegate = self;
-    
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.tableFooterView = [UIView new];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsDetailHeadCell" bundle:nil] forCellReuseIdentifier:quesAnsDetailHeadReuseIdentifier];
-    [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:quesAnsCommentHeadReuseIdentifier];
+    [self initialized];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getCommentsForQuestion:YES];
@@ -109,29 +98,22 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                                                                             target:self
                                                                             action:nil];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+#pragma mark --- 
+-(void)initialized{
+    self.title = [NSString stringWithFormat:@"%ld个回答",self.commentCount];
+    _comments = [NSMutableArray new];
+    _nextPageToken = @"";
+    self.commentTextField.delegate = self;
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.tableFooterView = [UIView new];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.estimatedRowHeight = 200;
+    [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsDetailHeadCell" bundle:nil] forCellReuseIdentifier:quesAnsDetailHeadReuseIdentifier];
+    [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:quesAnsCommentHeadReuseIdentifier];
 }
 
-- (void)showHubView {
-    UIView *coverView = [[UIView alloc]initWithFrame:self.view.bounds];
-    coverView.backgroundColor = [UIColor whiteColor];
-    coverView.tag = 10;
-    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    _hud = [[MBProgressHUD alloc] initWithWindow:window];
-    _hud.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
-    [window addSubview:_hud];
-    [self.view addSubview:coverView];
-    [_hud show:YES];
-    _hud.removeFromSuperViewOnHide = YES;
-    _hud.userInteractionEnabled = NO;
-}
-- (void)hideHubView {
-    [_hud hide:YES];
-    [[self.view viewWithTag:10] removeFromSuperview];
-}
 
 #pragma mark - 获取数据
 - (void)getDetailForQuestion
@@ -246,14 +228,13 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        QuesAnsDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:quesAnsDetailHeadReuseIdentifier forIndexPath:indexPath];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
-        cell.questioinDetail = _questionDetail;
-        cell.contentWebView.delegate = self;
-        [cell.contentWebView loadHTMLString:_questionDetail.body baseURL:[NSBundle mainBundle].resourceURL];
-        
-        return cell;
+            QuesAnsDetailHeadCell *cell = [tableView dequeueReusableCellWithIdentifier:quesAnsDetailHeadReuseIdentifier forIndexPath:indexPath];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            cell.questioinDetail = _questionDetail;
+            cell.contentWebView.delegate = self;
+                [cell.contentWebView loadHTMLString:_questionDetail.body baseURL:[NSBundle mainBundle].resourceURL];
+            return cell;
         
     } else if (indexPath.section == 1) {
         
@@ -301,22 +282,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
         
         return 83 + height;
     } else if (indexPath.section == 1) {
-        if (_comments.count > 0) {
-            UILabel *label = [UILabel new];
-            label.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
-            label.numberOfLines = 0;
-            label.lineBreakMode = NSLineBreakByCharWrapping;
-            
-            OSCNewComment *quesComment = _comments[indexPath.row];
-            
-            label.attributedText = [NewCommentCell contentStringFromRawString:quesComment.content];
-            
-            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-            
-            return height + 73;
-        } else {
-            return 0;
-        }
+        return UITableViewAutomaticDimension;
     }
     return 0;
 }
@@ -368,7 +334,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-    if (_webViewHeight == webViewHeight) {return;}
+    if (_webViewHeight == webViewHeight + 5) {return;}
     _webViewHeight = webViewHeight + 5;
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -684,6 +650,24 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                                      shareImage:[UIImage imageNamed:@"logo"]
                                 shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
                                        delegate:nil];
+}
+#pragma mark --- HUD setting
+- (void)showHubView {
+    UIView *coverView = [[UIView alloc]initWithFrame:self.view.bounds];
+    coverView.backgroundColor = [UIColor whiteColor];
+    coverView.tag = 10;
+    UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    [window addSubview:_hud];
+    [self.view addSubview:coverView];
+    [_hud show:YES];
+    _hud.removeFromSuperViewOnHide = YES;
+    _hud.userInteractionEnabled = NO;
+}
+- (void)hideHubView {
+    [_hud hide:YES];
+    [[self.view viewWithTag:10] removeFromSuperview];
 }
 
 @end
