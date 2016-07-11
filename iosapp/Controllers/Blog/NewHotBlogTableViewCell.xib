@@ -68,7 +68,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nzf-2N-COc" userLabel="color_View">
                         <rect key="frame" x="16" y="84" width="331" height="1"/>
                         <color key="backgroundColor" red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <rect key="contentStretch" x="0.0" y="0.0" width="0.5" height="1"/>
+                        <rect key="contentStretch" x="0.0" y="0.0" width="0.5" height="0.5"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="UQy-Y7-RyS"/>
                         </constraints>

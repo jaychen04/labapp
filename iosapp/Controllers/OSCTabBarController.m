@@ -27,9 +27,10 @@
 #import "OSCActivityViewController.h"
 #import "QuesAnsViewController.h"
 #import "InformationViewController.h"
-#import "NewHotBlogTableViewController.h"
 #import "TweetTableViewController.h"
 #import "EventsViewController.h"
+
+#import "NewBlogsViewController.h"
 
 #import "UIBarButtonItem+Badge.h"
 #import <RESideMenu/RESideMenu.h>
@@ -38,7 +39,7 @@
 @interface OSCTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     InformationViewController *newsViewCtl;
-    NewHotBlogTableViewController *newHotBlogCtl;
+    NewBlogsViewController *newHotBlogCtl;
     QuesAnsViewController *quesViewCtl;
     OSCActivityViewController *activitiesViewCtl;
     
@@ -143,8 +144,8 @@
 //    hotNewsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeAllTypeWeekHottest];
 //    hotNewsViewCtl = [[NewsViewController alloc]  init];
 //    hotNewsViewCtl.isJsonDataVc = YES;
-    newHotBlogCtl = [[NewHotBlogTableViewController alloc]  init];
-    newHotBlogCtl.isJsonDataVc = YES;
+    newHotBlogCtl = [[NewBlogsViewController alloc]  init];
+//    newHotBlogCtl.isJsonDataVc = YES;
     
     
 //    blogViewCtl = [[BlogsViewController alloc] initWithBlogsType:BlogTypeLatest];
@@ -159,7 +160,7 @@
 //    friendsTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
     
     newsViewCtl.needCache = YES;
-    newHotBlogCtl.needCache = YES;
+//    newHotBlogCtl.needCache = YES;
     activitiesViewCtl.needCache = YES;
 //    blogViewCtl.needCache = YES;
 //    recommendBlogViewCtl.needCache = YES;
