@@ -224,29 +224,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (NSInteger)getCommentCellHeightWithComment:(OSCNewComment*)comment {
     return UITableViewAutomaticDimension;
     
-    UILabel *label = [UILabel alloc];
-    label.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
-    label.numberOfLines = 0;
-    label.lineBreakMode = NSLineBreakByWordWrapping;
-    
-    label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
-    
-    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height - 5;
-
-//    height += 7;
-    OSCNewCommentRefer *refer = comment.refer;
-    int i = 0;
-    while (refer.author.length > 0) {
-        NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
-        [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
-        label.attributedText = replyContent;
-        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
-        i++;
-        refer = refer.refer;
-    }
-    
-    
-    return height + 71;
 }
 #pragma mark - UIAlertViewDelegate
 
