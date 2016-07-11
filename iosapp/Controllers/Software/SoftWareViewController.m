@@ -359,10 +359,10 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
         _recommendedHeaderView = [[UIView alloc] initWithFrame:(CGRect){{0,0},{SCREEN_WIDTH,32}}];
         _recommendedHeaderView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
         
-        UIView* topLine = [[UIView alloc]initWithFrame:(CGRect){{0,0},{SCREEN_WIDTH,1}}];
+        UIView* topLine = [[UIView alloc]initWithFrame:(CGRect){{0,0},{SCREEN_WIDTH,0.5}}];
         topLine.backgroundColor = [UIColor colorWithHex:0xc8c7cc];
         [_recommendedHeaderView addSubview:topLine];
-        UIView* bottomLine = [[UIView alloc]initWithFrame:(CGRect){{0,31},{SCREEN_WIDTH,1}}];
+        UIView* bottomLine = [[UIView alloc]initWithFrame:(CGRect){{0,31},{SCREEN_WIDTH,0.5}}];
         bottomLine.backgroundColor = [UIColor colorWithHex:0xc8c7cc];
         [_recommendedHeaderView addSubview:bottomLine];
         
