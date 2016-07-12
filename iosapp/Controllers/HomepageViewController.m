@@ -24,7 +24,7 @@
 #import "FeedBackViewController.h"
 #import "SettingsPage.h"
 #import "ActivitiesViewController.h"
-#import "NewHotBlogTableViewController.h"
+#import "MyBlogsViewController.h"
 
 #import "UIScrollView+ScalableCover.h"
 #import "UIFont+FontAwesome.h"
@@ -397,7 +397,7 @@
                     break;
                 }
                 case 1: {
-                    NewHotBlogTableViewController *blogsVC = [[NewHotBlogTableViewController alloc] initWithUserID:_myID];
+                    MyBlogsViewController *blogsVC = [[MyBlogsViewController alloc] initWithUserID:_myID];
                     blogsVC.navigationItem.title = @"我的博客";
                     blogsVC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:blogsVC animated:YES];
