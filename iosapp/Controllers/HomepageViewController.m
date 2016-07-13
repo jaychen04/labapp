@@ -310,20 +310,20 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     } else {
         
         UITableViewCell *cell = [UITableViewCell new];
-        cell.separatorInset = UIEdgeInsetsMake(0, 65, 0, 0);
+//        cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         UIView *selectedBackground = [UIView new];
         selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
         [cell setSelectedBackgroundView:selectedBackground];
         
-        cell.backgroundColor = [UIColor colorWithHex:0xebebf3];//colorWithHex:0xF9F9F9
+        cell.backgroundColor = [UIColor colorWithHex:0xf9f9f9];//colorWithHex:0xF9F9F9
         
         if (indexPath.section == 1) {
             cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的团队", @"我的活动"][indexPath.row];
             cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"discover-activities"][indexPath.row]];
         } else {
-            cell.textLabel.text = @[@"反馈", @"设置"][indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@[@"me-feedback", @"sidemenu_setting"][indexPath.row]];
+            cell.textLabel.text = @[@"设置"][indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:@[@"sidemenu_setting"][indexPath.row]];
         }
         
         
@@ -362,7 +362,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 2 && indexPath.row == 1) {
+    if (indexPath.section == 2 && indexPath.row == 0) {
         SettingsPage *settingPage = [SettingsPage new];
         settingPage.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:settingPage animated:YES];
@@ -409,17 +409,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                     [self.navigationController pushViewController:myActivitiesVc animated:YES];
                     break;
                 }
-                default: break;
-            }
-        } else if (indexPath.section == 2){
-            switch (indexPath.row) {
-                case 0: {
-                    FeedBackViewController *fbVc = [FeedBackViewController new];
-                    fbVc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:fbVc animated:YES];
-                    break;
-                }
-                
                 default: break;
             }
         }
