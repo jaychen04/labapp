@@ -303,6 +303,8 @@
 		EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE241B41CFD79C00088FFB3 /* ActivityDetailCell.xib */; };
 		EEEC98C31CF317D600995A03 /* QuesAnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */; };
 		EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */; };
+		EEFF2FFB1D361D2E0076CFF4 /* HomeButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */; };
+		EEFF2FFC1D361D2E0076CFF4 /* HomeButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */; };
 		EEFFA6421CFEDAC000A8701C /* webAndAbsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFFA6401CFEDAC000A8701C /* webAndAbsTableViewCell.m */; };
 		EEFFA6431CFEDAC000A8701C /* webAndAbsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFFA6411CFEDAC000A8701C /* webAndAbsTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -869,6 +871,9 @@
 		EEEC98C01CF317D600995A03 /* QuesAnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsViewController.h; path = Questions/QuesAnsViewController.h; sourceTree = "<group>"; };
 		EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsViewController.m; path = Questions/QuesAnsViewController.m; sourceTree = "<group>"; };
 		EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsViewController.xib; path = Questions/QuesAnsViewController.xib; sourceTree = "<group>"; };
+		EEFF2FF81D361D2E0076CFF4 /* HomeButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeButtonCell.h; sourceTree = "<group>"; };
+		EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeButtonCell.m; sourceTree = "<group>"; };
+		EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeButtonCell.xib; sourceTree = "<group>"; };
 		EEFFA63F1CFEDAC000A8701C /* webAndAbsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webAndAbsTableViewCell.h; sourceTree = "<group>"; };
 		EEFFA6401CFEDAC000A8701C /* webAndAbsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = webAndAbsTableViewCell.m; sourceTree = "<group>"; };
 		EEFFA6411CFEDAC000A8701C /* webAndAbsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = webAndAbsTableViewCell.xib; sourceTree = "<group>"; };
@@ -1703,6 +1708,9 @@
 		38BD3D151A37FD1500682D1F /* 我 */ = {
 			isa = PBXGroup;
 			children = (
+				EEFF2FF81D361D2E0076CFF4 /* HomeButtonCell.h */,
+				EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */,
+				EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */,
 				C5E92FDD1B59FAC300EFE47E /* Homepage.storyboard */,
 				C5E92FDF1B5A1E5F00EFE47E /* HomepageViewController.h */,
 				C5E92FE01B5A1E5F00EFE47E /* HomepageViewController.m */,
@@ -2358,6 +2366,7 @@
 				EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */,
 				EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */,
 				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
+				EEFF2FFC1D361D2E0076CFF4 /* HomeButtonCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
@@ -2531,6 +2540,7 @@
 				EED7C71C1D222667001B565C /* NewCommentListViewController.m in Sources */,
 				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,
 				EEE241B51CFD79C00088FFB3 /* ActivityDetailCell.m in Sources */,
+				EEFF2FFB1D361D2E0076CFF4 /* HomeButtonCell.m in Sources */,
 				C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */,
 				EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */,
 				38EAF1C41AE0EA6D00397E2A /* TeamProject.m in Sources */,
@@ -2812,8 +2822,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hailong Zhang (WSUBE85MHP)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hailong Zhang (WSUBE85MHP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2871,7 +2881,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "da210b6e-edf2-4f62-9f50-644a9eb94ac6";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2881,8 +2891,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hailong Zhang (WSUBE85MHP)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hailong Zhang (WSUBE85MHP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2939,7 +2949,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "da210b6e-edf2-4f62-9f50-644a9eb94ac6";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

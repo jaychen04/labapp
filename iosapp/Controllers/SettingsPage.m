@@ -11,8 +11,10 @@
 #import "Config.h"
 #import "AboutPage.h"
 #import "OSLicensePage.h"
-//#import "FeedBackViewController.h"
+#import "FeedBackViewController.h"
 #import "AppDelegate.h"
+#import "LoginViewController.h"
+
 #import <RESideMenu.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
@@ -68,7 +70,7 @@ static BOOL isNightMode;
 {
     switch (section) {
         case 0: return 1;
-        case 1: return 3;
+        case 1: return 4;
         case 2: return 1;
             
         default: return 0;
@@ -82,7 +84,7 @@ static BOOL isNightMode;
 //    NSString *nightModeStr = [Config getMode]?@"日间模式":@"夜间模式";
     NSArray *titles = @[
                         @[@"清除缓存", @"消息通知"],
-                        @[@"给应用评分", @"关于", @"开源许可"],
+                        @[@"给应用评分", @"关于", @"开源许可", @"反馈"],
                         @[@"注销登录"],
                         ];
     cell.textLabel.text = titles[indexPath.section][indexPath.row];
@@ -117,6 +119,17 @@ static BOOL isNightMode;
             [self.navigationController pushViewController:[AboutPage new] animated:YES];
         } else if (row == 2) {
             [self.navigationController pushViewController:[OSLicensePage new] animated:YES];
+        } else if (row == 3) {
+            if ([Config getOwnID] == 0) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                [self.navigationController pushViewController:loginVC animated:YES];
+                return;
+            } else {
+                FeedBackViewController *fbVc = [FeedBackViewController new];
+                fbVc.hidesBottomBarWhenPushed = YES;
+                [self.navigationController pushViewController:fbVc animated:YES];
+            }
         }
     }else if (section == 2) {
         [Config clearProfile];
