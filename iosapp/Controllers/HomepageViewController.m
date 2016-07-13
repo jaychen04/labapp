@@ -85,7 +85,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [super viewDidLoad];
     
      _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
-    self.tableView.backgroundColor = [UIColor whiteColor];
+    self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
@@ -318,7 +318,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
         [cell setSelectedBackgroundView:selectedBackground];
         
-        cell.backgroundColor = [UIColor colorWithHex:0xf9f9f9];//colorWithHex:0xF9F9F9
+        cell.backgroundColor = [UIColor whiteColor];//colorWithHex:0xF9F9F9
         
         if (indexPath.section == 1) {
             cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的活动", @"我的团队"][indexPath.row];
