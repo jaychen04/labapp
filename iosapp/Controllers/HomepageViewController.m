@@ -325,7 +325,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
             cell.imageView.image = [UIImage imageNamed:@[@"ic_my_messege", @"ic_my_blog", @"ic_my_event", @"ic_my_team"][indexPath.row]];
         } else {
             cell.textLabel.text = @[@"设置"][indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@[@"ic_discover_find"][indexPath.row]];
+            cell.imageView.image = [UIImage imageNamed:@[@"ic_my_setting"][indexPath.row]];
 
         }
         
