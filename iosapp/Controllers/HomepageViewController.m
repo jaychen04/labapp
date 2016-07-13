@@ -25,7 +25,7 @@
 #import "SettingsPage.h"
 #import "ActivitiesViewController.h"
 #import "MyBlogsViewController.h"
-
+#import "HomeButtonCell.h"
 #import "UIScrollView+ScalableCover.h"
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
@@ -34,18 +34,13 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MJRefresh.h>
 
+static NSString *reuseIdentifier = @"HomeButtonCell";
+
 @interface HomepageViewController ()
 
 @property (nonatomic, weak) IBOutlet UIImageView *portrait;
 @property (nonatomic, weak) IBOutlet UIButton *QRCodeButton;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-
-@property (nonatomic, weak) IBOutlet UIView *separator;
-
-@property (nonatomic, weak) IBOutlet UIButton *creditButton;
-@property (nonatomic, weak) IBOutlet UIButton *collectionButton;
-@property (nonatomic, weak) IBOutlet UIButton *followingButton;
-@property (nonatomic, weak) IBOutlet UIButton *fanButton;
 
 @property (nonatomic, strong) UIImageView *myQRCodeImageView;
 
@@ -62,8 +57,6 @@
 
 - (void)dawnAndNightMode
 {
-    self.tableView.backgroundColor = [UIColor themeColor];
-    self.tableView.separatorColor = [UIColor separatorColor];
     self.refreshControl.tintColor = [UIColor refreshControlColor];
     
     [self refreshHeaderView];
@@ -91,14 +84,10 @@
 {
     [super viewDidLoad];
     
-//    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-//    [self.navigationController.navigationBar setTranslucent:YES];
-    
      _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
-    self.tableView.backgroundColor = [UIColor themeColor];
+    self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.separatorColor = [UIColor separatorColor];
-    
+    [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
     [self setUpSubviews];
@@ -198,7 +187,7 @@
                                                                                          [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
                                                                                          [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
                                                                                          ]];
-    if (button == _fanButton) {[friendsSVC scrollToViewAtIndex:1];}
+    if (button.tag == 2) {[friendsSVC scrollToViewAtIndex:1];}
     
     friendsSVC.hidesBottomBarWhenPushed = YES;
     
@@ -211,23 +200,6 @@
 
 - (void)setUpSubviews
 {
-    _creditButton.titleLabel.numberOfLines = 0;
-    _creditButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    _collectionButton.titleLabel.numberOfLines = 0;
-    _collectionButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    _followingButton.titleLabel.numberOfLines = 0;
-    _followingButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    _fanButton.titleLabel.numberOfLines = 0;
-    _fanButton.titleLabel.textAlignment = NSTextAlignmentCenter;
-    
-    [_collectionButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
-    [_followingButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-    [_fanButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
     [_portrait setBorderWidth:2.0 andColor:[UIColor whiteColor]];
     [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
     
@@ -278,23 +250,14 @@
     }
     
     _nameLabel.text = _myProfile.name;
-    _separator.backgroundColor = [UIColor lineColor];
     
     [self setCoverImage];
     
     _QRCodeButton.hidden = !isLogin;
-    _creditButton.hidden = !isLogin;
-    _collectionButton.hidden = !isLogin;
-    _followingButton.hidden = !isLogin;
-    _fanButton.hidden = !isLogin;
-    _separator.hidden = !isLogin;
+    
     
     if (isLogin) {
         [_QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
-        [_creditButton setTitle:[NSString stringWithFormat:@"积分\n%@", @(_myProfile.score)] forState:UIControlStateNormal];
-        [_collectionButton setTitle:[NSString stringWithFormat:@"收藏\n%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
-        [_followingButton setTitle:[NSString stringWithFormat:@"关注\n%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
-        [_fanButton setTitle:[NSString stringWithFormat:@"粉丝\n%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
     }
 }
 
@@ -318,49 +281,79 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [UITableViewCell new];
-    cell.separatorInset = UIEdgeInsetsMake(0, 15, 0, 0);
-    
-    UIView *selectedBackground = [UIView new];
-    selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
-    [cell setSelectedBackgroundView:selectedBackground];
-    
-    cell.backgroundColor = [UIColor cellsColor];//colorWithHex:0xF9F9F9
-    
     if (indexPath.section == 0) {
-        cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的团队", @"我的活动"][indexPath.row];
-        cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"discover-activities"][indexPath.row]];
+        HomeButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+        
+        BOOL isLogin = _myID != 0;
+        buttonCell.creditButton.hidden = !isLogin;
+        buttonCell.collectionButton.hidden = !isLogin;
+        buttonCell.followingButton.hidden = !isLogin;
+        buttonCell.fanButton.hidden = !isLogin;
+        buttonCell.creditTitleButton.hidden = !isLogin;
+        buttonCell.collectionTitleButton.hidden = !isLogin;
+        buttonCell.followingTitleButton.hidden = !isLogin;
+        buttonCell.fanTitleButton.hidden = !isLogin;
+        
+        [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.score)] forState:UIControlStateNormal];
+        [buttonCell.collectionButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
+        [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
+        [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
+        
+        [buttonCell.collectionButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
+        [buttonCell.followingButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+        [buttonCell.fanButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+        [buttonCell.collectionTitleButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
+        [buttonCell.followingTitleButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+        [buttonCell.fanTitleButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+        
+        return buttonCell;
     } else {
-        cell.textLabel.text = @[@"反馈", @"设置"][indexPath.row];
-        cell.imageView.image = [UIImage imageNamed:@[@"me-feedback", @"sidemenu_setting"][indexPath.row]];
-    }
-    
-    
-    cell.textLabel.textColor = [UIColor titleColor];
-    
-    if (indexPath.row == 0 && indexPath.section == 0) {
-        if (_badgeValue == 0) {
-            cell.accessoryView = nil;
+        
+        UITableViewCell *cell = [UITableViewCell new];
+        cell.separatorInset = UIEdgeInsetsMake(0, 65, 0, 0);
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        UIView *selectedBackground = [UIView new];
+        selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
+        [cell setSelectedBackgroundView:selectedBackground];
+        
+        cell.backgroundColor = [UIColor colorWithHex:0xebebf3];//colorWithHex:0xF9F9F9
+        
+        if (indexPath.section == 1) {
+            cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的团队", @"我的活动"][indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:@[@"me-message", @"me-blog", @"me-team", @"discover-activities"][indexPath.row]];
         } else {
-            UILabel *accessoryBadge = [UILabel new];
-            accessoryBadge.backgroundColor = [UIColor redColor];
-            accessoryBadge.text = [@(_badgeValue) stringValue];
-            accessoryBadge.textColor = [UIColor whiteColor];
-            accessoryBadge.textAlignment = NSTextAlignmentCenter;
-            accessoryBadge.layer.cornerRadius = 11;
-            accessoryBadge.clipsToBounds = YES;
-            
-            CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
-            width = width > 26? width: 22;
-            accessoryBadge.frame = CGRectMake(0, 0, width, 22);
-            cell.accessoryView = accessoryBadge;
+            cell.textLabel.text = @[@"反馈", @"设置"][indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:@[@"me-feedback", @"sidemenu_setting"][indexPath.row]];
         }
+        
+        
+        cell.textLabel.textColor = [UIColor titleColor];
+        
+        if (indexPath.row == 0 && indexPath.section == 1) {
+            if (_badgeValue == 0) {
+                cell.accessoryView = nil;
+            } else {
+                UILabel *accessoryBadge = [UILabel new];
+                accessoryBadge.backgroundColor = [UIColor redColor];
+                accessoryBadge.text = [@(_badgeValue) stringValue];
+                accessoryBadge.textColor = [UIColor whiteColor];
+                accessoryBadge.textAlignment = NSTextAlignmentCenter;
+                accessoryBadge.layer.cornerRadius = 11;
+                accessoryBadge.clipsToBounds = YES;
+                
+                CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
+                width = width > 26? width: 22;
+                accessoryBadge.frame = CGRectMake(0, 0, width, 22);
+                cell.accessoryView = accessoryBadge;
+            }
+        }
+        
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+
+        return cell;
     }
     
-    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-    cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-    
-    return cell;
 }
 
 #pragma mark - UITableViewDelegate
@@ -369,7 +362,7 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 1 && indexPath.row == 1) {
+    if (indexPath.section == 2 && indexPath.row == 1) {
         SettingsPage *settingPage = [SettingsPage new];
         settingPage.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:settingPage animated:YES];
@@ -381,7 +374,7 @@
             return;
         }
         
-        if (indexPath.section == 0) {
+        if (indexPath.section == 1) {
             switch (indexPath.row) {
                 case 0: {
                     _badgeValue = 0;
@@ -418,7 +411,7 @@
                 }
                 default: break;
             }
-        } else {
+        } else if (indexPath.section == 2){
             switch (indexPath.row) {
                 case 0: {
                     FeedBackViewController *fbVc = [FeedBackViewController new];
@@ -485,7 +478,7 @@
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
     });
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
