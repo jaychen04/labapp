@@ -7,7 +7,8 @@
 
 编号 | 标签名 | 发布版本 |  备注
 ------- | ------- | ------- | ------- | -------
-1 | [v3.7.0](http://git.oschina.net/oschina/iphone-app/tree/v3.7.0/) | v3.7.0 (1606131024) |  当前最新版
+1 | [v3.7.1](http://git.oschina.net/oschina/iphone-app/tree/v3.7.1/) | v3.7.1 (1607111810) |  当前最新版
+2 | [v3.7.0](http://git.oschina.net/oschina/iphone-app/tree/v3.7.0/) | v3.7.0 (1606131024) |  
 
 
 
@@ -49,26 +50,26 @@ Xcode 6＋
 * SDWebImage：                           加载网络图片和缓存图片
 * SSKeychain：                           账号密码的存取
 * TBXML：                                解析XML
-* TOWebViewController：                  内置浏览器 
+* TOWebViewController：                  内置浏览器
 * TTTAttributedLabel：                   支持富文本显示的label
 
 
 ## 开源协议
 
 	The MIT License (MIT)
-	
+
 	Copyright (c) 2016 OSChina.net
-	
+
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
 	in the Software without restriction, including without limitation the rights
 	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 	copies of the Software, and to permit persons to whom the Software is
 	furnished to do so, subject to the following conditions:
-	
+
 	The above copyright notice and this permission notice shall be included in all
 	copies or substantial portions of the Software.
-	
+
 	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -76,6 +77,3 @@ Xcode 6＋
 	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
-	
-
-
