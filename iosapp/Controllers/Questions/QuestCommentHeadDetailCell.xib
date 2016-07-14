@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="luW-r4-QKD">
-                        <rect key="frame" x="250" y="13" width="1" height="58.5"/>
+                        <rect key="frame" x="250" y="5" width="1" height="75.5"/>
                         <color key="backgroundColor" red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="1" id="xbz-6Y-71Z"/>
@@ -73,11 +73,11 @@
                     <constraint firstItem="4kf-7o-rR2" firstAttribute="top" secondItem="Yxm-rc-f5R" secondAttribute="top" id="RNd-BZ-bMP"/>
                     <constraint firstItem="Yxm-rc-f5R" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="TQX-yg-fQd"/>
                     <constraint firstAttribute="trailingMargin" secondItem="m31-xf-2Ln" secondAttribute="trailing" id="VNc-Nl-cVz"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="luW-r4-QKD" secondAttribute="bottom" constant="8" id="XVu-hn-jcv"/>
                     <constraint firstItem="cbQ-bI-b15" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="ajz-7z-iEk"/>
                     <constraint firstAttribute="trailing" secondItem="cbQ-bI-b15" secondAttribute="trailing" id="bcz-ac-2Fs"/>
-                    <constraint firstItem="luW-r4-QKD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="5" id="iJU-NT-yDp"/>
+                    <constraint firstItem="luW-r4-QKD" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="beY-pr-Owh"/>
                     <constraint firstItem="4kf-7o-rR2" firstAttribute="leading" secondItem="Yxm-rc-f5R" secondAttribute="trailing" constant="8" id="oy8-vO-C2f"/>
+                    <constraint firstAttribute="bottom" secondItem="luW-r4-QKD" secondAttribute="bottom" constant="7" id="qOd-WT-eKz"/>
                     <constraint firstItem="m31-xf-2Ln" firstAttribute="leading" secondItem="4kf-7o-rR2" secondAttribute="leading" id="s3V-J5-44F"/>
                 </constraints>
             </tableViewCellContentView>
@@ -87,7 +87,7 @@
                 <outlet property="portraitView" destination="Yxm-rc-f5R" id="o4J-kd-a4f"/>
                 <outlet property="timeLabel" destination="m31-xf-2Ln" id="C5e-dx-f7Z"/>
             </connections>
-            <point key="canvasLocation" x="355" y="327"/>
+            <point key="canvasLocation" x="410" y="521"/>
         </tableViewCell>
     </objects>
     <resources>
