@@ -57,6 +57,7 @@
 		043568701D22272F00CC511C /* SoftWareDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435686F1D22272F00CC511C /* SoftWareDetailHeaderView.m */; };
 		043568761D225D2100CC511C /* SoftWareDetailBodyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */; };
 		043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */; };
+		0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */; };
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
@@ -393,6 +394,8 @@
 		043568731D225D2100CC511C /* SoftWareDetailBodyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareDetailBodyCell.h; sourceTree = "<group>"; };
 		043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftWareDetailBodyCell.m; sourceTree = "<group>"; };
 		043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoftWareDetailBodyCell.xib; sourceTree = "<group>"; };
+		0446D38E1D37337900169B2B /* UINavigationBar+BackgroundColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+BackgroundColor.h"; sourceTree = "<group>"; };
+		0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+BackgroundColor.m"; sourceTree = "<group>"; };
 		0473259A1CF821A700460658 /* QuesAnsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuesAnsTableViewCell.h; sourceTree = "<group>"; };
 		0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuesAnsTableViewCell.m; sourceTree = "<group>"; };
 		0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuesAnsTableViewCell.xib; sourceTree = "<group>"; };
@@ -1554,6 +1557,8 @@
 				042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */,
 				C5B2F1B71BD0DFF2004B4785 /* NSString+Util.h */,
 				C5B2F1B81BD0DFF2004B4785 /* NSString+Util.m */,
+				0446D38E1D37337900169B2B /* UINavigationBar+BackgroundColor.h */,
+				0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */,
 				C5E5E6B51B5CCBD3009EBD8E /* ScalableCover */,
 				C5A89C2E1B09C32000798B1C /* FontAwesome */,
 				EED55F6D1A80AB13004E6371 /* UIBarButtonItem+Badge.h */,
@@ -2584,6 +2589,7 @@
 				EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */,
 				31855C8B1D0E621F00C8F8B8 /* TweetDetailNewTableViewController.m in Sources */,
 				042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */,
+				0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */,
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
 				C5D7C10E1B12F8A8003EFE9B /* CheckboxTableCell.m in Sources */,
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,

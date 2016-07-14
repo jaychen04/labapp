@@ -165,6 +165,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-4, 0, 0, 0);
     [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarBtn];
+
 //    self.navigationItem.rightBarButtonItem.target = self;
 //    self.navigationItem.rightBarButtonItem.action = @selector(rightBarButtonClicked);
 

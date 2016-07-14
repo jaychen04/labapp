@@ -23,6 +23,14 @@ PODS:
   - AFOnoResponseSerializer (1.0.0):
     - AFNetworking (~> 2.2)
     - Ono (~> 1.0)
+  - AsyncDisplayKit (1.9.73):
+    - AsyncDisplayKit/PINRemoteImage (= 1.9.73)
+  - AsyncDisplayKit/ASDealloc2MainObject (1.9.73)
+  - AsyncDisplayKit/Core (1.9.73):
+    - AsyncDisplayKit/ASDealloc2MainObject
+  - AsyncDisplayKit/PINRemoteImage (1.9.73):
+    - AsyncDisplayKit/Core
+    - PINRemoteImage/iOS (>= 3.0.0-beta.2)
   - DateTools (1.7.0)
   - DTCoreText (1.6.17):
     - DTFoundation/Core (~> 1.7.5)
@@ -45,6 +53,11 @@ PODS:
   - MJRefresh (3.1.0)
   - Myhpple (0.0.3)
   - Ono (1.2.2)
+  - PINCache (2.2.2)
+  - PINRemoteImage/Core (3.0.0-beta.2):
+    - PINCache (>= 2.1)
+  - PINRemoteImage/iOS (3.0.0-beta.2):
+    - PINRemoteImage/Core
   - Reachability (3.2)
   - ReactiveCocoa (2.5):
     - ReactiveCocoa/UI (= 2.5)
@@ -68,6 +81,7 @@ PODS:
 
 DEPENDENCIES:
   - AFOnoResponseSerializer
+  - AsyncDisplayKit
   - DateTools
   - DTCoreText
   - GPUImage
@@ -91,6 +105,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
   AFOnoResponseSerializer: c02c8bef1d6742ac68f33ecaed41826c9657bc33
+  AsyncDisplayKit: cc906c5ddff9d34c8f5ea2f18ba092033c5516a3
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
@@ -103,6 +118,8 @@ SPEC CHECKSUMS:
   MJRefresh: 743e6404967d1c2c688472ea3ecfde247d872db4
   Myhpple: 27a5e95ed47f4e13679cb3a437e27cb2e6424e49
   Ono: 80b1c686777d3f6d5d5ce6fcac8a74afef4ca197
+  PINCache: 078426d356ab95ef875e9e62e5c35a2ea3333c28
+  PINRemoteImage: 197554c5ba57a6ae90f5db441651180039fc9062
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
