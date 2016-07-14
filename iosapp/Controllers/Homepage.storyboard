@@ -4,11 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="FontAwesome.ttf">
-            <string>FontAwesome</string>
-        </mutableArray>
-    </customFonts>
     <scenes>
         <!--Navigation Controller-->
         <scene sceneID="Osj-jl-Wz2">
@@ -44,14 +39,6 @@
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoq-xg-FOn">
-                                    <rect key="frame" x="554" y="51" width="30" height="38"/>
-                                    <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="25"/>
-                                    <state key="normal" title="">
-                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                </button>
                                 <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-portrait" translatesAutoresizingMaskIntoConstraints="NO" id="Rv9-mR-dOS">
                                     <rect key="frame" x="16" y="40" width="60" height="60"/>
                                     <constraints>
@@ -64,6 +51,17 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </imageView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoq-xg-FOn">
+                                    <rect key="frame" x="564" y="60" width="20" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="c58-ZK-8R1"/>
+                                        <constraint firstAttribute="width" constant="20" id="eaF-id-inj"/>
+                                    </constraints>
+                                    <state key="normal" image="btn_qrcode">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                </button>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="Rv9-mR-dOS" firstAttribute="top" secondItem="1V3-Hr-4J7" secondAttribute="top" constant="40" id="1xj-Fw-fpd"/>
@@ -89,7 +87,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="61.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -163,6 +161,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="btn_qrcode" width="20" height="20"/>
         <image name="default-portrait" width="36" height="36"/>
     </resources>
 </document>
