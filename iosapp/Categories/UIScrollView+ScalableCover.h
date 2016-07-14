@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-static const CGFloat MaxHeight = 200;
+static const CGFloat MaxHeight = 140;
 
 
 @interface ScalableCover : UIImageView

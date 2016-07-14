@@ -18,7 +18,6 @@
 #import "UserOperationCell.h"
 #import "BubbleChatViewController.h"
 #import "LoginViewController.h"
-#import "NewHotBlogTableViewController.h"
 #import "UINavigationBar+BackgroundColor.h"
 
 #import <MBProgressHUD.h>
@@ -282,11 +281,6 @@
     }
 }
 
-- (void)pushBlogsVC
-{
-    [self.navigationController pushViewController:[[NewHotBlogTableViewController alloc] initWithUserID:_user.userID]
-                                         animated:YES];
-}
 
 - (void)sendMessage
 {
