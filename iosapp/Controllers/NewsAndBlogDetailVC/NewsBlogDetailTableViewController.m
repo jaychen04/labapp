@@ -31,6 +31,7 @@
 #import "NewCommentListViewController.h"//新评论列表
 #import "SoftWareViewController.h"      //软件详情
 
+//#import <WebKit/WKWebView.h>
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
@@ -85,6 +86,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 @property (nonatomic,assign) CGPoint readingOffest;
 @property (nonatomic,assign) BOOL isReboundTop;
+@property (nonatomic,strong) UIView* headerView;
 @end
 
 
@@ -351,26 +353,28 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark -- DIY_headerView
 - (UIView*)headerViewWithSectionTitle:(NSString*)title {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
-    headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
-    
-    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
-    topLineView.backgroundColor = [UIColor separatorColor];
-    [headerView addSubview:topLineView];
-    
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
-    bottomLineView.backgroundColor = [UIColor separatorColor];
-    [headerView addSubview:bottomLineView];
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
-    titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
-    titleLabel.tag = 8;
-    titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
-    titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
-    titleLabel.text = title;
-    [headerView addSubview:titleLabel];
-    
-    return headerView;
+    if (_headerView == nil) {
+        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
+        headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
+        
+        UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
+        topLineView.backgroundColor = [UIColor separatorColor];
+        [headerView addSubview:topLineView];
+        
+        UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
+        bottomLineView.backgroundColor = [UIColor separatorColor];
+        [headerView addSubview:bottomLineView];
+        
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
+        titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
+        titleLabel.tag = 8;
+        titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
+        titleLabel.font = [UIFont systemFontOfSize:15];
+        titleLabel.text = title;
+        [headerView addSubview:titleLabel];
+        _headerView = headerView;
+    }
+    return _headerView;
 }
 
 

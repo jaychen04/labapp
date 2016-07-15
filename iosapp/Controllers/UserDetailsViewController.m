@@ -143,7 +143,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 436;
+        return 415;
     } else {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
@@ -152,35 +152,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    if (indexPath.section == 0) {
-//        if (indexPath.row == 0) {
-//            UserHeaderCell *cell = [UserHeaderCell new];
-//            
-//            [cell setContentWithUser:_user];
-//            
-//            cell.followsButton.tag = 0;
-//            cell.fansButton.tag = 1;
-//            
-//            [cell.followsButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-//            [cell.fansButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-//            
-//            return cell;
-//        } else {
-//            UserOperationCell *cell = [UserOperationCell new];
-//            if (_user) {
-//                cell.loginTimeLabel.text = [NSString stringWithFormat:@"上次登录：%@", [_user.latestOnlineTime timeAgoSinceNow]];
-//                [cell setFollowButtonByRelationship:_user.relationship];
-//                [cell.followButton addTarget:self action:@selector(updateRelationship) forControlEvents:UIControlEventTouchUpInside];
-//                [cell.blogsButton addTarget:self action:@selector(pushBlogsVC) forControlEvents:UIControlEventTouchUpInside];
-//                [cell.messageButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-//                [cell.informationButton addTarget:self action:@selector(showUserInformation) forControlEvents:UIControlEventTouchUpInside];
-//            }
-//            
-//            return cell;
-//        }
-//    } else {
-//        return [super tableView:tableView cellForRowAtIndexPath:indexPath];
-//    }
     if (indexPath.section == 0) {
         UserHeaderCell *cell = [UserHeaderCell new];
 
