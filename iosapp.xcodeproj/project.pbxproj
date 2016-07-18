@@ -111,6 +111,8 @@
 		31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FA1AEF2685004DF445 /* ProjectCell.m */; };
 		31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */; };
 		31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */; };
+		31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */; };
+		31FF2F951CF2F36600C7A0B6 /* NewHotBlogTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */; };
 		3801789C1A2C1A7300922858 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3801789B1A2C1A7300922858 /* EventCell.m */; };
 		380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */; };
 		380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21F1A74DFEE003C4021 /* ActivityCell.m */; };
@@ -269,6 +271,8 @@
 		EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
 		EE53F74F1D0048C800083D9D /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */; };
+		EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */; };
+		EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
@@ -501,6 +505,9 @@
 		31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueList.m; sourceTree = "<group>"; };
 		31F8925C1B0DF179002E0838 /* NewTeamIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTeamIssueViewController.h; sourceTree = "<group>"; };
 		31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTeamIssueViewController.m; sourceTree = "<group>"; };
+		31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		31FF2F931CF2F36600C7A0B6 /* NewHotBlogTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHotBlogTableViewController.h; sourceTree = "<group>"; };
+		31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHotBlogTableViewController.m; sourceTree = "<group>"; };
 		3801789A1A2C1A7300922858 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		3801789B1A2C1A7300922858 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		380FD21B1A74DFCE003C4021 /* ActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitiesViewController.h; sourceTree = "<group>"; };
@@ -819,6 +826,9 @@
 		EE2023291CFBE675002756E4 /* ActivityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadView.h; sourceTree = "<group>"; };
 		EE20232A1CFBE675002756E4 /* ActivityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadView.m; sourceTree = "<group>"; };
 		EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
+		EE603E031D3C75A700DA7F31 /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsDetailViewController.h; path = iosapp/Controllers/News/NewsDetailViewController.h; sourceTree = SOURCE_ROOT; };
+		EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsDetailViewController.m; path = iosapp/Controllers/News/NewsDetailViewController.m; sourceTree = SOURCE_ROOT; };
+		EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewsDetailViewController.xib; path = iosapp/Controllers/News/NewsDetailViewController.xib; sourceTree = SOURCE_ROOT; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE6DB9461AD6633E004FCF3C /* MyTweetLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTweetLikeListViewController.h; sourceTree = "<group>"; };
@@ -905,6 +915,7 @@
 			files = (
 				04EC1B5A1D38F6C8006DBD5D /* WebKit.framework in Frameworks */,
 				04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */,
+				31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */,
 				042E8D121CF595FC00364BD7 /* libNBSAppAgent.framework in Frameworks */,
 				042E8D0F1CF5950900364BD7 /* libiconv.tbd in Frameworks */,
 				042E8D0D1CF594F700364BD7 /* libsqlite3.tbd in Frameworks */,
@@ -1129,6 +1140,7 @@
 			children = (
 				04EC1B591D38F6C8006DBD5D /* WebKit.framework */,
 				04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */,
+				31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */,
 				042E8D101CF5950F00364BD7 /* libPods.a */,
 				042E8D0E1CF5950900364BD7 /* libiconv.tbd */,
 				042E8D0C1CF594F700364BD7 /* libsqlite3.tbd */,
@@ -2174,6 +2186,9 @@
 				0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */,
 				0422BC2C1CEDA2A7007DB140 /* InformationViewController.h */,
 				0422BC2D1CEDA2A7007DB140 /* InformationViewController.m */,
+				EE603E031D3C75A700DA7F31 /* NewsDetailViewController.h */,
+				EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */,
+				EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -2307,7 +2322,7 @@
 				00D6BCD819EB673200E8754E /* Resources */,
 				C8C815620688FAE2D386D6B8 /* [CP] Copy Pods Resources */,
 				65FB3FE0826CA3EDEA75FB1B /* [CP] Embed Pods Frameworks */,
-				790C4CFA3C11122D1210746B /* Embed Pods Frameworks */,
+				D25B57F3A9273ADED0D21235 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2409,6 +2424,7 @@
 				EEE241B11CFD6ECC0088FFB3 /* ActivityHeadCell.xib in Resources */,
 				0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */,
 				EEB3D7AA1D13A86200164EF5 /* CommentDetailViewController.xib in Resources */,
+				EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */,
 				EEB3D7AF1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
 				EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */,
@@ -2480,6 +2496,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D25B57F3A9273ADED0D21235 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F87169EF104A0A13C333FE09 /* [CP] Check Pods Manifest.lock */ = {
@@ -2673,6 +2704,7 @@
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				31D699581CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m in Sources */,
 				C5F3D7801AF0C8BF0032F775 /* WeeklyReportCell.m in Sources */,
+				EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */,
 				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
 				04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */,
 				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,

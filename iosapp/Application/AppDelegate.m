@@ -194,7 +194,8 @@
         UIViewController *detailVc;
         NSArray *queryArray = [[url query] componentsSeparatedByString:@"&"];
         [queryArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            if ([obj containsString:@"type"]) {
+            
+            if ([obj containsString:@"type"] && ![obj isEqualToString:@"main"]) {
                 NSCharacterSet* nonDigits =[[NSCharacterSet decimalDigitCharacterSet] invertedSet];
                 type =[[obj stringByTrimmingCharactersInSet:nonDigits] integerValue];
             } else if ([obj containsString:@"id"]) {
@@ -255,12 +256,13 @@
             detailVc.hidesBottomBarWhenPushed = YES;
             [tabBarVc.linkUtilNavController pushViewController:detailVc animated:YES];
         }
+        return YES;
+    }else {
+        return [UMSocialSnsService handleOpenURL:url]             ||
+        [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
+        [TencentOAuth HandleOpenURL:url]                   ||
+        [WeiboSDK handleOpenURL:url delegate:_loginDelegate];
     }
-    
-    return [UMSocialSnsService handleOpenURL:url]             ||
-           [WXApi handleOpenURL:url delegate:_loginDelegate]  ||
-           [TencentOAuth HandleOpenURL:url]                   ||
-           [WeiboSDK handleOpenURL:url delegate:_loginDelegate];
     
 //    return [UMSocialSnsService handleOpenURL:url];
 }

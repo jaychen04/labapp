@@ -120,6 +120,9 @@ pre {
     color:#111111;
     text-align:left;
 }
+.newTweetDetail img,table {
+    max-width: 100%;
+}
 
 /*.newTweetDetail.night {*/
 /*    */

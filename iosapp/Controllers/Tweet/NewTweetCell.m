@@ -195,7 +195,6 @@
          [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_actived"] forState:UIControlStateNormal];
      } else {
          [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
-         
      }
 
     _likeCountLabel.text = [NSString stringWithFormat:@"%d", tweet.likeCount];

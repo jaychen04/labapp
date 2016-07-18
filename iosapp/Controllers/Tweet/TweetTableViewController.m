@@ -233,6 +233,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCTweet *tweet = self.objects[indexPath.row];
+
     TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
     [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
     

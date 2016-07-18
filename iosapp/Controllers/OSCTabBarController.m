@@ -31,11 +31,14 @@
 #import "TweetTableViewController.h"
 #import "EventsViewController.h"
 
+#import<ELCImagePickerController.h>               //动弹多图
+#import <AssetsLibrary/AssetsLibrary.h>
+
 #import "UIBarButtonItem+Badge.h"
 #import <RESideMenu/RESideMenu.h>
 
 
-@interface OSCTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface OSCTabBarController () <UITabBarControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate,ELCImagePickerControllerDelegate>
 {
     InformationViewController *newsViewCtl;
     NewBlogsViewController *newHotBlogCtl;
@@ -402,13 +405,18 @@
             break;
         }
         case 1: {
-            UIImagePickerController *imagePickerController = [UIImagePickerController new];
-            imagePickerController.delegate = self;
-            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            imagePickerController.allowsEditing = NO;
-            imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+//            UIImagePickerController *imagePickerController = [UIImagePickerController new];
+//            imagePickerController.delegate = self;
+//            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+//            imagePickerController.allowsEditing = NO;
+//            imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+//            [self presentViewController:imagePickerController animated:YES completion:nil];
+
             
-            [self presentViewController:imagePickerController animated:YES completion:nil];
+            ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] init];
+            elcPicker.maximumImagesCount = 9;
+            elcPicker.imagePickerDelegate = self;
+            [self presentViewController:elcPicker animated:YES completion:nil];
             
             break;
         }
@@ -465,6 +473,63 @@
     [self buttonPressed];
 }
 
+
+#pragma mark ELCImagePickerControllerDelegate Methods
+
+- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
+{
+    NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
+    for (NSDictionary *dict in info) {
+        if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
+            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+                if (info.count > 1) {       //选择多张图片
+                    [images addObject:image];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [picker dismissViewControllerAnimated:NO completion:^{
+                            TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImages:images];
+                            UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+                            [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:^{
+                            }];
+                        }];
+                    });
+                }else {     //选择单张图片
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [picker dismissViewControllerAnimated:NO completion:^{
+                            TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImage:image];
+                            UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+                            [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:^{
+                            }];
+                        }];
+                    });
+                }
+                
+                
+            } else {
+                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
+            }
+        } else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
+            if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
+                UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
+                [images addObject:image];
+                
+            } else {
+                NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
+            }
+        } else {
+            NSLog(@"Uknown asset type");
+        }
+    }
+}
+
+- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+#pragma mark -- UIImagePickerController
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {    
     //如果是拍照的照片，则需要手动保存到本地，系统不会自动保存拍照成功后的照片
