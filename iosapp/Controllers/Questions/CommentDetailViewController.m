@@ -61,6 +61,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
+    self.tableView.estimatedRowHeight = 200;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerNib:[UINib nibWithNibName:@"QuestCommentHeadDetailCell" bundle:nil] forCellReuseIdentifier:CommentHeadDetailCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
@@ -448,22 +449,23 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
             return _webViewHeight+30;
         }
     } else if (indexPath.section == 1) {
-        if (_commentReplies.count > 0) {
-            UILabel *label = [UILabel new];
-            label.font = [UIFont systemFontOfSize:14];
-            label.numberOfLines = 0;
-            label.lineBreakMode = NSLineBreakByWordWrapping;
-            
-            OSCNewCommentReply *quesCommentReply = _commentReplies[indexPath.row];
-//            NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:quesCommentReply.content]];
-            label.attributedText = [NewCommentCell contentStringFromRawString:quesCommentReply.content];
-            
-            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
-            
-            return height + 71;
-        } else {
-            return 0;
-        }
+//        if (_commentReplies.count > 0) {
+//            UILabel *label = [UILabel new];
+//            label.font = [UIFont systemFontOfSize:14];
+//            label.numberOfLines = 0;
+//            label.lineBreakMode = NSLineBreakByWordWrapping;
+//            
+//            OSCNewCommentReply *quesCommentReply = _commentReplies[indexPath.row];
+//            label.attributedText = [NewCommentCell contentStringFromRawString:quesCommentReply.content];
+//            
+//            CGFloat height = [label sizeThatFits:CGSizeMake(tableView.frame.size.width - 32, MAXFLOAT)].height;
+//            
+//            return height + 71;
+//        } else {
+//            return 0;
+//        }
+        
+        return UITableViewAutomaticDimension;
     }
     return 0;
 }

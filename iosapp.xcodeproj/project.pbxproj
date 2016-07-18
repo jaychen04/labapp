@@ -264,6 +264,8 @@
 		EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
 		EE53F74F1D0048C800083D9D /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */; };
+		EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */; };
+		EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
@@ -273,6 +275,9 @@
 		EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */; };
 		EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */; };
 		EE7AC7F21AD38E5C00E850CB /* TweetsLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7F01AD38E5C00E850CB /* TweetsLikeListViewController.m */; };
+		EE7B0AE21D348DDF0070F196 /* MyBlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B0ADE1D348DDF0070F196 /* MyBlogsViewController.m */; };
+		EE7B0AE31D348DDF0070F196 /* NewBlogsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B0AE01D348DDF0070F196 /* NewBlogsViewController.m */; };
+		EE7B0AE41D348DDF0070F196 /* NewBlogsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE7B0AE11D348DDF0070F196 /* NewBlogsViewController.xib */; };
 		EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */; };
 		EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D32FE1AA95BF400ABFE58 /* PresentMembersViewController.m */; };
 		EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7D33011AA986AB00ABFE58 /* OSCEventPersonInfo.m */; };
@@ -302,6 +307,8 @@
 		EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE241B41CFD79C00088FFB3 /* ActivityDetailCell.xib */; };
 		EEEC98C31CF317D600995A03 /* QuesAnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */; };
 		EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */; };
+		EEFF2FFB1D361D2E0076CFF4 /* HomeButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */; };
+		EEFF2FFC1D361D2E0076CFF4 /* HomeButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */; };
 		EEFFA6421CFEDAC000A8701C /* webAndAbsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFFA6401CFEDAC000A8701C /* webAndAbsTableViewCell.m */; };
 		EEFFA6431CFEDAC000A8701C /* webAndAbsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFFA6411CFEDAC000A8701C /* webAndAbsTableViewCell.xib */; };
 /* End PBXBuildFile section */
@@ -800,6 +807,9 @@
 		EE2023291CFBE675002756E4 /* ActivityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadView.h; sourceTree = "<group>"; };
 		EE20232A1CFBE675002756E4 /* ActivityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadView.m; sourceTree = "<group>"; };
 		EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
+		EE603E031D3C75A700DA7F31 /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsDetailViewController.h; path = iosapp/Controllers/News/NewsDetailViewController.h; sourceTree = SOURCE_ROOT; };
+		EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsDetailViewController.m; path = iosapp/Controllers/News/NewsDetailViewController.m; sourceTree = SOURCE_ROOT; };
+		EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewsDetailViewController.xib; path = iosapp/Controllers/News/NewsDetailViewController.xib; sourceTree = SOURCE_ROOT; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE6DB9461AD6633E004FCF3C /* MyTweetLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTweetLikeListViewController.h; sourceTree = "<group>"; };
@@ -820,6 +830,11 @@
 		EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetLikeUserCell.m; sourceTree = "<group>"; };
 		EE7AC7EF1AD38E5C00E850CB /* TweetsLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetsLikeListViewController.h; sourceTree = "<group>"; };
 		EE7AC7F01AD38E5C00E850CB /* TweetsLikeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetsLikeListViewController.m; sourceTree = "<group>"; };
+		EE7B0ADD1D348DDF0070F196 /* MyBlogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBlogsViewController.h; sourceTree = "<group>"; };
+		EE7B0ADE1D348DDF0070F196 /* MyBlogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBlogsViewController.m; sourceTree = "<group>"; };
+		EE7B0ADF1D348DDF0070F196 /* NewBlogsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewBlogsViewController.h; sourceTree = "<group>"; };
+		EE7B0AE01D348DDF0070F196 /* NewBlogsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewBlogsViewController.m; sourceTree = "<group>"; };
+		EE7B0AE11D348DDF0070F196 /* NewBlogsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewBlogsViewController.xib; sourceTree = "<group>"; };
 		EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBasicInfoViewController.h; sourceTree = "<group>"; };
 		EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBasicInfoViewController.m; sourceTree = "<group>"; };
 		EE7D32FD1AA95BF400ABFE58 /* PresentMembersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentMembersViewController.h; sourceTree = "<group>"; };
@@ -866,6 +881,9 @@
 		EEEC98C01CF317D600995A03 /* QuesAnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsViewController.h; path = Questions/QuesAnsViewController.h; sourceTree = "<group>"; };
 		EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsViewController.m; path = Questions/QuesAnsViewController.m; sourceTree = "<group>"; };
 		EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsViewController.xib; path = Questions/QuesAnsViewController.xib; sourceTree = "<group>"; };
+		EEFF2FF81D361D2E0076CFF4 /* HomeButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeButtonCell.h; sourceTree = "<group>"; };
+		EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeButtonCell.m; sourceTree = "<group>"; };
+		EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeButtonCell.xib; sourceTree = "<group>"; };
 		EEFFA63F1CFEDAC000A8701C /* webAndAbsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = webAndAbsTableViewCell.h; sourceTree = "<group>"; };
 		EEFFA6401CFEDAC000A8701C /* webAndAbsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = webAndAbsTableViewCell.m; sourceTree = "<group>"; };
 		EEFFA6411CFEDAC000A8701C /* webAndAbsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = webAndAbsTableViewCell.xib; sourceTree = "<group>"; };
@@ -1702,6 +1720,9 @@
 		38BD3D151A37FD1500682D1F /* 我 */ = {
 			isa = PBXGroup;
 			children = (
+				EEFF2FF81D361D2E0076CFF4 /* HomeButtonCell.h */,
+				EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */,
+				EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */,
 				C5E92FDD1B59FAC300EFE47E /* Homepage.storyboard */,
 				C5E92FDF1B5A1E5F00EFE47E /* HomepageViewController.h */,
 				C5E92FE01B5A1E5F00EFE47E /* HomepageViewController.m */,
@@ -2110,8 +2131,11 @@
 				C5EF892E1BE319A300B5FA46 /* BlogCell.m */,
 				C5EF892F1BE319A300B5FA46 /* BlogsViewController.h */,
 				C5EF89301BE319A300B5FA46 /* BlogsViewController.m */,
-				31FF2F931CF2F36600C7A0B6 /* NewHotBlogTableViewController.h */,
-				31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */,
+				EE7B0ADD1D348DDF0070F196 /* MyBlogsViewController.h */,
+				EE7B0ADE1D348DDF0070F196 /* MyBlogsViewController.m */,
+				EE7B0ADF1D348DDF0070F196 /* NewBlogsViewController.h */,
+				EE7B0AE01D348DDF0070F196 /* NewBlogsViewController.m */,
+				EE7B0AE11D348DDF0070F196 /* NewBlogsViewController.xib */,
 				31D56E841CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.h */,
 				31D56E851CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m */,
 				EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */,
@@ -2131,6 +2155,9 @@
 				0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */,
 				0422BC2C1CEDA2A7007DB140 /* InformationViewController.h */,
 				0422BC2D1CEDA2A7007DB140 /* InformationViewController.m */,
+				EE603E031D3C75A700DA7F31 /* NewsDetailViewController.h */,
+				EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */,
+				EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -2354,6 +2381,7 @@
 				EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */,
 				EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */,
 				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
+				EEFF2FFC1D361D2E0076CFF4 /* HomeButtonCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */,
 				38CC81EC1AE6517E00CC4F6F /* emojiToText.plist in Resources */,
@@ -2363,6 +2391,7 @@
 				EEE241B11CFD6ECC0088FFB3 /* ActivityHeadCell.xib in Resources */,
 				0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */,
 				EEB3D7AA1D13A86200164EF5 /* CommentDetailViewController.xib in Resources */,
+				EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */,
 				EEB3D7AF1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
 				EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */,
@@ -2375,6 +2404,7 @@
 				EE82D0441C43B1E30066FDC9 /* FeedBackViewController.xib in Resources */,
 				317AD9C91C96AD68008356DE /* recommend_tag.png in Resources */,
 				C5E92FDE1B59FAC300EFE47E /* Homepage.storyboard in Resources */,
+				EE7B0AE41D348DDF0070F196 /* NewBlogsViewController.xib in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
 				043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */,
 			);
@@ -2398,6 +2428,21 @@
 			inputPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		790C4CFA3C11122D1210746B /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2526,6 +2571,7 @@
 				EED7C71C1D222667001B565C /* NewCommentListViewController.m in Sources */,
 				380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */,
 				EEE241B51CFD79C00088FFB3 /* ActivityDetailCell.m in Sources */,
+				EEFF2FFB1D361D2E0076CFF4 /* HomeButtonCell.m in Sources */,
 				C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */,
 				EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */,
 				38EAF1C41AE0EA6D00397E2A /* TeamProject.m in Sources */,
@@ -2551,6 +2597,7 @@
 				31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				C5EF89391BE319F600B5FA46 /* NewsViewController.m in Sources */,
+				EE7B0AE21D348DDF0070F196 /* MyBlogsViewController.m in Sources */,
 				31D6995F1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
 				31D699691CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m in Sources */,
@@ -2576,6 +2623,7 @@
 				C52BF5011AFCBF1700E53508 /* TeamReplyCell.m in Sources */,
 				C5B2F1AF1BCF453F004B4785 /* NSDateFormatter+Singleton.m in Sources */,
 				6662BACA1B8C4B7400D6A9BC /* TweetFriendsListViewController.m in Sources */,
+				EE7B0AE31D348DDF0070F196 /* NewBlogsViewController.m in Sources */,
 				38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */,
 				EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */,
 				31855C8B1D0E621F00C8F8B8 /* TweetDetailNewTableViewController.m in Sources */,
@@ -2620,6 +2668,7 @@
 				380FD22D1A7621C5003C4021 /* ActivityDetailsCell.m in Sources */,
 				31D699581CFC28D200B48BB0 /* NewsBlogDetailTableViewController.m in Sources */,
 				C5F3D7801AF0C8BF0032F775 /* WeeklyReportCell.m in Sources */,
+				EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */,
 				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
 				04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */,
 				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,
@@ -2660,7 +2709,6 @@
 				EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */,
 				C5A89C3A1B09C34B00798B1C /* UIImage+FontAwesome.m in Sources */,
 				C5F3D7761AF0C2A50032F775 /* WeeklyReportViewController.m in Sources */,
-				31FF2F951CF2F36600C7A0B6 /* NewHotBlogTableViewController.m in Sources */,
 				EEB3D7AE1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
 				EEE241A91CFD65710088FFB3 /* ActivityDetailViewController.m in Sources */,
