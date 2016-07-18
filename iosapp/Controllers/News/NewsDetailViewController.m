@@ -11,6 +11,13 @@
 #import "NewCommentListViewController.h"//新评论列表
 #import "SoftWareViewController.h"      //软件详情
 #import "NewCommentCell.h"
+#import "TitleInfoTableViewCell.h"
+#import "webAndAbsTableViewCell.h"
+#import "RecommandBlogTableViewCell.h"
+#import "ContentWebViewCell.h"
+#import "NewCommentCell.h"
+#import "RelatedSoftWareCell.h"
+#import "UIColor+Util.h"
 
 #import "Utils.h"
 #import "OSCAPI.h"
@@ -49,6 +56,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 @property (nonatomic, strong) UIButton *rightBarBtn;
 @property (nonatomic,assign) BOOL isReboundTop;
 @property (nonatomic,assign) CGPoint readingOffest;
+@property (nonatomic, assign) CGFloat webViewHeight;
 
 //软键盘size
 @property (nonatomic, assign) CGFloat keyboardHeight;
@@ -120,8 +128,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     //获取资讯详情和资讯评论
     [self getNewsData];
     [self getNewsComments];
-
-
+    
+    
     
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -133,7 +141,10 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
 }
-
+- (void)viewWillDisappear:(BOOL)animated {
+    [self hideHubView];
+    [super viewWillDisappear:animated];
+}
 #pragma mark - 获取资讯详情
 -(void)getNewsData{
     //    74510
@@ -184,8 +195,191 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             NSLog(@"%@",error);
         }];
 }
-#pragma mark - collect 收藏
 
+#pragma mark - Table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    NSInteger sectionNumber = 1;
+    //资讯详情
+    if (_isExistRelatedSoftware) {
+        sectionNumber += 1;
+    }
+    if (_newsDetails.abouts.count > 0) {
+        sectionNumber += 1;
+    }
+    if (_newsDetailComments.count > 0) {
+        sectionNumber += 1;
+    }
+    return sectionNumber;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    //资讯详情
+    switch (section) {
+        case 0:
+        {
+            return 2;
+            break;
+        }
+        case 1://与资讯有关的软件信息
+        {
+            NSInteger rows = 0;
+            if (_isExistRelatedSoftware) {
+                return rows = 1;
+            }else if (_newsDetails.abouts.count > 0){
+                return rows = _newsDetails.abouts.count;
+            }else if (_newsDetailComments.count > 0) {
+                return _newsDetailComments.count+1;
+            }
+            break;
+        }
+        case 2://相关资讯
+        {
+            return _isExistRelatedSoftware && _newsDetails.abouts.count > 0?_newsDetails.abouts.count:_newsDetailComments.count+1;
+            break;
+        }
+        case 3://评论
+        {
+            return _newsDetailComments.count+1;
+            break;
+        }
+        default:
+            break;
+    }
+    
+    return 0;
+}
+
+
+- (nullable UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    //资讯详情
+    if (section == 1) {
+        if (_isExistRelatedSoftware) {
+            return [self headerViewWithSectionTitle:@"相关软件"];
+        }else if (_newsDetails.abouts.count > 0){
+            return [self headerViewWithSectionTitle:@"相关资讯"];
+        }else if (_newsDetailComments.count > 0) {
+            return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_newsDetails.commentCount]];
+        }
+    }else if (section == 2) {
+        if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
+            return [self headerViewWithSectionTitle:@"相关资讯"];
+        }else {
+            if (_newsDetails.commentCount > 0) {
+                return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_newsDetails.commentCount]];
+            }
+            return [self headerViewWithSectionTitle:@"评论"];
+        }
+        
+    }else if (section == 3) {
+        if (_newsDetails.commentCount > 0) {
+            return [self headerViewWithSectionTitle:[NSString stringWithFormat:@"评论(%lu)", (unsigned long)_newsDetails.commentCount]];
+        }
+        return [self headerViewWithSectionTitle:@"评论"];
+    }
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //资讯详情
+    switch (indexPath.section) {
+        case 0:
+        {
+            switch (indexPath.row) {
+                case 0:
+                    return [tableView fd_heightForCellWithIdentifier:titleInfoReuseIdentifier configuration:^(TitleInfoTableViewCell *cell) {
+                        cell.newsDetail = _newsDetails;
+                    }];
+                    break;
+                case 1:
+                    return _webViewHeight+30;
+                    break;
+                default:
+                    break;
+            }
+            break;
+        }
+        case 1:
+        {
+            if (_isExistRelatedSoftware) {
+                return 45;
+            }else if (_newsDetails.abouts.count > 0){
+                return indexPath.row == _newsDetails.abouts.count-1 ? 72 : 60;
+            }else if (_newsDetailComments.count > 0) {
+                if (_newsDetailComments.count > 0) {
+                    if (indexPath.row == _newsDetailComments.count) {
+                        return 44;
+                    } else {
+                        return UITableViewAutomaticDimension;
+                    }
+                }
+            }
+            
+            break;
+        }
+        case 2:
+        {
+            if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
+                return indexPath.row == _newsDetails.abouts.count-1 ? 72 : 60;
+            }else {
+                if (_newsDetailComments.count > 0) {
+                    if (indexPath.row == _newsDetailComments.count) {
+                        return 44;
+                    } else {
+                        return UITableViewAutomaticDimension;
+                    }
+                }
+            }
+            
+            break;
+        }
+        case 3: {
+            if (_newsDetailComments.count > 0) {
+                if (indexPath.row == _newsDetailComments.count) {
+                    return 44;
+                } else {
+                    return UITableViewAutomaticDimension;
+                }
+            }
+        }
+        default:
+            break;
+    }
+    
+    
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return section != 0 ? 32 : 0.001;
+}
+
+
+#pragma mark -- DIY_headerView
+- (UIView*)headerViewWithSectionTitle:(NSString*)title {
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
+    headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
+    
+    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
+    topLineView.backgroundColor = [UIColor separatorColor];
+    [headerView addSubview:topLineView];
+    
+    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
+    bottomLineView.backgroundColor = [UIColor separatorColor];
+    [headerView addSubview:bottomLineView];
+    
+    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
+    titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
+    titleLabel.tag = 8;
+    titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
+    titleLabel.font = [UIFont systemFontOfSize:15];
+    titleLabel.text = title;
+    [headerView addSubview:titleLabel];
+    
+    return headerView;
+}
+#pragma mark - collect 收藏
 - (void)updateNewsFavButtonWithIsCollected:(BOOL)isCollected
 {
     if (isCollected) {
@@ -258,7 +452,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-//    [self sendComment];
+    //    [self sendComment];
     
     [textField resignFirstResponder];
     
