@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class OSCTweetItem;
+
 @interface NewMultipleTweetCell : UITableViewCell
 
 + (instancetype) returnReuseMultipeTweetCellWithTableView:(UITableView* )tableView
@@ -15,5 +17,7 @@
                                                 indexPath:(NSIndexPath* )indexPath;
 
 @property (nonatomic,weak) UIButton* likeCountButton;
+
+@property (nonatomic,strong) OSCTweetItem* tweetItem;
 
 @end

@@ -7,11 +7,13 @@
 //
 
 #import "NewMultipleTweetCell.h"
+#import "OSCTweetItem.h"
+
 #import <AsyncDisplayKit.h>
 #import <Masonry.h>
 
 @interface NewMultipleTweetCell (){
-    NSMutableArray* _imageViewsArray;   //二维数组
+    NSMutableArray* _imageViewsArray;   //二维数组 _imageViewsArray[line][row]
 }
 @end
 
@@ -29,7 +31,8 @@
     
     __weak ASDisplayNode* _colorLine;
 }
-
+#pragma mark -
+#pragma mark --- 初始化cell
 +(instancetype)returnReuseMultipeTweetCellWithTableView:(UITableView *)tableView
                                              identifier:(NSString *)reuseIdentifier
                                               indexPath:(NSIndexPath *)indexPath
@@ -49,6 +52,7 @@
     }
     return self;
 }
+
 
 
 #pragma mark - 
@@ -99,8 +103,6 @@
     
     [self addMultiples];
 }
-
-
 
 #pragma mark --- set Layout （ Masnory ）
 -(void)setLayout{
@@ -165,6 +167,27 @@
 
 
 
+#pragma mark -
+#pragma mark --- setting Model
+-(void)setTweetItem:(OSCTweetItem *)tweetItem{
+    _tweetItem = tweetItem;
+    
+    [self settingContentForSubViews:tweetItem];
+    [self updateLayoutToSubViews:tweetItem];
+}
+
+#pragma mrak --- 设置内容给子视图
+-(void)settingContentForSubViews:(OSCTweetItem* )model{
+
+}
+#pragma mark --- 为子视图更新布局
+-(void)updateLayoutToSubViews:(OSCTweetItem* )model{
+
+}
+
+
+
+#pragma mark -
 #pragma mark --- Using a for loop
 -(void)addMultiples{
     _imageViewsArray = [NSMutableArray arrayWithCapacity:3];
