@@ -17,4 +17,5 @@
 
 - (void)insertString:(NSString *)string andSelect:(BOOL)shouldSelect;
 
+- (instancetype)initWithImages:(NSMutableArray *)images;
 @end

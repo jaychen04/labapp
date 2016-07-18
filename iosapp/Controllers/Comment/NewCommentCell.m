@@ -45,12 +45,12 @@
     [self.contentView addSubview:_commentPortrait];
     
     _nameLabel = [UILabel new];
-    _nameLabel.font = [UIFont fontWithName:@"PingFangSC-Light" size:15];
+    _nameLabel.font = [UIFont systemFontOfSize:15];
     _nameLabel.textColor = [UIColor colorWithHex:0x111111];
     [self.contentView addSubview:_nameLabel];
     
     _timeLabel = [UILabel new];
-    _timeLabel.font = [UIFont fontWithName:@"PingFangSC-Light" size:10];
+    _timeLabel.font = [UIFont systemFontOfSize:10];
     _timeLabel.textColor = [UIColor colorWithHex:0x9d9d9d];
     [self.contentView addSubview:_timeLabel];
     
@@ -175,7 +175,7 @@
 - (void)setUpContetTextView:(UITextView*)textView
 {
     textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
-    textView.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
+    textView.font = [UIFont systemFontOfSize:14];
     textView.textColor = [UIColor colorWithHex:0x111111];
     textView.editable = NO;
     textView.scrollEnabled = NO;
@@ -196,7 +196,7 @@
     NSAttributedString *attrString = [Utils attributedStringFromHTML:rawString];
 //    [Utils emojiStringFromAttrString:attrString]
     NSMutableAttributedString *mutableAttrString = [attrString mutableCopy];
-    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Light" size:14.0] range:NSMakeRange(0, mutableAttrString.length)];
+    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14   ] range:NSMakeRange(0, mutableAttrString.length)];
     
     // remove under line style
     [mutableAttrString beginEditing];
@@ -224,7 +224,7 @@
         [_referCommentView addSubview:subContainer];
         
         UILabel *contentLabel = [UILabel new];
-        contentLabel.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
+        contentLabel.font = [UIFont systemFontOfSize:14];
         contentLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
         contentLabel.numberOfLines = 0;
         contentLabel.lineBreakMode = NSLineBreakByWordWrapping;

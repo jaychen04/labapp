@@ -220,11 +220,6 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
               if (objectsXML.count == 0) {
                   
               }else {
-//                  if (objectsXML.count < 20) {
-//                      [self.tableView.mj_footer endRefreshingWithNoMoreData];
-//                  }else {
-//                      _likeListPage++;
-//                  }
                   _likeListPage++;
                   for (ONOXMLElement *objectXML in objectsXML) {
                       OSCUser *obj = [[OSCUser alloc] initWithXML:objectXML];
@@ -273,18 +268,11 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
              if (objectsXML.count == 0) {
                  
              }else {
-//                 if (objectsXML.count < 20) {
-//                     [self.tableView.mj_footer endRefreshingWithNoMoreData];
-//                 }else {
-//                     _commentListPage++;
-//                 }
-                 
                  _commentListPage++;
                  for (ONOXMLElement *objectXML in objectsXML) {
                      OSCComment *obj = [[OSCComment alloc] initWithXML:objectXML];
                      [_tweetCommentList addObject:obj];
                  }
-                 
              }
              if (self.tableView.mj_footer.isRefreshing) {
                  [self.tableView.mj_footer endRefreshing];
@@ -375,9 +363,6 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                 
                 likeCell.touchButton.tag = likedUser.userID;
                 [likeCell.touchButton addTarget:self action:@selector(likedUserDetails:) forControlEvents:UIControlEventTouchUpInside];
-                
-//                likeCell.portraitIv.tag = likedUser.userID;
-//                [likeCell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
             }
             return likeCell;
         }

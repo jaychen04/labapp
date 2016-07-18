@@ -57,7 +57,7 @@
     NSDate* date = [formatter dateFromString:viewModel.pubDate];
     
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils attributedTimeString:date]];
-    [attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Light" size:10.0] range:NSMakeRange(0, attributedString.length)];
+    [attributedString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:10] range:NSMakeRange(0, attributedString.length)];
     [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor newAssistTextColor] range:NSMakeRange(0, attributedString.length)];
     [_timeLabel setAttributedText:attributedString];
 }
