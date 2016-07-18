@@ -61,6 +61,11 @@
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
+		04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */; };
+		04EC1B5A1D38F6C8006DBD5D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B591D38F6C8006DBD5D /* WebKit.framework */; };
+		04EC1B5D1D38F6DF006DBD5D /* IMYWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */; };
+		04EC1B601D38F7C7006DBD5D /* ContentWKWebViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1B5F1D38F7C7006DBD5D /* ContentWKWebViewCell.m */; };
+		04EC1B631D393049006DBD5D /* IMY_NJKWebViewProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1B621D393049006DBD5D /* IMY_NJKWebViewProgress.m */; };
 		04EC802F1D2A505E009D8025 /* NewCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC802E1D2A505E009D8025 /* NewCommentCell.m */; };
 		04EC96961CF436B10004B54E /* OSCActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96951CF436B10004B54E /* OSCActivityViewController.m */; };
 		04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC969B1CF436FB0004B54E /* OSCActivityTableViewCell.m */; };
@@ -408,6 +413,14 @@
 		047325A21CF8612B00460658 /* enumList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enumList.h; path = OSC/enumList.h; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
+		04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		04EC1B591D38F6C8006DBD5D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		04EC1B5B1D38F6DF006DBD5D /* IMYWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMYWebView.h; sourceTree = "<group>"; };
+		04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMYWebView.m; sourceTree = "<group>"; };
+		04EC1B5E1D38F7C7006DBD5D /* ContentWKWebViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContentWKWebViewCell.h; sourceTree = "<group>"; };
+		04EC1B5F1D38F7C7006DBD5D /* ContentWKWebViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContentWKWebViewCell.m; sourceTree = "<group>"; };
+		04EC1B611D393049006DBD5D /* IMY_NJKWebViewProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMY_NJKWebViewProgress.h; sourceTree = "<group>"; };
+		04EC1B621D393049006DBD5D /* IMY_NJKWebViewProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMY_NJKWebViewProgress.m; sourceTree = "<group>"; };
 		04EC802D1D2A505E009D8025 /* NewCommentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewCommentCell.h; sourceTree = "<group>"; };
 		04EC802E1D2A505E009D8025 /* NewCommentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewCommentCell.m; sourceTree = "<group>"; };
 		04EC96941CF436B10004B54E /* OSCActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCActivityViewController.h; sourceTree = "<group>"; };
@@ -890,6 +903,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04EC1B5A1D38F6C8006DBD5D /* WebKit.framework in Frameworks */,
+				04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */,
 				042E8D121CF595FC00364BD7 /* libNBSAppAgent.framework in Frameworks */,
 				042E8D0F1CF5950900364BD7 /* libiconv.tbd in Frameworks */,
 				042E8D0D1CF594F700364BD7 /* libsqlite3.tbd in Frameworks */,
@@ -1041,6 +1056,10 @@
 		00EDF60C19EFC13500A5C842 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				04EC1B5B1D38F6DF006DBD5D /* IMYWebView.h */,
+				04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */,
+				04EC1B611D393049006DBD5D /* IMY_NJKWebViewProgress.h */,
+				04EC1B621D393049006DBD5D /* IMY_NJKWebViewProgress.m */,
 				042E8D131CF6A3F000364BD7 /* TokenManager.h */,
 				042E8D141CF6A3F000364BD7 /* TokenManager.m */,
 				00EDF60D19EFF4B300A5C842 /* Utils.h */,
@@ -1108,6 +1127,8 @@
 		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04EC1B591D38F6C8006DBD5D /* WebKit.framework */,
+				04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */,
 				042E8D101CF5950F00364BD7 /* libPods.a */,
 				042E8D0E1CF5950900364BD7 /* libiconv.tbd */,
 				042E8D0C1CF594F700364BD7 /* libsqlite3.tbd */,
@@ -1229,6 +1250,8 @@
 				31D699661CFC4F8600B48BB0 /* RecommandBlogTableViewCell.h */,
 				31D699671CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m */,
 				31D699681CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib */,
+				04EC1B5E1D38F7C7006DBD5D /* ContentWKWebViewCell.h */,
+				04EC1B5F1D38F7C7006DBD5D /* ContentWKWebViewCell.m */,
 				317F88991D05698700BD931F /* ContentWebViewCell.h */,
 				317F889A1D05698800BD931F /* ContentWebViewCell.m */,
 				317F889B1D05698800BD931F /* ContentWebViewCell.xib */,
@@ -2559,6 +2582,7 @@
 				C5E56F4E1B56AFB50059924C /* RootViewController.m in Sources */,
 				38A93FA91AA31DB400A515E8 /* MessageCenter.m in Sources */,
 				31A06E961D18E34600E2DB8F /* OSCInformationDetails.m in Sources */,
+				04EC1B631D393049006DBD5D /* IMY_NJKWebViewProgress.m in Sources */,
 				31697BC21B16E496001FE346 /* TeamCalendarView.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */,
@@ -2587,6 +2611,7 @@
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
 				C52BF4F41AFB50CC00E53508 /* TeamDetailContentCell.m in Sources */,
 				384A112F1ADF9B5F00856A7C /* TeamHomePage.m in Sources */,
+				04EC1B601D38F7C7006DBD5D /* ContentWKWebViewCell.m in Sources */,
 				C57E7B571B56734300F39B5C /* PlaceholderTextView.m in Sources */,
 				38A93FA01A9F8F8F00A515E8 /* OSCReply.m in Sources */,
 				EE7B45E11A830B17002508C6 /* MyBasicInfoViewController.m in Sources */,
@@ -2700,6 +2725,7 @@
 				C5B2F1A81BCE6C84004B4785 /* UINavigationController+Router.m in Sources */,
 				31405BEC1AF074A4000A487D /* TeamIssueListCell.m in Sources */,
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
+				04EC1B5D1D38F6DF006DBD5D /* IMYWebView.m in Sources */,
 				C5EF89181BE318E800B5FA46 /* CommentCell.m in Sources */,
 				0422BC601CEDAAD3007DB140 /* InformationTableViewCell.m in Sources */,
 				EE01F8F71D1AAAD700F7DA2F /* OSCNewComment.m in Sources */,

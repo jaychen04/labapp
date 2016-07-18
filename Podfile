@@ -26,5 +26,6 @@ pod 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
 pod 'Myhpple'
 pod 'Masonry'
 pod 'AsyncDisplayKit'
+pod 'MLeaksFinder'
 
 end
