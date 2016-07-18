@@ -25,5 +25,6 @@ pod 'UMengSocial' , '~>4.4’
 pod 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
 pod 'Myhpple'
 pod 'Masonry'
+pod 'ELCImagePickerController', '~> 0.2.0'
 
 end

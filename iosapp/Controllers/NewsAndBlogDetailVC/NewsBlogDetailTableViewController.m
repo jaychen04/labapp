@@ -147,6 +147,19 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorColor = [UIColor separatorColor];
     
+    
+    _rightBarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _rightBarBtn.userInteractionEnabled = YES;
+//    _rightBarBtn.frame  = CGRectMake(0, 0, 27, 20);
+    _rightBarBtn.hidden = YES;
+    _rightBarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [_rightBarBtn addTarget:self action:@selector(rightBarButtonScrollToCommitSection) forControlEvents:UIControlEventTouchUpInside];
+    [_rightBarBtn setTitle:@"" forState:UIControlStateNormal];
+    _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-4, 0, 0, 0);
+    [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarBtn];
+//    _rightBarBtn.hidden = NO;
+    
     // 添加等待动画
     [self showHubView];
     
@@ -156,18 +169,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         [self getNewsData];
         [self getNewsComments];
     }
-    _rightBarBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    _rightBarBtn.userInteractionEnabled = YES;
-    _rightBarBtn.frame  = CGRectMake(0, 0, 27, 20);
-    _rightBarBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-    [_rightBarBtn addTarget:self action:@selector(rightBarButtonScrollToCommitSection) forControlEvents:UIControlEventTouchUpInside];
-    [_rightBarBtn setTitle:@"" forState:UIControlStateNormal];
-    _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-4, 0, 0, 0);
-    [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarBtn];
-//    self.navigationItem.rightBarButtonItem.target = self;
-//    self.navigationItem.rightBarButtonItem.action = @selector(rightBarButtonClicked);
-
     
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -1579,6 +1580,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 }
 #pragma mark --- update RightButton
 -(void)updateRightButton:(NSInteger)commentCount isNewsDetail:(BOOL)isNewsDetail{
+    _rightBarBtn.hidden = NO;
     if (commentCount >= 999) {
         _rightBarBtn.frame = Large_Frame;
         [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_4_appbar"] forState:UIControlStateNormal];

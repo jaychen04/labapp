@@ -104,6 +104,8 @@
 		31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FA1AEF2685004DF445 /* ProjectCell.m */; };
 		31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */; };
 		31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */; };
+		31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */; };
+		31FF2F951CF2F36600C7A0B6 /* NewHotBlogTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */; };
 		3801789C1A2C1A7300922858 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3801789B1A2C1A7300922858 /* EventCell.m */; };
 		380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21C1A74DFCE003C4021 /* ActivitiesViewController.m */; };
 		380FD2201A74DFEE003C4021 /* ActivityCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 380FD21F1A74DFEE003C4021 /* ActivityCell.m */; };
@@ -484,6 +486,9 @@
 		31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueList.m; sourceTree = "<group>"; };
 		31F8925C1B0DF179002E0838 /* NewTeamIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTeamIssueViewController.h; sourceTree = "<group>"; };
 		31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTeamIssueViewController.m; sourceTree = "<group>"; };
+		31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		31FF2F931CF2F36600C7A0B6 /* NewHotBlogTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewHotBlogTableViewController.h; sourceTree = "<group>"; };
+		31FF2F941CF2F36600C7A0B6 /* NewHotBlogTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewHotBlogTableViewController.m; sourceTree = "<group>"; };
 		3801789A1A2C1A7300922858 /* EventCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventCell.h; sourceTree = "<group>"; };
 		3801789B1A2C1A7300922858 /* EventCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventCell.m; sourceTree = "<group>"; };
 		380FD21B1A74DFCE003C4021 /* ActivitiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitiesViewController.h; sourceTree = "<group>"; };
@@ -889,6 +894,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */,
 				042E8D121CF595FC00364BD7 /* libNBSAppAgent.framework in Frameworks */,
 				042E8D0F1CF5950900364BD7 /* libiconv.tbd in Frameworks */,
 				042E8D0D1CF594F700364BD7 /* libsqlite3.tbd in Frameworks */,
@@ -1107,6 +1113,7 @@
 		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */,
 				042E8D101CF5950F00364BD7 /* libPods.a */,
 				042E8D0E1CF5950900364BD7 /* libiconv.tbd */,
 				042E8D0C1CF594F700364BD7 /* libsqlite3.tbd */,
@@ -2282,7 +2289,7 @@
 				00D6BCD819EB673200E8754E /* Resources */,
 				C8C815620688FAE2D386D6B8 /* [CP] Copy Pods Resources */,
 				65FB3FE0826CA3EDEA75FB1B /* [CP] Embed Pods Frameworks */,
-				790C4CFA3C11122D1210746B /* Embed Pods Frameworks */,
+				D25B57F3A9273ADED0D21235 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2456,6 +2463,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D25B57F3A9273ADED0D21235 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F87169EF104A0A13C333FE09 /* [CP] Check Pods Manifest.lock */ = {

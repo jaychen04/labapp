@@ -179,7 +179,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                                                  usingTemplate:@"blog"];
                 
                 [self updateFavButtonWithIsCollected:_translationDetails.favorite];
-                [_rightBarBtn setTitle:[NSString stringWithFormat:@"%d",_translationDetails.commentCount] forState:UIControlStateNormal];
+                [_rightBarBtn setTitle:[NSString stringWithFormat:@"%ld",(long)_translationDetails.commentCount] forState:UIControlStateNormal];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];

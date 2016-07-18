@@ -172,7 +172,7 @@
 {
     textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
     textView.backgroundColor = [UIColor clearColor];
-    textView.font = [UIFont fontWithName:@"PingFangSC-Light" size:14.0];
+    textView.font = [UIFont systemFontOfSize:14];
     textView.textColor = [UIColor newTitleColor];
     textView.editable = NO;
     textView.scrollEnabled = NO;
@@ -195,7 +195,6 @@
          [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_actived"] forState:UIControlStateNormal];
      } else {
          [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
-         
      }
 
     _likeCountLabel.text = [NSString stringWithFormat:@"%d", tweet.likeCount];
@@ -225,7 +224,7 @@
     
     NSAttributedString *attrString = [Utils attributedStringFromHTML:rawString];
     NSMutableAttributedString *mutableAttrString = [[Utils emojiStringFromAttrString:attrString] mutableCopy];
-    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont fontWithName:@"PingFangSC-Light" size:14.0] range:NSMakeRange(0, mutableAttrString.length)];
+    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, mutableAttrString.length)];
     
     // remove under line style
     [mutableAttrString beginEditing];

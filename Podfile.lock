@@ -35,6 +35,7 @@ PODS:
     - DTFoundation/Core
   - DTFoundation/UIKit (1.7.10):
     - DTFoundation/Core
+  - ELCImagePickerController (0.2.0)
   - GPUImage (0.1.7)
   - GRMustache (7.3.2):
     - JRSwizzle (~> 1.0)
@@ -70,6 +71,7 @@ DEPENDENCIES:
   - AFOnoResponseSerializer
   - DateTools
   - DTCoreText
+  - ELCImagePickerController (~> 0.2.0)
   - GPUImage
   - GRMustache
   - Masonry
@@ -94,6 +96,7 @@ SPEC CHECKSUMS:
   DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
   DTCoreText: 3ea8bba23dd2141ba18adb227a7dd33a822df1c4
   DTFoundation: 3b6b1b817d2a7fb02e7eaf2596c922a68145bd43
+  ELCImagePickerController: b1b7084434a7d49f2cfc916bde1f3ba353d38de9
   GPUImage: 733a5f0fab92df9de1c37ba9df520a833ccb406d
   GRMustache: ebe6104fd30a6d22c1f36af131e19e2dbf7cd292
   JRSwizzle: dd5ead5d913a0f29e7f558200165849f006bb1e3
