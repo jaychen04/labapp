@@ -181,17 +181,17 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 - (void)pushFriendsSVC:(UIButton *)button
 {
-    SwipableViewController *friendsSVC = [[SwipableViewController alloc] initWithTitle:@"关注/粉丝"
-                                                                          andSubTitles:@[@"关注", @"粉丝"]
-                                                                        andControllers:@[
-                                                                                         [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1],
-                                                                                         [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0]
-                                                                                         ]];
-    if (button.tag == 2) {[friendsSVC scrollToViewAtIndex:1];}
-    
-    friendsSVC.hidesBottomBarWhenPushed = YES;
-    
-    [self.navigationController pushViewController:friendsSVC animated:YES];
+    if (button.tag == 1) {
+        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1];
+        friendVC.title = @"关注";
+        friendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:friendVC animated:YES];
+    } else {
+        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0];
+        friendVC.title = @"粉丝";
+        friendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:friendVC animated:YES];
+    }
 }
 
 
@@ -302,10 +302,12 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
         
         [buttonCell.collectionButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
-        [buttonCell.followingButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-        [buttonCell.fanButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
         [buttonCell.collectionTitleButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
+        
         [buttonCell.followingTitleButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+        [buttonCell.followingButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+        
+        [buttonCell.fanButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
         [buttonCell.fanTitleButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
         
         return buttonCell;
