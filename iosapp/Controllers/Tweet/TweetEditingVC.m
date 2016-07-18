@@ -623,7 +623,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 [hud hide:YES afterDelay:1];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                
+                [self dismissViewControllerAnimated:YES completion:nil];
             });
         }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {

@@ -158,7 +158,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 
 
 //    OSCAPI_HTTPS_PREFIX  @"http://192.168.1.15:8000/action/api/"  http://192.168.1.48:1104/action/api/
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX, OSCAPI_LOGIN_VALIDATE]
+    [manager POST:[NSString stringWithFormat:@"%@%@", @"http://192.168.1.15:8000/action/api/", OSCAPI_LOGIN_VALIDATE]
        parameters:@{@"username" : _accountField.text,
                     @"pwd" : _passwordField.text,
                     @"keep_login" : @(1)
