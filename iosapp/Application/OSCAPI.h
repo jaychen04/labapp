@@ -21,11 +21,11 @@
 //#define OSCAPI_V2_HTTPS_PREFIX             @"https://www.oschina.net/action/apiv2/"
 
 
-#define OSCAPI_V2_PREFIX                   @"http://www.oschina.net/action/apiv2/"
+//#define OSCAPI_V2_PREFIX                   @"http://www.oschina.net/action/apiv2/"
 #define OSCAPI_V2_HTTPS_PREFIX             @"https://www.oschina.net/action/apiv2/"
 
 
-//#define OSCAPI_V2_PREFIX                  @"http://192.168.1.63:1104/action/apiv2/"
+#define OSCAPI_V2_PREFIX                  @"http://192.168.1.15:8000/action/apiv2/"
 
 
 
