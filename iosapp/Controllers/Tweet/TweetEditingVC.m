@@ -538,10 +538,8 @@
 
 #pragma mark 表情面板与键盘切换
 
-- (void)switchInputView
-{
+- (void)switchInputView {
     // 还要考虑一下用外接键盘输入时，置空inputView后，字体小的情况
-    
     if (_isEmojiPageOnScreen) {
         [_edittingArea becomeFirstResponder];
         
