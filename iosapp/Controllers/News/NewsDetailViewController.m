@@ -18,9 +18,13 @@
 #import "NewCommentCell.h"
 #import "RelatedSoftWareCell.h"
 #import "UIColor+Util.h"
+#import "NewsBlogDetailTableViewController.h"
+#import "CommentsBottomBarViewController.h"
+#import "LoginViewController.h"
 
 #import "Utils.h"
 #import "OSCAPI.h"
+#import "Config.h"
 #import "AFHTTPRequestOperationManager+Util.h"
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
@@ -58,6 +62,13 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 @property (nonatomic,assign) CGPoint readingOffest;
 @property (nonatomic, assign) CGFloat webViewHeight;
 
+@property (nonatomic, copy) NSString *mURL;
+@property (nonatomic, assign) BOOL isReply;
+@property (nonatomic, assign) NSInteger selectIndexPath;
+//被评论的某条评论的信息
+@property (nonatomic) NSInteger beRepliedCommentAuthorId;
+@property (nonatomic) NSInteger beRepliedCommentId;
+
 //软键盘size
 @property (nonatomic, assign) CGFloat keyboardHeight;
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
@@ -94,7 +105,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
     self.title = @"资讯";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -128,8 +138,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     //获取资讯详情和资讯评论
     [self getNewsData];
     [self getNewsComments];
-    
-    
     
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -354,7 +362,324 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 {
     return section != 0 ? 32 : 0.001;
 }
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+     //资讯详情
+        switch (indexPath.section) {
+            case 0: {
+                if (indexPath.row==0) {
+                    TitleInfoTableViewCell *titleInfoCell = [tableView dequeueReusableCellWithIdentifier:titleInfoReuseIdentifier forIndexPath:indexPath];
+                    titleInfoCell.newsDetail = _newsDetails;
+                    
+                    titleInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    return titleInfoCell;
+                } else if (indexPath.row==1) {
+                    ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+                    webViewCell.contentWebView.delegate = self;
+                    [webViewCell.contentWebView loadHTMLString:_newsDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                    webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    return webViewCell;
+                }
+                
+            }
+                break;
+            case 1: {
+                if (_isExistRelatedSoftware) {
+                    RelatedSoftWareCell *softWareCell = [tableView dequeueReusableCellWithIdentifier:relatedSoftWareReuseIdentifier forIndexPath:indexPath];
+                    softWareCell.titleLabel.text = _newsDetails.software?[_newsDetails.software objectForKey:@"name"]:@"";
+                    softWareCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                    return softWareCell;
+                }else if (_newsDetails.abouts.count > 0){
+                    RecommandBlogTableViewCell *recommandNewsCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
+                    if (_newsDetailRecommends.count > 0) {
+                        OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
+                        recommandNewsCell.abouts = about;
+                        recommandNewsCell.hiddenLine = _newsDetailRecommends.count - 1 == indexPath.row ? YES : NO;
+                    }
+                    recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                    return recommandNewsCell;
+                }else if (_newsDetailComments.count > 0) {
+                    if (_newsDetailComments.count > 0) {
+                        if (indexPath.row == _newsDetailComments.count) {
+                            UITableViewCell *cell = [UITableViewCell new];
+                            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                            cell.textLabel.text = @"更多评论";
+                            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                            cell.textLabel.font = [UIFont systemFontOfSize:14];
+                            cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                            
+                            return cell;
+                        } else {
+                            NewCommentCell *commentNewsCell = [NewCommentCell new];
+                            commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                            
+                            if (!commentNewsCell.contentTextView.delegate) {
+                                commentNewsCell.contentTextView.delegate = self;
+                            }
+                            OSCNewComment *detailComment = _newsDetailComments[indexPath.row];
+                            commentNewsCell.comment = detailComment;
+                            
+                            if (detailComment.refer.author.length > 0) {
+                                commentNewsCell.referCommentView.hidden = NO;
+                            } else {
+                                commentNewsCell.referCommentView.hidden = YES;
+                            }
+                            commentNewsCell.commentButton.tag = indexPath.row;
+                            [commentNewsCell.commentButton addTarget:self action:@selector(selectedNewsToComment:) forControlEvents:UIControlEventTouchUpInside];
+                            
+                            return commentNewsCell;
+                        }
+                        
+                    } else {
+                        UITableViewCell *cell = [UITableViewCell new];
+                        cell.textLabel.text = @"还没有评论";
+                        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                        cell.textLabel.font = [UIFont systemFontOfSize:14];
+                        cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        return cell;
+                    }
+                }
+            }
+                break;
+            case 2: {
+                if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
+                    RecommandBlogTableViewCell *recommandNewsCell = [tableView dequeueReusableCellWithIdentifier:recommandBlogReuseIdentifier forIndexPath:indexPath];
+                    if (indexPath.row < _newsDetailRecommends.count) {
+                        OSCBlogDetailRecommend *about = _newsDetailRecommends[indexPath.row];
+                        recommandNewsCell.abouts = about;
+                        recommandNewsCell.hiddenLine = _newsDetailRecommends.count - 1 == indexPath.row ? YES : NO;
+                        
+                    }
+                    recommandNewsCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                    return recommandNewsCell;
+                }else {
+                    if (_newsDetailComments.count > 0) {
+                        if (indexPath.row == _newsDetailComments.count) {
+                            UITableViewCell *cell = [UITableViewCell new];
+                            cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                            cell.textLabel.text = @"更多评论";
+                            cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                            cell.textLabel.font = [UIFont systemFontOfSize:14];
+                            cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                            
+                            return cell;
+                        } else {
+                            NewCommentCell *commentNewsCell = [NewCommentCell new];
+                            commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                            
+                            if (!commentNewsCell.contentTextView.delegate) {
+                                commentNewsCell.contentTextView.delegate = self;
+                            }
+                            
+                            OSCNewComment *detailComment = _newsDetailComments[indexPath.row];
+                            commentNewsCell.comment = detailComment;
+                            
+                            if (detailComment.refer.author.length > 0) {
+                                commentNewsCell.referCommentView.hidden = NO;
+                            } else {
+                                commentNewsCell.referCommentView.hidden = YES;
+                            }
+                            commentNewsCell.commentButton.tag = indexPath.row;
+                            [commentNewsCell.commentButton addTarget:self action:@selector(selectedNewsToComment:) forControlEvents:UIControlEventTouchUpInside];
+                            
+                            return commentNewsCell;
+                        }
+                        
+                    } else {
+                        UITableViewCell *cell = [UITableViewCell new];
+                        cell.textLabel.text = @"还没有评论";
+                        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                        cell.textLabel.font = [UIFont systemFontOfSize:14];
+                        cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        return cell;
+                    }
+                }
+                
+            }
+                break;
+            case 3: {
+                if (_newsDetailComments.count > 0) {
+                    if (indexPath.row == _newsDetailComments.count) {
+                        UITableViewCell *cell = [UITableViewCell new];
+                        cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                        cell.textLabel.text = @"更多评论";
+                        cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                        cell.textLabel.font = [UIFont systemFontOfSize:14];
+                        cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                        
+                        return cell;
+                    } else {
+                        NewCommentCell *commentNewsCell = [NewCommentCell new];
+                        commentNewsCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                        if (!commentNewsCell.contentTextView.delegate) {
+                            commentNewsCell.contentTextView.delegate = self;
+                        }
+                        
+                        OSCNewComment *detailComment = _newsDetailComments[indexPath.row];
+                        commentNewsCell.comment = detailComment;
+                        
+                        if (detailComment.refer.author.length > 0) {
+                            commentNewsCell.referCommentView.hidden = NO;
+                        } else {
+                            commentNewsCell.referCommentView.hidden = YES;
+                        }
+                        commentNewsCell.commentButton.tag = indexPath.row;
+                        [commentNewsCell.commentButton addTarget:self action:@selector(selectedNewsToComment:) forControlEvents:UIControlEventTouchUpInside];
+                        
+                        return commentNewsCell;
+                    }
+                    
+                } else {
+                    UITableViewCell *cell = [UITableViewCell new];
+                    cell.textLabel.text = @"还没有评论";
+                    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+                    cell.textLabel.font = [UIFont systemFontOfSize:14];
+                    cell.textLabel.textColor = [UIColor colorWithHex:0x24cf5f];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                    return cell;
+                }
+                
+            }
+                break;
+            default:
+                break;
+        }
 
+    
+    return [UITableViewCell new];
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+       //资讯详情
+        if (indexPath.section == 1) {
+            if (_isExistRelatedSoftware) {      //相关的软件详情
+                SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:[_newsDetails.software[@"id"] integerValue]];
+                [detailsViewController setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:detailsViewController animated:YES];
+                
+            }else if (_newsDetails.abouts.count > 0) {     //相关推荐的资讯详情
+                OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
+                [self pushDetailsVcWithDetailModel:detailRecommend];
+            }else if (_newsDetailComments.count > 0) {
+                //资讯评论列表
+                if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
+                    //新评论列表
+                    NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForNews sourceID:_newsDetails.id];
+                    [self.navigationController pushViewController:newCommentVC animated:YES];
+                }
+            }
+        }else if (indexPath.section == 2) {
+            if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
+                OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
+                [self pushDetailsVcWithDetailModel:detailRecommend];
+            }else {
+                //资讯评论列表
+                if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
+                    //新评论列表
+                    NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForNews sourceID:_newsDetails.id];
+                    [self.navigationController pushViewController:newCommentVC animated:YES];
+                }
+            }
+        }else if (indexPath.section == 3) {
+            if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
+                //新评论列表
+                NewCommentListViewController *newCommentVC = [[NewCommentListViewController alloc] initWithCommentType:CommentIdTypeForNews sourceID:_newsDetails.id];
+                [self.navigationController pushViewController:newCommentVC animated:YES];
+            }
+        }
+}
+
+#pragma mark - UIWebViewDelegate
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    
+    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+    
+    [self.navigationController handleURL:request.URL];
+    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+}
+
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+    if (_webViewHeight == webViewHeight) {return;}
+    _webViewHeight = webViewHeight;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadData];
+        [self hideHubView];
+    });
+}
+
+#pragma  mark -- 相关推荐跳转
+-(void)pushDetailsVcWithDetailModel:(OSCBlogDetailRecommend*)detailModel {
+    NSInteger pushType = detailModel.type;
+    if (pushType == 0) {
+        pushType = 6;
+    }
+    switch (pushType) {
+        case 1:{        //软件详情
+            SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:detailModel.id];
+            [detailsViewController setHidesBottomBarWhenPushed:YES];
+            [self.navigationController pushViewController:detailsViewController animated:YES];
+        }
+            break;
+        case 3:{        //博客详情
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailModel.id
+                                                                                                                isBlogDetail:YES];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+            break;
+        case 6:{        //资讯详情
+            NewsDetailViewController *newsBlogDetailVc = [[NewsDetailViewController alloc]initWithNewsId:detailModel.id];
+            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
+
+#pragma mark - 回复某条评论
+- (void)selectedNewsToComment:(UIButton *)button
+{
+    OSCNewComment *comment = _newsDetailComments[button.tag];
+    
+    if (_selectIndexPath == button.tag) {
+        _isReply = !_isReply;
+    } else {
+        _isReply = YES;
+    }
+    _selectIndexPath = button.tag;
+    
+    if (_isReply) {
+        if (comment.authorId > 0) {
+            _commentTextField.placeholder = [NSString stringWithFormat:@"@%@", comment.author];
+            _beRepliedCommentId = comment.id;
+            _beRepliedCommentAuthorId = comment.authorId;
+        } else {
+            MBProgressHUD *hud = [Utils createHUD];
+            hud.mode = MBProgressHUDModeCustomView;
+            hud.labelText = @"该用户不存在，不可引用回复";
+            [hud hide:YES afterDelay:1];
+        }
+        
+    } else {
+        _commentTextField.placeholder = @"发表评论";
+    }
+    
+    [_commentTextField becomeFirstResponder];
+}
 
 #pragma mark -- DIY_headerView
 - (UIView*)headerViewWithSectionTitle:(NSString*)title {
@@ -430,13 +755,99 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark - 收藏
 - (IBAction)favClick:(id)sender {
-    
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    } else {
+        NSDictionary *parameterDic =@{@"id"  : @(_newsDetails.id),
+                                      @"type": @(6)
+                                      };
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+        
+        [manger POST:[NSString stringWithFormat:@"%@/favorite_reverse", OSCAPI_V2_PREFIX]
+          parameters:parameterDic
+             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 
+                 BOOL isCollected = NO;
+                 if ([responseObject[@"code"] integerValue]== 1) {
+                     isCollected = [responseObject[@"result"][@"favorite"] boolValue];
+                 }
+                 
+                 MBProgressHUD *HUD = [Utils createHUD];
+                 HUD.mode = MBProgressHUDModeCustomView;
+                 HUD.labelText = isCollected? @"收藏成功": @"取消收藏";
+                 
+                 [HUD hide:YES afterDelay:1];
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self updateNewsFavButtonWithIsCollected:isCollected];
+                     [self.tableView reloadData];
+                 });
+             }
+             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                 MBProgressHUD *HUD = [Utils createHUD];
+                 HUD.mode = MBProgressHUDModeCustomView;
+                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                 HUD.labelText = @"网络异常，操作失败";
+                 
+                 [HUD hide:YES afterDelay:1];
+             }];
+    }
+
 }
 
 #pragma mark - 分享
 - (IBAction)shareClick:(id)sender {
     [_commentTextField resignFirstResponder];
+
+    NSString *body = _newsDetails.body;
+    NSString *href = _newsDetails.href;
+    NSString *title = _newsDetails.title;
     
+    NSString *trimmedHTML = [body deleteHTMLTag];
+    NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
+    NSString *digest = [trimmedHTML substringToIndex:length];
+    
+    // 微信相关设置
+    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
+    [UMSocialData defaultData].extConfig.wechatSessionData.url = href;
+    [UMSocialData defaultData].extConfig.wechatTimelineData.url = href;
+    [UMSocialData defaultData].extConfig.title = title;
+    
+    // 手机QQ相关设置
+    [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
+    [UMSocialData defaultData].extConfig.qqData.title = title;
+    [UMSocialData defaultData].extConfig.qqData.url = href;
+    
+    // 新浪微博相关设置
+    [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:href];
+    
+    [UMSocialSnsService presentSnsIconSheetView:self
+                                         appKey:@"54c9a412fd98c5779c000752"
+                                      shareText:[NSString stringWithFormat:@"%@...分享来自 %@", digest, href]
+                                     shareImage:[UIImage imageNamed:@"logo"]
+                                shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
+                                       delegate:nil];
+}
+
+#pragma mark - UITextViewDelegate
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
+{
+    [self.navigationController handleURL:URL];
+    return NO;
+}
+
+- (NSString *)mURL
+{
+    if (_mURL) {
+        return _mURL;
+    } else {
+        NSString *objId = [NSString stringWithFormat:@"%lld", _newsDetails.id];
+        NSString *preUrl = @"http://m.oschina.net/news/";
+        NSString *strUrl = [NSString stringWithFormat:@"%@%@", preUrl,objId];
+        _mURL = [strUrl copy];
+        return _mURL;
+    }
 }
 
 #pragma mark - UITextFieldDelegate
@@ -452,11 +863,67 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    //    [self sendComment];
-    
+    [self sendComment];
     [textField resignFirstResponder];
     
     return YES;
+}
+
+
+#pragma mark - 发评论
+- (void)sendComment
+{
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    } else {
+        MBProgressHUD *HUD = [Utils createHUD];
+        [HUD show:YES];
+        //新 发评论
+        NSMutableDictionary *paraDic = [NSMutableDictionary dictionaryWithDictionary:
+                                        @{
+                                          @"sourceId":@(_newsDetails.id),
+                                          @"type":@(6),
+                                          @"content":_commentTextField.text,
+                                          @"reAuthorId": @(_beRepliedCommentAuthorId),
+                                          @"replyId": @(_beRepliedCommentId)
+                                          }
+                                        ];
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+        [manger POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX,OSCAPI_COMMENT_PUB]
+          parameters:paraDic
+             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 
+                 HUD.mode = MBProgressHUDModeCustomView;
+                 
+                 if ([responseObject[@"code"]integerValue] == 1) {
+                     HUD.mode = MBProgressHUDModeCustomView;
+                     HUD.labelText = @"评论成功";
+                     
+                     OSCNewComment *postedComment = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
+                     
+                     [_newsDetailComments insertObject:postedComment atIndex:0];
+
+                     [HUD hide:YES afterDelay:1];
+                     _commentTextField.text = @"";
+                     _commentTextField.placeholder = @"";
+                 }else {
+                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                     HUD.labelText = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
+                 }
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     
+                     [self.tableView reloadData];
+                 });
+             }
+             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                 HUD.mode = MBProgressHUDModeCustomView;
+                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                 HUD.labelText = @"网络异常，评论发送失败";
+                 [HUD hide:YES afterDelay:1];
+             }];
+    }
 }
 
 - (void)keyboardDidShow:(NSNotification *)nsNotification
