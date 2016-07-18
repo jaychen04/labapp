@@ -11,7 +11,8 @@
 #import "TitleInfoTableViewCell.h"
 #import "webAndAbsTableViewCell.h"
 #import "RecommandBlogTableViewCell.h"
-#import "ContentWebViewCell.h"
+//#import "ContentWebViewCell.h"
+#import "ContentWKWebViewCell.h"
 #import "NewCommentCell.h"
 #import "RelatedSoftWareCell.h"
 #import "UIColor+Util.h"
@@ -31,6 +32,7 @@
 #import "NewCommentListViewController.h"//新评论列表
 #import "SoftWareViewController.h"      //软件详情
 
+#import "IMYWebView.h"
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
@@ -42,7 +44,8 @@ static NSString *followAuthorReuseIdentifier = @"FollowAuthorTableViewCell";
 static NSString *titleInfoReuseIdentifier = @"TitleInfoTableViewCell";
 static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
 static NSString *abstractReuseIdentifier = @"abstractTableViewCell";
-static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
+static NSString *contentWKWebReuseIdentifier = @"ContentWKWebViewCell";
+//static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
 static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
@@ -51,7 +54,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #define Small_Frame  (CGRect){{0,0},{25,25}}
 
 
-@interface NewsBlogDetailTableViewController () <UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate,UITextViewDelegate>
+@interface NewsBlogDetailTableViewController () < UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate,UITextViewDelegate,IMYWebViewDelegate>
 
 @property (nonatomic)int64_t blogId;
 @property (nonatomic, strong) OSCBlogDetail *blogDetails;
@@ -140,7 +143,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"TitleInfoTableViewCell" bundle:nil] forCellReuseIdentifier:titleInfoReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"webAndAbsTableViewCell" bundle:nil] forCellReuseIdentifier:abstractReuseIdentifier];
-    [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
+//    [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
+    [self.tableView registerClass:[ContentWKWebViewCell class] forCellReuseIdentifier:contentWKWebReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RelatedSoftWareCell" bundle:nil] forCellReuseIdentifier:relatedSoftWareReuseIdentifier];
     self.tableView.estimatedRowHeight = 250;
@@ -158,6 +162,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     _rightBarBtn.titleEdgeInsets = UIEdgeInsetsMake(-4, 0, 0, 0);
     [_rightBarBtn setBackgroundImage:[UIImage imageNamed:@"ic_comment_appbar"] forState:UIControlStateNormal];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:_rightBarBtn];
+//    self.navigationItem.rightBarButtonItem.target = self;
+//    self.navigationItem.rightBarButtonItem.action = @selector(rightBarButtonClicked);
+
 //    _rightBarBtn.hidden = NO;
     
     // 添加等待动画
@@ -351,25 +358,26 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 #pragma mark -- DIY_headerView
 - (UIView*)headerViewWithSectionTitle:(NSString*)title {
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
-    headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
     
-    UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
-    topLineView.backgroundColor = [UIColor separatorColor];
-    [headerView addSubview:topLineView];
-    
-    UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
-    bottomLineView.backgroundColor = [UIColor separatorColor];
-    [headerView addSubview:bottomLineView];
-    
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
-    titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
-    titleLabel.tag = 8;
-    titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
-    titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
-    titleLabel.text = title;
-    [headerView addSubview:titleLabel];
-    
+        UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 32)];
+        headerView.backgroundColor = [UIColor colorWithHex:0xf9f9f9];
+        
+        UIView *topLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
+        topLineView.backgroundColor = [UIColor separatorColor];
+        [headerView addSubview:topLineView];
+        
+        UIView *bottomLineView = [[UIView alloc] initWithFrame:CGRectMake(0, 31, CGRectGetWidth([[UIScreen mainScreen]bounds]), 0.5)];
+        bottomLineView.backgroundColor = [UIColor separatorColor];
+        [headerView addSubview:bottomLineView];
+        
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(16, 0, 100, 16)];
+        titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
+        titleLabel.tag = 8;
+        titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
+        titleLabel.font = [UIFont systemFontOfSize:15];
+        titleLabel.text = title;
+        [headerView addSubview:titleLabel];
+
     return headerView;
 }
 
@@ -677,15 +685,17 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         return abstractCell;
                         
                     } else {
-                        ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+                        ContentWKWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWKWebReuseIdentifier forIndexPath:indexPath];
                         webViewCell.contentWebView.delegate = self;
-                        [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                        if (_blogDetails.body.length > 0 && _webViewHeight == 0) {
+                            [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                        }
                         webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
                         return webViewCell;
                     }
                 } else if (indexPath.row == 3) {
-                    ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+                    ContentWKWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWKWebReuseIdentifier forIndexPath:indexPath];
                     webViewCell.contentWebView.delegate = self;
                     [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
                     webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -811,9 +821,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     
                     return titleInfoCell;
                 } else if (indexPath.row==1) {
-                    ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+                    ContentWKWebViewCell* webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWKWebReuseIdentifier forIndexPath:indexPath];
                     webViewCell.contentWebView.delegate = self;
-                    [webViewCell.contentWebView loadHTMLString:_newsDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                    if (_newsDetails.body.length > 0 && _webViewHeight == 0) {
+                        [webViewCell.contentWebView loadHTMLString:_newsDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                    }
                     webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     return webViewCell;
@@ -1125,26 +1137,42 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 }
 
 #pragma mark - UIWebViewDelegate
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    
+- (BOOL)webView:(IMYWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType{
     if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
     
     [self.navigationController handleURL:request.URL];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
 
+//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+//{
+//    
+//    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
+//    
+//    [self.navigationController handleURL:request.URL];
+//    return [request.URL.absoluteString isEqualToString:@"about:blank"];
+//}
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-    if (_webViewHeight == webViewHeight) {return;}
-    _webViewHeight = webViewHeight;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-        [self hideHubView];
-    });
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
+//    if (_webViewHeight == webViewHeight) {return;}
+//    _webViewHeight = webViewHeight;
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.tableView reloadData];
+//        [self hideHubView];
+//    });
+//}
+-(void)webViewDidFinishLoad:(IMYWebView*)webView{
+    [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(NSNumber* result, NSError *err) {
+        CGFloat webViewHeight = [result floatValue];
+        if (_webViewHeight == webViewHeight) return ;
+        _webViewHeight = webViewHeight;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [self hideHubView];
+        });
+    }];
 }
 
 #pragma mark - fav关注

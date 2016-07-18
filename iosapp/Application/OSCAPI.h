@@ -13,9 +13,9 @@
 //#define OSCAPI_PREFIX                   @"http://192.168.1.11/action/api/"
 
 #define OSCAPI_HTTPS_PREFIX             @"https://www.oschina.net/action/api/"
-#define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
+//#define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
 //#define OSCAPI_HTTPS_PREFIX             @"https://192.168.1.58:8080/action/api/"
-//#define OSCAPI_PREFIX                   @"http://192.168.1.58:8080/action/api/"
+#define OSCAPI_PREFIX                   @"http://192.168.1.15:8080/action/api/"
 
 //#define OSCAPI_V2_PREFIX                   @"http://www.oschina.net/action/apiv2/"
 //#define OSCAPI_V2_HTTPS_PREFIX             @"https://www.oschina.net/action/apiv2/"
@@ -66,6 +66,7 @@
 #define OSCAPI_MY_INFORMATION           @"my_information"
 #define OSCAPI_USER_INFORMATION         @"user_information"
 #define OSCAPI_USER_UPDATERELATION      @"user_updaterelation"
+#define OSCAPI_USER_RELATION_REVERSE    @"user_relation_reverse"//user_relation_reverse
 #define OSCAPI_USERINFO_UPDATE          @"portrait_update"
 #define OSCAPI_USER_NOTICE              @"user_notice"
 #define OSCAPI_NOTICE_CLEAR             @"notice_clear"

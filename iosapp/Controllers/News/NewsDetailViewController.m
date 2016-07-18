@@ -14,7 +14,7 @@
 #import "TitleInfoTableViewCell.h"
 #import "webAndAbsTableViewCell.h"
 #import "RecommandBlogTableViewCell.h"
-#import "ContentWebViewCell.h"
+#import "ContentWKWebViewCell.h"
 #import "NewCommentCell.h"
 #import "RelatedSoftWareCell.h"
 #import "UIColor+Util.h"
@@ -25,6 +25,7 @@
 #import "Utils.h"
 #import "OSCAPI.h"
 #import "Config.h"
+#import "IMYWebView.h"
 #import "AFHTTPRequestOperationManager+Util.h"
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
@@ -43,7 +44,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #define Medium_Frame (CGRect){{0,0},{30,25}}
 #define Small_Frame  (CGRect){{0,0},{25,25}}
 
-@interface NewsDetailViewController ()<UIWebViewDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate,UITextViewDelegate>
+@interface NewsDetailViewController ()<IMYWebViewDelegate,UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIAlertViewDelegate,UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
@@ -374,9 +375,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     
                     return titleInfoCell;
                 } else if (indexPath.row==1) {
-                    ContentWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
+                    ContentWKWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWebReuseIdentifier forIndexPath:indexPath];
                     webViewCell.contentWebView.delegate = self;
-                    [webViewCell.contentWebView loadHTMLString:_newsDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                    if (_newsDetails.body.length > 0 && _webViewHeight == 0) {
+                        [webViewCell.contentWebView loadHTMLString:_newsDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                    }
                     webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
                     return webViewCell;
@@ -597,28 +600,26 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         }
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - UIWebViewDelegate or WKWebViewDelegate
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    
+- (BOOL)webView:(IMYWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType{
     if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
     
     [self.navigationController handleURL:request.URL];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
-
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
-{
-    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-    if (_webViewHeight == webViewHeight) {return;}
-    _webViewHeight = webViewHeight;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-        [self hideHubView];
-    });
+-(void)webViewDidFinishLoad:(IMYWebView*)webView{
+    [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(NSNumber* result, NSError *err) {
+        CGFloat webViewHeight = [result floatValue];
+        if (_webViewHeight == webViewHeight) return ;
+        _webViewHeight = webViewHeight;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [self hideHubView];
+        });
+    }];
 }
+
 
 #pragma  mark -- 相关推荐跳转
 -(void)pushDetailsVcWithDetailModel:(OSCBlogDetailRecommend*)detailModel {
@@ -741,8 +742,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         [self.tableView scrollToRowAtIndexPath:lastSectionIndexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
     }else{
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-        //        跳转到reading位置
-        //        [self.tableView setContentOffset:self.readingOffest animated:YES];
+//        跳转到reading位置
+//        [self.tableView setContentOffset:self.readingOffest animated:YES];
     }
     self.isReboundTop = !self.isReboundTop;
 }
