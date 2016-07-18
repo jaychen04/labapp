@@ -9,6 +9,8 @@
 #import "NewMultipleTweetCell.h"
 #import "OSCTweetItem.h"
 
+#import <SDWebImage/SDImageCache.h>
+#import <SDWebImageDownloaderOperation.h>
 #import <AsyncDisplayKit.h>
 #import <Masonry.h>
 
@@ -178,6 +180,11 @@
 
 #pragma mrak --- 设置内容给子视图
 -(void)settingContentForSubViews:(OSCTweetItem* )model{
+    _userPortrait.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"loading"]];
+    UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:model.author.portrait];
+    if (!image) {
+        
+    }
 
 }
 #pragma mark --- 为子视图更新布局
@@ -201,5 +208,19 @@
         }
         [_imageViewsArray addObject:lineNodes];
     }
+}
+
+
+#pragma mark --- download image 
+-(void)downloadImageWithUrlString:(NSString* )url{
+    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:url]
+                                                        options:SDWebImageDownloaderUseNSURLCache
+                                                       progress:nil
+                                                      completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                                          
+      [[SDImageCache sharedImageCache] storeImage:image forKey:url toDisk:NO];
+                                                          
+                                                      }];
+
 }
 @end
