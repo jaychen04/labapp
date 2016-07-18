@@ -46,6 +46,9 @@
                                 <constraint firstAttribute="width" constant="20" id="ps4-Zt-sK5"/>
                             </constraints>
                             <state key="normal" image="ic_share_black_normal"/>
+                            <connections>
+                                <action selector="shareClick:" destination="-1" eventType="touchUpInside" id="gXC-4V-vi1"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qhf-cU-dTX">
                             <rect key="frame" x="528" y="9" width="20" height="20"/>
@@ -54,6 +57,9 @@
                                 <constraint firstAttribute="width" constant="20" id="s6E-u4-fwp"/>
                             </constraints>
                             <state key="normal" image="ic_fav_normal"/>
+                            <connections>
+                                <action selector="favClick:" destination="-1" eventType="touchUpInside" id="cyx-hK-Gjf"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
