@@ -67,8 +67,14 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 - (void)awakeFromNib
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noticeUpdateHandler:) name:OSCAPI_USER_NOTICE object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userRefreshHandler:)  name:@"userRefresh"     object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(noticeUpdateHandler:)
+                                                 name:OSCAPI_USER_NOTICE
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(userRefreshHandler:)
+                                                 name:@"userRefresh"
+                                               object:nil];
     
     _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
 }
@@ -248,6 +254,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"TweetUserUpdate" object:@(YES)];
                             }];
     } else {
+        
         _portrait.image = [UIImage imageNamed:@"default-portrait"];
     }
     
@@ -280,41 +287,71 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 
 #pragma mark - UITableViewDataSource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    BOOL isLogin = _myID != 0;
+    
+    if (!isLogin) {
+        return 2;
+    } else {
+        return 3;
+    }
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    BOOL isLogin = _myID != 0;
+    if (!isLogin) {
+        switch (section) {
+            case 0:
+                return 4;
+                break;
+            case 1:
+                return 1;
+                break;
+                
+            default:
+                break;
+        }
+    } else {
+        switch (section) {
+            case 0:
+                return 1;
+                break;
+            case 1:
+                return 4;
+                break;
+            case 2:
+                return 1;
+                break;
+                
+            default:
+                break;
+        }
+    }
+        return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    BOOL isLogin = _myID != 0;
+    if (!isLogin) {
+        return 45;
+    } else {
+        if (indexPath.section == 0) {
+            return 61;
+        } else {
+            return 45;
+        }
+    }
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        HomeButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-        
-        BOOL isLogin = _myID != 0;
-        buttonCell.creditButton.hidden = !isLogin;
-        buttonCell.collectionButton.hidden = !isLogin;
-        buttonCell.followingButton.hidden = !isLogin;
-        buttonCell.fanButton.hidden = !isLogin;
-        buttonCell.creditTitleButton.hidden = !isLogin;
-        buttonCell.collectionTitleButton.hidden = !isLogin;
-        buttonCell.followingTitleButton.hidden = !isLogin;
-        buttonCell.fanTitleButton.hidden = !isLogin;
-        
-        [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.score)] forState:UIControlStateNormal];
-        [buttonCell.collectionButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
-        [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
-        [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
-        
-        [buttonCell.collectionButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
-        [buttonCell.collectionTitleButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
-        
-        [buttonCell.followingTitleButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-        [buttonCell.followingButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [buttonCell.fanButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-        [buttonCell.fanTitleButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-        
-        return buttonCell;
-    } else {
-        
+    BOOL isLogin = _myID != 0;
+    if (!isLogin) {
         UITableViewCell *cell = [UITableViewCell new];
-//        cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        //        cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         UIView *selectedBackground = [UIView new];
         selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
@@ -322,13 +359,13 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         
         cell.backgroundColor = [UIColor whiteColor];//colorWithHex:0xF9F9F9
         
-        if (indexPath.section == 1) {
+        if (indexPath.section == 0) {
             cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的活动", @"我的团队"][indexPath.row];
             cell.imageView.image = [UIImage imageNamed:@[@"ic_my_messege", @"ic_my_blog", @"ic_my_event", @"ic_my_team"][indexPath.row]];
         } else {
             cell.textLabel.text = @[@"设置"][indexPath.row];
             cell.imageView.image = [UIImage imageNamed:@[@"ic_my_setting"][indexPath.row]];
-
+            
         }
         
         
@@ -355,9 +392,78 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
         cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-
+        
         return cell;
+    } else {
+        if (indexPath.section == 0) {
+            
+            HomeButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+            buttonCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.score)] forState:UIControlStateNormal];
+            [buttonCell.collectionButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
+            [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
+            [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
+            
+            [buttonCell.collectionButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
+            [buttonCell.collectionTitleButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
+            
+            [buttonCell.followingTitleButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+            [buttonCell.followingButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [buttonCell.fanButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+            [buttonCell.fanTitleButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+            
+            return buttonCell;
+        } else {
+            
+            UITableViewCell *cell = [UITableViewCell new];
+            //        cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            UIView *selectedBackground = [UIView new];
+            selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
+            [cell setSelectedBackgroundView:selectedBackground];
+            
+            cell.backgroundColor = [UIColor whiteColor];//colorWithHex:0xF9F9F9
+            
+            if (indexPath.section == 1) {
+                cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的活动", @"我的团队"][indexPath.row];
+                cell.imageView.image = [UIImage imageNamed:@[@"ic_my_messege", @"ic_my_blog", @"ic_my_event", @"ic_my_team"][indexPath.row]];
+            } else {
+                cell.textLabel.text = @[@"设置"][indexPath.row];
+                cell.imageView.image = [UIImage imageNamed:@[@"ic_my_setting"][indexPath.row]];
+                
+            }
+            
+            
+            cell.textLabel.textColor = [UIColor titleColor];
+            
+            if (indexPath.row == 0 && indexPath.section == 1) {
+                if (_badgeValue == 0) {
+                    cell.accessoryView = nil;
+                } else {
+                    UILabel *accessoryBadge = [UILabel new];
+                    accessoryBadge.backgroundColor = [UIColor redColor];
+                    accessoryBadge.text = [@(_badgeValue) stringValue];
+                    accessoryBadge.textColor = [UIColor whiteColor];
+                    accessoryBadge.textAlignment = NSTextAlignmentCenter;
+                    accessoryBadge.layer.cornerRadius = 11;
+                    accessoryBadge.clipsToBounds = YES;
+                    
+                    CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
+                    width = width > 26? width: 22;
+                    accessoryBadge.frame = CGRectMake(0, 0, width, 22);
+                    cell.accessoryView = accessoryBadge;
+                }
+            }
+            
+            cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+            cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+            
+            return cell;
+        }
     }
+    
     
 }
 
@@ -367,58 +473,116 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.section == 2 && indexPath.row == 0) {
-        SettingsPage *settingPage = [SettingsPage new];
-        settingPage.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:settingPage animated:YES];
-    } else {
-        if ([Config getOwnID] == 0) {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            [self.navigationController pushViewController:loginVC animated:YES];
-            return;
+    BOOL isLogin = _myID != 0;
+    if (!isLogin) {
+        if (indexPath.section == 1 && indexPath.row == 0) {
+            SettingsPage *settingPage = [SettingsPage new];
+            settingPage.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:settingPage animated:YES];
+        } else {
+            if ([Config getOwnID] == 0) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                [self.navigationController pushViewController:loginVC animated:YES];
+                return;
+            }
+            
+            if (indexPath.section == 0) {
+                switch (indexPath.row) {
+                    case 0: {
+                        _badgeValue = 0;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        });
+                        self.navigationController.tabBarItem.badgeValue = nil;
+                        
+                        MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+                        messageCenterVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:messageCenterVC animated:YES];
+                        
+                        break;
+                    }
+                    case 1: {
+                        MyBlogsViewController *blogsVC = [[MyBlogsViewController alloc] initWithUserID:_myID];
+                        blogsVC.navigationItem.title = @"我的博客";
+                        blogsVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:blogsVC animated:YES];
+                        break;
+                    }
+                    case 2: {
+                        ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
+                        myActivitiesVc.navigationItem.title = @"我的活动";
+                        myActivitiesVc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:myActivitiesVc animated:YES];
+                        break;
+                    }
+                    case 3: {
+                        TeamCenter *teamCenter = [TeamCenter new];
+                        teamCenter.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:teamCenter animated:YES];
+                        
+                        break;
+                    }
+                    default: break;
+                }
+            }
         }
-        
-        if (indexPath.section == 1) {
-            switch (indexPath.row) {
-                case 0: {
-                    _badgeValue = 0;
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                    });
-                    self.navigationController.tabBarItem.badgeValue = nil;
-                    
-                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
-                    messageCenterVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:messageCenterVC animated:YES];
-                    
-                    break;
+    } else {
+        if (indexPath.section == 2 && indexPath.row == 0) {
+            SettingsPage *settingPage = [SettingsPage new];
+            settingPage.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:settingPage animated:YES];
+        } else {
+            if ([Config getOwnID] == 0) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                [self.navigationController pushViewController:loginVC animated:YES];
+                return;
+            }
+            
+            if (indexPath.section == 1) {
+                switch (indexPath.row) {
+                    case 0: {
+                        _badgeValue = 0;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        });
+                        self.navigationController.tabBarItem.badgeValue = nil;
+                        
+                        MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+                        messageCenterVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:messageCenterVC animated:YES];
+                        
+                        break;
+                    }
+                    case 1: {
+                        MyBlogsViewController *blogsVC = [[MyBlogsViewController alloc] initWithUserID:_myID];
+                        blogsVC.navigationItem.title = @"我的博客";
+                        blogsVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:blogsVC animated:YES];
+                        break;
+                    }
+                    case 2: {
+                        ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
+                        myActivitiesVc.navigationItem.title = @"我的活动";
+                        myActivitiesVc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:myActivitiesVc animated:YES];
+                        break;
+                    }
+                    case 3: {
+                        TeamCenter *teamCenter = [TeamCenter new];
+                        teamCenter.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:teamCenter animated:YES];
+                        
+                        break;
+                    }
+                    default: break;
                 }
-                case 1: {
-                    MyBlogsViewController *blogsVC = [[MyBlogsViewController alloc] initWithUserID:_myID];
-                    blogsVC.navigationItem.title = @"我的博客";
-                    blogsVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:blogsVC animated:YES];
-                    break;
-                }
-                case 2: {
-                    ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
-                    myActivitiesVc.navigationItem.title = @"我的活动";
-                    myActivitiesVc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:myActivitiesVc animated:YES];
-                    break;
-                }
-                case 3: {
-                    TeamCenter *teamCenter = [TeamCenter new];
-                    teamCenter.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:teamCenter animated:YES];
-                    
-                    break;
-                }
-                default: break;
             }
         }
     }
+    
+    
 }
 
 
