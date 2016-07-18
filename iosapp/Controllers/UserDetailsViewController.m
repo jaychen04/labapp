@@ -18,9 +18,11 @@
 #import "UserOperationCell.h"
 #import "BubbleChatViewController.h"
 #import "LoginViewController.h"
-#import "MyBlogsViewController.h"
+#import "UINavigationBar+BackgroundColor.h"
 
 #import <MBProgressHUD.h>
+
+#define NAVBAR_CHANGE_POINT 50
 
 @interface UserDetailsViewController ()
 
@@ -33,7 +35,10 @@
 
 @end
 
-@implementation UserDetailsViewController
+@implementation UserDetailsViewController{
+     UIButton* _rightBarMessageBtn;
+     UIButton* _rightBaFollowrBtn;
+}
 
 
 #pragma mark - init method
@@ -68,6 +73,24 @@
     return self;
 }
 
+-(void)settingNaviBarItem{
+    _rightBarMessageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _rightBarMessageBtn.userInteractionEnabled = YES;
+    _rightBarMessageBtn.frame  = CGRectMake(0, 0, 36, 36);
+    [_rightBarMessageBtn addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
+    [_rightBaFollowrBtn setTitle:@"" forState:UIControlStateNormal];
+    [_rightBarMessageBtn setBackgroundImage:[UIImage imageNamed:@"btn_pm_normal"] forState:UIControlStateNormal];
+    [_rightBarMessageBtn setBackgroundImage:[UIImage imageNamed:@"btn_pm_pressed"] forState:UIControlStateHighlighted];
+    
+    _rightBaFollowrBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    _rightBaFollowrBtn.userInteractionEnabled = YES;
+    _rightBaFollowrBtn.frame  = CGRectMake(0, 0, 36, 36);
+    [_rightBaFollowrBtn addTarget:self action:@selector(updateRelationship) forControlEvents:UIControlEventTouchUpInside];
+    [_rightBaFollowrBtn setTitle:@"" forState:UIControlStateNormal];
+    [self updateRelationshipImage];
+    
+    self.navigationItem.rightBarButtonItems = @[[[UIBarButtonItem alloc] initWithCustomView:_rightBaFollowrBtn] ,[[UIBarButtonItem alloc] initWithCustomView:_rightBarMessageBtn]];;
+}
 
 
 #pragma mark - life cycle
@@ -76,17 +99,32 @@
     self.needRefreshAnimation = NO;
     [super viewDidLoad];
     
+//    self.tableView.frame = (CGRect){{0,-64},self.tableView.bounds.size};
+//    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
     self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationItem.title = @"用户中心";
     self.tableView.bounces = NO;
+    [self settingNaviBarItem];
 }
+
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    [super viewWillAppear:YES];
+//    self.tableView.delegate = self;
+//    [self scrollViewDidScroll:self.tableView];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//}
+
+//- (void)viewWillDisappear:(BOOL)animated
+//{
+//    [super viewWillDisappear:animated];
+//    self.tableView.delegate = nil;
+//    [self.navigationController.navigationBar lt_reset];
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
-
-
-
 
 #pragma mark - table view
 
@@ -99,17 +137,13 @@
 {
     self.tableView.separatorColor = [UIColor separatorColor];
     
-    return section == 0? 2 : self.objects.count;
+    return section == 0 ? 1 : self.objects.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            return 158;
-        } else {
-            return 105;
-        }
+        return 415;
     } else {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
@@ -119,32 +153,18 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            UserHeaderCell *cell = [UserHeaderCell new];
-            
-            [cell setContentWithUser:_user];
-            
-            cell.followsButton.tag = 0;
-            cell.fansButton.tag = 1;
-            
-            [cell.followsButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.fansButton addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-            
-            return cell;
-        } else {
-            UserOperationCell *cell = [UserOperationCell new];
-            if (_user) {
-                cell.loginTimeLabel.text = [NSString stringWithFormat:@"上次登录：%@", [_user.latestOnlineTime timeAgoSinceNow]];
-                [cell setFollowButtonByRelationship:_user.relationship];
-                [cell.followButton addTarget:self action:@selector(updateRelationship) forControlEvents:UIControlEventTouchUpInside];
-                [cell.blogsButton addTarget:self action:@selector(pushBlogsVC) forControlEvents:UIControlEventTouchUpInside];
-                [cell.messageButton addTarget:self action:@selector(sendMessage) forControlEvents:UIControlEventTouchUpInside];
-                [cell.informationButton addTarget:self action:@selector(showUserInformation) forControlEvents:UIControlEventTouchUpInside];
-            }
-            
-            return cell;
-        }
-    } else {
+        UserHeaderCell *cell = [UserHeaderCell new];
+
+        [cell setContentWithUser:_user];
+
+        cell.followsBtn.tag = 1;
+        cell.fansBtn.tag = 2;
+
+        [cell.followsBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.fansBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+        
+        return cell;
+    }else{
         return [super tableView:tableView cellForRowAtIndexPath:indexPath];
     }
 }
@@ -160,25 +180,31 @@
     return 0.01f;
 }
 
-
-
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    UIColor * color = [UIColor navigationbarColor];
+//    CGFloat offsetY = scrollView.contentOffset.y;
+//    if (offsetY > NAVBAR_CHANGE_POINT) {
+//        CGFloat alpha = MIN(1, 1 - ((NAVBAR_CHANGE_POINT + 64 - offsetY) / 64));
+//        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
+//    } else {
+//        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
+//    }
+//}
 
 #pragma mark - 处理页面跳转
 
 - (void)pushFriendsSVC:(UIButton *)button
 {
-    SwipableViewController *friendsSVC = [[SwipableViewController alloc] initWithTitle:@"关注/粉丝"
-                                                                          andSubTitles:@[@"关注", @"粉丝"]
-                                                                        andControllers:@[
-                                                                                         [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:1],
-                                                                                         [[FriendsViewController alloc] initWithUserID:_user.userID andFriendsRelation:0]
-                                                                                         ]];
-    
-    if (button.tag == 1) {
-        [friendsSVC scrollToViewAtIndex:1];
+    if (button.tag == 1) {//关注
+        FriendsViewController* followsVC = [[FriendsViewController alloc]initWithUserID:_user.userID andFriendsRelation:1];
+        followsVC.title = @"关注";
+        [self.navigationController pushViewController:followsVC animated:YES];
+    }else{//粉丝
+        FriendsViewController* fansVC = [[FriendsViewController alloc]initWithUserID:_user.userID andFriendsRelation:0];
+        fansVC.title = @"粉丝";
+        [self.navigationController pushViewController:fansVC animated:YES];
     }
-    
-    [self.navigationController pushViewController:friendsSVC animated:YES];
 }
 
 
@@ -191,6 +217,7 @@
         
         [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_UPDATERELATION]
            parameters:@{
+//                          @"id"       :       @(_user.userID)
                         @"uid":             @([Config getOwnID]),
                         @"hisuid":          @(_user.userID),
                         @"newrelation":     _user.relationship <= 2? @(0) : @(1)
@@ -203,8 +230,7 @@
                   if (errorCode == 1) {
                       _user.relationship = [[[responseDoment.rootElement firstChildWithTag:@"relation"] numberValue] intValue];
                       dispatch_async(dispatch_get_main_queue(), ^{
-                          [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]]
-                                                withRowAnimation:UITableViewRowAnimationNone];
+                          [self updateRelationshipImage];
                       });
                   } else {
                       MBProgressHUD *HUD = [Utils createHUD];
@@ -226,11 +252,6 @@
     }
 }
 
-- (void)pushBlogsVC
-{
-    [self.navigationController pushViewController:[[MyBlogsViewController alloc] initWithUserID:_user.userID]
-                                         animated:YES];
-}
 
 - (void)sendMessage
 {
@@ -240,8 +261,7 @@
         HUD.labelText = @"请先登录";
         [HUD hide:YES afterDelay:0.5];
     } else {
-        [self.navigationController pushViewController:[[BubbleChatViewController alloc] initWithUserID:_user.userID andUserName:_user.name]
-                                             animated:YES];
+        [self.navigationController pushViewController:[[BubbleChatViewController alloc] initWithUserID:_user.userID andUserName:_user.name] animated:YES];
     }
 }
 
@@ -286,7 +306,23 @@
     [(MBProgressHUD *)recognizer.view hide:YES];
 }
 
-
+-(void)updateRelationshipImage{
+    UIImage* relationImageNomal;
+    UIImage* relationImagePress;
+    if (_user.relationship == 1) {
+        relationImageNomal = [UIImage imageNamed:@"btn_following_both_normal"];
+        relationImagePress = [UIImage imageNamed:@"btn_following_both_pressed"];
+    }else if (_user.relationship == 2){
+        relationImageNomal = [UIImage imageNamed:@"btn_following_normal"];
+        relationImagePress = [UIImage imageNamed:@"btn_following_pressed"];
+    }else{
+        relationImageNomal = [UIImage imageNamed:@"btn_follow_normal"];
+        relationImagePress = [UIImage imageNamed:@"btn_follow_pressed"];
+    }
+    
+    [_rightBaFollowrBtn setBackgroundImage:relationImageNomal forState:UIControlStateNormal];
+    [_rightBaFollowrBtn setBackgroundImage:relationImagePress forState:UIControlStateHighlighted];
+}
 
 
 @end
