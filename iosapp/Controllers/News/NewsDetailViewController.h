@@ -10,4 +10,5 @@
 
 @interface NewsDetailViewController : UIViewController
 
+- (instancetype)initWithNewsId:(NSInteger)newsId;
 @end

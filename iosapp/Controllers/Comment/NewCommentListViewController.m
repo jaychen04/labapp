@@ -188,7 +188,7 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 {
     if (_comments.count > indexPath.row) {
         UILabel *label = [UILabel new];
-        label.font = [UIFont fontWithName:@"PingFangSC-Light" size:14];
+        label.font = [UIFont systemFontOfSize:14];
         label.numberOfLines = 0;
         label.lineBreakMode = NSLineBreakByWordWrapping;
         
