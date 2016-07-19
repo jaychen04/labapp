@@ -163,7 +163,7 @@
         make.left.equalTo(self.contentView).with.offset(69);
         make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
         make.width.equalTo(@212);
-        make.height.equalTo(@212);
+        make.height.equalTo(@Trumpet_Height);
     }];
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -288,42 +288,32 @@
             make.height.equalTo(@Medium_Height);
         }];
         if (count == 4) {
-//            _imageViewsArray[]
+            [self loopAssemblyContentWithLine:2 row:2];
         }else{
-            int dataIndex = 0;
-            for (int i = 0; i < 2; i++) {
-                for (int j = 0; j < (count - 3); j++) {
-                    OSCTweetImages* imageData = _tweetItem.images[dataIndex];
-                    UIImageView* imageView = (UIImageView* )_imageViewsArray[i][j];
-                    imageView.hidden = NO;
-                    UIImage* image = [self retrieveMemoryAndDiskCache:imageData.href];
-                    if (!image) {
-                        [self downloadImageWithUrlString:imageData.href displayNode:imageView];
-                    }else{
-                        [imageView setImage:image];
-                    }
-                    dataIndex++;
-                }
-            }
+            [self loopAssemblyContentWithLine:2 row:((int)count - 3)];
         }
     }else{  //Three lines layout
         [_imagesView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@Large_Height);
         }];
-        int dataIndex = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < (count - 6); j++) {
-                OSCTweetImages* imageData = _tweetItem.images[dataIndex];
-                UIImageView* imageView = (UIImageView* )_imageViewsArray[i][j];
-                imageView.hidden = NO;
-                UIImage* image = [self retrieveMemoryAndDiskCache:imageData.href];
-                if (!image) {
-                    [self downloadImageWithUrlString:imageData.href displayNode:imageView];
-                }else{
-                    [imageView setImage:image];
-                }
-                dataIndex++;
+        [self loopAssemblyContentWithLine:3 row:((int)count - 6)];
+    }
+}
+
+-(void)loopAssemblyContentWithLine:(int)line row:(int)row{
+    int dataIndex = 0;
+    for (int i = 0; i < line; i++) {
+        for (int j = 0; j < row; j++) {
+            OSCTweetImages* imageData = _tweetItem.images[dataIndex];
+            UIImageView* imageView = (UIImageView* )_imageViewsArray[i][j];
+            imageView.hidden = NO;
+            UIImage* image = [self retrieveMemoryAndDiskCache:imageData.href];
+            if (!image) {
+                [self downloadImageWithUrlString:imageData.href displayNode:imageView];
+            }else{
+                [imageView setImage:image];
             }
+            dataIndex++;
         }
     }
 }
@@ -405,11 +395,11 @@
                                                       completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
                                                           
       [[SDImageCache sharedImageCache] storeImage:image forKey:url toDisk:YES];
-      dispatch_async(dispatch_get_main_queue(), ^{
-          [node setImage:image];
-          _afterTheAssignment(self);
-      });
-                                                      }];
+          dispatch_async(dispatch_get_main_queue(), ^{
+              [node setImage:image];
+              _afterTheAssignment(self);
+          });
+    }];
 
 }
 
