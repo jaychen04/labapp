@@ -91,7 +91,7 @@
                  });
              }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [_HUD hide:YES];
+             [_HUD hideAnimated:YES];
          }];
 }
 
@@ -101,7 +101,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [_HUD hide:YES];
+    [_HUD hideAnimated:YES];
     [super viewWillDisappear:animated];
 }
 
@@ -228,7 +228,7 @@
     if (_webViewHeight == webViewHeight) {return;}
     
     _webViewHeight = webViewHeight;
-    [_HUD hide:YES];
+    [_HUD hideAnimated:YES];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -310,18 +310,18 @@
                   HUD.mode = MBProgressHUDModeCustomView;
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               }
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
               
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           }];
 }
 

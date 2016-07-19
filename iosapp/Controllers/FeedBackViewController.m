@@ -60,7 +60,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [_HUD hide:YES];
+    [_HUD hideAnimated:YES];
     [super viewWillDisappear:animated];
 }
 
@@ -125,7 +125,7 @@
 - (void)sendFeedback
 {
     _HUD = [Utils createHUD];
-    _HUD.labelText = @"正在发送反馈";
+    _HUD.label.text = @"正在发送反馈";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -148,24 +148,24 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
             
             if (errorCode == 1) {
-                [_HUD hide:YES];
+                [_HUD hideAnimated:YES];
                 _HUD.mode = MBProgressHUDModeCustomView;
                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                _HUD.labelText = @"发送成功，感谢您的反馈";
-                [_HUD hide:YES afterDelay:2];
+                _HUD.label.text = @"发送成功，感谢您的反馈";
+                [_HUD hideAnimated:YES afterDelay:2];
                 
                 [self.navigationController popViewControllerAnimated:YES];
             } else {
                 _HUD.mode = MBProgressHUDModeCustomView;
-                _HUD.labelText = errorMessage;
-                [_HUD hide:YES afterDelay:1];
+                _HUD.label.text = errorMessage;
+                [_HUD hideAnimated:YES afterDelay:1];
             }
             
         } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             _HUD.mode = MBProgressHUDModeCustomView;
             _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-            _HUD.labelText = @"网络异常，发送失败";
-            [_HUD hide:YES afterDelay:1.0];
+            _HUD.label.text = @"网络异常，发送失败";
+            [_HUD hideAnimated:YES afterDelay:1.0];
         }];
     
 }

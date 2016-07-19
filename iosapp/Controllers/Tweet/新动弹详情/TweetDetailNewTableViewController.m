@@ -57,15 +57,15 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     coverView.tag = 10;
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     _hud = [[MBProgressHUD alloc] initWithWindow:window];
-    _hud.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    _hud.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:_hud];
     [self.tableView addSubview:coverView];
-    [_hud show:YES];
+    [_hud showAnimated:YES];
     _hud.removeFromSuperViewOnHide = YES;
     _hud.userInteractionEnabled = NO;
 }
 - (void)hideHubView {
-    [_hud hide:YES];
+    [_hud hideAnimated:YES];
     [[self.tableView viewWithTag:10] removeFromSuperview];
 }
 
@@ -197,7 +197,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                  });
              }
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [_HUD hide:YES];
+             [_HUD hideAnimated:YES];
          }];
 }
 -(void)loadTweetLikeListIsrefresh:(BOOL)isRefresh {
@@ -292,8 +292,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.mode = MBProgressHUDModeCustomView;
     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-    HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
-    [HUD hide:YES afterDelay:1];
+    HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+    [HUD hideAnimated:YES afterDelay:1];
     
     if (self.tableView.mj_footer.isRefreshing) {
         [self.tableView.mj_footer endRefreshing];
@@ -503,9 +503,9 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                   HUD.mode = MBProgressHUDModeCustomView;
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               }
               
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -513,9 +513,9 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
               HUD.mode = MBProgressHUDModeCustomView;
               
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           }];
 }
 
@@ -535,7 +535,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     if (_webViewHeight == webViewHeight) {return;}
     
     _webViewHeight = webViewHeight;
-    [_HUD hide:YES];
+    [_HUD hideAnimated:YES];
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -570,7 +570,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
         OSCComment *comment = self.tweetCommentList[indexPath.row];
         MBProgressHUD *HUD = [Utils createHUD];
-        HUD.labelText = @"正在删除评论";
+        HUD.label.text = @"正在删除评论";
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         [manager POST:[NSString stringWithFormat:@"%@%@?", OSCAPI_PREFIX, OSCAPI_COMMENT_DELETE]
            parameters:@{
@@ -588,7 +588,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                   
                   if (errorCode == 1) {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.labelText = @"评论删除成功";
+                      HUD.label.text = @"评论删除成功";
                       
                       [self.tweetCommentList removeObjectAtIndex:indexPath.row];
 //                      self.allCount--;
@@ -602,16 +602,16 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                       });
                   } else {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = @"网络异常，操作失败";
+                  HUD.label.text = @"网络异常，操作失败";
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               }];
     };
 }

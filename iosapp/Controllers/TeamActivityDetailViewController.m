@@ -126,7 +126,7 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
 - (void)sendContent
 {
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"评论发送中";
+    HUD.label.text = @"评论发送中";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -150,22 +150,22 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
                   [self updateInputBarHeight];
                  
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = @"评论发表成功";
+                  HUD.label.text = @"评论发表成功";
                  
                   [self.tableView setContentOffset:CGPointZero animated:NO];
                   [self fetchRepliesOnPage:0];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.detailsLabelText = error.localizedFailureReason;
+              HUD.detailsLabel.text = error.localizedFailureReason;
              
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           }];
 }
 

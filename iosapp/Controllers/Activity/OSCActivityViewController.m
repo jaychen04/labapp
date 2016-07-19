@@ -168,9 +168,9 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+                  HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
                   dispatch_async(dispatch_get_main_queue(), ^{
                       self.lastCell.status = LastCellStatusError;
                       if (self.tableView.mj_header.isRefreshing) {

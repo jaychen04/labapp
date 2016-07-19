@@ -614,11 +614,11 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 hud.mode = MBProgressHUDModeCustomView;
                 //提示上传图片失败信息
                 if (_failCount > 0) {
-                    hud.labelText = [NSString stringWithFormat:@"%ld张图片上传失败", (long)_failCount];
+                    hud.label.text = [NSString stringWithFormat:@"%ld张图片上传失败", (long)_failCount];
                 }else {
-                    hud.labelText = @"动弹发布成功";
+                    hud.label.text = @"动弹发布成功";
                 }
-                [hud hide:YES afterDelay:1];
+                [hud hideAnimated:YES afterDelay:1];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -649,9 +649,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     }
     
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"动弹发送中";
+    HUD.label.text = @"动弹发送中";
     HUD.removeFromSuperViewOnHide = NO;
-    [HUD hide:YES afterDelay:1];
+    [HUD hideAnimated:YES afterDelay:1];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -679,7 +679,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                               NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
                               
                               HUD.mode = MBProgressHUDModeCustomView;
-                              [HUD show:YES];
+                              [HUD showAnimated:YES];
                               
                               if (errorCode == 1) {
                                   _edittingArea.text = @"";
@@ -687,25 +687,25 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                                   _deleteImageButton.hidden = YES;
                                   
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                                  HUD.labelText = @"动弹发表成功";
+                                  HUD.label.text = @"动弹发表成功";
                                   
                                   [Config saveTweetText:@"" forUser:[Config getOwnID]];
                               } else {
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                                   
                                   [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
                               }
                               
                               HUD.removeFromSuperViewOnHide = YES;
-                              [HUD hide:YES afterDelay:1];
+                              [HUD hideAnimated:YES afterDelay:1];
                               
                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               HUD.mode = MBProgressHUDModeCustomView;
                               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                              HUD.labelText = @"网络异常，动弹发送失败";
+                              HUD.label.text = @"网络异常，动弹发送失败";
                               HUD.removeFromSuperViewOnHide = YES;
-                              [HUD hide:YES afterDelay:1];
+                              [HUD hideAnimated:YES afterDelay:1];
                               
                               [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
                           }];

@@ -143,7 +143,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         [manager GET:str
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-                 NSLog(@"responseDocument = %@ \n=============", responseDocument);
                  
                  ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
                  _myProfile = [[OSCUser alloc] initWithXML:userXML];
@@ -160,9 +159,9 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                 HUD.labelText = @"网络异常，加载失败";
+                 HUD.label.text = @"网络异常，加载失败";
                  
-                 [HUD hide:YES afterDelay:1];
+                 [HUD hideAnimated:YES afterDelay:1];
                  
                  [self.refreshControl endRefreshing];
              }];
@@ -224,9 +223,9 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     if (![Utils isNetworkExist]) {
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"网络无连接，请检查网络";
+        HUD.label.text = @"网络无连接，请检查网络";
         
-        [HUD hide:YES afterDelay:1];
+        [HUD hideAnimated:YES afterDelay:1];
     } else {
         if ([Config getOwnID] == 0) {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
@@ -587,18 +586,18 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.mode = MBProgressHUDModeCustomView;
-    HUD.color = [UIColor whiteColor];
+    HUD.customView.backgroundColor = [UIColor whiteColor];
     
-    HUD.labelText = @"扫一扫上面的二维码，加我为好友";
-    HUD.labelFont = [UIFont systemFontOfSize:13];
-    HUD.labelColor = [UIColor grayColor];
+    HUD.label.text = @"扫一扫上面的二维码，加我为好友";
+    HUD.label.font = [UIFont systemFontOfSize:13];
+    HUD.label.textColor = [UIColor grayColor];
     HUD.customView = self.myQRCodeImageView;
     [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHUD:)]];
 }
 
 - (void)hideHUD:(UIGestureRecognizer *)recognizer
 {
-    [(MBProgressHUD *)recognizer.view hide:YES];
+    [(MBProgressHUD *)recognizer.view hideAnimated:YES];
 }
 
 - (UIImageView *)myQRCodeImageView
