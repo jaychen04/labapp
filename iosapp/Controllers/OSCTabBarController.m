@@ -298,9 +298,13 @@
 
 - (void)buttonPressed
 {
-    [self changeTheButtonStateAnimatedToOpen:_isPressed];
+    TweetEditingVC *tweetEditingVC = [TweetEditingVC new];
+    UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+    [self.selectedViewController presentViewController:tweetEditingNav animated:YES completion:nil];
+
+//    [self changeTheButtonStateAnimatedToOpen:_isPressed];
+//    _isPressed = !_isPressed;
     
-    _isPressed = !_isPressed;
 }
 
 
@@ -479,35 +483,13 @@
 
 #pragma mark ELCImagePickerControllerDelegate Methods
 
-- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info
-{
+- (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info {
     NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
     for (NSDictionary *dict in info) {
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                if (info.count > 1) {       //选择多张图片
-                    [images addObject:image];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [picker dismissViewControllerAnimated:NO completion:^{
-                            TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImages:images];
-                            UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
-                            [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:^{
-                            }];
-                        }];
-                    });
-                }else {     //选择单张图片
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [picker dismissViewControllerAnimated:NO completion:^{
-                            TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImage:image];
-                            UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
-                            [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:^{
-                            }];
-                        }];
-                    });
-                }
-                
-                
+                [images addObject:image];
             } else {
                 NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
             }
@@ -515,7 +497,6 @@
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
                 [images addObject:image];
-                
             } else {
                 NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
             }
@@ -523,6 +504,24 @@
             NSLog(@"Uknown asset type");
         }
     }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [picker dismissViewControllerAnimated:NO completion:^{
+            TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImages:images];
+            UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+            [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:nil];
+        }];
+    });
+//    if (info.count > 1) {       //选择多张图片
+//        
+//    }else {     //选择单张图片
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [picker dismissViewControllerAnimated:NO completion:^{
+//                TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithImage:[images objectAtIndex:0]];
+//                UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
+//                [self.selectedViewController presentViewController:tweetEditingNav animated:NO completion:nil];
+//            }];
+//        });
+//    }
 }
 
 - (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
