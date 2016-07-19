@@ -14,22 +14,6 @@
     __weak UIView* _colorLine;
 }
 
-#pragma mark - 留白处理frame算高
-/**
--(CGSize)sizeThatFits:(CGSize)size{
-    CGFloat cellRowHeight = 0;
-    
-    cellRowHeight += [self.nameLabel sizeThatFits:size].height;
-    cellRowHeight += [self.descTextView sizeThatFits:size].height;
-    cellRowHeight += [self.tweetImageView sizeThatFits:size].height;
-    cellRowHeight += 61;
-    cellRowHeight += 13;
-
-    return CGSizeMake(size.width, cellRowHeight);
-}
- */
-
-
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -68,7 +52,6 @@
     
     _tweetImageView = [UIImageView new];
     _tweetImageView.contentMode = UIViewContentModeScaleAspectFill;
-//    _tweetImageView.contentMode = UIViewContentModeLeft;
     _tweetImageView.clipsToBounds = YES;
     _tweetImageView.userInteractionEnabled = YES;
     [self.contentView addSubview:_tweetImageView];
@@ -130,7 +113,6 @@
     [_tweetImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(69);
         make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
-//        make.right.equalTo(@(-16));
     }];
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {

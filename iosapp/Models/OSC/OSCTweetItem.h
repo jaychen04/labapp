@@ -57,7 +57,7 @@
 
 @property (nonatomic, copy) NSString *brush;
 
-@property (nonatomic, copy) NSString *conent;
+@property (nonatomic, copy) NSString *content;
 
 @end
 

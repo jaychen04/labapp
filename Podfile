@@ -10,7 +10,7 @@ pod 'SDWebImage'
 pod 'SSKeychain'
 pod 'ReactiveCocoa'
 pod 'GPUImage'
-pod 'MBProgressHUD'
+pod 'MBProgressHUD', '~> 0.9.2'
 pod 'RESideMenu'
 pod 'Reachability'
 pod 'TTTAttributedLabel'
@@ -25,7 +25,6 @@ pod 'UMengSocial' , '~>4.4’
 pod 'UITableView+FDTemplateLayoutCell', '~> 1.5.beta'
 pod 'Myhpple'
 pod 'Masonry'
-pod 'AsyncDisplayKit'
 pod 'ELCImagePickerController', '~> 0.2.0'
 
 end

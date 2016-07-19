@@ -25,17 +25,36 @@
 static NSString * const reuseIdentifier = @"NewTweetCell";
 static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 
-@interface TweetTableViewController () <UITextViewDelegate>
+@interface TweetTableViewController () <UITextViewDelegate,networkingJsonDataDelegate>
 
 @property (nonatomic, assign) int64_t uid;
 @property (nonatomic, copy) NSString *topic;
 @property (nonatomic, strong) UITextView *textView;
+
+@property (nonatomic, copy) NSString *nextToken;
 
 @end
 
 @implementation TweetTableViewController
 
 #pragma mark - init method
+-(instancetype)initTweetListWithType:(NSInteger)type {
+    self = [super init];
+    if (self) {
+        self.netWorkingDelegate = self;
+        self.generateUrl = ^NSString * () {
+            return [NSString stringWithFormat:@"%@tweets",OSCAPI_V2_PREFIX];
+        };
+        self.isJsonDataVc = YES;
+        self.parametersDic = @{@"type":@(1),
+                               @"pageToken":@""
+                               };
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 21600;
+        self.kLastRefreshTime = @"NewsRefreshInterval";
+    }
+    return self;
+}
 
 - (instancetype)initWithTweetsType:(NewTweetsType)type
 {
@@ -158,6 +177,67 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+
+#pragma mark -- networking Delegate
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
+    if (isRefresh) {
+
+    }
+    
+    NSMutableDictionary* paraMutableDic = self.parametersDic.mutableCopy;
+    if (!isRefresh && [self.nextToken length] > 0) {
+        [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
+    }
+    
+    [self.manager GET:self.generateUrl()
+           parameters:paraMutableDic.copy
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  if([responseObject[@"code"]integerValue] == 1) {
+//                      _systemDate = responseObject[@"time"];
+                      
+                      NSDictionary* resultDic = responseObject[@"result"];
+                      NSArray* items = resultDic[@"items"];
+//                      NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
+                      if (isRefresh) {//上拉得到的数据
+//                          [self.dataModels removeAllObjects];
+                      }
+//                      [self.dataModels addObjectsFromArray:modelArray];
+                      self.nextToken = resultDic[@"nextPageToken"];
+//                      dispatch_async(dispatch_get_main_queue(), ^{
+//                          self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
+//                          if (self.tableView.mj_header.isRefreshing) {
+//                              [self.tableView.mj_header endRefreshing];
+//                          }
+//                          [self.tableView reloadData];
+//                      });
+                  }
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+                  
+                  [HUD hide:YES afterDelay:1];
+                  
+                  self.lastCell.status = LastCellStatusError;
+                  if (self.tableView.mj_header.isRefreshing) {
+                      [self.tableView.mj_header endRefreshing];
+                  }
+                  [self.tableView reloadData];
+              }
+     ];
+}
+
+
+
+#pragma mark - 处理消息通知
+
+- (void)userRefreshHandler:(NSNotification *)notification
+{
+    _uid = [Config getOwnID];
 }
 
 - (void)dealloc
@@ -504,11 +584,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
 }
 
-#pragma mark - 处理消息通知
 
-- (void)userRefreshHandler:(NSNotification *)notification
-{
-    _uid = [Config getOwnID];
-}
 
 @end

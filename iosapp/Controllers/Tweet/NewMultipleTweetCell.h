@@ -8,6 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class NewMultipleTweetCell;
+
+@protocol NewMultipleTweetCellDelegate <NSObject>
+
+- (void) userPortraitDidClick:(NewMultipleTweetCell* )multipleTweetCell;
+
+- (void) descTextViewDidClick:(NewMultipleTweetCell* )multipleTweetCell;
+
+@end
+
 @class OSCTweetItem;
 
 @interface NewMultipleTweetCell : UITableViewCell
@@ -19,5 +29,15 @@
 @property (nonatomic,weak) UIButton* likeCountButton;
 
 @property (nonatomic,strong) OSCTweetItem* tweetItem;
+
+@property (nonatomic,weak) id<NewMultipleTweetCellDelegate> delegate;
+
+@property (nonatomic, copy) BOOL (^canPerformAction)(UITableViewCell *cell, SEL action);
+
+@property (nonatomic, copy) void (^deleteObject)(UITableViewCell *cell);
+
+@property (nonatomic,copy) void (^afterTheAssignment)(UITableViewCell* cell);
+
++ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
 
 @end
