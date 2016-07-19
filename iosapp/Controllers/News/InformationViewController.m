@@ -20,6 +20,7 @@
 #import "SoftWareViewController.h"
 #import "QuesAnsDetailViewController.h"
 #import "TranslationViewController.h"
+#import "NewsDetailViewController.h"
 
 #import "OSCInformation.h"
 #import "OSCBanner.h"
@@ -279,9 +280,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 //            [self.navigationController pushViewController:detailsViewController animated:YES];
             
             //新版资讯详情界面
-            NewsBlogDetailTableViewController *newsBlogDetailVc =[[NewsBlogDetailTableViewController alloc]initWithObjectId:model.id isBlogDetail:NO];
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:model.id isBlogDetail:NO];
             newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            
+//            NewsDetailViewController *newsDetailsVc = [[NewsDetailViewController alloc]initWithNewsId:model.id];
+//            newsDetailsVc.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:newsDetailsVc animated:YES];
             break;
         }
        
@@ -415,9 +420,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 //            [self.navigationController pushViewController:detailsViewController animated:YES];
             
             //新版资讯详情界面
-            NewsBlogDetailTableViewController *newsBlogDetailVc =[[NewsBlogDetailTableViewController alloc]initWithObjectId:model.id isBlogDetail:NO];
+            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:model.id isBlogDetail:NO];
             newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            
+//            NewsDetailViewController *newsDetailsVc = [[NewsDetailViewController alloc]initWithNewsId:model.id];
+//            newsDetailsVc.hidesBottomBarWhenPushed = YES;
+//            [self.navigationController pushViewController:newsDetailsVc animated:YES];
             break;
         }
         default:

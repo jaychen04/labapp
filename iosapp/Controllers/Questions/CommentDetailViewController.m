@@ -85,9 +85,6 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [self getDataForCommentDetail];
 
 }
--(void)viewWillAppear:(BOOL)animated {
-
-}
 
 
 - (void)didReceiveMemoryWarning {

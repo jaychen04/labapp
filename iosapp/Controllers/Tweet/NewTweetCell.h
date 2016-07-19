@@ -17,7 +17,6 @@
 @property (nonatomic, strong) UIImageView *tweetImageView;
 
 @property (strong, nonatomic) UILabel *timeLabel;
-//@property (nonatomic, strong) UIImageView *likeImage;
 @property (strong, nonatomic) UILabel *likeCountLabel;
 @property (strong, nonatomic) UIButton *likeCountButton;
 
