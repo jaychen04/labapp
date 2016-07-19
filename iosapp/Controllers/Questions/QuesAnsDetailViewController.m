@@ -404,16 +404,16 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = @"举报成功";
+                  HUD.label.text = @"举报成功";
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = @"网络异常，操作失败";
+                  HUD.label.text = @"网络异常，操作失败";
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               }];
          */
         //新举报接口
@@ -433,9 +433,9 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                  if ([responseObject[@"code"]integerValue] == 1) {
                      MBProgressHUD *HUD = [Utils createHUD];
                      HUD.mode = MBProgressHUDModeCustomView;
-                     HUD.labelText = @"评论成功";
+                     HUD.label.text = @"评论成功";
 
-                     [HUD hide:YES afterDelay:1];
+                     [HUD hideAnimated:YES afterDelay:1];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
 
@@ -477,9 +477,9 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
         } else {
             MBProgressHUD *HUD = [Utils createHUD];
             HUD.mode = MBProgressHUDModeCustomView;
-            HUD.labelText = @"评论不能为空";
+            HUD.label.text = @"评论不能为空";
             
-            [HUD hide:YES afterDelay:1];
+            [HUD hideAnimated:YES afterDelay:1];
         }
     }
     
@@ -535,7 +535,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
             if ([responseObject[@"code"]integerValue] == 1) {
                 MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeCustomView;
-                HUD.labelText = @"评论成功";
+                HUD.label.text = @"评论成功";
                 
                 OSCNewComment *postedComment = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
                 if (postedComment) {
@@ -543,7 +543,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                 }
                 
                 _commentTextField.text = @"";
-                [HUD hide:YES afterDelay:1];
+                [HUD hideAnimated:YES afterDelay:1];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -595,9 +595,9 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                 
                 MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeCustomView;
-                HUD.labelText = _questionDetail.favorite? @"收藏成功": @"取消收藏";
+                HUD.label.text = _questionDetail.favorite? @"收藏成功": @"取消收藏";
                 
-                [HUD hide:YES afterDelay:1];
+                [HUD hideAnimated:YES afterDelay:1];
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -658,15 +658,15 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     coverView.tag = 10;
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     _hud = [[MBProgressHUD alloc] initWithWindow:window];
-    _hud.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    _hud.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:_hud];
     [self.view addSubview:coverView];
-    [_hud show:YES];
+    [_hud showAnimated:YES];
     _hud.removeFromSuperViewOnHide = YES;
     _hud.userInteractionEnabled = NO;
 }
 - (void)hideHubView {
-    [_hud hide:YES];
+    [_hud hideAnimated:YES];
     [[self.view viewWithTag:10] removeFromSuperview];
 }
 

@@ -236,18 +236,18 @@
                       MBProgressHUD *HUD = [Utils createHUD];
                       HUD.mode = MBProgressHUDModeCustomView;
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.labelText = errorMessage;
+                      HUD.label.text = errorMessage;
                       
-                      [HUD hide:YES afterDelay:1];
+                      [HUD hideAnimated:YES afterDelay:1];
                   }
                 
             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                 MBProgressHUD *HUD = [Utils createHUD];
                 HUD.mode = MBProgressHUDModeCustomView;
                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                HUD.labelText = @"网络异常，操作失败";
+                HUD.label.text = @"网络异常，操作失败";
                 
-                [HUD hide:YES afterDelay:1];
+                [HUD hideAnimated:YES afterDelay:1];
             }];
     }
 }
@@ -258,8 +258,8 @@
     if ([Config getOwnID] == 0) {
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"请先登录";
-        [HUD hide:YES afterDelay:0.5];
+        HUD.label.text = @"请先登录";
+        [HUD hideAnimated:YES afterDelay:0.5];
     } else {
         [self.navigationController pushViewController:[[BubbleChatViewController alloc] initWithUserID:_user.userID andUserName:_user.name] animated:YES];
     }
@@ -269,7 +269,7 @@
 {
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.mode = MBProgressHUDModeCustomView;
-    HUD.color = [UIColor colorWithHex:0xEEEEEE];
+    HUD.customView.backgroundColor = [UIColor colorWithHex:0xEEEEEE];
     
     UILabel *detailsLabel = [HUD valueForKey:@"detailsLabel"];
     detailsLabel.textAlignment = NSTextAlignmentLeft;
@@ -294,8 +294,8 @@
         [userInformation appendAttributedString:attributedText];
     }
     
-    HUD.detailsLabelColor = [UIColor blackColor];
-    HUD.detailsLabelFont = [UIFont systemFontOfSize:14];
+    HUD.detailsLabel.textColor = [UIColor blackColor];
+    HUD.detailsLabel.font = [UIFont systemFontOfSize:14];
     detailsLabel.attributedText = userInformation;
     
     [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHUD:)]];
@@ -303,7 +303,7 @@
 
 - (void)hideHUD:(UITapGestureRecognizer *)recognizer
 {
-    [(MBProgressHUD *)recognizer.view hide:YES];
+    [(MBProgressHUD *)recognizer.view hideAnimated:YES];
 }
 
 -(void)updateRelationshipImage{

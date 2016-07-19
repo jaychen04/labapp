@@ -99,7 +99,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     _HUD = [[MBProgressHUD alloc] initWithWindow:window];
-    _HUD.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    _HUD.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     _HUD.userInteractionEnabled = NO;
     [window addSubview:_HUD];
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
@@ -116,12 +116,12 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        HUD.labelText = @"请先输入任务标题";
-        [HUD hide:YES afterDelay:1];
+        HUD.label.text = @"请先输入任务标题";
+        [HUD hideAnimated:YES afterDelay:1];
         return;
     }
     
-    [_HUD show:YES];
+    [_HUD showAnimated:YES];
     NSDictionary *parameters = @{
                                  @"teamid": @([Config teamID]),
                                  @"uid": @([Config getOwnID]),
@@ -136,7 +136,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     [_manager POST:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_ISSUE_PUB]
        parameters:parameters
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-              [_HUD hide:YES];
+              [_HUD hideAnimated:YES];
               
               ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
               int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
@@ -146,19 +146,19 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
               HUD.mode = MBProgressHUDModeCustomView;
               if (errorCode == 1) {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = errorMessage;
+                  HUD.label.text = errorMessage;
                   [self.navigationController popViewControllerAnimated:YES];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   if ([errorMessage length] < 10) {
-                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }else {
-                      HUD.detailsLabelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                      HUD.detailsLabel.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }
               }
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [_HUD hide:YES];
+              [_HUD hideAnimated:YES];
           }];
     
 }
@@ -206,7 +206,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
 {
     [super viewWillDisappear:animated];
     
-    [_HUD hide:YES];
+    [_HUD hideAnimated:YES];
 }
 
 
@@ -367,7 +367,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                      withRowAnimation:UITableViewRowAnimationFade];
                     [tableView endUpdates];
                 } else {
-                    [_HUD show:YES];
+                    [_HUD showAnimated:YES];
                     
                     [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_LIST]
                        parameters:@{@"teamid": @([Config teamID])}
@@ -384,9 +384,9 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                                withRowAnimation:UITableViewRowAnimationFade];
                               [tableView endUpdates];
                               
-                              [_HUD hide:YES];
+                              [_HUD hideAnimated:YES];
                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                              [_HUD hide:YES];
+                              [_HUD hideAnimated:YES];
                           }];
                 }
             }
@@ -398,7 +398,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                      withRowAnimation:UITableViewRowAnimationFade];
                     [tableView endUpdates];
                 } else {
-                    [_HUD show:YES];
+                    [_HUD showAnimated:YES];
                     
                     [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_CATALOG_LIST]
                        parameters:@{
@@ -422,9 +422,9 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                                withRowAnimation:UITableViewRowAnimationFade];
                               [tableView endUpdates];
                               
-                              [_HUD hide:YES];
+                              [_HUD hideAnimated:YES];
                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                              [_HUD hide:YES];
+                              [_HUD hideAnimated:YES];
                           }];
                 }
             }
@@ -436,7 +436,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                      withRowAnimation:UITableViewRowAnimationFade];
                     [tableView endUpdates];
                 } else {
-                    [_HUD show:YES];
+                    [_HUD showAnimated:YES];
                     
                     [_manager GET:[NSString stringWithFormat:@"%@%@", TEAM_PREFIX, TEAM_PROJECT_MEMBER_LIST]
                        parameters:@{
@@ -460,9 +460,9 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                                                withRowAnimation:UITableViewRowAnimationFade];
                               [tableView endUpdates];
                               
-                              [_HUD hide:YES];
+                              [_HUD hideAnimated:YES];
                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                              [_HUD hide:YES];
+                              [_HUD hideAnimated:YES];
                           }];
                 }
                 break;

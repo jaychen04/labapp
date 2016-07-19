@@ -249,9 +249,9 @@ static const double accelerationThreshold = 2.0f;
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             HUD.labelText = @"网络异常，请检测网络";
+             HUD.label.text = @"网络异常，请检测网络";
              
-             [HUD hide:YES afterDelay:2];
+             [HUD hideAnimated:YES afterDelay:2];
              
              [self startAccelerometer];
              _isShaking = NO;

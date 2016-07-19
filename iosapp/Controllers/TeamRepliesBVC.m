@@ -247,9 +247,9 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+             HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
              
-             [HUD hide:YES afterDelay:1];
+             [HUD hideAnimated:YES afterDelay:1];
              
              _lastCell.status = LastCellStatusError;
              if (_refreshControl.refreshing) {

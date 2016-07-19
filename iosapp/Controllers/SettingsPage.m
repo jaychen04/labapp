@@ -144,8 +144,8 @@ static BOOL isNightMode;
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-        HUD.labelText = @"注销成功";
-        [HUD hide:YES afterDelay:0.5];
+        HUD.label.text = @"注销成功";
+        [HUD hideAnimated:YES afterDelay:0.5];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:@"userRefresh" object:@(YES)];
         

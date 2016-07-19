@@ -170,7 +170,7 @@ static NSString *kCommentCellID = @"CommentCell";
         OSCComment *comment = self.objects[indexPath.row];
         
         MBProgressHUD *HUD = [Utils createHUD];
-        HUD.labelText = @"正在删除评论";
+        HUD.label.text = @"正在删除评论";
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
@@ -190,7 +190,7 @@ static NSString *kCommentCellID = @"CommentCell";
                   
                   if (errorCode == 1) {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.labelText = @"评论删除成功";
+                      HUD.label.text = @"评论删除成功";
                       
                       [self.objects removeObjectAtIndex:indexPath.row];
                       self.allCount--;
@@ -204,16 +204,16 @@ static NSString *kCommentCellID = @"CommentCell";
                       });
                   } else {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = @"网络异常，操作失败";
+                  HUD.label.text = @"网络异常，操作失败";
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               }];
     };
 }

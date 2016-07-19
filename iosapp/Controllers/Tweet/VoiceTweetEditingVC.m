@@ -354,9 +354,9 @@
 
     } else {
         MBProgressHUD *HUD = [Utils createHUD];
-        HUD.labelText = @"没有语音信息可播";
+        HUD.label.text = @"没有语音信息可播";
         HUD.mode = MBProgressHUDModeCustomView;
-        [HUD hide:YES afterDelay:1];
+        [HUD hideAnimated:YES afterDelay:1];
     }
     
 }
@@ -450,8 +450,8 @@
     if (!_hasVoice) {
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.mode = MBProgressHUDModeCustomView;
-        HUD.labelText = @"还没有语音，请录音";
-        [HUD hide:YES afterDelay:1];
+        HUD.label.text = @"还没有语音，请录音";
+        [HUD hideAnimated:YES afterDelay:1];
         return;
     }
     NSString *message;
@@ -461,9 +461,9 @@
         message = @"#语音动弹#";
     }
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"语音动弹发送中";
+    HUD.label.text = @"语音动弹发送中";
     HUD.removeFromSuperViewOnHide = NO;
-    [HUD hide:YES afterDelay:1];
+    [HUD hideAnimated:YES afterDelay:1];
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -494,28 +494,28 @@
          NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
          
          HUD.mode = MBProgressHUDModeCustomView;
-         [HUD show:YES];
+         [HUD showAnimated:YES];
          
          if (errorCode == 1) {
              _edittingArea.text = @"";
              
              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-             HUD.labelText = @"动弹发表成功";
+             HUD.label.text = @"动弹发表成功";
          } else {
              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+             HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
          }
          
          HUD.removeFromSuperViewOnHide = YES;
-         [HUD hide:YES afterDelay:1];
+         [HUD hideAnimated:YES afterDelay:1];
          
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        HUD.labelText = @"网络异常，动弹发送失败";
+        HUD.label.text = @"网络异常，动弹发送失败";
         
         HUD.removeFromSuperViewOnHide = YES;
-        [HUD hide:YES afterDelay:1];
+        [HUD hideAnimated:YES afterDelay:1];
     }];
     
     [self dismissViewControllerAnimated:YES completion:nil];

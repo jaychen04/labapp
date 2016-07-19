@@ -277,8 +277,8 @@
         }else {
             MBProgressHUD *HUD = [Utils createHUD];
             HUD.mode = MBProgressHUDModeCustomView;
-            HUD.labelText = @"对不起，您无权更改任务状态";
-            [HUD hide:YES afterDelay:1];
+            HUD.label.text = @"对不起，您无权更改任务状态";
+            [HUD hideAnimated:YES afterDelay:1];
         }
         return;
     }
@@ -361,8 +361,8 @@
               NSString *alertMsg = [[[responseObject.rootElement firstChildWithTag:@"result"] firstChildWithTag:@"errorMessage"] stringValue];
               MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
-              HUD.labelText = alertMsg;
-              [HUD hide:YES afterDelay:1];
+              HUD.label.text = alertMsg;
+              [HUD hideAnimated:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               
           }];
@@ -521,8 +521,8 @@
              NSString *alertMsg = [[[responseObject.rootElement firstChildWithTag:@"result"] firstChildWithTag:@"errorMessage"] stringValue];
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
-             HUD.labelText = alertMsg;
-             [HUD hide:YES afterDelay:1];
+             HUD.label.text = alertMsg;
+             [HUD hideAnimated:YES afterDelay:1];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              
          }];
@@ -533,7 +533,7 @@
 - (void)sendContent
 {
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"评论发送中";
+    HUD.label.text = @"评论发送中";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -553,22 +553,22 @@
                   [self updateInputBarHeight];
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = @"评论发表成功";
+                  HUD.label.text = @"评论发表成功";
                   
                   [self.tableView setContentOffset:CGPointZero animated:NO];
                   [self fetchRepliesOnPage:0];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = @"评论失败";;
+                  HUD.label.text = @"评论失败";;
               }
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.detailsLabelText = error.localizedFailureReason;
+              HUD.detailsLabel.text = error.localizedFailureReason;
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           }];
 }
 
