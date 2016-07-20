@@ -328,10 +328,9 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
         return cell;
     }else{
         NewMultipleTweetCell* cell = [NewMultipleTweetCell returnReuseMultipeTweetCellWithTableView:tableView identifier:reuseIdentifier_Multiple indexPath:indexPath];
-        
+        cell.delegate = self;
         cell.tweetItem = model;
         [self setBlockForCommentMultipleCell:cell];
-        cell.delegate = self;
         
         if (!cell.descTextView.delegate) {
             cell.descTextView.delegate = self;
@@ -380,6 +379,10 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 {
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:multipleTweetCell.tweetItem.id];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
+
+-(void)assemblyMultipleTweetCellDidFinsh:(NewMultipleTweetCell *)multipleTweetCell{
+    [self.tableView reloadData];
 }
 
 

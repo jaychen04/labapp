@@ -18,24 +18,13 @@
 //- (void) descTextViewDidClick:(NewMultipleTweetCell* )multipleTweetCell
 //                  tapGestures:(UITapGestureRecognizer* )tap;
 
+- (void) assemblyMultipleTweetCellDidFinsh:(NewMultipleTweetCell* )multipleTweetCell;
+
 @end
 
 @class OSCTweetItem;
 
 @interface NewMultipleTweetCell : UITableViewCell
-/**
- __weak UIImageView* _userPortrait;
- __weak UILabel* _nameLabel;
- __weak UITextView* _descTextView;
- 
- __weak UIView* _imagesView;
- __weak UIView* _colorLine;
- 
- __weak UILabel* _timeLabel;
- __weak UILabel* _likeCountLabel;
- __weak UIImageView* _commentImage;
- __weak UILabel* _commentCountLabel;
- */
 
 + (instancetype) returnReuseMultipeTweetCellWithTableView:(UITableView* )tableView
                                                identifier:(NSString* )reuseIdentifier
@@ -52,7 +41,7 @@
 
 @property (nonatomic, copy) void (^deleteObject)(UITableViewCell *cell);
 
-@property (nonatomic,copy) void (^afterTheAssignment)(UITableViewCell* cell);
+//@property (nonatomic,copy) void (^afterTheAssignment)(UITableViewCell* cell);
 
 + (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
 

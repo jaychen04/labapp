@@ -260,6 +260,7 @@
         for (int j = 0; j < 3; j++) {//row
             originX = j * (ImageItemSize + ImageItemPadding);
             UIImageView* imageView = [[UIImageView alloc]init];
+            imageView.backgroundColor = [UIColor redColor];
             imageView.frame = (CGRect){{originX,originY},{ImageItemSize,ImageItemSize}};
             [_imagesView addSubview:imageView];
             [lineNodes addObject:imageView];
@@ -394,7 +395,9 @@
       [[SDImageCache sharedImageCache] storeImage:image forKey:url toDisk:YES];
           dispatch_async(dispatch_get_main_queue(), ^{
               [node setImage:image];
-              _afterTheAssignment(self);
+              if ([_delegate respondsToSelector:@selector(assemblyMultipleTweetCellDidFinsh:)]) {
+                  [_delegate assemblyMultipleTweetCellDidFinsh:self];
+              }
           });
     }];
 
