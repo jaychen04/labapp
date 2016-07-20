@@ -8,6 +8,8 @@
 
 #import "NewTweetCell.h"
 #import "Utils.h"
+#import "OSCTweetItem.h"
+
 #import <Masonry.h>
 
 @implementation NewTweetCell{
@@ -90,7 +92,7 @@
 
 - (void)setLayout
 {
-    
+
 #pragma mark - change using Masnory add Constraints
     
     [_userPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -163,41 +165,40 @@
 }
 
 #pragma mark - set Tweet
-- (void)setTweet:(OSCTweet *)tweet
-{
-    [_userPortrait loadPortrait:tweet.portraitURL];
-    _nameLabel.text = tweet.author;
-    _descTextView.attributedText = [NewTweetCell contentStringFromRawString:tweet.body];
-    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:tweet.pubDateString] timeAgoSinceNow]]];
+- (void)setTweet:(OSCTweetItem *)model{
+    [_userPortrait loadPortrait:[NSURL URLWithString:model.author.portrait]];
+    _nameLabel.text = model.author.name;
+    _descTextView.attributedText = [NewTweetCell contentStringFromRawString:model.content];
+    NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:model.pubDate] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
-    [att appendAttributedString:[Utils getAppclientName:tweet.appclient]];
+    [att appendAttributedString:[Utils getAppclientName:(int)model.appClient]];
     _timeLabel.attributedText = att;
     
-     if (tweet.isLike) {
+     if (model.liked) {
          [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_actived"] forState:UIControlStateNormal];
      } else {
          [_likeCountButton setImage:[UIImage imageNamed:@"ic_thumbup_normal"] forState:UIControlStateNormal];
      }
 
-    _likeCountLabel.text = [NSString stringWithFormat:@"%d", tweet.likeCount];
-    _commentCountLabel.text = [NSString stringWithFormat:@"%d", tweet.commentCount];
+    _likeCountLabel.text = [NSString stringWithFormat:@"%ld", (long)model.likeCount];
+    _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)model.commentCount];
     
     
-    if (tweet.hasAnImage) {
-        _tweetImageView.hidden = NO;
-        [_tweetImageView loadPortrait:tweet.smallImgURL];
-//        [self initImagesSubview];
+    if (model.images.count == 1) {
+//        _tweetImageView.hidden = NO;
+//        OSCTweetImages* imageData = [model.images lastObject];
+//        [_tweetImageView loadPortrait:[NSURL URLWithString:imageData.thumb]];
         [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_tweetImageView.mas_bottom).with.offset(8);
         }];
+        _imageBackView.hidden = NO;
     } else {
-        _imageBackView.hidden = YES;
-        _tweetImageView.hidden = YES;
+//        _tweetImageView.hidden = YES;
         [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_tweetImageView.mas_bottom).with.offset(0);
         }];
+        _imageBackView.hidden = YES;
     }
-    
 }
 
 + (NSAttributedString*)contentStringFromRawString:(NSString*)rawString

@@ -315,13 +315,13 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
                   NSDictionary* resultDic = responseObject[@"result"];
                   NSArray* items = resultDic[@"items"];
                   NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
-                  if (isRefresh) {//上拉得到的数据
+                  if (isRefresh) {//下拉得到的数据
                       [self.dataModels removeAllObjects];
                   }
                   [self.dataModels addObjectsFromArray:modelArray];
                   self.nextToken = resultDic[@"nextPageToken"];
                   dispatch_async(dispatch_get_main_queue(), ^{
-                      self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
+                      self.lastCell.status = items.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
                       if (self.tableView.mj_header.isRefreshing) {
                           [self.tableView.mj_header endRefreshing];
                       }

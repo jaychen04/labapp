@@ -13,6 +13,8 @@
 #import "UIView+Util.h"
 #import "NSDate+Util.h"
 
+#import "UserDetailsViewController.h"
+
 #import <SDWebImage/SDImageCache.h>
 #import <SDWebImageDownloaderOperation.h>
 #import <Masonry.h>
@@ -23,7 +25,7 @@
 #define ImageItemSize 60
 #define ImageItemPadding 16
 
-@interface NewMultipleTweetCell (){
+@interface NewMultipleTweetCell () {
     NSMutableArray* _imageViewsArray;   //二维数组 _imageViewsArray[line][row]
 }
 @end
@@ -31,7 +33,7 @@
 @implementation NewMultipleTweetCell{
     __weak UIImageView* _userPortrait;
     __weak UILabel* _nameLabel;
-    __weak UITextView* _descTextView;
+//    __weak UITextView* _descTextView;
     
     __weak UIView* _imagesView;
     __weak UIView* _colorLine;
@@ -71,7 +73,7 @@
     UIImageView* userPortrait = [[UIImageView alloc]init];
     userPortrait.userInteractionEnabled = YES;
     userPortrait.contentMode = UIViewContentModeScaleAspectFit;
-    [userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userPortraitDidClickMethod)]];
+    [userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userPortraitDidClickMethod:)]];
     [userPortrait setCornerRadius:22];
     _userPortrait = userPortrait;
     [self.contentView addSubview:_userPortrait];
@@ -85,7 +87,6 @@
     
     UITextView* descTextView = [[UITextView alloc]init];
     descTextView.userInteractionEnabled = YES;
-    [descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(descTextViewDidClickMethod)]];
     descTextView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
     descTextView.backgroundColor = [UIColor clearColor];
     descTextView.font = [UIFont systemFontOfSize:14];
@@ -339,16 +340,12 @@
 
 
 #pragma mark --- click Method
--(void)userPortraitDidClickMethod{
-    if ([_delegate respondsToSelector:@selector(userPortraitDidClick:)]) {
-        [_delegate userPortraitDidClick:self];
+-(void)userPortraitDidClickMethod:(UITapGestureRecognizer* )tap{
+    if ([_delegate respondsToSelector:@selector(userPortraitDidClick: tapGestures:)]) {
+        [_delegate userPortraitDidClick:self tapGestures:tap];
     }
 }
--(void)descTextViewDidClickMethod{
-    if ([_delegate respondsToSelector:@selector(descTextViewDidClick:)]) {
-        [_delegate descTextViewDidClick:self];
-    }
-}
+
 
 #pragma mark --- emoji Handle
 + (NSAttributedString*)contentStringFromRawString:(NSString*)rawString{

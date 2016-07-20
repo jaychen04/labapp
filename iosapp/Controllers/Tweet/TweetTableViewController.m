@@ -7,6 +7,7 @@
 //
 
 #import "TweetTableViewController.h"
+#import "OSCTweetItem.h"
 #import "NewTweetCell.h"
 #import "NewMultipleTweetCell.h"
 #import "Config.h"
@@ -21,12 +22,14 @@
 #import <UITableView+FDTemplateLayoutCell.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MBProgressHUD.h>
+#import <MJExtension.h>
 
-static NSString * const reuseIdentifier = @"NewTweetCell";
+static NSString* const reuseIdentifier = @"NewTweetCell";
 static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 
-@interface TweetTableViewController () <UITextViewDelegate,networkingJsonDataDelegate>
+@interface TweetTableViewController () <UITextViewDelegate,networkingJsonDataDelegate,NewMultipleTweetCellDelegate>
 
+@property (nonatomic,strong) NSMutableArray* dataModels;
 @property (nonatomic, assign) int64_t uid;
 @property (nonatomic, copy) NSString *topic;
 @property (nonatomic, strong) UITextView *textView;
@@ -38,17 +41,41 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 @implementation TweetTableViewController
 
 #pragma mark - init method
--(instancetype)initTweetListWithType:(NSInteger)type {
+-(instancetype)initTweetListWithType:(NewTweetsType)type {
     self = [super init];
     if (self) {
+        NSDictionary *para;
+        switch (type) {
+            case NewTweetsTypeAllTweets:
+                para = @{
+                         @"type":@(1),
+                         @"pageToken":@""
+                         };
+                break;
+                
+            case NewTweetsTypeHotestTweets:
+                para = @{
+                         @"type":@(2),
+                         @"pageToken":@""
+                         };
+            break;
+                
+            case NewTweetsTypeOwnTweets:
+                para = @{
+                         @"type":@([Config getOwnID]),
+                         @"pageToken":@""
+                         };
+            break;
+                
+        }
+        self.parametersDic = para;
+        
         self.netWorkingDelegate = self;
         self.generateUrl = ^NSString * () {
             return [NSString stringWithFormat:@"%@tweets",OSCAPI_V2_PREFIX];
         };
         self.isJsonDataVc = YES;
-        self.parametersDic = @{@"type":@(1),
-                               @"pageToken":@""
-                               };
+        
         self.needAutoRefresh = YES;
         self.refreshInterval = 21600;
         self.kLastRefreshTime = @"NewsRefreshInterval";
@@ -165,7 +192,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     [self.tableView registerClass:[NewMultipleTweetCell class] forCellReuseIdentifier:reuseIdentifier_Multiple];
-    self.tableView.estimatedRowHeight = 160;
+    self.tableView.estimatedRowHeight = 230;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -182,9 +209,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 
 #pragma mark -- networking Delegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
-    if (isRefresh) {
-
-    }
     
     NSMutableDictionary* paraMutableDic = self.parametersDic.mutableCopy;
     if (!isRefresh && [self.nextToken length] > 0) {
@@ -195,23 +219,22 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
            parameters:paraMutableDic.copy
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
                   if([responseObject[@"code"]integerValue] == 1) {
-//                      _systemDate = responseObject[@"time"];
-                      
                       NSDictionary* resultDic = responseObject[@"result"];
                       NSArray* items = resultDic[@"items"];
-//                      NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
-                      if (isRefresh) {//上拉得到的数据
-//                          [self.dataModels removeAllObjects];
+                      NSArray* modelArray = [OSCTweetItem mj_objectArrayWithKeyValuesArray:items];
+                      if (isRefresh) {//下拉得到的数据
+                          [self.dataModels removeAllObjects];
                       }
-//                      [self.dataModels addObjectsFromArray:modelArray];
+                      [self.dataModels addObjectsFromArray:modelArray];
+                      self.objects = self.dataModels;
                       self.nextToken = resultDic[@"nextPageToken"];
-//                      dispatch_async(dispatch_get_main_queue(), ^{
-//                          self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
-//                          if (self.tableView.mj_header.isRefreshing) {
-//                              [self.tableView.mj_header endRefreshing];
-//                          }
-//                          [self.tableView reloadData];
-//                      });
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          self.lastCell.status = items.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
+                          if (self.tableView.mj_header.isRefreshing) {
+                              [self.tableView.mj_header endRefreshing];
+                          }
+                          [self.tableView reloadData];
+                      });
                   }
               }
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -249,45 +272,44 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.objects.count > 0) {
-        return self.objects.count;
+    if (self.dataModels.count > 0) {
+        return self.dataModels.count;
     }
     return 0;
 }
 
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NewTweetCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
-    if (self.objects.count > 0) {
-        OSCTweet *tweet = self.objects[indexPath.row];
-        
+    OSCTweetItem* model = self.dataModels[indexPath.row];
+
+    if (model.images.count < 2) {
+        NewTweetCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
         
         if (!cell.descTextView.delegate) {
             cell.descTextView.delegate = self;
             [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
         }
-        cell.descTextView.tag = indexPath.row;
-        
-        cell.backgroundColor = [UIColor newCellColor];
         
         [self setBlockForCommentCell:cell];
-        cell.tweet = tweet;
+        cell.tweet = model;
         
-        if (tweet.hasAnImage) {
+        if (model.images.count > 0) {
+            OSCTweetImages* imageData = [model.images lastObject];
             cell.tweetImageView.hidden = NO;
             
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:tweet.smallImgURL.absoluteString];
-            
-            // 有图就加载，无图则下载并reload tableview
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
             if (!image) {
                 [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
-                [self downloadThumbnailImageThenReload:tweet];
+                [self downloadThumbnailImageThenReload:imageData.thumb];
             } else {
                 [cell.tweetImageView setImage:image];
             }
-        } else {cell.tweetImageView.hidden = YES;}
+            
+        } else {
+            cell.tweetImageView.hidden = YES;
+        }
         
         cell.userPortrait.tag = indexPath.row;
+        cell.descTextView.tag = indexPath.row;
         cell.nameLabel.tag = indexPath.row;
         cell.tweetImageView.tag = indexPath.row;
         cell.likeCountButton.tag = indexPath.row;
@@ -302,19 +324,38 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
         cell.backgroundColor = [UIColor themeColor];
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
         cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+
+        return cell;
+    }else{
+        NewMultipleTweetCell* cell = [NewMultipleTweetCell returnReuseMultipeTweetCellWithTableView:tableView identifier:reuseIdentifier_Multiple indexPath:indexPath];
         
+        cell.tweetItem = model;
+        [self setBlockForCommentMultipleCell:cell];
+        cell.delegate = self;
+        
+        if (!cell.descTextView.delegate) {
+            cell.descTextView.delegate = self;
+            [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
+        }
+        cell.likeCountButton.tag = indexPath.row;
+        [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
+        
+        cell.contentView.backgroundColor = [UIColor newCellColor];
+        cell.backgroundColor = [UIColor themeColor];
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+        
+        return cell;
     }
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    OSCTweet *tweet = self.objects[indexPath.row];
+    OSCTweetItem *tweet = self.dataModels[indexPath.row];
 
-    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+    TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.id];
     [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
     
 }
@@ -333,6 +374,15 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     // required
 }
 
+#pragma mark - NewMultipleTweetCellDelegate
+-(void)userPortraitDidClick:(NewMultipleTweetCell *)multipleTweetCell
+                tapGestures:(UITapGestureRecognizer *)tap
+{
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:multipleTweetCell.tweetItem.id];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
+
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -341,7 +391,70 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     if (_didScroll) {_didScroll();}
 }
 
+#pragma mark --- setting Block
+
 - (void)setBlockForCommentCell:(NewTweetCell *)cell
+{
+    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
+        if (action == @selector(copyText:)) {
+            return YES;
+        } else if (action == @selector(deleteObject:)) {
+            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+            
+            OSCTweetItem *tweet = self.objects[indexPath.row];
+            
+            return tweet.id == [Config getOwnID];
+        }
+        
+        return NO;
+    };
+    
+    cell.deleteObject = ^ (UITableViewCell *cell) {
+        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+        OSCTweetItem *tweet = self.objects[indexPath.row];
+        
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.labelText = @"正在删除动弹";
+        
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        
+        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_DELETE]
+           parameters:@{
+                        @"sourceId": @([tweet id]),
+                        }
+              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
+                  ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
+                  int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
+                  NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
+                  
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  
+                  if (errorCode == 1) {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                      HUD.labelText = @"动弹删除成功";
+                      
+                      [self.objects removeObjectAtIndex:indexPath.row];
+                      self.allCount--;
+
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.tableView reloadData];
+                      });
+                  } else {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  }
+                  
+                  [HUD hide:YES afterDelay:1];
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+                  
+                  [HUD hide:YES afterDelay:1];
+              }];
+    };
+}
+- (void)setBlockForCommentMultipleCell:(NewMultipleTweetCell *)cell
 {
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
@@ -384,7 +497,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                       
                       [self.objects removeObjectAtIndex:indexPath.row];
                       self.allCount--;
-
+                      
                       dispatch_async(dispatch_get_main_queue(), ^{
                           [self.tableView reloadData];
                       });
@@ -405,20 +518,18 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 }
 
 
-
 #pragma mark - 下载图片
 
-- (void)downloadThumbnailImageThenReload:(OSCTweet*)tweet
+- (void)downloadThumbnailImageThenReload:(NSString*)urlString
 {
-    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:tweet.smallImgURL
+    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:urlString]
                                                         options:SDWebImageDownloaderUseNSURLCache
                                                        progress:nil
                                                       completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                                                          [[SDImageCache sharedImageCache] storeImage:image forKey:tweet.smallImgURL.absoluteString toDisk:NO];
+                                                          [[SDImageCache sharedImageCache] storeImage:image forKey:urlString toDisk:NO];
                                                           
                                                           // 单独刷新某一行会有闪烁，全部reload反而较为顺畅
                                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                              tweet.cellHeight = 0;
                                                               [self.tableView reloadData];
                                                           });
                                                       }];
@@ -585,5 +696,12 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 }
 
 
+
+- (NSMutableArray *)dataModels {
+	if(_dataModels == nil) {
+		_dataModels = [[NSMutableArray alloc] init];
+	}
+	return _dataModels;
+}
 
 @end

@@ -158,7 +158,7 @@
     
     
 //    newTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeAllTweets];
-    newTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:1];
+    newTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:NewTweetsTypeAllTweets];
     
     hotTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
     myFriendTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeOwnTweets];

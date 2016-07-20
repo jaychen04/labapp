@@ -35,7 +35,6 @@
 		042D8C3E1D389328001A6494 /* NewMultipleTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */; };
 		042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */; };
 		042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */; };
-		042E54641D1B818100DC7E1D /* NewTweetTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E54631D1B818100DC7E1D /* NewTweetTextCell.m */; };
 		042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D95A1B65D7FE00116D6E /* Foundation.framework */; };
 		042E8CFE1CF5944E00364BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9581B65D7F200116D6E /* UIKit.framework */; };
 		042E8CFF1CF5945700364BD7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9561B65D7E800116D6E /* CoreText.framework */; };
@@ -388,8 +387,6 @@
 		042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		042E545C1D193FD400DC7E1D /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
 		042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
-		042E54621D1B818100DC7E1D /* NewTweetTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTweetTextCell.h; sourceTree = "<group>"; };
-		042E54631D1B818100DC7E1D /* NewTweetTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTweetTextCell.m; sourceTree = "<group>"; };
 		042E8CFB1CF5933F00364BD7 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		042E8D021CF5947400364BD7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		042E8D081CF594DF00364BD7 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -2272,8 +2269,6 @@
 			children = (
 				042D8C3C1D389328001A6494 /* NewMultipleTweetCell.h */,
 				042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */,
-				042E54621D1B818100DC7E1D /* NewTweetTextCell.h */,
-				042E54631D1B818100DC7E1D /* NewTweetTextCell.m */,
 				EE6FB5D91D0D1050006A11A4 /* NewTweetCell.h */,
 				EE6FB5DA1D0D1050006A11A4 /* NewTweetCell.m */,
 				EE6FB5DB1D0D1050006A11A4 /* TweetTableViewController.h */,
@@ -2759,7 +2754,6 @@
 				31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */,
 				C5B2F1B91BD0DFF2004B4785 /* NSString+Util.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,
-				042E54641D1B818100DC7E1D /* NewTweetTextCell.m in Sources */,
 				386825A91A70D5E6008F5706 /* OSCSearchResult.m in Sources */,
 				EEFFA6421CFEDAC000A8701C /* webAndAbsTableViewCell.m in Sources */,
 				38BD3D041A36A3E500682D1F /* OSCSoftwareCatalog.m in Sources */,
