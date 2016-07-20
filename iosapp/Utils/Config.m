@@ -92,7 +92,7 @@ NSString * const kTeamsArray = @"teams";
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     [userDefaults setObject:@(0) forKey:kUserID];
-    [userDefaults setObject:@"点击头像登录" forKey:kUserName];
+    [userDefaults setObject:@"" forKey:kUserName];//点击头像登录
     [userDefaults setObject:@(0) forKey:kUserScore];
     [userDefaults setObject:@(0) forKey:kFavoriteCount];
     [userDefaults setObject:@(0) forKey:kFanCount];
@@ -119,9 +119,9 @@ NSString * const kTeamsArray = @"teams";
     user.expertise = [userDefaults objectForKey:kExpertise];
     user.developPlatform = [userDefaults objectForKey:kDevelopPlatform];
     
-    if (!user.name) {
-        user.name = @"点击头像登录";
-    }
+//    if (!user.name) {
+//        user.name = @"点击头像登录";
+//    }
     
     return user;
 }

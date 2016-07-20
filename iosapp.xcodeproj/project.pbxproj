@@ -270,6 +270,7 @@
 		EE0DA3951D23D60200DD2C13 /* TranslationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0DA3931D23D60200DD2C13 /* TranslationViewController.m */; };
 		EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
+		EE4DDD991D3DFFD600F987DD /* OSCNewTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4DDD981D3DFFD600F987DD /* OSCNewTweet.m */; };
 		EE53F74F1D0048C800083D9D /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */; };
 		EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */; };
 		EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */; };
@@ -825,6 +826,8 @@
 		EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationViewController.xib; sourceTree = "<group>"; };
 		EE2023291CFBE675002756E4 /* ActivityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadView.h; sourceTree = "<group>"; };
 		EE20232A1CFBE675002756E4 /* ActivityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadView.m; sourceTree = "<group>"; };
+		EE4DDD971D3DFFD600F987DD /* OSCNewTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewTweet.h; sourceTree = "<group>"; };
+		EE4DDD981D3DFFD600F987DD /* OSCNewTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewTweet.m; sourceTree = "<group>"; };
 		EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
 		EE603E031D3C75A700DA7F31 /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsDetailViewController.h; path = iosapp/Controllers/News/NewsDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsDetailViewController.m; path = iosapp/Controllers/News/NewsDetailViewController.m; sourceTree = SOURCE_ROOT; };
@@ -1949,6 +1952,8 @@
 				0432B6B71D3CB63700AFC058 /* OSCTweetItem.m */,
 				00EDF60719EF77A100A5C842 /* OSCTweet.h */,
 				00EDF60819EF77A100A5C842 /* OSCTweet.m */,
+				EE4DDD971D3DFFD600F987DD /* OSCNewTweet.h */,
+				EE4DDD981D3DFFD600F987DD /* OSCNewTweet.m */,
 			);
 			name = Tweet;
 			sourceTree = "<group>";
@@ -2624,6 +2629,7 @@
 				31D699691CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m in Sources */,
 				C5A89C381B09C34B00798B1C /* NSString+FontAwesome.m in Sources */,
 				38B0BF921A3AE77300A2FDB0 /* MessagesViewController.m in Sources */,
+				EE4DDD991D3DFFD600F987DD /* OSCNewTweet.m in Sources */,
 				38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */,
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,

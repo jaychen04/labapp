@@ -566,10 +566,12 @@
     }
     if (_imageIndex == 0) {
         _uploadImgHub = [Utils createHUD];
-        _uploadImgHub.labelText = @"动弹发送中";
+        _uploadImgHub.label.text = @"动弹发送中";
         _uploadImgHub.removeFromSuperViewOnHide = NO;
     }
-    
+    if (_uploadImgHub) {
+        [_uploadImgHub showAnimated:YES];
+    }
     UIImage *postImage = [_images objectAtIndex:_imageIndex];
     NSString *urlStr = [NSString stringWithFormat:@"%@resource_image", OSCAPI_V2_PREFIX ];
     NSDictionary *paramDic = @{@"token":_imageToken};
@@ -607,13 +609,18 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         }
     
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        NSLog(@"error:%@",error);
+        _imageIndex = 0;
+        _failCount = 0;
+        _imageToken = @"";
+        _uploadImgHub.mode = MBProgressHUDModeCustomView;
+         _uploadImgHub.label.text = @"请求超时，请重新发送";
+        [_uploadImgHub hideAnimated:YES afterDelay:1];
     }];
 }
 
 #pragma mark -- 发表多图动弹
 - (void)pubTweetIsWithImages:(BOOL)isImgTweet {
-//    2964687
+//    9752556
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -623,7 +630,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     MBProgressHUD *HUD;
     if (!isImgTweet) {
         HUD = [Utils createHUD];
-        HUD.labelText = @"动弹发送中";
+        HUD.label.text = @"动弹发送中";
         HUD.removeFromSuperViewOnHide = NO;
     }
     NSString *urlStr = [NSString stringWithFormat:@"%@tweet", OSCAPI_V2_PREFIX];
@@ -641,25 +648,25 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                 if (isImgTweet) {       //图片动弹
                     _uploadImgHub.mode = MBProgressHUDModeCustomView;
                     if (_failCount > 0) {
-                        _uploadImgHub.labelText = [NSString stringWithFormat:@"%ld张图片上传失败", (long)_failCount];
+                        _uploadImgHub.label.text = [NSString stringWithFormat:@"%ld张图片上传失败", (long)_failCount];
                     }else {
                         _uploadImgHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                        _uploadImgHub.labelText = @"动弹发送成功";
+                        _uploadImgHub.label.text = @"动弹发送成功";
                     }
-                    [_uploadImgHub hide:YES afterDelay:1];
+                    [_uploadImgHub hideAnimated:YES afterDelay:1];
                 }else {     //文字动弹
                     HUD.mode = MBProgressHUDModeCustomView;
                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                    HUD.labelText = @"动弹发送成功";
-                    [HUD hide:YES afterDelay:1];
+                    HUD.label.text = @"动弹发送成功";
+                    [HUD hideAnimated:YES afterDelay:1];
                 }
             }else {
                 if (isImgTweet) {
-                    _uploadImgHub.labelText = responseObject[@"message"];
-                    [_uploadImgHub hide:YES afterDelay:1];
+                    _uploadImgHub.label.text = responseObject[@"message"];
+                    [_uploadImgHub hideAnimated:YES afterDelay:1];
                 }else {
-                    HUD.labelText = responseObject[@"message"];
-                    [HUD hide:YES afterDelay:1];
+                    HUD.label.text = responseObject[@"message"];
+                    [HUD hideAnimated:YES afterDelay:1];
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -701,9 +708,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     }
     
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"动弹发送中";
+    HUD.label.text = @"动弹发送中";
     HUD.removeFromSuperViewOnHide = NO;
-    [HUD hide:YES afterDelay:1];
+    [HUD hideAnimated:YES afterDelay:1];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -731,7 +738,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                               NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
                               
                               HUD.mode = MBProgressHUDModeCustomView;
-                              [HUD show:YES];
+                              [HUD showAnimated:YES];
                               
                               if (errorCode == 1) {
                                   _edittingArea.text = @"";
@@ -739,25 +746,25 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                                   _deleteImageButton.hidden = YES;
                                   
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                                  HUD.labelText = @"动弹发送成功";
+                                  HUD.label.text = @"动弹发表成功";
                                   
                                   [Config saveTweetText:@"" forUser:[Config getOwnID]];
                               } else {
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                                   
                                   [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
                               }
                               
                               HUD.removeFromSuperViewOnHide = YES;
-                              [HUD hide:YES afterDelay:1];
+                              [HUD hideAnimated:YES afterDelay:1];
                               
                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               HUD.mode = MBProgressHUDModeCustomView;
                               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                              HUD.labelText = @"网络异常，动弹发送失败";
+                              HUD.label.text = @"网络异常，动弹发送失败";
                               HUD.removeFromSuperViewOnHide = YES;
-                              [HUD hide:YES afterDelay:1];
+                              [HUD hideAnimated:YES afterDelay:1];
                               
                               [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
                           }];
@@ -854,15 +861,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     });
 }
 
-- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
-{
+- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UIImagePickerController 回调函数
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 //    _imageView.image = info[UIImagePickerControllerOriginalImage];
 //    _deleteImageButton.hidden = NO;
     
@@ -887,8 +892,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString: @"\n"]) {
         [self pubTweet];
         [textView resignFirstResponder];
@@ -903,13 +907,11 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     return YES;
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
+- (void)textViewDidBeginEditing:(UITextView *)textView {
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
 }
 
-- (void)textViewDidChange:(PlaceholderTextView *)textView
-{
+- (void)textViewDidChange:(PlaceholderTextView *)textView {
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
     
     CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 100);
@@ -922,8 +924,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (scrollView == _scrollView) {
         [_edittingArea resignFirstResponder];
         

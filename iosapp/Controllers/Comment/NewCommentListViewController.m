@@ -131,9 +131,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
             } else {
                 MBProgressHUD *hud = [Utils createHUD];
                 hud.mode = MBProgressHUDModeCustomView;
-                hud.labelText = responseObject[@"message"];
+                hud.label.text = responseObject[@"message"];
                 
-                [hud hide:YES afterDelay:1];
+                [hud hideAnimated:YES afterDelay:1];
                 
                 if (isRefresh) {
                     [self.tableView.mj_header endRefreshing];
@@ -251,9 +251,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         } else {
             MBProgressHUD *HUD = [Utils createHUD];
             HUD.mode = MBProgressHUDModeCustomView;
-            HUD.labelText = @"评论不能为空";
+            HUD.label.text = @"评论不能为空";
             
-            [HUD hide:YES afterDelay:1];
+            [HUD hideAnimated:YES afterDelay:1];
         }
     }
     
@@ -318,8 +318,8 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
         } else {
             MBProgressHUD *hud = [Utils createHUD];
             hud.mode = MBProgressHUDModeCustomView;
-            hud.labelText = @"该用户不存在，不可引用回复";
-            [hud hide:YES afterDelay:1];
+            hud.label.text = @"该用户不存在，不可引用回复";
+            [hud hideAnimated:YES afterDelay:1];
         }
         
     } else {
@@ -353,9 +353,9 @@ static NSString *newCommentReuseIdentifier = @"NewCommentCell";
                  if ([responseObject[@"code"]integerValue] == 1) {
                      MBProgressHUD *HUD = [Utils createHUD];
                      HUD.mode = MBProgressHUDModeCustomView;
-                     HUD.labelText = @"评论成功";
+                     HUD.label.text = @"评论成功";
                      
-                     [HUD hide:YES afterDelay:1];
+                     [HUD hideAnimated:YES afterDelay:1];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
                      

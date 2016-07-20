@@ -308,10 +308,10 @@
 + (MBProgressHUD *)createHUD
 {
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithWindow:window];
-    HUD.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:window];
+    HUD.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:HUD];
-    [HUD show:YES];
+    [HUD showAnimated:YES];
     HUD.removeFromSuperViewOnHide = YES;
     //[HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:HUD action:@selector(hide:)]];
     

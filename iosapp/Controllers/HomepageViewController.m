@@ -46,6 +46,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 @property (nonatomic, assign) int64_t myID;
 @property (nonatomic, strong) OSCUser *myProfile;
+@property (nonatomic, assign) BOOL isLogin;
 @property (nonatomic, strong) NSMutableArray *noticeCounts;
 @property (nonatomic, assign) int badgeValue;
 
@@ -138,9 +139,11 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     } else {
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
-        [manager GET:[NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID]
+        NSString *str = [NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID];
+        [manager GET:str
           parameters:nil
              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+                 
                  ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
                  _myProfile = [[OSCUser alloc] initWithXML:userXML];
                  
@@ -156,9 +159,9 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                 HUD.labelText = @"网络异常，加载失败";
+                 HUD.label.text = @"网络异常，加载失败";
                  
-                 [HUD hide:YES afterDelay:1];
+                 [HUD hideAnimated:YES afterDelay:1];
                  
                  [self.refreshControl endRefreshing];
              }];
@@ -220,9 +223,9 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     if (![Utils isNetworkExist]) {
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.mode = MBProgressHUDModeText;
-        HUD.labelText = @"网络无连接，请检查网络";
+        HUD.label.text = @"网络无连接，请检查网络";
         
-        [HUD hide:YES afterDelay:1];
+        [HUD hideAnimated:YES afterDelay:1];
     } else {
         if ([Config getOwnID] == 0) {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
@@ -243,9 +246,9 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     _myProfile = [Config myProfile];
     
-    BOOL isLogin = _myID != 0;
+    _isLogin = _myID != 0;
     
-    if (isLogin) {
+    if (_isLogin) {
         [_portrait sd_setImageWithURL:_myProfile.portraitURL
                      placeholderImage:[UIImage imageNamed:@"default-portrait"]
                               options:SDWebImageContinueInBackground | SDWebImageHandleCookies
@@ -253,21 +256,18 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                                 if (!image) {return;}
                                 [[NSNotificationCenter defaultCenter] postNotificationName:@"TweetUserUpdate" object:@(YES)];
                             }];
+        
+        [_QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
     } else {
         
         _portrait.image = [UIImage imageNamed:@"default-portrait"];
     }
     
-    _nameLabel.text = _myProfile.name;
+    _nameLabel.text = _isLogin ? _myProfile.name : @"点击头像登录";
     
     [self setCoverImage];
     
-    _QRCodeButton.hidden = !isLogin;
-    
-    
-    if (isLogin) {
-        [_QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
-    }
+    _QRCodeButton.hidden = !_isLogin;
 }
 
 
@@ -289,9 +289,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    BOOL isLogin = _myID != 0;
-    
-    if (!isLogin) {
+    if (!_isLogin) {
         return 2;
     } else {
         return 3;
@@ -300,8 +298,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    BOOL isLogin = _myID != 0;
-    if (!isLogin) {
+    if (!_isLogin) {
         switch (section) {
             case 0:
                 return 4;
@@ -334,8 +331,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BOOL isLogin = _myID != 0;
-    if (!isLogin) {
+    if (!_isLogin) {
         return 45;
     } else {
         if (indexPath.section == 0) {
@@ -348,10 +344,9 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    BOOL isLogin = _myID != 0;
-    if (!isLogin) {
+    if (!_isLogin) {
         UITableViewCell *cell = [UITableViewCell new];
-        //        cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         UIView *selectedBackground = [UIView new];
         selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
@@ -473,8 +468,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    BOOL isLogin = _myID != 0;
-    if (!isLogin) {
+    if (!_isLogin) {
         if (indexPath.section == 1 && indexPath.row == 0) {
             SettingsPage *settingPage = [SettingsPage new];
             settingPage.hidesBottomBarWhenPushed = YES;
@@ -592,18 +586,18 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.mode = MBProgressHUDModeCustomView;
-    HUD.color = [UIColor whiteColor];
+    HUD.customView.backgroundColor = [UIColor whiteColor];
     
-    HUD.labelText = @"扫一扫上面的二维码，加我为好友";
-    HUD.labelFont = [UIFont systemFontOfSize:13];
-    HUD.labelColor = [UIColor grayColor];
+    HUD.label.text = @"扫一扫上面的二维码，加我为好友";
+    HUD.label.font = [UIFont systemFontOfSize:13];
+    HUD.label.textColor = [UIColor grayColor];
     HUD.customView = self.myQRCodeImageView;
     [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHUD:)]];
 }
 
 - (void)hideHUD:(UIGestureRecognizer *)recognizer
 {
-    [(MBProgressHUD *)recognizer.view hide:YES];
+    [(MBProgressHUD *)recognizer.view hideAnimated:YES];
 }
 
 - (UIImageView *)myQRCodeImageView

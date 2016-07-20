@@ -157,8 +157,8 @@
     activitiesViewCtl = [OSCActivityViewController new];
     
     
-//    newTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeAllTweets];
-    newTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:1];
+    newTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeAllTweets];
+//    newTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:1];
     
     hotTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
     myFriendTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeOwnTweets];
