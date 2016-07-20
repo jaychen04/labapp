@@ -201,8 +201,10 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 //         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //             [_HUD hideAnimated:YES];
 //         }];
+
     
-    
+
+//    self.tweetID = 9752556;
     NSString *tweetDetailUrlStr = [NSString stringWithFormat:@"%@tweet?id=%ld", OSCAPI_V2_PREFIX, (long)self.tweetID];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:tweetDetailUrlStr

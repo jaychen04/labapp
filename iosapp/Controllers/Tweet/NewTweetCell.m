@@ -203,7 +203,7 @@
     
     if (tweet.hasAnImage) {
         _tweetImageView.hidden = NO;
-        [_tweetImageView loadPortrait:tweet.smallImgURL];
+//        [_tweetImageView loadPortrait:tweet.smallImgURL];
 //        [self initImagesSubview];
         [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_tweetImageView.mas_bottom).with.offset(8);

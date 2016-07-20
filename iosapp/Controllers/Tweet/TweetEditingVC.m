@@ -48,25 +48,44 @@
 @property (nonatomic, strong) UIImage               *image;
 @property (nonatomic, strong) NSString              *topicName;
 @property (nonatomic, assign) int                   teamID;
+@property (nonatomic)         BOOL                  isTeamTweet;
 
 @property (nonatomic, strong) NSMutableArray *images;
 @property (nonatomic, copy) NSString *imageToken;
 @property (nonatomic) NSInteger imageIndex;
 @property (nonatomic) NSInteger failCount;
-@property (nonatomic) BOOL isMultiImages;
+@property (nonatomic) BOOL isGotTweetAddImage;      //是否已有➕图片在images数组里
+@property (nonatomic) BOOL isAddImage;          //是否是添加图片模式（点击➕图片添加）
+@property (nonatomic, strong) MBProgressHUD *uploadImgHub;
 @end
 
 @implementation TweetEditingVC
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _isTeamTweet = NO;
+        _images = [NSMutableArray new];
+        _imageToken = @"";
+        _imageIndex = 0;
+        _failCount = 0;
+        _isGotTweetAddImage = NO;
+        _isAddImage = NO;
+    }
+    return self;
+}
+
 //多图
 - (instancetype)initWithImages:(NSMutableArray *)images
 {
     self = [super init];
     if (self) {
-        _isMultiImages = YES;
+
         _images = images;
         _imageToken = @"";
         _imageIndex = 0;
         _failCount = 0;
+        _isGotTweetAddImage = NO;
+        _isAddImage = NO;
     }
     
     return self;
@@ -98,6 +117,7 @@
     self = [super init];
     if (self) {
         _teamID = teamID;
+        _isTeamTweet = YES;
     }
     
     return self;
@@ -113,7 +133,7 @@
                                                                             target:self
                                                                             action:@selector(cancelButtonClicked)];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发表"
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"发送"
                                                                               style:UIBarButtonItemStylePlain
                                                                              target:self
                                                                              action:@selector(pubTweet)];
@@ -122,11 +142,7 @@
     ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     [self initSubViews];
     
-    if (!_isMultiImages) {  //普通模式
-        [self setLayout];
-    }else {     //多图模式
-        [self setMultiImagesLayoutIsRepeat:NO];
-    }
+    [self setUpLayoutIsRepeat:NO];
     
     if (!_edittingArea.text.length) {
         _edittingArea.text = [Config getTweetText];
@@ -138,7 +154,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.view.backgroundColor = [UIColor themeColor];
+//    self.view.backgroundColor = [UIColor themeColor];
     [_edittingArea.delegate textViewDidChange:_edittingArea];
     
     [_edittingArea becomeFirstResponder];
@@ -180,7 +196,7 @@
     _edittingArea.returnKeyType = UIReturnKeySend;
     _edittingArea.enablesReturnKeyAutomatically = YES;
     _edittingArea.scrollEnabled = NO;
-    _edittingArea.font = [UIFont systemFontOfSize:18];
+    _edittingArea.font = [UIFont systemFontOfSize:16];
     _edittingArea.autocorrectionType = UITextAutocorrectionTypeNo;
     [_contentView addSubview:_edittingArea];
     
@@ -188,7 +204,7 @@
         _edittingArea.keyboardAppearance = UIKeyboardAppearanceDark;
     }
     
-    _edittingArea.backgroundColor = [UIColor themeColor];
+    _edittingArea.backgroundColor = [UIColor whiteColor];
     _edittingArea.textColor = [UIColor titleColor];
     
     _emojiPageVC = [[EmojiPageVC alloc] initWithTextView:_edittingArea];
@@ -211,7 +227,7 @@
     _deleteImageButton.userInteractionEnabled = YES;
     _deleteImageButton.text = @"✕";
     _deleteImageButton.textColor = [UIColor whiteColor];
-    _deleteImageButton.backgroundColor = [UIColor redColor];
+    _deleteImageButton.backgroundColor = [UIColor colorWithHex:0xe35050];
     _deleteImageButton.textAlignment = NSTextAlignmentCenter;
     _deleteImageButton.hidden = _imageView.image == nil;
     [_deleteImageButton setCornerRadius:11];
@@ -264,90 +280,42 @@
     _toolBar.backgroundColor = [UIColor themeColor];
 }
 
-- (void)setLayout
-{
-
-    for (UIView *view in _contentView.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-    _toolBar.translatesAutoresizingMaskIntoConstraints = NO;
-    NSDictionary *views = NSDictionaryOfVariableBindings(_edittingArea, _imageView, _toolBar, _deleteImageButton, _contentView);
-    
-    
-    
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_edittingArea]-30-[_imageView(90)]"
-                                                                         options:NSLayoutFormatAlignAllLeft metrics:nil views:views]];
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_imageView(90)]" options:0 metrics:nil views:views]];
-    
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-8-[_edittingArea]-8-|" options:0 metrics:nil views:views]];
-    _textViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_edittingArea attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
-                                                                toItem:nil           attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:48];
-    [_contentView addConstraint:_textViewHeightConstraint];
-    
-    
-    
-    /*** toolBar ***/
-    
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_toolBar]|" options:0 metrics:nil views:views]];
-    _keyboardHeightConstraint = [NSLayoutConstraint constraintWithItem:self.view attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual
-                                                                toItem:_toolBar  attribute:NSLayoutAttributeBottom multiplier:1 constant:0];
-    [self.view addConstraint:_keyboardHeightConstraint];
-    
-    
-    /*** emojiPage ***/
-    
-    NSDictionary *view = @{@"emojiPage": _emojiPageVC.view};
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[emojiPage(216)]|" options:0 metrics:nil views:view]];
-    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[emojiPage]|" options:0 metrics:nil views:view]];
-    
-    
-    
-    /*** delete button ***/
-    
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_deleteImageButton(22)]" options:0 metrics:nil views:views]];
-    [_contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[_deleteImageButton(22)]"   options:0 metrics:nil views:views]];
-    [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_imageView         attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual
-                                                                toItem:_deleteImageButton attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0]];
-    [_contentView addConstraint:[NSLayoutConstraint constraintWithItem:_imageView         attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual
-                                                                toItem:_deleteImageButton attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-}
 #pragma mark -- 多图模式删除图片
 - (void)deleteMutilImage:(UITapGestureRecognizer*)tap {
     NSInteger deleteImgIndex = tap.view.tag;
     [self.images removeObjectAtIndex:deleteImgIndex];
+    if (_isGotTweetAddImage && _images.count == 1) {
+        [_images removeAllObjects];
+    }
     for (UIView *subView in _contentView.subviews) {
         if ([subView isKindOfClass:[UIImageView class]]) {
             [subView removeFromSuperview];
         }
     }
-    [self setMultiImagesLayoutIsRepeat:YES];
+    [self setUpLayoutIsRepeat:YES];
 }
 #pragma mark -- 多图模式布局
-- (void)setMultiImagesLayoutIsRepeat:(BOOL)isRepeat {
-    
+- (void)setUpLayoutIsRepeat:(BOOL)isRepeat {
     [_edittingArea mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(8);
         make.right.equalTo(self.contentView).offset(-8);
         make.top.equalTo(_contentView);
     }];
+    
+    if (_images.count > 0 && _images.count < 9 && !_isGotTweetAddImage) {
+        _isGotTweetAddImage = YES;
+        [_images insertObject:[UIImage imageNamed:@"ic_tweet_add"] atIndex:_images.count];
+    }
+    
     for (int k=0; k<_images.count; k++) {
         UIImageView *iv = [UIImageView new];
-        iv.backgroundColor = [UIColor redColor];
+        iv.tag = k;
         iv.contentMode = UIViewContentModeScaleAspectFill;
         iv.clipsToBounds = YES;
         iv.userInteractionEnabled = YES;
         iv.image = [_images objectAtIndex:k];
-        [iv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showImagePreview)]];
+        [iv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMutilImagePreview:)]];
         [_contentView addSubview:iv];
-        
-        UILabel *deleteLabel = [UILabel new];
-        deleteLabel.tag = k;
-        deleteLabel.userInteractionEnabled = YES;
-        deleteLabel.text = @"✕";
-        deleteLabel.textColor = [UIColor whiteColor];
-        deleteLabel.backgroundColor = [UIColor redColor];
-        deleteLabel.textAlignment = NSTextAlignmentCenter;
-        [deleteLabel setCornerRadius:11];
-        [deleteLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteMutilImage:)]];
-        [iv addSubview:deleteLabel];
         
         CGFloat ivWidth = CGRectGetWidth([[UIScreen mainScreen]bounds])/3 - 12;
         [iv mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -355,12 +323,27 @@
             make.top.equalTo(_edittingArea.mas_bottom).offset(k/3*(ivWidth+8)+8);
             make.width.and.height.mas_equalTo(ivWidth);
         }];
-        [deleteLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.equalTo(iv.mas_right);
-            make.top.equalTo(iv.mas_top);
-            make.width.and.height.mas_equalTo(20);
-        }];
-
+        
+        if ((_images.count == 9 && !_isGotTweetAddImage) || k+1 < _images.count) {
+            UILabel *deleteLabel = [UILabel new];
+            deleteLabel.tag = k;
+            deleteLabel.userInteractionEnabled = YES;
+            deleteLabel.text = @"✕";
+            deleteLabel.textColor = [UIColor whiteColor];
+            deleteLabel.backgroundColor = [UIColor colorWithHex:0xe35050];
+            deleteLabel.textAlignment = NSTextAlignmentCenter;
+            [deleteLabel setCornerRadius:9];
+            [deleteLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteMutilImage:)]];
+            [iv addSubview:deleteLabel];
+            
+            [deleteLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.equalTo(iv.mas_right);
+                make.top.equalTo(iv.mas_top);
+                make.width.mas_equalTo(19);
+                make.height.mas_equalTo(18);
+            }];
+        }
+        
     }
     if (!isRepeat) {
         _textViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_edittingArea attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
@@ -382,7 +365,22 @@
     }
 }
 
-
+- (void)showMutilImagePreview:(UITapGestureRecognizer*)tap {
+    NSInteger imageIndex = tap.view.tag;
+    if (imageIndex < _images.count - 1) {
+        [self.navigationController presentViewController:[[ImageViewerController alloc] initWithImage:[_images objectAtIndex:imageIndex]] animated:YES completion:nil];
+    }else if (imageIndex == _images.count - 1) {
+        if (_isGotTweetAddImage) {  //在原来基础上添加图片
+            _isAddImage = YES;
+            ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] init];
+            elcPicker.maximumImagesCount = 10 - _images.count;
+            elcPicker.imagePickerDelegate = self;
+            [self presentViewController:elcPicker animated:YES completion:nil];
+        }else {
+            [self.navigationController presentViewController:[[ImageViewerController alloc] initWithImage:[_images objectAtIndex:imageIndex]] animated:YES completion:nil];
+        }
+    }
+}
 
 - (void)cancelButtonClicked
 {
@@ -560,8 +558,21 @@
 
 #pragma mark -- 上传动弹多图
 - (void)uploadTweetImages {
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+        return;
+    }
+    if (_imageIndex == 0) {
+        _uploadImgHub = [Utils createHUD];
+        _uploadImgHub.label.text = @"动弹发送中";
+        _uploadImgHub.removeFromSuperViewOnHide = NO;
+    }
+    if (_uploadImgHub) {
+        [_uploadImgHub showAnimated:YES];
+    }
     UIImage *postImage = [_images objectAtIndex:_imageIndex];
-    
     NSString *urlStr = [NSString stringWithFormat:@"%@resource_image", OSCAPI_V2_PREFIX ];
     NSDictionary *paramDic = @{@"token":_imageToken};
     
@@ -585,22 +596,43 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             if (_imageIndex < _images.count) {
             [self uploadTweetImages];
             }else if (_imageIndex == _images.count) {
-                [self pubImagesTweet];
+                [self pubTweetIsWithImages:YES];
             }
         }else {
             _failCount += 1;
             _imageIndex += 1;
-            [self uploadTweetImages];
+            if (_imageIndex < _images.count) {
+                [self uploadTweetImages];
+            }else if (_imageIndex == _images.count) {
+                [self pubTweetIsWithImages:YES];
+            }
         }
     
     } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        NSLog(@"error:%@",error);
+        _imageIndex = 0;
+        _failCount = 0;
+        _imageToken = @"";
+        _uploadImgHub.mode = MBProgressHUDModeCustomView;
+         _uploadImgHub.label.text = @"请求超时，请重新发送";
+        [_uploadImgHub hideAnimated:YES afterDelay:1];
     }];
 }
 
 #pragma mark -- 发表多图动弹
-- (void)pubImagesTweet {
-//    2964687
+- (void)pubTweetIsWithImages:(BOOL)isImgTweet {
+//    9752556
+    if ([Config getOwnID] == 0) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+        [self.navigationController pushViewController:loginVC animated:YES];
+        return;
+    }
+    MBProgressHUD *HUD;
+    if (!isImgTweet) {
+        HUD = [Utils createHUD];
+        HUD.label.text = @"动弹发送中";
+        HUD.removeFromSuperViewOnHide = NO;
+    }
     NSString *urlStr = [NSString stringWithFormat:@"%@tweet", OSCAPI_V2_PREFIX];
     NSDictionary *paramDic = @{@"content":[Utils convertRichTextToRawText:_edittingArea],
                                @"images":_imageToken
@@ -609,16 +641,33 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     [manger POST:urlStr
      parameters:paramDic
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+            NSLog(@"tweetMessage:%@",responseObject[@"message"]);
+            
             if ([responseObject[@"code"]integerValue] == 1) {
-                MBProgressHUD *hud = [Utils createHUD];
-                hud.mode = MBProgressHUDModeCustomView;
                 //提示上传图片失败信息
-                if (_failCount > 0) {
-                    hud.label.text = [NSString stringWithFormat:@"%ld张图片上传失败", (long)_failCount];
-                }else {
-                    hud.label.text = @"动弹发布成功";
+                if (isImgTweet) {       //图片动弹
+                    _uploadImgHub.mode = MBProgressHUDModeCustomView;
+                    if (_failCount > 0) {
+                        _uploadImgHub.label.text = [NSString stringWithFormat:@"%ld张图片上传失败", (long)_failCount];
+                    }else {
+                        _uploadImgHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                        _uploadImgHub.label.text = @"动弹发送成功";
+                    }
+                    [_uploadImgHub hideAnimated:YES afterDelay:1];
+                }else {     //文字动弹
+                    HUD.mode = MBProgressHUDModeCustomView;
+                    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                    HUD.label.text = @"动弹发送成功";
+                    [HUD hideAnimated:YES afterDelay:1];
                 }
-                [hud hideAnimated:YES afterDelay:1];
+            }else {
+                if (isImgTweet) {
+                    _uploadImgHub.label.text = responseObject[@"message"];
+                    [_uploadImgHub hideAnimated:YES afterDelay:1];
+                }else {
+                    HUD.label.text = responseObject[@"message"];
+                    [HUD hideAnimated:YES afterDelay:1];
+                }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self dismissViewControllerAnimated:YES completion:nil];
@@ -632,15 +681,25 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 #pragma mark 发表动弹
 
 - (void)pubTweet {
-    if (_isMultiImages) {
-        [self uploadTweetImages];
-    }else {
-        [self pubNoMutilImgsTweet];
+    if (!_isTeamTweet) {
+        if (_images.count > 0) {    //发布图片动弹
+            if(_isGotTweetAddImage) {       //移除最后一张提示图片
+                [_images removeLastObject];
+            }
+            [self uploadTweetImages];
+        }else {    //发布文字动弹
+            [self pubTweetIsWithImages:NO];
+        }
+        
+    }else {     //团队动弹
+        [self pubTeamTweet];
     }
+    
 }
 
-#pragma mark -- 发表非多图动弹
-- (void)pubNoMutilImgsTweet {
+
+#pragma mark -- 发表团队动弹
+- (void)pubTeamTweet {
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -713,6 +772,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
 #pragma mark - UIActionSheetDelegate
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -728,6 +789,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 //        
 //        [self presentViewController:imagePickerController animated:YES completion:nil];
         
+        _isAddImage = NO;
         ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] init];
         elcPicker.maximumImagesCount = 9;
         elcPicker.imagePickerDelegate = self;
@@ -762,34 +824,17 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 
 - (void)elcImagePickerController:(ELCImagePickerController *)picker didFinishPickingMediaWithInfo:(NSArray *)info {
 
+    NSMutableArray *images = [NSMutableArray arrayWithCapacity:[info count]];
     for (NSDictionary *dict in info) {
         if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypePhoto){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
                 UIImage* image=[dict objectForKey:UIImagePickerControllerOriginalImage];
-                if (info.count > 1) {       //选择多张图片
-                    
-                    if (_isMultiImages == NO) {
-                        [_images removeAllObjects];
-                    }
-                    _isMultiImages = YES;
-                    [_images addObject:image];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [picker dismissViewControllerAnimated:NO completion:nil];
-                    });
-                }else {     //选择单张图片
-                    _image = image;
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [picker dismissViewControllerAnimated:NO completion:nil];
-                    });
-                }
-                
-                
+                [images addObject:image];
             } else {
                 NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
             }
         } else if ([dict objectForKey:UIImagePickerControllerMediaType] == ALAssetTypeVideo){
             if ([dict objectForKey:UIImagePickerControllerOriginalImage]){
-
                 
             } else {
                 NSLog(@"UIImagePickerControllerReferenceURL = %@", dict);
@@ -798,31 +843,56 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             NSLog(@"Uknown asset type");
         }
     }
+    if (!_isAddImage) {
+        [_images removeAllObjects];
+    }else {
+        [_images removeLastObject];
+    }
+    [_images addObjectsFromArray:images];
+    _isGotTweetAddImage = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (UIView *subView in _contentView.subviews) {
+            if ([subView isKindOfClass:[UIImageView class]]) {
+                [subView removeFromSuperview];
+            }
+        }
+        [self setUpLayoutIsRepeat:YES];
+        [picker dismissViewControllerAnimated:NO completion:nil];
+    });
 }
 
-- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker
-{
+- (void)elcImagePickerControllerDidCancel:(ELCImagePickerController *)picker {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - UIImagePickerController 回调函数
 
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    _imageView.image = info[UIImagePickerControllerOriginalImage];
-    _deleteImageButton.hidden = NO;
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+//    _imageView.image = info[UIImagePickerControllerOriginalImage];
+//    _deleteImageButton.hidden = NO;
+    
+    [_images addObject:info[UIImagePickerControllerOriginalImage]];
+    _isGotTweetAddImage = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (UIView *subView in _contentView.subviews) {
+            if ([subView isKindOfClass:[UIImageView class]]) {
+                [subView removeFromSuperview];
+            }
+        }
+        [self setUpLayoutIsRepeat:YES];
+        [picker dismissViewControllerAnimated:NO completion:nil];
+    });
     
     //如果是拍照的照片，则需要手动保存到本地，系统不会自动保存拍照成功后的照片
     //UIImageWriteToSavedPhotosAlbum(edit, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
     
-    [picker dismissViewControllerAnimated:YES completion:nil];
+
 }
 
 
 #pragma mark - UITextViewDelegate
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
     if ([text isEqualToString: @"\n"]) {
         [self pubTweet];
         [textView resignFirstResponder];
@@ -837,13 +907,11 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     return YES;
 }
 
-- (void)textViewDidBeginEditing:(UITextView *)textView
-{
+- (void)textViewDidBeginEditing:(UITextView *)textView {
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
 }
 
-- (void)textViewDidChange:(PlaceholderTextView *)textView
-{
+- (void)textViewDidChange:(PlaceholderTextView *)textView {
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
     
     CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 100);
@@ -856,8 +924,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     if (scrollView == _scrollView) {
         [_edittingArea resignFirstResponder];
         
