@@ -363,13 +363,13 @@ static NSInteger HeightPicker;
               
               if (errorCode == 1) {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", errorMessage];
+                  HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", errorMessage];
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", errorMessage];
+                  HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", errorMessage];
               }
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
               
               [Config saveName:_nameTextField.text
                            sex:_sexSegmentCtl.selectedSegmentIndex
@@ -383,9 +383,9 @@ static NSInteger HeightPicker;
               MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.labelText = @"网络异常，报名失败";
+              HUD.label.text = @"网络异常，报名失败";
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           }
      ];
     

@@ -56,7 +56,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [_HUD hide:YES];
+    [_HUD hideAnimated:YES];
 }
 
 
@@ -234,7 +234,7 @@
 - (void)updatePortrait
 {
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"正在上传头像";
+    HUD.label.text = @"正在上传头像";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -251,7 +251,7 @@
         HUD.mode = MBProgressHUDModeCustomView;
         if (errorCode) {
             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-            HUD.labelText = @"头像更新成功";
+            HUD.label.text = @"头像更新成功";
             
             HomepageViewController *homepageVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
             [homepageVC refresh];
@@ -259,16 +259,16 @@
             _portrait.image = _image;
         } else {
             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-            HUD.labelText = errorMessage;
+            HUD.label.text = errorMessage;
         }
-        [HUD hide:YES afterDelay:1];
+        [HUD hideAnimated:YES afterDelay:1];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         HUD.mode = MBProgressHUDModeCustomView;
         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        HUD.labelText = @"网络异常，头像更换失败";
+        HUD.label.text = @"网络异常，头像更换失败";
         
-        [HUD hide:YES afterDelay:1];
+        [HUD hideAnimated:YES afterDelay:1];
     }];
 }
 

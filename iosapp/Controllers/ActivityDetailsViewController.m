@@ -94,9 +94,9 @@
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              _HUD.mode = MBProgressHUDModeCustomView;
              _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             _HUD.labelText = @"网络异常，加载失败";
+             _HUD.label.text = @"网络异常，加载失败";
              
-             [_HUD hide:YES afterDelay:1];
+             [_HUD hideAnimated:YES afterDelay:1];
          }];
 }
 
@@ -107,7 +107,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [_HUD hide:YES];
+    [_HUD hideAnimated:YES];
     
     [super viewWillDisappear:animated];
 }
@@ -218,7 +218,7 @@
     if (_HTML == nil) {return;}
     if (_isLoadingFinished) {
         webView.hidden = NO;
-        [_HUD hide:YES];
+        [_HUD hideAnimated:YES];
         return;
     }
     

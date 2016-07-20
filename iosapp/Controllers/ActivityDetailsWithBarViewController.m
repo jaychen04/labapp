@@ -107,22 +107,22 @@
                   
                   if (errorCode == 1) {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.labelText = weakSelf.isStarred? @"删除收藏成功": @"添加收藏成功";
+                      HUD.label.text = weakSelf.isStarred? @"删除收藏成功": @"添加收藏成功";
                       weakSelf.isStarred = !weakSelf.isStarred;
                       weakSelf.operationBar.isStarred = weakSelf.isStarred;
                   } else {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = @"网络异常，操作失败";
+                  HUD.label.text = @"网络异常，操作失败";
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               }];
     };
     
@@ -187,7 +187,7 @@
 - (void)sendContent
 {
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"评论发送中";
+    HUD.label.text = @"评论发送中";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -217,19 +217,19 @@
                   [self updateInputBarHeight];
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = @"评论发表成功";
+                  HUD.label.text = @"评论发表成功";
               } else {
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.labelText = @"网络异常，动弹发送失败";
+              HUD.label.text = @"网络异常，动弹发送失败";
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           }];
 }
 

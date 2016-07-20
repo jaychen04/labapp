@@ -76,6 +76,9 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
         };
         self.isJsonDataVc = YES;
         
+        self.parametersDic = @{@"type":@(1),
+                               @"pageToken":@""
+                               };
         self.needAutoRefresh = YES;
         self.refreshInterval = 21600;
         self.kLastRefreshTime = @"NewsRefreshInterval";
@@ -241,9 +244,9 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.detailsLabelText = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+                  HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
                   
                   self.lastCell.status = LastCellStatusError;
                   if (self.tableView.mj_header.isRefreshing) {
@@ -478,7 +481,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
         OSCTweet *tweet = self.objects[indexPath.row];
         
         MBProgressHUD *HUD = [Utils createHUD];
-        HUD.labelText = @"正在删除动弹";
+        HUD.label.text = @"正在删除动弹";
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
@@ -496,7 +499,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                   
                   if (errorCode == 1) {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.labelText = @"动弹删除成功";
+                      HUD.label.text = @"动弹删除成功";
                       
                       [self.objects removeObjectAtIndex:indexPath.row];
                       self.allCount--;
@@ -506,16 +509,16 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                       });
                   } else {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+                  HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               }];
     };
 }
@@ -621,9 +624,9 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                   HUD.mode = MBProgressHUDModeCustomView;
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   
-                  [HUD hide:YES afterDelay:1];
+                  [HUD hideAnimated:YES afterDelay:1];
               }
               
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -631,9 +634,9 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
               HUD.mode = MBProgressHUDModeCustomView;
               
               HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.detailsLabelText = error.userInfo[NSLocalizedDescriptionKey];
+              HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           }];
 }
 

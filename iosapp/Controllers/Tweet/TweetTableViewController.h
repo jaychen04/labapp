@@ -10,7 +10,7 @@
 
 typedef NS_ENUM(NSUInteger, NewTweetsType)
 {
-    NewTweetsTypeAllTweets,
+    NewTweetsTypeAllTweets = 1,
     NewTweetsTypeHotestTweets,
     NewTweetsTypeOwnTweets,
 };

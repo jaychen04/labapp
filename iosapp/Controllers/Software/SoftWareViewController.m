@@ -75,11 +75,15 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
     
 }
 -(void)dealloc{
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+
+//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
+//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
 }
 
 
@@ -158,7 +162,8 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
               _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               _HUD.labelText = @"网络异常，操作失败";
               
-              [_HUD hide:YES afterDelay:1];}];
+              [_HUD hide:YES afterDelay:1];
+          }];
 }
 
 

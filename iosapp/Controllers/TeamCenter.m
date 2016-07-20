@@ -129,7 +129,7 @@ static NSString * kTeamCellID = @"TeamCell";
     if (![Config teamID]) {
         _HUD = [Utils createHUD];
         _HUD.userInteractionEnabled = NO;
-        _HUD.labelText = @"正在获取团队信息";
+        _HUD.label.text = @"正在获取团队信息";
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
         
@@ -143,12 +143,12 @@ static NSString * kTeamCellID = @"TeamCell";
                      self.titleBar.hidden = YES;
                      self.navigationItem.rightBarButtonItem = nil;
                      self.navigationItem.titleView = nil;
-                     _HUD.color = [UIColor themeColor];
+                     _HUD.customView.backgroundColor = [UIColor themeColor];
                      _HUD.mode = MBProgressHUDModeCustomView;
                      _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"page_icon_empty"]];
-                     _HUD.labelText = @" ";
-                     _HUD.detailsLabelColor = [UIColor colorWithHex:0x888888];
-                     _HUD.detailsLabelText = @"你还没有加入任何团队";
+                     _HUD.label.text = @" ";
+                     _HUD.detailsLabel.textColor = [UIColor colorWithHex:0x888888];
+                     _HUD.detailsLabel.text = @"你还没有加入任何团队";
                      
                      return;
                  }
@@ -167,11 +167,13 @@ static NSString * kTeamCellID = @"TeamCell";
                  [self updateTitle];
                  [self updateTeamPicker];
                  
-                 [_HUD hide:YES];
+                 [_HUD hideAnimated:YES];
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  _HUD.mode = MBProgressHUDModeCustomView;
                  _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                 _HUD.detailsLabelText = @"加载团队信息失败";
+                 _HUD.detailsLabel.text = @"加载团队信息失败";
+                 
+                 [_HUD hideAnimated:YES afterDelay:1];
              }];
     } else {
         _teams = [Config teams];
@@ -206,11 +208,11 @@ static NSString * kTeamCellID = @"TeamCell";
                  
                  [self updateTeamPicker];
                  
-                 [_HUD hide:YES];
+                 [_HUD hideAnimated:YES];
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  _HUD.mode = MBProgressHUDModeCustomView;
                  _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                 _HUD.detailsLabelText = @"加载团队信息失败";
+                 _HUD.detailsLabel.text = @"加载团队信息失败";
              }];
     }
 }
@@ -218,7 +220,7 @@ static NSString * kTeamCellID = @"TeamCell";
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [_HUD hide:NO];
+    [_HUD hideAnimated:NO];
     [super viewWillDisappear:animated];
 }
 

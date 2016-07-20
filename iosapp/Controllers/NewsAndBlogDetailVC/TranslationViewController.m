@@ -83,15 +83,15 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     coverView.tag = 10;
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
     _hud = [[MBProgressHUD alloc] initWithWindow:window];
-    _hud.detailsLabelFont = [UIFont boldSystemFontOfSize:16];
+    _hud.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:_hud];
     [self.view addSubview:coverView];
-    [_hud show:YES];
+    [_hud showAnimated:YES];
     _hud.removeFromSuperViewOnHide = YES;
     _hud.userInteractionEnabled = NO;
 }
 - (void)hideHubView {
-    [_hud hide:YES];
+    [_hud hideAnimated:YES];
     [[self.view viewWithTag:10] removeFromSuperview];
 }
 
@@ -480,8 +480,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         } else {
             MBProgressHUD *hud = [Utils createHUD];
             hud.mode = MBProgressHUDModeCustomView;
-            hud.labelText = @"该用户不存在，不可引用回复";
-            [hud hide:YES afterDelay:1];
+            hud.label.text = @"该用户不存在，不可引用回复";
+            [hud hideAnimated:YES afterDelay:1];
         }
         
     } else {
@@ -501,7 +501,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     } else {
         
         MBProgressHUD *HUD = [Utils createHUD];
-        [HUD show:YES];
+        [HUD showAnimated:YES];
         NSInteger fixedTranslastionId = _translationId > 10000000 ? _translationId-10000000:_translationId;
         NSDictionary *paraDic = @{
                                   @"sourceId":@(fixedTranslastionId),
@@ -519,17 +519,17 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                  
                  if ([responseObject[@"code"]integerValue] == 1) {
                      HUD.mode = MBProgressHUDModeCustomView;
-                     HUD.labelText = @"评论成功";
+                     HUD.label.text = @"评论成功";
                      
                      OSCNewComment *postedComment = [OSCNewComment mj_objectWithKeyValues:responseObject[@"result"]];
                      [_translationDetailComments insertObject:postedComment atIndex:0];
                      
-                     [HUD hide:YES afterDelay:1];
+                     [HUD hideAnimated:YES afterDelay:1];
                      _commentTextField.text = @"";
                      _commentTextField.placeholder = @"";
                  }else {
                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                     HUD.labelText = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
+                     HUD.label.text = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
                      
@@ -539,8 +539,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                  HUD.mode = MBProgressHUDModeCustomView;
                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                 HUD.labelText = @"网络异常，评论发送失败";
-                 [HUD hide:YES afterDelay:1];
+                 HUD.label.text = @"网络异常，评论发送失败";
+                 [HUD hideAnimated:YES afterDelay:1];
              }];
         
     }
@@ -581,8 +581,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                  
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
-                 HUD.labelText = isCollected? @"收藏成功": @"取消收藏";
-                 [HUD hide:YES afterDelay:1];
+                 HUD.label.text = isCollected? @"收藏成功": @"取消收藏";
+                 [HUD hideAnimated:YES afterDelay:1];
                  
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self updateFavButtonWithIsCollected:isCollected];
@@ -593,9 +593,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                 HUD.labelText = @"网络异常，操作失败";
+                 HUD.label.text = @"网络异常，操作失败";
                  
-                 [HUD hide:YES afterDelay:1];
+                 [HUD hideAnimated:YES afterDelay:1];
              }];
     }
 }

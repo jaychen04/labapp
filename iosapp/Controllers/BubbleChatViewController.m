@@ -109,7 +109,6 @@
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
-              
               [HUD hide:YES afterDelay:1];
               
               [_messageBubbleVC.tableView setContentOffset:CGPointZero animated:NO];

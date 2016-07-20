@@ -111,16 +111,16 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
                      [self setFavButtonAction:_activityDetail.favorite];
                      [self setApplyButton:_activityDetail.applyStatus];
                      [self.tableView reloadData];
-                     [_HUD hide:YES afterDelay:0.5];
+                     [_HUD hideAnimated:YES afterDelay:0.5];
                  });
              }
          } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             MBProgressHUD *HUD = [MBProgressHUD new];
             HUD.mode = MBProgressHUDModeCustomView;
             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-            HUD.labelText = @"网络异常，加载失败";
+            HUD.label.text = @"网络异常，加载失败";
 
-            [HUD hide:YES afterDelay:1];
+            [HUD hideAnimated:YES afterDelay:1];
     }];
 
 }
@@ -391,9 +391,9 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
              
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
-             HUD.labelText = _activityDetail.favorite? @"收藏成功": @"取消收藏";
+             HUD.label.text = _activityDetail.favorite? @"收藏成功": @"取消收藏";
              
-             [HUD hide:YES afterDelay:1];
+             [HUD hideAnimated:YES afterDelay:1];
              dispatch_async(dispatch_get_main_queue(), ^{
                  [self setFavButtonAction:_activityDetail.favorite];
                  [self.tableView reloadData];
@@ -403,9 +403,9 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-             HUD.labelText = @"网络异常，操作失败";
+             HUD.label.text = @"网络异常，操作失败";
              
-             [HUD hide:YES afterDelay:1];
+             [HUD hideAnimated:YES afterDelay:1];
          }];
     /* 旧版收藏 */
 //    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -427,21 +427,21 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 //              
 //              if (errorCode == 1) {
 //                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-//                  HUD.labelText = self.isFav? @"删除收藏成功": @"添加收藏成功";
+//                  HUD.label.text = self.isFav? @"删除收藏成功": @"添加收藏成功";
 //                  self.isFav = !self.isFav;
 //              } else {
 //                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+//                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
 //              }
 //              [self setFavButtonAction:self.isFav];
-//              [HUD hide:YES afterDelay:1];
+//              [HUD hideAnimated:YES afterDelay:1];
 //          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
 //              MBProgressHUD *HUD = [Utils createHUD];
 //              HUD.mode = MBProgressHUDModeCustomView;
 //              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//              HUD.labelText = @"网络异常，操作失败";
+//              HUD.label.text = @"网络异常，操作失败";
 //              
-//              [HUD hide:YES afterDelay:1];
+//              [HUD hideAnimated:YES afterDelay:1];
 //          }];
 }
 
