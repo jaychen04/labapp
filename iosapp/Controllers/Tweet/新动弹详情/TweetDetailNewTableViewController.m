@@ -388,10 +388,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_isShowCommentList) {
-        OSCComment *comment = _tweetCommentList[indexPath.row];
-        if (self.didCommentSelected) {
-            self.didCommentSelected(comment);
+    if (indexPath.section != 0) {
+        if (_isShowCommentList && _tweetCommentList.count > 0) {
+            OSCComment *comment = _tweetCommentList[indexPath.row];
+            if (self.didCommentSelected) {
+                self.didCommentSelected(comment);
+            }
         }
     }
 //    else {
