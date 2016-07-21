@@ -95,10 +95,17 @@
                                   _HUD.progress = (CGFloat)receivedSize / (CGFloat)expectedSize;
                               }
                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                 [_HUD hideAnimated:YES];
+                                 if (image) {
+                                     [_HUD hideAnimated:YES];
+                                     
+                                     _imageView.frame = [self frameForImage:image];
+                                     _scrollView.contentSize = [self contentSizeForImage:image];
+                                 } else {
+                                     _HUD.label.text = @"图片无法加载";
+                                     [_HUD hideAnimated:YES afterDelay:1.0];
+                                     [self dismissViewControllerAnimated:YES completion:nil];
+                                 }
                                  
-                                 _imageView.frame = [self frameForImage:image];
-                                 _scrollView.contentSize = [self contentSizeForImage:image];
                              }];
     }
     
