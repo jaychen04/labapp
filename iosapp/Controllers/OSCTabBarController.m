@@ -139,7 +139,7 @@
     
 //    newsViewCtl = [[NewsViewController alloc]  initWithNewsListType:NewsListTypeNews];
     newsViewCtl = [[InformationViewController alloc]  init];
-    newsViewCtl.isJsonDataVc = YES;
+//    newsViewCtl.isJsonDataVc = YES;
 //    newsViewCtl.parametersDic = @{};
     
     
@@ -165,7 +165,7 @@
     myFriendTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:NewTweetsTypeOwnTweets];
 //    friendsTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
     
-    newsViewCtl.needCache = YES;
+//    newsViewCtl.needCache = YES;
 //    newHotBlogCtl.needCache = YES;
     activitiesViewCtl.needCache = YES;
 //    blogViewCtl.needCache = YES;

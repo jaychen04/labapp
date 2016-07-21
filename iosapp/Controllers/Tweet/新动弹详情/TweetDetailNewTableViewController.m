@@ -174,37 +174,10 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     }
     [self.tableView reloadData];
 }
+
+#pragma mark - 获取动弹详情数据
 - (void)loadTweetDetails
 {
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-//    [manager GET:[NSString stringWithFormat:@"%@%@?id=%lld", OSCAPI_PREFIX, OSCAPI_TWEET_DETAIL, _tweetID]
-//      parameters:nil
-//         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-//             ONOXMLElement *tweetDetailsXML = [responseObject.rootElement firstChildWithTag:@"tweet"];
-//             
-//             if (!tweetDetailsXML || tweetDetailsXML.children.count <= 0) {
-//                 [self.navigationController popViewControllerAnimated:YES];
-//             } else {
-//                 _tweet = [[OSCTweet alloc] initWithXML:tweetDetailsXML];
-//                 NSDictionary *data = @{
-//                                        @"content": _tweet.body,
-//                                        @"imageURL": _tweet.bigImgURL.absoluteString,
-//                                        @"audioURL": _tweet.attach ?: @""
-//                                        };
-//                 
-//                 _tweet.body = [Utils HTMLWithData:data usingTemplate:@"newTweet"];
-//                 
-//                 dispatch_async(dispatch_get_main_queue(), ^{
-//                     [self.tableView reloadData];
-//                 });
-//             }
-//         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//             [_HUD hideAnimated:YES];
-//         }];
-
-    
-
-//    self.tweetID = 9752556;
     NSString *tweetDetailUrlStr = [NSString stringWithFormat:@"%@tweet?id=%ld", OSCAPI_V2_PREFIX, (long)self.tweetID];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:tweetDetailUrlStr
@@ -240,6 +213,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         }];
     
 }
+
+#pragma mark - 获取点赞列表数据
 -(void)loadTweetLikeListIsrefresh:(BOOL)isRefresh {
     if (isRefresh) {
         _likeListPage = 0;
@@ -286,6 +261,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     _tweetDetail.commentCount++;
     [self loadTweetCommentListIsrefresh:YES];
 }
+
+#pragma mark - 获取评论列表数据
 
 -(void)loadTweetCommentListIsrefresh:(BOOL)isRefresh {
     if (isRefresh) {
@@ -412,10 +389,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_isShowCommentList) {
-        OSCComment *comment = _tweetCommentList[indexPath.row];
-        if (self.didCommentSelected) {
-            self.didCommentSelected(comment);
+    if (indexPath.section != 0) {
+        if (_isShowCommentList && _tweetCommentList.count > 0) {
+            OSCComment *comment = _tweetCommentList[indexPath.row];
+            if (self.didCommentSelected) {
+                self.didCommentSelected(comment);
+            }
         }
     }
 //    else {
@@ -592,7 +571,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
 
-#pragma mark -- 删除动弹
+#pragma mark -- 删除动弹评论
 - (void)setBlockForCommentCell:(TweetCommentNewCell *)cell {
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {

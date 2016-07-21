@@ -10,6 +10,7 @@
 #import "TokenManager.h"
 #import "SDCycleScrollView.h"
 #import "enumList.h"
+
 #import "ActivityDetailsWithBarViewController.h"
 #import "DetailsViewController.h"
 #import "ActivityDetailsWithBarViewController.h"
@@ -27,19 +28,22 @@
 #import "OSCSoftware.h"
 #import "OSCNewHotBlog.h"
 #import "OSCPost.h"
+#import "Utils.h"
+#import "OSCAPI.h"
 
 #import <ReactiveCocoa.h>
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
 #import <TOWebViewController.h>
+#import <MJRefresh.h>
 
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define OSC_BANNER_HEIGHT 125
 
 static NSString * const informationReuseIdentifier = @"InformationTableViewCell";
 
-@interface InformationViewController () <SDCycleScrollViewDelegate,networkingJsonDataDelegate>
+@interface InformationViewController () <SDCycleScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic,strong) SDCycleScrollView* cycleScrollView;
 @property (nonatomic,strong) NSMutableArray* bannerTitles;
@@ -60,22 +64,9 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 -(instancetype)init{
     self = [super init];
     if (self) {
-        __weak InformationViewController *weakSelf = self;
-        self.generateUrl = ^NSString * () {
-            return [NSString stringWithFormat:@"%@news",OSCAPI_V2_PREFIX];
-        };
-        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
-            (weakSelf.lastCell.status = LastCellStatusMore);
-        };
-        self.objClass = [OSCInformation class];
-        self.netWorkingDelegate = self;
-        self.isJsonDataVc = YES;
-        self.parametersDic = @{};
-        self.needAutoRefresh = YES;
-        self.refreshInterval = 21600;
+
         [self.cycleScrollView setAutoScrollTimeInterval:4.0f];
-        self.kLastRefreshTime = @"NewsRefreshInterval";
+
     }
     return self;
 }
@@ -96,7 +87,17 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     [super viewDidLoad];
     [self getBannerData];
     [self layoutUI];
+    
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
     self.tableView.separatorColor = [UIColor separatorColor];
+    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+        [self getJsonDataforNews:YES];
+    }];
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
+        [self getJsonDataforNews:NO];
+    }];
+    [self.tableView.mj_header beginRefreshing];
 }
 
 
@@ -115,7 +116,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 
 -(void)getBannerData{
-    NSString* urlStr = [NSString stringWithFormat:@"%@banner",OSCAPI_V2_PREFIX];
+    NSString* urlStr = [NSString stringWithFormat:@"%@banner", OSCAPI_V2_PREFIX];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:urlStr
      parameters:@{@"catalog" : @1}
@@ -296,7 +297,10 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 
 #pragma mark -- networking Delegate
--(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
+-(void)getJsonDataforNews:(BOOL)isRefresh{//yes 下拉 no 上拉
+    
+    NSString *strUrl = [NSString stringWithFormat:@"%@news",OSCAPI_V2_PREFIX];
+    AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
     if (isRefresh) {    //刷新banners
         [self getBannerData];
     }
@@ -306,7 +310,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
     }
     
-    [self.manager GET:self.generateUrl()
+    [manager GET:strUrl
        parameters:paraMutableDic.copy
           success:^(AFHTTPRequestOperation *operation, id responseObject) {
               if([responseObject[@"code"]integerValue] == 1) {
@@ -321,9 +325,14 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
                   [self.dataModels addObjectsFromArray:modelArray];
                   self.nextToken = resultDic[@"nextPageToken"];
                   dispatch_async(dispatch_get_main_queue(), ^{
-                      self.lastCell.status = items.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
-                      if (self.tableView.mj_header.isRefreshing) {
+                      if (isRefresh) {
                           [self.tableView.mj_header endRefreshing];
+                      } else {
+                          if (modelArray.count < 1) {
+                              [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                          } else {
+                              [self.tableView.mj_footer endRefreshing];
+                          }
                       }
                       [self.tableView reloadData];
                   });
@@ -337,10 +346,12 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
               
               [HUD hideAnimated:YES afterDelay:1];
               
-              self.lastCell.status = LastCellStatusError;
-              if (self.tableView.mj_header.isRefreshing) {
+              if (isRefresh) {
                   [self.tableView.mj_header endRefreshing];
+              } else{
+                  [self.tableView.mj_footer endRefreshing];
               }
+              
               [self.tableView reloadData];
           }
      ];
