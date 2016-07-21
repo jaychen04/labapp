@@ -14,6 +14,7 @@
 #import "NSDate+Util.h"
 
 #import "UserDetailsViewController.h"
+#import "YYPhotoGroupView.h"
 
 #import <SDWebImage/SDImageCache.h>
 #import <SDWebImageDownloaderOperation.h>
@@ -23,10 +24,16 @@
 #define Medium_Height 136
 #define Large_Height 212
 #define ImageItemSize 60
-#define ImageItemPadding 16
+#define ImageItemPadding 8
 
 @interface NewMultipleTweetCell () {
     NSMutableArray* _imageViewsArray;   //二维数组 _imageViewsArray[line][row]
+    
+    NSMutableArray<NSString* >* _largerImageUrls;   //本地维护的大图数组
+    NSMutableArray<UIImageView* >* _visibleImageViews;   //可见的imageView数组
+    
+    YYPhotoGroupView* _photoGroup;
+//    BOOL _isHaveToTouch;
 }
 @end
 
@@ -59,6 +66,8 @@
 -(instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _largerImageUrls = [NSMutableArray arrayWithCapacity:9];
+        _visibleImageViews = [NSMutableArray arrayWithCapacity:9];
         [self setSubViews];
         [self setLayout];
     }
@@ -141,7 +150,7 @@
     [self addMultiples];
 }
 
-#pragma mark --- set Layout （ Masnory ）
+#pragma mark --- set base Layout （ Masnory ）
 -(void)setLayout{
     [_userPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.equalTo(self.contentView).with.offset(16);
@@ -208,6 +217,10 @@
 #pragma mark --- setting Model
 -(void)setTweetItem:(OSCTweetItem *)tweetItem{
     _tweetItem = tweetItem;
+
+    for (OSCTweetImages* imageDataSource in tweetItem.images) {
+        [_largerImageUrls addObject:imageDataSource.href];
+    }
     
     [self settingContentForSubViews:tweetItem];
 }
@@ -260,7 +273,10 @@
         for (int j = 0; j < 3; j++) {//row
             originX = j * (ImageItemSize + ImageItemPadding);
             UIImageView* imageView = [[UIImageView alloc]init];
-            imageView.backgroundColor = [UIColor redColor];
+            [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImageWithTap:)]];
+            imageView.backgroundColor = [UIColor newCellColor];
+            imageView.hidden = YES;
+            imageView.userInteractionEnabled = NO;
             imageView.frame = (CGRect){{originX,originY},{ImageItemSize,ImageItemSize}};
             [_imagesView addSubview:imageView];
             [lineNodes addObject:imageView];
@@ -274,45 +290,40 @@
         [_imagesView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@Trumpet_Height);
         }];
-        for (int i = 0; i < count; i++) {
-            OSCTweetImages* imageData = _tweetItem.images[i];
-            UIImageView* imageView = (UIImageView* )_imageViewsArray[0][i];
-            imageView.hidden = NO;
-            UIImage* image = [self retrieveMemoryAndDiskCache:imageData.href];
-            if (!image) {
-                [self downloadImageWithUrlString:imageData.href displayNode:imageView];
-            }else{
-                [imageView setImage:image];
-            }
-        }
+        [self loopAssemblyContentWithLine:1 row:(int)count count:(int)count];
     }else if (count <= 6){  //Double row layout
         [_imagesView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@Medium_Height);
         }];
         if (count == 4) {
-            [self loopAssemblyContentWithLine:2 row:2];
+            [self loopAssemblyContentWithLine:2 row:2 count:(int)count];
         }else{
-            [self loopAssemblyContentWithLine:2 row:((int)count - 3)];
+            [self loopAssemblyContentWithLine:2 row:3 count:(int)count];
         }
     }else{  //Three lines layout
         [_imagesView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@Large_Height);
         }];
-        [self loopAssemblyContentWithLine:3 row:((int)count - 6)];
+        [self loopAssemblyContentWithLine:3 row:3 count:(int)count];
     }
 }
 
--(void)loopAssemblyContentWithLine:(int)line row:(int)row{
+-(void)loopAssemblyContentWithLine:(int)line row:(int)row count:(int)count{
     int dataIndex = 0;
     for (int i = 0; i < line; i++) {
         for (int j = 0; j < row; j++) {
+            if (dataIndex == count) return;
             OSCTweetImages* imageData = _tweetItem.images[dataIndex];
             UIImageView* imageView = (UIImageView* )_imageViewsArray[i][j];
+            imageView.tag = dataIndex;
+            imageView.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.6];
             imageView.hidden = NO;
+            [_visibleImageViews addObject:imageView];
             UIImage* image = [self retrieveMemoryAndDiskCache:imageData.href];
             if (!image) {
                 [self downloadImageWithUrlString:imageData.href displayNode:imageView];
             }else{
+                imageView.userInteractionEnabled = YES;
                 [imageView setImage:image];
             }
             dataIndex++;
@@ -337,6 +348,35 @@
 - (void)deleteObject:(id)sender
 {
     _deleteObject(self);
+}
+
+#pragma mark --- 加载大图
+-(void)loadLargeImageWithTap:(UITapGestureRecognizer* )tap{
+    UIImageView* fromView = (UIImageView* )tap.view;
+    int index = (int)fromView.tag;
+//    current touch object
+    YYPhotoGroupItem* currentPhotoItem = [YYPhotoGroupItem new];
+    currentPhotoItem.thumbView = fromView;
+    currentPhotoItem.largeImageURL = [NSURL URLWithString:_largerImageUrls[index]];
+
+//    all imageItem objects
+//    if (_photoGroup == nil && _largerImageUrls.count == _visibleImageViews.count) {
+        NSMutableArray* photoGroupItems = [NSMutableArray arrayWithCapacity:_largerImageUrls.count];
+        
+        for (int i = 0; i < _largerImageUrls.count; i++) {
+            YYPhotoGroupItem* photoItem = [YYPhotoGroupItem new];
+            photoItem.thumbView = _visibleImageViews[i];
+            photoItem.largeImageURL = [NSURL URLWithString:_largerImageUrls[i]];
+            [photoGroupItems addObject:photoItem];
+        }
+        
+//        YYPhotoGroupView* photoGroup = [[YYPhotoGroupView alloc] initWithGroupItems:photoGroupItems];
+        YYPhotoGroupView* photoGroup = [[YYPhotoGroupView alloc] initWithGroupItems:photoGroupItems];
+//    }
+
+    if ([_delegate respondsToSelector:@selector(loadLargeImageDidFinsh:photoGroupView:fromView:)]) {
+        [_delegate loadLargeImageDidFinsh:self photoGroupView:photoGroup fromView:fromView];
+    }
 }
 
 
@@ -394,6 +434,7 @@
                                                           
       [[SDImageCache sharedImageCache] storeImage:image forKey:url toDisk:YES];
           dispatch_async(dispatch_get_main_queue(), ^{
+              node.userInteractionEnabled = YES;
               [node setImage:image];
               if ([_delegate respondsToSelector:@selector(assemblyMultipleTweetCellDidFinsh:)]) {
                   [_delegate assemblyMultipleTweetCellDidFinsh:self];
@@ -411,8 +452,14 @@
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             UIImageView* imageView = (UIImageView* )_imageViewsArray[i][j];
+            imageView.backgroundColor = [UIColor newCellColor];
+            imageView.userInteractionEnabled = NO;
+            imageView.tag = 0;
             imageView.hidden = YES;
             imageView.image = nil;
+            [_largerImageUrls removeAllObjects];
+            [_visibleImageViews removeAllObjects];
+            _photoGroup = nil;
         }
     }
 }

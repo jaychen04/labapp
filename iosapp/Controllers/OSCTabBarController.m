@@ -161,8 +161,8 @@
     newTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:NewTweetsTypeAllTweets];
 
     
-    hotTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
-    myFriendTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeOwnTweets];
+    hotTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:NewTweetsTypeHotestTweets];
+    myFriendTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:NewTweetsTypeOwnTweets];
 //    friendsTweetViewCtl = [[TweetTableViewController alloc] initWithTweetsType:NewTweetsTypeHotestTweets];
     
     newsViewCtl.needCache = YES;

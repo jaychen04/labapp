@@ -149,7 +149,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 
 -(NSMutableAttributedString*)getSubBtnAttributedStringWithTitle:(NSString*)title isSelected:(BOOL)isSelected {
     NSMutableAttributedString* attributedStrNormal = [[NSMutableAttributedString alloc]initWithString:title];
-    UIFont *font = [UIFont fontWithName:@"PingFangSC-Medium" size:15];
+    UIFont *font = [UIFont systemFontOfSize:15];
     UIColor *currentColor = isSelected?[UIColor colorWithHex:0x24cf5f]:[UIColor colorWithHex:0x6a6a6a];
     [attributedStrNormal setAttributes:@{NSForegroundColorAttributeName:currentColor,NSFontAttributeName:font} range:(NSRange){0,title.length}];
     return attributedStrNormal;

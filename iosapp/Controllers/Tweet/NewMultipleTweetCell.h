@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class NewMultipleTweetCell;
+@class NewMultipleTweetCell,YYPhotoGroupView;
 
 @protocol NewMultipleTweetCellDelegate <NSObject>
 
@@ -20,6 +20,10 @@
 
 - (void) assemblyMultipleTweetCellDidFinsh:(NewMultipleTweetCell* )multipleTweetCell;
 
+- (void) loadLargeImageDidFinsh:(NewMultipleTweetCell* )multipleTweetCell
+                 photoGroupView:(YYPhotoGroupView* )groupView
+                       fromView:(UIImageView* )fromView;
+
 @end
 
 @class OSCTweetItem;
@@ -29,6 +33,7 @@
 + (instancetype) returnReuseMultipeTweetCellWithTableView:(UITableView* )tableView
                                                identifier:(NSString* )reuseIdentifier
                                                 indexPath:(NSIndexPath* )indexPath;
+
 @property (nonatomic,weak) UITextView* descTextView;
 
 @property (nonatomic,weak) UIButton* likeCountButton;

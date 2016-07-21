@@ -10,6 +10,7 @@
 #import "OSCTweetItem.h"
 #import "NewTweetCell.h"
 #import "NewMultipleTweetCell.h"
+#import "YYPhotoGroupView.h"
 #import "Config.h"
 #import "OSCUser.h"
 
@@ -384,8 +385,16 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 
--(void)assemblyMultipleTweetCellDidFinsh:(NewMultipleTweetCell *)multipleTweetCell{
+-(void)assemblyMultipleTweetCellDidFinsh:(NewMultipleTweetCell *)multipleTweetCell
+{
     [self.tableView reloadData];
+}
+-(void)loadLargeImageDidFinsh:(NewMultipleTweetCell *)multipleTweetCell
+               photoGroupView:(YYPhotoGroupView *)groupView
+                     fromView:(UIImageView *)fromView
+{
+    UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
+    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
 }
 
 
