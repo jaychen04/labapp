@@ -1,8 +1,9 @@
 //
 //  YYPhotoGroupView.m
+//  iosapp
 //
-//  Created by ibireme on 14/3/9.
-//  Copyright (C) 2014 ibireme. All rights reserved.
+//  Created by Graphic-one on 16/7/15.
+//  Copyright © 2016年 oschina. All rights reserved.
 //
 
 #import "YYPhotoGroupView.h"
