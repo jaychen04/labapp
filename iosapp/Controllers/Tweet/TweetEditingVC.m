@@ -37,8 +37,6 @@
 @property (nonatomic, strong) UIScrollView          *scrollView;
 @property (nonatomic, strong) UIView                *contentView;
 @property (nonatomic, strong) PlaceholderTextView   *edittingArea;
-@property (nonatomic, strong) UIImageView           *imageView;
-@property (nonatomic, strong) UILabel               *deleteImageButton;
 @property (nonatomic, strong) UIToolbar             *toolBar;
 @property (nonatomic, strong) NSLayoutConstraint    *keyboardHeightConstraint;
 @property (nonatomic, strong) NSLayoutConstraint    *textViewHeightConstraint;
@@ -139,7 +137,7 @@
                                                                              action:@selector(pubTweet)];
     self.view.backgroundColor = [UIColor whiteColor];
     
-    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
+//    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     [self initSubViews];
     
     [self setUpLayoutIsRepeat:NO];
@@ -154,7 +152,6 @@
 {
     [super viewWillAppear:animated];
     
-//    self.view.backgroundColor = [UIColor themeColor];
     [_edittingArea.delegate textViewDidChange:_edittingArea];
     
     [_edittingArea becomeFirstResponder];
@@ -211,28 +208,6 @@
     _emojiPageVC.view.hidden = YES;
     _emojiPageVC.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:_emojiPageVC.view];
-    
-    _imageView = [UIImageView new];
-    _imageView.contentMode = UIViewContentModeScaleAspectFill;
-    _imageView.clipsToBounds = YES;
-    _imageView.userInteractionEnabled = YES;
-    _imageView.image = _image;
-    _image = nil;
-    [_imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showImagePreview)]];
-    [_contentView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:_edittingArea action:@selector(becomeFirstResponder)]];
-    [_contentView addSubview:_imageView];
-    
-    
-    _deleteImageButton = [UILabel new];
-    _deleteImageButton.userInteractionEnabled = YES;
-    _deleteImageButton.text = @"✕";
-    _deleteImageButton.textColor = [UIColor whiteColor];
-    _deleteImageButton.backgroundColor = [UIColor colorWithHex:0xe35050];
-    _deleteImageButton.textAlignment = NSTextAlignmentCenter;
-    _deleteImageButton.hidden = _imageView.image == nil;
-    [_deleteImageButton setCornerRadius:11];
-    [_deleteImageButton addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(deleteImage)]];
-    [_contentView addSubview:_deleteImageButton];
     
     
     /****** toolBar ******/
@@ -301,7 +276,7 @@
         make.right.equalTo(self.contentView).offset(-8);
         make.top.equalTo(_contentView);
     }];
-    
+
     if (_images.count > 0 && _images.count < 9 && !_isGotTweetAddImage) {
         _isGotTweetAddImage = YES;
         [_images insertObject:[UIImage imageNamed:@"ic_tweet_add"] atIndex:_images.count];
@@ -423,8 +398,7 @@
 
 #pragma mark - ToolBar 高度相关
 
-- (void)keyboardWillShow:(NSNotification *)notification
-{
+- (void)keyboardWillShow:(NSNotification *)notification {
     _emojiPageVC.view.hidden = YES;
     _isEmojiPageOnScreen = NO;
     
@@ -435,16 +409,35 @@
 }
 
 
-- (void)keyboardWillHide:(NSNotification *)notification
-{
+- (void)keyboardWillHide:(NSNotification *)notification {
     _keyboardHeightConstraint.constant = 0;
     
     [self updateBarHeight];
 }
+#pragma mark 表情面板与键盘切换
+
+- (void)switchInputView {
+    // 还要考虑一下用外接键盘输入时，置空inputView后，字体小的情况
+    if (_isEmojiPageOnScreen) {
+        [_edittingArea becomeFirstResponder];
+        
+        [_toolBar.items[7] setImage:[[UIImage imageNamed:@"toolbar-emoji"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        _edittingArea.font = [UIFont systemFontOfSize:18];
+        _isEmojiPageOnScreen = NO;
+        _emojiPageVC.view.hidden = YES;
+    } else {
+        [_edittingArea resignFirstResponder];
+        
+        [_toolBar.items[7] setImage:[[UIImage imageNamed:@"toolbar-text"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        _keyboardHeightConstraint.constant = 216;
+        [self updateBarHeight];
+        _isEmojiPageOnScreen = YES;
+        _emojiPageVC.view.hidden = NO;
+    }
+}
 
 
-- (void)updateBarHeight
-{
+- (void)updateBarHeight {
     [self.view setNeedsUpdateConstraints];
     [UIView animateKeyframesWithDuration:0.25       //animationDuration
                                    delay:0
@@ -460,8 +453,7 @@
 
 #pragma mark 图片相关
 
-- (void)addImage
-{
+- (void)addImage {
     [self.edittingArea resignFirstResponder]; //键盘遮盖了actionsheet
     
     [[[UIActionSheet alloc] initWithTitle:@"添加图片"
@@ -473,18 +465,7 @@
      showInView:self.view];
 }
 
-- (void)showImagePreview
-{
-    if (_imageView.image) {
-        [self.navigationController presentViewController:[[ImageViewerController alloc] initWithImage:_imageView.image] animated:YES completion:nil];
-    }
-}
 
-- (void)deleteImage
-{
-    _imageView.image = nil;
-    _deleteImageButton.hidden = YES;
-}
 
 
 #pragma mark 插入字符串操作（@人，引用软件或发表话题）
@@ -501,8 +482,7 @@
     if (_teamID) {
         [self.navigationController pushViewController:[TeamMemberListViewController new]
                                              animated:YES];
-    }
-    else {
+    }else {
         TweetFriendsListViewController * vc = [TweetFriendsListViewController new];
         [vc setSelectDone:^(NSString *result) {
             [self insertString:result andSelect:NO];
@@ -532,29 +512,6 @@
         [_edittingArea setSelectedTextRange:newRange];
     }
 }
-
-
-#pragma mark 表情面板与键盘切换
-
-- (void)switchInputView {
-    // 还要考虑一下用外接键盘输入时，置空inputView后，字体小的情况
-    if (_isEmojiPageOnScreen) {
-        [_edittingArea becomeFirstResponder];
-        
-        [_toolBar.items[7] setImage:[[UIImage imageNamed:@"toolbar-emoji"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        _edittingArea.font = [UIFont systemFontOfSize:18];
-    } else {
-        [_edittingArea resignFirstResponder];
-        [_toolBar.items[7] setImage:[[UIImage imageNamed:@"toolbar-text"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        
-        _keyboardHeightConstraint.constant = 216;
-        [self updateBarHeight];
-    }
-    
-    _emojiPageVC.view.hidden = !_emojiPageVC.view.hidden;
-    _isEmojiPageOnScreen = !_isEmojiPageOnScreen;
-}
-
 
 #pragma mark -- 上传动弹多图
 - (void)uploadTweetImages {
@@ -724,12 +681,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                                     }
          
         constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-            if (_imageView.image) {
-                [formData appendPartWithFileData:[Utils compressImage:_imageView.image]
-                                            name:@"img"
-                                        fileName:@"img.jpg"
-                                        mimeType:@"image/jpeg"];
-            }
         }
          
                           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
@@ -742,8 +693,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                               
                               if (errorCode == 1) {
                                   _edittingArea.text = @"";
-                                  _imageView.image = nil;
-                                  _deleteImageButton.hidden = YES;
                                   
                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                                   HUD.label.text = @"动弹发表成功";
@@ -781,13 +730,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
     if (buttonIndex == actionSheet.cancelButtonIndex) {
         return;
     } else if (buttonIndex == 0) {
-//        UIImagePickerController *imagePickerController = [UIImagePickerController new];
-//        imagePickerController.delegate = self;
-//        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//        imagePickerController.allowsEditing = NO;
-//        imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
-//        
-//        [self presentViewController:imagePickerController animated:YES completion:nil];
         
         _isAddImage = NO;
         ELCImagePickerController *elcPicker = [[ELCImagePickerController alloc] init];
@@ -868,8 +810,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 #pragma mark - UIImagePickerController 回调函数
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-//    _imageView.image = info[UIImagePickerControllerOriginalImage];
-//    _deleteImageButton.hidden = NO;
     
     [_images addObject:info[UIImagePickerControllerOriginalImage]];
     _isGotTweetAddImage = NO;
