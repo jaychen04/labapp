@@ -522,7 +522,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     titleLabel.center = CGPointMake(titleLabel.center.x, headerView.center.y);
     titleLabel.tag = 8;
     titleLabel.textColor = [UIColor colorWithHex:0x6a6a6a];
-    titleLabel.font = [UIFont fontWithName:@"PingFangSC-Regular" size:15];
+    titleLabel.font = [UIFont systemFontOfSize:15];
     titleLabel.text = title;
     [headerView addSubview:titleLabel];
     
