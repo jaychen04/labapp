@@ -6,19 +6,19 @@
 //  Copyright © 2016年 oschina. All rights reserved.
 //
 
-#import "YYPhotoGroupView.h"
+#import "OSCPhotoGroupView.h"
 #import <YYKit.h>
 
 #define kPadding 20
 #define kHiColor [UIColor colorWithRGBHex:0x2dd6b8]
 
 
-@interface YYPhotoGroupItem()<NSCopying>
+@interface OSCPhotoGroupItem()<NSCopying>
 @property (nonatomic, readonly) UIImage *thumbImage;
 @property (nonatomic, readonly) BOOL thumbClippedToTop;
 - (BOOL)shouldClipToTop:(CGSize)imageSize forView:(UIView *)view;
 @end
-@implementation YYPhotoGroupItem
+@implementation OSCPhotoGroupItem
 
 - (UIImage *)thumbImage {
     if ([_thumbView respondsToSelector:@selector(image)]) {
@@ -43,14 +43,14 @@
 }
 
 - (id)copyWithZone:(NSZone *)zone {
-    YYPhotoGroupItem *item = [self.class new];
+    OSCPhotoGroupItem *item = [self.class new];
     return item;
 }
 @end
 
 
 
-@interface YYPhotoGroupCell : UIScrollView <UIScrollViewDelegate>
+@interface OSCPhotoGroupCell : UIScrollView <UIScrollViewDelegate>
 @property (nonatomic, strong) UIView *imageContainerView;
 @property (nonatomic, strong) YYAnimatedImageView *imageView;
 @property (nonatomic, assign) NSInteger page;
@@ -59,12 +59,12 @@
 @property (nonatomic, assign) CGFloat progress;
 @property (nonatomic, strong) CAShapeLayer *progressLayer;
 
-@property (nonatomic, strong) YYPhotoGroupItem *item;
+@property (nonatomic, strong) OSCPhotoGroupItem *item;
 @property (nonatomic, readonly) BOOL itemDidLoad;
 - (void)resizeSubviewSize;
 @end
 
-@implementation YYPhotoGroupCell
+@implementation OSCPhotoGroupCell
 
 - (instancetype)init {
     self = super.init;
@@ -109,7 +109,7 @@
     _progressLayer.center = CGPointMake(self.width / 2, self.height / 2);
 }
 
-- (void)setItem:(YYPhotoGroupItem *)item {
+- (void)setItem:(OSCPhotoGroupItem *)item {
     if (_item == item) return;
     _item = item;
     _itemDidLoad = NO;
@@ -222,7 +222,7 @@
 
 
 
-@interface YYPhotoGroupView() <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+@interface OSCPhotoGroupView() <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, weak) UIView *fromView;
 @property (nonatomic, weak) UIView *toContainerView;
 
@@ -246,7 +246,7 @@
 @property (nonatomic, assign) CGPoint panGestureBeginPoint;
 @end
 
-@implementation YYPhotoGroupView
+@implementation OSCPhotoGroupView
 
 - (instancetype)initWithGroupItems:(NSArray *)groupItems {
     self = [super init];
@@ -370,7 +370,7 @@
     
     NSInteger page = -1;
     for (NSUInteger i = 0; i < self.groupItems.count; i++) {
-        if (fromView == ((YYPhotoGroupItem *)self.groupItems[i]).thumbView) {
+        if (fromView == ((OSCPhotoGroupItem *)self.groupItems[i]).thumbView) {
             page = (int)i;
             break;
         }
@@ -407,8 +407,8 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:animated ? UIStatusBarAnimationFade : UIStatusBarAnimationNone];
     
     
-    YYPhotoGroupCell *cell = [self cellForPage:self.currentPage];
-    YYPhotoGroupItem *item = _groupItems[self.currentPage];
+    OSCPhotoGroupCell *cell = [self cellForPage:self.currentPage];
+    OSCPhotoGroupItem *item = _groupItems[self.currentPage];
     
     if (!item.thumbClippedToTop) {
         NSString *imageKey = [[YYWebImageManager sharedManager] cacheKeyForURL:item.largeImageURL];
@@ -486,8 +486,8 @@
     
     [[UIApplication sharedApplication] setStatusBarHidden:_fromNavigationBarHidden withAnimation:animated ? UIStatusBarAnimationFade : UIStatusBarAnimationNone];
     NSInteger currentPage = self.currentPage;
-    YYPhotoGroupCell *cell = [self cellForPage:currentPage];
-    YYPhotoGroupItem *item = _groupItems[currentPage];
+    OSCPhotoGroupCell *cell = [self cellForPage:currentPage];
+    OSCPhotoGroupItem *item = _groupItems[currentPage];
     
     UIView *fromView = nil;
     if (_fromItemIndex == currentPage) {
@@ -581,7 +581,7 @@
 
 
 - (void)cancelAllImageLoad {
-    [_cells enumerateObjectsUsingBlock:^(YYPhotoGroupCell *cell, NSUInteger idx, BOOL *stop) {
+    [_cells enumerateObjectsUsingBlock:^(OSCPhotoGroupCell *cell, NSUInteger idx, BOOL *stop) {
         [cell.imageView cancelCurrentImageRequest];
     }];
 }
@@ -594,9 +594,9 @@
     
     for (NSInteger i = page - 1; i <= page + 1; i++) { // preload left and right cell
         if (i >= 0 && i < self.groupItems.count) {
-            YYPhotoGroupCell *cell = [self cellForPage:i];
+            OSCPhotoGroupCell *cell = [self cellForPage:i];
             if (!cell) {
-                YYPhotoGroupCell *cell = [self dequeueReusableCell];
+                OSCPhotoGroupCell *cell = [self dequeueReusableCell];
                 cell.page = i;
                 cell.left = (self.width + kPadding) * i + kPadding / 2;
                 
@@ -641,7 +641,7 @@
 
 /// enqueue invisible cells for reuse
 - (void)updateCellsForReuse {
-    for (YYPhotoGroupCell *cell in _cells) {
+    for (OSCPhotoGroupCell *cell in _cells) {
         if (cell.superview) {
             if (cell.left > _scrollView.contentOffset.x + _scrollView.width * 2||
                 cell.right < _scrollView.contentOffset.x - _scrollView.width) {
@@ -654,15 +654,15 @@
 }
 
 /// dequeue a reusable cell
-- (YYPhotoGroupCell *)dequeueReusableCell {
-    YYPhotoGroupCell *cell = nil;
+- (OSCPhotoGroupCell *)dequeueReusableCell {
+    OSCPhotoGroupCell *cell = nil;
     for (cell in _cells) {
         if (!cell.superview) {
             return cell;
         }
     }
     
-    cell = [YYPhotoGroupCell new];
+    cell = [OSCPhotoGroupCell new];
     cell.frame = self.bounds;
     cell.imageContainerView.frame = self.bounds;
     cell.imageView.frame = cell.bounds;
@@ -673,8 +673,8 @@
 }
 
 /// get the cell for specified page, nil if the cell is invisible
-- (YYPhotoGroupCell *)cellForPage:(NSInteger)page {
-    for (YYPhotoGroupCell *cell in _cells) {
+- (OSCPhotoGroupCell *)cellForPage:(NSInteger)page {
+    for (OSCPhotoGroupCell *cell in _cells) {
         if (cell.page == page) {
             return cell;
         }
@@ -729,7 +729,7 @@
 
 - (void)doubleTap:(UITapGestureRecognizer *)g {
     if (!_isPresented) return;
-    YYPhotoGroupCell *tile = [self cellForPage:self.currentPage];
+    OSCPhotoGroupCell *tile = [self cellForPage:self.currentPage];
     if (tile) {
         if (tile.zoomScale > 1) {
             [tile setZoomScale:1 animated:YES];
@@ -746,7 +746,7 @@
 - (void)longPress {
     if (!_isPresented) return;
     
-    YYPhotoGroupCell *tile = [self cellForPage:self.currentPage];
+    OSCPhotoGroupCell *tile = [self cellForPage:self.currentPage];
     if (!tile.imageView.image) return;
     
     // try to save original image data if the image contains multi-frame (such as GIF/APNG)

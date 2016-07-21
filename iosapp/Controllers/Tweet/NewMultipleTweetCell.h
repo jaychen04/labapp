@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class NewMultipleTweetCell,YYPhotoGroupView;
+@class NewMultipleTweetCell,OSCPhotoGroupView;
 
 @protocol NewMultipleTweetCellDelegate <NSObject>
 
@@ -21,7 +21,7 @@
 - (void) assemblyMultipleTweetCellDidFinsh:(NewMultipleTweetCell* )multipleTweetCell;
 
 - (void) loadLargeImageDidFinsh:(NewMultipleTweetCell* )multipleTweetCell
-                 photoGroupView:(YYPhotoGroupView* )groupView
+                 photoGroupView:(OSCPhotoGroupView* )groupView
                        fromView:(UIImageView* )fromView;
 
 @end

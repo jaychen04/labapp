@@ -151,7 +151,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
 - (IBAction)login
 {
     _hud = [Utils createHUD];
-    _hud.labelText = @"正在登录";
+    _hud.label.text = @"正在登录";
     _hud.userInteractionEnabled = NO;
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -172,7 +172,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
                   
                   _hud.mode = MBProgressHUDModeCustomView;
                   _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  _hud.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  _hud.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   [_hud hideAnimated:YES afterDelay:1];
                   
                   return;
@@ -185,7 +185,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _hud.mode = MBProgressHUDModeCustomView;
               _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              _hud.labelText = [@(operation.response.statusCode) stringValue];
+              _hud.label.text = [@(operation.response.statusCode) stringValue];
               _hud.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
               [_hud hideAnimated:YES afterDelay:1];

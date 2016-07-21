@@ -61,7 +61,7 @@
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
-		04E5BACA1D406DAD0046EA65 /* YYPhotoGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5BAC91D406DAD0046EA65 /* YYPhotoGroupView.m */; };
+		04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */; };
 		04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */; };
 		04EC1B5A1D38F6C8006DBD5D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B591D38F6C8006DBD5D /* WebKit.framework */; };
 		04EC1B5D1D38F6DF006DBD5D /* IMYWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */; };
@@ -417,8 +417,8 @@
 		047325A21CF8612B00460658 /* enumList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enumList.h; path = OSC/enumList.h; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
-		04E5BAC81D406DAD0046EA65 /* YYPhotoGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYPhotoGroupView.h; sourceTree = "<group>"; };
-		04E5BAC91D406DAD0046EA65 /* YYPhotoGroupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYPhotoGroupView.m; sourceTree = "<group>"; };
+		04E5BAC81D406DAD0046EA65 /* OSCPhotoGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPhotoGroupView.h; sourceTree = "<group>"; };
+		04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPhotoGroupView.m; sourceTree = "<group>"; };
 		04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		04EC1B591D38F6C8006DBD5D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		04EC1B5B1D38F6DF006DBD5D /* IMYWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMYWebView.h; sourceTree = "<group>"; };
@@ -1086,8 +1086,8 @@
 		0422BC461CEDA390007DB140 /* SDCycleScrollView */ = {
 			isa = PBXGroup;
 			children = (
-				04E5BAC81D406DAD0046EA65 /* YYPhotoGroupView.h */,
-				04E5BAC91D406DAD0046EA65 /* YYPhotoGroupView.m */,
+				04E5BAC81D406DAD0046EA65 /* OSCPhotoGroupView.h */,
+				04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */,
 				0422BC471CEDA390007DB140 /* PageControl */,
 				0422BC501CEDA390007DB140 /* SDCollectionViewCell.h */,
 				0422BC511CEDA390007DB140 /* SDCollectionViewCell.m */,
@@ -2555,7 +2555,7 @@
 				3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */,
 				EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */,
 				EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */,
-				04E5BACA1D406DAD0046EA65 /* YYPhotoGroupView.m in Sources */,
+				04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				38EAF1CA1AE112A200397E2A /* TeamIssueCell.m in Sources */,
 				0422BC591CEDA390007DB140 /* TAPageControl.m in Sources */,

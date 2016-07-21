@@ -14,7 +14,7 @@
 #import "NSDate+Util.h"
 
 #import "UserDetailsViewController.h"
-#import "YYPhotoGroupView.h"
+#import "OSCPhotoGroupView.h"
 
 #import <SDWebImage/SDImageCache.h>
 #import <SDWebImageDownloaderOperation.h>
@@ -32,7 +32,7 @@
     NSMutableArray<NSString* >* _largerImageUrls;   //本地维护的大图数组
     NSMutableArray<UIImageView* >* _visibleImageViews;   //可见的imageView数组
     
-    YYPhotoGroupView* _photoGroup;
+    OSCPhotoGroupView* _photoGroup;
 //    BOOL _isHaveToTouch;
 }
 @end
@@ -355,7 +355,7 @@
     UIImageView* fromView = (UIImageView* )tap.view;
     int index = (int)fromView.tag;
 //    current touch object
-    YYPhotoGroupItem* currentPhotoItem = [YYPhotoGroupItem new];
+    OSCPhotoGroupItem* currentPhotoItem = [OSCPhotoGroupItem new];
     currentPhotoItem.thumbView = fromView;
     currentPhotoItem.largeImageURL = [NSURL URLWithString:_largerImageUrls[index]];
 
@@ -364,14 +364,14 @@
         NSMutableArray* photoGroupItems = [NSMutableArray arrayWithCapacity:_largerImageUrls.count];
         
         for (int i = 0; i < _largerImageUrls.count; i++) {
-            YYPhotoGroupItem* photoItem = [YYPhotoGroupItem new];
+            OSCPhotoGroupItem* photoItem = [OSCPhotoGroupItem new];
             photoItem.thumbView = _visibleImageViews[i];
             photoItem.largeImageURL = [NSURL URLWithString:_largerImageUrls[i]];
             [photoGroupItems addObject:photoItem];
         }
         
 //        YYPhotoGroupView* photoGroup = [[YYPhotoGroupView alloc] initWithGroupItems:photoGroupItems];
-        YYPhotoGroupView* photoGroup = [[YYPhotoGroupView alloc] initWithGroupItems:photoGroupItems];
+        OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:photoGroupItems];
 //    }
 
     if ([_delegate respondsToSelector:@selector(loadLargeImageDidFinsh:photoGroupView:fromView:)]) {
