@@ -46,6 +46,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             return [NSString stringWithFormat:@"%@tweets",OSCAPI_V2_PREFIX];
         };
         self.isJsonDataVc = YES;
+        
         self.parametersDic = @{@"type":@(1),
                                @"pageToken":@""
                                };
