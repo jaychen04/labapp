@@ -32,6 +32,8 @@
 #import<ELCImagePickerController.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
+#define maxStrLength 160
+
 @interface TweetEditingVC () <UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UIScrollViewDelegate,ELCImagePickerControllerDelegate>
 
 @property (nonatomic, strong) UIScrollView          *scrollView;
@@ -136,8 +138,6 @@
                                                                              target:self
                                                                              action:@selector(pubTweet)];
     self.view.backgroundColor = [UIColor whiteColor];
-    
-//    ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = [Config getMode];
     [self initSubViews];
     
     [self setUpLayoutIsRepeat:NO];
@@ -271,10 +271,12 @@
 }
 #pragma mark -- 多图模式布局
 - (void)setUpLayoutIsRepeat:(BOOL)isRepeat {
+    CGFloat edittingAreaHeight = (359*190)/(CGRectGetWidth(self.view.frame)-16);
     [_edittingArea mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).offset(8);
         make.right.equalTo(self.contentView).offset(-8);
         make.top.equalTo(_contentView);
+        make.height.mas_equalTo(edittingAreaHeight);
     }];
 
     if (_images.count > 0 && _images.count < 9 && !_isGotTweetAddImage) {
@@ -321,9 +323,9 @@
         
     }
     if (!isRepeat) {
-        _textViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_edittingArea attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
-                                                                    toItem:nil           attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:48];
-        [_contentView addConstraint:_textViewHeightConstraint];
+//        _textViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_edittingArea attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
+//                                                                    toItem:nil           attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:48];
+//        [_contentView addConstraint:_textViewHeightConstraint];
 
         /*** toolBar ***/
         [_toolBar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -422,7 +424,7 @@
         [_edittingArea becomeFirstResponder];
         
         [_toolBar.items[7] setImage:[[UIImage imageNamed:@"toolbar-emoji"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
-        _edittingArea.font = [UIFont systemFontOfSize:18];
+        _edittingArea.font = [UIFont systemFontOfSize:16];
         _isEmojiPageOnScreen = NO;
         _emojiPageVC.view.hidden = YES;
     } else {
@@ -829,10 +831,41 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 
 }
 
+- (NSUInteger) lenghtWithString:(NSString *)string
+{
+    NSUInteger len = string.length;
+    // 汉字字符集
+    NSString * pattern  = @"[\u4e00-\u9fa5]";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:nil];
+    // 计算中文字符的个数
+    NSInteger numMatch = [regex numberOfMatchesInString:string options:NSMatchingReportProgress range:NSMakeRange(0, len)];
+    
+    return len + numMatch;
+}
 
 #pragma mark - UITextViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+
+    NSString *comcatstr = [textView.text stringByReplacingCharactersInRange:range withString:text];
+    NSInteger caninputlen = maxStrLength - comcatstr.length;
+    if (caninputlen < 0) {
+        NSInteger len = text.length + caninputlen;
+        //防止当text.length + caninputlen < 0时，使得rg.length为一个非法最大正数出错
+        NSRange rg = {0,MAX(len,0)};
+        if (rg.length > 0) {
+            NSString *s = [text substringWithRange:rg];
+            [textView setText:[textView.text stringByReplacingCharactersInRange:range withString:s]];
+        }
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.label.text = @"最多只能输入160字";
+        HUD.removeFromSuperViewOnHide = NO;
+        [HUD hideAnimated:YES afterDelay:1];
+        _edittingArea.text = [_edittingArea.text substringToIndex:_edittingArea.text.length-1];
+        return NO;
+    }
+    
     if ([text isEqualToString: @"\n"]) {
         [self pubTweet];
         [textView resignFirstResponder];
@@ -854,11 +887,11 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 - (void)textViewDidChange:(PlaceholderTextView *)textView {
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
     
-    CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 100);
-    if (height != _textViewHeightConstraint.constant) {
-        _textViewHeightConstraint.constant = height;
-        [self.view layoutIfNeeded];
-    }
+//    CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 100);
+//    if (height != _textViewHeightConstraint.constant) {
+//        _textViewHeightConstraint.constant = height;
+//        [self.view layoutIfNeeded];
+//    }
 }
 
 
