@@ -6,9 +6,9 @@
 //  Copyright © 2016年 oschina. All rights reserved.
 //
 
-#import "OSCObjsViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface InformationViewController : OSCObjsViewController
+@interface InformationViewController : UITableViewController
 
 - (void)dawnAndNightMode;
 
