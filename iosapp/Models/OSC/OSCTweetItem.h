@@ -57,7 +57,7 @@
 
 @property (nonatomic, copy) NSString *brush;
 
-@property (nonatomic, copy) NSString *conent;
+@property (nonatomic, copy) NSString *content;
 
 @end
 
@@ -75,9 +75,9 @@
 #pragma mark --- 动弹图片
 @interface OSCTweetImages : NSObject
 
-@property (nonatomic, copy) NSString *thumb;
+@property (nonatomic, copy) NSString *thumb;//小图
 
-@property (nonatomic, copy) NSString *href;
+@property (nonatomic, copy) NSString *href;//大图
 
 @end
 

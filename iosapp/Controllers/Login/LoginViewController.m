@@ -157,8 +157,8 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
 
 
-//    OSCAPI_HTTPS_PREFIX  @"http://192.168.1.15:8000/action/api/"  http://192.168.1.48:1104/action/api/
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX, OSCAPI_LOGIN_VALIDATE]
+//    OSCAPI_HTTPS_PREFIX  @"http://192.168.1.15:8000/action/api/" http://192.168.1.48:1104/action/api/
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX , OSCAPI_LOGIN_VALIDATE]
        parameters:@{@"username" : _accountField.text,
                     @"pwd" : _passwordField.text,
                     @"keep_login" : @(1)
@@ -174,7 +174,6 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
                   _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   _hud.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   [_hud hideAnimated:YES afterDelay:1];
-                  
                   
                   return;
               }
