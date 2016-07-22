@@ -104,7 +104,7 @@ static NSString * const MyTweetLikeListCellID = @"MyTweetLikeListCell";
 
 #pragma mark - 跳转到用户详情页
 
-- (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
+- (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer 
 {
     OSCMyTweetLikeList *myTweetLikeList = self.objects[recognizer.view.tag];
     UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:myTweetLikeList.userID];

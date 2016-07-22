@@ -202,7 +202,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     [self pushDetailInformationVC:informationModel];
 }
 
-#pragma mark - 跳转操作
+#pragma mark - 列表跳转操作
 
 -(void)pushDetailInformationVC:(OSCInformation* )model{
     switch (model.type) {
@@ -319,7 +319,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
                   NSDictionary* resultDic = responseObject[@"result"];
                   NSArray* items = resultDic[@"items"];
                   NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
-                  if (isRefresh) {//上拉得到的数据
+                  if (isRefresh) {//下拉得到的数据
                       [self.dataModels removeAllObjects];
                   }
                   [self.dataModels addObjectsFromArray:modelArray];

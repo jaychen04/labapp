@@ -47,7 +47,6 @@
                                           NSForegroundColorAttributeName : [UIColor newAssistTextColor],
                                           NSFontAttributeName            : [UIFont systemFontOfSize:12],
                                           }
-//         NSFontAttributeName            : @"PingFangSC-Light",
                                   range:NSMakeRange(stringLength, obj.length+2)];
         
         [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];

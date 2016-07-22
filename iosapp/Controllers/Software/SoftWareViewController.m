@@ -146,12 +146,12 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
                   NSInteger favoriteCode = [resultDic[@"favorite"] integerValue];
                   weakSelf.model.favorite = favoriteCode == 0 ? NO : YES;
                   _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  _HUD.label.text = weakSelf.model.favorite ? @"添加收藏成功" : @"删除收藏成功" ;
-                  [_HUD hideAnimated:YES afterDelay:1];
+                  _HUD.labelText = weakSelf.model.favorite ? @"添加收藏成功" : @"删除收藏成功" ;
+                  [_HUD hide:YES afterDelay:1];
               }else{
                   _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  _HUD.label.text = @"网络异常";
-                  [_HUD hideAnimated:YES afterDelay:1];
+                  _HUD.labelText = @"网络异常";
+                  [_HUD hide:YES afterDelay:1];
               }
 
               dispatch_async(dispatch_get_main_queue(), ^{
@@ -160,9 +160,10 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
 }
           failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
               _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              _HUD.label.text = @"网络异常，操作失败";
+              _HUD.labelText = @"网络异常，操作失败";
               
-              [_HUD hideAnimated:YES afterDelay:1];}];
+              [_HUD hide:YES afterDelay:1];
+          }];
 }
 
 

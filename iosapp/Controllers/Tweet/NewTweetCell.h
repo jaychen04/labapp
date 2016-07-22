@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OSCTweet.h"
 
+@class OSCTweetItem;
 @interface NewTweetCell : UITableViewCell
 
 @property (strong, nonatomic) UIImageView *userPortrait;
@@ -25,7 +25,7 @@
 
 @property (strong, nonatomic) UIView *imageBackView;
 
-@property (nonatomic, strong) OSCTweet *tweet;
+@property (nonatomic, strong) OSCTweetItem *tweet;
 
 @property (nonatomic, copy) BOOL (^canPerformAction)(UITableViewCell *cell, SEL action);
 @property (nonatomic, copy) void (^deleteObject)(UITableViewCell *cell);

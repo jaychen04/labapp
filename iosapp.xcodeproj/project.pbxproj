@@ -35,7 +35,6 @@
 		042D8C3E1D389328001A6494 /* NewMultipleTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */; };
 		042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */; };
 		042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */; };
-		042E54641D1B818100DC7E1D /* NewTweetTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E54631D1B818100DC7E1D /* NewTweetTextCell.m */; };
 		042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D95A1B65D7FE00116D6E /* Foundation.framework */; };
 		042E8CFE1CF5944E00364BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9581B65D7F200116D6E /* UIKit.framework */; };
 		042E8CFF1CF5945700364BD7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9561B65D7E800116D6E /* CoreText.framework */; };
@@ -62,6 +61,7 @@
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
+		04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */; };
 		04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */; };
 		04EC1B5A1D38F6C8006DBD5D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B591D38F6C8006DBD5D /* WebKit.framework */; };
 		04EC1B5D1D38F6DF006DBD5D /* IMYWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */; };
@@ -270,7 +270,6 @@
 		EE0DA3951D23D60200DD2C13 /* TranslationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0DA3931D23D60200DD2C13 /* TranslationViewController.m */; };
 		EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
-		EE4DDD991D3DFFD600F987DD /* OSCNewTweet.m in Sources */ = {isa = PBXBuildFile; fileRef = EE4DDD981D3DFFD600F987DD /* OSCNewTweet.m */; };
 		EE53F74F1D0048C800083D9D /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */; };
 		EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */; };
 		EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */; };
@@ -389,8 +388,6 @@
 		042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		042E545C1D193FD400DC7E1D /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
 		042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+LBBlurredImage.m"; sourceTree = "<group>"; };
-		042E54621D1B818100DC7E1D /* NewTweetTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTweetTextCell.h; sourceTree = "<group>"; };
-		042E54631D1B818100DC7E1D /* NewTweetTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTweetTextCell.m; sourceTree = "<group>"; };
 		042E8CFB1CF5933F00364BD7 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
 		042E8D021CF5947400364BD7 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		042E8D081CF594DF00364BD7 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -420,6 +417,8 @@
 		047325A21CF8612B00460658 /* enumList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enumList.h; path = OSC/enumList.h; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
+		04E5BAC81D406DAD0046EA65 /* OSCPhotoGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPhotoGroupView.h; sourceTree = "<group>"; };
+		04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPhotoGroupView.m; sourceTree = "<group>"; };
 		04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		04EC1B591D38F6C8006DBD5D /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		04EC1B5B1D38F6DF006DBD5D /* IMYWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMYWebView.h; sourceTree = "<group>"; };
@@ -826,8 +825,6 @@
 		EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationViewController.xib; sourceTree = "<group>"; };
 		EE2023291CFBE675002756E4 /* ActivityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadView.h; sourceTree = "<group>"; };
 		EE20232A1CFBE675002756E4 /* ActivityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadView.m; sourceTree = "<group>"; };
-		EE4DDD971D3DFFD600F987DD /* OSCNewTweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewTweet.h; sourceTree = "<group>"; };
-		EE4DDD981D3DFFD600F987DD /* OSCNewTweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewTweet.m; sourceTree = "<group>"; };
 		EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
 		EE603E031D3C75A700DA7F31 /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsDetailViewController.h; path = iosapp/Controllers/News/NewsDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsDetailViewController.m; path = iosapp/Controllers/News/NewsDetailViewController.m; sourceTree = SOURCE_ROOT; };
@@ -1089,6 +1086,8 @@
 		0422BC461CEDA390007DB140 /* SDCycleScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				04E5BAC81D406DAD0046EA65 /* OSCPhotoGroupView.h */,
+				04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */,
 				0422BC471CEDA390007DB140 /* PageControl */,
 				0422BC501CEDA390007DB140 /* SDCollectionViewCell.h */,
 				0422BC511CEDA390007DB140 /* SDCollectionViewCell.m */,
@@ -1952,8 +1951,6 @@
 				0432B6B71D3CB63700AFC058 /* OSCTweetItem.m */,
 				00EDF60719EF77A100A5C842 /* OSCTweet.h */,
 				00EDF60819EF77A100A5C842 /* OSCTweet.m */,
-				EE4DDD971D3DFFD600F987DD /* OSCNewTweet.h */,
-				EE4DDD981D3DFFD600F987DD /* OSCNewTweet.m */,
 			);
 			name = Tweet;
 			sourceTree = "<group>";
@@ -2277,8 +2274,6 @@
 			children = (
 				042D8C3C1D389328001A6494 /* NewMultipleTweetCell.h */,
 				042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */,
-				042E54621D1B818100DC7E1D /* NewTweetTextCell.h */,
-				042E54631D1B818100DC7E1D /* NewTweetTextCell.m */,
 				EE6FB5D91D0D1050006A11A4 /* NewTweetCell.h */,
 				EE6FB5DA1D0D1050006A11A4 /* NewTweetCell.m */,
 				EE6FB5DB1D0D1050006A11A4 /* TweetTableViewController.h */,
@@ -2560,6 +2555,7 @@
 				3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */,
 				EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */,
 				EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */,
+				04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				38EAF1CA1AE112A200397E2A /* TeamIssueCell.m in Sources */,
 				0422BC591CEDA390007DB140 /* TAPageControl.m in Sources */,
@@ -2629,7 +2625,6 @@
 				31D699691CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m in Sources */,
 				C5A89C381B09C34B00798B1C /* NSString+FontAwesome.m in Sources */,
 				38B0BF921A3AE77300A2FDB0 /* MessagesViewController.m in Sources */,
-				EE4DDD991D3DFFD600F987DD /* OSCNewTweet.m in Sources */,
 				38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */,
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
@@ -2765,7 +2760,6 @@
 				31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */,
 				C5B2F1B91BD0DFF2004B4785 /* NSString+Util.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,
-				042E54641D1B818100DC7E1D /* NewTweetTextCell.m in Sources */,
 				386825A91A70D5E6008F5706 /* OSCSearchResult.m in Sources */,
 				EEFFA6421CFEDAC000A8701C /* webAndAbsTableViewCell.m in Sources */,
 				38BD3D041A36A3E500682D1F /* OSCSoftwareCatalog.m in Sources */,
