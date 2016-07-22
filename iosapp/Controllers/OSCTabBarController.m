@@ -31,7 +31,7 @@
 #import "TweetTableViewController.h"
 #import "EventsViewController.h"
 
-#import<ELCImagePickerController.h>               //动弹多图
+#import"ELCImagePickerController.h"              //动弹多图
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "UIBarButtonItem+Badge.h"
