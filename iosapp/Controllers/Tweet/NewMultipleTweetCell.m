@@ -20,12 +20,6 @@
 #import <SDWebImageDownloaderOperation.h>
 #import <Masonry.h>
 
-#define Trumpet_Height 60
-#define Medium_Height 136
-#define Large_Height 212
-#define ImageItemSize 60
-#define ImageItemPadding 8
-
 @interface NewMultipleTweetCell () {
     NSMutableArray* _imageViewsArray;   //二维数组 _imageViewsArray[line][row]
     
@@ -33,7 +27,18 @@
     NSMutableArray<UIImageView* >* _visibleImageViews;   //可见的imageView数组
     
     OSCPhotoGroupView* _photoGroup;
-//    BOOL _isHaveToTouch;
+    
+/** 以下是根据屏幕大小进行适配的宽高值 (在 setSubViews 底部进行维护)*/
+/** 
+    _multiple_WH  为多图容器的宽高
+    _imageItem_WH 为每张图片的宽高
+    Multiple_Padding 是容器距离屏幕边缘的padding值
+    ImageItemPadding 是多图图片之间的padding值
+ */
+    CGFloat _multiple_WH;
+    CGFloat _imageItem_WH;
+    CGFloat Multiple_Padding;
+    CGFloat ImageItemPadding;
 }
 @end
 
@@ -147,11 +152,22 @@
     _colorLine = colorLine;
     [self.contentView addSubview:_colorLine];
     
+    Multiple_Padding = 69;
+    ImageItemPadding = 8;
+    
+/** 动态值维护*/
+    CGFloat multiple_WH = ceil(([UIScreen mainScreen].bounds.size.width - (Multiple_Padding * 2)));
+    _multiple_WH = multiple_WH;
+    CGFloat imageItem_WH = ceil(((multiple_WH - (2 * ImageItemPadding)) / 3 ));
+    _imageItem_WH = imageItem_WH;
+
+    
     [self addMultiples];
 }
 
 #pragma mark --- set base Layout （ Masnory ）
 -(void)setLayout{
+    
     [_userPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.and.top.equalTo(self.contentView).with.offset(16);
         make.width.and.height.equalTo(@45);
@@ -168,12 +184,13 @@
         make.top.equalTo(_nameLabel.mas_bottom).with.offset(5);
         make.right.equalTo(self.contentView).with.offset(-8);
     }];
-    
+
     [_imagesView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self.contentView).with.offset(69);
+        make.left.equalTo(self.contentView).with.offset(Multiple_Padding);
         make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
-        make.width.equalTo(@212);
-        make.height.equalTo(@Trumpet_Height);
+        make.width.equalTo(@(_multiple_WH));
+//        make.right.equalTo(self.contentView).width.offset(-Multiple_Padding);
+        make.height.equalTo(@(_multiple_WH));
     }];
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -264,20 +281,20 @@
 //add NewMultipleTweetCell
 -(void)addMultiples{
     _imageViewsArray = [NSMutableArray arrayWithCapacity:3];
-    
+        
     CGFloat originX = 0;
     CGFloat originY = 0;
     for (int i = 0 ; i < 3; i++) {//line
-        originY = i * (ImageItemSize + ImageItemPadding);
+        originY = i * (_imageItem_WH + ImageItemPadding);
         NSMutableArray* lineNodes = [NSMutableArray arrayWithCapacity:3];
         for (int j = 0; j < 3; j++) {//row
-            originX = j * (ImageItemSize + ImageItemPadding);
+            originX = j * (_imageItem_WH + ImageItemPadding);
             UIImageView* imageView = [[UIImageView alloc]init];
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImageWithTap:)]];
             imageView.backgroundColor = [UIColor newCellColor];
             imageView.hidden = YES;
             imageView.userInteractionEnabled = NO;
-            imageView.frame = (CGRect){{originX,originY},{ImageItemSize,ImageItemSize}};
+            imageView.frame = (CGRect){{originX,originY},{_imageItem_WH,_imageItem_WH}};
             [_imagesView addSubview:imageView];
             [lineNodes addObject:imageView];
         }
@@ -288,12 +305,12 @@
 -(void)assemblyContentToImageViewsWithImagesCount:(NSInteger)count{
     if (count <= 3) {   //Single line layout
         [_imagesView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@Trumpet_Height);
+            make.height.equalTo(@(_imageItem_WH));
         }];
         [self loopAssemblyContentWithLine:1 row:(int)count count:(int)count];
     }else if (count <= 6){  //Double row layout
         [_imagesView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@Medium_Height);
+            make.height.equalTo(@((_imageItem_WH * 2) + ImageItemPadding));
         }];
         if (count == 4) {
             [self loopAssemblyContentWithLine:2 row:2 count:(int)count];
@@ -302,7 +319,7 @@
         }
     }else{  //Three lines layout
         [_imagesView mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.height.equalTo(@Large_Height);
+            make.height.equalTo(@(_multiple_WH));
         }];
         [self loopAssemblyContentWithLine:3 row:3 count:(int)count];
     }
