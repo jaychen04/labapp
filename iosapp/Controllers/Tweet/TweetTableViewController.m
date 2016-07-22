@@ -285,9 +285,8 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             cell.descTextView.delegate = self;
             [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
         }
-        
-        [self setBlockForCommentCell:cell];
         cell.tweet = model;
+        [self setBlockForCommentCell:cell];
         
         if (model.images.count > 0) {
             OSCTweetImages* imageData = [model.images lastObject];
@@ -399,9 +398,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     if (_didScroll) {_didScroll();}
 }
 
-#pragma mark --- setting Block
-
-
 - (void)setBlockForCommentCell:(NewTweetCell *)cell
 {
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
@@ -409,7 +405,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             return YES;
         } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            OSCTweetItem *tweet = self.objects[indexPath.row];
+            OSCTweetItem *tweet = self.dataModels[indexPath.row];
             return tweet.author.id == [Config getOwnID];
         }
         return NO;
@@ -417,9 +413,10 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     
     cell.deleteObject = ^ (UITableViewCell *cell) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        OSCTweetItem *tweet = self.objects[indexPath.row];
+        OSCTweetItem *tweet = self.dataModels[indexPath.row];
         
         MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeCustomView;
         HUD.label.text = @"正在删除动弹";
         
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
@@ -429,8 +426,22 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                  @"sourceId": @(tweet.id),
                         }
               success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-                      NSLog(@"delete");
-                  NSLog(@"%@",responseObject);
+                  if ([responseObject[@"code"] floatValue] == 1) {
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                      HUD.label.text = @"动弹删除成功";
+                      
+                      [self.dataModels removeObjectAtIndex:indexPath.row];
+                      self.allCount--;
+                      
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.tableView reloadData];
+                      });
+                  }else{
+                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                      HUD.label.text = @"网络错误";
+                  }
+                  [HUD hideAnimated:YES afterDelay:1];
+                  
                  }
               failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                     HUD.mode = MBProgressHUDModeCustomView;
@@ -441,6 +452,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                  }];
     };
 }
+
 - (void)setBlockForCommentMultipleCell:(NewMultipleTweetCell *)cell
 {
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
@@ -448,7 +460,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             return YES;
         } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            OSCTweetItem *tweet = self.objects[indexPath.row];
+            OSCTweetItem *tweet = self.dataModels[indexPath.row];
             return tweet.author.id == [Config getOwnID];
         }
         return NO;
@@ -456,42 +468,37 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     
     cell.deleteObject = ^ (UITableViewCell *cell) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        OSCTweet *tweet = self.objects[indexPath.row];
+        OSCTweetItem *tweet = self.dataModels[indexPath.row];
         
         MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeCustomView;
         HUD.label.text = @"正在删除动弹";
         
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
         
-        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_DELETE]
+        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX, OSCAPI_TWEET_DELETE]
            parameters:@{
-                        @"uid": @([Config getOwnID]),
-                        @"tweetid": @(tweet.tweetID)
+                        @"sourceId": @(tweet.id),
                         }
-              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-                  ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
-                  int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
-                  NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
-                  
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  
-                  if (errorCode == 1) {
+              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                  if ([responseObject[@"code"] floatValue] == 1) {
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                       HUD.label.text = @"动弹删除成功";
                       
-                      [self.objects removeObjectAtIndex:indexPath.row];
+                      [self.dataModels removeObjectAtIndex:indexPath.row];
                       self.allCount--;
                       
                       dispatch_async(dispatch_get_main_queue(), ^{
                           [self.tableView reloadData];
                       });
-                  } else {
+                  }else{
                       HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                      HUD.label.text = @"网络错误";
                   }
-                  
                   [HUD hideAnimated:YES afterDelay:1];
-              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  
+              }
+              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
