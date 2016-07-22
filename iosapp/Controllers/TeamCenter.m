@@ -170,7 +170,7 @@ static NSString * kTeamCellID = @"TeamCell";
                  [_HUD hideAnimated:YES];
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  _HUD.mode = MBProgressHUDModeCustomView;
-                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                  _HUD.detailsLabel.text = @"加载团队信息失败";
                  
                  [_HUD hideAnimated:YES afterDelay:1];
@@ -211,7 +211,7 @@ static NSString * kTeamCellID = @"TeamCell";
                  [_HUD hideAnimated:YES];
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  _HUD.mode = MBProgressHUDModeCustomView;
-                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                 _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                  _HUD.detailsLabel.text = @"加载团队信息失败";
              }];
     }

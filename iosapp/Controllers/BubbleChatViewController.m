@@ -81,7 +81,7 @@
     [self.editingBar.editView resignFirstResponder];
     
     MBProgressHUD *HUD = [Utils createHUD];
-    HUD.labelText = @"私信发送中";
+    HUD.label.text = @"私信发送中";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
@@ -104,21 +104,21 @@
                   [self updateInputBarHeight];
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.labelText = @"发送私信成功";
+                  HUD.label.text = @"发送私信成功";
               } else {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.labelText = [NSString stringWithFormat:@"错误：%@", errorMessage];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
               
               [_messageBubbleVC.tableView setContentOffset:CGPointZero animated:NO];
               [_messageBubbleVC refresh];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-              HUD.labelText = @"网络异常，私信发送失败";
+//              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+              HUD.label.text = @"网络异常，私信发送失败";
               
-              [HUD hide:YES afterDelay:1];
+              [HUD hideAnimated:YES afterDelay:1];
           }];
 }
 

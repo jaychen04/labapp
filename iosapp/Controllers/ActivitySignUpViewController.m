@@ -365,7 +365,7 @@ static NSInteger HeightPicker;
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                   HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", errorMessage];
               } else {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", errorMessage];
               }
               
@@ -382,7 +382,7 @@ static NSInteger HeightPicker;
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.label.text = @"网络异常，报名失败";
               
               [HUD hideAnimated:YES afterDelay:1];

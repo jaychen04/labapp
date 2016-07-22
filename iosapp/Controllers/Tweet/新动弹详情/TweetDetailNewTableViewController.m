@@ -58,7 +58,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     coverView.backgroundColor = [UIColor whiteColor];
     coverView.tag = 10;
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud = [[MBProgressHUD alloc] initWithView:window];
     _hud.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:_hud];
     [self.tableView addSubview:coverView];

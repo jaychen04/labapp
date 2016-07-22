@@ -502,7 +502,7 @@
              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
              HUD.label.text = @"动弹发表成功";
          } else {
-             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
              HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
          }
          
@@ -511,7 +511,7 @@
          
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         HUD.mode = MBProgressHUDModeCustomView;
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
         HUD.label.text = @"网络异常，动弹发送失败";
         
         HUD.removeFromSuperViewOnHide = YES;
