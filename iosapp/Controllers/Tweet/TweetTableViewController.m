@@ -402,7 +402,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 #pragma mark --- setting Block
 
 
-
 - (void)setBlockForCommentCell:(NewTweetCell *)cell
 {
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
