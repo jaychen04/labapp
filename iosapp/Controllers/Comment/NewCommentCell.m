@@ -115,8 +115,6 @@
 - (void)setComment:(OSCNewComment *)comment
 {
 
-
-    
     [_commentPortrait loadPortrait:[NSURL URLWithString:comment.authorPortrait]];
     _nameLabel.text = comment.author.length > 0 ? comment.author : @"匿名";
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];

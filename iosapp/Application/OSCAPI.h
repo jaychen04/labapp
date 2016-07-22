@@ -14,15 +14,16 @@
 
 #define OSCAPI_HTTPS_PREFIX             @"https://www.oschina.net/action/api/"
 #define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
-//#define OSCAPI_HTTPS_PREFIX             @"https://192.168.1.58:8080/action/api/"
-//#define OSCAPI_PREFIX                   @"http://192.168.1.15:8080/action/api/"
-
-//#define OSCAPI_V2_PREFIX                   @"http://www.oschina.net/action/apiv2/"
-//#define OSCAPI_V2_HTTPS_PREFIX             @"https://www.oschina.net/action/apiv2/"
-
-
-#define OSCAPI_V2_PREFIX                   @"http://www.oschina.net/action/apiv2/"
 #define OSCAPI_V2_HTTPS_PREFIX             @"https://www.oschina.net/action/apiv2/"
+#define OSCAPI_V2_PREFIX                   @"http://www.oschina.net/action/apiv2/"
+
+// 15机器
+//#define OSCAPI_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/api/"
+//#define OSCAPI_PREFIX                   @"http://192.168.1.15:8000/action/api/"
+//#define OSCAPI_V2_PREFIX                   @"http://192.168.1.15:8000/action/apiv2/"
+//#define OSCAPI_V2_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/apiv2/"
+
+
 
 
 //#define OSCAPI_V2_PREFIX                  @"http://192.168.1.15:8000/action/apiv2/"

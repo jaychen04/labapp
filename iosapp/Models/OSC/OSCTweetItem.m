@@ -7,11 +7,11 @@
 //
 
 #import "OSCTweetItem.h"
+#import <MJExtension.h>
 
 @implementation OSCTweetItem
 
-
-+ (NSDictionary *)objectClassInArray{
++ (NSDictionary *)mj_objectClassInArray{
     return @{
              @"audio" : [OSCTweetAudio class],
              @"images" : [OSCTweetImages class]
