@@ -38,7 +38,7 @@
 {
     __weak UIImageView* _userPortrait;
     __weak UILabel* _nameLabel;
-//    __weak UITextView* _descTextView;
+    __weak UITextView* _descTextView;
     
     __weak UIView* _imagesView; //container view
     
@@ -68,12 +68,13 @@
 - (instancetype) initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        _largerImageUrls = [NSMutableArray arrayWithCapacity:9];
+        _visibleImageViews = [NSMutableArray arrayWithCapacity:9];
         [self setSubViews];
         [self setLayout];
     }
     return self;
 }
-
 
 #pragma mark - 
 #pragma mark --- setting SubViews && Layout
@@ -364,11 +365,11 @@
                                                           
                                                           [[SDImageCache sharedImageCache] storeImage:image forKey:url toDisk:YES];
                                                           dispatch_async(dispatch_get_main_queue(), ^{
-                                                              node.userInteractionEnabled = YES;
-                                                              [node setImage:image];
-                                                              if ([_delegate respondsToSelector:@selector(assemblyMultipleTweetCellDidFinsh:)]) {
-                                                                  [_delegate assemblyMultipleTweetCellDidFinsh:self];
-                                                              }
+          node.userInteractionEnabled = YES;
+          [node setImage:image];
+          if ([_delegate respondsToSelector:@selector(assemblyMultipleTweetCellDidFinsh:)]) {
+              [_delegate assemblyMultipleTweetCellDidFinsh:self];
+          }
                                                           });
                                                       }];
 }

@@ -34,6 +34,7 @@
 static NSString * const tDetailReuseIdentifier = @"TweetsDetailTableViewCell";
 static NSString * const tLikeReuseIdentifier = @"TweetLikeTableViewCell";
 static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
+static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell";
 
 @interface TweetDetailNewTableViewController ()<UIWebViewDelegate,NewMultipleDetailCellDelegate>
 @property (nonatomic, strong)UIView *headerView;
@@ -87,6 +88,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetsDetailNewCell" bundle:nil] forCellReuseIdentifier:tDetailReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetLikeNewCell" bundle:nil] forCellReuseIdentifier:tLikeReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCommentNewCell" bundle:nil] forCellReuseIdentifier:tCommentReuseIdentifier];
+    [self.tableView registerClass:[NewMultipleDetailCell class] forCellReuseIdentifier:tMultipleDetailReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.estimatedRowHeight = 250;
     
@@ -430,12 +432,24 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     return section==0?0:40;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return self.headerView;
+    if (section == 1) {
+        return self.headerView;
+    }else{
+        return nil;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return [tableView fd_heightForCellWithIdentifier:tDetailReuseIdentifier configuration:^(TweetsDetailNewCell *cell) {
-        }] + _webViewHeight + 10;
+        if (_tweetDetail.images.count <= 1) {
+            return [tableView fd_heightForCellWithIdentifier:tDetailReuseIdentifier configuration:^(TweetsDetailNewCell *cell) {
+            }] + _webViewHeight + 10;
+        }else{
+            return [tableView fd_heightForCellWithIdentifier:tMultipleDetailReuseIdentifier configuration:^(NewMultipleDetailCell* cell) {
+                if (!_tweetDetail) {return ;}
+                cell.item = _tweetDetail;
+            }];
+//            return UITableViewAutomaticDimension;
+        }
     }else if (indexPath.section == 1) {
         if (!_isShowCommentList) {
             return 56;
@@ -453,10 +467,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             [self setUpTweetDetailCell:detailCell];
             return detailCell;
         }else{
-            NewMultipleDetailCell* detailCell = [tableView dequeueReusableCellWithIdentifier:@"NewMultipleDetailCell"];
-            if (detailCell == nil) {
-                detailCell = [[NewMultipleDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NewMultipleDetailCell"];
-            }
+            NewMultipleDetailCell* detailCell = [tableView dequeueReusableCellWithIdentifier:tMultipleDetailReuseIdentifier forIndexPath:indexPath];
+            if (_tweetDetail == nil) {return nil;}
             detailCell.item = _tweetDetail;
             detailCell.delegate = self;
             return detailCell;
@@ -522,6 +534,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     [self likeThisTweet:tap];
 }
 -(void)assemblyMultipleTweetCellDidFinsh:(NewMultipleDetailCell *)multipleTweetCell
+{
+    [self.tableView reloadData];
+}
+- (void) loadLargeImageDidFinsh:(NewMultipleDetailCell* )multipleTweetCell
+                 photoGroupView:(OSCPhotoGroupView* )groupView
+                       fromView:(UIImageView* )fromView
 {
     [self.tableView reloadData];
 }

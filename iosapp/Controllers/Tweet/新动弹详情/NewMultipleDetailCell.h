@@ -39,8 +39,6 @@
 
 @property (nonatomic,strong) OSCTweetItem* item;
 
-@property (nonatomic,weak) UITextView* descTextView;
-
 @property (nonatomic,weak) id<NewMultipleDetailCellDelegate> delegate;
 
 /** Lock initialization routine method */
