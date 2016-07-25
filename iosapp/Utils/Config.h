@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 
 @class OSCUser;
+@class OSCUserItem;
 
 @interface Config : NSObject
 

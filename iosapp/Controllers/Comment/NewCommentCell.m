@@ -112,21 +112,16 @@
 
 #pragma mark - contentData
 
-- (void)setComment:(OSCNewComment *)comment
-{
+- (void)setComment:(OSCNewComment *)comment {
 
     [_commentPortrait loadPortrait:[NSURL URLWithString:comment.authorPortrait]];
     _nameLabel.text = comment.author.length > 0 ? comment.author : @"匿名";
     _timeLabel.text = [[NSDate dateFromString:comment.pubDate] timeAgoSinceNow];
     
     _bestImageView.hidden = YES;
-    
-
-//    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:comment.content]];//commentReply.contentd
 
     _contentTextView.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
 
-    
     if (comment.refer.author.length > 0) {
         _referCommentView.hidden = NO;
         [self setLayOutForRefer:comment.refer];
@@ -135,8 +130,7 @@
     }
 }
 
-- (void)setDataForQuestionComment:(OSCNewComment *)questComment
-{
+- (void)setDataForQuestionComment:(OSCNewComment *)questComment {
     [_commentPortrait loadPortrait:[NSURL URLWithString:questComment.authorPortrait]];
     _nameLabel.text = questComment.author;
     _timeLabel.text = [[NSDate dateFromString:questComment.pubDate] timeAgoSinceNow];
@@ -157,21 +151,16 @@
     }
 }
 
-- (void)setDataForQuestionCommentReply:(OSCNewCommentReply *)commentReply
-{
+- (void)setDataForQuestionCommentReply:(OSCNewCommentReply *)commentReply {
     [_commentPortrait loadPortrait:[NSURL URLWithString:commentReply.authorPortrait]];
     _nameLabel.text = commentReply.author;
     _timeLabel.text = [[NSDate dateFromString:commentReply.pubDate] timeAgoSinceNow];
-    
     _bestImageView.hidden = YES;
-    
-//    NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentReply.content]];
     _contentTextView.attributedText = [NewCommentCell contentStringFromRawString:commentReply.content];
 }
 
 
-- (void)setUpContetTextView:(UITextView*)textView
-{
+- (void)setUpContetTextView:(UITextView*)textView {
     textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
     textView.font = [UIFont systemFontOfSize:14];
     textView.textColor = [UIColor colorWithHex:0x111111];
@@ -187,8 +176,7 @@
 }
 
 #pragma mark - 处理字符串
-+ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString
-{
++ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString {
     if (!rawString || rawString.length == 0) return [[NSAttributedString alloc] initWithString:@""];
     
     NSAttributedString *attrString = [Utils attributedStringFromHTML:rawString];

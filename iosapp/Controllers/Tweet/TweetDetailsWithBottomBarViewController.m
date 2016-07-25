@@ -161,14 +161,14 @@
                   [_tweetDetailsNewVC reloadCommentList];
                   
               } else {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
               [HUD hideAnimated:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.label.text = @"网络异常，动弹发送失败";
               
               [HUD hideAnimated:YES afterDelay:1];

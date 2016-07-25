@@ -98,7 +98,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
     [self.tableView registerClass:[TeamIssueDetailCell class] forCellReuseIdentifier:kteamIssueDetailCellNomal];
     
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    _HUD = [[MBProgressHUD alloc] initWithWindow:window];
+    _HUD = [[MBProgressHUD alloc] initWithView:window];
     _HUD.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     _HUD.userInteractionEnabled = NO;
     [window addSubview:_HUD];
@@ -149,7 +149,7 @@ static NSString *kteamIssueTitleCell = @"teamIssueTitleCell";
                   HUD.label.text = errorMessage;
                   [self.navigationController popViewControllerAnimated:YES];
               } else {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   if ([errorMessage length] < 10) {
                       HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   }else {

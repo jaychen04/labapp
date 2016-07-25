@@ -13,7 +13,8 @@
 #import "ImageViewerController.h"
 #import "UserDetailsViewController.h"
 #import "Config.h"
-#import "OSCUser.h"
+#import "OSCUserItem.h"
+#import "OSCCommentItem.h"
 #import "OSCTweet.h"
 #import "OSCTweetItem.h"
 #import "NSString+FontAwesome.h"
@@ -40,6 +41,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 @property (nonatomic, strong)NSMutableArray *tweetCommentList;
 @property (nonatomic)NSInteger likeListPage;
 @property (nonatomic)NSInteger commentListPage;
+@property (nonatomic, copy)NSString *TweetLikesPageToken;
+@property (nonatomic, copy)NSString *TweetCommentsPageToken;
 
 @property (nonatomic, strong) UILabel *label;
 //@property (nonatomic, strong) OSCTweet *tweet;
@@ -58,7 +61,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     coverView.backgroundColor = [UIColor whiteColor];
     coverView.tag = 10;
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud = [[MBProgressHUD alloc] initWithView:window];
     _hud.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:_hud];
     [self.tableView addSubview:coverView];
@@ -94,16 +97,22 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     _isShowCommentList = YES;       //默认展示评论列表
     //上拉刷新
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-        [self loadTweetLikeListIsrefresh:NO];
-        [self loadTweetCommentListIsrefresh:NO];
+//        [self loadTweetLikeListIsrefresh:NO];
+        [self loadTweetLikesIsRefresh:NO];
+        
+//        [self loadTweetCommentListIsrefresh:NO];
+        [self loadTweetCommentsIsRefresh:NO];
     }];
     
     // 添加等待动画
     [self showHubView];
     
     [self loadTweetDetails];
-    [self loadTweetLikeListIsrefresh:YES];
-    [self loadTweetCommentListIsrefresh:YES];
+//    [self loadTweetLikeListIsrefresh:YES];
+    [self loadTweetLikesIsRefresh:YES];
+    
+//    [self loadTweetCommentListIsrefresh:YES];
+    [self loadTweetCommentsIsRefresh:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -176,8 +185,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 
 #pragma mark - 获取动弹详情数据
-- (void)loadTweetDetails
-{
+- (void)loadTweetDetails {
     NSString *tweetDetailUrlStr = [NSString stringWithFormat:@"%@tweet?id=%ld", OSCAPI_V2_PREFIX, (long)self.tweetID];
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
     [manger GET:tweetDetailUrlStr
@@ -215,6 +223,50 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 
 #pragma mark - 获取点赞列表数据
+-(void)loadTweetLikesIsRefresh:(BOOL)isRefresh {
+    if (isRefresh) {
+        _TweetLikesPageToken = @"";
+    }
+    NSDictionary *paraDic = @{@"sourceId":@(_tweetID),
+                              @"pageToken":_TweetLikesPageToken
+                              };
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX, OSCAPI_TWEET_LIKES]
+      parameters:paraDic
+         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+//             NSLog(@"%@",responseObject[@"message"]);
+             
+             if([responseObject[@"code"]integerValue] == 1) {
+                 NSDictionary* resultDic = responseObject[@"result"];
+                 NSArray* items = resultDic[@"items"];
+                 if (isRefresh && items.count > 0) {//下拉得到的数据
+                     [self.tweetLikeList removeAllObjects];
+                 }
+                 for(int k=0;k<items.count;k++) {
+                     NSDictionary *userDic =[items objectAtIndex:k][@"author"];
+                     OSCUserItem *user = [OSCUserItem mj_objectWithKeyValues:userDic];
+                     if (user) {
+                         [self.tweetLikeList addObject:user];
+                     }
+                 }
+                 _TweetLikesPageToken = resultDic[@"nextPageToken"];
+             }
+             
+             if (self.tableView.mj_footer.isRefreshing) {
+                 [self.tableView.mj_footer endRefreshing];
+             }
+             if (!_isShowCommentList) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadData];
+                 });
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [self networkingError:error];
+         }
+     ];
+}
+/*
 -(void)loadTweetLikeListIsrefresh:(BOOL)isRefresh {
     if (isRefresh) {
         _likeListPage = 0;
@@ -256,14 +308,56 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
           }
      ];
 }
+ */
+
 //发表评论后，为了更新总的评论数
 -(void)reloadCommentList {
     _tweetDetail.commentCount++;
-    [self loadTweetCommentListIsrefresh:YES];
+    [self loadTweetCommentsIsRefresh:YES];
 }
 
 #pragma mark - 获取评论列表数据
+-(void)loadTweetCommentsIsRefresh:(BOOL)isRefresh {
+    if (isRefresh) {
+        _TweetCommentsPageToken = @"";
+    }
+    NSDictionary *paraDic = @{@"sourceId":@(_tweetID),
+                              @"pageToken":_TweetCommentsPageToken
+                              };
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX, OSCAPI_TWEET_COMMENTS]
+      parameters:paraDic
+         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+             //             NSLog(@"%@",responseObject[@"message"]);
+             
+             if([responseObject[@"code"]integerValue] == 1) {
+                 NSDictionary* resultDic = responseObject[@"result"];
+                 NSArray* items = resultDic[@"items"];
+                 NSArray *modelArray = [OSCCommentItem mj_objectArrayWithKeyValuesArray:items];
+                 
+                 if (isRefresh && modelArray.count > 0) {//下拉得到的数据
+                     [self.tweetCommentList removeAllObjects];
+                 }
+                 [self.tweetCommentList addObjectsFromArray:modelArray];
 
+                 _TweetCommentsPageToken = resultDic[@"nextPageToken"];
+             }
+             
+             if (self.tableView.mj_footer.isRefreshing) {
+                 [self.tableView.mj_footer endRefreshing];
+             }
+             if (!_isShowCommentList) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadData];
+                 });
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [self networkingError:error];
+         }
+     ];
+}
+/*
 -(void)loadTweetCommentListIsrefresh:(BOOL)isRefresh {
     if (isRefresh) {
         _commentListPage = 0;
@@ -305,10 +399,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
          }
      ];
 }
+ */
+
 -(void)networkingError:(NSError*)error {
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.mode = MBProgressHUDModeCustomView;
-    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
     HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
     [HUD hideAnimated:YES afterDelay:1];
     
@@ -359,7 +455,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         if (_isShowCommentList) {
             TweetCommentNewCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:tCommentReuseIdentifier forIndexPath:indexPath];
             if (indexPath.row < _tweetCommentList.count) {
-                OSCComment *commentModel = _tweetCommentList[indexPath.row];
+//                OSCComment *commentModel = _tweetCommentList[indexPath.row];
+                OSCCommentItem *commentModel = _tweetCommentList[indexPath.row];
                 [commentCell setCommentModel:commentModel];
                 
                 [self setBlockForCommentCell:commentCell];
@@ -367,18 +464,18 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                 commentCell.commentTagIv.tag = indexPath.row;
                 [commentCell.commentTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(replyReviewer:)]];
                 
-                commentCell.portraitIv.tag = commentModel.authorID;
+                commentCell.portraitIv.tag = commentModel.id;
                 [commentCell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
             }
             return commentCell;
         }else {
             TweetLikeNewCell *likeCell = [self.tableView dequeueReusableCellWithIdentifier:tLikeReuseIdentifier forIndexPath:indexPath];
             if (indexPath.row < _tweetLikeList.count) {
-                OSCUser *likedUser = [_tweetLikeList objectAtIndex:indexPath.row];
-                [likeCell.portraitIv loadPortrait:likedUser.portraitURL];
+                OSCUserItem *likedUser = [_tweetLikeList objectAtIndex:indexPath.row];
+                [likeCell.portraitIv loadPortrait:[NSURL URLWithString:likedUser.portrait]];
                 likeCell.nameLabel.text = likedUser.name;
+                likeCell.touchButton.tag = likedUser.id;
                 
-                likeCell.touchButton.tag = likedUser.userID;
                 [likeCell.touchButton addTarget:self action:@selector(likedUserDetails:) forControlEvents:UIControlEventTouchUpInside];
             }
             return likeCell;
@@ -453,7 +550,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 
 -(void)likeThisTweet:(UITapGestureRecognizer*)tap {
     UIImageView *likeTagIv = (UIImageView*)tap.view;
-    [self praiseTweetAndUpdateTagIv:likeTagIv];
+//    [self praiseTweetAndUpdateTagIv:likeTagIv];
+    [self likeOrCancelLikeTweetAndUpdateTagIv:likeTagIv];
 }
 -(void)commentTweet {
     if (self.didActivatedInputBar) {
@@ -466,6 +564,66 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         self.didCommentSelected(comment);
     }
 }
+#pragma mark --点赞（新接口)
+-(void)likeOrCancelLikeTweetAndUpdateTagIv:(UIImageView*)likeTagIv {
+    if (_tweetDetail.id == 0) {
+        return;
+    }
+    NSString *postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX, OSCAPI_TWEET_LIKE_REVERSE];
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
+    [manager POST:postUrl
+       parameters:@{@"sourceId":@(_tweetDetail.id)}
+         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        
+             if([responseObject[@"code"]integerValue] == 1) {
+                 if (_tweetDetail.liked) {
+                     //取消点赞
+                     _tweetDetail.likeCount--;
+                     [likeTagIv setImage:[UIImage imageNamed:@"ic_thumbup_normal"]];
+                     for (OSCUserItem *likeUser in _tweetLikeList) {
+                         OSCUserItem *currentUser = [OSCUserItem mj_objectWithKeyValues:responseObject[@"result"][@"author"]];
+                         if (currentUser.id == likeUser.id) {
+                             [_tweetLikeList removeObject:likeUser];
+                             break;
+                         }
+                     }
+                     _tweetDetail.liked = NO;
+                 } else {
+                     //点赞
+                     _tweetDetail.likeCount++;
+                     [likeTagIv setImage:[UIImage imageNamed:@"ic_thumbup_actived"]];
+                     OSCUserItem *currentUser = [OSCUserItem mj_objectWithKeyValues:responseObject[@"result"][@"author"]];
+                     [_tweetLikeList insertObject:currentUser atIndex:0];
+                     _tweetDetail.liked = YES;
+                 }
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                 });
+             }else {
+                 MBProgressHUD *HUD = [Utils createHUD];
+                 HUD.mode = MBProgressHUDModeCustomView;
+                 HUD.label.text = [NSString stringWithFormat:@"%@", responseObject[@"message"]];
+                 
+                 [HUD hideAnimated:YES afterDelay:1];
+             }
+             
+             if (self.tableView.mj_footer.isRefreshing) {
+                 [self.tableView.mj_footer endRefreshing];
+             }
+             if (!_isShowCommentList) {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     [self.tableView reloadData];
+                 });
+             }
+         }
+         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             [self networkingError:error];
+         }
+     ];
+}
+/*
 #pragma mark -- 点赞
 - (void)praiseTweetAndUpdateTagIv:(UIImageView*)likeTagIv {
     if (_tweetDetail.id == 0) {
@@ -497,9 +655,9 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                       //取消点赞
                       _tweetDetail.likeCount--;
                       [likeTagIv setImage:[UIImage imageNamed:@"ic_thumbup_normal"]];
-                      for (OSCUser *likeUser in _tweetLikeList) {
-                          OSCUser *currentUser = [Config myProfile];
-                          if (currentUser.userID == likeUser.userID) {
+                      for (OSCUserItem *likeUser in _tweetLikeList) {
+                          OSCUserItem *currentUser = [Config myProfileNew];
+                          if (currentUser.id == likeUser.id) {
                               [_tweetLikeList removeObject:likeUser];
                               break;
                           }
@@ -520,9 +678,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
               } else {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
-                  
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  HUD.label.text = [NSString stringWithFormat:@"%@", errorMessage];
                   
                   [HUD hideAnimated:YES afterDelay:1];
               }
@@ -530,14 +686,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
-              
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
               [HUD hideAnimated:YES afterDelay:1];
           }];
 }
-
+*/
 #pragma mark - scrollView
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -563,8 +717,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
     
     [self.navigationController handleURL:request.URL];
@@ -578,16 +731,18 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             return YES;
         } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            OSCComment *comment = self.tweetCommentList[indexPath.row];
+//            OSCComment *comment = self.tweetCommentList[indexPath.row];
+            OSCCommentItem *comment = self.tweetCommentList[indexPath.row];
             int64_t ownID = [Config getOwnID];
-            return (comment.authorID == ownID || _tweetDetail.id == ownID);
+            return (comment.author.id == ownID || _tweetDetail.id == ownID);
         }
         return NO;
     };
     
     cell.deleteObject = ^ (UITableViewCell *cell) {
         NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        OSCComment *comment = self.tweetCommentList[indexPath.row];
+//        OSCComment *comment = self.tweetCommentList[indexPath.row];
+        OSCCommentItem *comment = self.tweetCommentList[indexPath.row];
         MBProgressHUD *HUD = [Utils createHUD];
         HUD.label.text = @"正在删除评论";
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
@@ -595,8 +750,8 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
            parameters:@{
                         @"catalog": @(3),
                         @"id": @(_tweetDetail.id),
-                        @"replyid": @(comment.commentID),
-                        @"authorid": @(comment.authorID)
+                        @"replyid": @(comment.id),
+                        @"authorid": @(comment.author.id)
                         }
               success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
                   ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
@@ -610,7 +765,6 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                       HUD.label.text = @"评论删除成功";
                       
                       [self.tweetCommentList removeObjectAtIndex:indexPath.row];
-//                      self.allCount--;
                       if (self.tweetCommentList.count > 0) {
                           [self.tableView beginUpdates];
                           [self.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
@@ -620,14 +774,12 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
                           [self.tableView reloadData];
                       });
                   } else {
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                      HUD.label.text = [NSString stringWithFormat:@"%@", errorMessage];
                   }
                   
                   [HUD hideAnimated:YES afterDelay:1];
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.label.text = @"网络异常，操作失败";
                   
                   [HUD hideAnimated:YES afterDelay:1];

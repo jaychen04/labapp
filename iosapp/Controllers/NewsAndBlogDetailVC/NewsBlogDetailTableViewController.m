@@ -117,7 +117,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     coverView.backgroundColor = [UIColor whiteColor];
     coverView.tag = 10;
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud = [[MBProgressHUD alloc] initWithView:window];
     _hud.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:_hud];
     [self.view addSubview:coverView];
@@ -260,7 +260,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.label.text = @"网络异常，操作失败";
                   
                   [HUD hideAnimated:YES afterDelay:1];
@@ -1319,7 +1319,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                      _commentTextField.text = @"";
                      _commentTextField.placeholder = @"";
                  }else {
-                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -1329,7 +1329,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
              }
              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                  HUD.mode = MBProgressHUDModeCustomView;
-                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                  HUD.label.text = @"网络异常，评论发送失败";
                  [HUD hideAnimated:YES afterDelay:1];
              }];
@@ -1498,7 +1498,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
-                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                  HUD.label.text = @"网络异常，操作失败";
                  
                  [HUD hideAnimated:YES afterDelay:1];

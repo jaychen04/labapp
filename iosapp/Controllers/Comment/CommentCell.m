@@ -8,6 +8,7 @@
 
 #import "CommentCell.h"
 #import "OSCComment.h"
+#import "OSCCommentItem.h"
 #import "Utils.h"
 #import "Config.h"
 #import "AppDelegate.h"

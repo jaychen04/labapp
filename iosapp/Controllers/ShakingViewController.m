@@ -248,7 +248,7 @@ static const double accelerationThreshold = 2.0f;
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
              MBProgressHUD *HUD = [Utils createHUD];
              HUD.mode = MBProgressHUDModeCustomView;
-             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//             HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
              HUD.label.text = @"网络异常，请检测网络";
              
              [HUD hideAnimated:YES afterDelay:2];

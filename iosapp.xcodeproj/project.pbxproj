@@ -122,6 +122,8 @@
 		31F14FE81D41F80300AD0763 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDC1D41F80300AD0763 /* Overlay@2x.png */; };
 		31F14FE91D41F80300AD0763 /* Overlay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDD1D41F80300AD0763 /* Overlay@3x.png */; };
 		31F14FEA1D41F80300AD0763 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FDE1D41F80300AD0763 /* README.md */; };
+		31F14FED1D42205700AD0763 /* OSCUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FEC1D42205700AD0763 /* OSCUserItem.m */; };
+		31F14FF01D422A4400AD0763 /* OSCCommentItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FEF1D422A4400AD0763 /* OSCCommentItem.m */; };
 		31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */; };
 		31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */; };
 		3801789C1A2C1A7300922858 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3801789B1A2C1A7300922858 /* EventCell.m */; };
@@ -535,6 +537,10 @@
 		31F14FDC1D41F80300AD0763 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
 		31F14FDD1D41F80300AD0763 /* Overlay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@3x.png"; sourceTree = "<group>"; };
 		31F14FDE1D41F80300AD0763 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		31F14FEB1D42205700AD0763 /* OSCUserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCUserItem.h; sourceTree = "<group>"; };
+		31F14FEC1D42205700AD0763 /* OSCUserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCUserItem.m; sourceTree = "<group>"; };
+		31F14FEE1D422A4400AD0763 /* OSCCommentItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCCommentItem.h; sourceTree = "<group>"; };
+		31F14FEF1D422A4400AD0763 /* OSCCommentItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCCommentItem.m; sourceTree = "<group>"; };
 		31F8925C1B0DF179002E0838 /* NewTeamIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTeamIssueViewController.h; sourceTree = "<group>"; };
 		31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTeamIssueViewController.m; sourceTree = "<group>"; };
 		31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -2038,6 +2044,8 @@
 			children = (
 				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
 				386039601A09C5A1007C9B88 /* OSCUser.m */,
+				31F14FEB1D42205700AD0763 /* OSCUserItem.h */,
+				31F14FEC1D42205700AD0763 /* OSCUserItem.m */,
 			);
 			name = User;
 			sourceTree = "<group>";
@@ -2049,6 +2057,8 @@
 				38BD7D7419FF8521003ABB80 /* OSCComment.m */,
 				38A93F9E1A9F8F8F00A515E8 /* OSCReply.h */,
 				38A93F9F1A9F8F8F00A515E8 /* OSCReply.m */,
+				31F14FEE1D422A4400AD0763 /* OSCCommentItem.h */,
+				31F14FEF1D422A4400AD0763 /* OSCCommentItem.m */,
 			);
 			name = Comment;
 			sourceTree = "<group>";
@@ -2738,6 +2748,7 @@
 				31D56E871CF6D7C6000AA1D4 /* NewHotBlogTableViewCell.m in Sources */,
 				38EAF1B61AE0A85F00397E2A /* TeamActivity.m in Sources */,
 				C5EF89221BE3194800B5FA46 /* SoftwareCatalogVC.m in Sources */,
+				31F14FED1D42205700AD0763 /* OSCUserItem.m in Sources */,
 				0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */,
 				0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */,
 				EE6FB5DD1D0D1050006A11A4 /* NewTweetCell.m in Sources */,
@@ -2831,6 +2842,7 @@
 				042D8C3E1D389328001A6494 /* NewMultipleTweetCell.m in Sources */,
 				C5E4B17C1B5794FB008E7463 /* DiscoverViewController.m in Sources */,
 				C5FB958E1AEA2C8D006918CD /* DiscussionDetailsViewController.m in Sources */,
+				31F14FF01D422A4400AD0763 /* OSCCommentItem.m in Sources */,
 				31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */,
 				C5B2F1B91BD0DFF2004B4785 /* NSString+Util.m in Sources */,
 				38BD7D7519FF8521003ABB80 /* OSCComment.m in Sources */,
