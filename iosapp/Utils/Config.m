@@ -9,7 +9,7 @@
 #import "Config.h"
 #import "TeamTeam.h"
 #import "OSCUser.h"
-
+#import "OSCUserItem.h"
 #import <SSKeychain.h>
 
 NSString * const kService = @"OSChina";

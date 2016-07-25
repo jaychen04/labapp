@@ -156,7 +156,6 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
 
-
 //    OSCAPI_HTTPS_PREFIX  @"http://192.168.1.15:8000/action/api/" http://192.168.1.48:1104/action/api/
     [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_HTTPS_PREFIX , OSCAPI_LOGIN_VALIDATE]
        parameters:@{@"username" : _accountField.text,
@@ -171,7 +170,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
                   NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
                   
                   _hud.mode = MBProgressHUDModeCustomView;
-                  _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   _hud.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   [_hud hideAnimated:YES afterDelay:1];
                   
@@ -184,7 +183,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               [self renewUserWithXML:userXML];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _hud.mode = MBProgressHUDModeCustomView;
-              _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               _hud.label.text = [@(operation.response.statusCode) stringValue];
               _hud.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
@@ -344,7 +343,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *hud = [Utils createHUD];
               hud.mode = MBProgressHUDModeCustomView;
-              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               hud.label.text = [@(operation.response.statusCode) stringValue];
               hud.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
@@ -373,7 +372,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               } else {
                   MBProgressHUD *hud = [Utils createHUD];
                   hud.mode = MBProgressHUDModeCustomView;
-                  hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   hud.detailsLabel.text = errorMessage;
                   
                   [hud hideAnimated:YES afterDelay:1];
@@ -381,7 +380,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *hud = [Utils createHUD];
               hud.mode = MBProgressHUDModeCustomView;
-              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               hud.label.text = [@(operation.response.statusCode) stringValue];
               hud.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
@@ -412,7 +411,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               } else {
                   MBProgressHUD *hud = [Utils createHUD];
                   hud.mode = MBProgressHUDModeCustomView;
-                  hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   hud.detailsLabel.text = errorMessage;
                   
                   [hud hideAnimated:YES afterDelay:1];
@@ -421,7 +420,7 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *hud = [Utils createHUD];
               hud.mode = MBProgressHUDModeCustomView;
-              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               hud.label.text = [@(operation.response.statusCode) stringValue];
               hud.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
