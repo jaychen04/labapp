@@ -111,6 +111,18 @@
 		31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */; };
 		31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FA1AEF2685004DF445 /* ProjectCell.m */; };
 		31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */; };
+		31F14FDF1D41F80300AD0763 /* ELCAlbumPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FCC1D41F80300AD0763 /* ELCAlbumPickerController.m */; };
+		31F14FE01D41F80300AD0763 /* ELCAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FCE1D41F80300AD0763 /* ELCAsset.m */; };
+		31F14FE11D41F80300AD0763 /* ELCAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FD01D41F80300AD0763 /* ELCAssetCell.m */; };
+		31F14FE21D41F80300AD0763 /* ELCAssetTablePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FD41D41F80300AD0763 /* ELCAssetTablePicker.m */; };
+		31F14FE31D41F80300AD0763 /* ELCImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FD61D41F80300AD0763 /* ELCImagePickerController.m */; };
+		31F14FE41D41F80300AD0763 /* ELCAlbumPickerController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FD81D41F80300AD0763 /* ELCAlbumPickerController.xib */; };
+		31F14FE51D41F80300AD0763 /* ELCAssetPicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FD91D41F80300AD0763 /* ELCAssetPicker.xib */; };
+		31F14FE61D41F80300AD0763 /* ELCAssetTablePicker.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDA1D41F80300AD0763 /* ELCAssetTablePicker.xib */; };
+		31F14FE71D41F80300AD0763 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDB1D41F80300AD0763 /* Overlay.png */; };
+		31F14FE81D41F80300AD0763 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDC1D41F80300AD0763 /* Overlay@2x.png */; };
+		31F14FE91D41F80300AD0763 /* Overlay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDD1D41F80300AD0763 /* Overlay@3x.png */; };
+		31F14FEA1D41F80300AD0763 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FDE1D41F80300AD0763 /* README.md */; };
 		31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */; };
 		31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */; };
 		3801789C1A2C1A7300922858 /* EventCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3801789B1A2C1A7300922858 /* EventCell.m */; };
@@ -505,6 +517,25 @@
 		31EAF9FA1AEF2685004DF445 /* ProjectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectCell.m; sourceTree = "<group>"; };
 		31EAF9FD1AEF884A004DF445 /* TeamIssueList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamIssueList.h; sourceTree = "<group>"; };
 		31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamIssueList.m; sourceTree = "<group>"; };
+		31F14FCB1D41F80300AD0763 /* ELCAlbumPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAlbumPickerController.h; sourceTree = "<group>"; };
+		31F14FCC1D41F80300AD0763 /* ELCAlbumPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAlbumPickerController.m; sourceTree = "<group>"; };
+		31F14FCD1D41F80300AD0763 /* ELCAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAsset.h; sourceTree = "<group>"; };
+		31F14FCE1D41F80300AD0763 /* ELCAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAsset.m; sourceTree = "<group>"; };
+		31F14FCF1D41F80300AD0763 /* ELCAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetCell.h; sourceTree = "<group>"; };
+		31F14FD01D41F80300AD0763 /* ELCAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAssetCell.m; sourceTree = "<group>"; };
+		31F14FD11D41F80300AD0763 /* ELCAssetPickerFilterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetPickerFilterDelegate.h; sourceTree = "<group>"; };
+		31F14FD21D41F80300AD0763 /* ELCAssetSelectionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetSelectionDelegate.h; sourceTree = "<group>"; };
+		31F14FD31D41F80300AD0763 /* ELCAssetTablePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCAssetTablePicker.h; sourceTree = "<group>"; };
+		31F14FD41D41F80300AD0763 /* ELCAssetTablePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCAssetTablePicker.m; sourceTree = "<group>"; };
+		31F14FD51D41F80300AD0763 /* ELCImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ELCImagePickerController.h; sourceTree = "<group>"; };
+		31F14FD61D41F80300AD0763 /* ELCImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ELCImagePickerController.m; sourceTree = "<group>"; };
+		31F14FD81D41F80300AD0763 /* ELCAlbumPickerController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAlbumPickerController.xib; sourceTree = "<group>"; };
+		31F14FD91D41F80300AD0763 /* ELCAssetPicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetPicker.xib; sourceTree = "<group>"; };
+		31F14FDA1D41F80300AD0763 /* ELCAssetTablePicker.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ELCAssetTablePicker.xib; sourceTree = "<group>"; };
+		31F14FDB1D41F80300AD0763 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
+		31F14FDC1D41F80300AD0763 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
+		31F14FDD1D41F80300AD0763 /* Overlay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@3x.png"; sourceTree = "<group>"; };
+		31F14FDE1D41F80300AD0763 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		31F8925C1B0DF179002E0838 /* NewTeamIssueViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTeamIssueViewController.h; sourceTree = "<group>"; };
 		31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTeamIssueViewController.m; sourceTree = "<group>"; };
 		31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -1067,6 +1098,7 @@
 		00EDF60C19EFC13500A5C842 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				31F14FC81D41F80300AD0763 /* ELCImagePickerController */,
 				04EC1B5B1D38F6DF006DBD5D /* IMYWebView.h */,
 				04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */,
 				04EC1B611D393049006DBD5D /* IMY_NJKWebViewProgress.h */,
@@ -1289,6 +1321,56 @@
 				31405BE61AF073A6000A487D /* 任务分组列表 */,
 			);
 			name = "项目";
+			sourceTree = "<group>";
+		};
+		31F14FC81D41F80300AD0763 /* ELCImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				31F14FC91D41F80300AD0763 /* Classes */,
+				31F14FDE1D41F80300AD0763 /* README.md */,
+			);
+			path = ELCImagePickerController;
+			sourceTree = "<group>";
+		};
+		31F14FC91D41F80300AD0763 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				31F14FCA1D41F80300AD0763 /* ELCImagePicker */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		31F14FCA1D41F80300AD0763 /* ELCImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				31F14FCB1D41F80300AD0763 /* ELCAlbumPickerController.h */,
+				31F14FCC1D41F80300AD0763 /* ELCAlbumPickerController.m */,
+				31F14FCD1D41F80300AD0763 /* ELCAsset.h */,
+				31F14FCE1D41F80300AD0763 /* ELCAsset.m */,
+				31F14FCF1D41F80300AD0763 /* ELCAssetCell.h */,
+				31F14FD01D41F80300AD0763 /* ELCAssetCell.m */,
+				31F14FD11D41F80300AD0763 /* ELCAssetPickerFilterDelegate.h */,
+				31F14FD21D41F80300AD0763 /* ELCAssetSelectionDelegate.h */,
+				31F14FD31D41F80300AD0763 /* ELCAssetTablePicker.h */,
+				31F14FD41D41F80300AD0763 /* ELCAssetTablePicker.m */,
+				31F14FD51D41F80300AD0763 /* ELCImagePickerController.h */,
+				31F14FD61D41F80300AD0763 /* ELCImagePickerController.m */,
+				31F14FD71D41F80300AD0763 /* Resources */,
+			);
+			path = ELCImagePicker;
+			sourceTree = "<group>";
+		};
+		31F14FD71D41F80300AD0763 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				31F14FD81D41F80300AD0763 /* ELCAlbumPickerController.xib */,
+				31F14FD91D41F80300AD0763 /* ELCAssetPicker.xib */,
+				31F14FDA1D41F80300AD0763 /* ELCAssetTablePicker.xib */,
+				31F14FDB1D41F80300AD0763 /* Overlay.png */,
+				31F14FDC1D41F80300AD0763 /* Overlay@2x.png */,
+				31F14FDD1D41F80300AD0763 /* Overlay@3x.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		380FD21A1A74DF22003C4021 /* 活动 */ = {
@@ -2398,7 +2480,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31F14FE71D41F80300AD0763 /* Overlay.png in Resources */,
+				31F14FE41D41F80300AD0763 /* ELCAlbumPickerController.xib in Resources */,
 				EEE241AA1CFD65710088FFB3 /* ActivityDetailViewController.xib in Resources */,
+				31F14FE61D41F80300AD0763 /* ELCAssetTablePicker.xib in Resources */,
 				31212ECC1D0E670100FA17B1 /* TweetsDetailNewCell.xib in Resources */,
 				EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */,
 				C5E56F531B56B58B0059924C /* Discover.storyboard in Resources */,
@@ -2415,7 +2500,9 @@
 				EED7C71D1D222667001B565C /* NewCommentListViewController.xib in Resources */,
 				EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */,
 				EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */,
+				31F14FE91D41F80300AD0763 /* Overlay@3x.png in Resources */,
 				31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */,
+				31F14FE51D41F80300AD0763 /* ELCAssetPicker.xib in Resources */,
 				EEFF2FFC1D361D2E0076CFF4 /* HomeButtonCell.xib in Resources */,
 				31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */,
 				EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */,
@@ -2441,6 +2528,7 @@
 				C5E92FDE1B59FAC300EFE47E /* Homepage.storyboard in Resources */,
 				EE7B0AE41D348DDF0070F196 /* NewBlogsViewController.xib in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
+				31F14FE81D41F80300AD0763 /* Overlay@2x.png in Resources */,
 				043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2560,6 +2648,7 @@
 				38EAF1CA1AE112A200397E2A /* TeamIssueCell.m in Sources */,
 				0422BC591CEDA390007DB140 /* TAPageControl.m in Sources */,
 				C5E92FE11B5A1E5F00EFE47E /* HomepageViewController.m in Sources */,
+				31F14FE31D41F80300AD0763 /* ELCImagePickerController.m in Sources */,
 				31405BE91AF07453000A487D /* TeamIssueListViewController.m in Sources */,
 				3801789C1A2C1A7300922858 /* EventCell.m in Sources */,
 				38EAF1B31AE0A6B900397E2A /* TeamActivityViewController.m in Sources */,
@@ -2625,6 +2714,7 @@
 				31D699691CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m in Sources */,
 				C5A89C381B09C34B00798B1C /* NSString+FontAwesome.m in Sources */,
 				38B0BF921A3AE77300A2FDB0 /* MessagesViewController.m in Sources */,
+				31F14FE01D41F80300AD0763 /* ELCAsset.m in Sources */,
 				38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */,
 				00D6BCE319EB673200E8754E /* AppDelegate.m in Sources */,
 				38B0BFA31A41349800A2FDB0 /* OptionButton.m in Sources */,
@@ -2651,6 +2741,7 @@
 				EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */,
 				31855C8B1D0E621F00C8F8B8 /* TweetDetailNewTableViewController.m in Sources */,
 				042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */,
+				31F14FE21D41F80300AD0763 /* ELCAssetTablePicker.m in Sources */,
 				0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */,
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
 				C5D7C10E1B12F8A8003EFE9B /* CheckboxTableCell.m in Sources */,
@@ -2695,6 +2786,7 @@
 				EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */,
 				384A11361ADFCBD200856A7C /* TeamUser.m in Sources */,
 				04EC969D1CF436FB0004B54E /* OSCActivityTableViewCell.m in Sources */,
+				31F14FE11D41F80300AD0763 /* ELCAssetCell.m in Sources */,
 				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
 				C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */,
@@ -2722,6 +2814,7 @@
 				0422BC5B1CEDA390007DB140 /* SDCycleScrollView.m in Sources */,
 				38B0BFA91A42AF5500A2FDB0 /* TweetEditingVC.m in Sources */,
 				31ABF5811B0F1B5300663C08 /* JKAlertDialog.m in Sources */,
+				31F14FDF1D41F80300AD0763 /* ELCAlbumPickerController.m in Sources */,
 				38A9EEA41AA84BE6006C95BD /* SettingsPage.m in Sources */,
 				3118F8D31AFB4803001684BC /* TeamMemberDetailViewController.m in Sources */,
 				00364FF419F543DE00871255 /* TitleBarView.m in Sources */,
@@ -2745,6 +2838,7 @@
 				EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */,
 				C5B2F1A81BCE6C84004B4785 /* UINavigationController+Router.m in Sources */,
 				31405BEC1AF074A4000A487D /* TeamIssueListCell.m in Sources */,
+				31F14FEA1D41F80300AD0763 /* README.md in Sources */,
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
 				04EC1B5D1D38F6DF006DBD5D /* IMYWebView.m in Sources */,
 				C5EF89181BE318E800B5FA46 /* CommentCell.m in Sources */,
@@ -2880,8 +2974,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Hailong Zhang (W2L8S38S6D)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hailong Zhang (W2L8S38S6D)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2939,7 +3033,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "abc0ca45-0503-49a3-9062-3fa64e270874";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -2949,8 +3043,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Hailong Zhang (W2L8S38S6D)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Hailong Zhang (W2L8S38S6D)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3007,7 +3101,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "abc0ca45-0503-49a3-9062-3fa64e270874";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
