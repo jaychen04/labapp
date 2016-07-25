@@ -23,6 +23,7 @@
 @property (nonatomic, copy) void (^deleteObject)(UITableViewCell *cell);
 
 - (void)setContentWithComment:(OSCComment *)comment;
+
 - (void)copyText:(id)sender;
 - (void)deleteObject:(id)sender;
 

@@ -12,10 +12,10 @@
 //#define OSCAPI_HTTPS_PREFIX             @"http://192.168.1.11/action/api/"
 //#define OSCAPI_PREFIX                   @"http://192.168.1.11/action/api/"
 
-#define OSCAPI_HTTPS_PREFIX             @"https://www.oschina.net/action/api/"
-#define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
-#define OSCAPI_V2_HTTPS_PREFIX             @"https://www.oschina.net/action/apiv2/"
-#define OSCAPI_V2_PREFIX                   @"http://www.oschina.net/action/apiv2/"
+//#define OSCAPI_HTTPS_PREFIX             @"https://www.oschina.net/action/api/"
+//#define OSCAPI_PREFIX                   @"http://www.oschina.net/action/api/"
+//#define OSCAPI_V2_HTTPS_PREFIX             @"https://www.oschina.net/action/apiv2/"
+//#define OSCAPI_V2_PREFIX                   @"http://www.oschina.net/action/apiv2/"
 
 // 15机器
 //#define OSCAPI_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/api/"
@@ -23,11 +23,11 @@
 //#define OSCAPI_V2_PREFIX                   @"http://192.168.1.15:8000/action/apiv2/"
 //#define OSCAPI_V2_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/apiv2/"
 
-
-
-
-//#define OSCAPI_V2_PREFIX                  @"http://192.168.1.15:8000/action/apiv2/"
-
+// 10机器
+#define OSCAPI_HTTPS_PREFIX                 @"http://192.168.1.10:8000/action/api/"
+#define OSCAPI_PREFIX                       @"http://192.168.1.10:8000/action/api/"
+#define OSCAPI_V2_PREFIX                   @"http://192.168.1.10:8000/action/apiv2/"
+#define OSCAPI_V2_HTTPS_PREFIX             @"http://192.168.1.10:8000/action/apiv2/"
 
 
 #define OSCAPI_SUFFIX                   @"pageSize=20"
@@ -47,10 +47,16 @@
 #define OSCAPI_TWEET_PUB                @"tweet_pub"
 #define OSCAPI_TWEET_LIKE               @"tweet_like"
 #define OSCAPI_TWEET_UNLIKE             @"tweet_unlike"
+#define OSCAPI_TWEET_LIKE_REVERSE       @"tweet_like_reverse"
+
 #define OSCAPI_TWEET_LIKE_LIST          @"tweet_like_list"
 #define OSCAPI_MY_TWEET_LIKE_LIST       @"my_tweet_like_list"
 #define OSCAPI_SOFTWARE_TWEET_PUB       @"software_tweet_pub"
 #define OSCAPI_TWEET_TOPIC_LIST         @"tweet_topic_list"
+//新动弹接口
+#define OSCAPI_TWEET_LIKES              @"tweet_likes"      //点赞列表
+#define OSCAPI_TWEET_COMMENTS              @"tweet_comments"      //评论列表
+
 
 #define OSCAPI_ACTIVE_LIST              @"active_list"
 
