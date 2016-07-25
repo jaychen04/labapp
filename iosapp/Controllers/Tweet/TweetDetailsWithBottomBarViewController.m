@@ -12,7 +12,7 @@
 #import "UserDetailsViewController.h"
 #import "ImageViewerController.h"
 #import "OSCTweet.h"
-#import "OSCComment.h"
+#import "OSCCommentItem.h"
 #import "TweetDetailsCell.h"
 #import "Config.h"
 #import "Utils.h"
@@ -76,8 +76,8 @@
 //        [weakSelf hideEmojiPageView];
     
     
-    _tweetDetailsNewVC.didCommentSelected = ^(OSCComment *comment) {
-        NSString *authorString = [NSString stringWithFormat:@"@%@ ", comment.author];
+    _tweetDetailsNewVC.didCommentSelected = ^(OSCCommentItem *comment) {
+        NSString *authorString = [NSString stringWithFormat:@"@%@ ", comment.author.name];
         
         if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {
             [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:authorString];

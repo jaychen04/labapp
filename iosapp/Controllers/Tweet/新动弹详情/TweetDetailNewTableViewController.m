@@ -348,7 +348,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
              if (self.tableView.mj_footer.isRefreshing) {
                  [self.tableView.mj_footer endRefreshing];
              }
-             if (!_isShowCommentList) {
+             if (_isShowCommentList) {
                  dispatch_async(dispatch_get_main_queue(), ^{
                      [self.tableView reloadData];
                  });
@@ -406,7 +406,6 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 -(void)networkingError:(NSError*)error {
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.mode = MBProgressHUDModeCustomView;
-//    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
     HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
     [HUD hideAnimated:YES afterDelay:1];
     
@@ -510,7 +509,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section != 0) {
         if (_isShowCommentList && _tweetCommentList.count > 0) {
-            OSCComment *comment = _tweetCommentList[indexPath.row];
+            OSCCommentItem *comment = _tweetCommentList[indexPath.row];
             if (self.didCommentSelected) {
                 self.didCommentSelected(comment);
             }
@@ -602,7 +601,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     }
 }
 -(void)replyReviewer:(UITapGestureRecognizer*)tap {
-    OSCComment *comment = _tweetCommentList[tap.view.tag];
+    OSCCommentItem *comment = _tweetCommentList[tap.view.tag];
     if (self.didCommentSelected) {
         self.didCommentSelected(comment);
     }
@@ -647,7 +646,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
              }else {
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
-                 HUD.label.text = [NSString stringWithFormat:@"%@", responseObject[@"message"]];
+                 HUD.label.text = [NSString stringWithFormat:@"%@", responseObject[@"message"]?:@"未知错误"];
                  
                  [HUD hideAnimated:YES afterDelay:1];
              }
