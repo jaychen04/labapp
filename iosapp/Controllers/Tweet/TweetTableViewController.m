@@ -131,7 +131,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             return [NSString stringWithFormat:@"%@%@?project=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_SOFTWARE_TWEET_LIST, softwareID, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
-        self.objClass = [OSCTweet class];
+        self.objClass = [OSCTweetItem class];
     }
     
     return self;
@@ -150,7 +150,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             return [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         };
         
-        self.objClass = [OSCTweet class];
+        self.objClass = [OSCTweetItem class];
         
         self.navigationItem.title = topic;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(topicEditing)];
@@ -173,7 +173,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
         return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
     };
     
-    self.objClass = [OSCTweet class];
+    self.objClass = [OSCTweetItem class];
 }
 
 
@@ -576,15 +576,15 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 #pragma mark - 点赞功能
 - (void)togglePraise:(UIButton *)button
 {
-    OSCTweet *tweet = self.objects[button.tag];
+    OSCTweetItem *tweet = self.objects[button.tag];
     [self toPraise:tweet];
 }
 
-- (void)toPraise:(OSCTweet *)tweet
+- (void)toPraise:(OSCTweetItem *)tweet
 {
     
     NSString *postUrl;
-    if (tweet.isLike) {
+    if (tweet.liked) {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_UNLIKE];
     } else {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
@@ -595,8 +595,8 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     [manager POST:postUrl
        parameters:@{
                     @"uid": @([Config getOwnID]),
-                    @"tweetid": @(tweet.tweetID),
-                    @"ownerOfTweet": @( tweet.authorID)
+                    @"tweetid": @(tweet.id),
+                    @"ownerOfTweet": @( tweet.author.id)
                     }
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
@@ -604,7 +604,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
               NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
               
               if (errorCode == 1) {
-                  if (tweet.isLike) {
+                  if (tweet.liked) {
                       //取消点赞
 
                       tweet.likeCount--;
@@ -613,7 +613,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 
                       tweet.likeCount++;
                   }
-                  tweet.isLike = !tweet.isLike;
+                  tweet.liked = !tweet.liked;
                   
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [self.tableView reloadData];
