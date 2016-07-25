@@ -17,6 +17,7 @@
 #import "OSCCommentItem.h"
 #import "OSCTweet.h"
 #import "OSCTweetItem.h"
+#import "OSCPhotoGroupView.h"
 #import "NSString+FontAwesome.h"
 
 #import <AFNetworking.h>
@@ -215,6 +216,9 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
+                if (_tweetDetail.images.count > 1) {
+                    [self hideHubView];
+                }
                 [self.tableView reloadData];
             });
         }
@@ -540,7 +544,8 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
                  photoGroupView:(OSCPhotoGroupView* )groupView
                        fromView:(UIImageView* )fromView
 {
-    [self.tableView reloadData];
+    UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
+    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
 }
 #pragma mark -- Copy/Paste.  All three methods must be implemented by the delegate.
 
