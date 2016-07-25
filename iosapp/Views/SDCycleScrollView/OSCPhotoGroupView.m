@@ -8,6 +8,8 @@
 
 #import "OSCPhotoGroupView.h"
 #import <YYKit.h>
+#import <MBProgressHUD.h>
+#import "Utils.h"
 
 #define kPadding 20
 #define kHiColor [UIColor colorWithRGBHex:0x2dd6b8]
@@ -51,6 +53,10 @@
 
 
 @interface OSCPhotoGroupCell : UIScrollView <UIScrollViewDelegate>
+{
+@public
+    __weak UIButton* _downloadButton;
+}
 @property (nonatomic, strong) UIView *imageContainerView;
 @property (nonatomic, strong) YYAnimatedImageView *imageView;
 @property (nonatomic, assign) NSInteger page;
@@ -101,6 +107,17 @@
     _progressLayer.strokeEnd = 0;
     _progressLayer.hidden = YES;
     [self.layer addSublayer:_progressLayer];
+    
+    UIButton* downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGFloat W = [UIScreen mainScreen].bounds.size.width;
+    CGFloat H = [UIScreen mainScreen].bounds.size.height;
+    downloadBtn.frame = CGRectMake(W-60, H-60, 30, 30);
+    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"picture_download"] forState:UIControlStateNormal];
+    [downloadBtn addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
+    _downloadButton = downloadBtn;
+    UIView* keyWin = [UIApplication sharedApplication].keyWindow;
+    [keyWin addSubview:_downloadButton];
+    
     return self;
 }
 
@@ -207,6 +224,35 @@
     
     subView.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
                                  scrollView.contentSize.height * 0.5 + offsetY);
+}
+
+#pragma mark --- 下载保存图片
+- (void)downloadPicture
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"下载图片至手机相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(imageSavedToPhotosAlbum:didFinishSavingWithError:contextInfo:), nil);
+    }
+}
+
+- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+{
+    MBProgressHUD *HUD = [Utils createHUD];
+    HUD.mode = MBProgressHUDModeCustomView;
+    
+    if (!error) {
+        HUD.label.text = @"保存成功";
+    } else {
+        HUD.label.text = [NSString stringWithFormat:@"%@", [error description]];
+    }
+    
+    [HUD hideAnimated:YES afterDelay:1];
 }
 
 @end
@@ -386,7 +432,8 @@
     
     _background.image = _snapshorImageHideFromView;
     if (_blurEffectBackground) {
-        _blurBackground.image = [_snapshorImageHideFromView imageByBlurDark]; //Same to UIBlurEffectStyleDark
+        _blurBackground.image = [_snapshorImageHideFromView imageByBlurRadius:40 tintColor:[UIColor colorWithWhite:0.11 alpha:0.84] tintMode:kCGBlendModeNormal saturation:1.8 maskImage:nil];
+//        _blurBackground.image = [_snapshorImageHideFromView imageByBlurDark]; //Same to UIBlurEffectStyleDark
     } else {
         _blurBackground.image = [UIImage imageWithColor:[UIColor blackColor]];
     }
@@ -545,6 +592,9 @@
     [UIView animateWithDuration:animated ? 0.2 : 0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
         _pager.alpha = 0.0;
         _blurBackground.alpha = 0.0;
+        for (OSCPhotoGroupCell* cell in self.cells) {
+            cell->_downloadButton.alpha = 0.0;
+        }
         if (isFromImageClipped) {
             
             CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell];
@@ -567,6 +617,9 @@
             self.alpha = 0;
         } completion:^(BOOL finished) {
             cell.imageContainerView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+            for (OSCPhotoGroupCell* cell in self.cells) {
+                [cell->_downloadButton removeFromSuperview];
+            }
             [self removeFromSuperview];
             if (completion) completion();
         }];
@@ -844,5 +897,4 @@
         default:break;
     }
 }
-
 @end
