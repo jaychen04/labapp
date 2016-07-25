@@ -139,8 +139,8 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
      parameters:paraMutableDic.copy
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
             NSDictionary* result = responseObject[@"result"];
-            NSArray* JsonItems = result[@"items"];
-            NSArray* models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
+            NSArray *JsonItems = result[@"items"];
+            NSArray *models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
             self.tokens[index] = result[@"nextPageToken"];
             if (isRefresh) {
                 self.dataModels[index] = models;
@@ -150,10 +150,10 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (isRefresh) {
                     [self.tableView.mj_header endRefreshing];
-                }else{
-                    if (models.count < 20) {
+                } else {
+                    if (models.count < 1) {
                         [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                    }else{
+                    } else {
                         [self.tableView.mj_footer endRefreshing];
                     }
                 }

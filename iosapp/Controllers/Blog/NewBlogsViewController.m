@@ -120,16 +120,16 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
             self.tokens[index] = result[@"nextPageToken"];
             if (isRefresh) {
                 self.dataModels[index] = models;
-            }else {
+            } else {
                 [self.dataModels[index] addObjectsFromArray:models];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (isRefresh) {
                     [self.tableView.mj_header endRefreshing];
-                }else{
-                    if (models.count < 20) {
+                } else {
+                    if (models.count < 1) {
                         [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                    }else{
+                    } else {
                         [self.tableView.mj_footer endRefreshing];
                     }
                 }
