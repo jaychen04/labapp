@@ -163,7 +163,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
             
         } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             _HUD.mode = MBProgressHUDModeCustomView;
-            _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//            _HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
             _HUD.label.text = @"网络异常，发送失败";
             [_HUD hideAnimated:YES afterDelay:1.0];
         }];

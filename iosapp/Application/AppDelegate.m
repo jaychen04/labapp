@@ -28,6 +28,8 @@
 #import "TranslationViewController.h"
 #import "ActivityDetailViewController.h"
 
+#import "UMMobClick/MobClick.h"
+
 
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
@@ -46,8 +48,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     _inNightMode = [Config getMode];
-    
-    [NBSAppAgent startWithAppID:@"2142ec9589c2480f952feab9ed19a535"];
+	
+	//友盟统计SDK
+	UMConfigInstance.appKey = @"54c9a412fd98c5779c000752";
+	UMConfigInstance.channelId = @"AppStore";	
+	[MobClick startWithConfigure:UMConfigInstance];
     
     
     [self loadCookies];

@@ -131,7 +131,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             return [NSString stringWithFormat:@"%@%@?project=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_SOFTWARE_TWEET_LIST, softwareID, (unsigned long)page, OSCAPI_SUFFIX];
         };
         
-        self.objClass = [OSCTweet class];
+        self.objClass = [OSCTweetItem class];
     }
     
     return self;
@@ -150,7 +150,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             return [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         };
         
-        self.objClass = [OSCTweet class];
+        self.objClass = [OSCTweetItem class];
         
         self.navigationItem.title = topic;
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(topicEditing)];
@@ -173,7 +173,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
         return [NSString stringWithFormat:@"%@%@?uid=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_TWEETS_LIST, weakSelf.uid, (unsigned long)page, OSCAPI_SUFFIX];
     };
     
-    self.objClass = [OSCTweet class];
+    self.objClass = [OSCTweetItem class];
 }
 
 
@@ -215,6 +215,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     [self.manager GET:self.generateUrl()
            parameters:paraMutableDic.copy
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
                   if([responseObject[@"code"]integerValue] == 1) {
                       NSDictionary* resultDic = responseObject[@"result"];
                       NSArray* items = resultDic[@"items"];
@@ -225,6 +226,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                       [self.dataModels addObjectsFromArray:modelArray];
                       self.objects = self.dataModels;
                       self.nextToken = resultDic[@"nextPageToken"];
+                      
                       dispatch_async(dispatch_get_main_queue(), ^{
                           self.lastCell.status = items.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
                           if (self.tableView.mj_header.isRefreshing) {
@@ -237,7 +239,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
                   
                   [HUD hideAnimated:YES afterDelay:1];
@@ -437,7 +439,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                           [self.tableView reloadData];
                       });
                   }else{
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                       HUD.label.text = @"网络错误";
                   }
                   [HUD hideAnimated:YES afterDelay:1];
@@ -445,7 +446,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                  }
               failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                     HUD.mode = MBProgressHUDModeCustomView;
-                    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                     HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
   
                     [HUD hideAnimated:YES afterDelay:1];
@@ -492,7 +492,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                           [self.tableView reloadData];
                       });
                   }else{
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                       HUD.label.text = @"网络错误";
                   }
                   [HUD hideAnimated:YES afterDelay:1];
@@ -500,7 +499,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
               }
               failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                   HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
                   
                   [HUD hideAnimated:YES afterDelay:1];
@@ -578,15 +576,15 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 #pragma mark - 点赞功能
 - (void)togglePraise:(UIButton *)button
 {
-    OSCTweet *tweet = self.objects[button.tag];
+    OSCTweetItem *tweet = self.objects[button.tag];
     [self toPraise:tweet];
 }
 
-- (void)toPraise:(OSCTweet *)tweet
+- (void)toPraise:(OSCTweetItem *)tweet
 {
     
     NSString *postUrl;
-    if (tweet.isLike) {
+    if (tweet.liked) {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_UNLIKE];
     } else {
         postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
@@ -597,8 +595,8 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     [manager POST:postUrl
        parameters:@{
                     @"uid": @([Config getOwnID]),
-                    @"tweetid": @(tweet.tweetID),
-                    @"ownerOfTweet": @( tweet.authorID)
+                    @"tweetid": @(tweet.id),
+                    @"ownerOfTweet": @( tweet.author.id)
                     }
           success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
               ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
@@ -606,7 +604,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
               NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
               
               if (errorCode == 1) {
-                  if (tweet.isLike) {
+                  if (tweet.liked) {
                       //取消点赞
 
                       tweet.likeCount--;
@@ -615,7 +613,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 
                       tweet.likeCount++;
                   }
-                  tweet.isLike = !tweet.isLike;
+                  tweet.liked = !tweet.liked;
                   
                   dispatch_async(dispatch_get_main_queue(), ^{
                       [self.tableView reloadData];
@@ -625,7 +623,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
                   
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                   
                   [HUD hideAnimated:YES afterDelay:1];
@@ -635,7 +633,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
               MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
               
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               
               [HUD hideAnimated:YES afterDelay:1];

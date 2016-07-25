@@ -100,7 +100,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 }
 #pragma mark --- 
 -(void)initialized{
-    self.title = [NSString stringWithFormat:@"%ld个回答",self.commentCount];
+    self.title = [NSString stringWithFormat:@"%ld个回答",(long)self.commentCount];
     _comments = [NSMutableArray new];
     _nextPageToken = @"";
     self.commentTextField.delegate = self;
@@ -108,10 +108,10 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.tableFooterView = [UIView new];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.estimatedRowHeight = 200;
     [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsDetailHeadCell" bundle:nil] forCellReuseIdentifier:quesAnsDetailHeadReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:quesAnsCommentHeadReuseIdentifier];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.estimatedRowHeight = 250;
 }
 
 
@@ -657,7 +657,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     coverView.backgroundColor = [UIColor whiteColor];
     coverView.tag = 10;
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud = [[MBProgressHUD alloc] initWithView:window];
     _hud.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:_hud];
     [self.view addSubview:coverView];

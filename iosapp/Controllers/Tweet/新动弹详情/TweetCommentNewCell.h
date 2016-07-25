@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OSCComment.h"
+#import "OSCCommentItem.h"
 @interface TweetCommentNewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *portraitIv;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *contentLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *commentTagIv;
 
-@property (nonatomic, strong)OSCComment *commentModel;
+@property (nonatomic, strong)OSCCommentItem *commentModel;
 
 @property (nonatomic, copy) BOOL (^canPerformAction)(UITableViewCell *cell, SEL action);
 @property (nonatomic, copy) void (^deleteObject)(UITableViewCell *cell);

@@ -155,14 +155,14 @@ static NSString * const kTeamReplyCellID = @"TeamReplyCell";
                   [self.tableView setContentOffset:CGPointZero animated:NO];
                   [self fetchRepliesOnPage:0];
               } else {
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
               [HUD hideAnimated:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
-              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.detailsLabel.text = error.localizedFailureReason;
              
               [HUD hideAnimated:YES afterDelay:1];

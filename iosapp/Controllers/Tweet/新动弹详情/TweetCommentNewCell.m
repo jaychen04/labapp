@@ -17,16 +17,18 @@
     _commentTagIv.userInteractionEnabled = YES;
     _portraitIv.userInteractionEnabled = YES;
     self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.backgroundColor = [UIColor whiteColor];
 }
 
--(void)setCommentModel:(OSCComment *)commentModel {
-    self.backgroundColor = [UIColor whiteColor];
-    [self.portraitIv loadPortrait:commentModel.portraitURL];
-    [self.nameLabel setText:commentModel.author];
-    self.interalTimeLabel.attributedText = [Utils newTweetAttributedTimeString:commentModel.pubDate];
+-(void)setCommentModel:(OSCCommentItem *)commentModel {
+    
+    [self.portraitIv loadPortrait:[NSURL URLWithString:commentModel.author.portrait]];
+    [self.nameLabel setText:commentModel.author.name];
+    NSDate *pDate = [NSDate dateFromString:commentModel.pubDate];
+    self.interalTimeLabel.attributedText = [Utils newTweetAttributedTimeString:pDate];
     NSMutableAttributedString *contentString = [[NSMutableAttributedString alloc] initWithAttributedString:[Utils emojiStringFromRawString:commentModel.content]];
     if (commentModel.replies.count > 0) {
-        [contentString appendAttributedString:[OSCComment attributedTextFromReplies:commentModel.replies]];
+        [contentString appendAttributedString:[OSCCommentItem attributedTextFromReplies:commentModel.replies]];
     }
     [self.contentLabel setAttributedText:contentString];
 }

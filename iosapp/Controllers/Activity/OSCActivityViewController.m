@@ -43,10 +43,10 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
     if (self) {
         __weak OSCActivityViewController *weakSelf = self;
         self.generateUrl = ^NSString * () {
-            return [NSString stringWithFormat:@"%@event",OSCAPI_V2_PREFIX];;
+            return [NSString stringWithFormat:@"%@event",OSCAPI_V2_PREFIX];
         };
         self.tableWillReload = ^(NSUInteger responseObjectsCount) {
-            responseObjectsCount < 20? (weakSelf.lastCell.status = LastCellStatusFinished) :
+            responseObjectsCount < 1? (weakSelf.lastCell.status = LastCellStatusFinished) :
             (weakSelf.lastCell.status = LastCellStatusMore);
         };
         self.objClass = [OSCActivities class];
@@ -153,12 +153,22 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
                       NSDictionary* resultDic = responseObject[@"result"];
                       NSArray* items = resultDic[@"items"];
                       self.nextToken = resultDic[@"nextPageToken"];
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          self.lastCell.status = items.count < 20 ? LastCellStatusFinished : LastCellStatusMore;
-                          
-                          if (self.tableView.mj_header.isRefreshing) {
-                              [self.tableView.mj_header endRefreshing];
+                      
+                      self.lastCell.status = items.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
+                      
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      if (!isRefresh) {
+                          if (items.count > 0) {
+                              [self.tableView.mj_footer endRefreshing];
+                          } else {
+                              [self.tableView.mj_footer endRefreshingWithNoMoreData];
                           }
+                      }
+                      
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          
                           [self.tableView reloadData];
                       });
                   }
@@ -167,7 +177,7 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
               failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
                   
                   [HUD hideAnimated:YES afterDelay:1];
