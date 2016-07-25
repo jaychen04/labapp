@@ -109,7 +109,7 @@
     [_descTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(69);
         make.top.equalTo(_nameLabel.mas_bottom).with.offset(5);
-        make.right.equalTo(self.contentView).with.offset(-8);
+        make.right.equalTo(self.contentView).with.offset(-16);
     }];
     
     [_tweetImageView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -168,7 +168,8 @@
 - (void)setTweet:(OSCTweetItem *)model{
     [_userPortrait loadPortrait:[NSURL URLWithString:model.author.portrait]];
     _nameLabel.text = model.author.name;
-    _descTextView.attributedText = [NewTweetCell contentStringFromRawString:model.content];
+    _descTextView.text = model.content;
+//    _descTextView.attributedText = [NewTweetCell contentStringFromRawString:model.content];
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:model.pubDate] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     [att appendAttributedString:[Utils getAppclientName:(int)model.appClient]];

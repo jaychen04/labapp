@@ -29,12 +29,14 @@
 #import "TweetsDetailNewCell.h"
 #import "TweetLikeNewCell.h"
 #import "TweetCommentNewCell.h"
+#import "NewMultipleDetailCell.h"
 
 static NSString * const tDetailReuseIdentifier = @"TweetsDetailTableViewCell";
 static NSString * const tLikeReuseIdentifier = @"TweetLikeTableViewCell";
 static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
+static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell";
 
-@interface TweetDetailNewTableViewController ()<UIWebViewDelegate>
+@interface TweetDetailNewTableViewController ()<UIWebViewDelegate,NewMultipleDetailCellDelegate>
 @property (nonatomic, strong)UIView *headerView;
 @property (nonatomic)BOOL isShowCommentList;
 @property (nonatomic, strong)NSMutableArray *tweetLikeList;
@@ -86,6 +88,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetsDetailNewCell" bundle:nil] forCellReuseIdentifier:tDetailReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetLikeNewCell" bundle:nil] forCellReuseIdentifier:tLikeReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCommentNewCell" bundle:nil] forCellReuseIdentifier:tCommentReuseIdentifier];
+    [self.tableView registerClass:[NewMultipleDetailCell class] forCellReuseIdentifier:tMultipleDetailReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.estimatedRowHeight = 250;
     
@@ -194,23 +197,22 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             
             if ([responseObject[@"code"]integerValue] == 1) {
                 _tweetDetail = [OSCTweetItem mj_objectWithKeyValues:responseObject[@"result"]];
-                OSCTweetImages* imageData = [_tweetDetail.images lastObject];
                 
                 NSDictionary *data;
-                if (_tweetDetail.images.count) {
+                if (_tweetDetail.images.count == 1) {
+                    OSCTweetImages* imageData = [_tweetDetail.images lastObject];
                     data = @{
                              @"content" : _tweetDetail.content,
-//                             @"imageURL": [_tweetDetail.images[0] objectForKey:@"href"],
-//                                       @"audioURL": _tweetDetail.audio ?: @""
+                             @"imageURL": imageData.href,
+//                               @"audioURL": _tweetDetail.audio ?: @""
                              };
+                    _tweetDetail.content = [Utils HTMLWithData:data usingTemplate:@"newTweet"];
                 } else {
                     data = @{
                              @"content" : _tweetDetail.content,
 //                                       @"audioURL": _tweetDetail.audio ?: @""
                              };
                 }
-                
-                _tweetDetail.content = [Utils HTMLWithData:data usingTemplate:@"newTweet"];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
@@ -429,12 +431,24 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     return section==0?0:40;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    return self.headerView;
+    if (section == 1) {
+        return self.headerView;
+    }else{
+        return nil;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        return [tableView fd_heightForCellWithIdentifier:tDetailReuseIdentifier configuration:^(TweetsDetailNewCell *cell) {
-        }] + _webViewHeight + 10;
+        if (_tweetDetail.images.count <= 1) {
+            return [tableView fd_heightForCellWithIdentifier:tDetailReuseIdentifier configuration:^(TweetsDetailNewCell *cell) {
+            }] + _webViewHeight + 10;
+        }else{
+            return [tableView fd_heightForCellWithIdentifier:tMultipleDetailReuseIdentifier configuration:^(NewMultipleDetailCell* cell) {
+                if (!_tweetDetail) {return ;}
+                cell.item = _tweetDetail;
+            }];
+//            return UITableViewAutomaticDimension;
+        }
     }else if (indexPath.section == 1) {
         if (!_isShowCommentList) {
             return 56;
@@ -447,9 +461,17 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        TweetsDetailNewCell *detailCell = [self.tableView dequeueReusableCellWithIdentifier:tDetailReuseIdentifier forIndexPath:indexPath];
-        [self setUpTweetDetailCell:detailCell];
-        return detailCell;
+        if (_tweetDetail.images.count <= 1) {
+            TweetsDetailNewCell *detailCell = [self.tableView dequeueReusableCellWithIdentifier:tDetailReuseIdentifier forIndexPath:indexPath];
+            [self setUpTweetDetailCell:detailCell];
+            return detailCell;
+        }else{
+            NewMultipleDetailCell* detailCell = [tableView dequeueReusableCellWithIdentifier:tMultipleDetailReuseIdentifier forIndexPath:indexPath];
+            if (_tweetDetail == nil) {return nil;}
+            detailCell.item = _tweetDetail;
+            detailCell.delegate = self;
+            return detailCell;
+        }
     }else if (indexPath.section == 1) {
         if (_isShowCommentList) {
             TweetCommentNewCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:tCommentReuseIdentifier forIndexPath:indexPath];
@@ -493,11 +515,32 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             }
         }
     }
-//    else {
-//        OSCUser *likedUser = _tweetLikeList[indexPath.row];
-//        UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:likedUser.userID];
-//        [self.navigationController pushViewController:userDetailsVC animated:YES];
-//    }
+}
+#pragma mark -- NewMultipleDetailCell Delegate
+- (void) userPortraitDidClick:(NewMultipleDetailCell* )multipleTweetCell
+                  tapGestures:(UITapGestureRecognizer* )tap
+{
+    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:_tweetDetail.author.id] animated:YES];
+}
+- (void) commentButtonDidClick:(NewMultipleDetailCell *)multipleTweetCell
+                   tapGestures:(UITapGestureRecognizer *)tap
+{
+    [self commentTweet];
+}
+- (void) likeButtonDidClick:(NewMultipleDetailCell *)multipleTweetCell
+                tapGestures:(UITapGestureRecognizer *)tap
+{
+    [self likeThisTweet:tap];
+}
+-(void)assemblyMultipleTweetCellDidFinsh:(NewMultipleDetailCell *)multipleTweetCell
+{
+    [self.tableView reloadData];
+}
+- (void) loadLargeImageDidFinsh:(NewMultipleDetailCell* )multipleTweetCell
+                 photoGroupView:(OSCPhotoGroupView* )groupView
+                       fromView:(UIImageView* )fromView
+{
+    [self.tableView reloadData];
 }
 #pragma mark -- Copy/Paste.  All three methods must be implemented by the delegate.
 
@@ -520,7 +563,6 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 
 #pragma mark -- 设置动弹详情cell
 -(void)setUpTweetDetailCell:(TweetsDetailNewCell*)cell {
-    
     if (_tweetDetail) {
         [cell.portraitIv loadPortrait:[NSURL URLWithString:_tweetDetail.author.portrait]];
         [cell.nameLabel setText:_tweetDetail.author.name];
@@ -539,6 +581,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         [cell.contentWebView loadHTMLString:_tweetDetail.content baseURL:[NSBundle mainBundle].resourceURL];
     }
 }
+
 #pragma  mark -- 用户详情界面
 -(void)pushUserDetails:(UITapGestureRecognizer*)tap {
     [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:tap.view.tag] animated:YES];

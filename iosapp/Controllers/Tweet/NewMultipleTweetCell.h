@@ -48,6 +48,6 @@
 
 //@property (nonatomic,copy) void (^afterTheAssignment)(UITableViewCell* cell);
 
-+ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
+//+ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString;
 
 @end
