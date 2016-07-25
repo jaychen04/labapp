@@ -73,6 +73,7 @@
 		04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EC969C1CF436FB0004B54E /* OSCActivityTableViewCell.xib */; };
 		04EC96A11CF469FF0004B54E /* OSCActivities.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96A01CF469FF0004B54E /* OSCActivities.m */; };
 		04EC96A71CF48E8C0004B54E /* OSCBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96A61CF48E8C0004B54E /* OSCBanner.m */; };
+		04F62F5B1D45E54700EDC480 /* NewMultipleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F62F5A1D45E54700EDC480 /* NewMultipleDetailCell.m */; };
 		3118F8D31AFB4803001684BC /* TeamMemberDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3118F8D21AFB4803001684BC /* TeamMemberDetailViewController.m */; };
 		3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3118F8D51AFB49CD001684BC /* MemberDetailCell.m */; };
 		31212ECB1D0E670100FA17B1 /* TweetsDetailNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31212EC91D0E670100FA17B1 /* TweetsDetailNewCell.m */; };
@@ -450,6 +451,8 @@
 		04EC96A01CF469FF0004B54E /* OSCActivities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCActivities.m; sourceTree = "<group>"; };
 		04EC96A51CF48E8C0004B54E /* OSCBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBanner.h; sourceTree = "<group>"; };
 		04EC96A61CF48E8C0004B54E /* OSCBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBanner.m; sourceTree = "<group>"; };
+		04F62F591D45E54700EDC480 /* NewMultipleDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMultipleDetailCell.h; sourceTree = "<group>"; };
+		04F62F5A1D45E54700EDC480 /* NewMultipleDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMultipleDetailCell.m; sourceTree = "<group>"; };
 		3118F8D11AFB4803001684BC /* TeamMemberDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamMemberDetailViewController.h; sourceTree = "<group>"; };
 		3118F8D21AFB4803001684BC /* TeamMemberDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamMemberDetailViewController.m; sourceTree = "<group>"; };
 		3118F8D41AFB49CD001684BC /* MemberDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemberDetailCell.h; sourceTree = "<group>"; };
@@ -1239,6 +1242,8 @@
 		31855C7D1D0E621F00C8F8B8 /* 新动弹详情 */ = {
 			isa = PBXGroup;
 			children = (
+				04F62F591D45E54700EDC480 /* NewMultipleDetailCell.h */,
+				04F62F5A1D45E54700EDC480 /* NewMultipleDetailCell.m */,
 				31855C811D0E621F00C8F8B8 /* TweetDetailNewTableViewController.h */,
 				31855C821D0E621F00C8F8B8 /* TweetDetailNewTableViewController.m */,
 				31212EC81D0E670100FA17B1 /* TweetsDetailNewCell.h */,
@@ -2727,6 +2732,7 @@
 				384364251AC566BD00743CB0 /* MemberCell.m in Sources */,
 				C5EF892A1BE3197C00B5FA46 /* PostCell.m in Sources */,
 				EE7AC7F21AD38E5C00E850CB /* TweetsLikeListViewController.m in Sources */,
+				04F62F5B1D45E54700EDC480 /* NewMultipleDetailCell.m in Sources */,
 				C5EF892B1BE3197C00B5FA46 /* PostsViewController.m in Sources */,
 				C5344E8F1B1DA2970024F110 /* TeamMemberListViewController.m in Sources */,
 				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,

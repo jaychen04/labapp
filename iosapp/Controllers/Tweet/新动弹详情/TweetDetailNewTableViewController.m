@@ -28,12 +28,13 @@
 #import "TweetsDetailNewCell.h"
 #import "TweetLikeNewCell.h"
 #import "TweetCommentNewCell.h"
+#import "NewMultipleDetailCell.h"
 
 static NSString * const tDetailReuseIdentifier = @"TweetsDetailTableViewCell";
 static NSString * const tLikeReuseIdentifier = @"TweetLikeTableViewCell";
 static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 
-@interface TweetDetailNewTableViewController ()<UIWebViewDelegate>
+@interface TweetDetailNewTableViewController ()<UIWebViewDelegate,NewMultipleDetailCellDelegate>
 @property (nonatomic, strong)UIView *headerView;
 @property (nonatomic)BOOL isShowCommentList;
 @property (nonatomic, strong)NSMutableArray *tweetLikeList;
@@ -58,7 +59,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
     coverView.backgroundColor = [UIColor whiteColor];
     coverView.tag = 10;
     UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-    _hud = [[MBProgressHUD alloc] initWithWindow:window];
+    _hud = [[MBProgressHUD alloc] initWithView:window];
     _hud.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
     [window addSubview:_hud];
     [self.tableView addSubview:coverView];
@@ -186,23 +187,22 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             
             if ([responseObject[@"code"]integerValue] == 1) {
                 _tweetDetail = [OSCTweetItem mj_objectWithKeyValues:responseObject[@"result"]];
-                OSCTweetImages* imageData = [_tweetDetail.images lastObject];
                 
                 NSDictionary *data;
-                if (_tweetDetail.images.count) {
+                if (_tweetDetail.images.count == 1) {
+                    OSCTweetImages* imageData = [_tweetDetail.images lastObject];
                     data = @{
                              @"content" : _tweetDetail.content,
-//                             @"imageURL": [_tweetDetail.images[0] objectForKey:@"href"],
-//                                       @"audioURL": _tweetDetail.audio ?: @""
+                             @"imageURL": imageData.href,
+//                               @"audioURL": _tweetDetail.audio ?: @""
                              };
+                    _tweetDetail.content = [Utils HTMLWithData:data usingTemplate:@"newTweet"];
                 } else {
                     data = @{
                              @"content" : _tweetDetail.content,
 //                                       @"audioURL": _tweetDetail.audio ?: @""
                              };
                 }
-                
-                _tweetDetail.content = [Utils HTMLWithData:data usingTemplate:@"newTweet"];
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.tableView reloadData];
@@ -352,9 +352,19 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        TweetsDetailNewCell *detailCell = [self.tableView dequeueReusableCellWithIdentifier:tDetailReuseIdentifier forIndexPath:indexPath];
-        [self setUpTweetDetailCell:detailCell];
-        return detailCell;
+        if (_tweetDetail.images.count <= 1) {
+            TweetsDetailNewCell *detailCell = [self.tableView dequeueReusableCellWithIdentifier:tDetailReuseIdentifier forIndexPath:indexPath];
+            [self setUpTweetDetailCell:detailCell];
+            return detailCell;
+        }else{
+            NewMultipleDetailCell* detailCell = [tableView dequeueReusableCellWithIdentifier:@"NewMultipleDetailCell"];
+            if (detailCell == nil) {
+                detailCell = [[NewMultipleDetailCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"NewMultipleDetailCell"];
+            }
+            detailCell.item = _tweetDetail;
+            detailCell.delegate = self;
+            return detailCell;
+        }
     }else if (indexPath.section == 1) {
         if (_isShowCommentList) {
             TweetCommentNewCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:tCommentReuseIdentifier forIndexPath:indexPath];
@@ -397,11 +407,26 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
             }
         }
     }
-//    else {
-//        OSCUser *likedUser = _tweetLikeList[indexPath.row];
-//        UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:likedUser.userID];
-//        [self.navigationController pushViewController:userDetailsVC animated:YES];
-//    }
+}
+#pragma mark -- NewMultipleDetailCell Delegate
+- (void) userPortraitDidClick:(NewMultipleDetailCell* )multipleTweetCell
+                  tapGestures:(UITapGestureRecognizer* )tap
+{
+    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:_tweetDetail.author.id] animated:YES];
+}
+- (void) commentButtonDidClick:(NewMultipleDetailCell *)multipleTweetCell
+                   tapGestures:(UITapGestureRecognizer *)tap
+{
+    [self commentTweet];
+}
+- (void) likeButtonDidClick:(NewMultipleDetailCell *)multipleTweetCell
+                tapGestures:(UITapGestureRecognizer *)tap
+{
+    [self likeThisTweet:tap];
+}
+-(void)assemblyMultipleTweetCellDidFinsh:(NewMultipleDetailCell *)multipleTweetCell
+{
+    [self.tableView reloadData];
 }
 #pragma mark -- Copy/Paste.  All three methods must be implemented by the delegate.
 
@@ -424,7 +449,6 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 
 #pragma mark -- 设置动弹详情cell
 -(void)setUpTweetDetailCell:(TweetsDetailNewCell*)cell {
-    
     if (_tweetDetail) {
         [cell.portraitIv loadPortrait:[NSURL URLWithString:_tweetDetail.author.portrait]];
         [cell.nameLabel setText:_tweetDetail.author.name];
@@ -443,6 +467,7 @@ static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
         [cell.contentWebView loadHTMLString:_tweetDetail.content baseURL:[NSBundle mainBundle].resourceURL];
     }
 }
+
 #pragma  mark -- 用户详情界面
 -(void)pushUserDetails:(UITapGestureRecognizer*)tap {
     [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:tap.view.tag] animated:YES];
