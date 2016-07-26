@@ -27,12 +27,15 @@
 #import <MJExtension.h>
 
 
-#import "TweetsDetailNewCell.h"
+//#import "TweetsDetailNewCell.h"
+#import "TweetDetailCell.h"
 #import "TweetLikeNewCell.h"
 #import "TweetCommentNewCell.h"
 #import "NewMultipleDetailCell.h"
 
-static NSString * const tDetailReuseIdentifier = @"TweetsDetailTableViewCell";
+//static NSString * const tDetailReuseIdentifier = @"TweetsDetailTableViewCell";
+static NSString * const tDetailReuseIdentifier = @"TweetDetailCell";
+
 static NSString * const tLikeReuseIdentifier = @"TweetLikeTableViewCell";
 static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell";
@@ -86,9 +89,9 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"TweetsDetailNewCell" bundle:nil] forCellReuseIdentifier:tDetailReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetLikeNewCell" bundle:nil] forCellReuseIdentifier:tLikeReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCommentNewCell" bundle:nil] forCellReuseIdentifier:tCommentReuseIdentifier];
+    [self.tableView registerClass:[TweetDetailCell class] forCellReuseIdentifier:tDetailReuseIdentifier];
     [self.tableView registerClass:[NewMultipleDetailCell class] forCellReuseIdentifier:tMultipleDetailReuseIdentifier];
     self.tableView.tableFooterView = [UIView new];
     self.tableView.estimatedRowHeight = 250;
@@ -212,9 +215,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (_tweetDetail.images.count > 1) {
-                    [self hideHubView];
-                }
+                [self hideHubView];
                 [self.tableView reloadData];
             });
         }
@@ -268,49 +269,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
          }
      ];
 }
-/*
--(void)loadTweetLikeListIsrefresh:(BOOL)isRefresh {
-    if (isRefresh) {
-        _likeListPage = 0;
-    }
-    NSDictionary *paraDic = @{@"tweetid":@(_tweetID),
-                              @"pageIndex":@(_likeListPage),
-                              @"pageSize":@(20)
-                              };
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE_LIST]
-       parameters:paraDic
-          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-              NSArray *objectsXML = [[responseDocument.rootElement firstChildWithTag:@"likeList"] childrenWithTag:@"user"];
-              if (isRefresh && objectsXML.count > 0) {
-                  [_tweetLikeList removeAllObjects];
-              }
-              
-              if (objectsXML.count == 0) {
-                  
-              }else {
-                  _likeListPage++;
-                  for (ONOXMLElement *objectXML in objectsXML) {
-                      OSCUser *obj = [[OSCUser alloc] initWithXML:objectXML];
-                      [_tweetLikeList addObject:obj];
-                  }
-              }
-              
-              if (self.tableView.mj_footer.isRefreshing) {
-                  [self.tableView.mj_footer endRefreshing];
-              }
-              if (!_isShowCommentList) {
-                  dispatch_async(dispatch_get_main_queue(), ^{
-                      [self.tableView reloadData];
-                  });
-              }
-          }
-          failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-              [self networkingError:error];
-          }
-     ];
-}
- */
+
 
 //发表评论后，为了更新总的评论数
 -(void)reloadCommentList {
@@ -359,49 +318,6 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
          }
      ];
 }
-/*
--(void)loadTweetCommentListIsrefresh:(BOOL)isRefresh {
-    if (isRefresh) {
-        _commentListPage = 0;
-    }
-    NSDictionary *paraDic = @{@"id":@(_tweetID),
-                              @"catalog":@(3),
-                              @"pageIndex":@(_commentListPage),
-                              @"pageSize":@(20)
-                              };
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_COMMENTS_LIST]
-      parameters:paraDic
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-             NSArray *objectsXML = [[responseDocument.rootElement firstChildWithTag:@"comments"] childrenWithTag:@"comment"];
-             if (isRefresh && objectsXML.count > 0) {
-                 [_tweetCommentList removeAllObjects];
-             }
-             
-             if (objectsXML.count == 0) {
-                 
-             }else {
-                 _commentListPage++;
-                 for (ONOXMLElement *objectXML in objectsXML) {
-                     OSCComment *obj = [[OSCComment alloc] initWithXML:objectXML];
-                     [_tweetCommentList addObject:obj];
-                 }
-             }
-             if (self.tableView.mj_footer.isRefreshing) {
-                 [self.tableView.mj_footer endRefreshing];
-             }
-             if (_isShowCommentList) {
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [self.tableView reloadData];
-                 });
-             }
-         }
-         failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             [self networkingError:error];
-         }
-     ];
-}
- */
 
 -(void)networkingError:(NSError*)error {
     MBProgressHUD *HUD = [Utils createHUD];
@@ -440,14 +356,12 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_tweetDetail.images.count <= 1) {
-            return [tableView fd_heightForCellWithIdentifier:tDetailReuseIdentifier configuration:^(TweetsDetailNewCell *cell) {
-            }] + _webViewHeight + 10;
+            return UITableViewAutomaticDimension;
         }else{
             return [tableView fd_heightForCellWithIdentifier:tMultipleDetailReuseIdentifier configuration:^(NewMultipleDetailCell* cell) {
                 if (!_tweetDetail) {return ;}
                 cell.item = _tweetDetail;
             }];
-//            return UITableViewAutomaticDimension;
         }
     }else if (indexPath.section == 1) {
         if (!_isShowCommentList) {
@@ -462,7 +376,8 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_tweetDetail.images.count <= 1) {
-            TweetsDetailNewCell *detailCell = [self.tableView dequeueReusableCellWithIdentifier:tDetailReuseIdentifier forIndexPath:indexPath];
+            TweetDetailCell *detailCell = [tableView dequeueReusableCellWithIdentifier:tDetailReuseIdentifier forIndexPath:indexPath];
+            detailCell.tweet = _tweetDetail;
             [self setUpTweetDetailCell:detailCell];
             return detailCell;
         }else{
@@ -476,7 +391,6 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
         if (_isShowCommentList) {
             TweetCommentNewCell *commentCell = [self.tableView dequeueReusableCellWithIdentifier:tCommentReuseIdentifier forIndexPath:indexPath];
             if (indexPath.row < _tweetCommentList.count) {
-//                OSCComment *commentModel = _tweetCommentList[indexPath.row];
                 OSCCommentItem *commentModel = _tweetCommentList[indexPath.row];
                 [commentCell setCommentModel:commentModel];
                 
@@ -485,8 +399,8 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
                 commentCell.commentTagIv.tag = indexPath.row;
                 [commentCell.commentTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(replyReviewer:)]];
                 
-                commentCell.portraitIv.tag = commentModel.id;
-                [commentCell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
+                commentCell.portraitIv.tag = commentModel.author.id;
+                [commentCell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentItemPushUserDetails:)]];
             }
             return commentCell;
         }else {
@@ -563,29 +477,58 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 }
 
 #pragma mark -- 设置动弹详情cell
--(void)setUpTweetDetailCell:(TweetsDetailNewCell*)cell {
+-(void)setUpTweetDetailCell:(TweetDetailCell*)cell {
     if (_tweetDetail) {
-        [cell.portraitIv loadPortrait:[NSURL URLWithString:_tweetDetail.author.portrait]];
+        [cell.userPortrait loadPortrait:[NSURL URLWithString:_tweetDetail.author.portrait]];
+        cell.userPortrait.tag = _tweetDetail.author.id;
+        [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
+        
         [cell.nameLabel setText:_tweetDetail.author.name];
+        cell.descTextView.attributedText = [Utils contentStringFromRawString:_tweetDetail.content];
         
-        cell.portraitIv.tag = _tweetDetail.author.id;
-        [cell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
-        [cell.likeTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(likeThisTweet:)]];
-        [cell.commentTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(commentTweet)]];
+        if (_tweetDetail.images.count == 1) {
+            cell.tweetImageView.hidden = NO;
+            OSCTweetImages* imageData = [_tweetDetail.images lastObject];
+            [cell.tweetImageView loadPortrait:[NSURL URLWithString:imageData.thumb]];
+        }else{
+            cell.tweetImageView.hidden = YES;
+        }
         
-        [cell.intervalTimeLabel setAttributedText:[Utils newTweetAttributedTimeString:[NSDate dateFromString:_tweetDetail.pubDate]]];
+        [cell.tweetImageView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(loadTweetImage:)]];
+        [cell.likeCountIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(likeThisTweet:)]];
+        [cell.commentImage addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(commentTweet)]];
+        
+        NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:_tweetDetail.pubDate] timeAgoSinceNow]]];
+        [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
+        [att appendAttributedString:[Utils getAppclientName:(int)_tweetDetail.appClient]];
+        cell.timeLabel.attributedText = att;
+        
         NSString *likeImgNameStr = _tweetDetail.liked?@"ic_thumbup_actived":@"ic_thumbup_normal";
-        [cell.likeTagIv setImage:[UIImage imageNamed:likeImgNameStr]];
-        
-        [cell.platformLabel setAttributedText:[Utils getAppclientName:(int)_tweetDetail.appClient]];
-        cell.contentWebView.delegate = self;
-        [cell.contentWebView loadHTMLString:_tweetDetail.content baseURL:[NSBundle mainBundle].resourceURL];
+        [cell.likeCountIv setImage:[UIImage imageNamed:likeImgNameStr]];
     }
 }
 
+#pragma 加载大图
+-(void)loadTweetImage:(UITapGestureRecognizer*)tap {
+    UIImageView* fromView = (UIImageView* )tap.view;
+//        current touch object
+    OSCPhotoGroupItem* currentPhotoItem = [OSCPhotoGroupItem new];
+    currentPhotoItem.thumbView = fromView;
+    OSCTweetImages* imageData = [_tweetDetail.images lastObject];
+    currentPhotoItem.largeImageURL = [NSURL URLWithString:imageData.href];
+    
+    NSArray* photoGroupItems = @[currentPhotoItem];
+    
+    OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:photoGroupItems];
+    [photoGroup presentFromImageView:fromView toContainer:self.navigationController.view animated:YES completion:nil];
+}
 #pragma  mark -- 用户详情界面
 -(void)pushUserDetails:(UITapGestureRecognizer*)tap {
     [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:tap.view.tag] animated:YES];
+}
+-(void)commentItemPushUserDetails:(UITapGestureRecognizer*)tap {
+    NSInteger userId = tap.view.tag;
+    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:userId] animated:YES];
 }
 - (void)likedUserDetails:(UIButton*)btn {
     [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:btn.tag] animated:YES];
@@ -593,7 +536,6 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 
 -(void)likeThisTweet:(UITapGestureRecognizer*)tap {
     UIImageView *likeTagIv = (UIImageView*)tap.view;
-//    [self praiseTweetAndUpdateTagIv:likeTagIv];
     [self likeOrCancelLikeTweetAndUpdateTagIv:likeTagIv];
 }
 -(void)commentTweet {

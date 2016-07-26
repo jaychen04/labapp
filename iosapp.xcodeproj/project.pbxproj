@@ -108,8 +108,7 @@
 		31D699651CFC352400B48BB0 /* TitleInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D699631CFC352400B48BB0 /* TitleInfoTableViewCell.xib */; };
 		31D699691CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D699671CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m */; };
 		31D6996A1CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31D699681CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib */; };
-		31DE37C91D473CB400529BBB /* NewTweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DE37C71D473CB400529BBB /* NewTweetDetailCell.m */; };
-		31DE37CA1D473CB400529BBB /* NewTweetDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31DE37C81D473CB400529BBB /* NewTweetDetailCell.xib */; };
+		31DE37CD1D474DEA00529BBB /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31DE37CC1D474DEA00529BBB /* TweetDetailCell.m */; };
 		31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */; };
 		31EAF9FC1AEF2685004DF445 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FA1AEF2685004DF445 /* ProjectCell.m */; };
 		31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */ = {isa = PBXBuildFile; fileRef = 31EAF9FE1AEF884A004DF445 /* TeamIssueList.m */; };
@@ -517,9 +516,8 @@
 		31D699661CFC4F8600B48BB0 /* RecommandBlogTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommandBlogTableViewCell.h; sourceTree = "<group>"; };
 		31D699671CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommandBlogTableViewCell.m; sourceTree = "<group>"; };
 		31D699681CFC4F8600B48BB0 /* RecommandBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecommandBlogTableViewCell.xib; sourceTree = "<group>"; };
-		31DE37C61D473CB400529BBB /* NewTweetDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTweetDetailCell.h; sourceTree = "<group>"; };
-		31DE37C71D473CB400529BBB /* NewTweetDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTweetDetailCell.m; sourceTree = "<group>"; };
-		31DE37C81D473CB400529BBB /* NewTweetDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewTweetDetailCell.xib; sourceTree = "<group>"; };
+		31DE37CB1D474DEA00529BBB /* TweetDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailCell.h; sourceTree = "<group>"; };
+		31DE37CC1D474DEA00529BBB /* TweetDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailCell.m; sourceTree = "<group>"; };
 		31EAF9F71AEF2685004DF445 /* ProjectListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectListViewController.h; sourceTree = "<group>"; };
 		31EAF9F81AEF2685004DF445 /* ProjectListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectListViewController.m; sourceTree = "<group>"; };
 		31EAF9F91AEF2685004DF445 /* ProjectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectCell.h; sourceTree = "<group>"; };
@@ -1262,9 +1260,8 @@
 				04F62F5A1D45E54700EDC480 /* NewMultipleDetailCell.m */,
 				31855C811D0E621F00C8F8B8 /* TweetDetailNewTableViewController.h */,
 				31855C821D0E621F00C8F8B8 /* TweetDetailNewTableViewController.m */,
-				31DE37C61D473CB400529BBB /* NewTweetDetailCell.h */,
-				31DE37C71D473CB400529BBB /* NewTweetDetailCell.m */,
-				31DE37C81D473CB400529BBB /* NewTweetDetailCell.xib */,
+				31DE37CB1D474DEA00529BBB /* TweetDetailCell.h */,
+				31DE37CC1D474DEA00529BBB /* TweetDetailCell.m */,
 				31212EC81D0E670100FA17B1 /* TweetsDetailNewCell.h */,
 				31212EC91D0E670100FA17B1 /* TweetsDetailNewCell.m */,
 				31212ECA1D0E670100FA17B1 /* TweetsDetailNewCell.xib */,
@@ -2510,7 +2507,6 @@
 				C5E56F4D1B56AFB50059924C /* Main.storyboard in Resources */,
 				317F889D1D05698800BD931F /* ContentWebViewCell.xib in Resources */,
 				0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */,
-				31DE37CA1D473CB400529BBB /* NewTweetDetailCell.xib in Resources */,
 				31855C8D1D0E621F00C8F8B8 /* TweetLikeNewCell.xib in Resources */,
 				EEFFA6431CFEDAC000A8701C /* webAndAbsTableViewCell.xib in Resources */,
 				EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */,
@@ -2755,6 +2751,7 @@
 				00FF954219F10DEE002F4737 /* UIView+Util.m in Sources */,
 				31D56E831CF6D16F000AA1D4 /* OSCNewHotBlog.m in Sources */,
 				C52BF5011AFCBF1700E53508 /* TeamReplyCell.m in Sources */,
+				31DE37CD1D474DEA00529BBB /* TweetDetailCell.m in Sources */,
 				C5B2F1AF1BCF453F004B4785 /* NSDateFormatter+Singleton.m in Sources */,
 				6662BACA1B8C4B7400D6A9BC /* TweetFriendsListViewController.m in Sources */,
 				EE7B0AE31D348DDF0070F196 /* NewBlogsViewController.m in Sources */,
@@ -2831,7 +2828,6 @@
 				38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
 				38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */,
-				31DE37C91D473CB400529BBB /* NewTweetDetailCell.m in Sources */,
 				EEE241B01CFD6ECC0088FFB3 /* ActivityHeadCell.m in Sources */,
 				EE88C4061D127CE6000FE427 /* QuesAnsDetailViewController.m in Sources */,
 				0422BC5B1CEDA390007DB140 /* SDCycleScrollView.m in Sources */,
