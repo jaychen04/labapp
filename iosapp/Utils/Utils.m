@@ -210,6 +210,29 @@
                                      documentAttributes:nil];
 }
 
++ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString
+{
+    if (!rawString || rawString.length == 0) return [[NSAttributedString alloc] initWithString:@""];
+    
+    NSAttributedString *attrString = [Utils attributedStringFromHTML:rawString];
+    NSMutableAttributedString *mutableAttrString = [[Utils emojiStringFromAttrString:attrString] mutableCopy];
+    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, mutableAttrString.length)];
+    
+    // remove under line style
+    [mutableAttrString beginEditing];
+    [mutableAttrString enumerateAttribute:NSUnderlineStyleAttributeName
+                                  inRange:NSMakeRange(0, mutableAttrString.length)
+                                  options:0
+                               usingBlock:^(id value, NSRange range, BOOL *stop) {
+                                   if (value) {
+                                       [mutableAttrString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:range];
+                                   }
+                               }];
+    [mutableAttrString endEditing];
+    
+    return mutableAttrString;
+}
+
 + (NSString *)convertRichTextToRawText:(UITextView *)textView
 {
     NSMutableString *rawText = [[NSMutableString alloc] initWithString:textView.text];

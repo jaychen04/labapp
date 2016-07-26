@@ -254,8 +254,8 @@
     
     _nameLabel.text = model.author.name;
     
-    _descTextView.text = model.content;
-    
+    _descTextView.attributedText = [Utils contentStringFromRawString:model.content];
+
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:model.pubDate] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     [att appendAttributedString:[Utils getAppclientName:(int)model.appClient]];

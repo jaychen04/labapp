@@ -168,8 +168,7 @@
 - (void)setTweet:(OSCTweetItem *)model{
     [_userPortrait loadPortrait:[NSURL URLWithString:model.author.portrait]];
     _nameLabel.text = model.author.name;
-    _descTextView.text = model.content;
-//    _descTextView.attributedText = [NewTweetCell contentStringFromRawString:model.content];
+    _descTextView.attributedText = [Utils contentStringFromRawString:model.content];
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:model.pubDate] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     [att appendAttributedString:[Utils getAppclientName:(int)model.appClient]];
@@ -200,29 +199,6 @@
         }];
         _imageBackView.hidden = YES;
     }
-}
-
-+ (NSAttributedString*)contentStringFromRawString:(NSString*)rawString
-{
-    if (!rawString || rawString.length == 0) return [[NSAttributedString alloc] initWithString:@""];
-    
-    NSAttributedString *attrString = [Utils attributedStringFromHTML:rawString];
-    NSMutableAttributedString *mutableAttrString = [[Utils emojiStringFromAttrString:attrString] mutableCopy];
-    [mutableAttrString addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:14] range:NSMakeRange(0, mutableAttrString.length)];
-    
-    // remove under line style
-    [mutableAttrString beginEditing];
-    [mutableAttrString enumerateAttribute:NSUnderlineStyleAttributeName
-                                  inRange:NSMakeRange(0, mutableAttrString.length)
-                                  options:0
-                               usingBlock:^(id value, NSRange range, BOOL *stop) {
-                                   if (value) {
-                                       [mutableAttrString addAttribute:NSUnderlineStyleAttributeName value:@(NSUnderlineStyleNone) range:range];
-                                   }
-                               }];
-    [mutableAttrString endEditing];
-    
-    return mutableAttrString;
 }
 
 #pragma mark - 处理长按操作

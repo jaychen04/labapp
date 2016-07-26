@@ -70,6 +70,7 @@
     if (self) {
         _largerImageUrls = [NSMutableArray arrayWithCapacity:9];
         _visibleImageViews = [NSMutableArray arrayWithCapacity:9];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
         [self setSubViews];
         [self setLayout];
     }
@@ -118,6 +119,7 @@
     [self.contentView addSubview:_timeLabel];
     
     UIImageView* likeImage = [[UIImageView alloc] init];
+    likeImage.contentMode = UIViewContentModeRight;
     likeImage.image = [UIImage imageNamed:@"ic_thumbup_normal"];
     [likeImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeBtnDidClickMethod:)]];
     _likeImage = likeImage;
@@ -182,7 +184,7 @@
         make.width.equalTo(@40);
         make.height.equalTo(@15);
         make.bottom.equalTo(self.contentView).with.offset(-16);
-        make.right.equalTo(_commentImage.mas_left).with.offset(-5);
+        make.right.equalTo(_commentImage.mas_left).with.offset(-16);
     }];
 }
 
@@ -191,6 +193,7 @@
 -(void)setItem:(OSCTweetItem *)item{
     _item = item;
     
+    [_largerImageUrls removeAllObjects];
     for (OSCTweetImages* imageDataSource in item.images) {
         [_largerImageUrls addObject:imageDataSource.href];
     }
@@ -209,7 +212,7 @@
     
     _nameLabel.text = model.author.name;
     
-    _descTextView.text = model.content;
+    _descTextView.attributedText = [Utils contentStringFromRawString:model.content];
     
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:model.pubDate] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
@@ -240,7 +243,7 @@
         for (int j = 0; j < 3; j++) {//row
             originX = j * (_imageItem_WH + ImageItemPadding);
             UIImageView* imageView = [[UIImageView alloc]init];
-            [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImageWithTap:)]];
+            [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImageWithTapGes:)]];
             imageView.backgroundColor = [UIColor newCellColor];
             imageView.hidden = YES;
             imageView.userInteractionEnabled = NO;
@@ -315,7 +318,7 @@
 }
 
 #pragma mark --- 加载大图
--(void)loadLargeImageWithTap:(UITapGestureRecognizer* )tap{
+-(void)loadLargeImageWithTapGes:(UITapGestureRecognizer* )tap{
     UIImageView* fromView = (UIImageView* )tap.view;
     int index = (int)fromView.tag;
 //        current touch object
@@ -333,7 +336,6 @@
         [photoGroupItems addObject:photoItem];
     }
     
-//        YYPhotoGroupView* photoGroup = [[YYPhotoGroupView alloc] initWithGroupItems:photoGroupItems];
     OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:photoGroupItems];
 
     if ([_delegate respondsToSelector:@selector(loadLargeImageDidFinsh:photoGroupView:fromView:)]) {
