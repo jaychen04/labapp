@@ -167,22 +167,19 @@ static NSString * const kShowAccountOperation = @"ShowAccountOperation";
               NSInteger errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] integerValue];
               if (!errorCode) {
                   NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-                  
                   _hud.mode = MBProgressHUDModeCustomView;
-//                  _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  _hud.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
+                  _hud.label.text = [NSString stringWithFormat:@"%@", errorMessage];
                   [_hud hideAnimated:YES afterDelay:1];
-                  
                   return;
               }
               
+              [_hud hideAnimated:YES afterDelay:1];
               [Config saveOwnAccount:_accountField.text andPassword:_passwordField.text];
               ONOXMLElement *userXML = [responseObject.rootElement firstChildWithTag:@"user"];
               
               [self renewUserWithXML:userXML];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               _hud.mode = MBProgressHUDModeCustomView;
-//              _hud.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               _hud.label.text = [@(operation.response.statusCode) stringValue];
               _hud.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
               

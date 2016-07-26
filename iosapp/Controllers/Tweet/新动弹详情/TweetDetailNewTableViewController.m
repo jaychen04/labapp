@@ -199,20 +199,16 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
             if ([responseObject[@"code"]integerValue] == 1) {
                 _tweetDetail = [OSCTweetItem mj_objectWithKeyValues:responseObject[@"result"]];
                 
-                NSDictionary *data;
-                if (_tweetDetail.images.count == 1) {
+                NSDictionary *tweetData;
+                if (_tweetDetail.images.count <= 1) {       //单图或纯文本用html渲染
                     OSCTweetImages* imageData = [_tweetDetail.images lastObject];
-                    data = @{
-                             @"content" : _tweetDetail.content,
-                             @"imageURL": imageData.href,
-//                               @"audioURL": _tweetDetail.audio ?: @""
-                             };
-                    _tweetDetail.content = [Utils HTMLWithData:data usingTemplate:@"newTweet"];
-                } else {
-                    data = @{
-                             @"content" : _tweetDetail.content,
-//                                       @"audioURL": _tweetDetail.audio ?: @""
-                             };
+                    NSLog(@"content:%@",_tweetDetail.content);
+                    tweetData = @{
+                                  @"content" : _tweetDetail.content,
+                                  @"imageURL": imageData.href ?: @"",
+                                  @"audioURL": _tweetDetail.audio ?: @""
+                                  };
+                    _tweetDetail.content = [Utils HTMLWithData:tweetData usingTemplate:@"newTweet"];
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
