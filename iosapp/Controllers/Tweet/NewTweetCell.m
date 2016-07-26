@@ -119,7 +119,7 @@
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(69);
-        make.top.equalTo(_tweetImageView.mas_bottom).with.offset(3);
+        make.top.equalTo(_tweetImageView.mas_bottom).with.offset(6);
         make.bottom.equalTo(self.contentView).with.offset(-16);
     }];
     
@@ -189,7 +189,7 @@
 //        OSCTweetImages* imageData = [model.images lastObject];
 //        [_tweetImageView loadPortrait:[NSURL URLWithString:imageData.thumb]];
         [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_tweetImageView.mas_bottom).with.offset(8);
+            make.top.equalTo(_tweetImageView.mas_bottom).with.offset(6);
         }];
         _imageBackView.hidden = NO;
     } else {
