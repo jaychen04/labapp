@@ -534,7 +534,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 - (void) likeButtonDidClick:(NewMultipleDetailCell *)multipleTweetCell
                 tapGestures:(UITapGestureRecognizer *)tap
 {
-    [self likeThisTweet:tap];
+    [self likeOrCancelLikeTweetAndUpdateTagIv:(UIImageView* )tap.view];
 }
 -(void)assemblyMultipleTweetCellDidFinsh:(NewMultipleDetailCell *)multipleTweetCell
 {

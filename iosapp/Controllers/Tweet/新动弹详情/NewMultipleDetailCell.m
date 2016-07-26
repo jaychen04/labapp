@@ -119,6 +119,7 @@
     [self.contentView addSubview:_timeLabel];
     
     UIImageView* likeImage = [[UIImageView alloc] init];
+    likeImage.userInteractionEnabled = YES;
     likeImage.contentMode = UIViewContentModeRight;
     likeImage.image = [UIImage imageNamed:@"ic_thumbup_normal"];
     [likeImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeBtnDidClickMethod:)]];
@@ -126,6 +127,7 @@
     [self.contentView addSubview:_likeImage];
     
     UIImageView* commentImage = [[UIImageView alloc]init];
+    commentImage.userInteractionEnabled = YES;
     commentImage.image = [UIImage imageNamed:@"ic_comment_30"];
     [commentImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentBtnDidClickMethod:)]];
     _commentImage = commentImage;
