@@ -574,15 +574,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
 //    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
     [photoGroup presentFromImageView:fromView toContainer:self.tabBarController.view animated:YES completion:nil];
-
-    
-    //    __weak typeof(self) weakSelf = self;
-    //    [photoGroup dismissAnimated:YES completion:^{
-    //        [weakSelf.tableView reloadData];
-    //    }];
-    //    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:^{
-    //        [photoGroup dismissAnimated:YES completion:nil];
-    //    }];
 }
 
 #pragma mark - 点赞功能

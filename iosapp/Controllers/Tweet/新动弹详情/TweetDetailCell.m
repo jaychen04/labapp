@@ -139,16 +139,10 @@
         [_tweetImageView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
         }];
-        [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_tweetImageView.mas_bottom).with.offset(8);
-        }];
         _imageBackView.hidden = NO;
     } else {
         [_tweetImageView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_descTextView.mas_bottom).with.offset(0);
-        }];
-        [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_tweetImageView.mas_bottom).with.offset(0);
         }];
         _imageBackView.hidden = YES;
     }
