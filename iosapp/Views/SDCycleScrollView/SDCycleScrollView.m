@@ -527,6 +527,7 @@ NSString * const ID = @"cycleCell";
         cell.hasConfigured = YES;
         cell.imageView.contentMode = self.bannerImageViewContentMode;
         cell.clipsToBounds = YES;
+        cell.titleBackgroundLayerBool = self.titleBackgroundLayerBool;
     }
     
     return cell;

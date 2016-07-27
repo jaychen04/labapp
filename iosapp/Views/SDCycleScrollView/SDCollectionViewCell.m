@@ -8,6 +8,7 @@
 
 #import "SDCollectionViewCell.h"
 #import "UIView+SDExtension.h"
+#import "Utils.h"
 
 @implementation SDCollectionViewCell
 {
@@ -96,6 +97,26 @@
 //    _titleLabel.hidden = !_titleLabel.text;
     _colorImageView.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
     _titleTextLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW-60, titleLabelH);
+    
+    if (_titleBackgroundLayerBool) {
+        [self layerForCycleScrollViewTitle];
+    }
+    
+}
+
+/* 标题背景添加渐变色 */
+- (void)layerForCycleScrollViewTitle
+{
+    CAGradientLayer *layer = [CAGradientLayer new];
+    layer.colors = @[
+                     (__bridge id)[UIColor colorWithHex:0xececec alpha:0.4].CGColor,
+                     (__bridge id)[UIColor colorWithHex:0x757575 alpha:0.9].CGColor,
+                     ];
+    layer.startPoint = CGPointMake(0, 0);
+    layer.endPoint = CGPointMake(0, 0.5);
+    layer.frame = _titleLabel.bounds;
+    
+    [_titleLabel.layer addSublayer:layer];
 }
 
 @end

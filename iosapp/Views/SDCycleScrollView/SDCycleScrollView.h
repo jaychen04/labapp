@@ -137,6 +137,10 @@ typedef enum {
 @property (nonatomic, assign) CGFloat titleLabelHeight;
 
 
+/** 轮播文字背景颜色是否渐变*/
+@property (nonatomic, assign) BOOL titleBackgroundLayerBool;
+
+
 
 //////////////////////  清除缓存接口  //////////////////////
 

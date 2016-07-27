@@ -21,4 +21,6 @@
 
 @property (nonatomic, assign) BOOL hasConfigured;
 
+@property (nonatomic, assign) BOOL titleBackgroundLayerBool;
+
 @end

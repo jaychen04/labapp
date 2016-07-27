@@ -573,7 +573,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 #pragma mark - 点赞功能
 - (void)togglePraise:(UIButton *)button
 {
-    OSCTweetItem *tweet = self.objects[button.tag];
+    OSCTweetItem *tweet = self.dataModels[button.tag];
     [self toPraise:tweet];
 }
 #pragma mark --点赞（新接口)
@@ -590,12 +590,17 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
               
               if([responseObject[@"code"]integerValue] == 1) {
                   tweet.liked = !tweet.liked;
+                  NSDictionary* resultDic = responseObject[@"result"];
+                  tweet.likeCount = [resultDic[@"likeCount"] integerValue];
               }else {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;
                   HUD.label.text = [NSString stringWithFormat:@"%@", responseObject[@"message"]?:@"未知错误"];
                   [HUD hideAnimated:YES afterDelay:1];
               }
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  [self.tableView reloadData];
+              });
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];

@@ -465,6 +465,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         _cycleScrollView.currentPageDotColor = [UIColor navigationbarColor];
         _cycleScrollView.showPageControl = YES;
         _cycleScrollView.titleLabelBackgroundColor = [UIColor clearColor];
+        _cycleScrollView.titleBackgroundLayerBool = YES;
 	}
 	return _cycleScrollView;
 }
