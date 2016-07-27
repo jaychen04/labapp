@@ -109,8 +109,8 @@
 {
     CAGradientLayer *layer = [CAGradientLayer new];
     layer.colors = @[
-                     (__bridge id)[UIColor colorWithHex:0xececec alpha:0.4].CGColor,
-                     (__bridge id)[UIColor colorWithHex:0x757575 alpha:0.9].CGColor,
+                     (__bridge id)[UIColor colorWithHex:0x000000 alpha:0.0].CGColor,
+                     (__bridge id)[UIColor colorWithHex:0x000000 alpha:0.65].CGColor,
                      ];
     layer.startPoint = CGPointMake(0, 0);
     layer.endPoint = CGPointMake(0, 0.5);
