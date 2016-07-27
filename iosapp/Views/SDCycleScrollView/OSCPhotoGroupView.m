@@ -112,7 +112,7 @@
     CGFloat W = [UIScreen mainScreen].bounds.size.width;
     CGFloat H = [UIScreen mainScreen].bounds.size.height;
     downloadBtn.frame = CGRectMake(W-60, H-60, 30, 30);
-    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"picture_download"] forState:UIControlStateNormal];
+    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"btn_download"] forState:UIControlStateNormal];
     [downloadBtn addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
     _downloadButton = downloadBtn;
     UIView* keyWin = [UIApplication sharedApplication].keyWindow;
@@ -529,7 +529,7 @@
 }
 
 - (void)dismissAnimated:(BOOL)animated completion:(void (^)(void))completion {
-    [UIView setAnimationsEnabled:NO];
+    [UIView setAnimationsEnabled:YES];
     
     [[UIApplication sharedApplication] setStatusBarHidden:_fromNavigationBarHidden withAnimation:animated ? UIStatusBarAnimationFade : UIStatusBarAnimationNone];
     NSInteger currentPage = self.currentPage;
@@ -633,6 +633,7 @@
 
 - (void)dismiss {
     [self dismissAnimated:YES completion:nil];
+//    [self dismissAnimated:NO completion:nil];
 }
 
 
