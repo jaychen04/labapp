@@ -112,7 +112,7 @@
     CGFloat W = [UIScreen mainScreen].bounds.size.width;
     CGFloat H = [UIScreen mainScreen].bounds.size.height;
     downloadBtn.frame = CGRectMake(W-60, H-60, 30, 30);
-    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"picture_download"] forState:UIControlStateNormal];
+    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"btn_download"] forState:UIControlStateNormal];
     [downloadBtn addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
     _downloadButton = downloadBtn;
     UIView* keyWin = [UIApplication sharedApplication].keyWindow;
@@ -551,7 +551,7 @@
     [CATransaction setDisableActions:YES];
     if (isFromImageClipped) {
         CGRect frame = cell.imageContainerView.frame;
-        cell.imageContainerView.layer.anchorPoint = CGPointMake(0.5, 0);
+        cell.imageContainerView.layer.anchorPoint = CGPointMake(0.5, 0.5);
         cell.imageContainerView.frame = frame;
     }
     cell.progressLayer.hidden = YES;
@@ -633,6 +633,7 @@
 
 - (void)dismiss {
     [self dismissAnimated:YES completion:nil];
+//    [self dismissAnimated:NO completion:nil];
 }
 
 
