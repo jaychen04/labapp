@@ -569,6 +569,9 @@
             self.pager.alpha = 0;
             self.blurBackground.alpha = 0;
         }completion:^(BOOL finished) {
+            for (OSCPhotoGroupCell* cell in self.cells) {
+                [cell->_downloadButton removeFromSuperview];
+            }
             self.scrollView.layer.transformScale = 1;
             [self removeFromSuperview];
             [self cancelAllImageLoad];
@@ -865,6 +868,9 @@
                 duration = YY_CLAMP(duration, 0.05, 0.3);
                 
                 [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState animations:^{
+                    for (OSCPhotoGroupCell* cell in self.cells) {
+                        cell->_downloadButton.alpha = 0.0;
+                    }
                     _blurBackground.alpha = 0;
                     _pager.alpha = 0;
                     if (moveToTop) {
@@ -873,6 +879,9 @@
                         _scrollView.top = self.height;
                     }
                 } completion:^(BOOL finished) {
+                    for (OSCPhotoGroupCell* cell in self.cells) {
+                        [cell->_downloadButton removeFromSuperview];
+                    }
                     [self removeFromSuperview];
                 }];
                 

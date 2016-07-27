@@ -119,6 +119,7 @@
     [self.contentView addSubview:_timeLabel];
     
     UIImageView* likeImage = [[UIImageView alloc] init];
+    likeImage.userInteractionEnabled = YES;
     likeImage.contentMode = UIViewContentModeRight;
     likeImage.image = [UIImage imageNamed:@"ic_thumbup_normal"];
     [likeImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(likeBtnDidClickMethod:)]];
@@ -126,6 +127,7 @@
     [self.contentView addSubview:_likeImage];
     
     UIImageView* commentImage = [[UIImageView alloc]init];
+    commentImage.userInteractionEnabled = YES;
     commentImage.image = [UIImage imageNamed:@"ic_comment_30"];
     [commentImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentBtnDidClickMethod:)]];
     _commentImage = commentImage;
@@ -157,7 +159,7 @@
     
     [_descTextView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(16);
-        make.top.equalTo(_userPortrait.mas_bottom).with.offset(5);
+        make.top.equalTo(_userPortrait.mas_bottom).with.offset(8);
         make.right.equalTo(self.contentView).with.offset(-16);
     }];
     
@@ -170,7 +172,7 @@
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(16);
-        make.top.equalTo(_imagesView.mas_bottom).with.offset(3);
+        make.top.equalTo(_imagesView.mas_bottom).with.offset(8);
         make.bottom.equalTo(self.contentView).with.offset(-16);
     }];
     
