@@ -160,8 +160,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 
 
 
-- (void)setBlockAndClass
-{
+- (void)setBlockAndClass {
     __weak TweetTableViewController *weakSelf = self;
     self.tableWillReload = ^(NSUInteger responseObjectsCount) {
         if (weakSelf.uid == -1) {weakSelf.lastCell.status = LastCellStatusFinished;}
@@ -189,7 +188,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     [self.tableView registerClass:[NewMultipleTweetCell class] forCellReuseIdentifier:reuseIdentifier_Multiple];
-    self.tableView.estimatedRowHeight = 230;
+    self.tableView.estimatedRowHeight = 250;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
