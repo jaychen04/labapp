@@ -160,8 +160,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 
 
 
-- (void)setBlockAndClass
-{
+- (void)setBlockAndClass {
     __weak TweetTableViewController *weakSelf = self;
     self.tableWillReload = ^(NSUInteger responseObjectsCount) {
         if (weakSelf.uid == -1) {weakSelf.lastCell.status = LastCellStatusFinished;}
@@ -189,7 +188,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     [self.tableView registerClass:[NewMultipleTweetCell class] forCellReuseIdentifier:reuseIdentifier_Multiple];
-    self.tableView.estimatedRowHeight = 230;
+//    self.tableView.estimatedRowHeight = 300;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -277,17 +276,44 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     return 0;
 }
 
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    OSCTweetItem* model = self.dataModels[indexPath.row];
+//    if (model.images.count < 2){
+//        return [tableView fd_heightForCellWithIdentifier:reuseIdentifier configuration:^(id cell) {
+//            
+//        }];
+//    }else{
+//        return [tableView fd_heightForCellWithIdentifier:reuseIdentifier_Multiple configuration:^(id cell) {
+//            
+//        }];
+//    }
+//}
+- (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    OSCTweetItem* model = self.dataModels[indexPath.row];
+    if (model.images.count == 0) {
+        if (model.content.length > 200) {
+            return 200;
+        }else{
+            return 150;
+        }
+    }else if (model.images.count == 1){
+        return 250;
+    }else{
+        return 300;
+    }
+}
+
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OSCTweetItem* model = self.dataModels[indexPath.row];
     
     if (model.images.count < 2) {
         NewTweetCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-        
+        cell.tweet = model;
+
         if (!cell.descTextView.delegate) {
             cell.descTextView.delegate = self;
             [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
         }
-        cell.tweet = model;
         [self setBlockForCommentCell:cell];
         
         if (model.images.count > 0) {
