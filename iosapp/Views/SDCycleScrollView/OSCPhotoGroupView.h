@@ -21,6 +21,7 @@
 @property (nonatomic, readonly) NSInteger currentPage;
 @property (nonatomic, assign) BOOL blurEffectBackground; ///< Default is YES
 
+@property (nonatomic,assign) BOOL isShowDownloadButton; ///< Default is YES
 
 /** 锁死常规初始化方法 只能用initWithGroupItems:方法进行初始化 */
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;

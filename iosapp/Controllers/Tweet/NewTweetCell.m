@@ -155,14 +155,17 @@
 
 + (void)initContetTextView:(UITextView*)textView
 {
-    textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
     textView.backgroundColor = [UIColor clearColor];
     textView.font = [UIFont systemFontOfSize:14];
     textView.textColor = [UIColor newTitleColor];
     textView.editable = NO;
     textView.scrollEnabled = NO;
     [textView setTextContainerInset:UIEdgeInsetsZero];
+//    textView.backgroundColor = [UIColor redColor];
     textView.textContainer.lineFragmentPadding = 0;
+    [textView setContentInset:UIEdgeInsetsMake(0, -1, 0, 1)];
+    textView.textContainer.lineBreakMode = NSLineBreakByCharWrapping;
+    [textView setTextAlignment:NSTextAlignmentLeft];
 }
 
 #pragma mark - set Tweet

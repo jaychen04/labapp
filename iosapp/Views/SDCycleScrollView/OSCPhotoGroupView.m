@@ -53,10 +53,7 @@
 
 
 @interface OSCPhotoGroupCell : UIScrollView <UIScrollViewDelegate>
-{
-@public
-    __weak UIButton* _downloadButton;
-}
+
 @property (nonatomic, strong) UIView *imageContainerView;
 @property (nonatomic, strong) YYAnimatedImageView *imageView;
 @property (nonatomic, assign) NSInteger page;
@@ -107,16 +104,6 @@
     _progressLayer.strokeEnd = 0;
     _progressLayer.hidden = YES;
     [self.layer addSublayer:_progressLayer];
-    
-    UIButton* downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat W = [UIScreen mainScreen].bounds.size.width;
-    CGFloat H = [UIScreen mainScreen].bounds.size.height;
-    downloadBtn.frame = CGRectMake(W-60, H-60, 30, 30);
-    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"btn_download"] forState:UIControlStateNormal];
-    [downloadBtn addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
-    _downloadButton = downloadBtn;
-    UIView* keyWin = [UIApplication sharedApplication].keyWindow;
-    [keyWin addSubview:_downloadButton];
     
     return self;
 }
@@ -269,6 +256,9 @@
 
 
 @interface OSCPhotoGroupView() <UIScrollViewDelegate, UIGestureRecognizerDelegate>
+{
+    __weak UIButton* _downloadButton;
+}
 @property (nonatomic, weak) UIView *fromView;
 @property (nonatomic, weak) UIView *toContainerView;
 
@@ -299,6 +289,17 @@
     if (groupItems.count == 0) return nil;
     _groupItems = groupItems.copy;
     _blurEffectBackground = YES;
+    _isShowDownloadButton = YES;
+    
+    UIButton* downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGFloat W = [UIScreen mainScreen].bounds.size.width;
+    CGFloat H = [UIScreen mainScreen].bounds.size.height;
+    downloadBtn.frame = CGRectMake(W-60, H-60, 30, 30);
+    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"btn_download"] forState:UIControlStateNormal];
+    [downloadBtn addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
+    _downloadButton = downloadBtn;
+    UIView* keyWin = [UIApplication sharedApplication].keyWindow;
+    [keyWin addSubview:_downloadButton];
     
     NSString *model = [UIDevice currentDevice].machineModel;
     static NSMutableSet *oldDevices;
@@ -403,7 +404,14 @@
     
     return self;
 }
-
+-(void)setIsShowDownloadButton:(BOOL)isShowDownloadButton{
+    _isShowDownloadButton = isShowDownloadButton;
+    if (!_isShowDownloadButton) {
+        _downloadButton.hidden = YES;
+        [_downloadButton removeFromSuperview];
+    }
+//    [self setNeedsLayout];
+}
 
 - (void)presentFromImageView:(UIView *)fromView
                  toContainer:(UIView *)toContainer
@@ -569,9 +577,7 @@
             self.pager.alpha = 0;
             self.blurBackground.alpha = 0;
         }completion:^(BOOL finished) {
-            for (OSCPhotoGroupCell* cell in self.cells) {
-                [cell->_downloadButton removeFromSuperview];
-            }
+            [_downloadButton removeFromSuperview];
             self.scrollView.layer.transformScale = 1;
             [self removeFromSuperview];
             [self cancelAllImageLoad];
@@ -595,9 +601,7 @@
     [UIView animateWithDuration:animated ? 0.2 : 0 delay:0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut animations:^{
         _pager.alpha = 0.0;
         _blurBackground.alpha = 0.0;
-        for (OSCPhotoGroupCell* cell in self.cells) {
-            cell->_downloadButton.alpha = 0.0;
-        }
+        _downloadButton.alpha = 0.0;
         if (isFromImageClipped) {
             
             CGRect fromFrame = [fromView convertRect:fromView.bounds toView:cell];
@@ -620,9 +624,7 @@
             self.alpha = 0;
         } completion:^(BOOL finished) {
             cell.imageContainerView.layer.anchorPoint = CGPointMake(0.5, 0.5);
-            for (OSCPhotoGroupCell* cell in self.cells) {
-                [cell->_downloadButton removeFromSuperview];
-            }
+            [_downloadButton removeFromSuperview];
             [self removeFromSuperview];
             if (completion) completion();
         }];
@@ -869,9 +871,7 @@
                 duration = YY_CLAMP(duration, 0.05, 0.3);
                 
                 [UIView animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionBeginFromCurrentState animations:^{
-                    for (OSCPhotoGroupCell* cell in self.cells) {
-                        cell->_downloadButton.alpha = 0.0;
-                    }
+                    _downloadButton.alpha = 0.0;
                     _blurBackground.alpha = 0;
                     _pager.alpha = 0;
                     if (moveToTop) {
@@ -880,9 +880,7 @@
                         _scrollView.top = self.height;
                     }
                 } completion:^(BOOL finished) {
-                    for (OSCPhotoGroupCell* cell in self.cells) {
-                        [cell->_downloadButton removeFromSuperview];
-                    }
+                    [_downloadButton removeFromSuperview];
                     [self removeFromSuperview];
                 }];
                 
