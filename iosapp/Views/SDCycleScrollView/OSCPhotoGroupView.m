@@ -529,7 +529,7 @@
 }
 
 - (void)dismissAnimated:(BOOL)animated completion:(void (^)(void))completion {
-    [UIView setAnimationsEnabled:YES];
+    [UIView setAnimationsEnabled:NO];
     
     [[UIApplication sharedApplication] setStatusBarHidden:_fromNavigationBarHidden withAnimation:animated ? UIStatusBarAnimationFade : UIStatusBarAnimationNone];
     NSInteger currentPage = self.currentPage;
@@ -551,7 +551,7 @@
     [CATransaction setDisableActions:YES];
     if (isFromImageClipped) {
         CGRect frame = cell.imageContainerView.frame;
-        cell.imageContainerView.layer.anchorPoint = CGPointMake(0.5, 0);
+        cell.imageContainerView.layer.anchorPoint = CGPointMake(0.5, 0.5);
         cell.imageContainerView.frame = frame;
     }
     cell.progressLayer.hidden = YES;

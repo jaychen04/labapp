@@ -189,7 +189,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     [self.tableView registerClass:[NewMultipleTweetCell class] forCellReuseIdentifier:reuseIdentifier_Multiple];
-    self.tableView.estimatedRowHeight = 230;
+    self.tableView.estimatedRowHeight = 250;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -560,7 +560,9 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:@[currentPhotoItem]];
     
     UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
-    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
+//    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
+    [photoGroup presentFromImageView:fromView toContainer:self.tabBarController.view animated:YES completion:nil];
+
     
     //    __weak typeof(self) weakSelf = self;
     //    [photoGroup dismissAnimated:YES completion:^{
