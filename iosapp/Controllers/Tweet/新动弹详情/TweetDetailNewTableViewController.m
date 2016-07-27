@@ -26,21 +26,17 @@
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
 
-
-//#import "TweetsDetailNewCell.h"
 #import "TweetDetailCell.h"
 #import "TweetLikeNewCell.h"
 #import "TweetCommentNewCell.h"
 #import "NewMultipleDetailCell.h"
 
-//static NSString * const tDetailReuseIdentifier = @"TweetsDetailTableViewCell";
 static NSString * const tDetailReuseIdentifier = @"TweetDetailCell";
-
 static NSString * const tLikeReuseIdentifier = @"TweetLikeTableViewCell";
 static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell";
 
-@interface TweetDetailNewTableViewController ()<UIWebViewDelegate,NewMultipleDetailCellDelegate>
+@interface TweetDetailNewTableViewController ()<NewMultipleDetailCellDelegate>
 @property (nonatomic, strong)UIView *headerView;
 @property (nonatomic)BOOL isShowCommentList;
 @property (nonatomic, strong)NSMutableArray *tweetLikeList;
@@ -51,7 +47,6 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 @property (nonatomic, copy)NSString *TweetCommentsPageToken;
 
 @property (nonatomic, strong) UILabel *label;
-//@property (nonatomic, strong) OSCTweet *tweet;
 @property (nonatomic, strong) OSCTweetItem *tweetDetail;
 @property (nonatomic, assign) CGFloat webViewHeight;
 @property (nonatomic, strong) MBProgressHUD *HUD;
@@ -104,10 +99,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     _isShowCommentList = YES;       //默认展示评论列表
     //上拉刷新
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//        [self loadTweetLikeListIsrefresh:NO];
         [self loadTweetLikesIsRefresh:NO];
-        
-//        [self loadTweetCommentListIsrefresh:NO];
         [self loadTweetCommentsIsRefresh:NO];
     }];
     
@@ -115,10 +107,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     [self showHubView];
     
     [self loadTweetDetails];
-//    [self loadTweetLikeListIsrefresh:YES];
     [self loadTweetLikesIsRefresh:YES];
-    
-//    [self loadTweetCommentListIsrefresh:YES];
     [self loadTweetCommentsIsRefresh:YES];
 }
 
@@ -171,7 +160,6 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     return attributedStrNormal;
 }
 
-
 -(void)clickBtn:(UIButton*)btn {
     if (btn.tag == 1) { //赞
         _isShowCommentList = NO;
@@ -202,17 +190,17 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
             if ([responseObject[@"code"]integerValue] == 1) {
                 _tweetDetail = [OSCTweetItem mj_objectWithKeyValues:responseObject[@"result"]];
                 
-                NSDictionary *tweetData;
-                if (_tweetDetail.images.count <= 1) {       //单图或纯文本用html渲染
-                    OSCTweetImages* imageData = [_tweetDetail.images lastObject];
-                    NSLog(@"content:%@",_tweetDetail.content);
-                    tweetData = @{
-                                  @"content" : _tweetDetail.content,
-                                  @"imageURL": imageData.href ?: @"",
-                                  @"audioURL": _tweetDetail.audio ?: @""
-                                  };
-                    _tweetDetail.content = [Utils HTMLWithData:tweetData usingTemplate:@"newTweet"];
-                }
+//                NSDictionary *tweetData;
+//                if (_tweetDetail.images.count <= 1) {       //单图或纯文本用html渲染
+//                    OSCTweetImages* imageData = [_tweetDetail.images lastObject];
+//                    NSLog(@"content:%@",_tweetDetail.content);
+//                    tweetData = @{
+//                                  @"content" : _tweetDetail.content,
+//                                  @"imageURL": imageData.href ?: @"",
+//                                  @"audioURL": _tweetDetail.audio ?: @""
+//                                  };
+//                    _tweetDetail.content = [Utils HTMLWithData:tweetData usingTemplate:@"newTweet"];
+//                }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self hideHubView];
@@ -677,16 +665,9 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
           }];
 }
 */
-#pragma mark - scrollView
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    if (scrollView == self.tableView && self.didScroll) {
-        self.didScroll();
-    }
-}
-
+/*
 #pragma mark - UIWebViewDelegate
-
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
@@ -708,7 +689,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     [self.navigationController handleURL:request.URL];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
-
+*/
 #pragma mark -- 删除动弹评论
 - (void)setBlockForCommentCell:(TweetCommentNewCell *)cell {
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
@@ -771,4 +752,12 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
               }];
     };
 }
+
+#pragma mark - scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView == self.tableView && self.didScroll) {
+        self.didScroll();
+    }
+}
+
 @end

@@ -56,6 +56,7 @@
     _tweetImageView.contentMode = UIViewContentModeScaleAspectFill;
     _tweetImageView.clipsToBounds = YES;
     _tweetImageView.userInteractionEnabled = YES;
+    _tweetImageView.hidden = YES;
     [self.contentView addSubview:_tweetImageView];
     
     _timeLabel = [UILabel new];
@@ -191,13 +192,11 @@
         [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_tweetImageView.mas_bottom).with.offset(6);
         }];
-        _imageBackView.hidden = NO;
     } else {
 //        _tweetImageView.hidden = YES;
         [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_tweetImageView.mas_bottom).with.offset(0);
         }];
-        _imageBackView.hidden = YES;
     }
 }
 
@@ -229,7 +228,7 @@
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    
+    _tweetImageView.hidden = YES;
     _tweetImageView.image = nil;
 }
 

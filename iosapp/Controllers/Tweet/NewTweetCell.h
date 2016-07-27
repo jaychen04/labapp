@@ -23,7 +23,7 @@
 @property (nonatomic, strong) UIImageView *commentImage;
 @property (strong, nonatomic) UILabel *commentCountLabel;
 
-@property (strong, nonatomic) UIView *imageBackView;
+//@property (strong, nonatomic) UIView *imageBackView;
 
 @property (nonatomic, strong) OSCTweetItem *tweet;
 
