@@ -78,8 +78,10 @@
 - (void)setTitle:(NSString *)title
 {
     _title = [title copy];
+
 //    _titleLabel.text = [NSString stringWithFormat:@"   %@", title];
     _titleTextLabel.text = [NSString stringWithFormat:@"   %@", title];
+
 }
 
 
@@ -96,7 +98,7 @@
     _titleLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
 //    _titleLabel.hidden = !_titleLabel.text;
     _colorImageView.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW, titleLabelH);
-    _titleTextLabel.frame = CGRectMake(titleLabelX, titleLabelY, titleLabelW-60, titleLabelH);
+    _titleTextLabel.frame = CGRectMake(titleLabelX, titleLabelY+20, titleLabelW-80, titleLabelH-20);
     
     if (_titleBackgroundLayerBool) {
         [self layerForCycleScrollViewTitle];
@@ -109,8 +111,8 @@
 {
     CAGradientLayer *layer = [CAGradientLayer new];
     layer.colors = @[
-                     (__bridge id)[UIColor colorWithHex:0xececec alpha:0.4].CGColor,
-                     (__bridge id)[UIColor colorWithHex:0x757575 alpha:0.9].CGColor,
+                     (__bridge id)[UIColor colorWithHex:0x000000 alpha:0.0].CGColor,
+                     (__bridge id)[UIColor colorWithHex:0x000000 alpha:0.5].CGColor,
                      ];
     layer.startPoint = CGPointMake(0, 0);
     layer.endPoint = CGPointMake(0, 0.5);
