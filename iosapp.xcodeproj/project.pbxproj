@@ -335,6 +335,7 @@
 				<string>31F8925E1B0DF179002E0838</string>
 				<string>00D6BD3119ECD71B00E8754E</string>
 				<string>C5EF89391BE319F600B5FA46</string>
+				<string>EEF328861D49A40B007EBAE6</string>
 				<string>EE7B0AE21D348DDF0070F196</string>
 				<string>31D6995F1CFC29B500B48BB0</string>
 				<string>381EAB6919FE3B9800C1937C</string>
@@ -605,6 +606,7 @@
 				<string>C8C815620688FAE2D386D6B8</string>
 				<string>65FB3FE0826CA3EDEA75FB1B</string>
 				<string>4EC8763DFC3982692BC260F5</string>
+				<string>7E5FFDCC488C339DB654CFE6</string>
 			</array>
 			<key>buildRules</key>
 			<array/>
@@ -1098,9 +1100,9 @@
 				<key>ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME</key>
 				<string>LaunchImage</string>
 				<key>CODE_SIGN_IDENTITY</key>
-				<string></string>
+				<string>iPhone Developer</string>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string></string>
+				<string>iPhone Developer</string>
 				<key>DEBUG_INFORMATION_FORMAT</key>
 				<string>dwarf</string>
 				<key>ENABLE_BITCODE</key>
@@ -1187,9 +1189,9 @@
 				<key>ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME</key>
 				<string>LaunchImage</string>
 				<key>CODE_SIGN_IDENTITY</key>
-				<string></string>
+				<string>iPhone Developer</string>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
-				<string></string>
+				<string>iPhone Developer</string>
 				<key>ENABLE_BITCODE</key>
 				<string>NO</string>
 				<key>FRAMEWORK_SEARCH_PATHS</key>
@@ -8783,30 +8785,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>4EC8763DFC3982692BC260F5</key>
-		<dict>
-			<key>buildActionMask</key>
-			<string>2147483647</string>
-			<key>files</key>
-			<array/>
-			<key>inputPaths</key>
-			<array/>
-			<key>isa</key>
-			<string>PBXShellScriptBuildPhase</string>
-			<key>name</key>
-			<string>Embed Pods Frameworks</string>
-			<key>outputPaths</key>
-			<array/>
-			<key>runOnlyForDeploymentPostprocessing</key>
-			<string>0</string>
-			<key>shellPath</key>
-			<string>/bin/sh</string>
-			<key>shellScript</key>
-			<string>"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh"
-</string>
-			<key>showEnvVarsInLog</key>
-			<string>0</string>
-		</dict>
 		<key>61545762CA68D30009DA2509</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -8951,6 +8929,30 @@
 			<string>B420F583B282D16EC0A8FC21</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>7E5FFDCC488C339DB654CFE6</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
 		</dict>
 		<key>882493DB35681DCC3F81CA6F</key>
 		<dict>
@@ -9264,6 +9266,8 @@
 		<dict>
 			<key>children</key>
 			<array>
+				<string>EEF328841D49A40B007EBAE6</string>
+				<string>EEF328851D49A40B007EBAE6</string>
 				<string>31ABF57F1B0F1B5300663C08</string>
 				<string>31ABF5801B0F1B5300663C08</string>
 				<string>C57E7B551B56734300F39B5C</string>
@@ -12997,6 +13001,39 @@
 		<dict>
 			<key>fileRef</key>
 			<string>EEEC98C21CF317D600995A03</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>EEF328841D49A40B007EBAE6</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>BannerScrollView.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>EEF328851D49A40B007EBAE6</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>BannerScrollView.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>EEF328861D49A40B007EBAE6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>EEF328851D49A40B007EBAE6</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
