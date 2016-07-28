@@ -66,11 +66,18 @@
             } else if (pathComponents.count == 4) {
                 NSString *type = pathComponents[2];
                 if ([type isEqualToString:@"blog"]) {
-                    OSCNews *news = [OSCNews new];
-                    news.type = NewsTypeBlog;
-                    news.attachment = pathComponents[3];
-                    viewController = [[DetailsViewController alloc] initWithNews:news];
-                    viewController.navigationItem.title = @"博客详情";
+//                    OSCNews *news = [OSCNews new];
+//                    news.type = NewsTypeBlog;
+//                    news.attachment = pathComponents[3];
+//                    viewController = [[DetailsViewController alloc] initWithNews:news];
+//                    viewController.navigationItem.title = @"博客详情";
+                    
+                    NSInteger blogId = [pathComponents[3] integerValue];
+                    if(blogId > 0) {
+                        viewController = [[NewsBlogDetailTableViewController alloc]initWithObjectId:blogId isBlogDetail:YES];
+                        viewController.hidesBottomBarWhenPushed = YES;
+                    }
+ 
                 } else if ([type isEqualToString:@"tweet"]){
                     OSCTweet *tweet = [OSCTweet new];
                     tweet.tweetID = [pathComponents[3] longLongValue];
@@ -80,11 +87,17 @@
             } else if(pathComponents.count == 5) {
                 NSString *type = pathComponents[3];
                 if ([type isEqualToString:@"blog"]) {
-                    OSCNews *news = [OSCNews new];
-                    news.type = NewsTypeBlog;
-                    news.attachment = pathComponents[4];
-                    viewController = [[DetailsViewController alloc] initWithNews:news];
-                    viewController.navigationItem.title = @"博客详情";
+//                    OSCNews *news = [OSCNews new];
+//                    news.type = NewsTypeBlog;
+//                    news.attachment = pathComponents[4];
+//                    viewController = [[DetailsViewController alloc] initWithNews:news];
+//                    viewController.navigationItem.title = @"博客详情";
+                    
+                    NSInteger blogId = [pathComponents[4] integerValue];
+                    if(blogId > 0) {
+                        viewController = [[NewsBlogDetailTableViewController alloc]initWithObjectId:blogId isBlogDetail:YES];
+                        viewController.hidesBottomBarWhenPushed = YES;
+                    }
                 }
             }
         } else if ([prefix isEqualToString:@"www"] || [prefix isEqualToString:@"m"]) {
