@@ -188,7 +188,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     [self.tableView registerClass:[NewMultipleTweetCell class] forCellReuseIdentifier:reuseIdentifier_Multiple];
-//    self.tableView.estimatedRowHeight = 300;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
@@ -275,19 +274,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     }
     return 0;
 }
-
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    OSCTweetItem* model = self.dataModels[indexPath.row];
-//    if (model.images.count < 2){
-//        return [tableView fd_heightForCellWithIdentifier:reuseIdentifier configuration:^(id cell) {
-//            
-//        }];
-//    }else{
-//        return [tableView fd_heightForCellWithIdentifier:reuseIdentifier_Multiple configuration:^(id cell) {
-//            
-//        }];
-//    }
-//}
 - (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
     OSCTweetItem* model = self.dataModels[indexPath.row];
     if (model.images.count == 0) {
@@ -586,15 +572,8 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:@[currentPhotoItem]];
     
     UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
-    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
-    
-    //    __weak typeof(self) weakSelf = self;
-    //    [photoGroup dismissAnimated:YES completion:^{
-    //        [weakSelf.tableView reloadData];
-    //    }];
-    //    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:^{
-    //        [photoGroup dismissAnimated:YES completion:nil];
-    //    }];
+//    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
+    [photoGroup presentFromImageView:fromView toContainer:self.tabBarController.view animated:YES completion:nil];
 }
 
 #pragma mark - 点赞功能

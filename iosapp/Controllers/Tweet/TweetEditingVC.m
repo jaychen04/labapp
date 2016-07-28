@@ -18,6 +18,7 @@
 #import "AppDelegate.h"
 #import "TeamMemberListViewController.h"
 #import "Config.h"
+#import "OSCPhotoGroupView.h"
 
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <objc/runtime.h>
@@ -60,7 +61,9 @@
 @property (nonatomic, strong) MBProgressHUD *uploadImgHub;
 @end
 
-@implementation TweetEditingVC
+@implementation TweetEditingVC{
+    NSMutableArray* _itemImageArr;
+}
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -71,6 +74,7 @@
         _failCount = 0;
         _isGotTweetAddImage = NO;
         _isAddImage = NO;
+        _itemImageArr = [NSMutableArray arrayWithCapacity:9];
     }
     return self;
 }
@@ -285,15 +289,27 @@
         [_images insertObject:[UIImage imageNamed:@"ic_tweet_add"] atIndex:_images.count];
     }
     
+    [_itemImageArr removeAllObjects];
     for (int k=0; k<_images.count; k++) {
         UIImageView *iv = [UIImageView new];
         iv.tag = k;
         iv.contentMode = UIViewContentModeScaleAspectFill;
         iv.clipsToBounds = YES;
         iv.userInteractionEnabled = YES;
-        iv.image = [_images objectAtIndex:k];
+        UIImage* image = [_images objectAtIndex:k];
+        iv.image = image;
         [iv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showMutilImagePreview:)]];
         [_contentView addSubview:iv];
+        
+        NSData* imageData = UIImagePNGRepresentation(image);
+        NSString* imageStr = [[NSString alloc]initWithData:imageData encoding:NSUTF8StringEncoding];
+        NSURL* imageUrl = [NSURL URLWithString:imageStr];
+        
+        OSCPhotoGroupItem* imageItem = [OSCPhotoGroupItem new];
+        imageItem.largeImageURL = imageUrl;
+        imageItem.largeImageSize = [UIScreen mainScreen].bounds.size;
+        imageItem.thumbView = iv;
+        [_itemImageArr addObject:imageItem];
         
         CGFloat ivWidth = CGRectGetWidth([[UIScreen mainScreen]bounds])/3 - 12;
         [iv mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -323,6 +339,8 @@
         }
         
     }
+    [_itemImageArr removeLastObject];
+    
     if (!isRepeat) {
 //        _textViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_edittingArea attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
 //                                                                    toItem:nil           attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:48];
@@ -342,11 +360,19 @@
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[emojiPage]|" options:0 metrics:nil views:view]];
     }
 }
-
+#pragma mark --- 预览大图
 - (void)showMutilImagePreview:(UITapGestureRecognizer*)tap {
     NSInteger imageIndex = tap.view.tag;
     if (imageIndex < _images.count - 1) {
-        [self.navigationController presentViewController:[[ImageViewerController alloc] initWithImage:[_images objectAtIndex:imageIndex]] animated:YES completion:nil];
+        [_edittingArea resignFirstResponder];
+        UIImageView* fromView = (UIImageView* )tap.view;
+        
+        OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:_itemImageArr.copy];
+        
+        UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
+        [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
+        photoGroup.isShowDownloadButton = NO;
+        
     }else if (imageIndex == _images.count - 1) {
         if (_isGotTweetAddImage) {  //在原来基础上添加图片
             _isAddImage = YES;
