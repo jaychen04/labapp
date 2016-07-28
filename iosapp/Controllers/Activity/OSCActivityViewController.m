@@ -8,7 +8,6 @@
 
 #import "OSCActivityViewController.h"
 #import "OSCActivityTableViewCell.h"
-#import "SDCycleScrollView.h"
 #import "UITableView+FDTemplateLayoutCell.h"
 #import "ActivityDetailsWithBarViewController.h"
 
@@ -27,7 +26,7 @@
 
 static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 
-@interface OSCActivityViewController ()<UITableViewDelegate,UITableViewDataSource,SDCycleScrollViewDelegate, networkingJsonDataDelegate, ActivityHeadViewDelegate>
+@interface OSCActivityViewController ()<UITableViewDelegate,UITableViewDataSource, networkingJsonDataDelegate, ActivityHeadViewDelegate>
 
 @property (nonatomic,strong) ActivityHeadView *bannerView;
 @property (nonatomic, strong) NSMutableArray *activitys;

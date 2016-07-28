@@ -8,8 +8,8 @@
 
 #import "InformationViewController.h"
 #import "TokenManager.h"
-#import "SDCycleScrollView.h"
 #import "enumList.h"
+#import "BannerScrollView.h"
 
 #import "ActivityDetailsWithBarViewController.h"
 #import "DetailsViewController.h"
@@ -35,17 +35,18 @@
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
-#import <TOWebViewController.h>
 #import <MJRefresh.h>
+
 
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define OSC_BANNER_HEIGHT 125
 
 static NSString * const informationReuseIdentifier = @"InformationTableViewCell";
 
-@interface InformationViewController () <SDCycleScrollViewDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface InformationViewController () <UITableViewDelegate, UITableViewDataSource, BannerScrollViewDelegate>
 
-@property (nonatomic,strong) SDCycleScrollView* cycleScrollView;
+@property (nonatomic,strong) BannerScrollView *bannerScrollView;
+
 @property (nonatomic,strong) NSMutableArray* bannerTitles;
 @property (nonatomic,strong) NSMutableArray* bannerImageUrls;
 @property (nonatomic,strong) NSMutableArray* bannerModels;
@@ -57,19 +58,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 @end
 
 
-
-
 @implementation InformationViewController
-
--(instancetype)init{
-    self = [super init];
-    if (self) {
-
-        [self.cycleScrollView setAutoScrollTimeInterval:4.0f];
-
-    }
-    return self;
-}
 
 
 #pragma mark - life cycle
@@ -87,6 +76,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     [super viewDidLoad];
     [self getBannerData];
     [self layoutUI];
+    
     
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -127,6 +117,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
                 NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
                 self.bannerModels = bannerModels.mutableCopy;
                 
+                
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self configurationCycleScrollView];
                 });
@@ -141,24 +132,18 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 -(void)layoutUI{
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerNib:[UINib nibWithNibName:@"InformationTableViewCell" bundle:nil] forCellReuseIdentifier:informationReuseIdentifier];
-    self.tableView.tableHeaderView = self.cycleScrollView;
     self.tableView.estimatedRowHeight = 132;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.bannerScrollView = [[BannerScrollView alloc] initWithFrame:CGRectMake(0, 0, OSC_SCREEN_WIDTH, OSC_BANNER_HEIGHT)];
+    self.bannerScrollView.delegate = self;
+    self.tableView.tableHeaderView = self.bannerScrollView;
 }
 
 
 -(void)configurationCycleScrollView{
-    [self.bannerImageUrls removeAllObjects];
-    [self.bannerTitles removeAllObjects];
-    
-    for (OSCBanner* bannerItem in self.bannerModels) {
-        [self.bannerTitles addObject:bannerItem.name];
-        [self.bannerImageUrls addObject:bannerItem.img];
-    }
-    
-    self.cycleScrollView.imageURLStringsGroup = self.bannerImageUrls.copy;
-    self.cycleScrollView.titlesGroup = self.bannerTitles.copy;
+    self.bannerScrollView.banners = self.bannerModels.mutableCopy;
     
     [self.tableView reloadData];
 }
@@ -358,16 +343,18 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 }
 
 
+#pragma mark - memory warning
 
-#pragma mark - banner delegate 
-
-- (void)cycleScrollView:(SDCycleScrollView *)cycleScrollView didSelectItemAtIndex:(NSInteger)index{
-    OSCBanner* bannerModel = self.bannerModels[index];
-    [self pushConcreteViewController:bannerModel];
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 
 
--(void)pushConcreteViewController:(OSCBanner* )model{
+#pragma mark - BannerScrollViewDelegate
+- (void)clickedScrollViewBanners:(NSInteger)bannerTag
+{
+    OSCBanner *model = _bannerModels[bannerTag];
+    
     switch (model.type) {
         case InformationTypeLinkNews:{
             [self.navigationController handleURL:[NSURL URLWithString:model.href]];
@@ -387,10 +374,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             detailVC.questionID = model.id;
             [self.navigationController pushViewController:detailVC animated:YES];
             
-//            OSCPost* post = [OSCPost new];
-//            post.postID = model.id;
-//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
-//            [self.navigationController pushViewController:detailsViewController animated:YES];
             break;
         }
             
@@ -400,7 +383,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             detailViewController.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:detailViewController animated:YES];
             
-             
+            
             break;
         }
             
@@ -410,7 +393,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             translationVc.translationId = model.id;
             [self.navigationController pushViewController:translationVc animated:YES];
             
-//            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
             break;
         }
             
@@ -420,55 +402,19 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             activityDetailCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:activityDetailCtl animated:YES];
             
-//            ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:model.id];
-//            [self.navigationController pushViewController:activityVC animated:YES];
             break;
         }
         case InformationTypeInfo:{
-//            OSCInformation* info = [[OSCInformation alloc]init];
-//            info.id = model.id;
-//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithInfo:info];
-//            [self.navigationController pushViewController:detailsViewController animated:YES];
-            
             //新版资讯详情界面
             NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:model.id isBlogDetail:NO];
             newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
             
-//            NewsDetailViewController *newsDetailsVc = [[NewsDetailViewController alloc]initWithNewsId:model.id];
-//            newsDetailsVc.hidesBottomBarWhenPushed = YES;
-//            [self.navigationController pushViewController:newsDetailsVc animated:YES];
             break;
         }
         default:
             break;
     }
-}
-
-#pragma mark - memory warning
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    [self.cycleScrollView clearCache];
-}
-
-
-#pragma mark - lazy loading
-
-- (SDCycleScrollView *)cycleScrollView {
-	if(_cycleScrollView == nil) {
-        _cycleScrollView = [SDCycleScrollView cycleScrollViewWithFrame:(CGRect){{0,0},{OSC_SCREEN_WIDTH,OSC_BANNER_HEIGHT}} delegate:self placeholderImage:[UIImage imageNamed:@""]];
-        _cycleScrollView.pageControlDotSize = CGSizeMake(3, 10);
-        _cycleScrollView.pageControlStyle = SDCycleScrollViewPageContolStyleClassic;
-        _cycleScrollView.pageControlAliment = SDCycleScrollViewPageContolAlimentRight;
-        _cycleScrollView.pageDotColor = [UIColor whiteColor];
-        _cycleScrollView.currentPageDotColor = [UIColor navigationbarColor];
-        _cycleScrollView.showPageControl = YES;
-        _cycleScrollView.titleLabelBackgroundColor = [UIColor clearColor];
-        _cycleScrollView.titleBackgroundLayerBool = YES;
-        _cycleScrollView.titleLabelHeight = 50;
-	}
-	return _cycleScrollView;
 }
 
 - (NSMutableArray *)bannerTitles {

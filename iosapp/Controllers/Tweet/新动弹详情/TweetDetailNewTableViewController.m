@@ -31,12 +31,14 @@
 #import "TweetCommentNewCell.h"
 #import "NewMultipleDetailCell.h"
 
+@import SafariServices ;
+
 static NSString * const tDetailReuseIdentifier = @"TweetDetailCell";
 static NSString * const tLikeReuseIdentifier = @"TweetLikeTableViewCell";
 static NSString * const tCommentReuseIdentifier = @"TweetCommentTableViewCell";
 static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell";
 
-@interface TweetDetailNewTableViewController ()<NewMultipleDetailCellDelegate>
+@interface TweetDetailNewTableViewController ()<NewMultipleDetailCellDelegate,UITextViewDelegate>
 @property (nonatomic, strong)UIView *headerView;
 @property (nonatomic)BOOL isShowCommentList;
 @property (nonatomic, strong)NSMutableArray *tweetLikeList;
@@ -473,6 +475,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
         
         [cell.nameLabel setText:_tweetDetail.author.name];
         cell.descTextView.attributedText = [Utils contentStringFromRawString:_tweetDetail.content];
+		cell.descTextView.delegate = self; //监听点击事件
         
         if (_tweetDetail.images.count == 1) {
             cell.tweetImageView.hidden = NO;
@@ -496,7 +499,13 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     }
 }
 
-#pragma 加载大图
+#pragma mark  给UITextView添加监听
+-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {	
+	[self.navigationController handleURL:URL];
+	return NO;
+}
+
+#pragma mark 加载大图
 -(void)loadTweetImage:(UITapGestureRecognizer*)tap {
     UIImageView* fromView = (UIImageView* )tap.view;
 //        current touch object

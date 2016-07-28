@@ -39,6 +39,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 @interface HomepageViewController ()
 
 @property (nonatomic, weak) IBOutlet UIImageView *portrait;
+@property (weak, nonatomic) IBOutlet UIImageView *genderImageView;
 @property (nonatomic, weak) IBOutlet UIButton *QRCodeButton;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 
@@ -90,13 +91,14 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    _genderImageView.hidden = YES;
     
      _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
-    
+
     [self setUpSubviews];
     
     _myID = [Config getOwnID];
@@ -146,6 +148,14 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                  
                  ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
                  _myProfile = [[OSCUser alloc] initWithXML:userXML];
+                 
+                 if ([_myProfile.gender isEqualToString:@"1"]) {
+                     [_genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
+                     _genderImageView.hidden = NO;
+                 } else if ([_myProfile.gender isEqualToString:@"2"]) {
+                     [_genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
+                     _genderImageView.hidden = NO;
+                 }
                  
                  [Config updateProfile:_myProfile];
                  

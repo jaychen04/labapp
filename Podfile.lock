@@ -59,9 +59,6 @@ PODS:
   - SDWebImage/Core (3.8.1)
   - SSKeychain (1.4.0)
   - TBXML (1.5)
-  - TOWebViewController (2.2.6):
-    - TOWebViewController/Core (= 2.2.6)
-  - TOWebViewController/Core (2.2.6)
   - TTTAttributedLabel (1.13.4)
   - UITableView+FDTemplateLayoutCell (1.5.beta)
   - UMengAnalytics-NO-IDFA (4.0.5)
@@ -87,7 +84,6 @@ DEPENDENCIES:
   - SDWebImage (~> 3.8.1)
   - SSKeychain
   - TBXML
-  - TOWebViewController
   - TTTAttributedLabel
   - UITableView+FDTemplateLayoutCell (~> 1.5.beta)
   - UMengAnalytics-NO-IDFA (~> 4.0.5)
@@ -115,7 +111,6 @@ SPEC CHECKSUMS:
   SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
   SSKeychain: c71293fa57216a40ab06c23f4085387583293de4
   TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
-  TOWebViewController: a29908019f7e0e0f8eccfab8a1ee8dcdf4fc5aac
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f
   UITableView+FDTemplateLayoutCell: 02b508ab1cb4cea16a8c17ac83d2cd1fd72124f9
   UMengAnalytics-NO-IDFA: 965a219b05475ff2a4c09a164139a27bbaa0e25b
