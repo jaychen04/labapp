@@ -12,4 +12,5 @@
 
 @property (nonatomic, assign) NSInteger questionID;
 @property (nonatomic)NSInteger commentCount;
+
 @end
