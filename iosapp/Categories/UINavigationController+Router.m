@@ -20,7 +20,9 @@
 #import "OSCPost.h"
 #import "OSCTweet.h"
 
-#import <TOWebViewController.h>
+@import SafariServices ;
+
+
 
 @implementation UINavigationController (Router)
 
@@ -31,12 +33,16 @@
     //判断是否包含 oschina.net 来确定是不是站内链接
     NSRange range = [urlString rangeOfString:@"oschina.net"];
     if (range.length <= 0) {
-        TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
-        webViewController.hidesBottomBarWhenPushed = YES;
-        [self pushViewController:webViewController animated:YES];
+		//TODO: 替换合适的webviewcontroller
+		if([[[UIDevice currentDevice] systemVersion] hasPrefix:@"9"]) {
+			SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
+			[self pushViewController:webviewController animated:YES];
+		} else {
+			[[UIApplication sharedApplication] openURL:url];
+		}
+		
     } else {
         //站内链接
-        
         urlString = [urlString substringFromIndex:7];
         NSArray *pathComponents = [urlString pathComponents];
         NSString *prefix = [pathComponents[0] componentsSeparatedByString:@"."][0];
@@ -88,14 +94,7 @@
                 if ([type isEqualToString:@"news"]) {
                     // 新闻
                     // www.oschina.net/news/27259/mobile-internet-market-is-small
-                    
                     int64_t newsID = [urlComponents[2] longLongValue];
-//                    OSCNews *news = [OSCNews new];
-//                    news.type = NewsTypeStandardNews;
-//                    news.newsID = newsID;
-//                    viewController = [[DetailsViewController alloc] initWithNews:news];
-//                    viewController.navigationItem.title = @"资讯详情";
-                    
                     //新版资讯界面
                     viewController =[[NewsBlogDetailTableViewController alloc]initWithObjectId:newsID isBlogDetail:NO];
                     viewController.hidesBottomBarWhenPushed = YES;
@@ -138,23 +137,25 @@
                     //话题
                     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     urlComponents = [urlString componentsSeparatedByString:@"/"];
-                    
                     viewController = [[TweetsViewController alloc] initWithTopic:urlComponents[2]];
                 }
             }
         } else if ([prefix isEqualToString:@"static"]) {
             ImageViewerController *imageViewerVC = [[ImageViewerController alloc] initWithImageURL:url];
-            
             [self presentViewController:imageViewerVC animated:YES completion:nil];
-            
             return;
-        }
+		}
+		
         if (viewController) {
             [self pushViewController:viewController animated:YES];
         } else {
-            TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
-            webViewController.hidesBottomBarWhenPushed = YES;
-            [self pushViewController:webViewController animated:YES];
+			
+			if([[[UIDevice currentDevice] systemVersion] hasPrefix:@"9"]) {
+				SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
+				[self pushViewController:webviewController animated:YES];
+			} else {
+				[[UIApplication sharedApplication] openURL:url];
+			}
         }
     }
 }
