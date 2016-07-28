@@ -605,6 +605,7 @@
 				<string>00D6BCD819EB673200E8754E</string>
 				<string>C8C815620688FAE2D386D6B8</string>
 				<string>65FB3FE0826CA3EDEA75FB1B</string>
+				<string>4EC8763DFC3982692BC260F5</string>
 				<string>7E5FFDCC488C339DB654CFE6</string>
 			</array>
 			<key>buildRules</key>

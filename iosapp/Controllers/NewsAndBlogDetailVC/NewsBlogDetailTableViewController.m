@@ -26,6 +26,9 @@
 #import "DetailsViewController.h"
 #import "OSCNewHotBlogDetails.h"
 #import "OSCInformationDetails.h"
+#import "ActivityDetailViewController.h"
+#import "TranslationViewController.h"
+#import "QuesAnsDetailViewController.h"
 #import "CommentsBottomBarViewController.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
@@ -1118,10 +1121,33 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
             [self.navigationController pushViewController:detailsViewController animated:YES];
         }
             break;
+        case 2:{
+            //问答
+            QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
+            detailVC.hidesBottomBarWhenPushed = YES;
+            detailVC.questionID = detailModel.id;
+            [self.navigationController pushViewController:detailVC animated:YES];
+        }
+            break;
         case 3:{        //博客详情
             NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailModel.id
                                                                                                                 isBlogDetail:YES];
             [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+        }
+            break;
+        case 4:{
+            //翻译
+            TranslationViewController *translationVc = [TranslationViewController new];
+            translationVc.hidesBottomBarWhenPushed = YES;
+            translationVc.translationId = detailModel.id;
+            [self.navigationController pushViewController:translationVc animated:YES];
+        }
+            break;
+        case 5:{
+            //新活动详情页面
+            ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:detailModel.id];
+            activityDetailCtl.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:activityDetailCtl animated:YES];
         }
             break;
         case 6:{        //资讯详情
@@ -1144,6 +1170,18 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
 
+-(void)webViewDidFinishLoad:(IMYWebView*)webView{
+    [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(NSNumber* result, NSError *err) {
+        CGFloat webViewHeight = [result floatValue];
+        if (_webViewHeight == webViewHeight) return ;
+        _webViewHeight = webViewHeight;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [self hideHubView];
+        });
+    }];
+}
+
 //- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 //{
 //    
@@ -1163,17 +1201,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 //        [self hideHubView];
 //    });
 //}
--(void)webViewDidFinishLoad:(IMYWebView*)webView{
-    [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(NSNumber* result, NSError *err) {
-        CGFloat webViewHeight = [result floatValue];
-        if (_webViewHeight == webViewHeight) return ;
-        _webViewHeight = webViewHeight;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            [self hideHubView];
-        });
-    }];
-}
 
 #pragma mark - fav关注
 - (void)favSelected
@@ -1202,44 +1229,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
              } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                  NSLog(@"%@",error);
              }];
-        
-        /* 旧关注 */
-        //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        //
-        //        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_UPDATERELATION]
-        //           parameters:@{
-        //                        @"uid":             @([Config getOwnID]),
-        //                        @"hisuid":          @(_blogDetails.authorId),
-        //                        @"newrelation":     _blogDetails.authorRelation <= 2? @(0) : @(1)
-        //                        }
-        //              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
-        //                  ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
-        //                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-        //                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-        //
-        //                  if (errorCode == 1) {
-        //                      _blogDetails.authorRelation = [[[responseDoment.rootElement firstChildWithTag:@"relation"] numberValue] intValue];
-        //                      dispatch_async(dispatch_get_main_queue(), ^{
-        //                          [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]]
-        //                                                withRowAnimation:UITableViewRowAnimationNone];
-        //                      });
-        //                  } else {
-        //                      MBProgressHUD *HUD = [Utils createHUD];
-        //                      HUD.mode = MBProgressHUDModeCustomView;
-        //                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        //                      HUD.label.text = errorMessage;
-        //
-        //                      [HUD hideAnimated:YES afterDelay:1];
-        //                  }
-        //
-        //              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //                  MBProgressHUD *HUD = [Utils createHUD];
-        //                  HUD.mode = MBProgressHUDModeCustomView;
-        //                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        //                  HUD.label.text = @"网络异常，操作失败";
-        //
-        //                  [HUD hideAnimated:YES afterDelay:1];
-        //              }];
     }
     
 }
@@ -1319,7 +1308,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                      _commentTextField.text = @"";
                      _commentTextField.placeholder = @"";
                  }else {
-//                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
                  }
                  dispatch_async(dispatch_get_main_queue(), ^{
@@ -1329,91 +1317,23 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
              }
              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                  HUD.mode = MBProgressHUDModeCustomView;
-//                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                  HUD.label.text = @"网络异常，评论发送失败";
                  [HUD hideAnimated:YES afterDelay:1];
              }];
-        
-        
-        /*
-         //旧 发评论
-         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-         
-         NSString *urlStr = _isBlogDetail ? [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_BLOGCOMMENT_PUB]:[NSString stringWithFormat:@"%@%@",OSCAPI_PREFIX,OSCAPI_COMMENT_PUB];
-         NSDictionary *parameters =  _isBlogDetail ? @{
-         @"blog"     : @(_blogDetails.id),
-         @"uid"      : @([Config getOwnID]),
-         @"content"  : _commentTextField.text,
-         @"reply_id" : @(replyID),
-         @"objuid"   : @(authorID),
-         } : @{
-         @"catalog": @(1),
-         @"id": @(_newsDetails.id),
-         @"uid": @([Config getOwnID]),
-         @"replyid": @(replyID),
-         @"authorid": @(authorID),
-         @"content": _commentTextField.text,
-         @"isPostToMyZone": @(0)
-         };
-         [manager POST:urlStr
-         parameters:parameters
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-         ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
-         int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-         NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-         
-         HUD.mode = MBProgressHUDModeCustomView;
-         
-         if (errorCode == 1) {
-         ONOXMLElement *postXML = [responseDocument.rootElement firstChildWithTag:@"comment"];
-         OSCNewComment *postedComment = [[OSCNewComment alloc] initWithXML:postXML];
-         
-         if (postedComment) {
-         if(_isBlogDetail) {
-         [_blogDetailComments insertObject:postedComment atIndex:0];
-         }else {
-         [_newsDetailComments insertObject:postedComment atIndex:0];
-         }
-         }
-         
-         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-         HUD.label.text = @"评论发表成功";
-         
-         [self.tableView reloadData];
-         _commentTextField.text = @"";
-         } else {
-         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-         HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
-         }
-         
-         [HUD hideAnimated:YES afterDelay:1];
-         
-         
-         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-         HUD.mode = MBProgressHUDModeCustomView;
-         HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-         HUD.label.text = @"网络异常，动弹发送失败";
-         
-         [HUD hideAnimated:YES afterDelay:1];
-         }];
-         */
     }
     
 }
 
 #pragma mark - UITextFieldDelegate
-- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
-{
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     return YES;
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     return YES;
 }
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [self sendComment];
 
     [textField resignFirstResponder];
@@ -1421,8 +1341,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     return YES;
 }
 
-- (void)keyboardDidShow:(NSNotification *)nsNotification
-{
+- (void)keyboardDidShow:(NSNotification *)nsNotification {
     
     //获取键盘的高度
     
@@ -1441,20 +1360,17 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     
 }
 
-- (void)keyboardWillHide:(NSNotification *)aNotification
-{
+- (void)keyboardWillHide:(NSNotification *)aNotification {
     _bottmTextFiled.constant = 0;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - collect 收藏
 
-- (void)updateFavButtonWithIsCollected:(BOOL)isCollected
-{
+- (void)updateFavButtonWithIsCollected:(BOOL)isCollected {
     if (isCollected) {
         [_favButton setImage:[UIImage imageNamed:@"ic_faved_pressed"] forState:UIControlStateNormal];
     }else {
@@ -1498,51 +1414,10 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
-//                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                  HUD.label.text = @"网络异常，操作失败";
                  
                  [HUD hideAnimated:YES afterDelay:1];
              }];
-        
-        
-        /* 旧版收藏 */
-        //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        //
-        //        NSString *API = _blogDetails.favorite? OSCAPI_FAVORITE_DELETE: OSCAPI_FAVORITE_ADD;
-        //        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, API]
-        //           parameters:@{
-        //                        @"uid":   @([Config getOwnID]),
-        //                        @"objid": @(_blogDetails.id),
-        //                        @"type":  @(3)
-        //                        }
-        //              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-        //                  ONOXMLElement *result = [responseObject.rootElement firstChildWithTag:@"result"];
-        //                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-        //                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-        //
-        //                  MBProgressHUD *HUD = [Utils createHUD];
-        //                  HUD.mode = MBProgressHUDModeCustomView;
-        //
-        //                  if (errorCode == 1) {
-        //                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-        //                      HUD.label.text = _blogDetails.favorite? @"删除收藏成功": @"添加收藏成功";
-        //
-        //                      _blogDetails.favorite = !_blogDetails.favorite;
-        //                  } else {
-        //                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        //                      HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
-        //                  }
-        //
-        //                  [self favButtonImage];
-        //                  [HUD hideAnimated:YES afterDelay:1];
-        //              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //                  MBProgressHUD *HUD = [Utils createHUD];
-        //                  HUD.mode = MBProgressHUDModeCustomView;
-        //                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        //                  HUD.label.text = @"网络异常，操作失败";
-        //
-        //                  [HUD hideAnimated:YES afterDelay:1];
-        //              }];
     }
 }
 
