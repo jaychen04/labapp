@@ -472,7 +472,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
         [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetails:)]];
         
         [cell.nameLabel setText:_tweetDetail.author.name];
-        cell.descTextView.attributedText = [Utils contentStringFromRawString:_tweetDetail.content];
+        cell.descTextView.attributedText = [Utils contentStringFromRawString:_tweetDetail.content];		
         
         if (_tweetDetail.images.count == 1) {
             cell.tweetImageView.hidden = NO;

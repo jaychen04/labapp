@@ -26,6 +26,8 @@
 
 #import "OSCActivities.h"
 
+@import SafariServices ;
+
 static NSString * const activityHeadDetailReuseIdentifier = @"ActivityHeadCell";
 static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 @interface ActivityDetailViewController () <UITableViewDelegate, UITableViewDataSource, UIWebViewDelegate>
@@ -450,7 +452,13 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
 - (void)enrollActivity
 {
     if (_activityDetail.type == ActivityTypeBelow) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_activityDetail.href]];
+		NSURL *url = [NSURL URLWithString:_activityDetail.href];
+		if([[[UIDevice currentDevice] systemVersion] hasPrefix:@"9"]) {
+			SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
+			[self.navigationController pushViewController:webviewController animated:YES];
+		} else {
+			[[UIApplication sharedApplication] openURL:url];
+		}
     } else {
         if (_activityDetail.applyStatus == ApplyStatusAttended) {
             PresentMembersViewController *presentMembersViewController = [[PresentMembersViewController alloc] initWithEventID:_activityDetail.id];
