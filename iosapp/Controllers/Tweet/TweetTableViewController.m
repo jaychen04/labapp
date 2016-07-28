@@ -680,8 +680,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
  */
 #pragma mark - UITableViewDelegate
 
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
-{
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
     [self.navigationController handleURL:URL];
     return NO;
 }

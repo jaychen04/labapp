@@ -1170,6 +1170,18 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
 
+-(void)webViewDidFinishLoad:(IMYWebView*)webView{
+    [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(NSNumber* result, NSError *err) {
+        CGFloat webViewHeight = [result floatValue];
+        if (_webViewHeight == webViewHeight) return ;
+        _webViewHeight = webViewHeight;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [self hideHubView];
+        });
+    }];
+}
+
 //- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 //{
 //    
@@ -1189,17 +1201,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 //        [self hideHubView];
 //    });
 //}
--(void)webViewDidFinishLoad:(IMYWebView*)webView{
-    [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(NSNumber* result, NSError *err) {
-        CGFloat webViewHeight = [result floatValue];
-        if (_webViewHeight == webViewHeight) return ;
-        _webViewHeight = webViewHeight;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            [self hideHubView];
-        });
-    }];
-}
 
 #pragma mark - fav关注
 - (void)favSelected

@@ -15,8 +15,11 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         IMYWebView* contentWebView = [[IMYWebView alloc] initWithFrame:CGRectZero usingUIWebView:NO];
-        contentWebView.userInteractionEnabled = NO;
+        contentWebView.userInteractionEnabled = YES;
+        [contentWebView.scrollView setBounces:NO];
+        [contentWebView.scrollView setScrollEnabled:NO];
         [self.contentView addSubview:contentWebView];
+        
         [contentWebView mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.equalTo(self.contentView).with.offset(16);
             make.top.equalTo(self.contentView).with.offset(4);
