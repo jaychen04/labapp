@@ -31,8 +31,8 @@
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
 #import <UITableView+FDTemplateLayoutCell.h>
-#import <TOWebViewController.h>
 #import "UMSocial.h"
+
 
 static NSString *titleInfoReuseIdentifier = @"TitleInfoTableViewCell";
 static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
