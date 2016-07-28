@@ -20,7 +20,11 @@
 #import "OSCPost.h"
 #import "OSCTweet.h"
 
-#import <TOWebViewController.h>
+// #import <TOWebViewController.h>
+
+@import SafariServices ;
+
+
 
 @implementation UINavigationController (Router)
 
@@ -31,9 +35,24 @@
     //判断是否包含 oschina.net 来确定是不是站内链接
     NSRange range = [urlString rangeOfString:@"oschina.net"];
     if (range.length <= 0) {
-        TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
+		
+		
+		//TODO: 替换合适的webviewcontroller
+	
+		if([[[UIDevice currentDevice] systemVersion] hasPrefix:@"9"]) {
+			SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
+			[self pushViewController:webviewController animated:YES];
+		} else {
+			[[UIApplication sharedApplication] openURL:url];
+		}
+		
+		/*
+        
+		 TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
         webViewController.hidesBottomBarWhenPushed = YES;
         [self pushViewController:webViewController animated:YES];
+		 
+		 */
     } else {
         //站内链接
         
@@ -149,12 +168,23 @@
             
             return;
         }
+		
         if (viewController) {
             [self pushViewController:viewController animated:YES];
         } else {
+			
+			if([[[UIDevice currentDevice] systemVersion] hasPrefix:@"9"]) {
+				SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
+				[self pushViewController:webviewController animated:YES];
+			} else {
+				[[UIApplication sharedApplication] openURL:url];
+			}
+			
+			/*
             TOWebViewController *webViewController = [[TOWebViewController alloc] initWithURL:url];
             webViewController.hidesBottomBarWhenPushed = YES;
             [self pushViewController:webViewController animated:YES];
+			 */
         }
     }
 }
