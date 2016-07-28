@@ -9,6 +9,7 @@
 #import "OSCPhotoGroupView.h"
 #import <YYKit.h>
 #import <MBProgressHUD.h>
+#import "OSCPhotoAlbumManger.h"
 #import "Utils.h"
 
 #define kPadding 20
@@ -213,35 +214,6 @@
                                  scrollView.contentSize.height * 0.5 + offsetY);
 }
 
-#pragma mark --- 下载保存图片
-- (void)downloadPicture
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"下载图片至手机相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    
-    [alertView show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1) {
-        UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(imageSavedToPhotosAlbum:didFinishSavingWithError:contextInfo:), nil);
-    }
-}
-
-- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    MBProgressHUD *HUD = [Utils createHUD];
-    HUD.mode = MBProgressHUDModeCustomView;
-    
-    if (!error) {
-        HUD.label.text = @"保存成功";
-    } else {
-        HUD.label.text = [NSString stringWithFormat:@"%@", [error description]];
-    }
-    
-    [HUD hideAnimated:YES afterDelay:1];
-}
-
 @end
 
 
@@ -290,16 +262,6 @@
     _groupItems = groupItems.copy;
     _blurEffectBackground = YES;
     _isShowDownloadButton = YES;
-    
-    UIButton* downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    CGFloat W = [UIScreen mainScreen].bounds.size.width;
-    CGFloat H = [UIScreen mainScreen].bounds.size.height;
-    downloadBtn.frame = CGRectMake(W-60, H-60, 30, 30);
-    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"btn_download"] forState:UIControlStateNormal];
-    [downloadBtn addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
-    _downloadButton = downloadBtn;
-    UIView* keyWin = [UIApplication sharedApplication].keyWindow;
-    [keyWin addSubview:_downloadButton];
     
     NSString *model = [UIDevice currentDevice].machineModel;
     static NSMutableSet *oldDevices;
@@ -534,6 +496,15 @@
             }];
         }];
     }
+    UIButton* downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    CGFloat W = [UIScreen mainScreen].bounds.size.width;
+    CGFloat H = [UIScreen mainScreen].bounds.size.height;
+    downloadBtn.frame = CGRectMake(W-60, H-60, 30, 30);
+    [downloadBtn setBackgroundImage:[UIImage imageNamed:@"btn_download"] forState:UIControlStateNormal];
+    [downloadBtn addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
+    _downloadButton = downloadBtn;
+    UIView* keyWin = [UIApplication sharedApplication].keyWindow;
+    [keyWin addSubview:_downloadButton];
 }
 
 - (void)dismissAnimated:(BOOL)animated completion:(void (^)(void))completion {
@@ -905,4 +876,53 @@
         default:break;
     }
 }
+#pragma mark --- 下载保存图片
+- (void)downloadPicture
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"下载图片至手机相册" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    
+    [alertView show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        MBProgressHUD *HUD = [Utils createHUD];
+//        HUD.label.text = @"正在保存";
+        
+        
+        UIImage* image = nil;
+        OSCPhotoGroupItem* item = _groupItems[self.currentPage];
+        for (OSCPhotoGroupCell* cell in _cells) {
+            if (cell.item == item) {
+                image = cell.imageView.image;
+            }
+        }
+        if (image) {
+            OSCPhotoAlbumManger* manger = [OSCPhotoAlbumManger sharePhotoAlbumManger];
+            [manger saveImage:image albumName:@"OSChina" completeHandle:^(NSError *error, BOOL isHasAuthorized) {
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    HUD.mode = MBProgressHUDModeCustomView;
+                    if (isHasAuthorized) {
+                        if (error) {
+                            HUD.label.text = @"保存失败";
+                        }else{
+                            HUD.label.text = @"保存成功";
+                        }
+                    }else{
+                        HUD.label.text = @"授权失败";
+                    }
+                    [HUD hideAnimated:YES afterDelay:1];
+                });
+            }];
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                HUD.label.text = @"保存出错";
+                [HUD hideAnimated:YES afterDelay:1];
+            });
+        }
+    }
+}
+
 @end
