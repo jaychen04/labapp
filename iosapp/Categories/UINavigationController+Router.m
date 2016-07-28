@@ -19,6 +19,8 @@
 #import "OSCNews.h"
 #import "OSCPost.h"
 #import "OSCTweet.h"
+#import "SoftWareViewController.h"
+#import "QuesAnsDetailViewController.h"
 
 @import SafariServices ;
 
@@ -105,8 +107,11 @@
                     OSCNews *news = [OSCNews new];
                     news.type = NewsTypeSoftWare;
                     news.attachment = urlComponents[2];
-                    viewController = [[DetailsViewController alloc] initWithNews:news];
+					
+					viewController = [[SoftWareViewController alloc] initWithSoftWareIdentity:news.attachment];
+					viewController.hidesBottomBarWhenPushed = YES;
                     viewController.navigationItem.title = @"软件详情";
+					
                 } else if ([type isEqualToString:@"question"]) {
                     // 问答
                     
@@ -117,8 +122,12 @@
                         if ([IDs count] >= 2) {
                             OSCPost *post = [OSCPost new];
                             post.postID = [IDs[1] longLongValue];
-                            viewController = [[DetailsViewController alloc] initWithPost:post];
-                            viewController.navigationItem.title = @"帖子详情";
+							
+							QuesAnsDetailViewController *questionViewController = [[QuesAnsDetailViewController alloc] init];
+							questionViewController.questionID = post.postID;
+							viewController = questionViewController;
+							viewController.hidesBottomBarWhenPushed = YES;
+							viewController.navigationItem.title = @"帖子详情";
                         }
                     } else if (count >= 4) {
                         // 问答-标签 www.oschina.net/question/tag/python
