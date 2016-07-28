@@ -39,6 +39,7 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
 }
 
 @property (nonatomic,assign) NSInteger id;
+@property (nonatomic,strong) NSString* identity;
 @property (nonatomic,strong) NSString* networkURL;
 @property (nonatomic, strong) OSCNewSoftWare *model;
 
@@ -63,6 +64,15 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
         _networkURL = [NSString stringWithFormat:@"%@software?id=%ld",OSCAPI_V2_HTTPS_PREFIX,(long)_id];
     }
     return self;
+}
+
+-(instancetype)initWithSoftWareIdentity:(NSString *)identity{
+	self = [super init];
+	if (self) {
+		_identity = identity;
+		_networkURL = [NSString stringWithFormat:@"%@software?ident=%@",OSCAPI_V2_HTTPS_PREFIX,_identity];
+	}
+	return self;
 }
 
 #pragma mark - life cycle

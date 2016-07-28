@@ -12,4 +12,6 @@
 
 - (instancetype)initWithSoftWareID:(NSInteger)softWareID;
 
+- (instancetype)initWithSoftWareIdentity:(NSString *)identity;
+
 @end
