@@ -329,6 +329,7 @@
 		EEE241B61CFD79C00088FFB3 /* ActivityDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEE241B41CFD79C00088FFB3 /* ActivityDetailCell.xib */; };
 		EEEC98C31CF317D600995A03 /* QuesAnsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */; };
 		EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */; };
+		EEF328861D49A40B007EBAE6 /* BannerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF328851D49A40B007EBAE6 /* BannerScrollView.m */; };
 		EEFF2FFB1D361D2E0076CFF4 /* HomeButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */; };
 		EEFF2FFC1D361D2E0076CFF4 /* HomeButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */; };
 		EEFFA6421CFEDAC000A8701C /* webAndAbsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EEFFA6401CFEDAC000A8701C /* webAndAbsTableViewCell.m */; };
@@ -941,6 +942,8 @@
 		EEEC98C01CF317D600995A03 /* QuesAnsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsViewController.h; path = Questions/QuesAnsViewController.h; sourceTree = "<group>"; };
 		EEEC98C11CF317D600995A03 /* QuesAnsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsViewController.m; path = Questions/QuesAnsViewController.m; sourceTree = "<group>"; };
 		EEEC98C21CF317D600995A03 /* QuesAnsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsViewController.xib; path = Questions/QuesAnsViewController.xib; sourceTree = "<group>"; };
+		EEF328841D49A40B007EBAE6 /* BannerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BannerScrollView.h; sourceTree = "<group>"; };
+		EEF328851D49A40B007EBAE6 /* BannerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BannerScrollView.m; sourceTree = "<group>"; };
 		EEFF2FF81D361D2E0076CFF4 /* HomeButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeButtonCell.h; sourceTree = "<group>"; };
 		EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeButtonCell.m; sourceTree = "<group>"; };
 		EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeButtonCell.xib; sourceTree = "<group>"; };
@@ -1999,6 +2002,8 @@
 		C54689FC1BD1EFC400D49223 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EEF328841D49A40B007EBAE6 /* BannerScrollView.h */,
+				EEF328851D49A40B007EBAE6 /* BannerScrollView.m */,
 				31ABF57F1B0F1B5300663C08 /* JKAlertDialog.h */,
 				31ABF5801B0F1B5300663C08 /* JKAlertDialog.m */,
 				C57E7B551B56734300F39B5C /* PlaceholderTextView.h */,
@@ -2724,6 +2729,7 @@
 				31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */,
 				00D6BD3119ECD71B00E8754E /* TweetsViewController.m in Sources */,
 				C5EF89391BE319F600B5FA46 /* NewsViewController.m in Sources */,
+				EEF328861D49A40B007EBAE6 /* BannerScrollView.m in Sources */,
 				EE7B0AE21D348DDF0070F196 /* MyBlogsViewController.m in Sources */,
 				31D6995F1CFC29B500B48BB0 /* FollowAuthorTableViewCell.m in Sources */,
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
