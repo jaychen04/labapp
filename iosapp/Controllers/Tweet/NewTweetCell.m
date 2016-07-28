@@ -166,6 +166,7 @@
     [textView setContentInset:UIEdgeInsetsMake(0, -1, 0, 1)];
     textView.textContainer.lineBreakMode = NSLineBreakByCharWrapping;
     [textView setTextAlignment:NSTextAlignmentLeft];
+    textView.text = @" ";
 }
 
 #pragma mark - set Tweet
@@ -233,6 +234,7 @@
     [super prepareForReuse];
     _tweetImageView.hidden = YES;
     _tweetImageView.image = nil;
+    _descTextView.text = @" ";
 }
 
 @end

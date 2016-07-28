@@ -158,7 +158,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                  MBProgressHUD *HUD = [Utils createHUD];
                  HUD.mode = MBProgressHUDModeCustomView;
-//                 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                  HUD.label.text = @"网络异常，加载失败";
                  
                  [HUD hideAnimated:YES afterDelay:1];

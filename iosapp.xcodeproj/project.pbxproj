@@ -56,6 +56,8 @@
 		043568701D22272F00CC511C /* SoftWareDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435686F1D22272F00CC511C /* SoftWareDetailHeaderView.m */; };
 		043568761D225D2100CC511C /* SoftWareDetailBodyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */; };
 		043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */; };
+		044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */; };
+		044266961D49E7BB00D87091 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044266951D49E7BB00D87091 /* Photos.framework */; };
 		0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */; };
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
@@ -123,7 +125,6 @@
 		31F14FE71D41F80300AD0763 /* Overlay.png in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDB1D41F80300AD0763 /* Overlay.png */; };
 		31F14FE81D41F80300AD0763 /* Overlay@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDC1D41F80300AD0763 /* Overlay@2x.png */; };
 		31F14FE91D41F80300AD0763 /* Overlay@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 31F14FDD1D41F80300AD0763 /* Overlay@3x.png */; };
-		31F14FEA1D41F80300AD0763 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FDE1D41F80300AD0763 /* README.md */; };
 		31F14FED1D42205700AD0763 /* OSCUserItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FEC1D42205700AD0763 /* OSCUserItem.m */; };
 		31F14FF01D422A4400AD0763 /* OSCCommentItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F14FEF1D422A4400AD0763 /* OSCCommentItem.m */; };
 		31F8925E1B0DF179002E0838 /* NewTeamIssueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F8925D1B0DF179002E0838 /* NewTeamIssueViewController.m */; };
@@ -424,6 +425,9 @@
 		043568731D225D2100CC511C /* SoftWareDetailBodyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareDetailBodyCell.h; sourceTree = "<group>"; };
 		043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftWareDetailBodyCell.m; sourceTree = "<group>"; };
 		043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoftWareDetailBodyCell.xib; sourceTree = "<group>"; };
+		044266921D49C98C00D87091 /* OSCPhotoAlbumManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCPhotoAlbumManger.h; path = ELCImagePickerController/Classes/OSCPhotoAlbumManger.h; sourceTree = "<group>"; };
+		044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSCPhotoAlbumManger.m; path = ELCImagePickerController/Classes/OSCPhotoAlbumManger.m; sourceTree = "<group>"; };
+		044266951D49E7BB00D87091 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 		0446D38E1D37337900169B2B /* UINavigationBar+BackgroundColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationBar+BackgroundColor.h"; sourceTree = "<group>"; };
 		0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationBar+BackgroundColor.m"; sourceTree = "<group>"; };
 		0473259A1CF821A700460658 /* QuesAnsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuesAnsTableViewCell.h; sourceTree = "<group>"; };
@@ -542,7 +546,6 @@
 		31F14FDB1D41F80300AD0763 /* Overlay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Overlay.png; sourceTree = "<group>"; };
 		31F14FDC1D41F80300AD0763 /* Overlay@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@2x.png"; sourceTree = "<group>"; };
 		31F14FDD1D41F80300AD0763 /* Overlay@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Overlay@3x.png"; sourceTree = "<group>"; };
-		31F14FDE1D41F80300AD0763 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		31F14FEB1D42205700AD0763 /* OSCUserItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCUserItem.h; sourceTree = "<group>"; };
 		31F14FEC1D42205700AD0763 /* OSCUserItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCUserItem.m; sourceTree = "<group>"; };
 		31F14FEE1D422A4400AD0763 /* OSCCommentItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCCommentItem.h; sourceTree = "<group>"; };
@@ -954,9 +957,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */,
+				044266961D49E7BB00D87091 /* Photos.framework in Frameworks */,
 				04EC1B5A1D38F6C8006DBD5D /* WebKit.framework in Frameworks */,
 				04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */,
-				31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */,
 				042E8D0F1CF5950900364BD7 /* libiconv.tbd in Frameworks */,
 				042E8D0D1CF594F700364BD7 /* libsqlite3.tbd in Frameworks */,
 				042E8D091CF594DF00364BD7 /* libstdc++.tbd in Frameworks */,
@@ -1108,6 +1112,8 @@
 			isa = PBXGroup;
 			children = (
 				31F14FC81D41F80300AD0763 /* ELCImagePickerController */,
+				044266921D49C98C00D87091 /* OSCPhotoAlbumManger.h */,
+				044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */,
 				04EC1B5B1D38F6DF006DBD5D /* IMYWebView.h */,
 				04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */,
 				04EC1B611D393049006DBD5D /* IMY_NJKWebViewProgress.h */,
@@ -1181,6 +1187,7 @@
 		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				044266951D49E7BB00D87091 /* Photos.framework */,
 				04EC1B591D38F6C8006DBD5D /* WebKit.framework */,
 				04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */,
 				31FA28E71D36147F008F1EDD /* AssetsLibrary.framework */,
@@ -1348,7 +1355,6 @@
 			isa = PBXGroup;
 			children = (
 				31F14FC91D41F80300AD0763 /* Classes */,
-				31F14FDE1D41F80300AD0763 /* README.md */,
 			);
 			path = ELCImagePickerController;
 			sourceTree = "<group>";
@@ -2685,6 +2691,7 @@
 				38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */,
 				C5EF89231BE3194800B5FA46 /* SoftwareCell.m in Sources */,
 				38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */,
+				044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */,
 				04EC802F1D2A505E009D8025 /* NewCommentCell.m in Sources */,
 				31212ECB1D0E670100FA17B1 /* TweetsDetailNewCell.m in Sources */,
 				C5EF89321BE319A300B5FA46 /* BlogsViewController.m in Sources */,
@@ -2857,7 +2864,6 @@
 				EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */,
 				C5B2F1A81BCE6C84004B4785 /* UINavigationController+Router.m in Sources */,
 				31405BEC1AF074A4000A487D /* TeamIssueListCell.m in Sources */,
-				31F14FEA1D41F80300AD0763 /* README.md in Sources */,
 				3874EC1C1A08DB8E000D2894 /* EditingBar.m in Sources */,
 				04EC1B5D1D38F6DF006DBD5D /* IMYWebView.m in Sources */,
 				C5EF89181BE318E800B5FA46 /* CommentCell.m in Sources */,

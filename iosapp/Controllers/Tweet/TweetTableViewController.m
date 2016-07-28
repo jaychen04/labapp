@@ -616,7 +616,29 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
           }
      ];
 }
-
+#pragma mark -
+#pragma mark --- UITextView Delegate
+- (void)textViewDidChange:(UITextView *)textView
+{
+    //hack for iOS8
+    if ([[UIDevice currentDevice].systemVersion floatValue] < 9.0 )//in iOS9 Apple has already fixed this bug
+    {
+        CGRect line = [textView caretRectForPosition:
+                       textView.selectedTextRange.start];
+        CGFloat overflow = line.origin.y + line.size.height
+        - (textView.contentOffset.y + textView.bounds.size.height
+           - textView.contentInset.bottom - textView.contentInset.top);
+        if (overflow > 0)//If at the bottom of text view
+        {
+            //disable animation. Otherwise, when a input confirm scroll animation is doing, input new text, animation will re-do from animation beginning, which looks strange.
+            [UIView setAnimationsEnabled:NO];
+            
+            //scroll to text end
+            [textView scrollRangeToVisible:NSMakeRange([textView.text length], 0)];
+            [UIView setAnimationsEnabled:YES];
+        }
+    }
+}
 /*
  - (void)toPraise:(OSCTweetItem *)tweet
  {
