@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -51,6 +51,18 @@
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </imageView>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pUc-pP-R1e" userLabel="genderImageView">
+                                    <rect key="frame" x="60" y="84" width="16" height="16"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="16" id="9T9-Ex-U84"/>
+                                        <constraint firstAttribute="height" constant="16" id="ozs-Ae-GNb"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <integer key="value" value="8"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aoq-xg-FOn">
                                     <rect key="frame" x="564" y="60" width="20" height="20"/>
                                     <constraints>
@@ -66,6 +78,8 @@
                             <constraints>
                                 <constraint firstItem="Rv9-mR-dOS" firstAttribute="top" secondItem="1V3-Hr-4J7" secondAttribute="top" constant="40" id="1xj-Fw-fpd"/>
                                 <constraint firstItem="Rv9-mR-dOS" firstAttribute="leading" secondItem="1V3-Hr-4J7" secondAttribute="leading" constant="16" id="GSn-Zn-eS9"/>
+                                <constraint firstItem="pUc-pP-R1e" firstAttribute="bottom" secondItem="Rv9-mR-dOS" secondAttribute="bottom" id="J8F-56-U3L"/>
+                                <constraint firstItem="pUc-pP-R1e" firstAttribute="trailing" secondItem="Rv9-mR-dOS" secondAttribute="trailing" id="Nr1-RX-OKj"/>
                                 <constraint firstItem="aoq-xg-FOn" firstAttribute="centerY" secondItem="Rv9-mR-dOS" secondAttribute="centerY" id="bab-Yb-yQ8"/>
                                 <constraint firstAttribute="trailing" secondItem="aoq-xg-FOn" secondAttribute="trailing" constant="16" id="kTG-Xz-BvV"/>
                                 <constraint firstItem="cTu-7j-mVS" firstAttribute="centerY" secondItem="Rv9-mR-dOS" secondAttribute="centerY" id="oBP-DI-gGw"/>
@@ -73,16 +87,16 @@
                             </constraints>
                         </view>
                         <view key="tableFooterView" contentMode="scaleToFill" id="BTX-Pk-esC">
-                            <rect key="frame" x="0.0" y="345.5" width="600" height="0.0"/>
+                            <rect key="frame" x="0.0" y="346" width="600" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" rowHeight="62" id="AFr-7F-uqh">
-                                <rect key="frame" x="0.0" y="253.5" width="600" height="62"/>
+                                <rect key="frame" x="0.0" y="254" width="600" height="62"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AFr-7F-uqh" id="gT2-oJ-aaN">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="61.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="61"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -100,6 +114,7 @@
                     </refreshControl>
                     <connections>
                         <outlet property="QRCodeButton" destination="aoq-xg-FOn" id="7NZ-Wq-gcV"/>
+                        <outlet property="genderImageView" destination="pUc-pP-R1e" id="wCa-bH-Kzw"/>
                         <outlet property="nameLabel" destination="cTu-7j-mVS" id="Wq2-iH-A7V"/>
                         <outlet property="portrait" destination="Rv9-mR-dOS" id="TdF-XP-30s"/>
                     </connections>
