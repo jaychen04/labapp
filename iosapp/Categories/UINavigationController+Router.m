@@ -21,6 +21,7 @@
 #import "OSCTweet.h"
 #import "SoftWareViewController.h"
 #import "QuesAnsDetailViewController.h"
+#import "OSCPhotoGroupView.h"
 
 @import SafariServices ;
 
