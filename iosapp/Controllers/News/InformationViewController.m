@@ -197,13 +197,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeSoftWare:{
-//            OSCSoftware* softWare = [OSCSoftware new];
-//            softWare.name = model.title;
-//            softWare.url = [NSURL URLWithString:model.href];
-//            softWare.softId = model.id;
-//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
-//            [self.navigationController pushViewController:detailsViewController animated:YES];
-
             SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:model.id];
             [detailsViewController setHidesBottomBarWhenPushed:YES];
             [self.navigationController pushViewController:detailsViewController animated:YES];
@@ -211,17 +204,11 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         }
             
         case InformationTypeForum:{
-            
             QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
             detailVC.hidesBottomBarWhenPushed = YES;
             detailVC.questionID = model.id;
             detailVC.commentCount = model.commentCount;
             [self.navigationController pushViewController:detailVC animated:YES];
-            
-//            OSCPost* post = [OSCPost new];
-//            post.postID = model.id;
-//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithPost:post];
-//            [self.navigationController pushViewController:detailsViewController animated:YES];
             break;
         }
             
@@ -232,10 +219,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:blog.id isBlogDetail:YES];
             newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
-            
-            /* 旧博客详情页面 */
-//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithNewHotBlog:blog];
-//            [self.navigationController pushViewController:detailsViewController animated:YES];
             break;
         }
             
