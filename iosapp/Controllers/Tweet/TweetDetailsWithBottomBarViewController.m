@@ -76,7 +76,7 @@
 //        [weakSelf hideEmojiPageView];
     
     
-    _tweetDetailsNewVC.didCommentSelected = ^(OSCCommentItem *comment) {
+    _tweetDetailsNewVC.didTweetCommentSelected = ^(OSCCommentItem *comment) {
         NSString *authorString = [NSString stringWithFormat:@"@%@ ", comment.author.name];
         
         if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {

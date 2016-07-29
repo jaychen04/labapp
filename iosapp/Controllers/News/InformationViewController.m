@@ -227,8 +227,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             translationVc.hidesBottomBarWhenPushed = YES;
             translationVc.translationId = model.id;
             [self.navigationController pushViewController:translationVc animated:YES];
-            
-//            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
             break;
         }
             
@@ -237,17 +235,9 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:model.id];
             activityDetailCtl.hidesBottomBarWhenPushed = YES;
             [self.navigationController pushViewController:activityDetailCtl animated:YES];
-            
-//            ActivityDetailsWithBarViewController *activityVC = [[ActivityDetailsWithBarViewController alloc] initWithActivityID:model.id];
-//            [self.navigationController pushViewController:activityVC animated:YES];
             break;
         }
         case InformationTypeInfo:{
-//            OSCInformation* info = [[OSCInformation alloc]init];
-//            info.id = model.id;
-//            DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithInfo:info];
-//            [self.navigationController pushViewController:detailsViewController animated:YES];
-            
             //新版资讯详情界面
             NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:model.id isBlogDetail:NO];
             newsBlogDetailVc.hidesBottomBarWhenPushed = YES;
@@ -309,7 +299,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               MBProgressHUD *HUD = [Utils createHUD];
               HUD.mode = MBProgressHUDModeCustomView;
-//              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
               
               [HUD hideAnimated:YES afterDelay:1];
