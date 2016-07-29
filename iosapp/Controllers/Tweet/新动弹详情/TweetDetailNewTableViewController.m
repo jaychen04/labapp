@@ -414,8 +414,8 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     if (indexPath.section != 0) {
         if (_isShowCommentList && _tweetCommentList.count > 0) {
             OSCCommentItem *comment = _tweetCommentList[indexPath.row];
-            if (self.didCommentSelected) {
-                self.didCommentSelected(comment);
+            if (self.didTweetCommentSelected) {
+                self.didTweetCommentSelected(comment);
             }
         }
     }
@@ -542,8 +542,8 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 }
 -(void)replyReviewer:(UITapGestureRecognizer*)tap {
     OSCCommentItem *comment = _tweetCommentList[tap.view.tag];
-    if (self.didCommentSelected) {
-        self.didCommentSelected(comment);
+    if (self.didTweetCommentSelected) {
+        self.didTweetCommentSelected(comment);
     }
 }
 #pragma mark --点赞（新接口)
