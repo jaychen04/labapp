@@ -79,7 +79,8 @@
 //    CGFloat totalWidth = self.rowAssets.count * 75 + (self.rowAssets.count - 1) * 4;
 //    CGFloat startX = (self.bounds.size.width - totalWidth) / 2;
     
-	CGRect frame = CGRectMake(4, 4, 75, 75);
+    CGFloat imgWidth = (CGRectGetWidth(self.bounds)-20)/4;
+	CGRect frame = CGRectMake(4, 4, imgWidth, imgWidth);
 	
 	for (int i = 0; i < [_rowAssets count]; ++i) {
         if (CGRectContainsPoint(frame, point)) {
