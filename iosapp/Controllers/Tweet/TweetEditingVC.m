@@ -728,7 +728,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                                   
                                   [Config saveTweetText:@"" forUser:[Config getOwnID]];
                               } else {
-//                                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                                   HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
                                   
                                   [Config saveTweetText:_edittingArea.text forUser:[Config getOwnID]];
@@ -739,7 +738,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                               
                           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                               HUD.mode = MBProgressHUDModeCustomView;
-//                              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                               HUD.label.text = @"网络异常，动弹发送失败";
                               HUD.removeFromSuperViewOnHide = YES;
                               [HUD hideAnimated:YES afterDelay:1];

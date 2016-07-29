@@ -54,12 +54,10 @@
         if ([prefix isEqualToString:@"my"]) {
             if (pathComponents.count == 2) {
                 // 个人专页 my.oschina.net/dong706
-                
                 viewController = [[UserDetailsViewController alloc] initWithUserName:pathComponents[1]];
                 viewController.navigationItem.title = @"用户详情";
             } else if (pathComponents.count == 3) {
                 // 个人专页 my.oschina.net/u/12
-                
                 if ([pathComponents[1] isEqualToString:@"u"]) {
                     viewController= [[UserDetailsViewController alloc] initWithUserID:[pathComponents[2] longLongValue]];
                     viewController.navigationItem.title = @"用户详情";
@@ -117,7 +115,6 @@
                     
                 } else if ([type isEqualToString:@"p"]) {
                     // 软件 www.oschina.net/p/jx
-                    
                     OSCNews *news = [OSCNews new];
                     news.type = NewsTypeSoftWare;
                     news.attachment = urlComponents[2];
@@ -131,7 +128,6 @@
                     
                     if (count == 3) {
                         // 问答 www.oschina.net/question/12_45738
-                        
                         NSArray *IDs = [urlComponents[2] componentsSeparatedByString:@"_"];
                         if ([IDs count] >= 2) {
                             OSCPost *post = [OSCPost new];
@@ -145,7 +141,6 @@
                         }
                     } else if (count >= 4) {
                         // 问答-标签 www.oschina.net/question/tag/python
-                        
                         NSString *tag = urlComponents.lastObject;
                         
                         viewController = [PostsViewController new];
