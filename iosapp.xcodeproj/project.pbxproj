@@ -31,6 +31,7 @@
 		0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC551CEDA390007DB140 /* UIView+SDExtension.m */; };
 		0422BC601CEDAAD3007DB140 /* InformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC5E1CEDAAD3007DB140 /* InformationTableViewCell.m */; };
 		0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */; };
+		0423F1891D4B3E8400204108 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0423F1881D4B3E8400204108 /* Launch Screen.storyboard */; };
 		042D8C3E1D389328001A6494 /* NewMultipleTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */; };
 		042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */; };
 		042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */; };
@@ -399,6 +400,7 @@
 		0422BC5D1CEDAAD3007DB140 /* InformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTableViewCell.h; sourceTree = "<group>"; };
 		0422BC5E1CEDAAD3007DB140 /* InformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTableViewCell.m; sourceTree = "<group>"; };
 		0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTableViewCell.xib; sourceTree = "<group>"; };
+		0423F1881D4B3E8400204108 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		042D8C3C1D389328001A6494 /* NewMultipleTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMultipleTweetCell.h; sourceTree = "<group>"; };
 		042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMultipleTweetCell.m; sourceTree = "<group>"; };
 		042E545A1D193FD400DC7E1D /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
@@ -1631,6 +1633,7 @@
 				C5B1231A1B316830000B29D2 /* html */,
 				C5B1231B1B316830000B29D2 /* js */,
 				C5A89C3B1B09C59400798B1C /* FontAwesome.ttf */,
+				0423F1881D4B3E8400204108 /* Launch Screen.storyboard */,
 			);
 			name = Resources;
 			path = Resource;
@@ -2543,6 +2546,7 @@
 				EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */,
 				EEB3D7AF1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
+				0423F1891D4B3E8400204108 /* Launch Screen.storyboard in Resources */,
 				EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */,
 				C5B1231D1B316830000B29D2 /* html in Resources */,
 				31855C8A1D0E621F00C8F8B8 /* TweetCommentNewCell.xib in Resources */,

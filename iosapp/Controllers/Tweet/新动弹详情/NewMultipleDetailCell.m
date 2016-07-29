@@ -250,6 +250,8 @@
             imageView.hidden = YES;
             imageView.userInteractionEnabled = NO;
             imageView.frame = (CGRect){{originX,originY},{_imageItem_WH,_imageItem_WH}};
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.clipsToBounds = YES;
             [_imagesView addSubview:imageView];
             [lineNodes addObject:imageView];
         }
