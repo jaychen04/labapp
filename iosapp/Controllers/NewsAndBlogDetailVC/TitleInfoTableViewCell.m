@@ -41,7 +41,6 @@
     }
     
     _TitleLabel.text = blogDetail.title;
-    _viewCountLabel.text = [NSString stringWithFormat:@"%ld", (long)blogDetail.viewCount];
     _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)blogDetail.commentCount];
 }
 
@@ -49,7 +48,6 @@
     _propertyTagIv.hidden = YES;
     _recommendTagIv.hidden = YES;
     _TitleLabel.text = newsDetail.title;
-    _viewCountLabel.text = [NSString stringWithFormat:@"%ld", (long)newsDetail.viewCount];
     _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)newsDetail.commentCount];
 }
 @end

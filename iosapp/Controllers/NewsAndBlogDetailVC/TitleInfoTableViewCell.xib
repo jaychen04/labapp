@@ -35,26 +35,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gmf-XR-MbB" userLabel="commentCountLabel">
-                        <rect key="frame" x="64" y="55" width="6" height="14"/>
+                        <rect key="frame" x="29" y="55" width="6" height="14"/>
                         <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="10"/>
                         <color key="textColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CfH-DQ-ehX" userLabel="viewCountLabel">
-                        <rect key="frame" x="33" y="55" width="6" height="14"/>
-                        <fontDescription key="fontDescription" name="PingFangSC-Regular" family="PingFang SC" pointSize="10"/>
-                        <color key="textColor" red="0.61568627450000002" green="0.61568627450000002" blue="0.61568627450000002" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_view" translatesAutoresizingMaskIntoConstraints="NO" id="3m0-P3-aEA" userLabel="viewCountIv">
-                        <rect key="frame" x="16" y="57" width="14" height="10"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="10" id="HEG-z6-IbB"/>
-                            <constraint firstAttribute="width" constant="14" id="Okr-N9-kt2"/>
-                        </constraints>
-                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_comment" translatesAutoresizingMaskIntoConstraints="NO" id="xG1-ne-Mre" userLabel="commentCountIv">
-                        <rect key="frame" x="51" y="57" width="10" height="10"/>
+                        <rect key="frame" x="16" y="57" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="10" id="HRE-NB-Kq5"/>
                             <constraint firstAttribute="height" constant="10" id="i0c-Pu-bPQ"/>
@@ -62,22 +49,18 @@
                     </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottom" secondItem="3m0-P3-aEA" secondAttribute="bottom" constant="12" id="2bQ-CM-E5x"/>
-                    <constraint firstItem="xG1-ne-Mre" firstAttribute="leading" secondItem="CfH-DQ-ehX" secondAttribute="trailing" constant="12" id="7yS-l1-Gir"/>
-                    <constraint firstItem="3m0-P3-aEA" firstAttribute="top" secondItem="9TD-Sq-pvv" secondAttribute="bottom" constant="8" id="9Jm-Oj-a0U"/>
+                    <constraint firstItem="Gmf-XR-MbB" firstAttribute="centerY" secondItem="xG1-ne-Mre" secondAttribute="centerY" id="2k3-S2-LtJ"/>
                     <constraint firstAttribute="trailing" secondItem="9TD-Sq-pvv" secondAttribute="trailing" constant="16" id="B3Y-U9-100"/>
+                    <constraint firstItem="xG1-ne-Mre" firstAttribute="top" secondItem="9TD-Sq-pvv" secondAttribute="bottom" constant="8" id="GA6-D5-daJ"/>
                     <constraint firstItem="zxJ-fn-pfm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="TZa-3L-ql6"/>
-                    <constraint firstItem="CfH-DQ-ehX" firstAttribute="leading" secondItem="3m0-P3-aEA" secondAttribute="trailing" constant="3" id="VJG-G4-hMP"/>
                     <constraint firstItem="Gmf-XR-MbB" firstAttribute="leading" secondItem="xG1-ne-Mre" secondAttribute="trailing" constant="3" id="X1W-Y8-XL7"/>
                     <constraint firstItem="zxJ-fn-pfm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="Xwc-z0-60G"/>
-                    <constraint firstItem="xG1-ne-Mre" firstAttribute="centerY" secondItem="3m0-P3-aEA" secondAttribute="centerY" id="YPw-zo-6Dt"/>
-                    <constraint firstItem="3m0-P3-aEA" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ctN-7c-xWB"/>
+                    <constraint firstAttribute="bottom" secondItem="xG1-ne-Mre" secondAttribute="bottom" constant="12" id="YMI-Dt-e8Q"/>
                     <constraint firstItem="PcZ-s2-pbT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="iiX-ta-3bK"/>
-                    <constraint firstItem="CfH-DQ-ehX" firstAttribute="centerY" secondItem="3m0-P3-aEA" secondAttribute="centerY" id="oPc-Rd-wsz"/>
                     <constraint firstItem="9TD-Sq-pvv" firstAttribute="top" secondItem="PcZ-s2-pbT" secondAttribute="bottom" id="oQo-BN-AuQ"/>
                     <constraint firstItem="PcZ-s2-pbT" firstAttribute="leading" secondItem="zxJ-fn-pfm" secondAttribute="trailing" id="sNU-Oz-7P9"/>
                     <constraint firstItem="9TD-Sq-pvv" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="tb6-7m-0MQ"/>
-                    <constraint firstItem="Gmf-XR-MbB" firstAttribute="centerY" secondItem="3m0-P3-aEA" secondAttribute="centerY" id="xMh-cT-EiU"/>
+                    <constraint firstItem="xG1-ne-Mre" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="w2G-uY-yQL"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
@@ -85,7 +68,6 @@
                 <outlet property="commentCountLabel" destination="Gmf-XR-MbB" id="7yw-25-LTn"/>
                 <outlet property="propertyTagIv" destination="PcZ-s2-pbT" id="4Z5-Fl-iA5"/>
                 <outlet property="recommendTagIv" destination="zxJ-fn-pfm" id="CPe-wP-e67"/>
-                <outlet property="viewCountLabel" destination="CfH-DQ-ehX" id="BMx-ci-oZ3"/>
             </connections>
             <point key="canvasLocation" x="174" y="360"/>
         </tableViewCell>
@@ -94,6 +76,5 @@
         <image name="ic_comment" width="10" height="10"/>
         <image name="ic_label_originate" width="16" height="18"/>
         <image name="ic_label_recommend" width="16" height="18"/>
-        <image name="ic_view" width="14" height="10"/>
     </resources>
 </document>

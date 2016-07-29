@@ -12,7 +12,6 @@
 @interface RecommandBlogTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
-@property (weak, nonatomic) IBOutlet UILabel *viewCountLabel;
 
 //提供给最后一个cell取消分割线的接口
 @property (nonatomic,assign,getter=isHiddenColorLine) BOOL hiddenLine;
