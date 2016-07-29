@@ -75,8 +75,8 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             return [NSString stringWithFormat:@"%@tweets",OSCAPI_V2_PREFIX];
         };
         self.isJsonDataVc = YES;
-        self.needAutoRefresh = YES;
-        self.refreshInterval = 21600;
+//        self.needAutoRefresh = YES;
+//        self.refreshInterval = 21600;
         self.kLastRefreshTime = @"NewsRefreshInterval";
     }
     return self;
@@ -571,7 +571,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     
     OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:@[currentPhotoItem]];
     
-    UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
+//    UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
 //    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
     [photoGroup presentFromImageView:fromView toContainer:self.tabBarController.view animated:YES completion:nil];
 }
@@ -639,67 +639,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
         }
     }
 }
-/*
- - (void)toPraise:(OSCTweetItem *)tweet
- {
- 
- NSString *postUrl;
- if (tweet.liked) {
- postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_UNLIKE];
- } else {
- postUrl = [NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_TWEET_LIKE];
- }
- 
- AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
- 
- [manager POST:postUrl
- parameters:@{
- @"uid": @([Config getOwnID]),
- @"tweetid": @(tweet.id),
- @"ownerOfTweet": @( tweet.author.id)
- }
- success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
- ONOXMLElement *resultXML = [responseObject.rootElement firstChildWithTag:@"result"];
- int errorCode = [[[resultXML firstChildWithTag: @"errorCode"] numberValue] intValue];
- NSString *errorMessage = [[resultXML firstChildWithTag:@"errorMessage"] stringValue];
- 
- if (errorCode == 1) {
- if (tweet.liked) {
- //取消点赞
- 
- tweet.likeCount--;
- } else {
- //点赞
- 
- tweet.likeCount++;
- }
- tweet.liked = !tweet.liked;
- 
- dispatch_async(dispatch_get_main_queue(), ^{
- [self.tableView reloadData];
- });
- 
- } else {
- MBProgressHUD *HUD = [Utils createHUD];
- HUD.mode = MBProgressHUDModeCustomView;
- 
- //                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
- HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
- 
- [HUD hideAnimated:YES afterDelay:1];
- }
- 
- } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
- MBProgressHUD *HUD = [Utils createHUD];
- HUD.mode = MBProgressHUDModeCustomView;
- 
- //              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
- HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
- 
- [HUD hideAnimated:YES afterDelay:1];
- }];
- }
- */
+
 #pragma mark - UITableViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
