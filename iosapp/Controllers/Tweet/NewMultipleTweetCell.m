@@ -290,11 +290,14 @@
         for (int j = 0; j < 3; j++) {//row
             originX = j * (_imageItem_WH + ImageItemPadding);
             UIImageView* imageView = [[UIImageView alloc]init];
+//            imageView.center = CGPointMake(_avatarView.right - 6, _avatarView.bottom - 6);
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImageWithTap:)]];
             imageView.backgroundColor = [UIColor newCellColor];
             imageView.hidden = YES;
             imageView.userInteractionEnabled = NO;
             imageView.frame = (CGRect){{originX,originY},{_imageItem_WH,_imageItem_WH}};
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.clipsToBounds = YES;
             [_imagesView addSubview:imageView];
             [lineNodes addObject:imageView];
         }

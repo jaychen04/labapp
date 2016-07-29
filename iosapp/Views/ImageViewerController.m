@@ -11,6 +11,7 @@
 
 #import "ImageViewerController.h"
 #import "Utils.h"
+#import "OSCPhotoAlbumManger.h"
 
 #import <SDWebImageManager.h>
 #import <UIImageView+WebCache.h>
@@ -112,8 +113,8 @@
     _saveButton = [UIButton new];
     CGFloat X = self.view.frame.size.width;
     CGFloat Y = self.view.frame.size.height;
-    _saveButton.frame = CGRectMake(X-60, Y-45, 30, 30);
-    [_saveButton setImage:[UIImage imageNamed:@"picture_download"] forState:UIControlStateNormal];
+    _saveButton.frame = CGRectMake(X-60, Y-60, 30, 30);
+    [_saveButton setImage:[UIImage imageNamed:@"btn_download"] forState:UIControlStateNormal];
     [_saveButton addTarget:self action:@selector(downloadPicture) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_saveButton];
 }
@@ -332,22 +333,47 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(imageSavedToPhotosAlbum:didFinishSavingWithError:contextInfo:), nil);
+        MBProgressHUD *HUD = [Utils createHUD];
+        
+        OSCPhotoAlbumManger* manger = [OSCPhotoAlbumManger sharePhotoAlbumManger];
+        if (self.imageView.image) {
+            [manger saveImage:self.imageView.image albumName:@"OSChina" completeHandle:^(NSError *error, BOOL isHasAuthorized) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    HUD.mode = MBProgressHUDModeCustomView;
+                    if (isHasAuthorized) {
+                        if (error) {
+                            HUD.label.text = @"保存失败";
+                        }else{
+                            HUD.label.text = @"保存成功";
+                        }
+                    }else{
+                        HUD.label.text = @"授权失败";
+                    }
+                    [HUD hideAnimated:YES afterDelay:1];
+                });
+            }];
+        }else{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                HUD.label.text = @"保存出错";
+                [HUD hideAnimated:YES afterDelay:1];
+            });
+        }
+//        UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(imageSavedToPhotosAlbum:didFinishSavingWithError:contextInfo:), nil);
     }
 }
 
-- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
-{
-    MBProgressHUD *HUD = [Utils createHUD];
-    HUD.mode = MBProgressHUDModeCustomView;
-    
-    if (!error) {
-        HUD.label.text = @"保存成功";
-    } else {
-        HUD.label.text = [NSString stringWithFormat:@"%@", [error description]];
-    }
-    
-    [HUD hideAnimated:YES afterDelay:1];
-}
+//- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo
+//{
+//    MBProgressHUD *HUD = [Utils createHUD];
+//    HUD.mode = MBProgressHUDModeCustomView;
+//    
+//    if (!error) {
+//        HUD.label.text = @"保存成功";
+//    } else {
+//        HUD.label.text = [NSString stringWithFormat:@"%@", [error description]];
+//    }
+//    
+//    [HUD hideAnimated:YES afterDelay:1];
+//}
 
 @end
