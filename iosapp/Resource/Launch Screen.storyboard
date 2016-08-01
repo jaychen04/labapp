@@ -17,19 +17,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Default" translatesAutoresizingMaskIntoConstraints="NO" id="i0B-1F-mB5">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Default" translatesAutoresizingMaskIntoConstraints="NO" id="U84-ub-bzD">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="i0B-1F-mB5" secondAttribute="trailing" id="3bR-A3-ADi"/>
-                            <constraint firstItem="i0B-1F-mB5" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="JSq-yT-LLb"/>
-                            <constraint firstItem="i0B-1F-mB5" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="NmD-YU-4W9"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="i0B-1F-mB5" secondAttribute="bottom" id="zew-jK-eEm"/>
+                            <constraint firstItem="U84-ub-bzD" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="0xY-7b-rzD"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="U84-ub-bzD" secondAttribute="bottom" id="3lB-yv-kWN"/>
+                            <constraint firstAttribute="trailing" secondItem="U84-ub-bzD" secondAttribute="trailing" id="FEe-we-P41"/>
+                            <constraint firstItem="U84-ub-bzD" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="Sgz-VS-oaw"/>
                         </constraints>
                     </view>
-                    <nil key="simulatedStatusBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -37,6 +36,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Default" width="375" height="667"/>
+        <image name="Default" width="750" height="1334"/>
     </resources>
 </document>

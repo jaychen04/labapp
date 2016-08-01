@@ -53,6 +53,7 @@
     self.parseExtraInfo = ^(ONOXMLDocument *XML) {
         ONOXMLElement *userXML = [XML.rootElement firstChildWithTag:@"user"];
         weakSelf.user = [[OSCUser alloc] initWithXML:userXML];
+        [weakSelf updateRelationshipImage];
     };
     
     return self;
@@ -68,6 +69,7 @@
     self.parseExtraInfo = ^(ONOXMLDocument *XML) {
         ONOXMLElement *userXML = [XML.rootElement firstChildWithTag:@"user"];
         weakSelf.user = [[OSCUser alloc] initWithXML:userXML];
+        [weakSelf updateRelationshipImage];
     };
     
     return self;
@@ -213,42 +215,41 @@
     if ([Config getOwnID] == 0) {
         [self.navigationController pushViewController:[LoginViewController new] animated:YES];
     } else {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+        MBProgressHUD *HUD = [Utils createHUD];
         
-        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_UPDATERELATION]
-           parameters:@{
-//                          @"id"       :       @(_user.userID)
-                        @"uid":             @([Config getOwnID]),
-                        @"hisuid":          @(_user.userID),
-                        @"newrelation":     _user.relationship <= 2? @(0) : @(1)
-                        }
-              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
-                  ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
-                  int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-                  NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-                  
-                  if (errorCode == 1) {
-                      _user.relationship = [[[responseDoment.rootElement firstChildWithTag:@"relation"] numberValue] intValue];
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          [self updateRelationshipImage];
-                      });
-                  } else {
-                      MBProgressHUD *HUD = [Utils createHUD];
-                      HUD.mode = MBProgressHUDModeCustomView;
-//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                      HUD.label.text = errorMessage;
-                      
-                      [HUD hideAnimated:YES afterDelay:1];
-                  }
-                
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                MBProgressHUD *HUD = [Utils createHUD];
-                HUD.mode = MBProgressHUDModeCustomView;
-//                HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                HUD.label.text = @"网络异常，操作失败";
-                
-                [HUD hideAnimated:YES afterDelay:1];
-            }];
+        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+        [manger POST:[NSString stringWithFormat:@"%@%@",OSCAPI_V2_HTTPS_PREFIX,OSCAPI_USER_RELATION_REVERSE] parameters:@{
+                         @"id" : @(_user.userID)
+                         }
+             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+                 if ([responseObject[@"code"] floatValue] == 1) {
+                     NSDictionary* resultDic = responseObject[@"result"];
+                     _user.relationship = [resultDic[@"relation"] intValue];
+                     
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         HUD.mode = MBProgressHUDModeCustomView;
+                         if (_user.relationship == 1 || _user.relationship == 2) {
+                             HUD.label.text = @"关注成功";
+                         }else{
+                             HUD.label.text = @"取消关注";
+                         }
+                         
+                         [HUD hideAnimated:YES afterDelay:1];
+                         [self updateRelationshipImage];
+                     });
+                 }else{
+                     HUD.mode = MBProgressHUDModeCustomView;
+                   HUD.label.text = @"数据异常";
+
+                   [HUD hideAnimated:YES afterDelay:1];
+                 }
+              }
+             failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+                 HUD.mode = MBProgressHUDModeCustomView;
+                 HUD.label.text = @"网络异常，操作失败";
+                 
+                 [HUD hideAnimated:YES afterDelay:1];
+         }];
     }
 }
 
