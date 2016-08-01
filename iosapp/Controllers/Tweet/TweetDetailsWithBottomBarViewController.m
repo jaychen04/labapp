@@ -111,11 +111,9 @@
 
 - (void)setLayout
 {
-//    [self.view addSubview:_tweetDetailsVC.view];
     [self.view addSubview:_tweetDetailsNewVC.view];
     
     for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
-//    NSDictionary *views = @{@"tableView": _tweetDetailsVC.view, @"editingBar": self.editingBar};
     NSDictionary *views = @{@"tableView": _tweetDetailsNewVC.view, @"editingBar": self.editingBar};
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[tableView]|" options:0 metrics:nil views:views]];
@@ -161,14 +159,12 @@
                   [_tweetDetailsNewVC reloadCommentList];
                   
               } else {
-//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
                   HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
               }
               
               [HUD hideAnimated:YES afterDelay:1];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
-//              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
               HUD.label.text = @"网络异常，动弹发送失败";
               
               [HUD hideAnimated:YES afterDelay:1];

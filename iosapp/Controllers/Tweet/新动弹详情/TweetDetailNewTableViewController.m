@@ -346,7 +346,10 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_tweetDetail.images.count <= 1) {
-            return UITableViewAutomaticDimension;
+            return [tableView fd_heightForCellWithIdentifier:tDetailReuseIdentifier configuration:^(TweetDetailCell* cell) {
+                cell.tweet = _tweetDetail;
+                [self setUpTweetDetailCell:cell];
+            }];
         }else{
             return [tableView fd_heightForCellWithIdentifier:tMultipleDetailReuseIdentifier configuration:^(NewMultipleDetailCell* cell) {
                 if (!_tweetDetail) {return ;}

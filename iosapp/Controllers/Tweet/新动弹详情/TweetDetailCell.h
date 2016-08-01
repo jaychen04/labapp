@@ -21,9 +21,6 @@
 
 @property (nonatomic, strong) UIImageView *commentImage;
 
-@property (strong, nonatomic) UIView *imageBackView;
-
 @property (nonatomic, strong) OSCTweetItem *tweet;
-
 
 @end

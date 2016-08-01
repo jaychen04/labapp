@@ -18,6 +18,7 @@
 #import "DetailsViewController.h"
 #import "UserDetailsViewController.h"
 #import "ImageViewerController.h"
+#import "OSCTweetItem.h"
 
 #import "SoftWareViewController.h"
 #import "NewsBlogDetailTableViewController.h"
@@ -232,10 +233,12 @@ static NSString * const EventCellID = @"EventCell";
             break;
         }
         case 3: {
-            OSCTweet *tweet = [OSCTweet new];
-            tweet.tweetID = event.objectID;
+//            OSCTweet *tweet = [OSCTweet new];
+//            tweet.tweetID = event.objectID;
+//            TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+//            [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
             
-            TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+            TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:event.objectID];
             [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
             
             break;
