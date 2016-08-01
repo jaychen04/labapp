@@ -128,10 +128,13 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     self = [super init];
     if (self) {
         self.generateURL = ^NSString * (NSUInteger page) {
-            return [NSString stringWithFormat:@"%@%@?project=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_SOFTWARE_TWEET_LIST, softwareID, (unsigned long)page, OSCAPI_SUFFIX];
+
+            NSString *URL = [NSString stringWithFormat:@"%@%@?project=%lld&pageIndex=%lu&%@&clientType=android", OSCAPI_PREFIX, OSCAPI_SOFTWARE_TWEET_LIST, softwareID, (unsigned long)page, OSCAPI_SUFFIX];
+            
+            return [URL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         };
         
-        self.objClass = [OSCTweetItem class];
+        self.objClass = [OSCTweet class];
     }
     
     return self;
