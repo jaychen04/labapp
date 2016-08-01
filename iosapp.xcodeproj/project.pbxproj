@@ -1172,8 +1172,6 @@
 				04EC969A1CF436FB0004B54E /* OSCActivityTableViewCell.h */,
 				04EC969B1CF436FB0004B54E /* OSCActivityTableViewCell.m */,
 				04EC969C1CF436FB0004B54E /* OSCActivityTableViewCell.xib */,
-				EE2023291CFBE675002756E4 /* ActivityHeadView.h */,
-				EE20232A1CFBE675002756E4 /* ActivityHeadView.m */,
 				04EC96941CF436B10004B54E /* OSCActivityViewController.h */,
 				04EC96951CF436B10004B54E /* OSCActivityViewController.m */,
 				EEE241A61CFD65710088FFB3 /* ActivityDetailViewController.h */,
@@ -2013,6 +2011,8 @@
 			children = (
 				044266981D4A036000D87091 /* BannerScrollView.h */,
 				044266991D4A036000D87091 /* BannerScrollView.m */,
+				EE2023291CFBE675002756E4 /* ActivityHeadView.h */,
+				EE20232A1CFBE675002756E4 /* ActivityHeadView.m */,
 				31ABF57F1B0F1B5300663C08 /* JKAlertDialog.h */,
 				31ABF5801B0F1B5300663C08 /* JKAlertDialog.m */,
 				C57E7B551B56734300F39B5C /* PlaceholderTextView.h */,

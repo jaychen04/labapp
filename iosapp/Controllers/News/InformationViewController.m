@@ -107,7 +107,8 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 -(void)getBannerData{
     NSString* urlStr = [NSString stringWithFormat:@"%@banner", OSCAPI_V2_PREFIX];
-    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager OSCJsonManager];
+    manger.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
     [manger GET:urlStr
      parameters:@{@"catalog" : @1}
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
@@ -116,7 +117,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
                 NSArray* responseArr = resultDic[@"items"];
                 NSArray* bannerModels = [OSCBanner mj_objectArrayWithKeyValuesArray:responseArr];
                 self.bannerModels = bannerModels.mutableCopy;
-                
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self configurationCycleScrollView];
