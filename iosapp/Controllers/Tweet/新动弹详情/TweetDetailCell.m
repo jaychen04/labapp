@@ -131,21 +131,18 @@
 }
 
 #pragma mark - set Tweet
-- (void)setTweet:(OSCTweetItem *)model{
-    if (!model) { return;}
-    _tweet = model;
+-(void)setTweet:(OSCTweetItem *)tweet{
+    if (!tweet) { return; }
+    _tweet = tweet;
     
-    if (model.images.count == 1) {
+    if (_tweet.images.count == 1) {
         [_tweetImageView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
         }];
-        _imageBackView.hidden = NO;
     } else {
         [_tweetImageView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_descTextView.mas_bottom).with.offset(0);
         }];
-        _imageBackView.hidden = YES;
     }
 }
-
 @end
