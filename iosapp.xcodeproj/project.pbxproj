@@ -49,6 +49,8 @@
 		042E8D0F1CF5950900364BD7 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8D0E1CF5950900364BD7 /* libiconv.tbd */; };
 		042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D141CF6A3F000364BD7 /* TokenManager.m */; };
 		042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */; };
+		043130C11D51D91B00C01881 /* QuartzCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043130C01D51D91B00C01881 /* QuartzCanvasView.m */; };
+		043130C41D51E29C00C01881 /* UserDrawHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043130C31D51E29C00C01881 /* UserDrawHeaderView.m */; };
 		0432B6B81D3CB63700AFC058 /* OSCTweetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432B6B71D3CB63700AFC058 /* OSCTweetItem.m */; };
 		043568671D221D7100CC511C /* SoftWareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568651D221D7100CC511C /* SoftWareViewController.m */; };
 		043568681D221D7100CC511C /* SoftWareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043568661D221D7100CC511C /* SoftWareViewController.xib */; };
@@ -63,7 +65,6 @@
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
-		04E50D911D4C434D008FA097 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E50D901D4C434D008FA097 /* Launch Screen.storyboard */; };
 		04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */; };
 		04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */; };
 		04EC1B5A1D38F6C8006DBD5D /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B591D38F6C8006DBD5D /* WebKit.framework */; };
@@ -417,6 +418,10 @@
 		042E8D141CF6A3F000364BD7 /* TokenManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TokenManager.m; sourceTree = "<group>"; };
 		042E8D1C1CF7038600364BD7 /* OSCBlogDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetail.h; sourceTree = "<group>"; };
 		042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetail.m; sourceTree = "<group>"; };
+		043130BF1D51D91B00C01881 /* QuartzCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuartzCanvasView.h; sourceTree = "<group>"; };
+		043130C01D51D91B00C01881 /* QuartzCanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuartzCanvasView.m; sourceTree = "<group>"; };
+		043130C21D51E29C00C01881 /* UserDrawHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDrawHeaderView.h; sourceTree = "<group>"; };
+		043130C31D51E29C00C01881 /* UserDrawHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDrawHeaderView.m; sourceTree = "<group>"; };
 		0432B6B61D3CB63700AFC058 /* OSCTweetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCTweetItem.h; sourceTree = "<group>"; };
 		0432B6B71D3CB63700AFC058 /* OSCTweetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCTweetItem.m; sourceTree = "<group>"; };
 		043568641D221D7100CC511C /* SoftWareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareViewController.h; sourceTree = "<group>"; };
@@ -440,7 +445,6 @@
 		047325A21CF8612B00460658 /* enumList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enumList.h; path = OSC/enumList.h; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
-		04E50D901D4C434D008FA097 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		04E5BAC81D406DAD0046EA65 /* OSCPhotoGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPhotoGroupView.h; sourceTree = "<group>"; };
 		04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPhotoGroupView.m; sourceTree = "<group>"; };
 		04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -1631,7 +1635,6 @@
 				C5B1231A1B316830000B29D2 /* html */,
 				C5B1231B1B316830000B29D2 /* js */,
 				C5A89C3B1B09C59400798B1C /* FontAwesome.ttf */,
-				04E50D901D4C434D008FA097 /* Launch Screen.storyboard */,
 			);
 			name = Resources;
 			path = Resource;
@@ -1684,6 +1687,8 @@
 			children = (
 				386039621A0A179A007C9B88 /* UserDetailsViewController.h */,
 				386039631A0A179A007C9B88 /* UserDetailsViewController.m */,
+				043130C21D51E29C00C01881 /* UserDrawHeaderView.h */,
+				043130C31D51E29C00C01881 /* UserDrawHeaderView.m */,
 				38763A051A85E591008E6805 /* UserHeaderCell.h */,
 				38763A061A85E591008E6805 /* UserHeaderCell.m */,
 				38763A081A860A96008E6805 /* UserOperationCell.h */,
@@ -2009,6 +2014,8 @@
 		C54689FC1BD1EFC400D49223 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				043130BF1D51D91B00C01881 /* QuartzCanvasView.h */,
+				043130C01D51D91B00C01881 /* QuartzCanvasView.m */,
 				044266981D4A036000D87091 /* BannerScrollView.h */,
 				044266991D4A036000D87091 /* BannerScrollView.m */,
 				EE2023291CFBE675002756E4 /* ActivityHeadView.h */,
@@ -2546,7 +2553,6 @@
 				EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */,
 				EEB3D7AF1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
-				04E50D911D4C434D008FA097 /* Launch Screen.storyboard in Resources */,
 				EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */,
 				C5B1231D1B316830000B29D2 /* html in Resources */,
 				31855C8A1D0E621F00C8F8B8 /* TweetCommentNewCell.xib in Resources */,
@@ -2676,6 +2682,7 @@
 				EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */,
 				EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */,
 				04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */,
+				043130C41D51E29C00C01881 /* UserDrawHeaderView.m in Sources */,
 				382A95BE1A29DC4700AAAFEA /* OSCEvent.m in Sources */,
 				38EAF1CA1AE112A200397E2A /* TeamIssueCell.m in Sources */,
 				0422BC591CEDA390007DB140 /* TAPageControl.m in Sources */,
@@ -2788,6 +2795,7 @@
 				C5F3D77A1AF0C40B0032F775 /* WeeklyReportTableViewController.m in Sources */,
 				043568701D22272F00CC511C /* SoftWareDetailHeaderView.m in Sources */,
 				38EAF1C11AE0E6B100397E2A /* TeamIssue.m in Sources */,
+				043130C11D51D91B00C01881 /* QuartzCanvasView.m in Sources */,
 				31EAF9FF1AEF884A004DF445 /* TeamIssueList.m in Sources */,
 				C52BF4F01AF9FE8800E53508 /* TimeLineNodeCell.m in Sources */,
 				386039611A09C5A1007C9B88 /* OSCUser.m in Sources */,
