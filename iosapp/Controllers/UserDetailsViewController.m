@@ -22,7 +22,7 @@
 
 #import <MBProgressHUD.h>
 
-#define NAVBAR_CHANGE_POINT 50
+#define NAVIBAR_HEIGHT 415
 
 @interface UserDetailsViewController ()
 
@@ -54,6 +54,9 @@
         ONOXMLElement *userXML = [XML.rootElement firstChildWithTag:@"user"];
         weakSelf.user = [[OSCUser alloc] initWithXML:userXML];
         [weakSelf updateRelationshipImage];
+        if (weakSelf.user.userID != [Config getOwnID]) {
+            [weakSelf settingNaviBarItem];
+        }
     };
     
     return self;
@@ -70,6 +73,9 @@
         ONOXMLElement *userXML = [XML.rootElement firstChildWithTag:@"user"];
         weakSelf.user = [[OSCUser alloc] initWithXML:userXML];
         [weakSelf updateRelationshipImage];
+        if (weakSelf.user.userID != [Config getOwnID]) {
+            [weakSelf settingNaviBarItem];
+        }
     };
     
     return self;
@@ -101,28 +107,12 @@
     self.needRefreshAnimation = NO;
     [super viewDidLoad];
     
-//    self.tableView.frame = (CGRect){{0,-64},self.tableView.bounds.size};
-//    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
-    self.edgesForExtendedLayout = UIRectEdgeNone;
     self.navigationItem.title = @"用户中心";
     self.tableView.bounces = NO;
-    [self settingNaviBarItem];
+    
+//    self.automaticallyAdjustsScrollViewInsets = NO;
+//    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor redColor]];
 }
-
-//- (void)viewWillAppear:(BOOL)animated
-//{
-//    [super viewWillAppear:YES];
-//    self.tableView.delegate = self;
-//    [self scrollViewDidScroll:self.tableView];
-//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
-//}
-
-//- (void)viewWillDisappear:(BOOL)animated
-//{
-//    [super viewWillDisappear:animated];
-//    self.tableView.delegate = nil;
-//    [self.navigationController.navigationBar lt_reset];
-//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -145,26 +135,24 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
-        return 415;
+        return NAVIBAR_HEIGHT;
     } else {
         return [super tableView:tableView heightForRowAtIndexPath:indexPath];
     }
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0) {
         UserHeaderCell *cell = [UserHeaderCell new];
-
+        
         [cell setContentWithUser:_user];
-
+        
         cell.followsBtn.tag = 1;
         cell.fansBtn.tag = 2;
-
+        
         [cell.followsBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
         [cell.fansBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-        
         return cell;
     }else{
         return [super tableView:tableView cellForRowAtIndexPath:indexPath];
@@ -181,18 +169,6 @@
 {
     return 0.01f;
 }
-
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    UIColor * color = [UIColor navigationbarColor];
-//    CGFloat offsetY = scrollView.contentOffset.y;
-//    if (offsetY > NAVBAR_CHANGE_POINT) {
-//        CGFloat alpha = MIN(1, 1 - ((NAVBAR_CHANGE_POINT + 64 - offsetY) / 64));
-//        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
-//    } else {
-//        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
-//    }
-//}
 
 #pragma mark - 处理页面跳转
 
