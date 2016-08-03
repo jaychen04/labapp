@@ -13,6 +13,7 @@
 #import "SoftWareDetailHeaderView.h"
 #import "TweetTableViewController.h"
 #import "recommandBlogTableViewCell.h"
+#import "TweetsViewController.h"
 
 #import "OSCAPI.h"
 #import "Utils.h"
@@ -298,7 +299,7 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
 - (IBAction)buttonClick:(UIButton *)sender {
     switch (sender.tag) {
         case 1:{//评论{
-            TweetTableViewController* commentVC = [[TweetTableViewController alloc]initWithSoftwareID:self.model.id];
+            TweetsViewController* commentVC = [[TweetsViewController alloc] initWithSoftwareID:self.model.id];
             [self.navigationController pushViewController:commentVC animated:YES];
             break;
         }

@@ -1023,7 +1023,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 //                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
 //                                                                                                                    isBlogDetail:YES];
 //                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
-            }else {
+            } else {
                 if (_blogDetailComments.count > 0) {
                     if (indexPath.row == _blogDetailComments.count) {
                         //新评论列表
@@ -1043,7 +1043,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 }
             }
         }
-    }else {     //资讯详情
+    } else {     //资讯详情
         if (indexPath.section == 1) {
             
             if (_isExistRelatedSoftware) {      //相关的软件详情
@@ -1058,21 +1058,21 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 //                DetailsViewController *detailsViewController = [[DetailsViewController alloc] initWithV2Software:softWare];
 //                [self.navigationController pushViewController:detailsViewController animated:YES];
                 
-            }else if (_newsDetails.abouts.count > 0) {     //相关推荐的资讯详情
+            } else if (_newsDetails.abouts.count > 0) {     //相关推荐的资讯详情
                 OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
                 [self pushDetailsVcWithDetailModel:detailRecommend];
                 
 //                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
 //                                                                                                                    isBlogDetail:NO];
 //                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
-            }else if (_newsDetailComments.count > 0) {
+            } else if (_newsDetailComments.count > 0) {
                 //资讯评论列表
                 if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
                     CommentsBottomBarViewController *commentsBVC = [[CommentsBottomBarViewController alloc] initWithCommentType:1 andObjectID:_newsDetails.id];
                     [self.navigationController pushViewController:commentsBVC animated:YES];
                 }
             }
-        }else if (indexPath.section == 2) {
+        } else if (indexPath.section == 2) {
             if (_isExistRelatedSoftware && _newsDetails.abouts.count > 0) {
                 OSCBlogDetailRecommend *detailRecommend = _newsDetailRecommends[indexPath.row];
                 [self pushDetailsVcWithDetailModel:detailRecommend];
@@ -1080,7 +1080,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 //                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:detailRecommend.id
 //                                                                                                                    isBlogDetail:NO];
 //                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
-            }else {
+            } else {
                 //资讯评论列表
                 if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
                     
@@ -1093,7 +1093,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 //                    [self.navigationController pushViewController:commentsBVC animated:YES];
                 }
             }
-        }else if (indexPath.section == 3) {
+        } else if (indexPath.section == 3) {
             if (_newsDetailComments.count > 0 && indexPath.row == _newsDetailComments.count) {
                 
                 //新评论列表

@@ -13,7 +13,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *recommendTagIv;
 @property (weak, nonatomic) IBOutlet UIImageView *propertyTagIv;
 @property (weak, nonatomic) IBOutlet UILabel *TitleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *commentCountIcon;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
 @property (nonatomic, strong) OSCBlogDetail *blogDetail;
 @property (nonatomic, strong) OSCInformationDetails *newsDetail;
