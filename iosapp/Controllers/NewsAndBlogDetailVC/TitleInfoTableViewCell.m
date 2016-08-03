@@ -47,7 +47,22 @@
 - (void)setNewsDetail:(OSCInformationDetails *)newsDetail {
     _propertyTagIv.hidden = YES;
     _recommendTagIv.hidden = YES;
+    
+    _commentCountIcon.hidden = YES;
+    _commentCountLabel.hidden = YES;
+    
     _TitleLabel.text = newsDetail.title;
-    _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)newsDetail.commentCount];
+    _timeLabel.text = [self timeComponentsSep:newsDetail.pubDate];
 }
+
+- (NSString *)timeComponentsSep:(NSString *)pubdate
+{
+    NSString *string = [pubdate componentsSeparatedByString:@" "][0];
+    
+    string = [string stringByReplacingCharactersInRange:NSMakeRange(7, 1) withString:@"月"];
+    string = [string stringByReplacingCharactersInRange:NSMakeRange(4, 1) withString:@"年"];
+    
+    return [NSString stringWithFormat:@"发布于%@日", string];
+}
+
 @end
