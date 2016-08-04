@@ -50,6 +50,7 @@
 		042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D141CF6A3F000364BD7 /* TokenManager.m */; };
 		042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */; };
 		042F0AA11D52DDB900D3DC76 /* QuartzCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F0AA01D52DDB900D3DC76 /* QuartzCanvasView.m */; };
+		042F0AA71D531B8700D3DC76 /* UIDevice+SystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F0AA61D531B8700D3DC76 /* UIDevice+SystemInfo.m */; };
 		043130C71D52314F00C01881 /* UserDrawHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043130C61D52314F00C01881 /* UserDrawHeaderView.m */; };
 		0432B6B81D3CB63700AFC058 /* OSCTweetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432B6B71D3CB63700AFC058 /* OSCTweetItem.m */; };
 		043568671D221D7100CC511C /* SoftWareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568651D221D7100CC511C /* SoftWareViewController.m */; };
@@ -420,6 +421,8 @@
 		042E8D1D1CF7038600364BD7 /* OSCBlogDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetail.m; sourceTree = "<group>"; };
 		042F0A9F1D52DDB900D3DC76 /* QuartzCanvasView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuartzCanvasView.h; sourceTree = "<group>"; };
 		042F0AA01D52DDB900D3DC76 /* QuartzCanvasView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuartzCanvasView.m; sourceTree = "<group>"; };
+		042F0AA51D531B8700D3DC76 /* UIDevice+SystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIDevice+SystemInfo.h"; sourceTree = "<group>"; };
+		042F0AA61D531B8700D3DC76 /* UIDevice+SystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+SystemInfo.m"; sourceTree = "<group>"; };
 		043130C51D52314F00C01881 /* UserDrawHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDrawHeaderView.h; sourceTree = "<group>"; };
 		043130C61D52314F00C01881 /* UserDrawHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDrawHeaderView.m; sourceTree = "<group>"; };
 		0432B6B61D3CB63700AFC058 /* OSCTweetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCTweetItem.h; sourceTree = "<group>"; };
@@ -1704,6 +1707,8 @@
 		38A1A1571A15BAB500AFD144 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				042F0AA51D531B8700D3DC76 /* UIDevice+SystemInfo.h */,
+				042F0AA61D531B8700D3DC76 /* UIDevice+SystemInfo.m */,
 				042E545A1D193FD400DC7E1D /* UIImage+ImageEffects.h */,
 				042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */,
 				042E545C1D193FD400DC7E1D /* UIImageView+LBBlurredImage.h */,
@@ -2734,6 +2739,7 @@
 				31697BC21B16E496001FE346 /* TeamCalendarView.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
 				EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */,
+				042F0AA71D531B8700D3DC76 /* UIDevice+SystemInfo.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,
 				00FF954819F2BF8B002F4737 /* LastCell.m in Sources */,
 				3838D1A91A6F455600CC7913 /* ShakingViewController.m in Sources */,
@@ -3018,8 +3024,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hailong Zhang (WSUBE85MHP)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hailong Zhang (WSUBE85MHP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3076,7 +3082,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "da210b6e-edf2-4f62-9f50-644a9eb94ac6";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -3086,8 +3092,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Hailong Zhang (WSUBE85MHP)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Hailong Zhang (WSUBE85MHP)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3143,7 +3149,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "net.oschina.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "da210b6e-edf2-4f62-9f50-644a9eb94ac6";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

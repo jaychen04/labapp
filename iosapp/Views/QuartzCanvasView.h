@@ -41,7 +41,7 @@ typedef struct GradientColor GradientColor;
 @property (nonatomic,assign) NSInteger biggestRoundRadius;///< default is (QuartzCanvasView.frame.size.width * 0.5)
 
 /** 最小圆(最内层圆)的半径值限制 */
-@property (nonatomic,assign) NSInteger minimumRoundRadius;///< default is 120px
+@property (nonatomic,assign) NSInteger minimumRoundRadius;///< default is 30px
 
 /** 最外圆的运动时间 其他小圆按比例缩放运动时间*/
 @property (nonatomic,assign) CFTimeInterval duration;///< default is 20s
