@@ -7,6 +7,7 @@
 //
 
 #import "ActivityHeadView.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "UIImageView+LBBlurredImage.h"
 #import "Utils.h"
 
@@ -130,6 +131,7 @@
 {
     _bottomImage = [[UIImageView alloc] initWithFrame:frame];
     _bottomImage.contentMode = UIViewContentModeScaleAspectFill;
+    _bottomImage.backgroundColor = [UIColor lightGrayColor];
     _bottomImage.clipsToBounds = YES;
     [self addSubview:_bottomImage];
    
