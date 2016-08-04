@@ -10,9 +10,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#import "UIDevice+SystemInfo.h"
+
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define PI 3.14159265358979323846
-#define minimum_round_radius 50
 
 @interface QuartzCanvasView (){
     CAGradientLayer* _gradientLayer;
@@ -44,7 +45,7 @@
         CGFloat centerY = frame.size.height * 0.5;
         _center = (CGPoint){centerX,centerY};
         self.biggestRoundRadius = centerX + 16;
-        self.minimumRoundRadius = minimum_round_radius;
+        self.minimumRoundRadius = 15;
         _layers = [NSMutableArray arrayWithCapacity:5];
         _keyFrameAnis = [NSMutableArray arrayWithCapacity:5];
     }
@@ -108,7 +109,23 @@
     }
     
     NSInteger i = 0;
-    CGFloat changeRadius = _openRandomness ? (biggestRadius - (50 - i*3)) : biggestRadius - 50;
+    CGFloat changeRadius = 0;
+    
+    DeviceResolution resolution = [UIDevice currentDeviceResolution];
+    if (resolution == Device_iPhone_4 || resolution == Device_iPhone_4s) {
+        NSLog(@"4 && 4s");
+        changeRadius = _openRandomness ? (biggestRadius - (40 + i*3)) : biggestRadius - 40;
+    }else if (resolution == Device_iPhone_5 || resolution == Device_iPhone_5c || resolution == Device_iPhone_5s || resolution == Device_iPhone_se){
+        NSLog(@"5 && 5c && 5s");
+        changeRadius = _openRandomness ? (biggestRadius - (50 + i*3)) : biggestRadius - 50;
+    }else if (resolution == Device_iPhone_6 || resolution == Device_iPhone_6s){
+        NSLog(@"6 && 6s");
+        changeRadius = _openRandomness ? (biggestRadius - (60 + i*3)) : biggestRadius - 60;
+    }else if (resolution == Device_iPhone_6p || resolution == Device_iPhone_6sp){
+        NSLog(@"6p && 6sp");
+        changeRadius = _openRandomness ? (biggestRadius - (70 + i*3)) : biggestRadius - 70;
+    }
+    
     while (changeRadius > 0) {
         CGContextAddArc(ctx, _center.x, _center.y, changeRadius, 0, 2*PI, 0);
         CGContextDrawPath(ctx, kCGPathStroke);
@@ -157,7 +174,7 @@
         
         i++;
         changeRadius = (changeRadius - (50 - i*3));;
-        if (changeRadius < minimum_round_radius) { break; }
+        if (changeRadius < self.minimumRoundRadius) { break; }
     }
 }
 

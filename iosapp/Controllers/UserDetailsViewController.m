@@ -19,15 +19,17 @@
 #import "BubbleChatViewController.h"
 #import "LoginViewController.h"
 #import "UINavigationBar+BackgroundColor.h"
+#import "UserDrawHeaderView.h"
 
 #import <MBProgressHUD.h>
 
-#define NAVIBAR_HEIGHT 415
+#define NAVIBAR_HEIGHT 350
 
 @interface UserDetailsViewController ()
 
 @property (nonatomic, strong) OSCUser *user;
 
+@property (nonatomic, strong) UserDrawHeaderView* headerCanvasView;
 @property (nonatomic, strong) UIImageView *portrait;
 @property (nonatomic, strong) UILabel *nameLabel;
 @property (nonatomic, strong) UILabel *countLabel;
@@ -57,6 +59,7 @@
         if (weakSelf.user.userID != [Config getOwnID]) {
             [weakSelf settingNaviBarItem];
         }
+        [weakSelf assemblyHeaderView];
     };
     
     return self;
@@ -76,6 +79,7 @@
         if (weakSelf.user.userID != [Config getOwnID]) {
             [weakSelf settingNaviBarItem];
         }
+        [weakSelf assemblyHeaderView];
     };
     
     return self;
@@ -109,9 +113,19 @@
     
     self.navigationItem.title = @"用户中心";
     self.tableView.bounces = NO;
-    
-//    self.automaticallyAdjustsScrollViewInsets = NO;
-//    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor redColor]];
+    self.tableView.tableHeaderView = self.headerCanvasView;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:YES];
+    self.tableView.tableHeaderView = self.headerCanvasView;
+    if (_user) { [self assemblyHeaderView]; }
+}
+
+- (void)viewDidDisappear:(BOOL)animated{
+    [super viewDidDisappear:YES];
+    self.headerCanvasView = nil;
+    self.tableView.tableHeaderView = nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -122,47 +136,29 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     self.tableView.separatorColor = [UIColor separatorColor];
     
-    return section == 0 ? 1 : self.objects.count;
+    return self.objects.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return NAVIBAR_HEIGHT;
-    } else {
-        return [super tableView:tableView heightForRowAtIndexPath:indexPath];
-    }
+    return [super tableView:tableView heightForRowAtIndexPath:indexPath];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        UserHeaderCell *cell = [UserHeaderCell new];
-        
-        [cell setContentWithUser:_user];
-        
-        cell.followsBtn.tag = 1;
-        cell.fansBtn.tag = 2;
-        
-        [cell.followsBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.fansBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
-        return cell;
-    }else{
-        return [super tableView:tableView cellForRowAtIndexPath:indexPath];
-    }
+     return [super tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {return;}
-    else {[super tableView:tableView didSelectRowAtIndexPath:indexPath];}
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -301,5 +297,21 @@
     [_rightBaFollowrBtn setBackgroundImage:relationImagePress forState:UIControlStateHighlighted];
 }
 
+#pragma mark --- headerView 
+- (void) assemblyHeaderView{
+    [self.headerCanvasView setContentWithUser:_user];
+    self.headerCanvasView.followsBtn.tag = 1;
+    self.headerCanvasView.fansBtn.tag = 2;
+
+    [self.headerCanvasView.followsBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+    [self.headerCanvasView.fansBtn addTarget:self action:@selector(pushFriendsSVC:) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (UserDrawHeaderView *)headerCanvasView {
+	if(_headerCanvasView == nil) {
+        _headerCanvasView = [[UserDrawHeaderView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width,NAVIBAR_HEIGHT}}];
+	}
+	return _headerCanvasView;
+}
 
 @end

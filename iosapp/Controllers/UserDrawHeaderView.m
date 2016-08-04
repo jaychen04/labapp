@@ -47,14 +47,15 @@
 
 - (void)setLayout
 {
-    QuartzCanvasView* drawView = [[QuartzCanvasView alloc]initWithFrame:(CGRect){{0,0},{screen_width,415}}];
+    QuartzCanvasView* drawView = [[QuartzCanvasView alloc]initWithFrame:(CGRect){{0,0},self.bounds.size}];
     _drawView = drawView;
+    _drawView.openRandomness = YES;
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
     _drawView.gradientColor = (GradientColor){
         [UIColor colorWithHex:0x24CF5F].CGColor,
         [UIColor colorWithHex:0x20B955].CGColor,
     };
-    _drawView.offestCenter = (OffestCenter){0,-90};
+    _drawView.offestCenter = (OffestCenter){0,-55};
     [self addSubview:_drawView];
     
     _imageBackView = [UIView new];
