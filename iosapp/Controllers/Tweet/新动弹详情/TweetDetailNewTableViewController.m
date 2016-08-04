@@ -25,6 +25,8 @@
 #import <Ono.h>
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
+#import <SDImageCache.h>
+#import <SDWebImageDownloader.h>
 
 #import "TweetDetailCell.h"
 #import "TweetLikeNewCell.h"
@@ -90,8 +92,8 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     [self.tableView registerNib:[UINib nibWithNibName:@"TweetCommentNewCell" bundle:nil] forCellReuseIdentifier:tCommentReuseIdentifier];
     [self.tableView registerClass:[TweetDetailCell class] forCellReuseIdentifier:tDetailReuseIdentifier];
     [self.tableView registerClass:[NewMultipleDetailCell class] forCellReuseIdentifier:tMultipleDetailReuseIdentifier];
-    self.tableView.tableFooterView = [UIView new];
     self.tableView.estimatedRowHeight = 250;
+    self.tableView.tableFooterView = [UIView new];
     
     _tweetLikeList = [NSMutableArray new];
     _tweetCommentList = [NSMutableArray new];
@@ -343,6 +345,17 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
         return nil;
     }
 }
+//- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    if (indexPath.section == 0) {
+//        if (_tweetDetail.images.count <= 1) {
+//            return _tweetDetail.images.count == 1 ? 350 : 250;
+//        }else{
+//            return 250;
+//        }
+//    }else{
+//        return 300;
+//    }
+//}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
         if (_tweetDetail.images.count <= 1) {
@@ -483,7 +496,13 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
         if (_tweetDetail.images.count == 1) {
             cell.tweetImageView.hidden = NO;
             OSCTweetImages* imageData = [_tweetDetail.images lastObject];
-            [cell.tweetImageView loadPortrait:[NSURL URLWithString:imageData.thumb]];
+            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
+            if (!image) {
+                [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
+                [self downloadThumbnailImageThenReload:imageData.thumb];
+            } else {
+                [cell.tweetImageView setImage:image];
+            }
         }else{
             cell.tweetImageView.hidden = YES;
         }
@@ -763,6 +782,23 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
                   [HUD hideAnimated:YES afterDelay:1];
               }];
     };
+}
+#pragma mark - 下载图片
+
+- (void)downloadThumbnailImageThenReload:(NSString*)urlString
+{
+    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:urlString]
+                                                        options:SDWebImageDownloaderUseNSURLCache
+                                                       progress:nil
+                                                      completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                                                          [[SDImageCache sharedImageCache] storeImage:image forKey:urlString toDisk:NO];
+                                                          
+
+                                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                                              [self.tableView reloadData];
+                                                          });
+                                                      }];
+    
 }
 
 #pragma mark - scrollView
