@@ -7,7 +7,7 @@
 //
 
 #import "BannerScrollView.h"
-#import "UIImageView+LBBlurredImage.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "Utils.h"
 
 
@@ -150,7 +150,8 @@
 
 - (void)setContentForBanners:(OSCBanner *)banner
 {
-    [_imageView loadPortrait:[NSURL URLWithString:banner.img]];
+//    [_imageView loadPortrait:[NSURL URLWithString:banner.img]];
+    [_imageView sd_setImageWithURL:[NSURL URLWithString:banner.img]];
     _titleLable.text = banner.name;
 }
 
