@@ -94,9 +94,8 @@ static NSString * const activityReuseIdentifier = @"OSCActivityTableViewCell";
 
 -(void)getBannerData{
     NSString* urlStr = [NSString stringWithFormat:@"%@banner",OSCAPI_V2_PREFIX];
-    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    manger.requestSerializer.cachePolicy = NSURLRequestReturnCacheDataElseLoad;
-    
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];    
+    manger.requestSerializer.cachePolicy = NSURLRequestUseProtocolCachePolicy;
     [manger GET:urlStr
      parameters:@{@"catalog" : @3}
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
