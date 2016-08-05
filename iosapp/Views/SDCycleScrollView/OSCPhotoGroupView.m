@@ -10,7 +10,6 @@
 #import <YYKit.h>
 #import <MBProgressHUD.h>
 #import "OSCPhotoAlbumManger.h"
-#import "Utils.h"
 
 #define kPadding 20
 #define kHiColor [UIColor colorWithRGBHex:0x2dd6b8]
@@ -887,9 +886,12 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
-        MBProgressHUD *HUD = [Utils createHUD];
-//        HUD.label.text = @"正在保存";
-        
+        UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+        MBProgressHUD *HUD = [[MBProgressHUD alloc] initWithView:window];
+        HUD.detailsLabel.font = [UIFont boldSystemFontOfSize:16];
+        [window addSubview:HUD];
+        [HUD showAnimated:YES];
+        HUD.removeFromSuperViewOnHide = YES;
         
         UIImage* image = nil;
         OSCPhotoGroupItem* item = _groupItems[self.currentPage];

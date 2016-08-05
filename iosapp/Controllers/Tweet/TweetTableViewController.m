@@ -191,7 +191,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
     [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
     [self.tableView registerClass:[NewMultipleTweetCell class] forCellReuseIdentifier:reuseIdentifier_Multiple];
-    self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
@@ -289,6 +288,71 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
         return 250;
     }else{
         return 300;
+    }
+}
+-(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    OSCTweetItem* model = self.dataModels[indexPath.row];
+    if (model.images.count < 2) {
+        return [tableView fd_heightForCellWithIdentifier:reuseIdentifier configuration:^(NewTweetCell* cell) {
+            cell.tweet = model;
+            
+            if (!cell.descTextView.delegate) {
+                cell.descTextView.delegate = self;
+                [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
+            }
+            [self setBlockForCommentCell:cell];
+            
+            if (model.images.count > 0) {
+                OSCTweetImages* imageData = [model.images lastObject];
+                cell.tweetImageView.hidden = NO;
+                
+                UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
+                if (!image) {
+                    [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
+                    [self downloadThumbnailImageThenReload:imageData.thumb];
+                } else {
+                    [cell.tweetImageView setImage:image];
+                }
+                
+            } else {
+                cell.tweetImageView.hidden = YES;
+            }
+            
+            cell.userPortrait.tag = indexPath.row;
+            cell.descTextView.tag = indexPath.row;
+            cell.nameLabel.tag = indexPath.row;
+            cell.tweetImageView.tag = indexPath.row;
+            cell.likeCountButton.tag = indexPath.row;
+            cell.nameLabel.textColor = [UIColor newTitleColor];
+            cell.descTextView.textColor = [UIColor newTitleColor];
+            
+            [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
+            [cell.tweetImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
+            [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.contentView.backgroundColor = [UIColor newCellColor];
+            cell.backgroundColor = [UIColor themeColor];
+            cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+            cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+        }];
+    }else{
+        return [tableView fd_heightForCellWithIdentifier:reuseIdentifier_Multiple configuration:^(NewMultipleTweetCell* cell) {
+            cell.delegate = self;
+            cell.tweetItem = model;
+            [self setBlockForCommentMultipleCell:cell];
+            
+            if (!cell.descTextView.delegate) {
+                cell.descTextView.delegate = self;
+                [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
+            }
+            cell.likeCountButton.tag = indexPath.row;
+            [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.contentView.backgroundColor = [UIColor newCellColor];
+            cell.backgroundColor = [UIColor themeColor];
+            cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+            cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+        }];
     }
 }
 

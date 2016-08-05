@@ -373,7 +373,17 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
         if (!_isShowCommentList) {
             return 56;
         }else {
-            return UITableViewAutomaticDimension;
+            return [tableView fd_heightForCellWithIdentifier:tCommentReuseIdentifier configuration:^(TweetCommentNewCell* cell) {
+                if (indexPath.row < _tweetCommentList.count) {
+                    OSCCommentItem *commentModel = _tweetCommentList[indexPath.row];
+                    [cell setCommentModel:commentModel];
+                    [self setBlockForCommentCell:cell];
+                    cell.commentTagIv.tag = indexPath.row;
+                    [cell.commentTagIv addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(replyReviewer:)]];
+                    cell.portraitIv.tag = commentModel.author.id;
+                    [cell.portraitIv addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(commentItemPushUserDetails:)]];
+                }
+            }];
         }
     }
     return 0;
