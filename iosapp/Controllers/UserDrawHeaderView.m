@@ -55,7 +55,7 @@
         [UIColor colorWithHex:0x24CF5F].CGColor,
         [UIColor colorWithHex:0x20B955].CGColor,
     };
-    _drawView.offestCenter = (OffestCenter){0,-55};
+    _drawView.offestCenter = (OffestCenter){0,-52};
     [self addSubview:_drawView];
     
     _imageBackView = [UIView new];
