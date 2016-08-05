@@ -59,7 +59,7 @@
 		043568761D225D2100CC511C /* SoftWareDetailBodyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */; };
 		043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */; };
 		044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */; };
-		044266961D49E7BB00D87091 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044266951D49E7BB00D87091 /* Photos.framework */; };
+		044266961D49E7BB00D87091 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044266951D49E7BB00D87091 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		044266971D4A026000D87091 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC2D1CEDA2A7007DB140 /* InformationViewController.m */; };
 		0442669A1D4A036000D87091 /* BannerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 044266991D4A036000D87091 /* BannerScrollView.m */; };
 		0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */; };
