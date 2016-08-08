@@ -30,7 +30,7 @@
 
 #import "UMMobClick/MobClick.h"
 
-
+#import <JSPatch/JSPatch.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <UMSocial.h>
@@ -50,6 +50,10 @@
     
     _inNightMode = [Config getMode];
 	
+    //启动JSPatch
+    [JSPatch startWithAppKey:@"dc6e9b5af2143ee8"];
+    [JSPatch sync];
+    
 	//友盟统计SDK
 	UMConfigInstance.appKey = @"54c9a412fd98c5779c000752";
 	UMConfigInstance.channelId = @"AppStore";	
