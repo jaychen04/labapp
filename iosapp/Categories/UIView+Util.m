@@ -11,13 +11,25 @@
 
 @implementation UIView (Util)
 
+#define kScreenScale GraScreenScale()
+
 - (void)setCornerRadius:(CGFloat)cornerRadius
 {
     self.layer.cornerRadius = cornerRadius;
     self.layer.masksToBounds = YES;
     self.layer.shouldRasterize = YES;
-    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    self.layer.rasterizationScale = kScreenScale;
 }
+
+CGFloat GraScreenScale(){
+    static CGFloat scale;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        scale = [UIScreen mainScreen].scale;
+    });
+    return scale;
+}
+
 
 - (void)setBorderWidth:(CGFloat)width andColor:(UIColor *)color
 {

@@ -27,6 +27,7 @@
 #import <MJExtension.h>
 #import <SDImageCache.h>
 #import <SDWebImageDownloader.h>
+#import <UIImage+GIF.h>
 
 #import "TweetDetailCell.h"
 #import "TweetLikeNewCell.h"
@@ -473,6 +474,12 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
     [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
 }
+-(void)shouldInteractTextView:(UITextView *)textView
+                          URL:(NSURL *)URL
+                      inRange:(NSRange)characterRange
+{
+    [self.navigationController handleURL:URL];
+}
 #pragma mark -- Copy/Paste.  All three methods must be implemented by the delegate.
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -507,6 +514,10 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
             cell.tweetImageView.hidden = NO;
             OSCTweetImages* imageData = [_tweetDetail.images lastObject];
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
+//            if ([imageData.thumb hasSuffix:@".gif"]) {
+//                NSData *dataImage = UIImagePNGRepresentation(image);
+//                image = [UIImage sd_animatedGIFWithData:dataImage];
+//            }
             if (!image) {
                 [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
                 [self downloadThumbnailImageThenReload:imageData.thumb];
@@ -802,7 +813,6 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
                                                        progress:nil
                                                       completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
                                                           [[SDImageCache sharedImageCache] storeImage:image forKey:urlString toDisk:NO];
-                                                          
 
                                                           dispatch_async(dispatch_get_main_queue(), ^{
                                                               [self.tableView reloadData];
