@@ -21,9 +21,7 @@
 #import <MJExtension.h>
 #import <UITableView+FDTemplateLayoutCell.h>
 
-static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
-
-//#define QUESTION_URL @"http://192.168.1.15:8000/action/apiv2/question"
+static NSString* const ReuseIdentifier = @"NewHotBlogTableViewCell";
 
 @interface NewBlogsViewController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -46,8 +44,6 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     if(self.selectedBtn.tag == 0 ) {
         self.selectedBtn = _recommendButton;
     }
-    
-    NSLog(@"button index %ld",self.selectedBtn.tag);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -87,7 +83,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self.tableView registerNib:[UINib nibWithNibName:@"NewHotBlogTableViewCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"NewHotBlogTableViewCell" bundle:nil] forCellReuseIdentifier:ReuseIdentifier];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self sendNetworkingRequestWithRefresh:YES];
@@ -100,6 +96,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 #pragma mark - NetWorking
 
 -(void)sendNetworkingRequestWithRefresh:(BOOL)isRefresh{
+	
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
     
     NSInteger index = self.selectedBtn.tag;
@@ -127,11 +124,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
                 if (isRefresh) {
                     [self.tableView.mj_header endRefreshing];
                 } else {
-                    if (models.count < 1) {
-                        [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                    } else {
-                        [self.tableView.mj_footer endRefreshing];
-                    }
+					[self.tableView.mj_footer endRefreshing];
                 }
                 [self.tableView reloadData];
             });
@@ -159,7 +152,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     NSInteger currentIndex = self.selectedBtn.tag;
     NSArray* dataSource = self.dataModels[currentIndex];
     
-    NewHotBlogTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    NewHotBlogTableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ReuseIdentifier forIndexPath:indexPath];
     
     cell.contentView.backgroundColor = [UIColor newCellColor];
     cell.backgroundColor = [UIColor themeColor];
@@ -171,7 +164,7 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
     return cell;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [tableView fd_heightForCellWithIdentifier:reuseIdentifier configuration:^(NewHotBlogTableViewCell* cell) {
+    return [tableView fd_heightForCellWithIdentifier:ReuseIdentifier configuration:^(NewHotBlogTableViewCell* cell) {
         NSInteger currentIndex = self.selectedBtn.tag;
         NSArray* dataSource = self.dataModels[currentIndex];
         if (dataSource.count > indexPath.row) {
@@ -235,14 +228,14 @@ static NSString *reuseIdentifier = @"NewHotBlogTableViewCell";
 
 - (NSMutableArray *)tokens {
     if(_tokens == nil) {
-        _tokens = @[@"tokensPlaceholder",@"",@"",@"",@"",@""].mutableCopy;
+        _tokens = @[@"tokensPlaceholder",@"",@"",@""].mutableCopy;
     }
     return _tokens;
 }
 
 - (NSMutableArray *)dataModels {
     if(_dataModels == nil) {
-        _dataModels = @[@[@"dataModelsPlaceholder"],@[],@[],@[],@[],@[]].mutableCopy;
+        _dataModels = @[@[@"dataModelsPlaceholder"],@[],@[],@[]].mutableCopy;
     }
     return _dataModels;
 }

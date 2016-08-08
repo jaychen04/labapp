@@ -23,15 +23,13 @@
 
 static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
 
-//#define QUESTION_URL @"http://192.168.1.15:8000/action/apiv2/question"
 
 @interface QuesAnsViewController () <UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *buttons;
-
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (nonatomic,strong) UIButton* selectedBtn;
 
+@property (nonatomic,strong) UIButton* selectedBtn;
 @property (nonatomic,strong) NSMutableArray* dataModels;
 @property (nonatomic,strong) NSMutableArray* tokens;
 
@@ -64,8 +62,6 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     if(self.selectedBtn.tag == 0 ) {
         self.selectedBtn = _askQuesButton;
     }
-    
-    NSLog(@"button index %ld",self.selectedBtn.tag);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
@@ -151,11 +147,7 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
                 if (isRefresh) {
                     [self.tableView.mj_header endRefreshing];
                 } else {
-                    if (models.count < 1) {
-                        [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                    } else {
-                        [self.tableView.mj_footer endRefreshing];
-                    }
+					[self.tableView.mj_footer endRefreshing];
                 }
                 [self.tableView reloadData];
             });
