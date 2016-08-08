@@ -25,6 +25,10 @@
 - (void) loadLargeImageDidFinsh:(NewMultipleDetailCell* )multipleTweetCell
                  photoGroupView:(OSCPhotoGroupView* )groupView
                        fromView:(UIImageView* )fromView;
+
+- (void) shouldInteractTextView:(UITextView* )textView
+                            URL:(NSURL *)URL
+                        inRange:(NSRange)characterRange;
 @end
 
 

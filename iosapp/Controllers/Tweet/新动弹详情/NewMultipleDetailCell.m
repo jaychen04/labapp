@@ -18,7 +18,7 @@
 #import <SDWebImageDownloaderOperation.h>
 #import <Masonry.h>
 
-@interface NewMultipleDetailCell (){
+@interface NewMultipleDetailCell ()<UITextViewDelegate>{
     NSMutableArray* _imageViewsArray;   //二维数组 _imageViewsArray[line][row]
     
     NSMutableArray<NSString* >* _largerImageUrls;   //本地维护的大图数组
@@ -105,6 +105,7 @@
     descTextView.scrollEnabled = NO;
     [descTextView setTextContainerInset:UIEdgeInsetsZero];
     descTextView.textContainer.lineFragmentPadding = 0;
+    descTextView.delegate = self;
     _descTextView = descTextView;
     [self.contentView addSubview:_descTextView];
     
@@ -213,7 +214,7 @@
     }
     
     _nameLabel.text = model.author.name;
-    
+
     _descTextView.attributedText = [Utils contentStringFromRawString:model.content];
     
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:model.pubDate] timeAgoSinceNow]]];
@@ -346,8 +347,13 @@
         [_delegate loadLargeImageDidFinsh:self photoGroupView:photoGroup fromView:fromView];
     }
 }
-
-
+#pragma mark --- UITextView delegate 
+-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    if ([_delegate respondsToSelector:@selector(shouldInteractTextView:URL:inRange:)]) {
+        [_delegate shouldInteractTextView:textView URL:URL inRange:characterRange];
+    }
+    return NO;
+}
 
 #pragma mark --- retrieve && download image
 -(nullable UIImage *)retrieveMemoryAndDiskCache:(NSString* )imageKey{

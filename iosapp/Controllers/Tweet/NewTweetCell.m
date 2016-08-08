@@ -39,9 +39,10 @@
     _userPortrait = [UIImageView new];
     _userPortrait.contentMode = UIViewContentModeScaleAspectFit;
     _userPortrait.userInteractionEnabled = YES;
+    _userPortrait.layer.masksToBounds = YES;
     [_userPortrait setCornerRadius:22];
     [self.contentView addSubview:_userPortrait];
-    
+        
     _nameLabel = [UILabel new];
     _nameLabel.font = [UIFont boldSystemFontOfSize:15];
     _nameLabel.numberOfLines = 1;
