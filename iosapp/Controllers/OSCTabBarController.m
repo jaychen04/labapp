@@ -262,9 +262,7 @@
     CGSize buttonSize = CGSizeMake(self.tabBar.frame.size.width / 5 - 6, self.tabBar.frame.size.height - 4);
     
     _centerButton.frame = CGRectMake(origin.x - buttonSize.height/2, origin.y - buttonSize.height/2, buttonSize.height, buttonSize.height);
-    
-    [_centerButton setCornerRadius:buttonSize.height/2];
-//    [_centerButton setBackgroundColor:[UIColor colorWithHex:0x24a83d]];
+
     [_centerButton setImage:buttonImage forState:UIControlStateNormal];
     [_centerButton setImage:[UIImage imageNamed:@"ic_nav_add_actived"] forState:UIControlStateHighlighted];
     [_centerButton addTarget:self action:@selector(buttonPressed) forControlEvents:UIControlEventTouchUpInside];
