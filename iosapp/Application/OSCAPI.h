@@ -52,7 +52,7 @@
 #define OSCAPI_TWEET_TOPIC_LIST         @"tweet_topic_list"
 //新动弹接口
 #define OSCAPI_TWEET_LIKES              @"tweet_likes"      //点赞列表
-#define OSCAPI_TWEET_COMMENTS              @"tweet_comments"      //评论列表
+#define OSCAPI_TWEET_COMMENTS           @"tweet_comments"      //评论列表
 
 
 #define OSCAPI_ACTIVE_LIST              @"active_list"
