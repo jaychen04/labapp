@@ -544,6 +544,7 @@
 
 #pragma mark -- 上传动弹多图
 - (void)uploadTweetImages {
+    [_edittingArea resignFirstResponder];
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -558,6 +559,7 @@
     if (_uploadImgHub) {
         [_uploadImgHub showAnimated:YES];
     }
+    self.navigationItem.rightBarButtonItem.accessibilityElementsHidden = YES;
     UIImage *postImage = [_images objectAtIndex:_imageIndex];
     NSString *urlStr = [NSString stringWithFormat:@"%@resource_image", OSCAPI_V2_PREFIX ];
     NSDictionary *paramDic = @{@"token":_imageToken};
@@ -575,7 +577,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         }
     } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
         NSLog(@"message:%@",responseObject[@"message"]);
-    
+        _uploadImgHub = [Utils createHUD];
+        _uploadImgHub.label.text = @"动弹发送中";
+        
         if ([responseObject[@"code"]integerValue] == 1) {
             _imageIndex += 1;
             _imageToken = responseObject[@"result"][@"token"];
@@ -620,7 +624,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         HUD.removeFromSuperViewOnHide = NO;
     }
     NSString *urlStr = [NSString stringWithFormat:@"%@tweet", OSCAPI_V2_PREFIX];
-    NSDictionary *paramDic = @{@"content":[Utils convertRichTextToRawText:_edittingArea],
+    NSDictionary *paramDic = @{
+                               @"content":[Utils convertRichTextToRawText:_edittingArea],
                                @"images":_imageToken
                                };
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
@@ -639,23 +644,23 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
                         _uploadImgHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                         _uploadImgHub.label.text = @"动弹发送成功";
                     }
-                    [_uploadImgHub hideAnimated:YES afterDelay:1];
                 }else {     //文字动弹
                     HUD.mode = MBProgressHUDModeCustomView;
                     HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                     HUD.label.text = @"动弹发送成功";
-                    [HUD hideAnimated:YES afterDelay:1];
                 }
             }else {
                 if (isImgTweet) {
                     _uploadImgHub.label.text = responseObject[@"message"];
-                    [_uploadImgHub hideAnimated:YES afterDelay:1];
                 }else {
                     HUD.label.text = responseObject[@"message"];
-                    [HUD hideAnimated:YES afterDelay:1];
                 }
             }
             dispatch_async(dispatch_get_main_queue(), ^{
+                UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+                [MBProgressHUD hideAllHUDsForView:window animated:YES];
+                [_uploadImgHub hideAnimated:YES afterDelay:1];
+                [HUD hideAnimated:YES afterDelay:1];
                 [self dismissViewControllerAnimated:YES completion:nil];
             });
         }
@@ -693,10 +698,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         return;
     }
     
+    self.navigationItem.rightBarButtonItem.accessibilityElementsHidden = YES;
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.label.text = @"动弹发送中";
     HUD.removeFromSuperViewOnHide = NO;
-    [HUD hideAnimated:YES afterDelay:1];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
