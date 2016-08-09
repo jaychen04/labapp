@@ -267,6 +267,14 @@
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.clipsToBounds = YES;
             [_imagesView addSubview:imageView];
+//            imageTypeLogo
+#pragma TODO
+            UIImageView* imageTypeLogo = [UIImageView new];
+            imageTypeLogo.frame = (CGRect){{imageView.bounds.size.width - 18 - 2,imageView.bounds.size.height - 11 - 2 },{18,11}};
+            imageTypeLogo.userInteractionEnabled = NO;
+            imageTypeLogo.hidden = YES;
+            [imageView addSubview:imageTypeLogo];
+            
             [lineNodes addObject:imageView];
         }
         [_imageViewsArray addObject:lineNodes];
@@ -312,6 +320,9 @@
                     dispatch_async(dispatch_get_main_queue(), ^{
                         imageView.userInteractionEnabled = YES;
                         if ([imageData.thumb hasSuffix:@".gif"]) {
+                            UIImageView* imageTypeLogo = (UIImageView* )[[imageView subviews] lastObject];
+                            imageTypeLogo.image = [UIImage imageNamed:@"gif"];
+                            imageTypeLogo.hidden = NO;
                             NSData *dataImage = UIImagePNGRepresentation(image);
                             UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
                             [imageView setImage:gifImage];
@@ -323,6 +334,9 @@
             }else{
                 imageView.userInteractionEnabled = YES;
                 if ([imageData.thumb hasSuffix:@".gif"]) {
+                    UIImageView* imageTypeLogo = (UIImageView* )[[imageView subviews] lastObject];
+                    imageTypeLogo.image = [UIImage imageNamed:@"gif"];
+                    imageTypeLogo.hidden = NO;
                     NSData *dataImage = UIImagePNGRepresentation(image);
                     image = [UIImage sd_animatedGIFWithData:dataImage];
                 }
@@ -382,44 +396,5 @@
     }
     return NO;
 }
-
-#pragma mark --- retrieve && download image
-//-(nullable UIImage *)retrieveMemoryAndDiskCache:(NSString* )imageKey{
-//    UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageKey];
-//    if (!image) {
-//        image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKey];
-//        if (!image) {
-//            return nil;
-//        }else{
-//            return image;
-//        }
-//    }else{
-//        return image;
-//    }
-//}
-//-(void)downloadImageWithUrlString:(NSString* )url displayNode:(UIImageView* )node{
-//    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:url]
-//                                                        options:SDWebImageDownloaderUseNSURLCache
-//                                                       progress:nil
-//                                                      completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-//                                                          if (image) {
-//          [[SDImageCache sharedImageCache] storeImage:image forKey:url toDisk:YES];
-//          dispatch_async(dispatch_get_main_queue(), ^{
-//              node.userInteractionEnabled = YES;
-//              if ([url hasSuffix:@".gif"]) {
-//                  NSData *dataImage = UIImagePNGRepresentation(image);
-//                  UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
-//                  [node setImage:gifImage];
-//              }else{
-//                  [node setImage:image];
-//              }
-//              if ([_delegate respondsToSelector:@selector(assemblyMultipleTweetCellDidFinsh:)]) {
-//                  [_delegate assemblyMultipleTweetCellDidFinsh:self];
-//              }
-//          });
-//                                                          }
-//
-//                                                      }];
-//}
 
 @end

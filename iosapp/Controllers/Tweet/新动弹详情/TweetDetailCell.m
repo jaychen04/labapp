@@ -106,10 +106,9 @@
     }];
     
     [_imageTypeLogo mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.and.bottom.equalTo(_tweetImageView);
-#pragma TODO :: Setting GIF Logo
-        //        make.width.equalTo(@);
-        //        make.height.equalTo(@);
+        make.right.and.bottom.equalTo(_tweetImageView).with.offset(-2);
+        make.width.equalTo(@18);
+        make.height.equalTo(@11);
     }];
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -152,8 +151,7 @@
     if (_tweet.images.count == 1) {
         OSCTweetImages* imageData = [tweet.images lastObject];
         if ([imageData.thumb hasSuffix:@".gif"]) {
-#pragma TODO :: Setting GIF Logo
-            _imageTypeLogo.image = [UIImage imageNamed:@""];
+            _imageTypeLogo.image = [UIImage imageNamed:@"gif"];
             _imageTypeLogo.hidden = NO;
         }
         [_tweetImageView mas_updateConstraints:^(MASConstraintMaker *make) {

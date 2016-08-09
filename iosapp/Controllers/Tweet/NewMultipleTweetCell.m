@@ -309,9 +309,9 @@
             imageView.clipsToBounds = YES;
             [_imagesView addSubview:imageView];
 //            imageTypeLogo
-#pragma TODO :: GIF
+#pragma TODO
             UIImageView* imageTypeLogo = [UIImageView new];
-//            imageTypeLogo.frame = (CGRect){{}{}};
+            imageTypeLogo.frame = (CGRect){{imageView.bounds.size.width - 18 - 2,imageView.bounds.size.height - 11 - 2 },{18,11}};
             imageTypeLogo.userInteractionEnabled = NO;
             imageTypeLogo.hidden = YES;
             [imageView addSubview:imageTypeLogo];
@@ -358,9 +358,8 @@
             [_visibleImageViews addObject:imageView];
             UIImage* image = [self retrieveMemoryAndDiskCache:imageData.thumb];
             if ([imageData.thumb hasSuffix:@".gif"]) {
-#pragma TODO GIF
                 UIImageView* imageTypeLogo = (UIImageView* )[[imageView subviews] lastObject];
-                imageTypeLogo.image = [UIImage imageNamed:@""];
+                imageTypeLogo.image = [UIImage imageNamed:@"gif"];
                 imageTypeLogo.hidden = NO;
                 NSData *dataImage = UIImagePNGRepresentation(image);
                 image = [UIImage sd_animatedGIFWithData:dataImage];
