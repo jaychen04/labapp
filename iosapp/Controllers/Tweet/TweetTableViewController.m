@@ -22,6 +22,7 @@
 
 #import <UITableView+FDTemplateLayoutCell.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <UIImage+GIF.h>
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
 
@@ -374,6 +375,10 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
             cell.tweetImageView.hidden = NO;
             
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
+            if ([imageData.thumb hasSuffix:@".gif"]) {
+                NSData *dataImage = UIImagePNGRepresentation(image);
+                image = [UIImage sd_animatedGIFWithData:dataImage];
+            }
             if (!image) {
                 [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
                 [self downloadThumbnailImageThenReload:imageData.thumb];

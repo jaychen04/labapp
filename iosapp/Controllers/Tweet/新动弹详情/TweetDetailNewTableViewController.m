@@ -514,14 +514,14 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
             cell.tweetImageView.hidden = NO;
             OSCTweetImages* imageData = [_tweetDetail.images lastObject];
             UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
-//            if ([imageData.thumb hasSuffix:@".gif"]) {
-//                NSData *dataImage = UIImagePNGRepresentation(image);
-//                image = [UIImage sd_animatedGIFWithData:dataImage];
-//            }
             if (!image) {
                 [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
                 [self downloadThumbnailImageThenReload:imageData.thumb];
             } else {
+                if ([imageData.thumb hasSuffix:@".gif"]) {
+                    NSData *dataImage = UIImagePNGRepresentation(image);
+                    image = [UIImage sd_animatedGIFWithData:dataImage];
+                }
                 [cell.tweetImageView setImage:image];
             }
         }else{

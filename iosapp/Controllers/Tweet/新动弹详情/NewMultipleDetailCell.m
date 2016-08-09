@@ -12,10 +12,13 @@
 #import "UIColor+Util.h"
 #import "UIView+Util.h"
 #import "NSDate+Util.h"
+#import "UIImageView+RadiusHandle.h"
 #import "OSCPhotoGroupView.h"
+#import "ImageDownloadHandle.h"
 
 #import <SDWebImage/SDImageCache.h>
 #import <SDWebImageDownloaderOperation.h>
+#import <UIImage+GIF.h>
 #import <Masonry.h>
 
 @interface NewMultipleDetailCell ()<UITextViewDelegate>{
@@ -84,7 +87,7 @@
     userPortrait.userInteractionEnabled = YES;
     userPortrait.contentMode = UIViewContentModeScaleAspectFit;
     [userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userPortraitDidClickMethod:)]];
-    [userPortrait setCornerRadius:22];
+//    [userPortrait setCornerRadius:22];
     _userPortrait = userPortrait;
     [self.contentView addSubview:_userPortrait];
     
@@ -205,12 +208,22 @@
 }
 #pragma mrak --- 设置内容给子视图
 -(void)settingContentForSubViews:(OSCTweetItem* )model{
-    UIImage* portrait = [self retrieveMemoryAndDiskCache:model.author.portrait];
+    UIImage* portrait = [ImageDownloadHandle retrieveMemoryAndDiskCache:model.author.portrait];
     if (!portrait) {
         _userPortrait.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"loading"]];
-        [self downloadImageWithUrlString:model.author.portrait displayNode:_userPortrait];
+        [ImageDownloadHandle downloadImageWithUrlString:model.author.portrait SaveToDisk:NO completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _userPortrait.userInteractionEnabled = YES;
+                [_userPortrait setImage:image];
+                [_userPortrait addCorner:22];
+                if ([_delegate respondsToSelector:@selector(assemblyMultipleTweetCellDidFinsh:)]) {
+                    [_delegate assemblyMultipleTweetCellDidFinsh:self];
+                }
+            });
+        }];
     }else{
         [_userPortrait setImage:portrait];
+        [_userPortrait addCorner:22];
     }
     
     _nameLabel.text = model.author.name;
@@ -293,11 +306,26 @@
             imageView.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.6];
             imageView.hidden = NO;
             [_visibleImageViews addObject:imageView];
-            UIImage* image = [self retrieveMemoryAndDiskCache:imageData.href];
+            UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:imageData.thumb];
             if (!image) {
-                [self downloadImageWithUrlString:imageData.href displayNode:imageView];
+                [ImageDownloadHandle downloadImageWithUrlString:imageData.thumb SaveToDisk:NO completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        imageView.userInteractionEnabled = YES;
+                        if ([imageData.thumb hasSuffix:@".gif"]) {
+                            NSData *dataImage = UIImagePNGRepresentation(image);
+                            UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
+                            [imageView setImage:gifImage];
+                        }else{
+                            [imageView setImage:image];
+                        }
+                    });
+                }];
             }else{
                 imageView.userInteractionEnabled = YES;
+                if ([imageData.thumb hasSuffix:@".gif"]) {
+                    NSData *dataImage = UIImagePNGRepresentation(image);
+                    image = [UIImage sd_animatedGIFWithData:dataImage];
+                }
                 [imageView setImage:image];
             }
             dataIndex++;
@@ -356,34 +384,42 @@
 }
 
 #pragma mark --- retrieve && download image
--(nullable UIImage *)retrieveMemoryAndDiskCache:(NSString* )imageKey{
-    UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageKey];
-    if (!image) {
-        image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKey];
-        if (!image) {
-            return nil;
-        }else{
-            return image;
-        }
-    }else{
-        return image;
-    }
-}
--(void)downloadImageWithUrlString:(NSString* )url displayNode:(UIImageView* )node{
-    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:url]
-                                                        options:SDWebImageDownloaderUseNSURLCache
-                                                       progress:nil
-                                                      completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                                                          
-                                                          [[SDImageCache sharedImageCache] storeImage:image forKey:url toDisk:YES];
-                                                          dispatch_async(dispatch_get_main_queue(), ^{
-          node.userInteractionEnabled = YES;
-          [node setImage:image];
-          if ([_delegate respondsToSelector:@selector(assemblyMultipleTweetCellDidFinsh:)]) {
-              [_delegate assemblyMultipleTweetCellDidFinsh:self];
-          }
-                                                          });
-                                                      }];
-}
+//-(nullable UIImage *)retrieveMemoryAndDiskCache:(NSString* )imageKey{
+//    UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageKey];
+//    if (!image) {
+//        image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKey];
+//        if (!image) {
+//            return nil;
+//        }else{
+//            return image;
+//        }
+//    }else{
+//        return image;
+//    }
+//}
+//-(void)downloadImageWithUrlString:(NSString* )url displayNode:(UIImageView* )node{
+//    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:url]
+//                                                        options:SDWebImageDownloaderUseNSURLCache
+//                                                       progress:nil
+//                                                      completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+//                                                          if (image) {
+//          [[SDImageCache sharedImageCache] storeImage:image forKey:url toDisk:YES];
+//          dispatch_async(dispatch_get_main_queue(), ^{
+//              node.userInteractionEnabled = YES;
+//              if ([url hasSuffix:@".gif"]) {
+//                  NSData *dataImage = UIImagePNGRepresentation(image);
+//                  UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
+//                  [node setImage:gifImage];
+//              }else{
+//                  [node setImage:image];
+//              }
+//              if ([_delegate respondsToSelector:@selector(assemblyMultipleTweetCellDidFinsh:)]) {
+//                  [_delegate assemblyMultipleTweetCellDidFinsh:self];
+//              }
+//          });
+//                                                          }
+//
+//                                                      }];
+//}
 
 @end

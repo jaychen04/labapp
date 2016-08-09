@@ -12,7 +12,9 @@
 
 #import <Masonry.h>
 
-@implementation TweetDetailCell
+@implementation TweetDetailCell{
+    __weak UIImageView* _imageTypeLogo;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -50,10 +52,16 @@
     [self.contentView addSubview:_descTextView];
     
     _tweetImageView = [UIImageView new];
-//    _tweetImageView.contentMode = UIViewContentModeScaleAspectFit;
     _tweetImageView.clipsToBounds = YES;
     _tweetImageView.userInteractionEnabled = YES;
     [self.contentView addSubview:_tweetImageView];
+    
+//    imageTypeLogo
+    UIImageView* imageTypeLogo = [[UIImageView alloc]init];
+    _imageTypeLogo = imageTypeLogo;
+    _imageTypeLogo.userInteractionEnabled = NO;
+    _imageTypeLogo.hidden = YES;
+    [_tweetImageView addSubview:_imageTypeLogo];
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:12];
@@ -95,7 +103,13 @@
     [_tweetImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(16);
         make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
-//        make.right.equalTo(self.contentView).with.offset(-16);
+    }];
+    
+    [_imageTypeLogo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.and.bottom.equalTo(_tweetImageView);
+#pragma TODO :: Setting GIF Logo
+        //        make.width.equalTo(@);
+        //        make.height.equalTo(@);
     }];
     
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -136,6 +150,12 @@
     _tweet = tweet;
     
     if (_tweet.images.count == 1) {
+        OSCTweetImages* imageData = [tweet.images lastObject];
+        if ([imageData.thumb hasSuffix:@".gif"]) {
+#pragma TODO :: Setting GIF Logo
+            _imageTypeLogo.image = [UIImage imageNamed:@""];
+            _imageTypeLogo.hidden = NO;
+        }
         [_tweetImageView mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
         }];

@@ -9,11 +9,14 @@
 #import "NewTweetCell.h"
 #import "Utils.h"
 #import "OSCTweetItem.h"
+#import "ImageDownloadHandle.h"
 
 #import <Masonry.h>
+#import "UIImageView+RadiusHandle.h"
 
 @implementation NewTweetCell{
     __weak UIView* _colorLine;
+    __weak UIImageView* _imageTypeLogo;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -39,8 +42,6 @@
     _userPortrait = [UIImageView new];
     _userPortrait.contentMode = UIViewContentModeScaleAspectFit;
     _userPortrait.userInteractionEnabled = YES;
-    _userPortrait.layer.masksToBounds = YES;
-    [_userPortrait setCornerRadius:22];
     [self.contentView addSubview:_userPortrait];
         
     _nameLabel = [UILabel new];
@@ -59,6 +60,13 @@
     _tweetImageView.userInteractionEnabled = YES;
     _tweetImageView.hidden = YES;
     [self.contentView addSubview:_tweetImageView];
+    
+//    imageTypeLogo
+    UIImageView* imageTypeLogo = [[UIImageView alloc]init];
+    _imageTypeLogo = imageTypeLogo;
+    _imageTypeLogo.userInteractionEnabled = NO;
+    _imageTypeLogo.hidden = YES;
+    [_tweetImageView addSubview:_imageTypeLogo];
     
     _timeLabel = [UILabel new];
     _timeLabel.font = [UIFont systemFontOfSize:12];
@@ -119,6 +127,13 @@
         make.top.equalTo(_descTextView.mas_bottom).with.offset(8);
     }];
     
+    [_imageTypeLogo mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.and.bottom.equalTo(_tweetImageView);
+#pragma TODO :: Setting GIF Logo
+//        make.width.equalTo(@);
+//        make.height.equalTo(@);
+    }];
+    
     [_timeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView).with.offset(69);
         make.top.equalTo(_tweetImageView.mas_bottom).with.offset(6);
@@ -172,7 +187,21 @@
 
 #pragma mark - set Tweet
 - (void)setTweet:(OSCTweetItem *)model{
-    [_userPortrait loadPortrait:[NSURL URLWithString:model.author.portrait]];
+    UIImage* portrait = [ImageDownloadHandle retrieveMemoryAndDiskCache:model.author.portrait];
+    if (!portrait) {
+        _userPortrait.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"loading"]];
+        [ImageDownloadHandle downloadImageWithUrlString:model.author.portrait SaveToDisk:NO completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _userPortrait.userInteractionEnabled = YES;
+                [_userPortrait setImage:image];
+                [_userPortrait addCorner:22];
+            });
+        }];
+    }else{
+        [_userPortrait setImage:portrait];
+        [_userPortrait addCorner:22];
+    }
+    
     _nameLabel.text = model.author.name;
     _descTextView.attributedText = [Utils contentStringFromRawString:model.content];
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:model.pubDate] timeAgoSinceNow]]];
@@ -191,14 +220,16 @@
     
     
     if (model.images.count == 1) {
-//        _tweetImageView.hidden = NO;
-//        OSCTweetImages* imageData = [model.images lastObject];
-//        [_tweetImageView loadPortrait:[NSURL URLWithString:imageData.thumb]];
+        OSCTweetImages* imageData = [model.images lastObject];
+        if ([imageData.thumb hasSuffix:@".gif"]) {
+#pragma TODO :: Setting GIF Logo
+            _imageTypeLogo.image = [UIImage imageNamed:@""];
+            _imageTypeLogo.hidden = NO;
+        }
         [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_tweetImageView.mas_bottom).with.offset(6);
         }];
     } else {
-//        _tweetImageView.hidden = YES;
         [_timeLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_tweetImageView.mas_bottom).with.offset(0);
         }];
@@ -236,6 +267,8 @@
     _tweetImageView.hidden = YES;
     _tweetImageView.image = nil;
     _descTextView.text = @" ";
+    _imageTypeLogo.image = nil;
+    _imageTypeLogo.hidden = YES;
 }
 
 @end
