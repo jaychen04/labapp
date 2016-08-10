@@ -161,10 +161,10 @@
     CAGradientLayer *layer = [CAGradientLayer new];
     layer.colors = @[
                      (__bridge id)[UIColor colorWithHex:0x000000 alpha:0.0].CGColor,
-                     (__bridge id)[UIColor colorWithHex:0x000000 alpha:0.5].CGColor,
+                     (__bridge id)[UIColor colorWithHex:0x000000 alpha:0.35].CGColor,
                      ];
     layer.startPoint = CGPointMake(0, 0);
-    layer.endPoint = CGPointMake(0, 0.5);
+    layer.endPoint = CGPointMake(0, 0.7);
     layer.frame = bottomView.bounds;
     
     [bottomView.layer addSublayer:layer];
