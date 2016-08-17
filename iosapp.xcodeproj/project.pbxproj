@@ -292,7 +292,6 @@
 		EE0DA3951D23D60200DD2C13 /* TranslationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE0DA3931D23D60200DD2C13 /* TranslationViewController.m */; };
 		EE0DA3961D23D60200DD2C13 /* TranslationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
-		EE2794C41D6317C90048A484 /* HomePageHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE2794C31D6317C90048A484 /* HomePageHeadView.m */; };
 		EE53F74F1D0048C800083D9D /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */; };
 		EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */; };
 		EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */; };
@@ -317,7 +316,6 @@
 		EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C4051D127CE6000FE427 /* QuesAnsDetailViewController.xib */; };
 		EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */; };
 		EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */; };
-		EE9B40E31D64480100AD2C99 /* OSCNewUser.m in Sources */ = {isa = PBXBuildFile; fileRef = EE9B40E21D64480100AD2C99 /* OSCNewUser.m */; };
 		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
 		EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */; };
 		EEB3D7AA1D13A86200164EF5 /* CommentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB3D7A81D13A86200164EF5 /* CommentDetailViewController.xib */; };
@@ -889,8 +887,6 @@
 		EE0DA3941D23D60200DD2C13 /* TranslationViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TranslationViewController.xib; sourceTree = "<group>"; };
 		EE2023291CFBE675002756E4 /* ActivityHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityHeadView.h; sourceTree = "<group>"; };
 		EE20232A1CFBE675002756E4 /* ActivityHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityHeadView.m; sourceTree = "<group>"; };
-		EE2794C21D6317C90048A484 /* HomePageHeadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomePageHeadView.h; sourceTree = "<group>"; };
-		EE2794C31D6317C90048A484 /* HomePageHeadView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomePageHeadView.m; sourceTree = "<group>"; };
 		EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewHotBlogTableViewCell.xib; sourceTree = "<group>"; };
 		EE603E031D3C75A700DA7F31 /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsDetailViewController.h; path = iosapp/Controllers/News/NewsDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsDetailViewController.m; path = iosapp/Controllers/News/NewsDetailViewController.m; sourceTree = SOURCE_ROOT; };
@@ -934,8 +930,6 @@
 		EE88C4081D128138000FE427 /* QuesAnsDetailHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsDetailHeadCell.h; path = Questions/QuesAnsDetailHeadCell.h; sourceTree = "<group>"; };
 		EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsDetailHeadCell.m; path = Questions/QuesAnsDetailHeadCell.m; sourceTree = "<group>"; };
 		EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsDetailHeadCell.xib; path = Questions/QuesAnsDetailHeadCell.xib; sourceTree = "<group>"; };
-		EE9B40E11D64480100AD2C99 /* OSCNewUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewUser.h; sourceTree = "<group>"; };
-		EE9B40E21D64480100AD2C99 /* OSCNewUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewUser.m; sourceTree = "<group>"; };
 		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
 		EEB3D7A61D13A86200164EF5 /* CommentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentDetailViewController.h; path = Questions/CommentDetailViewController.h; sourceTree = "<group>"; };
 		EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentDetailViewController.m; path = Questions/CommentDetailViewController.m; sourceTree = "<group>"; };
@@ -1883,8 +1877,6 @@
 		38BD3D151A37FD1500682D1F /* 我 */ = {
 			isa = PBXGroup;
 			children = (
-				EE2794C21D6317C90048A484 /* HomePageHeadView.h */,
-				EE2794C31D6317C90048A484 /* HomePageHeadView.m */,
 				EEFF2FF81D361D2E0076CFF4 /* HomeButtonCell.h */,
 				EEFF2FF91D361D2E0076CFF4 /* HomeButtonCell.m */,
 				EEFF2FFA1D361D2E0076CFF4 /* HomeButtonCell.xib */,
@@ -2098,8 +2090,6 @@
 			children = (
 				3860395F1A09C5A1007C9B88 /* OSCUser.h */,
 				386039601A09C5A1007C9B88 /* OSCUser.m */,
-				EE9B40E11D64480100AD2C99 /* OSCNewUser.h */,
-				EE9B40E21D64480100AD2C99 /* OSCNewUser.m */,
 				31F14FEB1D42205700AD0763 /* OSCUserItem.h */,
 				31F14FEC1D42205700AD0763 /* OSCUserItem.m */,
 			);
@@ -2468,7 +2458,6 @@
 				00D6BCD819EB673200E8754E /* Resources */,
 				C8C815620688FAE2D386D6B8 /* [CP] Copy Pods Resources */,
 				65FB3FE0826CA3EDEA75FB1B /* [CP] Embed Pods Frameworks */,
-				4CCA69F891D14612DFEA47CB /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2605,21 +2594,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		4CCA69F891D14612DFEA47CB /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		65FB3FE0826CA3EDEA75FB1B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2703,7 +2677,6 @@
 				380FD21D1A74DFCE003C4021 /* ActivitiesViewController.m in Sources */,
 				381EAB5C19FE25DF00C1937C /* OSCPost.m in Sources */,
 				386039641A0A179A007C9B88 /* UserDetailsViewController.m in Sources */,
-				EE9B40E31D64480100AD2C99 /* OSCNewUser.m in Sources */,
 				3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */,
 				EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */,
 				EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */,
@@ -2880,7 +2853,6 @@
 				38590C201A1341BB008E2CFA /* ImageViewerController.m in Sources */,
 				00D6BCE019EB673200E8754E /* main.m in Sources */,
 				38BC59901A5D214E00F3C4D2 /* PeopleTableViewController.m in Sources */,
-				EE2794C41D6317C90048A484 /* HomePageHeadView.m in Sources */,
 				EEE241B01CFD6ECC0088FFB3 /* ActivityHeadCell.m in Sources */,
 				EE88C4061D127CE6000FE427 /* QuesAnsDetailViewController.m in Sources */,
 				0422BC5B1CEDA390007DB140 /* SDCycleScrollView.m in Sources */,

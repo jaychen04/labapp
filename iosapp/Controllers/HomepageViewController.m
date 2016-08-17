@@ -29,8 +29,6 @@
 #import "UIScrollView+ScalableCover.h"
 #import "UIFont+FontAwesome.h"
 #import "NSString+FontAwesome.h"
-#import "HomePageHeadView.h"
-#import "ImageViewerController.h"
 
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -38,9 +36,12 @@
 
 static NSString *reuseIdentifier = @"HomeButtonCell";
 
+@interface HomepageViewController ()
 
-#define screen_height [UIScreen mainScreen].bounds.size.height - 108
-@interface HomepageViewController ()<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIAlertViewDelegate>
+@property (nonatomic, weak) IBOutlet UIImageView *portrait;
+@property (weak, nonatomic) IBOutlet UIImageView *genderImageView;
+@property (nonatomic, weak) IBOutlet UIButton *QRCodeButton;
+@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 
 @property (nonatomic, strong) UIImageView *myQRCodeImageView;
 
@@ -51,11 +52,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 @property (nonatomic, assign) int badgeValue;
 
 @property (nonatomic, strong) UIImageView * imageView;
-
-@property (nonatomic, strong) UIImage *image;
-
-@property (nonatomic, strong) HomePageHeadView *homePageHeadView;
-
 
 @end
 
@@ -89,29 +85,17 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     [super viewWillAppear:animated];
     _imageView.hidden = YES;
-    
-    self.tableView.tableHeaderView = self.homePageHeadView;
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor clearColor]];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.homePageHeadView.genderImageView.hidden = YES;
+    _genderImageView.hidden = YES;
     
      _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
-    self.tableView.tableHeaderView = self.homePageHeadView;
-    self.tableView.bounces = NO;
-    
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
 
@@ -121,9 +105,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [self refreshHeaderView];
     
     [self refresh];
-    
-    [self.homePageHeadView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
-    self.homePageHeadView.userInteractionEnabled = YES;
 }
 
 - (void)dealloc
@@ -169,11 +150,11 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                  _myProfile = [[OSCUser alloc] initWithXML:userXML];
                  
                  if ([_myProfile.gender isEqualToString:@"1"]) {
-                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
-                     self.homePageHeadView.genderImageView.hidden = NO;
+                     [_genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
+                     _genderImageView.hidden = NO;
                  } else if ([_myProfile.gender isEqualToString:@"2"]) {
-                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
-                     self.homePageHeadView.genderImageView.hidden = NO;
+                     [_genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
+                     _genderImageView.hidden = NO;
                  }
                  
                  [Config updateProfile:_myProfile];
@@ -193,203 +174,58 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                  
                  [self.refreshControl endRefreshing];
              }];
-        
-        
-        //新用户信息接口
-        /*
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
-        
-        NSString *strUrl = [NSString stringWithFormat:@"%@user_me", OSCAPI_V2_PREFIX];
-        
-        [manager GET:strUrl
-          parameters:nil
-             success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-                 //
-                 NSDictionary* result = responseObject[@"result"];
-                 NSLog(@"result = %@", result);
-             } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-                 //
-                 NSLog(@"error= %@", error);
-        }];
-        */
     }
 }
 
-#pragma mark - refresh header
 
-- (void)refreshHeaderView
+
+
+
+- (void)pushFavoriteSVC
 {
-    _myProfile = [Config myProfile];
+    SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
+                                                                            andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
+                                                                          andControllers:@[
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
+                                                                                           ]];
+    favoritesSVC.hidesBottomBarWhenPushed = YES;
     
-    _isLogin = _myID != 0;
-    
-    if (_isLogin) {
-        [self.homePageHeadView.userPortrait sd_setImageWithURL:_myProfile.portraitURL
-                     placeholderImage:[UIImage imageNamed:@"default-portrait"]
-                              options:SDWebImageContinueInBackground | SDWebImageHandleCookies
-                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                                if (!image) {return;}
-                                [[NSNotificationCenter defaultCenter] postNotificationName:@"TweetUserUpdate" object:@(YES)];
-                            }];
-        self.homePageHeadView.descLable.hidden = NO;
-        self.homePageHeadView.creditLabel.hidden = NO;
-        self.homePageHeadView.creditLabel.text = [NSString stringWithFormat:@"积分:%d", _myProfile.score];
-        
-    } else {
-        
-        self.homePageHeadView.userPortrait.image = [UIImage imageNamed:@"default-portrait"];
-        self.homePageHeadView.descLable.hidden = YES;
-        self.homePageHeadView.creditLabel.hidden = YES;
-    }
-    
-    self.homePageHeadView.nameLabel.text = _isLogin ? _myProfile.name : @"点击头像登录";
-
+    [self.navigationController pushViewController:favoritesSVC animated:YES];
 }
+
+- (void)pushFriendsSVC:(UIButton *)button
+{
+    if (button.tag == 1) {
+        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1];
+        friendVC.title = @"关注";
+        friendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:friendVC animated:YES];
+    } else {
+        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0];
+        friendVC.title = @"粉丝";
+        friendVC.hidesBottomBarWhenPushed = YES;
+        [self.navigationController pushViewController:friendVC animated:YES];
+    }
+}
+
 
 
 #pragma mark - customize subviews
 
 - (void)setUpSubviews
 {
-    [self.homePageHeadView.userPortrait setBorderWidth:2.0 andColor:[UIColor whiteColor]];
-    [self.homePageHeadView.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changePortraitAction)]];
+    [_portrait setBorderWidth:2.0 andColor:[UIColor whiteColor]];
+    [_portrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
     
+    [self setCoverImage];
     self.refreshControl.tintColor = [UIColor refreshControlColor];
 }
 
-- (void)changePortraitAction
-{
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择操作" message:nil delegate:self
-                                              cancelButtonTitle:@"取消" otherButtonTitles:@"更换头像", @"查看大头像", nil];
-    alertView.tag = 1;
-    
-    [alertView show];
-}
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == alertView.cancelButtonIndex) {return;}
-    
-    if (alertView.tag == 1)
-    {
-        if (buttonIndex == alertView.cancelButtonIndex) {
-            return;
-        } else if (buttonIndex == 1){
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择图片" message:nil delegate:self
-                                                      cancelButtonTitle:@"取消" otherButtonTitles:@"相机", @"相册", nil];
-            alertView.tag = 2;
-            
-            [alertView show];
-            
-        } else {
-            
-            NSString *str = [NSString stringWithFormat:@"%@", _myProfile.portraitURL];
-            
-            if (str.length == 0) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"尚未设置头像" message:nil delegate:self
-                                                          cancelButtonTitle:@"知道了" otherButtonTitles: nil];
-                [alertView show];
-                return ;
-            }
-            
-            NSArray *array1 = [str componentsSeparatedByString:@"_"];
-            
-            NSArray *array2 = [array1[1] componentsSeparatedByString:@"."];
-            
-            NSString *bigPortraitURL = [NSString stringWithFormat:@"%@_200.%@", array1[0], array2[1]];
-            
-            ImageViewerController *imgViewweVC = [[ImageViewerController alloc] initWithImageURL:[NSURL URLWithString:bigPortraitURL]];
-            
-            [self presentViewController:imgViewweVC animated:YES completion:nil];
-        }
-        
-    } else {
-        if (buttonIndex == 1) {
-            if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                                    message:@"Device has no camera"
-                                                                   delegate:nil
-                                                          cancelButtonTitle:@"OK"
-                                                          otherButtonTitles: nil];
-                
-                [alertView show];
-            } else {
-                UIImagePickerController *imagePickerController = [UIImagePickerController new];
-                imagePickerController.delegate = self;
-                imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
-                imagePickerController.allowsEditing = YES;
-                imagePickerController.showsCameraControls = YES;
-                imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-                imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
-                
-                [self presentViewController:imagePickerController animated:YES completion:nil];
-            }
-            
-            
-        } else {
-            UIImagePickerController *imagePickerController = [UIImagePickerController new];
-            imagePickerController.delegate = self;
-            imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            imagePickerController.allowsEditing = YES;
-            imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
-            
-            [self presentViewController:imagePickerController animated:YES completion:nil];
-        }
-    }
-}
-
-- (void)updatePortrait
-{
-    MBProgressHUD *HUD = [Utils createHUD];
-    HUD.label.text = @"正在上传头像";
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-    
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USERINFO_UPDATE] parameters:@{@"uid":@([Config getOwnID])}
-constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-    if (_image) {
-        [formData appendPartWithFileData:[Utils compressImage:_image] name:@"portrait" fileName:@"img.jpg" mimeType:@"image/jpeg"];
-    }
-} success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
-    ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
-    int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-    NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-    
-    HUD.mode = MBProgressHUDModeCustomView;
-    if (errorCode) {
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-        HUD.label.text = @"头像更新成功";
-        
-        HomepageViewController *homepageVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-        [homepageVC refresh];
-        
-        self.homePageHeadView.userPortrait.image = _image;
-    } else {
-        //            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        HUD.label.text = errorMessage;
-    }
-    [HUD hideAnimated:YES afterDelay:1];
-    
-} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    HUD.mode = MBProgressHUDModeCustomView;
-    //        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-    HUD.label.text = @"网络异常，头像更换失败";
-    
-    [HUD hideAnimated:YES afterDelay:1];
-}];
-}
-
-
-#pragma mark - UIImagePickerController
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    _image = info[UIImagePickerControllerEditedImage];
-    
-    [picker dismissViewControllerAnimated:YES completion:^ {
-        [self updatePortrait];
-    }];
-}
 
 - (void)tapPortraitAction
 {
@@ -413,20 +249,76 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 }
 
 
+#pragma mark - refresh header
+
+- (void)refreshHeaderView
+{
+    _myProfile = [Config myProfile];
+    
+    _isLogin = _myID != 0;
+    
+    if (_isLogin) {
+        [_portrait sd_setImageWithURL:_myProfile.portraitURL
+                     placeholderImage:[UIImage imageNamed:@"default-portrait"]
+                              options:SDWebImageContinueInBackground | SDWebImageHandleCookies
+                            completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                if (!image) {return;}
+                                [[NSNotificationCenter defaultCenter] postNotificationName:@"TweetUserUpdate" object:@(YES)];
+                            }];
+        
+        [_QRCodeButton addTarget:self action:@selector(showQRCode) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        
+        _portrait.image = [UIImage imageNamed:@"default-portrait"];
+    }
+    
+    _nameLabel.text = _isLogin ? _myProfile.name : @"点击头像登录";
+    
+    [self setCoverImage];
+    
+    _QRCodeButton.hidden = !_isLogin;
+}
+
+
+- (void)setCoverImage
+{
+    NSString *imageName = @"bg_my";
+    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
+        imageName = @"bg_my_dark";
+    }
+    
+    if (!self.tableView.scalableCover) {
+        [self.tableView addScalableCoverWithImage:[UIImage imageNamed:imageName]];
+    } else {
+        self.tableView.scalableCover.image = [UIImage imageNamed:imageName];
+    }
+}
+
+
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if (!_isLogin) {
-        return 1;
-    } else {
         return 2;
+    } else {
+        return 3;
     }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (!_isLogin) {
-        return 4;
+        switch (section) {
+            case 0:
+                return 4;
+                break;
+            case 1:
+                return 1;
+                break;
+                
+            default:
+                break;
+        }
     } else {
         switch (section) {
             case 0:
@@ -435,12 +327,15 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             case 1:
                 return 4;
                 break;
+            case 2:
+                return 1;
+                break;
                 
             default:
                 break;
         }
     }
-    return 0;
+        return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -460,16 +355,22 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 {
     if (!_isLogin) {
         UITableViewCell *cell = [UITableViewCell new];
-        
+
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         UIView *selectedBackground = [UIView new];
         selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
         [cell setSelectedBackgroundView:selectedBackground];
         
-        cell.backgroundColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor whiteColor];//colorWithHex:0xF9F9F9
         
-        cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的活动", @"我的团队"][indexPath.row];
-        cell.imageView.image = [UIImage imageNamed:@[@"ic_my_messege", @"ic_my_blog", @"ic_my_event", @"ic_my_team"][indexPath.row]];
+        if (indexPath.section == 0) {
+            cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的活动", @"我的团队"][indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:@[@"ic_my_messege", @"ic_my_blog", @"ic_my_event", @"ic_my_team"][indexPath.row]];
+        } else {
+            cell.textLabel.text = @[@"设置"][indexPath.row];
+            cell.imageView.image = [UIImage imageNamed:@[@"ic_my_setting"][indexPath.row]];
+            
+        }
         
         
         cell.textLabel.textColor = [UIColor titleColor];
@@ -503,7 +404,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             HomeButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
             buttonCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"0"] forState:UIControlStateNormal];//动弹数
+            [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.score)] forState:UIControlStateNormal];
             [buttonCell.collectionButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
             [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
             [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
@@ -521,7 +422,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         } else {
             
             UITableViewCell *cell = [UITableViewCell new];
-        
+            //        cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             UIView *selectedBackground = [UIView new];
             selectedBackground.backgroundColor = [UIColor colorWithHex:0xF5FFFA];
@@ -529,8 +430,15 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
             cell.backgroundColor = [UIColor whiteColor];//colorWithHex:0xF9F9F9
             
-            cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的活动", @"我的团队"][indexPath.row];
-            cell.imageView.image = [UIImage imageNamed:@[@"ic_my_messege", @"ic_my_blog", @"ic_my_event", @"ic_my_team"][indexPath.row]];
+            if (indexPath.section == 1) {
+                cell.textLabel.text = @[@"我的消息", @"我的博客", @"我的活动", @"我的团队"][indexPath.row];
+                cell.imageView.image = [UIImage imageNamed:@[@"ic_my_messege", @"ic_my_blog", @"ic_my_event", @"ic_my_team"][indexPath.row]];
+            } else {
+                cell.textLabel.text = @[@"设置"][indexPath.row];
+                cell.imageView.image = [UIImage imageNamed:@[@"ic_my_setting"][indexPath.row]];
+                
+            }
+            
             
             cell.textLabel.textColor = [UIColor titleColor];
             
@@ -570,101 +478,147 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (!_isLogin) {
-        if ([Config getOwnID] == 0) {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            [self.navigationController pushViewController:loginVC animated:YES];
-            return;
-        }
-        
-        if (indexPath.section == 0) {
-            switch (indexPath.row) {
-                case 0: {
-                    _badgeValue = 0;
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                    });
-                    self.navigationController.tabBarItem.badgeValue = nil;
-                    
-                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
-                    messageCenterVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:messageCenterVC animated:YES];
-                    
-                    break;
+        if (indexPath.section == 1 && indexPath.row == 0) {
+            SettingsPage *settingPage = [SettingsPage new];
+            settingPage.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:settingPage animated:YES];
+        } else {
+            if ([Config getOwnID] == 0) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                [self.navigationController pushViewController:loginVC animated:YES];
+                return;
+            }
+            
+            if (indexPath.section == 0) {
+                switch (indexPath.row) {
+                    case 0: {
+                        _badgeValue = 0;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        });
+                        self.navigationController.tabBarItem.badgeValue = nil;
+                        
+                        MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+                        messageCenterVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:messageCenterVC animated:YES];
+                        
+                        break;
+                    }
+                    case 1: {
+                        MyBlogsViewController *blogsVC = [[MyBlogsViewController alloc] initWithUserID:_myID];
+                        blogsVC.navigationItem.title = @"我的博客";
+                        blogsVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:blogsVC animated:YES];
+                        break;
+                    }
+                    case 2: {
+                        ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
+                        myActivitiesVc.navigationItem.title = @"我的活动";
+                        myActivitiesVc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:myActivitiesVc animated:YES];
+                        break;
+                    }
+                    case 3: {
+                        TeamCenter *teamCenter = [TeamCenter new];
+                        teamCenter.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:teamCenter animated:YES];
+                        
+                        break;
+                    }
+                    default: break;
                 }
-                case 1: {
-                    MyBlogsViewController *blogsVC = [[MyBlogsViewController alloc] initWithUserID:(NSInteger)_myID];
-                    blogsVC.navigationItem.title = @"我的博客";
-                    blogsVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:blogsVC animated:YES];
-                    break;
-                }
-                case 2: {
-                    ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
-                    myActivitiesVc.navigationItem.title = @"我的活动";
-                    myActivitiesVc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:myActivitiesVc animated:YES];
-                    break;
-                }
-                case 3: {
-                    TeamCenter *teamCenter = [TeamCenter new];
-                    teamCenter.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:teamCenter animated:YES];
-                    
-                    break;
-                }
-                default: break;
             }
         }
     } else {
-        if ([Config getOwnID] == 0) {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-            [self.navigationController pushViewController:loginVC animated:YES];
-            return;
-        }
-        
-        if (indexPath.section == 1) {
-            switch (indexPath.row) {
-                case 0: {
-                    _badgeValue = 0;
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                    });
-                    self.navigationController.tabBarItem.badgeValue = nil;
-                    
-                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
-                    messageCenterVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:messageCenterVC animated:YES];
-                    
-                    break;
+        if (indexPath.section == 2 && indexPath.row == 0) {
+            SettingsPage *settingPage = [SettingsPage new];
+            settingPage.hidesBottomBarWhenPushed = YES;
+            [self.navigationController pushViewController:settingPage animated:YES];
+        } else {
+            if ([Config getOwnID] == 0) {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+                LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+                [self.navigationController pushViewController:loginVC animated:YES];
+                return;
+            }
+            
+            if (indexPath.section == 1) {
+                switch (indexPath.row) {
+                    case 0: {
+                        _badgeValue = 0;
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        });
+                        self.navigationController.tabBarItem.badgeValue = nil;
+                        
+                        MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+                        messageCenterVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:messageCenterVC animated:YES];
+                        
+                        break;
+                    }
+                    case 1: {
+                        MyBlogsViewController *blogsVC = [[MyBlogsViewController alloc] initWithUserID:_myID];
+                        blogsVC.navigationItem.title = @"我的博客";
+                        blogsVC.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:blogsVC animated:YES];
+                        break;
+                    }
+                    case 2: {
+                        ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
+                        myActivitiesVc.navigationItem.title = @"我的活动";
+                        myActivitiesVc.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:myActivitiesVc animated:YES];
+                        break;
+                    }
+                    case 3: {
+                        TeamCenter *teamCenter = [TeamCenter new];
+                        teamCenter.hidesBottomBarWhenPushed = YES;
+                        [self.navigationController pushViewController:teamCenter animated:YES];
+                        
+                        break;
+                    }
+                    default: break;
                 }
-                case 1: {
-                    MyBlogsViewController *blogsVC = [[MyBlogsViewController alloc] initWithUserID:(NSInteger)_myID];
-                    blogsVC.navigationItem.title = @"我的博客";
-                    blogsVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:blogsVC animated:YES];
-                    break;
-                }
-                case 2: {
-                    ActivitiesViewController *myActivitiesVc = [[ActivitiesViewController alloc] initWithUID:[Config getOwnID]];
-                    myActivitiesVc.navigationItem.title = @"我的活动";
-                    myActivitiesVc.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:myActivitiesVc animated:YES];
-                    break;
-                }
-                case 3: {
-                    TeamCenter *teamCenter = [TeamCenter new];
-                    teamCenter.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:teamCenter animated:YES];
-                    
-                    break;
-                }
-                default: break;
             }
         }
     }
+    
+    
 }
+
+
+#pragma mark - 二维码相关
+
+- (void)showQRCode
+{
+    MBProgressHUD *HUD = [Utils createHUD];
+    HUD.mode = MBProgressHUDModeCustomView;
+    HUD.customView.backgroundColor = [UIColor whiteColor];
+    
+    HUD.label.text = @"扫一扫上面的二维码，加我为好友";
+    HUD.label.font = [UIFont systemFontOfSize:13];
+    HUD.label.textColor = [UIColor grayColor];
+    HUD.customView = self.myQRCodeImageView;
+    [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHUD:)]];
+}
+
+- (void)hideHUD:(UIGestureRecognizer *)recognizer
+{
+    [(MBProgressHUD *)recognizer.view hideAnimated:YES];
+}
+
+- (UIImageView *)myQRCodeImageView
+{
+    if (!_myQRCodeImageView) {
+        UIImage *myQRCode = [Utils createQRCodeFromString:[NSString stringWithFormat:@"http://my.oschina.net/u/%llu", [Config getOwnID]]];
+        _myQRCodeImageView = [[UIImageView alloc] initWithImage:myQRCode];
+    }
+    
+    return _myQRCodeImageView;
+}
+
 
 #pragma mark - 处理通知
 
@@ -703,94 +657,15 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     });
 }
 
-#pragma mark - 功能
-- (void)pushFavoriteSVC
-{
-    SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
-                                                                            andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
-                                                                          andControllers:@[
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
-                                                                                           ]];
-    favoritesSVC.hidesBottomBarWhenPushed = YES;
-    
-    [self.navigationController pushViewController:favoritesSVC animated:YES];
-}
 
-- (void)pushFriendsSVC:(UIButton *)button
-{
-    if (button.tag == 1) {
-        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1];
-        friendVC.title = @"关注";
-        friendVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:friendVC animated:YES];
-    } else {
-        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0];
-        friendVC.title = @"粉丝";
-        friendVC.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:friendVC animated:YES];
-    }
-}
+/*
+#pragma mark - Navigation
 
-#pragma mark - setup
-- (IBAction)setUpAction:(UIBarButtonItem *)sender {
-    SettingsPage *settingPage = [SettingsPage new];
-    settingPage.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:settingPage animated:YES];
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
 }
-
-#pragma mark - 二维码相关
-- (IBAction)showCodeAction:(UIBarButtonItem *)sender {
-    
-    if ([Config getOwnID] == 0) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
-        LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [self.navigationController pushViewController:loginVC animated:YES];
-        return;
-    } else {
-        MBProgressHUD *HUD = [Utils createHUD];
-        HUD.mode = MBProgressHUDModeCustomView;
-        HUD.customView.backgroundColor = [UIColor whiteColor];
-
-        HUD.label.text = @"扫一扫上面的二维码，加我为好友";
-        HUD.label.font = [UIFont systemFontOfSize:13];
-        HUD.label.textColor = [UIColor grayColor];
-        HUD.customView = self.myQRCodeImageView;
-        [HUD addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideHUD:)]];
-    }
-}
-
-- (void)hideHUD:(UIGestureRecognizer *)recognizer
-{
-    [(MBProgressHUD *)recognizer.view hideAnimated:YES];
-}
-
-- (UIImageView *)myQRCodeImageView
-{
-    if (!_myQRCodeImageView) {
-        UIImage *myQRCode = [Utils createQRCodeFromString:[NSString stringWithFormat:@"http://my.oschina.net/u/%llu", [Config getOwnID]]];
-        _myQRCodeImageView = [[UIImageView alloc] initWithImage:myQRCode];
-    }
-    
-    return _myQRCodeImageView;
-}
-
-#pragma mark - 初始化
-- (HomePageHeadView *)homePageHeadView {
-    if(_homePageHeadView == nil) {
-        if ([UIScreen mainScreen].bounds.size.height < 500) {
-            
-            _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, 200}}];
-        } else {
-            
-            _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 245}}];
-        }
-        
-    }
-    return _homePageHeadView;
-}
+*/
 
 @end
