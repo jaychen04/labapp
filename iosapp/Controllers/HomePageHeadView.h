@@ -11,6 +11,9 @@
 
 @interface HomePageHeadView : UIView
 
+@property (nonatomic, strong) UIButton *setUpButton;
+@property (nonatomic, strong) UIButton *codeButton;
+
 @property (nonatomic, strong) UIImageView *userPortrait;
 @property (nonatomic, strong) UIImageView *genderImageView;
 @property (nonatomic, strong)  UILabel *nameLabel;

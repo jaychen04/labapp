@@ -91,14 +91,16 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView.hidden = YES;
     
     self.tableView.tableHeaderView = self.homePageHeadView;
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor clearColor]];
+    
+    [self hideStatusBar:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-//    [[UINavigationBar appearance] setBarTintColor:[UIColor navigationbarColor]];
+
+    [self hideStatusBar:NO];
 }
 
 - (void)viewDidLoad
@@ -131,6 +133,23 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - 状态栏、导航栏处理
+- (void)hideStatusBar:(BOOL)hidden
+{
+    if (hidden) {
+        UIView *statusBarView=[[UIView alloc] initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
+        statusBarView.backgroundColor=[UIColor colorWithHex:0x24CF5F];
+        [self.view addSubview:statusBarView];
+
+        self.navigationController.navigationBarHidden = YES;
+    } else {
+
+        self.navigationController.navigationBarHidden = NO;
+    }
+    
+}
+
+#pragma mark - 处理导航栏下1px横线
 - (UIImageView *)findHairlineImageViewUnder:(UIView *)view {
     if ([view isKindOfClass:UIImageView.class] && view.bounds.size.height <= 1.0) {
         return (UIImageView *)view;
@@ -144,7 +163,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     return nil;
 }
 
-
+#pragma mark - 刷新
 - (void)refresh
 {
     _myID = [Config getOwnID];
@@ -234,6 +253,9 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         self.homePageHeadView.descLable.hidden = NO;
         self.homePageHeadView.creditLabel.hidden = NO;
         self.homePageHeadView.creditLabel.text = [NSString stringWithFormat:@"积分:%d", _myProfile.score];
+        
+        [self.homePageHeadView.setUpButton addTarget:self action:@selector(setUpAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.homePageHeadView.codeButton addTarget:self action:@selector(showCodeAction) forControlEvents:UIControlEventTouchUpInside];
         
     } else {
         
@@ -736,14 +758,14 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 }
 
 #pragma mark - setup
-- (IBAction)setUpAction:(UIBarButtonItem *)sender {
+- (void)setUpAction {
     SettingsPage *settingPage = [SettingsPage new];
     settingPage.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:settingPage animated:YES];
 }
 
 #pragma mark - 二维码相关
-- (IBAction)showCodeAction:(UIBarButtonItem *)sender {
+- (void)showCodeAction {
     
     if ([Config getOwnID] == 0) {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
@@ -783,10 +805,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     if(_homePageHeadView == nil) {
         if ([UIScreen mainScreen].bounds.size.height < 500) {
             
-            _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, 200}}];
+            _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, 250}}];
         } else {
             
-            _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 245}}];
+            _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 205}}];
         }
         
     }

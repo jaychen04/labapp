@@ -21,8 +21,9 @@
 #define genderImageView_width 20
 #define bottomButton_height 60
 #define bottom_subButton_height 30
+#define setupButton_width 24
 
-#define view_userPortrait 30
+#define view_userPortrait 73
 
 @implementation HomePageHeadView
 {
@@ -51,6 +52,14 @@
     };
     _drawView.offestCenter = (OffestCenter){0, (view_userPortrait + userPortrait_width * 0.5) - viewHeight * 0.5};
     [self addSubview:_drawView];
+    
+    _setUpButton = [UIButton new];
+    [_setUpButton setImage:[UIImage imageNamed:@"btn_my_setting"] forState:UIControlStateNormal];
+    [self addSubview:_setUpButton];
+    
+    _codeButton = [UIButton new];
+    [_codeButton setImage:[UIImage imageNamed:@"btn_qrcode"] forState:UIControlStateNormal];
+    [self addSubview:_codeButton];
     
     _userPortrait = [UIImageView new];
     _userPortrait.contentMode = UIViewContentModeScaleAspectFit;
@@ -85,6 +94,18 @@
     _creditLabel.textColor = [UIColor colorWithHex:0xFFFFFF];
     _creditLabel.text = @"积分：0";
     [self addSubview:_creditLabel];
+    
+    [_setUpButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.mas_left).with.offset(16);
+        make.top.equalTo(self.mas_top).with.offset(16);
+        make.width.and.height.equalTo(@setupButton_width);
+    }];
+    
+    [_codeButton mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(self.mas_right).with.offset(-16);
+        make.top.equalTo(self.mas_top).with.offset(16);
+        make.width.and.height.equalTo(@setupButton_width);
+    }];
     
     [_userPortrait mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self).with.offset(screen_half_width-(userPortrait_width * 0.5));

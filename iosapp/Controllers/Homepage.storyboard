@@ -69,18 +69,7 @@
                             <outlet property="delegate" destination="9CB-MD-mci" id="w9T-g4-pff"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="8UP-78-1G8">
-                        <barButtonItem key="leftBarButtonItem" image="btn_my_setting" id="j9F-Ns-6fh">
-                            <connections>
-                                <action selector="setUpAction:" destination="9CB-MD-mci" id="UrV-b1-LKw"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" image="btn_qrcode" id="YEm-j7-KKk">
-                            <connections>
-                                <action selector="showCodeAction:" destination="9CB-MD-mci" id="gah-BK-Wkz"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="8UP-78-1G8"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="UpT-p5-6Dz">
                         <autoresizingMask key="autoresizingMask"/>
                     </refreshControl>
@@ -90,8 +79,4 @@
             <point key="canvasLocation" x="597" y="300"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="btn_my_setting" width="24" height="24"/>
-        <image name="btn_qrcode" width="20" height="20"/>
-    </resources>
 </document>
