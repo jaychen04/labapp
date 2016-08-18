@@ -7,8 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
-@class OSCTweetAuthor,OSCTweetCode,OSCTweetAudio,OSCTweetImages;
+struct MultipleImageViewFrame {
+    int line;
+    int row;
+    CGRect frame;
+};
+typedef struct MultipleImageViewFrame MultipleImageViewFrame;
+
+@class OSCTweetAuthor,OSCTweetCode,OSCTweetAudio,OSCTweetImages,OSCTweetLayout;
 
 @interface OSCTweetItem : NSObject
 
@@ -36,6 +44,16 @@
 
 @property (nonatomic, copy) NSString *content;
 
+/** 以下是布局信息*/
+@property (nonatomic,assign) CGRect descTextFrame;///< 无图 单图 多图用到
+
+@property (nonatomic,assign) CGRect imageFrame;///< 单图用到
+
+@property (nonatomic,assign) MultipleImageViewFrame multipleFrame;///< 多图用到
+
+@property (nonatomic,assign) CGFloat rowHeight;
+
+//@property (nonatomic,strong) OSCTweetLayout layoutResult;//组合布局model
 
 @end
 
@@ -79,5 +97,23 @@
 
 @property (nonatomic, copy) NSString *href;//大图
 
+@property (nonatomic, assign) NSInteger w;//原图宽
+
+@property (nonatomic, assign) NSInteger h;//原图高
+
 @end
+
+//#pragma mark -
+//#pragma mark --- layout result
+//@interface OSCTweetLayout : NSObject
+//
+//@property (nonatomic,assign) CGRect descTextFrame;///< 无图 单图 多图用到
+//
+//@property (nonatomic,assign) CGRect imageFrame;///< 单图用到
+//
+//@property (nonatomic,assign) MultipleImageViewFrame multipleFrame;///< 多图用到
+//
+//@property (nonatomic,assign) CGFloat rowHeight;
+//
+//@end
 

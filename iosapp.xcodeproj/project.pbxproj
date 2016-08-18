@@ -52,12 +52,14 @@
 		042F0AA11D52DDB900D3DC76 /* QuartzCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F0AA01D52DDB900D3DC76 /* QuartzCanvasView.m */; };
 		042F0AA71D531B8700D3DC76 /* UIDevice+SystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F0AA61D531B8700D3DC76 /* UIDevice+SystemInfo.m */; };
 		043130C71D52314F00C01881 /* UserDrawHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 043130C61D52314F00C01881 /* UserDrawHeaderView.m */; };
+		04323DA91D643802008FD302 /* ThumbnailHadle.m in Sources */ = {isa = PBXBuildFile; fileRef = 04323DA81D643802008FD302 /* ThumbnailHadle.m */; };
 		0432B6B81D3CB63700AFC058 /* OSCTweetItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0432B6B71D3CB63700AFC058 /* OSCTweetItem.m */; };
 		043568671D221D7100CC511C /* SoftWareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568651D221D7100CC511C /* SoftWareViewController.m */; };
 		043568681D221D7100CC511C /* SoftWareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043568661D221D7100CC511C /* SoftWareViewController.xib */; };
 		043568701D22272F00CC511C /* SoftWareDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0435686F1D22272F00CC511C /* SoftWareDetailHeaderView.m */; };
 		043568761D225D2100CC511C /* SoftWareDetailBodyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */; };
 		043568771D225D2100CC511C /* SoftWareDetailBodyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */; };
+		044050B91D5C83F800C6DF2F /* UIImageView+CornerRadius.m in Sources */ = {isa = PBXBuildFile; fileRef = 044050B81D5C83F800C6DF2F /* UIImageView+CornerRadius.m */; };
 		044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */; };
 		044266961D49E7BB00D87091 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044266951D49E7BB00D87091 /* Photos.framework */; };
 		044266971D4A026000D87091 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC2D1CEDA2A7007DB140 /* InformationViewController.m */; };
@@ -65,6 +67,10 @@
 		0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */; };
 		0447EF281D59733700F0954D /* UIImageView+RadiusHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0447EF271D59733700F0954D /* UIImageView+RadiusHandle.m */; };
 		0447EF2B1D59779C00F0954D /* ImageDownloadHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */; };
+		045126541D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045126531D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m */; };
+		045126571D61736F00E4DD93 /* OSCTextTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045126561D61736F00E4DD93 /* OSCTextTweetCell.m */; };
+		0451265A1D61739900E4DD93 /* OSCImageTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045126591D61739900E4DD93 /* OSCImageTweetCell.m */; };
+		045126601D6173D400E4DD93 /* OSCMultipleTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451265F1D6173D400E4DD93 /* OSCMultipleTweetCell.m */; };
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
@@ -427,6 +433,8 @@
 		042F0AA61D531B8700D3DC76 /* UIDevice+SystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIDevice+SystemInfo.m"; sourceTree = "<group>"; };
 		043130C51D52314F00C01881 /* UserDrawHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDrawHeaderView.h; sourceTree = "<group>"; };
 		043130C61D52314F00C01881 /* UserDrawHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDrawHeaderView.m; sourceTree = "<group>"; };
+		04323DA71D643802008FD302 /* ThumbnailHadle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThumbnailHadle.h; sourceTree = "<group>"; };
+		04323DA81D643802008FD302 /* ThumbnailHadle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThumbnailHadle.m; sourceTree = "<group>"; };
 		0432B6B61D3CB63700AFC058 /* OSCTweetItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCTweetItem.h; sourceTree = "<group>"; };
 		0432B6B71D3CB63700AFC058 /* OSCTweetItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCTweetItem.m; sourceTree = "<group>"; };
 		043568641D221D7100CC511C /* SoftWareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareViewController.h; sourceTree = "<group>"; };
@@ -437,6 +445,8 @@
 		043568731D225D2100CC511C /* SoftWareDetailBodyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoftWareDetailBodyCell.h; sourceTree = "<group>"; };
 		043568741D225D2100CC511C /* SoftWareDetailBodyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoftWareDetailBodyCell.m; sourceTree = "<group>"; };
 		043568751D225D2100CC511C /* SoftWareDetailBodyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SoftWareDetailBodyCell.xib; sourceTree = "<group>"; };
+		044050B71D5C83F800C6DF2F /* UIImageView+CornerRadius.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+CornerRadius.h"; sourceTree = "<group>"; };
+		044050B81D5C83F800C6DF2F /* UIImageView+CornerRadius.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+CornerRadius.m"; sourceTree = "<group>"; };
 		044266921D49C98C00D87091 /* OSCPhotoAlbumManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCPhotoAlbumManger.h; path = ELCImagePickerController/Classes/OSCPhotoAlbumManger.h; sourceTree = "<group>"; };
 		044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSCPhotoAlbumManger.m; path = ELCImagePickerController/Classes/OSCPhotoAlbumManger.m; sourceTree = "<group>"; };
 		044266951D49E7BB00D87091 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -448,6 +458,14 @@
 		0447EF271D59733700F0954D /* UIImageView+RadiusHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+RadiusHandle.m"; sourceTree = "<group>"; };
 		0447EF291D59779C00F0954D /* ImageDownloadHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDownloadHandle.h; path = ELCImagePickerController/ImageDownloadHandle.h; sourceTree = "<group>"; };
 		0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageDownloadHandle.m; path = ELCImagePickerController/ImageDownloadHandle.m; sourceTree = "<group>"; };
+		045126521D6172FF00E4DD93 /* AsyncDisplayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncDisplayTableViewCell.h; sourceTree = "<group>"; };
+		045126531D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncDisplayTableViewCell.m; sourceTree = "<group>"; };
+		045126551D61736F00E4DD93 /* OSCTextTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCTextTweetCell.h; sourceTree = "<group>"; };
+		045126561D61736F00E4DD93 /* OSCTextTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCTextTweetCell.m; sourceTree = "<group>"; };
+		045126581D61739900E4DD93 /* OSCImageTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCImageTweetCell.h; sourceTree = "<group>"; };
+		045126591D61739900E4DD93 /* OSCImageTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCImageTweetCell.m; sourceTree = "<group>"; };
+		0451265E1D6173D400E4DD93 /* OSCMultipleTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMultipleTweetCell.h; sourceTree = "<group>"; };
+		0451265F1D6173D400E4DD93 /* OSCMultipleTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMultipleTweetCell.m; sourceTree = "<group>"; };
 		0473259A1CF821A700460658 /* QuesAnsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuesAnsTableViewCell.h; sourceTree = "<group>"; };
 		0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuesAnsTableViewCell.m; sourceTree = "<group>"; };
 		0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuesAnsTableViewCell.xib; sourceTree = "<group>"; };
@@ -1098,6 +1116,14 @@
 		00D6BD3219ECD73B00E8754E /* Tweet */ = {
 			isa = PBXGroup;
 			children = (
+				045126521D6172FF00E4DD93 /* AsyncDisplayTableViewCell.h */,
+				045126531D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m */,
+				045126551D61736F00E4DD93 /* OSCTextTweetCell.h */,
+				045126561D61736F00E4DD93 /* OSCTextTweetCell.m */,
+				045126581D61739900E4DD93 /* OSCImageTweetCell.h */,
+				045126591D61739900E4DD93 /* OSCImageTweetCell.m */,
+				0451265E1D6173D400E4DD93 /* OSCMultipleTweetCell.h */,
+				0451265F1D6173D400E4DD93 /* OSCMultipleTweetCell.m */,
 				EE6FB5D81D0D0D29006A11A4 /* NewTweet */,
 				00D6BD2F19ECD71B00E8754E /* TweetsViewController.h */,
 				00D6BD3019ECD71B00E8754E /* TweetsViewController.m */,
@@ -1130,6 +1156,8 @@
 			isa = PBXGroup;
 			children = (
 				31F14FC81D41F80300AD0763 /* ELCImagePickerController */,
+				04323DA71D643802008FD302 /* ThumbnailHadle.h */,
+				04323DA81D643802008FD302 /* ThumbnailHadle.m */,
 				0447EF291D59779C00F0954D /* ImageDownloadHandle.h */,
 				0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */,
 				044266921D49C98C00D87091 /* OSCPhotoAlbumManger.h */,
@@ -1715,6 +1743,8 @@
 		38A1A1571A15BAB500AFD144 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				044050B71D5C83F800C6DF2F /* UIImageView+CornerRadius.h */,
+				044050B81D5C83F800C6DF2F /* UIImageView+CornerRadius.m */,
 				0447EF261D59733700F0954D /* UIImageView+RadiusHandle.h */,
 				0447EF271D59733700F0954D /* UIImageView+RadiusHandle.m */,
 				042F0AA51D531B8700D3DC76 /* UIDevice+SystemInfo.h */,
@@ -2709,6 +2739,7 @@
 				043130C71D52314F00C01881 /* UserDrawHeaderView.m in Sources */,
 				38763A361A8DDF51008E6805 /* MessageBubbleViewController.m in Sources */,
 				3838D19F1A6DFE9000CC7913 /* ScanViewController.m in Sources */,
+				045126601D6173D400E4DD93 /* OSCMultipleTweetCell.m in Sources */,
 				31855C8C1D0E621F00C8F8B8 /* TweetLikeNewCell.m in Sources */,
 				C5FB95851AEA1D51006918CD /* TeamDiscussionViewController.m in Sources */,
 				382F5EB31A036EB800A8EF11 /* OSCBlogDetails.m in Sources */,
@@ -2721,6 +2752,7 @@
 				C52BF4E71AF9AAA000E53508 /* TeamWeeklyReportDetail.m in Sources */,
 				38A9EEA91AA95AB4006C95BD /* AboutPage.m in Sources */,
 				38763A351A8DDF51008E6805 /* MessageBubbleCell.m in Sources */,
+				0451265A1D61739900E4DD93 /* OSCImageTweetCell.m in Sources */,
 				C5EF89231BE3194800B5FA46 /* SoftwareCell.m in Sources */,
 				38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */,
 				044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */,
@@ -2741,6 +2773,7 @@
 				C5FB95881AEA1DA9006918CD /* TeamDiscussion.m in Sources */,
 				EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */,
 				38EAF1C41AE0EA6D00397E2A /* TeamProject.m in Sources */,
+				045126541D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m in Sources */,
 				00FF954E19F3E5FF002F4737 /* SwipableViewController.m in Sources */,
 				EE0DA3951D23D60200DD2C13 /* TranslationViewController.m in Sources */,
 				C5E56F4E1B56AFB50059924C /* RootViewController.m in Sources */,
@@ -2756,6 +2789,7 @@
 				3838D1A91A6F455600CC7913 /* ShakingViewController.m in Sources */,
 				6662BACD1B8C508500D6A9BC /* TweetFriendCell.m in Sources */,
 				31C50BC21AF1FE7F00074B72 /* TeamIssueDetailController.m in Sources */,
+				045126571D61736F00E4DD93 /* OSCTextTweetCell.m in Sources */,
 				38996A521A02642C0025AA52 /* OSCBlog.m in Sources */,
 				0004918E19F8FFE9001F3A36 /* HorizonalTableViewController.m in Sources */,
 				0422BC571CEDA390007DB140 /* TAAnimatedDotView.m in Sources */,
@@ -2771,6 +2805,7 @@
 				381EAB6919FE3B9800C1937C /* OSCObjsViewController.m in Sources */,
 				31D699691CFC4F8600B48BB0 /* RecommandBlogTableViewCell.m in Sources */,
 				C5A89C381B09C34B00798B1C /* NSString+FontAwesome.m in Sources */,
+				044050B91D5C83F800C6DF2F /* UIImageView+CornerRadius.m in Sources */,
 				38B0BF921A3AE77300A2FDB0 /* MessagesViewController.m in Sources */,
 				31F14FE01D41F80300AD0763 /* ELCAsset.m in Sources */,
 				38BC204A1A073A7800B8BB16 /* OSCSoftwareDetails.m in Sources */,
@@ -2830,6 +2865,7 @@
 				C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */,
 				EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */,
 				042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */,
+				04323DA91D643802008FD302 /* ThumbnailHadle.m in Sources */,
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,
 				38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */,
 				04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */,

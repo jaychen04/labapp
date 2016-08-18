@@ -13,6 +13,7 @@
 #import "UIView+Util.h"
 #import "NSDate+Util.h"
 #import "UIImageView+RadiusHandle.h"
+#import "UIImageView+CornerRadius.h"
 #import "ImageDownloadHandle.h"
 
 #import "UserDetailsViewController.h"
@@ -92,7 +93,15 @@
     userPortrait.contentMode = UIViewContentModeScaleAspectFit;
     [userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(userPortraitDidClickMethod:)]];
     _userPortrait = userPortrait;
+    [_userPortrait zy_cornerRadiusAdvance:22 rectCornerType:UIRectCornerAllCorners];
     [self.contentView addSubview:_userPortrait];
+    
+//    CALayer* maskLayer = [CALayer new];
+//    maskLayer.frame = (CGRect){{0,0},userPortrait.bounds.size};
+//    maskLayer.backgroundColor = [UIColor redColor].CGColor;
+//    maskLayer.contents = (id)[UIImage imageNamed:@"avatar_mask"].CGImage;
+//    [_userPortrait.layer addSublayer:maskLayer];
+//    [_userPortrait.layer insertSublayer:maskLayer atIndex:0];
 
     UILabel* nameLabel = [[UILabel alloc]init];
     nameLabel.font = [UIFont boldSystemFontOfSize:15];
@@ -253,12 +262,10 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 _userPortrait.userInteractionEnabled = YES;
                 [_userPortrait setImage:image];
-                [_userPortrait addCorner:22];
             });
         }];
     }else{
         [_userPortrait setImage:portrait];
-        [_userPortrait addCorner:22];
     }
     
     _nameLabel.text = model.author.name;
