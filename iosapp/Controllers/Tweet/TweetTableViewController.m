@@ -8,8 +8,6 @@
 
 #import "TweetTableViewController.h"
 #import "OSCTweetItem.h"
-#import "NewTweetCell.h"
-#import "NewMultipleTweetCell.h"
 #import "OSCPhotoGroupView.h"
 #import "Config.h"
 #import "OSCUser.h"
@@ -26,10 +24,15 @@
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
 
-static NSString* const reuseIdentifier = @"NewTweetCell";
-static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
+#import "AsyncDisplayTableViewCell.h"
+#import "OSCTextTweetCell.h"
+#import "OSCImageTweetCell.h"
+#import "OSCMultipleTweetCell.h"
+static NSString* const reuseTextTweetCell = @"OSCTextTweetCell";
+static NSString* const reuseImageTweetCell = @"OSCImageTweetCell";
+static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
 
-@interface TweetTableViewController () <UITextViewDelegate,networkingJsonDataDelegate,NewMultipleTweetCellDelegate>
+@interface TweetTableViewController () <UITextViewDelegate,networkingJsonDataDelegate,AsyncDisplayTableViewCellDelegate>
 
 @property (nonatomic,strong) NSMutableArray* dataModels;
 @property (nonatomic, assign) int64_t uid;
@@ -162,8 +165,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     return self;
 }
 
-
-
 - (void)setBlockAndClass {
     __weak TweetTableViewController *weakSelf = self;
     self.tableWillReload = ^(NSUInteger responseObjectsCount) {
@@ -179,7 +180,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     self.objClass = [OSCTweetItem class];
 }
 
-
 - (NSArray *)parseXML:(ONOXMLDocument *)xml
 {
     return [[xml.rootElement firstChildWithTag:@"tweets"] childrenWithTag:@"tweet"];
@@ -190,20 +190,11 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
-    [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
-    [self.tableView registerClass:[NewMultipleTweetCell class] forCellReuseIdentifier:reuseIdentifier_Multiple];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
-    [NewTweetCell initContetTextView:_textView];
     [self.view addSubview:_textView];
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 
 #pragma mark -- networking Delegate
 -(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh{//yes 下拉 no 上拉
@@ -257,7 +248,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
 
 
 #pragma mark - 处理消息通知
-
 - (void)userRefreshHandler:(NSNotification *)notification
 {
     _uid = [Config getOwnID];
@@ -277,157 +267,65 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     }
     return 0;
 }
-- (CGFloat) tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OSCTweetItem* model = self.dataModels[indexPath.row];
-    if (model.images.count == 0) {
-        if (model.content.length > 200) {
-            return 200;
-        }else{
-            return 150;
+
+- (CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    OSCTweetItem* tweetItem = self.dataModels[indexPath.row];
+    if (tweetItem.images.count == 0) {
+        if (tweetItem.rowHeight == 0) {
+            tweetItem.rowHeight = padding_top + nameLabel_H + nameLabel_space_descTextView + tweetItem.descTextFrame.size.height + descTextView_space_timeAndSourceLabel + timeAndSourceLabel_H + padding_bottom;
         }
-    }else if (model.images.count == 1){
-        return 250;
+        return tweetItem.rowHeight;
+    }else if (tweetItem.images.count == 1){
+        if (tweetItem.rowHeight == 0) {
+            tweetItem.rowHeight = padding_top + nameLabel_H + nameLabel_space_descTextView + tweetItem.descTextFrame.size.height + descTextView_space_imageView + tweetItem.imageFrame.size.height + imageView_space_timeAndSourceLabel + timeAndSourceLabel_H + padding_bottom;
+        }
+        return tweetItem.rowHeight;
     }else{
-        return 300;
-    }
-}
--(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OSCTweetItem* model = self.dataModels[indexPath.row];
-    if (model.images.count < 2) {
-        return [tableView fd_heightForCellWithIdentifier:reuseIdentifier configuration:^(NewTweetCell* cell) {
-            cell.tweet = model;
-            
-            if (!cell.descTextView.delegate) {
-                cell.descTextView.delegate = self;
-                [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
-            }
-            [self setBlockForCommentCell:cell];
-            
-            if (model.images.count > 0) {
-                OSCTweetImages* imageData = [model.images lastObject];
-                cell.tweetImageView.hidden = NO;
-                
-                UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
-                if (!image) {
-                    [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
-                    [self downloadThumbnailImageThenReload:imageData.thumb];
-                } else {
-                    [cell.tweetImageView setImage:image];
-                }
-                
-            } else {
-                cell.tweetImageView.hidden = YES;
-            }
-            
-            cell.userPortrait.tag = indexPath.row;
-            cell.descTextView.tag = indexPath.row;
-            cell.nameLabel.tag = indexPath.row;
-            cell.tweetImageView.tag = indexPath.row;
-            cell.likeCountButton.tag = indexPath.row;
-            cell.nameLabel.textColor = [UIColor newTitleColor];
-            cell.descTextView.textColor = [UIColor newTitleColor];
-            
-            [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
-            [cell.tweetImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
-            [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
-            
-            cell.contentView.backgroundColor = [UIColor newCellColor];
-            cell.backgroundColor = [UIColor themeColor];
-            cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-            cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-        }];
-    }else{
-        return [tableView fd_heightForCellWithIdentifier:reuseIdentifier_Multiple configuration:^(NewMultipleTweetCell* cell) {
-            cell.delegate = self;
-            cell.tweetItem = model;
-            [self setBlockForCommentMultipleCell:cell];
-            
-            if (!cell.descTextView.delegate) {
-                cell.descTextView.delegate = self;
-                [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
-            }
-            cell.likeCountButton.tag = indexPath.row;
-            [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
-            
-            cell.contentView.backgroundColor = [UIColor newCellColor];
-            cell.backgroundColor = [UIColor themeColor];
-            cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-            cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-        }];
+        if (tweetItem.rowHeight == 0) {
+            tweetItem.rowHeight = padding_top + nameLabel_H + nameLabel_space_descTextView + tweetItem.descTextFrame.size.height + descTextView_space_imageView + tweetItem.multipleFrame.frame.size.height + imageView_space_timeAndSourceLabel + timeAndSourceLabel_H + padding_bottom;
+        }
+        return tweetItem.rowHeight;
     }
 }
 
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OSCTweetItem* model = self.dataModels[indexPath.row];
-    
-    if (model.images.count < 2) {
-        NewTweetCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-        cell.tweet = model;
-
-        if (!cell.descTextView.delegate) {
-            cell.descTextView.delegate = self;
-            [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
-        }
-        [self setBlockForCommentCell:cell];
-        
-        if (model.images.count > 0) {
-            OSCTweetImages* imageData = [model.images lastObject];
-            cell.tweetImageView.hidden = NO;
-            
-            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
-            if ([imageData.thumb hasSuffix:@".gif"]) {
-                NSData *dataImage = UIImagePNGRepresentation(image);
-                image = [UIImage sd_animatedGIFWithData:dataImage];
-            }
-            if (!image) {
-                [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
-                [self downloadThumbnailImageThenReload:imageData.thumb];
-            } else {
-                [cell.tweetImageView setImage:image];
-            }
-            
-        } else {
-            cell.tweetImageView.hidden = YES;
-        }
-        
-        cell.userPortrait.tag = indexPath.row;
-        cell.descTextView.tag = indexPath.row;
-        cell.nameLabel.tag = indexPath.row;
-        cell.tweetImageView.tag = indexPath.row;
-        cell.likeCountButton.tag = indexPath.row;
-        cell.nameLabel.textColor = [UIColor newTitleColor];
-        cell.descTextView.textColor = [UIColor newTitleColor];
-        
-        [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
-        [cell.tweetImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
-        [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
-        
-        cell.contentView.backgroundColor = [UIColor newCellColor];
-        cell.backgroundColor = [UIColor themeColor];
-        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-        
-        return cell;
+    OSCTweetItem* tweetItem = self.dataModels[indexPath.row];
+    if (tweetItem.images.count == 0) {
+        OSCTextTweetCell* textCell = [OSCTextTweetCell returnReuseTextTweetCellWithTableView:tableView identifier:reuseTextTweetCell];
+        textCell.tweetItem = tweetItem;
+        textCell.delegate = self;
+        [self setBlockForCommentCell:textCell];
+        return textCell;
+    }else if (tweetItem.images.count == 1){
+        OSCImageTweetCell* imageTweetCell = [OSCImageTweetCell returnReuseImageTweetCellWithTableView:tableView identifier:reuseImageTweetCell];
+        imageTweetCell.tweetItem = tweetItem;
+        imageTweetCell.delegate = self;
+        [self setBlockForCommentCell:imageTweetCell];
+        return imageTweetCell;
     }else{
-        NewMultipleTweetCell* cell = [NewMultipleTweetCell returnReuseMultipeTweetCellWithTableView:tableView identifier:reuseIdentifier_Multiple indexPath:indexPath];
-        cell.delegate = self;
-        cell.tweetItem = model;
-        [self setBlockForCommentMultipleCell:cell];
-        
-        if (!cell.descTextView.delegate) {
-            cell.descTextView.delegate = self;
-            [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
-        }
-        cell.likeCountButton.tag = indexPath.row;
-        [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
-        
-        cell.contentView.backgroundColor = [UIColor newCellColor];
-        cell.backgroundColor = [UIColor themeColor];
-        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-        
-        return cell;
+        OSCMultipleTweetCell* multipleTweetCell = [OSCMultipleTweetCell returnReuseMultipleTweetCellWithTableView:tableView identifier:reuseMultipleTweetCell];
+        multipleTweetCell.tweetItem = tweetItem;
+        multipleTweetCell.delegate = self;
+        [self setBlockForCommentCell:multipleTweetCell];
+        return multipleTweetCell;
     }
+}
+
+#pragma mark --- AsyncDisplayTableViewCellDelegate
+- (void)userPortraitDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
+    OSCTweetItem* tweetItem = [cell valueForKey:@"tweetItem"];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweetItem.author.id];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
+- (void)loadLargeImageDidFinsh:(__kindof AsyncDisplayTableViewCell *)cell
+                photoGroupView:(OSCPhotoGroupView *)groupView
+                      fromView:(UIImageView *)fromView
+{
+    UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
+    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
+}
+- (void)changeTweetStausButtonDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
+    [self toPraise:cell];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -455,37 +353,15 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     // required
 }
 
-#pragma mark - NewMultipleTweetCellDelegate
--(void)userPortraitDidClick:(NewMultipleTweetCell *)multipleTweetCell
-                tapGestures:(UITapGestureRecognizer *)tap
-{
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:multipleTweetCell.tweetItem.author.id];
-    [self.navigationController pushViewController:userDetailsVC animated:YES];
-}
-
--(void)assemblyMultipleTweetCellDidFinsh:(NewMultipleTweetCell *)multipleTweetCell
-{
-    [self.tableView reloadData];
-}
--(void)loadLargeImageDidFinsh:(NewMultipleTweetCell *)multipleTweetCell
-               photoGroupView:(OSCPhotoGroupView *)groupView
-                     fromView:(UIImageView *)fromView
-{
-    UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
-    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
-}
-
 
 #pragma mark - UIScrollViewDelegate
-
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     [super scrollViewDidScroll:scrollView];
     if (_didScroll) {_didScroll();}
 }
 
-- (void)setBlockForCommentCell:(NewTweetCell *)cell
-{
+- (void)setBlockForCommentCell:(__kindof AsyncDisplayTableViewCell *)cell{
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
             return YES;
@@ -536,60 +412,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
               }];
     };
 }
-
-- (void)setBlockForCommentMultipleCell:(NewMultipleTweetCell *)cell
-{
-    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
-        if (action == @selector(copyText:)) {
-            return YES;
-        } else if (action == @selector(deleteObject:)) {
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            OSCTweetItem *tweet = self.dataModels[indexPath.row];
-            return tweet.author.id == [Config getOwnID];
-        }
-        return NO;
-    };
-    
-    cell.deleteObject = ^ (UITableViewCell *cell) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        OSCTweetItem *tweet = self.dataModels[indexPath.row];
-        
-        MBProgressHUD *HUD = [Utils createHUD];
-        HUD.mode = MBProgressHUDModeCustomView;
-        HUD.label.text = @"正在删除动弹";
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
-        
-        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX, OSCAPI_TWEET_DELETE]
-           parameters:@{
-                        @"sourceId": @(tweet.id),
-                        }
-              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-                  if ([responseObject[@"code"] floatValue] == 1) {
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.label.text = @"动弹删除成功";
-                      
-                      [self.dataModels removeObjectAtIndex:indexPath.row];
-                      self.allCount--;
-                      
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          [self.tableView reloadData];
-                      });
-                  }else{
-                      HUD.label.text = @"网络错误";
-                  }
-                  [HUD hideAnimated:YES afterDelay:1];
-                  
-              }
-              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
-                  
-                  [HUD hideAnimated:YES afterDelay:1];
-              }];
-    };
-}
-
 
 #pragma mark - 下载图片
 
@@ -643,19 +465,12 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     
     OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:@[currentPhotoItem]];
     
-//    UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
-//    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
     [photoGroup presentFromImageView:fromView toContainer:self.tabBarController.view animated:YES completion:nil];
 }
 
-#pragma mark - 点赞功能
-- (void)togglePraise:(UIButton *)button
-{
-    OSCTweetItem *tweet = self.dataModels[button.tag];
-    [self toPraise:tweet];
-}
 #pragma mark --点赞（新接口)
-- (void)toPraise:(OSCTweetItem *)tweet {
+- (void)toPraise:(__kindof AsyncDisplayTableViewCell*)cell{
+    OSCTweetItem* tweet = [cell valueForKey:@"tweetItem"];
     if (tweet.id == 0) {
         return;
     }
@@ -677,7 +492,7 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
                   [HUD hideAnimated:YES afterDelay:1];
               }
               dispatch_async(dispatch_get_main_queue(), ^{
-                  [self.tableView reloadData];
+                  [cell setLikeStatus:tweet.liked animation:YES];
               });
           }
           failure:^(AFHTTPRequestOperation *operation, NSError *error) {

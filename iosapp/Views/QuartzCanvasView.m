@@ -95,22 +95,88 @@
 
 #pragma mark --- drawRect (display)
 - (void)drawRect:(CGRect)rect {
-    CGFloat biggestRadius = self.biggestRoundRadius;
+    NSInteger i = 0;
+    CGFloat changeRadius = self.minimumRoundRadius;
+    CGFloat standardRadius = MAX(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
+    DeviceResolution resolution = [UIDevice currentDeviceResolution];
+    if (resolution == Device_iPhone_6p || resolution == Device_iPhone_6sp) {
+        standardRadius = self.bounds.size.width * 0.5;
+    }else{
+        standardRadius = self.bounds.size.height - _center.y;
+    }
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     [self makeGradientColor:ctx];
     
     CGContextSetStrokeColorWithColor(ctx, self.strokeColor.CGColor);//画笔线的颜色
-    CGContextSetLineWidth(ctx, 1.3);//线的宽度
+    CGContextSetLineWidth(ctx, 1.0);//线的宽度
     
-    if (biggestRadius > 0) {
-        CGContextAddArc(ctx, _center.x, _center.y, biggestRadius, 0, 2*PI, 0);
+//    if (biggestRadius > 0) {
+//        CGContextAddArc(ctx, _center.x, _center.y, biggestRadius, 0, 2*PI, 0);
+//        CGContextDrawPath(ctx, kCGPathStroke);
+//    }
+    
+/** 从最内层圆开始绘制 */
+    while (changeRadius < standardRadius) {
+        CGContextAddArc(ctx, _center.x, _center.y, changeRadius, 0, 2*PI, 0);
+        CGContextDrawPath(ctx, kCGPathStroke);
+        CALayer* layer = [[CALayer alloc]init];
+        layer.backgroundColor = self.strokeColor.CGColor;
+        int layerSize = (arc4random() % 4) + 8;
+        NSLog(@"%lu",(unsigned long)layerSize);
+        layer.frame = (CGRect){{0,0},{layerSize,layerSize}};
+        layer.cornerRadius = 5;
+        [self.layer addSublayer:layer];
+        [_layers addObject:layer];
+        
+        CAKeyframeAnimation* keyFrameAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
+        keyFrameAnimation.repeatCount = MAXFLOAT;
+        keyFrameAnimation.repeatDuration = MAXFLOAT;
+//        keyFrameAnimation.autoreverses = YES;//翻转动画
+        keyFrameAnimation.speed = self.speed - i * 0.21;
+        if (i % 2 != 0) { keyFrameAnimation.speed = - keyFrameAnimation.speed;}
+        keyFrameAnimation.calculationMode = kCAAnimationPaced;
+        keyFrameAnimation.rotationMode = kCAAnimationRotateAuto;
+        
+/** UIBezierPath 创建路径 */
+//        UIBezierPath * circlePath = [UIBezierPath bezierPathWithArcCenter:_center
+//                                                                   radius:changeRadius
+//                                                               startAngle:-180
+//                                                                 endAngle:180
+//                                                                clockwise:YES];
+//        keyFrameAnimation.path = circlePath.CGPath;
+        
+        
+        /** core Graphics 创建路径 */
+        CGMutablePathRef path = CGPathCreateMutable();
+        CGPathAddEllipseInRect(path, NULL, CGRectMake(_center.x - changeRadius, _center.y - changeRadius, changeRadius * 2, changeRadius * 2));
+        keyFrameAnimation.path = path;
+        CGPathRelease(path);
+        
+        
+/** CFAutorelease添加圆形路径 */
+//        keyFrameAnimation.path = CFAutorelease(CGPathCreateWithEllipseInRect(CGRectMake(_center.x - changeRadius, _center.y - changeRadius, changeRadius * 2, changeRadius * 2), NULL));
+
+        NSLog(@"%@",keyFrameAnimation.values);
+        
+        keyFrameAnimation.duration = _duration - i * 4;
+        [layer addAnimation:keyFrameAnimation forKey:@"PostionKeyframeValueAni"];
+        [_keyFrameAnis addObject:keyFrameAnimation];
+        
+        i++;
+        changeRadius = changeRadius + 40 + i * 2;;
+    }
+    
+/** 防御性绘制 */
+    CGFloat lastChangeRadius = changeRadius - 40 - i * 2;
+    if (standardRadius - lastChangeRadius > 40) {
+        CGContextAddArc(ctx, _center.x, _center.y, standardRadius + 3, 0, 2*PI, 0);
         CGContextDrawPath(ctx, kCGPathStroke);
     }
     
-    NSInteger i = 0;
-    CGFloat changeRadius = 0;
     
+/** 从最外层的圆开始绘制 
+    //机型判断
     DeviceResolution resolution = [UIDevice currentDeviceResolution];
     if (resolution == Device_iPhone_4 || resolution == Device_iPhone_4s) {
         NSLog(@"4 && 4s");
@@ -125,6 +191,7 @@
         NSLog(@"6p && 6sp");
         changeRadius = _openRandomness ? (biggestRadius - (70 + i*3)) : biggestRadius - 70;
     }
+    
     
     while (changeRadius > 0) {
         CGContextAddArc(ctx, _center.x, _center.y, changeRadius, 0, 2*PI, 0);
@@ -146,36 +213,37 @@
         if (i == 1) { keyFrameAnimation.speed = - keyFrameAnimation.speed;}
         keyFrameAnimation.calculationMode = kCAAnimationPaced;
         keyFrameAnimation.rotationMode = kCAAnimationRotateAuto;
-        
-/** UIBezierPath 创建路径 */
+//
+    //UIBezierPath 创建路径
 //        UIBezierPath * circlePath = [UIBezierPath bezierPathWithArcCenter:_center
 //                                                                   radius:changeRadius
 //                                                               startAngle:-180
 //                                                                 endAngle:180
 //                                                                clockwise:YES];
 //        keyFrameAnimation.path = circlePath.CGPath;
-        
-        
-/** core Graphics 创建路径 */
-        CGMutablePathRef path = CGPathCreateMutable();
-        CGPathAddEllipseInRect(path, NULL, CGRectMake(_center.x - changeRadius, _center.y - changeRadius, changeRadius * 2, changeRadius * 2));
-        keyFrameAnimation.path = path;
-        CGPathRelease(path);
-        
-        
-/** CFAutorelease添加圆形路径 */
+
+ 
+    //core Graphics 创建路径
+//        CGMutablePathRef path = CGPathCreateMutable();
+//        CGPathAddEllipseInRect(path, NULL, CGRectMake(_center.x - changeRadius, _center.y - changeRadius, changeRadius * 2, changeRadius * 2));
+//        keyFrameAnimation.path = path;
+//        CGPathRelease(path);
+
+    
+    //CFAutorelease添加圆形路径
 //        keyFrameAnimation.path = CFAutorelease(CGPathCreateWithEllipseInRect(CGRectMake(_center.x - changeRadius, _center.y - changeRadius, changeRadius * 2, changeRadius * 2), NULL));
-
-        NSLog(@"%@",keyFrameAnimation.values);
-
-        keyFrameAnimation.duration = _duration - i * 4;
-        [layer addAnimation:keyFrameAnimation forKey:@"PostionKeyframeValueAni"];
-        [_keyFrameAnis addObject:keyFrameAnimation];
-        
+//
+//        NSLog(@"%@",keyFrameAnimation.values);
+//
+//        keyFrameAnimation.duration = _duration - i * 4;
+//        [layer addAnimation:keyFrameAnimation forKey:@"PostionKeyframeValueAni"];
+//        [_keyFrameAnis addObject:keyFrameAnimation];
+//        
         i++;
         changeRadius = (changeRadius - (50 - i*3));;
         if (changeRadius < self.minimumRoundRadius) { break; }
     }
+*/
 }
 
 #pragma mrak --- 球形渐变

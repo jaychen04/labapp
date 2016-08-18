@@ -10,9 +10,10 @@
 #import "Utils.h"
 #import "OSCTweetItem.h"
 #import "ImageDownloadHandle.h"
+#import "UIImageView+RadiusHandle.h"
+#import "UIImageView+CornerRadius.h"
 
 #import <Masonry.h>
-#import "UIImageView+RadiusHandle.h"
 
 @implementation NewTweetCell{
     __weak UIView* _colorLine;
@@ -42,8 +43,16 @@
     _userPortrait = [UIImageView new];
     _userPortrait.contentMode = UIViewContentModeScaleAspectFit;
     _userPortrait.userInteractionEnabled = YES;
+    [_userPortrait zy_cornerRadiusAdvance:22 rectCornerType:UIRectCornerAllCorners];
     [self.contentView addSubview:_userPortrait];
-        
+    
+//    CALayer* maskLayer = [CALayer new];
+//    maskLayer.frame = (CGRect){{0,0},_userPortrait.bounds.size};
+//    maskLayer.backgroundColor = [UIColor redColor].CGColor;
+//    maskLayer.contents = (id)[UIImage imageNamed:@"avatar_mask"].CGImage;
+//    [_userPortrait.layer addSublayer:maskLayer];
+//    [_userPortrait.layer insertSublayer:maskLayer atIndex:0];
+    
     _nameLabel = [UILabel new];
     _nameLabel.font = [UIFont boldSystemFontOfSize:15];
     _nameLabel.numberOfLines = 1;
@@ -193,12 +202,12 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 _userPortrait.userInteractionEnabled = YES;
                 [_userPortrait setImage:image];
-                [_userPortrait addCorner:22];
+//                [_userPortrait addCorner:22];
             });
         }];
     }else{
         [_userPortrait setImage:portrait];
-        [_userPortrait addCorner:22];
+//        [_userPortrait addCorner:22];
     }
     
     _nameLabel.text = model.author.name;

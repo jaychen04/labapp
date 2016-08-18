@@ -50,6 +50,7 @@
     QuartzCanvasView* drawView = [[QuartzCanvasView alloc]initWithFrame:(CGRect){{0,0},self.bounds.size}];
     _drawView = drawView;
     _drawView.openRandomness = YES;
+    _drawView.minimumRoundRadius = portrait_width * 0.5 + 30;
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
     _drawView.gradientColor = (GradientColor){
         [UIColor colorWithHex:0x24CF5F].CGColor,
