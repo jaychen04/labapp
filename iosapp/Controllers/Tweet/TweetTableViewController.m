@@ -8,8 +8,6 @@
 
 #import "TweetTableViewController.h"
 #import "OSCTweetItem.h"
-#import "NewTweetCell.h"
-#import "NewMultipleTweetCell.h"
 #import "OSCPhotoGroupView.h"
 #import "Config.h"
 #import "OSCUser.h"
@@ -34,11 +32,7 @@ static NSString* const reuseTextTweetCell = @"OSCTextTweetCell";
 static NSString* const reuseImageTweetCell = @"OSCImageTweetCell";
 static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
 
-
-static NSString* const reuseIdentifier = @"NewTweetCell";
-static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
-
-@interface TweetTableViewController () <UITextViewDelegate,networkingJsonDataDelegate,NewMultipleTweetCellDelegate,AsyncDisplayTableViewCellDelegate>
+@interface TweetTableViewController () <UITextViewDelegate,networkingJsonDataDelegate,AsyncDisplayTableViewCellDelegate>
 
 @property (nonatomic,strong) NSMutableArray* dataModels;
 @property (nonatomic, assign) int64_t uid;
@@ -196,12 +190,9 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
-    [self.tableView registerClass:[NewTweetCell class] forCellReuseIdentifier:reuseIdentifier];
-    [self.tableView registerClass:[NewMultipleTweetCell class] forCellReuseIdentifier:reuseIdentifier_Multiple];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _textView = [[UITextView alloc] initWithFrame:CGRectZero];
-    [NewTweetCell initContetTextView:_textView];
     [self.view addSubview:_textView];
 }
 
@@ -334,82 +325,8 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
 }
 - (void)changeTweetStausButtonDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
-    OSCTweetItem* tweetItem = [cell valueForKey:@"tweetItem"];
-//    [self toPraise:tweetItem];
     [self toPraise:cell];
 }
-//- (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-//    OSCTweetItem* model = self.dataModels[indexPath.row];
-//    
-//    if (model.images.count < 2) {
-//        NewTweetCell *cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-//        cell.tweet = model;
-//
-//        if (!cell.descTextView.delegate) {
-//            cell.descTextView.delegate = self;
-//            [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
-//        }
-//        [self setBlockForCommentCell:cell];
-//        
-//        if (model.images.count > 0) {
-//            OSCTweetImages* imageData = [model.images lastObject];
-//            cell.tweetImageView.hidden = NO;
-//            
-//            UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageData.thumb];
-//            if ([imageData.thumb hasSuffix:@".gif"]) {
-//                NSData *dataImage = UIImagePNGRepresentation(image);
-//                image = [UIImage sd_animatedGIFWithData:dataImage];
-//            }
-//            if (!image) {
-//                [cell.tweetImageView setImage:[UIImage imageNamed:@"loading"]];
-//                [self downloadThumbnailImageThenReload:imageData.thumb];
-//            } else {
-//                [cell.tweetImageView setImage:image];
-//            }
-//            
-//        } else {
-//            cell.tweetImageView.hidden = YES;
-//        }
-//        
-//        cell.userPortrait.tag = indexPath.row;
-//        cell.descTextView.tag = indexPath.row;
-//        cell.nameLabel.tag = indexPath.row;
-//        cell.tweetImageView.tag = indexPath.row;
-//        cell.likeCountButton.tag = indexPath.row;
-//        cell.nameLabel.textColor = [UIColor newTitleColor];
-//        cell.descTextView.textColor = [UIColor newTitleColor];
-//        
-//        [cell.userPortrait addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushUserDetailsView:)]];
-//        [cell.tweetImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(loadLargeImage:)]];
-//        [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        cell.contentView.backgroundColor = [UIColor newCellColor];
-//        cell.backgroundColor = [UIColor themeColor];
-//        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-//        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-//        
-//        return cell;
-//    }else{
-//        NewMultipleTweetCell* cell = [NewMultipleTweetCell returnReuseMultipeTweetCellWithTableView:tableView identifier:reuseIdentifier_Multiple indexPath:indexPath];
-//        cell.delegate = self;
-//        cell.tweetItem = model;
-//        [self setBlockForCommentMultipleCell:cell];
-//        
-//        if (!cell.descTextView.delegate) {
-//            cell.descTextView.delegate = self;
-//            [cell.descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapCellContentText:)]];
-//        }
-//        cell.likeCountButton.tag = indexPath.row;
-//        [cell.likeCountButton addTarget:self action:@selector(togglePraise:) forControlEvents:UIControlEventTouchUpInside];
-//        
-//        cell.contentView.backgroundColor = [UIColor newCellColor];
-//        cell.backgroundColor = [UIColor themeColor];
-//        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
-//        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
-//        
-//        return cell;
-//    }
-//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -496,114 +413,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     };
 }
 
-
-//- (void)setBlockForCommentCell:(NewTweetCell *)cell
-//{
-//    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
-//        if (action == @selector(copyText:)) {
-//            return YES;
-//        } else if (action == @selector(deleteObject:)) {
-//            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-//            OSCTweetItem *tweet = self.dataModels[indexPath.row];
-//            return tweet.author.id == [Config getOwnID];
-//        }
-//        return NO;
-//    };
-//    
-//    cell.deleteObject = ^ (UITableViewCell *cell) {
-//        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-//        OSCTweetItem *tweet = self.dataModels[indexPath.row];
-//        
-//        MBProgressHUD *HUD = [Utils createHUD];
-//        HUD.mode = MBProgressHUDModeCustomView;
-//        HUD.label.text = @"正在删除动弹";
-//        
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
-//        
-//        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX, OSCAPI_TWEET_DELETE]
-//           parameters:@{
-//                        @"sourceId": @(tweet.id),
-//                        }
-//              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-//                  if ([responseObject[@"code"] floatValue] == 1) {
-//                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-//                      HUD.label.text = @"动弹删除成功";
-//                      
-//                      [self.dataModels removeObjectAtIndex:indexPath.row];
-//                      self.allCount--;
-//                      
-//                      dispatch_async(dispatch_get_main_queue(), ^{
-//                          [self.tableView reloadData];
-//                      });
-//                  }else{
-//                      HUD.label.text = @"网络错误";
-//                  }
-//                  [HUD hideAnimated:YES afterDelay:1];
-//                  
-//              }
-//              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-//                  HUD.mode = MBProgressHUDModeCustomView;
-//                  HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
-//                  
-//                  [HUD hideAnimated:YES afterDelay:1];
-//              }];
-//    };
-//}
-
-- (void)setBlockForCommentMultipleCell:(NewMultipleTweetCell *)cell
-{
-    cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
-        if (action == @selector(copyText:)) {
-            return YES;
-        } else if (action == @selector(deleteObject:)) {
-            NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-            OSCTweetItem *tweet = self.dataModels[indexPath.row];
-            return tweet.author.id == [Config getOwnID];
-        }
-        return NO;
-    };
-    
-    cell.deleteObject = ^ (UITableViewCell *cell) {
-        NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-        OSCTweetItem *tweet = self.dataModels[indexPath.row];
-        
-        MBProgressHUD *HUD = [Utils createHUD];
-        HUD.mode = MBProgressHUDModeCustomView;
-        HUD.label.text = @"正在删除动弹";
-        
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
-        
-        [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_V2_PREFIX, OSCAPI_TWEET_DELETE]
-           parameters:@{
-                        @"sourceId": @(tweet.id),
-                        }
-              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-                  if ([responseObject[@"code"] floatValue] == 1) {
-                      HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                      HUD.label.text = @"动弹删除成功";
-                      
-                      [self.dataModels removeObjectAtIndex:indexPath.row];
-                      self.allCount--;
-                      
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          [self.tableView reloadData];
-                      });
-                  }else{
-                      HUD.label.text = @"网络错误";
-                  }
-                  [HUD hideAnimated:YES afterDelay:1];
-                  
-              }
-              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.detailsLabel.text = error.userInfo[NSLocalizedDescriptionKey];
-                  
-                  [HUD hideAnimated:YES afterDelay:1];
-              }];
-    };
-}
-
-
 #pragma mark - 下载图片
 
 - (void)downloadThumbnailImageThenReload:(NSString*)urlString
@@ -656,8 +465,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     
     OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:@[currentPhotoItem]];
     
-//    UIWindow* keyWindow = [UIApplication sharedApplication].keyWindow;
-//    [photoGroup presentFromImageView:fromView toContainer:keyWindow animated:YES completion:nil];
     [photoGroup presentFromImageView:fromView toContainer:self.tabBarController.view animated:YES completion:nil];
 }
 
