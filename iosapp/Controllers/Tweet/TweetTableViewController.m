@@ -374,7 +374,7 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
 - (void)setBlockForCommentCell:(__kindof AsyncDisplayTableViewCell *)cell{
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
-            return NO;
+            return YES;
         } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             OSCTweetItem *tweet = self.dataModels[indexPath.row];
