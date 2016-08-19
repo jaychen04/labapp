@@ -311,23 +311,6 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
     }
 }
 
-#pragma mark --- AsyncDisplayTableViewCellDelegate
-- (void)userPortraitDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
-    OSCTweetItem* tweetItem = [cell valueForKey:@"tweetItem"];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweetItem.author.id];
-    [self.navigationController pushViewController:userDetailsVC animated:YES];
-}
-- (void)loadLargeImageDidFinsh:(__kindof AsyncDisplayTableViewCell *)cell
-                photoGroupView:(OSCPhotoGroupView *)groupView
-                      fromView:(UIImageView *)fromView
-{
-    UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
-    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
-}
-- (void)changeTweetStausButtonDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
-    [self toPraise:cell];
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -336,7 +319,6 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
     
     TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.id];
     [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
-    
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -354,6 +336,34 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
 }
 
 
+#pragma mark --- AsyncDisplayTableViewCellDelegate
+- (void)userPortraitDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
+    OSCTweetItem* tweetItem = [cell valueForKey:@"tweetItem"];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweetItem.author.id];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
+- (void)loadLargeImageDidFinsh:(__kindof AsyncDisplayTableViewCell *)cell
+                photoGroupView:(OSCPhotoGroupView *)groupView
+                      fromView:(UIImageView *)fromView
+{
+    UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
+    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
+}
+- (void)changeTweetStausButtonDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
+    [self toPraise:cell];
+}
+- (void) shouldInteractTextView:(UITextView* )textView
+                            URL:(NSURL *)URL
+                        inRange:(NSRange)characterRange
+{
+    [self.navigationController handleURL:URL];
+}
+- (void)textViewTouchPointProcessing:(UITapGestureRecognizer *)tap{
+    CGPoint point = [tap locationInView:self.tableView];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForRowAtPoint:point]];
+}
+
+
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -364,7 +374,7 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
 - (void)setBlockForCommentCell:(__kindof AsyncDisplayTableViewCell *)cell{
     cell.canPerformAction = ^ BOOL (UITableViewCell *cell, SEL action) {
         if (action == @selector(copyText:)) {
-            return YES;
+            return NO;
         } else if (action == @selector(deleteObject:)) {
             NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
             OSCTweetItem *tweet = self.dataModels[indexPath.row];
@@ -413,27 +423,7 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
     };
 }
 
-#pragma mark - 下载图片
-
-- (void)downloadThumbnailImageThenReload:(NSString*)urlString
-{
-    [SDWebImageDownloader.sharedDownloader downloadImageWithURL:[NSURL URLWithString:urlString]
-                                                        options:SDWebImageDownloaderUseNSURLCache
-                                                       progress:nil
-                                                      completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                                                          [[SDImageCache sharedImageCache] storeImage:image forKey:urlString toDisk:NO];
-                                                          
-                                                          // 单独刷新某一行会有闪烁，全部reload反而较为顺畅
-                                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                                              [self.tableView reloadData];
-                                                          });
-                                                      }];
-    
-}
-
-
 #pragma mark - 跳转到用户详情页
-
 - (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
 {
     OSCTweetItem *tweet = self.objects[recognizer.view.tag];
@@ -442,30 +432,11 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
 }
 
 #pragma mark - 编辑话题动弹
-
 - (void)topicEditing {
     TweetEditingVC *tweetEditingVC = [[TweetEditingVC alloc] initWithTopic:_topic];
     UINavigationController *tweetEditingNav = [[UINavigationController alloc] initWithRootViewController:tweetEditingVC];
     [self.navigationController presentViewController:tweetEditingNav animated:NO completion:nil];
     
-}
-
-
-#pragma mark - 加载大图
-
-- (void)loadLargeImage:(UITapGestureRecognizer *)recognizer {
-    UIImageView* fromView = (UIImageView* )recognizer.view;
-    OSCTweetItem *tweet = self.objects[recognizer.view.tag];
-    OSCTweetImages* tweetItem = [tweet.images lastObject];
-    
-    OSCPhotoGroupItem* currentPhotoItem = [OSCPhotoGroupItem new];
-    currentPhotoItem.largeImageURL = [NSURL URLWithString:tweetItem.href];
-    currentPhotoItem.thumbView = fromView;
-    currentPhotoItem.largeImageSize = [UIScreen mainScreen].bounds.size;
-    
-    OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:@[currentPhotoItem]];
-    
-    [photoGroup presentFromImageView:fromView toContainer:self.tabBarController.view animated:YES completion:nil];
 }
 
 #pragma mark --点赞（新接口)
@@ -503,44 +474,14 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
           }
      ];
 }
-#pragma mark -
+
 #pragma mark --- UITextView Delegate
-- (void)textViewDidChange:(UITextView *)textView
-{
-    //hack for iOS8
-    if ([[UIDevice currentDevice].systemVersion floatValue] < 9.0 )//in iOS9 Apple has already fixed this bug
-    {
-        CGRect line = [textView caretRectForPosition:
-                       textView.selectedTextRange.start];
-        CGFloat overflow = line.origin.y + line.size.height
-        - (textView.contentOffset.y + textView.bounds.size.height
-           - textView.contentInset.bottom - textView.contentInset.top);
-        if (overflow > 0)//If at the bottom of text view
-        {
-            //disable animation. Otherwise, when a input confirm scroll animation is doing, input new text, animation will re-do from animation beginning, which looks strange.
-            [UIView setAnimationsEnabled:NO];
-            
-            //scroll to text end
-            [textView scrollRangeToVisible:NSMakeRange([textView.text length], 0)];
-            [UIView setAnimationsEnabled:YES];
-        }
-    }
-}
-
-#pragma mark - UITableViewDelegate
-
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
     [self.navigationController handleURL:URL];
     return NO;
 }
 
-#pragma  mark - 转发cell.contentText的tap事件
-- (void)onTapCellContentText:(UITapGestureRecognizer*)tap
-{
-    CGPoint point = [tap locationInView:self.tableView];
-    [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForRowAtPoint:point]];
-}
-
+#pragma mark --- lazy loading
 - (NSMutableArray *)dataModels {
     if(_dataModels == nil) {
         _dataModels = [[NSMutableArray alloc] init];

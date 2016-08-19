@@ -26,7 +26,7 @@
     _content = content;
     NSAttributedString* string = [Utils contentStringFromRawString:content];
     CGSize size = [string.string boundingRectWithSize:(CGSize){(kScreen_W - padding_left - userPortrait_W - userPortrait_SPACE_nameLabel - padding_right),MAXFLOAT} options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:descTextView_FontSize]} context:Nil].size;
-    CGRect descTextFrame = (CGRect){{0,0},{kScreen_W - padding_left - userPortrait_W - userPortrait_SPACE_nameLabel - padding_right,size.height}};
+    CGRect descTextFrame = (CGRect){{0,0},{kScreen_W - padding_left - userPortrait_W - userPortrait_SPACE_nameLabel - padding_right,size.height + 6}};
     _descTextFrame = descTextFrame;
 }
 -(void)setImages:(NSArray<OSCTweetImages *> *)images{
