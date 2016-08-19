@@ -21,7 +21,7 @@
 #define nameLabel_H 16
 #define nameLabel_space_descTextView 4
 #define descTextView_space_imageView 10
-#define descTextView_space_timeAndSourceLabel 8
+#define descTextView_space_timeAndSourceLabel 2
 #define imageView_space_timeAndSourceLabel 8
 #define timeAndSourceLabel_W 190
 #define timeAndSourceLabel_H 14
@@ -47,6 +47,12 @@
 
 - (void)changeTweetStausButtonDidClick:(__kindof AsyncDisplayTableViewCell* )cell;
 
+- (void)shouldInteractTextView:(UITextView* )textView
+                           URL:(NSURL *)URL
+                       inRange:(NSRange)characterRange;
+
+- (void)textViewTouchPointProcessing:(UITapGestureRecognizer* )tap;
+
 @optional
 - (void)loadLargeImageDidFinsh:(__kindof AsyncDisplayTableViewCell *)cell
                 photoGroupView:(OSCPhotoGroupView *)groupView
@@ -61,6 +67,8 @@
 @property (nonatomic, copy) void (^deleteObject)(UITableViewCell *cell);
 
 - (void)handleTextView:(UITextView* )textView;
+
+- (void)copyText:(id)sender;
 
 - (UIImage* )likeImage;
 

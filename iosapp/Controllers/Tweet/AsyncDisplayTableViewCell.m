@@ -40,6 +40,8 @@
     textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
     [textView setTextAlignment:NSTextAlignmentLeft];
     textView.text = @" ";
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:textView.text];
 }
 
 #pragma mark - 处理长按操作
@@ -92,6 +94,9 @@ static UIImage* _gifImage;
     return _gifImage;
 }
 - (void)setLikeStatus:(BOOL)isLike animation:(BOOL)isNeedAnimation{
+    // Covered by the subclass
+}
+- (void)copyText:(id)sender{
     // Covered by the subclass
 }
 

@@ -17,7 +17,7 @@
 
 #import <YYKit.h>
 
-@interface OSCImageTweetCell (){
+@interface OSCImageTweetCell ()<UITextViewDelegate>{
     __weak UIImageView* _userPortrait;
     __weak YYLabel* _nameLabel;
     __weak UITextView* _descTextView;
@@ -73,6 +73,8 @@
     
     UITextView* descTextView = [UITextView new];
     _descTextView = descTextView;
+    [_descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(forwardingEvent:)]];
+    _descTextView.delegate = self;
     [self handleTextView:_descTextView];
     [self.contentView addSubview:_descTextView];
     
@@ -86,14 +88,12 @@
 //    图片类型标识
     UIImageView* imageTypeLogo = [UIImageView new];
     _imageTypeLogo = imageTypeLogo;
-    imageTypeLogo.frame = (CGRect){{imageView.bounds.size.width - 18 - 2,imageView.bounds.size.height - 11 - 2 },{18,11}};
     imageTypeLogo.hidden = YES;
     [_imageView addSubview:imageTypeLogo];
     
     YYLabel* timeAndSourceLabel = [YYLabel new];
     _timeAndSourceLabel = timeAndSourceLabel;
     _timeAndSourceLabel.font = [UIFont systemFontOfSize:12];
-    _timeAndSourceLabel.textColor = [UIColor newAssistTextColor];
     _timeAndSourceLabel.displaysAsynchronously = YES;
     _timeAndSourceLabel.fadeOnAsynchronouslyDisplay = NO;
     _timeAndSourceLabel.fadeOnHighlight = NO;
@@ -151,6 +151,8 @@
     _imageView.top = CGRectGetMaxY(_descTextView.frame) + descTextView_space_imageView;
     _imageView.size = _imageSize;
     
+    _imageTypeLogo.frame = (CGRect){{_imageView.bounds.size.width - 18 - 2,_imageView.bounds.size.height - 11 - 2 },{18,11}};
+    
     _timeAndSourceLabel.left = _descTextView.left;
     _timeAndSourceLabel.top = CGRectGetMaxY(_imageView.frame) + imageView_space_timeAndSourceLabel;
     _timeAndSourceLabel.size = (CGSize){timeAndSourceLabel_W,timeAndSourceLabel_H};
@@ -198,6 +200,7 @@
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:tweetItem.pubDate] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     [att appendAttributedString:[Utils getAppclientName:(int)tweetItem.appClient]];
+    att.color = [UIColor newAssistTextColor];
     _timeAndSourceLabel.attributedText = att;
     
     OSCTweetImages* imageData = [tweetItem.images lastObject];
@@ -211,12 +214,16 @@
         _imageView.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.6];
         _imageView.userInteractionEnabled = NO;
         [ImageDownloadHandle downloadImageWithUrlString:imageData.thumb SaveToDisk:NO completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-            if (isGif) {
-                NSData *dataImage = UIImagePNGRepresentation(image);
-                image = [UIImage sd_animatedGIFWithData:dataImage];
-            }
-            [_imageView setImage:image];
-            _imageView.userInteractionEnabled = YES;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (isGif) {
+                    NSData *dataImage = UIImagePNGRepresentation(image);
+                    UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
+                    [_imageView setImage:gifImage];
+                }else{
+                    [_imageView setImage:image];
+                }
+                _imageView.userInteractionEnabled = YES;
+            });
         }];
     }else{
         if (isGif) {
@@ -253,6 +260,7 @@
     _imageSize = CGSizeZero;
 }
 
+#pragma mark --- 触摸分发
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     _trackingTouch_userPortrait = NO;
     _trackingTouch_likeBtn = NO;
@@ -260,10 +268,11 @@
     UITouch *t = touches.anyObject;
     CGPoint p1 = [t locationInView:_userPortrait];
     CGPoint p2 = [t locationInView:_likeCountButton];
+    CGPoint p2_1 = [t locationInView:_likeCountLabel];
     CGPoint p3 = [t locationInView:_imageView];
     if (CGRectContainsPoint(_userPortrait.bounds, p1)) {
         _trackingTouch_userPortrait = YES;
-    }else if(CGRectContainsPoint(_likeCountButton.bounds, p2)){
+    }else if(CGRectContainsPoint(_likeCountButton.bounds, p2) || CGRectContainsPoint(_likeCountLabel.bounds, p2_1)){
         _trackingTouch_likeBtn = YES;
     }else if(CGRectContainsPoint(_imageView.bounds, p3)){
         _trackingTouch_imageView = YES;
@@ -304,6 +313,7 @@
     }
 }
 
+#pragma mark --- 动画handle
 - (void)setLikeStatus:(BOOL)isLike animation:(BOOL)isNeedAnimation{
     UIImage* image = isLike ? [self likeImage] : [self unlikeImage];
     if (isNeedAnimation) {
@@ -326,6 +336,25 @@
     }else{
         [_likeCountButton setImage:image];
         _likeCountLabel.text = [NSString stringWithFormat:@"%ld", (long)_tweetItem.likeCount];
+    }
+}
+
+#pragma mark --- textHandle
+- (void)copyText:(id)sender
+{
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:_descTextView.text];
+}
+#pragma mark --- UITextView delegate
+-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    if ([_delegate respondsToSelector:@selector(shouldInteractTextView:URL:inRange:)]) {
+        [_delegate shouldInteractTextView:textView URL:URL inRange:characterRange];
+    }
+    return NO;
+}
+- (void)forwardingEvent:(UITapGestureRecognizer* )tap{
+    if ([_delegate respondsToSelector:@selector(textViewTouchPointProcessing:)]) {
+        [_delegate textViewTouchPointProcessing:tap];
     }
 }
 
