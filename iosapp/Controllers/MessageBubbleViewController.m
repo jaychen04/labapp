@@ -100,9 +100,9 @@
 }
 
 
-- (void)pushUserDetails:(UIButton *)recognizer
+- (void)pushUserDetails:(UITapGestureRecognizer *)recognizer
 {
-    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:recognizer.tag] animated:YES];
+    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID: recognizer.view.tag] animated:YES];
 }
 
 #pragma mark - 删除私信
