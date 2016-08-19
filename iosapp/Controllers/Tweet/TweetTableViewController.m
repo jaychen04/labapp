@@ -438,7 +438,6 @@ static NSString* const reuseIdentifier_Multiple = @"NewMultipleTweetCell";
     
     TweetDetailsWithBottomBarViewController *tweetDetailsBVC = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.id];
     [self.navigationController pushViewController:tweetDetailsBVC animated:YES];
-    
 }
 
 - (BOOL)tableView:(UITableView *)tableView shouldShowMenuForRowAtIndexPath:(NSIndexPath *)indexPath

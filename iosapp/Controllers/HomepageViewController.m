@@ -10,7 +10,9 @@
 #import "Utils.h"
 #import "Config.h"
 #import "OSCAPI.h"
+
 #import "OSCUser.h"
+#import "OSCUserItem.h"
 #import "SwipableViewController.h"
 #import "FriendsViewController.h"
 #import "FavoritesViewController.h"
@@ -32,9 +34,11 @@
 #import "HomePageHeadView.h"
 #import "ImageViewerController.h"
 
+
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MJRefresh.h>
+#import <MJExtension.h>
 
 static NSString *reuseIdentifier = @"HomeButtonCell";
 
@@ -46,6 +50,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 @property (nonatomic, assign) int64_t myID;
 @property (nonatomic, strong) OSCUser *myProfile;
+@property (nonatomic, strong) OSCUserItem *myInfo;
 @property (nonatomic, assign) BOOL isLogin;
 @property (nonatomic, strong) NSMutableArray *noticeCounts;
 @property (nonatomic, assign) int badgeValue;
@@ -177,45 +182,45 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
             });
         });
     } else {
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        
-        NSString *str = [NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID];
-        [manager GET:str
-          parameters:nil
-             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-                 
-                 ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
-                 _myProfile = [[OSCUser alloc] initWithXML:userXML];
-                 
-                 if ([_myProfile.gender isEqualToString:@"1"]) {
-                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
-                     self.homePageHeadView.genderImageView.hidden = NO;
-                 } else if ([_myProfile.gender isEqualToString:@"2"]) {
-                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
-                     self.homePageHeadView.genderImageView.hidden = NO;
-                 }
-                 
-                 [Config updateProfile:_myProfile];
-                 
-                 [self refreshHeaderView];
-                 [self.refreshControl endRefreshing];
-                 
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [self.tableView reloadData];
-                 });
-             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                 MBProgressHUD *HUD = [Utils createHUD];
-                 HUD.mode = MBProgressHUDModeCustomView;
-                 HUD.label.text = @"网络异常，加载失败";
-                 
-                 [HUD hideAnimated:YES afterDelay:1];
-                 
-                 [self.refreshControl endRefreshing];
-             }];
+//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+//        
+//        NSString *str = [NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID];
+//        [manager GET:str
+//          parameters:nil
+//             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
+//                 
+//                 ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
+//                 _myProfile = [[OSCUser alloc] initWithXML:userXML];
+//                 
+//                 if ([_myProfile.gender isEqualToString:@"1"]) {
+//                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
+//                     self.homePageHeadView.genderImageView.hidden = NO;
+//                 } else if ([_myProfile.gender isEqualToString:@"2"]) {
+//                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
+//                     self.homePageHeadView.genderImageView.hidden = NO;
+//                 }
+//                 
+//                 [Config updateProfile:_myProfile];
+//                 
+//                 [self refreshHeaderView];
+//                 [self.refreshControl endRefreshing];
+//                 
+//                 dispatch_async(dispatch_get_main_queue(), ^{
+//                     [self.tableView reloadData];
+//                 });
+//             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//                 MBProgressHUD *HUD = [Utils createHUD];
+//                 HUD.mode = MBProgressHUDModeCustomView;
+//                 HUD.label.text = @"网络异常，加载失败";
+//                 
+//                 [HUD hideAnimated:YES afterDelay:1];
+//                 
+//                 [self.refreshControl endRefreshing];
+//             }];
         
         
         //新用户信息接口
-        /*
+        //*
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
         
         NSString *strUrl = [NSString stringWithFormat:@"%@user_me", OSCAPI_V2_PREFIX];
@@ -223,15 +228,48 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         [manager GET:strUrl
           parameters:nil
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-                 //
-                 NSDictionary* result = responseObject[@"result"];
-                 NSLog(@"result = %@", result);
-             } failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-                 //
-                 NSLog(@"error= %@", error);
-        }];
-        */
+                 NSInteger code = [responseObject[@"code"] integerValue];
+                 if (code == 1) {
+                     _myInfo = [OSCUserItem mj_objectWithKeyValues:responseObject[@"result"]];
+                 }
+ 
+                  [Config updateProfile:[self changeUpdateWithOSCUser:_myInfo]];
+ 
+                  [self refreshHeaderView];
+                  [self.refreshControl endRefreshing];
+ 
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      [self.tableView reloadData];
+                  });
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.label.text = @"网络异常，加载失败";
+                  
+                  [HUD hideAnimated:YES afterDelay:1];
+                  
+                  [self.refreshControl endRefreshing];
+              }];
+        //*/
     }
+}
+
+- (OSCUser *)changeUpdateWithOSCUser:(OSCUserItem *)userItem
+{
+    OSCUser *user = [[OSCUser alloc] init];
+    
+    user.name = userItem.name;
+    user.portraitURL = [NSURL URLWithString:userItem.portrait];
+    user.score = userItem.score;
+    user.favoriteCount = userItem.collectCount;
+    user.fansCount = userItem.fansCount;
+    
+    user.desc = userItem.desc;
+    user.followersCount = userItem.followCount;
+    user.tweetCount = userItem.tweetCount;
+    user.gender = [NSString stringWithFormat:@"%d", userItem.gender];
+    
+    return user;
 }
 
 #pragma mark - refresh header
@@ -253,6 +291,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         self.homePageHeadView.descLable.hidden = NO;
         self.homePageHeadView.creditLabel.hidden = NO;
         self.homePageHeadView.creditLabel.text = [NSString stringWithFormat:@"积分:%d", _myProfile.score];
+        self.homePageHeadView.descLable.text = _myProfile.desc.length ? _myProfile.desc : @"这个人很懒，啥也没写";
         
         [self.homePageHeadView.setUpButton addTarget:self action:@selector(setUpAction) forControlEvents:UIControlEventTouchUpInside];
         [self.homePageHeadView.codeButton addTarget:self action:@selector(showCodeAction) forControlEvents:UIControlEventTouchUpInside];
@@ -265,6 +304,13 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     }
     
     self.homePageHeadView.nameLabel.text = _isLogin ? _myProfile.name : @"点击头像登录";
+    if ([_myProfile.gender isEqualToString:@"1"]) {
+        [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
+        self.homePageHeadView.genderImageView.hidden = NO;
+    } else if ([_myProfile.gender isEqualToString:@"2"]) {
+        [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
+        self.homePageHeadView.genderImageView.hidden = NO;
+    }
 
 }
 
@@ -305,7 +351,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
             
         } else {
             
-            NSString *str = [NSString stringWithFormat:@"%@", _myProfile.portraitURL];
+            NSString *str = [NSString stringWithFormat:@"%@", _myInfo.portrait];
             
             if (str.length == 0) {
                 UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"尚未设置头像" message:nil delegate:self
@@ -367,38 +413,41 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USERINFO_UPDATE] parameters:@{@"uid":@([Config getOwnID])}
+    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USERINFO_UPDATE]
+       parameters:@{@"uid":@([Config getOwnID])}
 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-    if (_image) {
-        [formData appendPartWithFileData:[Utils compressImage:_image] name:@"portrait" fileName:@"img.jpg" mimeType:@"image/jpeg"];
-    }
-} success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
-    ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
-    int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-    NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-    
-    HUD.mode = MBProgressHUDModeCustomView;
-    if (errorCode) {
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-        HUD.label.text = @"头像更新成功";
+        if (_image) {
+            [formData appendPartWithFileData:[Utils compressImage:_image]
+                                        name:@"portrait"
+                                    fileName:@"img.jpg"
+                                    mimeType:@"image/jpeg"];
+        }
+    } success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
+        ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
+        int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
+        NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
         
-        HomepageViewController *homepageVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-        [homepageVC refresh];
+        HUD.mode = MBProgressHUDModeCustomView;
+        if (errorCode) {
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+            HUD.label.text = @"头像更新成功";
+            
+            HomepageViewController *homepageVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
+            [homepageVC refresh];
+            
+            self.homePageHeadView.userPortrait.image = _image;
+        } else {
+            
+            HUD.label.text = errorMessage;
+        }
+        [HUD hideAnimated:YES afterDelay:1];
         
-        self.homePageHeadView.userPortrait.image = _image;
-    } else {
-        //            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-        HUD.label.text = errorMessage;
-    }
-    [HUD hideAnimated:YES afterDelay:1];
-    
-} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    HUD.mode = MBProgressHUDModeCustomView;
-    //        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-    HUD.label.text = @"网络异常，头像更换失败";
-    
-    [HUD hideAnimated:YES afterDelay:1];
-}];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.label.text = @"网络异常，头像更换失败";
+        
+        [HUD hideAnimated:YES afterDelay:1];
+    }];
 }
 
 
@@ -525,7 +574,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             HomeButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
             buttonCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"0"] forState:UIControlStateNormal];//动弹数
+            [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.tweetCount)] forState:UIControlStateNormal];//动弹数
             [buttonCell.collectionButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
             [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
             [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];

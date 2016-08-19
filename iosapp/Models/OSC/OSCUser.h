@@ -27,4 +27,8 @@
 @property (nonatomic, readwrite, copy) NSString *pinyin; //拼音
 @property (nonatomic, readwrite, copy) NSString *pinyinFirst; //拼音首字母
 
+@property (nonatomic, copy) NSString *desc;//描述
+@property (nonatomic, assign) int tweetCount;//动弹数
+
+
 @end

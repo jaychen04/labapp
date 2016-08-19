@@ -38,6 +38,10 @@ NSString * const kPosition = @"position";
 NSString * const kTeamID = @"teamID";
 NSString * const kTeamsArray = @"teams";
 
+NSString * const kDesc = @"desc";
+NSString * const kTweetCount = @"tweetCount";
+NSString * const kGender = @"gender";
+
 
 @implementation Config
 
@@ -65,6 +69,10 @@ NSString * const kTeamsArray = @"teams";
     [userDefaults setObject:@(user.fansCount)      forKey:kFanCount];
     [userDefaults setObject:@(user.followersCount) forKey:kFollowerCount];
     
+    [userDefaults setObject:@(user.tweetCount) forKey:kTweetCount];
+    [userDefaults setObject:user.desc forKey:kDesc];
+    [userDefaults setObject:user.gender forKey:kGender];
+    
     [userDefaults synchronize];
 }
 
@@ -84,6 +92,10 @@ NSString * const kTeamsArray = @"teams";
     [userDefaults setObject:user.expertise forKey:kExpertise];
     [userDefaults setObject:user.developPlatform forKey:kDevelopPlatform];
     
+    [userDefaults setObject:@(user.tweetCount) forKey:kTweetCount];
+    [userDefaults setObject:user.desc forKey:kDesc];
+    [userDefaults setObject:user.gender forKey:kGender];
+    
     [userDefaults synchronize];
 }
 
@@ -97,6 +109,10 @@ NSString * const kTeamsArray = @"teams";
     [userDefaults setObject:@(0) forKey:kFavoriteCount];
     [userDefaults setObject:@(0) forKey:kFanCount];
     [userDefaults setObject:@(0) forKey:kFollowerCount];
+    
+    [userDefaults setObject:@(0) forKey:kTweetCount];
+    [userDefaults setObject:@"" forKey:kDesc];
+    [userDefaults setObject:@"" forKey:kGender];
     
     [userDefaults synchronize];
 }
@@ -118,6 +134,10 @@ NSString * const kTeamsArray = @"teams";
     user.location = [userDefaults objectForKey:kLocation];
     user.expertise = [userDefaults objectForKey:kExpertise];
     user.developPlatform = [userDefaults objectForKey:kDevelopPlatform];
+    
+    user.tweetCount = [[userDefaults objectForKey:kTweetCount] intValue];
+    user.desc = [userDefaults objectForKey:kDesc];
+    user.gender = [userDefaults objectForKey:kGender];
     
 //    if (!user.name) {
 //        user.name = @"点击头像登录";
