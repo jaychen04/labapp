@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "OSCNewUser.h"
 
 @interface HomePageHeadView : UIView
 

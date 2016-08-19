@@ -38,7 +38,7 @@ typedef struct GradientColor GradientColor;
 @property (nonatomic,assign) OffestCenter offestCenter;///< the center offest , default (0,0);
 
 /** 最外圆的半径值 默认是所设frame的宽度的一半 (用作下拉放大用)*/
-@property (nonatomic,assign) NSInteger biggestRoundRadius;///< default is (QuartzCanvasView.frame.size.width * 0.5)
+@property (nonatomic,assign) NSInteger biggestRoundRadius;///< default is MAX(QuartzCanvasView.frame.size.width * 0.5 , QuartzCanvasView.frame.size.height * 0.5)
 
 /** 最小圆(最内层圆)的半径值限制 */
 @property (nonatomic,assign) NSInteger minimumRoundRadius;///< default is 30px
