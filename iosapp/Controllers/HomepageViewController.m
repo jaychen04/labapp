@@ -372,44 +372,49 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.label.text = @"正在上传头像";
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    NSString *strUrl = [NSString stringWithFormat:@"%@user_edit_portrait", OSCAPI_V2_PREFIX];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USERINFO_UPDATE]
-       parameters:@{@"uid":@([Config getOwnID])}
+    [manager POST:strUrl
+parameters:@{@"uid":@([Config getOwnID])}
 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-    if (_image) {
-        [formData appendPartWithFileData:[Utils compressImage:_image]
-                                    name:@"portrait"
-                                fileName:@"img.jpg"
-                                mimeType:@"image/jpeg"];
-    }
-} success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
-    ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
-    int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-    NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-    
-    HUD.mode = MBProgressHUDModeCustomView;
-    if (errorCode) {
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-        HUD.label.text = @"头像更新成功";
+        if (_image) {
+            [formData appendPartWithFileData:[Utils compressImage:_image]
+                                        name:@"portrait"
+                                    fileName:@"img.jpg"
+                                    mimeType:@"image/jpeg"];
+        }
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            _myInfo = [OSCUserItem mj_objectWithKeyValues:responseObject[@"result"]];
+            
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+            HUD.label.text = @"头像更新成功";
+        } else {
+            HUD.label.text = @"头像更换失败";
+        }
+        [HUD hideAnimated:YES afterDelay:1];
         
-        HomepageViewController *homepageVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-        [homepageVC refresh];
+        [Config updateProfile:[self changeUpdateWithOSCUser:_myInfo]];
         
-        self.homePageHeadView.userPortrait.image = _image;
-    } else {
+        [self refreshHeaderView];
+        [self.refreshControl endRefreshing];
         
-        HUD.label.text = errorMessage;
-    }
-    [HUD hideAnimated:YES afterDelay:1];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.label.text = @"网络异常，头像更换失败";
+        
+        [HUD hideAnimated:YES afterDelay:1];
+    }];
     
-} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    HUD.mode = MBProgressHUDModeCustomView;
-    HUD.label.text = @"网络异常，头像更换失败";
-    
-    [HUD hideAnimated:YES afterDelay:1];
-}];
 }
 
 
