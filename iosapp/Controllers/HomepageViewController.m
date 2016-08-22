@@ -34,7 +34,6 @@
 #import "HomePageHeadView.h"
 #import "ImageViewerController.h"
 
-
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MJRefresh.h>
@@ -95,7 +94,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [super viewWillAppear:animated];
     _imageView.hidden = YES;
     
-    self.tableView.tableHeaderView = self.homePageHeadView;
+//    self.tableView.tableHeaderView = self.homePageHeadView;
     
     [self hideStatusBar:YES];
 }
@@ -116,7 +115,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
-//    self.tableView.tableHeaderView = self.homePageHeadView;
+    self.tableView.tableHeaderView = self.homePageHeadView;
     self.tableView.bounces = NO;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
@@ -757,12 +756,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 - (void)pushFriendsSVC:(UIButton *)button
 {
     if (button.tag == 1) {
-        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1];
+        FriendsViewController *friendVC = [[FriendsViewController alloc] initUserId:_myID andRelation:OSCAPI_USER_FOLLOWS];
         friendVC.title = @"关注";
         friendVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:friendVC animated:YES];
     } else {
-        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0];
+
+        FriendsViewController *friendVC = [[FriendsViewController alloc] initUserId:_myID andRelation:OSCAPI_USER_FANS];
         friendVC.title = @"粉丝";
         friendVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:friendVC animated:YES];

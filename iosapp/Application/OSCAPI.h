@@ -111,4 +111,7 @@
 
 #define OSCAPI_QUESTION                 @"question" //问答
 
+#define OSCAPI_USER_FOLLOWS             @"user_follows"
+#define OSCAPI_USER_FANS                @"user_fans"
+
 #endif
