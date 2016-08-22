@@ -116,7 +116,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
-    self.tableView.tableHeaderView = self.homePageHeadView;
+//    self.tableView.tableHeaderView = self.homePageHeadView;
     self.tableView.bounces = NO;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
@@ -182,43 +182,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
             });
         });
     } else {
-        //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        //
-        //        NSString *str = [NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID];
-        //        [manager GET:str
-        //          parameters:nil
-        //             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-        //
-        //                 ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
-        //                 _myProfile = [[OSCUser alloc] initWithXML:userXML];
-        //
-        //                 if ([_myProfile.gender isEqualToString:@"1"]) {
-        //                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
-        //                     self.homePageHeadView.genderImageView.hidden = NO;
-        //                 } else if ([_myProfile.gender isEqualToString:@"2"]) {
-        //                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
-        //                     self.homePageHeadView.genderImageView.hidden = NO;
-        //                 }
-        //
-        //                 [Config updateProfile:_myProfile];
-        //
-        //                 [self refreshHeaderView];
-        //                 [self.refreshControl endRefreshing];
-        //
-        //                 dispatch_async(dispatch_get_main_queue(), ^{
-        //                     [self.tableView reloadData];
-        //                 });
-        //             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //                 MBProgressHUD *HUD = [Utils createHUD];
-        //                 HUD.mode = MBProgressHUDModeCustomView;
-        //                 HUD.label.text = @"网络异常，加载失败";
-        //
-        //                 [HUD hideAnimated:YES afterDelay:1];
-        //
-        //                 [self.refreshControl endRefreshing];
-        //             }];
-        
-        
         //新用户信息接口
         //*
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
