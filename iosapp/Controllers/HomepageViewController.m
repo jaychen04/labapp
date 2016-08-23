@@ -96,6 +96,10 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView.hidden = YES;
     
     self.tableView.tableHeaderView = self.homePageHeadView;
+    self.homePageHeadView.drawView.gradientColor = (GradientColor){
+        [UIColor colorWithHex:0x24CF5F].CGColor,
+        [UIColor colorWithHex:0x20B955].CGColor,
+    };
     
     [self hideStatusBar:YES];
     [self refreshHeaderView];
@@ -114,7 +118,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.homePageHeadView.genderImageView.hidden = YES;
     
     _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
@@ -125,15 +128,10 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
-    [self setUpSubviews];
-    
     _myID = [Config getOwnID];
     [self refreshHeaderView];
     
     [self refresh];
-    
-    [self.homePageHeadView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
-    self.homePageHeadView.userInteractionEnabled = YES;
 }
 
 - (void)dealloc
@@ -270,6 +268,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     }
     
     self.homePageHeadView.nameLabel.text = _isLogin ? _myProfile.name : @"点击头像登录";
+    self.homePageHeadView.genderImageView.hidden = YES;
     if ([_myProfile.gender isEqualToString:@"1"]) {
         [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
         self.homePageHeadView.genderImageView.hidden = NO;
@@ -278,6 +277,10 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         self.homePageHeadView.genderImageView.hidden = NO;
     }
     
+    [self.homePageHeadView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
+    self.homePageHeadView.userInteractionEnabled = YES;
+    
+    [self setUpSubviews];
 }
 
 
@@ -511,6 +514,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             return 45;
         }
     }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -860,7 +864,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
             _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 202}}];
         }
-        
+        _homePageHeadView.drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
+        _homePageHeadView.drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
         _homePageHeadView.drawView.gradientColor = (GradientColor){
             [UIColor colorWithHex:0x24CF5F].CGColor,
             [UIColor colorWithHex:0x20B955].CGColor,
