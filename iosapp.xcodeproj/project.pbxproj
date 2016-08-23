@@ -70,6 +70,7 @@
 		044195441D6C2B5600BBDF26 /* OSCCommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044195421D6C2B5600BBDF26 /* OSCCommentsCell.m */; };
 		044195451D6C2B5600BBDF26 /* OSCCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044195431D6C2B5600BBDF26 /* OSCCommentsCell.xib */; };
 		044195481D6C397600BBDF26 /* OSCCommentsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044195471D6C397600BBDF26 /* OSCCommentsController.m */; };
+		0441954E1D6C591300BBDF26 /* OSCMessageCenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0441954D1D6C591300BBDF26 /* OSCMessageCenterController.m */; };
 		044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */; };
 		044266961D49E7BB00D87091 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044266951D49E7BB00D87091 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		044266971D4A026000D87091 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC2D1CEDA2A7007DB140 /* InformationViewController.m */; };
@@ -476,6 +477,8 @@
 		044195431D6C2B5600BBDF26 /* OSCCommentsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSCCommentsCell.xib; sourceTree = "<group>"; };
 		044195461D6C397600BBDF26 /* OSCCommentsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCCommentsController.h; sourceTree = "<group>"; };
 		044195471D6C397600BBDF26 /* OSCCommentsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCCommentsController.m; sourceTree = "<group>"; };
+		0441954C1D6C591300BBDF26 /* OSCMessageCenterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMessageCenterController.h; sourceTree = "<group>"; };
+		0441954D1D6C591300BBDF26 /* OSCMessageCenterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMessageCenterController.m; sourceTree = "<group>"; };
 		044266921D49C98C00D87091 /* OSCPhotoAlbumManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCPhotoAlbumManger.h; path = ELCImagePickerController/Classes/OSCPhotoAlbumManger.h; sourceTree = "<group>"; };
 		044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSCPhotoAlbumManger.m; path = ELCImagePickerController/Classes/OSCPhotoAlbumManger.m; sourceTree = "<group>"; };
 		044266951D49E7BB00D87091 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -1821,6 +1824,8 @@
 			children = (
 				38A93FA71AA31DB400A515E8 /* MessageCenter.h */,
 				38A93FA81AA31DB400A515E8 /* MessageCenter.m */,
+				0441954C1D6C591300BBDF26 /* OSCMessageCenterController.h */,
+				0441954D1D6C591300BBDF26 /* OSCMessageCenterController.m */,
 				044195461D6C397600BBDF26 /* OSCCommentsController.h */,
 				044195471D6C397600BBDF26 /* OSCCommentsController.m */,
 				044195411D6C2B5600BBDF26 /* OSCCommentsCell.h */,
@@ -2925,6 +2930,7 @@
 				042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */,
 				04323DA91D643802008FD302 /* ThumbnailHadle.m in Sources */,
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,
+				0441954E1D6C591300BBDF26 /* OSCMessageCenterController.m in Sources */,
 				38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */,
 				04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */,
 				384A112C1ADE565200856A7C /* TeamMember.m in Sources */,
