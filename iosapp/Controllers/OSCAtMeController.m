@@ -18,7 +18,7 @@
 static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 @interface OSCAtMeController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic,strong) UITableView* tableView;
+@property (nonatomic,weak) UITableView* tableView;
 @property (nonatomic,strong) NSMutableArray* dataSource;
 @property (nonatomic,strong) NSString* nextToken;
 
@@ -91,7 +91,8 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
 	if(_tableView == nil) {
-		_tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+		UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView = tableView;
         _tableView.separatorColor = [UIColor separatorColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;

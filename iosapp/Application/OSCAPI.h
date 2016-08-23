@@ -59,8 +59,9 @@
 
 
 //#define OSCAPI_MESSAGES_LIST            @"message_list"
-#define OSCAPI_MESSAGES_LIST            @"user_msg_letters"//私信我的列表
-#define OSCAPI_MESSAGES_ATME_LIST       @"user_msg_mentions"//@我的列表
+#define OSCAPI_MESSAGES_LIST            @"user_msg_letters"//消息中心_私信我的列表
+#define OSCAPI_MESSAGES_ATME_LIST       @"user_msg_mentions"//消息中心_@我的列表
+#define OSCAPI_MESSAGES_COMMENTS_LIST   @"user_msg_comments"//消息中心_评论列表
 #define OSCAPI_MESSAGE_DELETE           @"message_delete"
 #define OSCAPI_MESSAGE_PUB              @"message_pub"
 

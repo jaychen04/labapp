@@ -1,42 +1,37 @@
 //
-//  OSCMessageController.m
+//  OSCCommentsController.m
 //  iosapp
 //
-//  Created by Graphic-one on 16/8/22.
+//  Created by Graphic-one on 16/8/23.
 //  Copyright © 2016年 oschina. All rights reserved.
 //
 
-#import "OSCMessageController.h"
-#import "OSCMessageCell.h"
-#import "OSCMessageCenter.h"
+#import "OSCCommentsController.h"
 #import "OSCAPI.h"
 #import "Config.h"
+#import "MessageCenter.h"
+#import "OSCCommentsCell.h"
 
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "UIColor+Util.h"
-#import <AFNetworking.h>
+
 #import <MJRefresh.h>
 
-static NSString* const messageCellIdentifier = @"OSCMessageCell";
-
-@interface OSCMessageController ()<UITableViewDelegate,UITableViewDataSource>
+static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
+@interface OSCCommentsController ()<UITableViewDelegate,UITableViewDataSource>
 
 @property (nonatomic,weak) UITableView* tableView;
-
 @property (nonatomic,strong) NSMutableArray* dataSource;
 @property (nonatomic,strong) NSString* nextToken;
 
 @end
 
-@implementation OSCMessageController
-
-#pragma mrak --- initialize Method
-
+@implementation OSCCommentsController
 
 #pragma mark --- life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     [self.view addSubview:self.tableView];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
@@ -49,16 +44,15 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
-    
 }
 
-#pragma mark --- Network 
-- (void)getDataThroughDropdown:(BOOL)dropDown{//YES:下拉   NO:上拉
-    NSString *strUrl = [NSString stringWithFormat:@"%@%@?uid=%llu",OSCAPI_V2_PREFIX,OSCAPI_MESSAGES_LIST,[Config getOwnID]];
+
+#pragma mark --- Networking 
+- (void)getDataThroughDropdown:(BOOL)dropDown{
+    NSString *strUrl = [NSString stringWithFormat:@"%@%@?uid=%llu",OSCAPI_V2_PREFIX,OSCAPI_MESSAGES_COMMENTS_LIST,[Config getOwnID]];
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
     
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
@@ -69,15 +63,12 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
     [manager GET:strUrl
       parameters:paraMutableDic.copy
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-             if([responseObject[@"code"]integerValue] == 1) {
-                 
-             }
+        
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-
+        
     }];
 }
-
 
 #pragma mark --- UITableViewDelegate & UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -87,32 +78,23 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
     return self.dataSource.count;
 }
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OSCMessageCell* cell = [OSCMessageCell returnReuseMessageCellWithTableView:tableView identifier:messageCellIdentifier];
-    cell.messageItem = self.dataSource[indexPath.row];
+    OSCCommentsCell* cell = [OSCCommentsCell returnReuseCommentsCellWithTableView:tableView identifier:OSCCommentsCellReuseIdentifier];
+    cell.commentItem = self.dataSource[indexPath.row];
     return cell;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    //push 到私信界面
-}
-
-
-
-
 
 
 
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
-	if(_tableView == nil) {
-        UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    if(_tableView == nil) {
+        UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView = tableView;
         _tableView.separatorColor = [UIColor separatorColor];
-        _tableView.dataSource = self;
         _tableView.delegate = self;
-	}
-	return _tableView;
+        _tableView.dataSource = self;
+    }
+    return _tableView;
 }
 - (NSMutableArray *)dataSource {
 	if(_dataSource == nil) {
