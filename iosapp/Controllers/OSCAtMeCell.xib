@@ -40,7 +40,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brin想写程序：最火的开放语言是什么？最赚钱的语言是什么？最有前途的语言是什么？@空格邓犹豫毁一生踌躇穷三代。投身互联网，成就好未来。巴林的狗尾草Java毁一生C#穷三代，若要好前程，置身IT外。 到底谁说的有道理" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uab-NC-Yku">
                                 <rect key="frame" x="10" y="10" width="438" height="40"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.12156862745098039" green="0.12941176470588234" blue="0.14117647058823529" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -92,6 +92,7 @@
                     <constraint firstItem="ERs-VW-9tz" firstAttribute="top" secondItem="vTT-Oh-3ew" secondAttribute="bottom" constant="10" id="oEd-hR-FDH"/>
                     <constraint firstItem="qjZ-Lr-eTx" firstAttribute="top" secondItem="dSC-Zg-3zt" secondAttribute="bottom" constant="2" id="pVR-ep-vXq"/>
                     <constraint firstItem="EG8-sE-zEZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="vPP-9p-cCX"/>
+                    <constraint firstItem="2Rg-U0-ANg" firstAttribute="centerY" secondItem="ERs-VW-9tz" secondAttribute="centerY" id="vya-pX-LtR"/>
                     <constraint firstItem="qjZ-Lr-eTx" firstAttribute="leading" secondItem="EG8-sE-zEZ" secondAttribute="trailing" constant="8" id="z7u-fw-5gD"/>
                 </constraints>
                 <variation key="default">

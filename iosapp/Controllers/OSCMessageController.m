@@ -8,7 +8,7 @@
 
 #import "OSCMessageController.h"
 #import "OSCMessageCell.h"
-#import "MessageItem.h"
+#import "OSCMessageCenter.h"
 #import "OSCAPI.h"
 #import "Config.h"
 
@@ -57,12 +57,12 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 }
 
 #pragma mark --- Network 
-- (void)getDataThroughDropdown:(BOOL)dorpDown{//YES:下拉   NO:上拉
+- (void)getDataThroughDropdown:(BOOL)dropDown{//YES:下拉   NO:上拉
     NSString *strUrl = [NSString stringWithFormat:@"%@%@?uid=%llu",OSCAPI_V2_PREFIX,OSCAPI_MESSAGES_LIST,[Config getOwnID]];
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
     
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
-    if (!dorpDown && [self.nextToken length] > 0) {
+    if (!dropDown && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
     }
     

@@ -63,11 +63,12 @@
 		044195251D6AD37A00BBDF26 /* OSCMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044195231D6AD37A00BBDF26 /* OSCMessageCell.m */; };
 		044195261D6AD37A00BBDF26 /* OSCMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044195241D6AD37A00BBDF26 /* OSCMessageCell.xib */; };
 		044195291D6AE59B00BBDF26 /* OSCMessageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044195281D6AE59B00BBDF26 /* OSCMessageController.m */; };
-		0441952C1D6AE85500BBDF26 /* MessageItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 0441952B1D6AE85500BBDF26 /* MessageItem.m */; };
 		0441952F1D6B01F800BBDF26 /* OSCAtMeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0441952E1D6B01F800BBDF26 /* OSCAtMeController.m */; };
 		044195331D6B0E1500BBDF26 /* OSCAtMeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044195311D6B0E1500BBDF26 /* OSCAtMeCell.m */; };
 		044195341D6B0E1500BBDF26 /* OSCAtMeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044195321D6B0E1500BBDF26 /* OSCAtMeCell.xib */; };
-		0441953A1D6BF1ED00BBDF26 /* AtMeItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 044195391D6BF1ED00BBDF26 /* AtMeItem.m */; };
+		0441953D1D6C244800BBDF26 /* OSCMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0441953C1D6C244800BBDF26 /* OSCMessageCenter.m */; };
+		044195441D6C2B5600BBDF26 /* OSCCommentsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044195421D6C2B5600BBDF26 /* OSCCommentsCell.m */; };
+		044195451D6C2B5600BBDF26 /* OSCCommentsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044195431D6C2B5600BBDF26 /* OSCCommentsCell.xib */; };
 		044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */; };
 		044266961D49E7BB00D87091 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044266951D49E7BB00D87091 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		044266971D4A026000D87091 /* InformationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC2D1CEDA2A7007DB140 /* InformationViewController.m */; };
@@ -462,15 +463,16 @@
 		044195241D6AD37A00BBDF26 /* OSCMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSCMessageCell.xib; sourceTree = "<group>"; };
 		044195271D6AE59B00BBDF26 /* OSCMessageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMessageController.h; sourceTree = "<group>"; };
 		044195281D6AE59B00BBDF26 /* OSCMessageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMessageController.m; sourceTree = "<group>"; };
-		0441952A1D6AE85500BBDF26 /* MessageItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageItem.h; sourceTree = "<group>"; };
-		0441952B1D6AE85500BBDF26 /* MessageItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageItem.m; sourceTree = "<group>"; };
 		0441952D1D6B01F800BBDF26 /* OSCAtMeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCAtMeController.h; sourceTree = "<group>"; };
 		0441952E1D6B01F800BBDF26 /* OSCAtMeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCAtMeController.m; sourceTree = "<group>"; };
 		044195301D6B0E1500BBDF26 /* OSCAtMeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCAtMeCell.h; sourceTree = "<group>"; };
 		044195311D6B0E1500BBDF26 /* OSCAtMeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCAtMeCell.m; sourceTree = "<group>"; };
 		044195321D6B0E1500BBDF26 /* OSCAtMeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSCAtMeCell.xib; sourceTree = "<group>"; };
-		044195381D6BF1ED00BBDF26 /* AtMeItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AtMeItem.h; sourceTree = "<group>"; };
-		044195391D6BF1ED00BBDF26 /* AtMeItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AtMeItem.m; sourceTree = "<group>"; };
+		0441953B1D6C244800BBDF26 /* OSCMessageCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMessageCenter.h; sourceTree = "<group>"; };
+		0441953C1D6C244800BBDF26 /* OSCMessageCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMessageCenter.m; sourceTree = "<group>"; };
+		044195411D6C2B5600BBDF26 /* OSCCommentsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCCommentsCell.h; sourceTree = "<group>"; };
+		044195421D6C2B5600BBDF26 /* OSCCommentsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCCommentsCell.m; sourceTree = "<group>"; };
+		044195431D6C2B5600BBDF26 /* OSCCommentsCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSCCommentsCell.xib; sourceTree = "<group>"; };
 		044266921D49C98C00D87091 /* OSCPhotoAlbumManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCPhotoAlbumManger.h; path = ELCImagePickerController/Classes/OSCPhotoAlbumManger.h; sourceTree = "<group>"; };
 		044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSCPhotoAlbumManger.m; path = ELCImagePickerController/Classes/OSCPhotoAlbumManger.m; sourceTree = "<group>"; };
 		044266951D49E7BB00D87091 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
@@ -1816,6 +1818,9 @@
 			children = (
 				38A93FA71AA31DB400A515E8 /* MessageCenter.h */,
 				38A93FA81AA31DB400A515E8 /* MessageCenter.m */,
+				044195411D6C2B5600BBDF26 /* OSCCommentsCell.h */,
+				044195421D6C2B5600BBDF26 /* OSCCommentsCell.m */,
+				044195431D6C2B5600BBDF26 /* OSCCommentsCell.xib */,
 				0441952D1D6B01F800BBDF26 /* OSCAtMeController.h */,
 				0441952E1D6B01F800BBDF26 /* OSCAtMeController.m */,
 				044195301D6B0E1500BBDF26 /* OSCAtMeCell.h */,
@@ -2179,12 +2184,10 @@
 		C5468A011BD1F45000D49223 /* Message */ = {
 			isa = PBXGroup;
 			children = (
+				0441953B1D6C244800BBDF26 /* OSCMessageCenter.h */,
+				0441953C1D6C244800BBDF26 /* OSCMessageCenter.m */,
 				38B0BF931A3AE79700A2FDB0 /* OSCMessage.h */,
 				38B0BF941A3AE79700A2FDB0 /* OSCMessage.m */,
-				044195381D6BF1ED00BBDF26 /* AtMeItem.h */,
-				044195391D6BF1ED00BBDF26 /* AtMeItem.m */,
-				0441952A1D6AE85500BBDF26 /* MessageItem.h */,
-				0441952B1D6AE85500BBDF26 /* MessageItem.m */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -2640,6 +2643,7 @@
 				EEB3D7AA1D13A86200164EF5 /* CommentDetailViewController.xib in Resources */,
 				EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */,
 				EEB3D7AF1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib in Resources */,
+				044195451D6C2B5600BBDF26 /* OSCCommentsCell.xib in Resources */,
 				C5B1231E1B316830000B29D2 /* js in Resources */,
 				EEEC98C41CF317D600995A03 /* QuesAnsViewController.xib in Resources */,
 				C5B1231D1B316830000B29D2 /* html in Resources */,
@@ -2755,7 +2759,6 @@
 				381EAB5919FE1FCF00C1937C /* OSCNews.m in Sources */,
 				042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */,
 				C5EF89381BE319F600B5FA46 /* NewsCell.m in Sources */,
-				0441953A1D6BF1ED00BBDF26 /* AtMeItem.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */,
 				C5D7C1111B14508E003EFE9B /* TableViewCell.m in Sources */,
@@ -2802,7 +2805,6 @@
 				0451265A1D61739900E4DD93 /* OSCImageTweetCell.m in Sources */,
 				C5EF89231BE3194800B5FA46 /* SoftwareCell.m in Sources */,
 				38763A0A1A860A96008E6805 /* UserOperationCell.m in Sources */,
-				0441952C1D6AE85500BBDF26 /* MessageItem.m in Sources */,
 				044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */,
 				04EC802F1D2A505E009D8025 /* NewCommentCell.m in Sources */,
 				31212ECB1D0E670100FA17B1 /* TweetsDetailNewCell.m in Sources */,
@@ -2889,6 +2891,7 @@
 				0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */,
 				38B0BF851A3993CD00A2FDB0 /* FavoritesViewController.m in Sources */,
 				C5D7C10E1B12F8A8003EFE9B /* CheckboxTableCell.m in Sources */,
+				0441953D1D6C244800BBDF26 /* OSCMessageCenter.m in Sources */,
 				380FD2261A761119003C4021 /* ActivityDetailsViewController.m in Sources */,
 				31EAF9FB1AEF2685004DF445 /* ProjectListViewController.m in Sources */,
 				38763A401A8DFB11008E6805 /* UIImage+Util.m in Sources */,
@@ -2904,6 +2907,7 @@
 				C5EF89221BE3194800B5FA46 /* SoftwareCatalogVC.m in Sources */,
 				31F14FED1D42205700AD0763 /* OSCUserItem.m in Sources */,
 				0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */,
+				044195441D6C2B5600BBDF26 /* OSCCommentsCell.m in Sources */,
 				0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */,
 				EE6FB5DD1D0D1050006A11A4 /* NewTweetCell.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,

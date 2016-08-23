@@ -7,7 +7,7 @@
 //
 
 #import "OSCAtMeCell.h"
-#import "AtMeItem.h"
+#import "OSCMessageCenter.h"
 #import "ImageDownloadHandle.h"
 #import "Utils.h"
 #import "UIImageView+CornerRadius.h"
@@ -54,7 +54,7 @@
         [_userPortraitImageView setImage:portraitImage];
     }
     
-    _nameLabel.text = atMeItem.author.portrait;
+    _nameLabel.text = atMeItem.author.name;
     _descLabel.attributedText = [Utils contentStringFromRawString:atMeItem.content];
     _originDescLabel.attributedText = [Utils contentStringFromRawString:atMeItem.origin.desc];
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:atMeItem.pubDate] timeAgoSinceNow]]];

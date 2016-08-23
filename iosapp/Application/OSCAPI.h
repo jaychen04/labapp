@@ -60,6 +60,7 @@
 
 //#define OSCAPI_MESSAGES_LIST            @"message_list"
 #define OSCAPI_MESSAGES_LIST            @"user_msg_letters"//私信我的列表
+#define OSCAPI_MESSAGES_ATME_LIST       @"user_msg_mentions"//@我的列表
 #define OSCAPI_MESSAGE_DELETE           @"message_delete"
 #define OSCAPI_MESSAGE_PUB              @"message_pub"
 

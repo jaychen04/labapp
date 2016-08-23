@@ -7,7 +7,7 @@
 //
 
 #import "OSCMessageCell.h"
-#import "MessageItem.h"
+#import "OSCMessageCenter.h"
 #import "ImageDownloadHandle.h"
 
 #import "UIImageView+CornerRadius.h"
