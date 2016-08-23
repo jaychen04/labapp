@@ -171,11 +171,11 @@
 - (void)pushFriendsSVC:(UIButton *)button
 {
     if (button.tag == 1) {//关注
-        FriendsViewController* followsVC = [[FriendsViewController alloc]initWithUserID:_user.userID andFriendsRelation:1];
+        FriendsViewController* followsVC = [[FriendsViewController alloc]initUserId:_user.userID andRelation:OSCAPI_USER_FOLLOWS];
         followsVC.title = @"关注";
         [self.navigationController pushViewController:followsVC animated:YES];
     }else{//粉丝
-        FriendsViewController* fansVC = [[FriendsViewController alloc]initWithUserID:_user.userID andFriendsRelation:0];
+        FriendsViewController* fansVC = [[FriendsViewController alloc]initUserId:_user.userID andRelation:OSCAPI_USER_FANS];
         fansVC.title = @"粉丝";
         [self.navigationController pushViewController:fansVC animated:YES];
     }

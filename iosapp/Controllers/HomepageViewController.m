@@ -33,7 +33,7 @@
 #import "NSString+FontAwesome.h"
 #import "HomePageHeadView.h"
 #import "ImageViewerController.h"
-
+#import "TweetTableViewController.h"
 
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -96,22 +96,28 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView.hidden = YES;
     
     self.tableView.tableHeaderView = self.homePageHeadView;
+    self.homePageHeadView.drawView.gradientColor = (GradientColor){
+        [UIColor colorWithHex:0x24CF5F].CGColor,
+        [UIColor colorWithHex:0x20B955].CGColor,
+    };
     
     [self hideStatusBar:YES];
+    [self refreshHeaderView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    
     [self hideStatusBar:NO];
+    
+    self.homePageHeadView = nil;
+    self.tableView.tableHeaderView = nil;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.homePageHeadView.genderImageView.hidden = YES;
     
     _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
@@ -122,15 +128,10 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
-    [self setUpSubviews];
-    
     _myID = [Config getOwnID];
     [self refreshHeaderView];
     
     [self refresh];
-    
-    [self.homePageHeadView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
-    self.homePageHeadView.userInteractionEnabled = YES;
 }
 
 - (void)dealloc
@@ -182,43 +183,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
             });
         });
     } else {
-        //        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        //
-        //        NSString *str = [NSString stringWithFormat:@"%@%@?uid=%lld", OSCAPI_PREFIX, OSCAPI_MY_INFORMATION, _myID];
-        //        [manager GET:str
-        //          parameters:nil
-        //             success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-        //
-        //                 ONOXMLElement *userXML = [responseDocument.rootElement firstChildWithTag:@"user"];
-        //                 _myProfile = [[OSCUser alloc] initWithXML:userXML];
-        //
-        //                 if ([_myProfile.gender isEqualToString:@"1"]) {
-        //                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
-        //                     self.homePageHeadView.genderImageView.hidden = NO;
-        //                 } else if ([_myProfile.gender isEqualToString:@"2"]) {
-        //                     [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
-        //                     self.homePageHeadView.genderImageView.hidden = NO;
-        //                 }
-        //
-        //                 [Config updateProfile:_myProfile];
-        //
-        //                 [self refreshHeaderView];
-        //                 [self.refreshControl endRefreshing];
-        //
-        //                 dispatch_async(dispatch_get_main_queue(), ^{
-        //                     [self.tableView reloadData];
-        //                 });
-        //             } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        //                 MBProgressHUD *HUD = [Utils createHUD];
-        //                 HUD.mode = MBProgressHUDModeCustomView;
-        //                 HUD.label.text = @"网络异常，加载失败";
-        //
-        //                 [HUD hideAnimated:YES afterDelay:1];
-        //
-        //                 [self.refreshControl endRefreshing];
-        //             }];
-        
-        
         //新用户信息接口
         //*
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
@@ -304,6 +268,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     }
     
     self.homePageHeadView.nameLabel.text = _isLogin ? _myProfile.name : @"点击头像登录";
+    self.homePageHeadView.genderImageView.hidden = YES;
     if ([_myProfile.gender isEqualToString:@"1"]) {
         [self.homePageHeadView.genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
         self.homePageHeadView.genderImageView.hidden = NO;
@@ -312,6 +277,10 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         self.homePageHeadView.genderImageView.hidden = NO;
     }
     
+    [self.homePageHeadView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
+    self.homePageHeadView.userInteractionEnabled = YES;
+    
+    [self setUpSubviews];
 }
 
 
@@ -327,11 +296,26 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 - (void)changePortraitAction
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择操作" message:nil delegate:self
-                                              cancelButtonTitle:@"取消" otherButtonTitles:@"更换头像", @"查看大头像", nil];
-    alertView.tag = 1;
+    if (![Utils isNetworkExist]) {
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.label.text = @"网络无连接，请检查网络";
+        
+        [HUD hideAnimated:YES afterDelay:1];
+    } else {
+        if ([Config getOwnID] == 0) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择操作" message:nil delegate:self
+                                                      cancelButtonTitle:@"取消" otherButtonTitles:@"更换头像", @"查看大头像", nil];
+            alertView.tag = 1;
+            
+            [alertView show];
+        }
+    }
     
-    [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -410,44 +394,49 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     MBProgressHUD *HUD = [Utils createHUD];
     HUD.label.text = @"正在上传头像";
+
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    NSString *strUrl = [NSString stringWithFormat:@"%@user_edit_portrait", OSCAPI_V2_PREFIX];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USERINFO_UPDATE]
-       parameters:@{@"uid":@([Config getOwnID])}
+    [manager POST:strUrl
+parameters:@{@"uid":@([Config getOwnID])}
 constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-    if (_image) {
-        [formData appendPartWithFileData:[Utils compressImage:_image]
-                                    name:@"portrait"
-                                fileName:@"img.jpg"
-                                mimeType:@"image/jpeg"];
-    }
-} success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDoment) {
-    ONOXMLElement *result = [responseDoment.rootElement firstChildWithTag:@"result"];
-    int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-    NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-    
-    HUD.mode = MBProgressHUDModeCustomView;
-    if (errorCode) {
-        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-        HUD.label.text = @"头像更新成功";
+        if (_image) {
+            [formData appendPartWithFileData:[Utils compressImage:_image]
+                                        name:@"portrait"
+                                    fileName:@"img.jpg"
+                                    mimeType:@"image/jpeg"];
+        }
+    } success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+        NSInteger code = [responseObject[@"code"] integerValue];
+        if (code == 1) {
+            _myInfo = [OSCUserItem mj_objectWithKeyValues:responseObject[@"result"]];
+            
+            HUD.mode = MBProgressHUDModeCustomView;
+            HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+            HUD.label.text = @"头像更新成功";
+        } else {
+            HUD.label.text = @"头像更换失败";
+        }
+        [HUD hideAnimated:YES afterDelay:1];
         
-        HomepageViewController *homepageVC = [self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count-2];
-        [homepageVC refresh];
+        [Config updateProfile:[self changeUpdateWithOSCUser:_myInfo]];
         
-        self.homePageHeadView.userPortrait.image = _image;
-    } else {
+        [self refreshHeaderView];
+        [self.refreshControl endRefreshing];
         
-        HUD.label.text = errorMessage;
-    }
-    [HUD hideAnimated:YES afterDelay:1];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.label.text = @"网络异常，头像更换失败";
+        
+        [HUD hideAnimated:YES afterDelay:1];
+    }];
     
-} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-    HUD.mode = MBProgressHUDModeCustomView;
-    HUD.label.text = @"网络异常，头像更换失败";
-    
-    [HUD hideAnimated:YES afterDelay:1];
-}];
 }
 
 
@@ -525,6 +514,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             return 45;
         }
     }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -578,6 +568,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [buttonCell.collectionButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
             [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
             [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
+            
+            [buttonCell.creditButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
+            [buttonCell.creditTitleButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
             
             [buttonCell.collectionButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
             [buttonCell.collectionTitleButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
@@ -775,6 +768,16 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 }
 
 #pragma mark - 功能
+#pragma mark - 动弹
+- (void)pushTweetList
+{
+    TweetTableViewController *myFriendTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:NewTweetsTypeOwnTweets];
+    myFriendTweetViewCtl.title = @"动弹";
+    myFriendTweetViewCtl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:myFriendTweetViewCtl animated:YES];
+}
+
+#pragma mark - 收藏
 - (void)pushFavoriteSVC
 {
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
@@ -791,15 +794,17 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     [self.navigationController pushViewController:favoritesSVC animated:YES];
 }
 
+#pragma mark - 关注/粉丝
 - (void)pushFriendsSVC:(UIButton *)button
 {
     if (button.tag == 1) {
-        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:1];
+        FriendsViewController *friendVC = [[FriendsViewController alloc] initUserId:_myID andRelation:OSCAPI_USER_FOLLOWS];
         friendVC.title = @"关注";
         friendVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:friendVC animated:YES];
     } else {
-        FriendsViewController *friendVC = [[FriendsViewController alloc] initWithUserID:_myID andFriendsRelation:0];
+
+        FriendsViewController *friendVC = [[FriendsViewController alloc] initUserId:_myID andRelation:OSCAPI_USER_FANS];
         friendVC.title = @"粉丝";
         friendVC.hidesBottomBarWhenPushed = YES;
         [self.navigationController pushViewController:friendVC animated:YES];
@@ -859,7 +864,12 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
             _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 202}}];
         }
-        
+        _homePageHeadView.drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
+        _homePageHeadView.drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
+        _homePageHeadView.drawView.gradientColor = (GradientColor){
+            [UIColor colorWithHex:0x24CF5F].CGColor,
+            [UIColor colorWithHex:0x20B955].CGColor,
+        };
     }
     return _homePageHeadView;
 }

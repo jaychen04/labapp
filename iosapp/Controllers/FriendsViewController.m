@@ -7,45 +7,53 @@
 //
 
 #import "FriendsViewController.h"
-#import "OSCUser.h"
+#import "OSCUserItem.h"
 #import "PersonCell.h"
 #import "UserDetailsViewController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
+#import <MJExtension.h>
+#import <MBProgressHUD.h>
 
 static NSString * const kPersonCellID = @"PersonCell";
 
-@interface FriendsViewController ()
+@interface FriendsViewController () <networkingJsonDataDelegate>
 
 @property (nonatomic, assign) int64_t uid;
 
+
+@property (nonatomic, assign) long userID;
+@property (nonatomic, copy) NSString *lastUrlDefine;
+@property (nonatomic, copy) NSString *nextPageToken;
+
+@property (nonatomic, strong) NSMutableArray *items;
 @end
 
 @implementation FriendsViewController
 
-- (instancetype)initWithUserID:(int64_t)userID andFriendsRelation:(int)relation
+- (instancetype)initUserId:(long)userId andRelation:(NSString *)lastUrlDefine
 {
     self = [super init];
-    if (!self) {return nil;}
-    
-    self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?uid=%lld&relation=%d&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_FRIENDS_LIST, userID, relation, (unsigned long)page, OSCAPI_SUFFIX];
-    };
-    
-    self.objClass = [OSCUser class];
-    
+    if (self) {
+        __weak FriendsViewController *weakSelf = self;
+        self.generateUrl = ^NSString * () {
+            return [NSString stringWithFormat:@"%@%@?id=%ld", OSCAPI_V2_PREFIX, lastUrlDefine, userId];
+        };
+        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+            responseObjectsCount < 1? (weakSelf.lastCell.status = LastCellStatusFinished) :
+            (weakSelf.lastCell.status = LastCellStatusMore);
+        };
+        
+        self.netWorkingDelegate = self;
+        self.isJsonDataVc = YES;
+        self.needAutoRefresh = YES;
+        self.refreshInterval = 21600;
+        self.kLastRefreshTime = @"NewsRefreshInterval";
+        
+        self.items = [NSMutableArray new];
+    }
     return self;
 }
-
-
-
-- (NSArray *)parseXML:(ONOXMLDocument *)xml
-{
-    return [[xml.rootElement firstChildWithTag:@"friends"] childrenWithTag:@"friend"];
-}
-
-
-
 
 
 #pragma mark - life cycle
@@ -54,26 +62,102 @@ static NSString * const kPersonCellID = @"PersonCell";
     [super viewDidLoad];
     
     [self.tableView registerClass:[PersonCell class] forCellReuseIdentifier:kPersonCellID];
+    self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark --- 维护用作tableView数据源的数组
+-(void)handleData:(id)responseJSON isRefresh:(BOOL)isRefresh{
+    if (responseJSON) {
+        NSDictionary *result = responseJSON[@"result"];
+        NSArray* items = result[@"items"];
+        NSArray* modelArray = [OSCUserItem mj_objectArrayWithKeyValuesArray:items];
+        
+        if (isRefresh) {//上拉得到的数据
+            [self.items removeAllObjects];
+        }
+        [self.items addObjectsFromArray:modelArray];
+    }
+}
 
+#pragma mark - 获取具体用户博客
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh {
+    NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
+    if (!isRefresh && [self.nextPageToken length] > 0) {
+        [paraMutableDic setObject:self.nextPageToken forKey:@"pageToken"];
+    }
+    
+    [self.manager GET:self.generateUrl()
+           parameters:paraMutableDic
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  if ([responseObject[@"code"] integerValue] == 1) {
+                      
+                      [self handleData:responseObject isRefresh:isRefresh];
+
+                      NSDictionary *resultDic = responseObject[@"result"];
+                      self.nextPageToken = resultDic[@"nextPageToken"];
+                      NSArray* items = resultDic[@"items"];
+                      
+                      self.lastCell.status = items.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
+                      
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      if (!isRefresh) {
+                          if (items.count > 0) {
+                              [self.tableView.mj_footer endRefreshing];
+                          } else {
+                              [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                          }
+                      }
+                      
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.tableView reloadData];
+                      });
+                  } else {
+                      self.lastCell.status = LastCellStatusFinished;
+                      [self.tableView.mj_header endRefreshing];
+                      [self.tableView.mj_footer endRefreshing];
+                  }
+                  
+              }
+              failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  //                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
+                  HUD.detailsLabel.text = [NSString stringWithFormat:@"%@", error.userInfo[NSLocalizedDescriptionKey]];
+                  
+                  [HUD hideAnimated:YES afterDelay:1];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      self.lastCell.status = LastCellStatusError;
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      [self.tableView reloadData];
+                  });
+              }
+     ];
+}
 
 
 #pragma mark - Table view data source
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OSCUser *friend = self.objects[indexPath.row];
     PersonCell *cell = [tableView dequeueReusableCellWithIdentifier:kPersonCellID forIndexPath:indexPath];
     
-    [cell.portrait loadPortrait:friend.portraitURL];
-    cell.nameLabel.text = friend.name;
-    cell.infoLabel.text = friend.expertise;
-    cell.infoLabel.textColor = [UIColor titleColor];
+    if (self.items.count > 0) {
+        OSCUserItem *friend = self.items[indexPath.row];
+        
+        [cell.portrait loadPortrait:[NSURL URLWithString:friend.portrait]];
+        cell.nameLabel.text = friend.name;
+        cell.infoLabel.text = friend.expertise;
+        cell.infoLabel.textColor = [UIColor titleColor];
+    }
+    
     
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
@@ -83,7 +167,7 @@ static NSString * const kPersonCellID = @"PersonCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OSCUser *friend = self.objects[indexPath.row];
+    OSCUserItem *friend = self.items[indexPath.row];
     self.label.text = friend.name;
     self.label.font = [UIFont systemFontOfSize:16];
     CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
@@ -99,12 +183,19 @@ static NSString * const kPersonCellID = @"PersonCell";
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    OSCUser *friend = self.objects[indexPath.row];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:friend.userID];
+    OSCUserItem *friend = self.items[indexPath.row];
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:friend.id];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 
-
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.items.count > 0) {
+        return self.items.count;
+    }
+    
+    return 0;
+}
 
 
 @end
