@@ -12,6 +12,7 @@
 #import "EventsViewController.h"
 #import "FriendsViewController.h"
 #import "MessagesViewController.h"
+#import "OSCMessageController.h"
 #import "MyTweetLikeListViewController.h"
 
 #import "UIButton+Badge.h"
@@ -38,7 +39,8 @@
                  andControllers:@[
                                   [[EventsViewController alloc] initWithCatalog:2],
                                   [[EventsViewController alloc] initWithCatalog:3],
-                                  [MessagesViewController new],
+//                                  [MessagesViewController new],
+                                  [OSCMessageController new],
                                   [[FriendsViewController alloc] initWithUserID:[Config getOwnID] andFriendsRelation:0],
                                   [MyTweetLikeListViewController new]
                                   ]];

@@ -52,12 +52,14 @@
 #define OSCAPI_TWEET_TOPIC_LIST         @"tweet_topic_list"
 //新动弹接口
 #define OSCAPI_TWEET_LIKES              @"tweet_likes"      //点赞列表
-#define OSCAPI_TWEET_COMMENTS           @"tweet_comments"      //评论列表
+#define OSCAPI_TWEET_COMMENTS           @"tweet_comments"   //评论列表
 
 
 #define OSCAPI_ACTIVE_LIST              @"active_list"
 
-#define OSCAPI_MESSAGES_LIST            @"message_list"
+
+//#define OSCAPI_MESSAGES_LIST            @"message_list"
+#define OSCAPI_MESSAGES_LIST            @"user_msg_letters"//私信我的列表
 #define OSCAPI_MESSAGE_DELETE           @"message_delete"
 #define OSCAPI_MESSAGE_PUB              @"message_pub"
 

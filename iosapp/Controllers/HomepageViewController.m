@@ -93,8 +93,8 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _imageView.hidden = YES;
     
+//    _imageView.hidden = YES;
     self.tableView.tableHeaderView = self.homePageHeadView;
     
     [self hideStatusBar:YES];
@@ -104,6 +104,8 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     [super viewWillDisappear:animated];
     
+//    _imageView.hidden = NO;
+    self.homePageHeadView = nil;
     
     [self hideStatusBar:NO];
 }
@@ -452,7 +454,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 
 #pragma mark - UIImagePickerController
-
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     _image = info[UIImagePickerControllerEditedImage];
@@ -738,7 +739,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 }
 
 #pragma mark - 处理通知
-
 - (void)noticeUpdateHandler:(NSNotification *)notification
 {
     NSArray *noticeCounts = [notification object];
@@ -853,13 +853,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 - (HomePageHeadView *)homePageHeadView {
     if(_homePageHeadView == nil) {
         if ([UIScreen mainScreen].bounds.size.height < 500) {
-            
             _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, 250}}];
         } else {
-            
             _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 202}}];
         }
-        
     }
     return _homePageHeadView;
 }

@@ -26,9 +26,6 @@
 #define view_userPortrait 68
 
 @implementation HomePageHeadView
-{
-    __weak QuartzCanvasView* _drawView;
-}
 
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -44,6 +41,7 @@
     
     QuartzCanvasView* drawView = [[QuartzCanvasView alloc]initWithFrame:(CGRect){{0,0},self.bounds.size}];
     _drawView = drawView;
+    _drawView.minimumRoundRadius = userPortrait_width * 0.5 + 30;
     _drawView.openRandomness = YES;
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
     _drawView.gradientColor = (GradientColor){
@@ -95,6 +93,8 @@
     _creditLabel.textColor = [UIColor colorWithHex:0xFFFFFF];
     _creditLabel.text = @"积分：0";
     [self addSubview:_creditLabel];
+    
+    [self sendSubviewToBack:_drawView];
     
     [_setUpButton mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.mas_left).with.offset(16);

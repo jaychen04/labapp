@@ -97,24 +97,13 @@
 - (void)drawRect:(CGRect)rect {
     NSInteger i = 0;
     CGFloat changeRadius = self.minimumRoundRadius;
-    CGFloat standardRadius = MAX(self.bounds.size.width * 0.5, self.bounds.size.height * 0.5);
-    DeviceResolution resolution = [UIDevice currentDeviceResolution];
-    if (resolution == Device_iPhone_6p || resolution == Device_iPhone_6sp) {
-        standardRadius = self.bounds.size.width * 0.5;
-    }else{
-        standardRadius = self.bounds.size.height - _center.y;
-    }
+    CGFloat standardRadius = MAX(self.bounds.size.width * 0.5, self.bounds.size.height - _center.y);
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     [self makeGradientColor:ctx];
     
     CGContextSetStrokeColorWithColor(ctx, self.strokeColor.CGColor);//画笔线的颜色
     CGContextSetLineWidth(ctx, 1.0);//线的宽度
-    
-//    if (biggestRadius > 0) {
-//        CGContextAddArc(ctx, _center.x, _center.y, biggestRadius, 0, 2*PI, 0);
-//        CGContextDrawPath(ctx, kCGPathStroke);
-//    }
     
 /** 从最内层圆开始绘制 */
     while (changeRadius < standardRadius) {
