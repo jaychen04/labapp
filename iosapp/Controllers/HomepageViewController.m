@@ -98,6 +98,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     self.tableView.tableHeaderView = self.homePageHeadView;
     
     [self hideStatusBar:YES];
+    [self refreshHeaderView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -105,6 +106,9 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [super viewWillDisappear:animated];
     
     [self hideStatusBar:NO];
+    
+    self.homePageHeadView = nil;
+    self.tableView.tableHeaderView = nil;
 }
 
 - (void)viewDidLoad
@@ -857,6 +861,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 202}}];
         }
         
+        _homePageHeadView.drawView.gradientColor = (GradientColor){
+            [UIColor colorWithHex:0x24CF5F].CGColor,
+            [UIColor colorWithHex:0x20B955].CGColor,
+        };
     }
     return _homePageHeadView;
 }

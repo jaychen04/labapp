@@ -10,7 +10,7 @@
 #import "Utils.h"
 #import "OSCUser.h"
 #import "AppDelegate.h"
-#import "QuartzCanvasView.h"
+
 
 #import <Masonry.h>
 
@@ -26,9 +26,9 @@
 #define view_userPortrait 68
 
 @implementation HomePageHeadView
-{
-    __weak QuartzCanvasView* _drawView;
-}
+//{
+//    __weak QuartzCanvasView* _drawView;
+//}
 
 -(instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
@@ -45,6 +45,8 @@
     QuartzCanvasView* drawView = [[QuartzCanvasView alloc]initWithFrame:(CGRect){{0,0},self.bounds.size}];
     _drawView = drawView;
     _drawView.openRandomness = YES;
+    _drawView.duration = 25;
+    _drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
     _drawView.gradientColor = (GradientColor){
         [UIColor colorWithHex:0x24CF5F].CGColor,
@@ -62,6 +64,7 @@
     [self addSubview:_codeButton];
     
     _userPortrait = [UIImageView new];
+    _userPortrait.backgroundColor = [UIColor redColor];
     _userPortrait.contentMode = UIViewContentModeScaleAspectFit;
     [_userPortrait setCornerRadius:userPortrait_width * 0.5];
     _userPortrait.userInteractionEnabled = YES;
