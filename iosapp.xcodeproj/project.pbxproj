@@ -1920,6 +1920,7 @@
 				C5E92FE01B5A1E5F00EFE47E /* HomepageViewController.m */,
 				EE7B45DF1A830B17002508C6 /* MyBasicInfoViewController.h */,
 				EE7B45E01A830B17002508C6 /* MyBasicInfoViewController.m */,
+				EE43A53E1D6BF447005C5B94 /* 动弹 */,
 				38A93FAB1AA31DEB00A515E8 /* 收藏 */,
 				38A93FAA1AA31DE100A515E8 /* 消息中心 */,
 				38B0BF8F1A3AE72E00A2FDB0 /* 关注/粉丝 */,
@@ -2425,6 +2426,13 @@
 				EEB3D7AD1D13CE2300164EF5 /* QuestCommentHeadDetailCell.xib */,
 			);
 			name = Questions;
+			sourceTree = "<group>";
+		};
+		EE43A53E1D6BF447005C5B94 /* 动弹 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "动弹";
 			sourceTree = "<group>";
 		};
 		EE6DB9451AD6628A004FCF3C /* 点赞列表 */ = {

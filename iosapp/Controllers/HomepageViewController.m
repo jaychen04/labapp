@@ -33,6 +33,7 @@
 #import "NSString+FontAwesome.h"
 #import "HomePageHeadView.h"
 #import "ImageViewerController.h"
+#import "TweetTableViewController.h"
 
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -94,7 +95,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [super viewWillAppear:animated];
     _imageView.hidden = YES;
     
-//    self.tableView.tableHeaderView = self.homePageHeadView;
+    self.tableView.tableHeaderView = self.homePageHeadView;
     
     [self hideStatusBar:YES];
 }
@@ -102,7 +103,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
     
     [self hideStatusBar:NO];
 }
@@ -289,11 +289,26 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 - (void)changePortraitAction
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择操作" message:nil delegate:self
-                                              cancelButtonTitle:@"取消" otherButtonTitles:@"更换头像", @"查看大头像", nil];
-    alertView.tag = 1;
+    if (![Utils isNetworkExist]) {
+        MBProgressHUD *HUD = [Utils createHUD];
+        HUD.mode = MBProgressHUDModeText;
+        HUD.label.text = @"网络无连接，请检查网络";
+        
+        [HUD hideAnimated:YES afterDelay:1];
+    } else {
+        if ([Config getOwnID] == 0) {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+            LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            [self.navigationController pushViewController:loginVC animated:YES];
+        } else {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择操作" message:nil delegate:self
+                                                      cancelButtonTitle:@"取消" otherButtonTitles:@"更换头像", @"查看大头像", nil];
+            alertView.tag = 1;
+            
+            [alertView show];
+        }
+    }
     
-    [alertView show];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -546,6 +561,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
             [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
             
+            [buttonCell.creditButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
+            [buttonCell.creditTitleButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
+            
             [buttonCell.collectionButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
             [buttonCell.collectionTitleButton addTarget:self action:@selector(pushFavoriteSVC) forControlEvents:UIControlEventTouchUpInside];
             
@@ -742,6 +760,16 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 }
 
 #pragma mark - 功能
+#pragma mark - 动弹
+- (void)pushTweetList
+{
+    TweetTableViewController *myFriendTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:NewTweetsTypeOwnTweets];
+    myFriendTweetViewCtl.title = @"动弹";
+    myFriendTweetViewCtl.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:myFriendTweetViewCtl animated:YES];
+}
+
+#pragma mark - 收藏
 - (void)pushFavoriteSVC
 {
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
@@ -758,6 +786,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     [self.navigationController pushViewController:favoritesSVC animated:YES];
 }
 
+#pragma mark - 关注/粉丝
 - (void)pushFriendsSVC:(UIButton *)button
 {
     if (button.tag == 1) {
