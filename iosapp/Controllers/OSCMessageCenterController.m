@@ -20,7 +20,7 @@
 @implementation OSCMessageCenterController
 
 - (instancetype)init{
-    self = [super initWithTitle:@"消息中心" andSubTitles:_titles andControllers:_controllers underTabbar:YES];
+    self = [super initWithTitle:@"消息中心" andSubTitles:self.titles andControllers:self.controllers underTabbar:YES];
     if (self) {
         //do something...
     }

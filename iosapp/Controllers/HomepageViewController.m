@@ -34,6 +34,8 @@
 #import "HomePageHeadView.h"
 #import "ImageViewerController.h"
 
+#import "OSCMessageCenterController.h"
+
 
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -658,9 +660,11 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                     });
                     self.navigationController.tabBarItem.badgeValue = nil;
                     
-                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
-                    messageCenterVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:messageCenterVC animated:YES];
+                    OSCMessageCenterController* messageCenter = [OSCMessageCenterController new];
+                    messageCenter.hidesBottomBarWhenPushed = YES;
+//                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+//                    messageCenterVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:messageCenter animated:YES];
                     
                     break;
                 }
@@ -705,9 +709,11 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                     });
                     self.navigationController.tabBarItem.badgeValue = nil;
                     
-                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
-                    messageCenterVC.hidesBottomBarWhenPushed = YES;
-                    [self.navigationController pushViewController:messageCenterVC animated:YES];
+                    OSCMessageCenterController* messageCenter = [OSCMessageCenterController new];
+                    messageCenter.hidesBottomBarWhenPushed = YES;
+//                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+//                    messageCenterVC.hidesBottomBarWhenPushed = YES;
+                    [self.navigationController pushViewController:messageCenter animated:YES];
                     
                     break;
                 }

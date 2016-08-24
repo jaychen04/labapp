@@ -18,7 +18,7 @@
 static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 @interface OSCAtMeController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic,weak) UITableView* tableView;
+@property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) NSMutableArray* dataSource;
 @property (nonatomic,strong) NSString* nextToken;
 
@@ -41,11 +41,9 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:YES];
-    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:YES];
-    
 }
 
 #pragma mark --- Networking
@@ -62,11 +60,11 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
       parameters:paraMutableDic.copy
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
              if([responseObject[@"code"]integerValue] == 1) {
-                 
+                 NSLog(@"success ");
              }
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        
+             NSLog(@"success ");
     }];
 
 }
@@ -91,8 +89,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
 	if(_tableView == nil) {
-		UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-        _tableView = tableView;
+		_tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.separatorColor = [UIColor separatorColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;

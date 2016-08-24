@@ -21,7 +21,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 
 @interface OSCMessageController ()<UITableViewDelegate,UITableViewDataSource>
 
-@property (nonatomic,weak) UITableView* tableView;
+@property (nonatomic,strong) UITableView* tableView;
 
 @property (nonatomic,strong) NSMutableArray* dataSource;
 @property (nonatomic,strong) NSString* nextToken;
@@ -106,8 +106,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
 	if(_tableView == nil) {
-        UITableView* tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        _tableView = tableView;
+        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
         _tableView.separatorColor = [UIColor separatorColor];
         _tableView.dataSource = self;
         _tableView.delegate = self;

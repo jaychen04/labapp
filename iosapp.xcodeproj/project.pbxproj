@@ -31,7 +31,6 @@
 		0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC551CEDA390007DB140 /* UIView+SDExtension.m */; };
 		0422BC601CEDAAD3007DB140 /* InformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC5E1CEDAAD3007DB140 /* InformationTableViewCell.m */; };
 		0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */; };
-		042D8C3E1D389328001A6494 /* NewMultipleTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */; };
 		042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */; };
 		042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */; };
 		042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D95A1B65D7FE00116D6E /* Foundation.framework */; };
@@ -317,7 +316,6 @@
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
 		EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */; };
-		EE6FB5DD1D0D1050006A11A4 /* NewTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6FB5DA1D0D1050006A11A4 /* NewTweetCell.m */; };
 		EE6FB5DE1D0D1050006A11A4 /* TweetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6FB5DC1D0D1050006A11A4 /* TweetTableViewController.m */; };
 		EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */; };
 		EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE7AC7EE1AD38E5C00E850CB /* TweetLikeUserCell.m */; };
@@ -423,8 +421,6 @@
 		0422BC5D1CEDAAD3007DB140 /* InformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTableViewCell.h; sourceTree = "<group>"; };
 		0422BC5E1CEDAAD3007DB140 /* InformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTableViewCell.m; sourceTree = "<group>"; };
 		0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTableViewCell.xib; sourceTree = "<group>"; };
-		042D8C3C1D389328001A6494 /* NewMultipleTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMultipleTweetCell.h; sourceTree = "<group>"; };
-		042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMultipleTweetCell.m; sourceTree = "<group>"; };
 		042E545A1D193FD400DC7E1D /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		042E545C1D193FD400DC7E1D /* UIImageView+LBBlurredImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+LBBlurredImage.h"; sourceTree = "<group>"; };
@@ -490,14 +486,14 @@
 		0447EF271D59733700F0954D /* UIImageView+RadiusHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+RadiusHandle.m"; sourceTree = "<group>"; };
 		0447EF291D59779C00F0954D /* ImageDownloadHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDownloadHandle.h; path = ELCImagePickerController/ImageDownloadHandle.h; sourceTree = "<group>"; };
 		0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageDownloadHandle.m; path = ELCImagePickerController/ImageDownloadHandle.m; sourceTree = "<group>"; };
-		045126521D6172FF00E4DD93 /* AsyncDisplayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncDisplayTableViewCell.h; sourceTree = "<group>"; };
-		045126531D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AsyncDisplayTableViewCell.m; sourceTree = "<group>"; };
-		045126551D61736F00E4DD93 /* OSCTextTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCTextTweetCell.h; sourceTree = "<group>"; };
-		045126561D61736F00E4DD93 /* OSCTextTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCTextTweetCell.m; sourceTree = "<group>"; };
-		045126581D61739900E4DD93 /* OSCImageTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCImageTweetCell.h; sourceTree = "<group>"; };
-		045126591D61739900E4DD93 /* OSCImageTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCImageTweetCell.m; sourceTree = "<group>"; };
-		0451265E1D6173D400E4DD93 /* OSCMultipleTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMultipleTweetCell.h; sourceTree = "<group>"; };
-		0451265F1D6173D400E4DD93 /* OSCMultipleTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMultipleTweetCell.m; sourceTree = "<group>"; };
+		045126521D6172FF00E4DD93 /* AsyncDisplayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AsyncDisplayTableViewCell.h; path = ../AsyncDisplayTableViewCell.h; sourceTree = "<group>"; };
+		045126531D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AsyncDisplayTableViewCell.m; path = ../AsyncDisplayTableViewCell.m; sourceTree = "<group>"; };
+		045126551D61736F00E4DD93 /* OSCTextTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCTextTweetCell.h; path = ../OSCTextTweetCell.h; sourceTree = "<group>"; };
+		045126561D61736F00E4DD93 /* OSCTextTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSCTextTweetCell.m; path = ../OSCTextTweetCell.m; sourceTree = "<group>"; };
+		045126581D61739900E4DD93 /* OSCImageTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCImageTweetCell.h; path = ../OSCImageTweetCell.h; sourceTree = "<group>"; };
+		045126591D61739900E4DD93 /* OSCImageTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSCImageTweetCell.m; path = ../OSCImageTweetCell.m; sourceTree = "<group>"; };
+		0451265E1D6173D400E4DD93 /* OSCMultipleTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCMultipleTweetCell.h; path = ../OSCMultipleTweetCell.h; sourceTree = "<group>"; };
+		0451265F1D6173D400E4DD93 /* OSCMultipleTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OSCMultipleTweetCell.m; path = ../OSCMultipleTweetCell.m; sourceTree = "<group>"; };
 		0473259A1CF821A700460658 /* QuesAnsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuesAnsTableViewCell.h; sourceTree = "<group>"; };
 		0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuesAnsTableViewCell.m; sourceTree = "<group>"; };
 		0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuesAnsTableViewCell.xib; sourceTree = "<group>"; };
@@ -950,10 +946,8 @@
 		EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTweetLikeListCell.m; sourceTree = "<group>"; };
 		EE6DB94C1AD68140004FCF3C /* OSCMyTweetLikeList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMyTweetLikeList.h; sourceTree = "<group>"; };
 		EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMyTweetLikeList.m; sourceTree = "<group>"; };
-		EE6FB5D91D0D1050006A11A4 /* NewTweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewTweetCell.h; sourceTree = "<group>"; };
-		EE6FB5DA1D0D1050006A11A4 /* NewTweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewTweetCell.m; sourceTree = "<group>"; };
-		EE6FB5DB1D0D1050006A11A4 /* TweetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetTableViewController.h; sourceTree = "<group>"; };
-		EE6FB5DC1D0D1050006A11A4 /* TweetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetTableViewController.m; sourceTree = "<group>"; };
+		EE6FB5DB1D0D1050006A11A4 /* TweetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetTableViewController.h; path = ../TweetTableViewController.h; sourceTree = "<group>"; };
+		EE6FB5DC1D0D1050006A11A4 /* TweetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetTableViewController.m; path = ../TweetTableViewController.m; sourceTree = "<group>"; };
 		EE713BA11AB2C12600D318AF /* iosapp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iosapp-Prefix.pch"; sourceTree = "<group>"; };
 		EE7A55571AEDD82C00DF10D3 /* VoiceTweetEditingVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceTweetEditingVC.h; sourceTree = "<group>"; };
 		EE7A55581AEDD82C00DF10D3 /* VoiceTweetEditingVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoiceTweetEditingVC.m; sourceTree = "<group>"; };
@@ -1149,21 +1143,13 @@
 		00D6BD3219ECD73B00E8754E /* Tweet */ = {
 			isa = PBXGroup;
 			children = (
-				045126521D6172FF00E4DD93 /* AsyncDisplayTableViewCell.h */,
-				045126531D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m */,
-				045126551D61736F00E4DD93 /* OSCTextTweetCell.h */,
-				045126561D61736F00E4DD93 /* OSCTextTweetCell.m */,
-				045126581D61739900E4DD93 /* OSCImageTweetCell.h */,
-				045126591D61739900E4DD93 /* OSCImageTweetCell.m */,
-				0451265E1D6173D400E4DD93 /* OSCMultipleTweetCell.h */,
-				0451265F1D6173D400E4DD93 /* OSCMultipleTweetCell.m */,
-				EE6FB5D81D0D0D29006A11A4 /* NewTweet */,
 				00D6BD2F19ECD71B00E8754E /* TweetsViewController.h */,
 				00D6BD3019ECD71B00E8754E /* TweetsViewController.m */,
 				387639FB1A807918008E6805 /* SoftwareCommentsViewController.h */,
 				387639FC1A807918008E6805 /* SoftwareCommentsViewController.m */,
 				00D6BD3319ECFD8E00E8754E /* TweetCell.h */,
 				00D6BD3419ECFD8E00E8754E /* TweetCell.m */,
+				0441954F1D6C95EB00BBDF26 /* 动弹列表 */,
 				EE7A55561AEDD77000DF10D3 /* 语音动弹 */,
 				EE7AC7F31AD38E6700E850CB /* 动弹点赞列表 */,
 				38BD7D6B19FF7F31003ABB80 /* 动弹详情 */,
@@ -1240,6 +1226,23 @@
 				0422BC4F1CEDA390007DB140 /* TAPageControl.m */,
 			);
 			path = PageControl;
+			sourceTree = "<group>";
+		};
+		0441954F1D6C95EB00BBDF26 /* 动弹列表 */ = {
+			isa = PBXGroup;
+			children = (
+				045126521D6172FF00E4DD93 /* AsyncDisplayTableViewCell.h */,
+				045126531D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m */,
+				045126551D61736F00E4DD93 /* OSCTextTweetCell.h */,
+				045126561D61736F00E4DD93 /* OSCTextTweetCell.m */,
+				045126581D61739900E4DD93 /* OSCImageTweetCell.h */,
+				045126591D61739900E4DD93 /* OSCImageTweetCell.m */,
+				0451265E1D6173D400E4DD93 /* OSCMultipleTweetCell.h */,
+				0451265F1D6173D400E4DD93 /* OSCMultipleTweetCell.m */,
+				EE6FB5DB1D0D1050006A11A4 /* TweetTableViewController.h */,
+				EE6FB5DC1D0D1050006A11A4 /* TweetTableViewController.m */,
+			);
+			path = "动弹列表";
 			sourceTree = "<group>";
 		};
 		04EC96931CF4368F0004B54E /* Activity */ = {
@@ -2487,19 +2490,6 @@
 			name = "点赞列表";
 			sourceTree = "<group>";
 		};
-		EE6FB5D81D0D0D29006A11A4 /* NewTweet */ = {
-			isa = PBXGroup;
-			children = (
-				042D8C3C1D389328001A6494 /* NewMultipleTweetCell.h */,
-				042D8C3D1D389328001A6494 /* NewMultipleTweetCell.m */,
-				EE6FB5D91D0D1050006A11A4 /* NewTweetCell.h */,
-				EE6FB5DA1D0D1050006A11A4 /* NewTweetCell.m */,
-				EE6FB5DB1D0D1050006A11A4 /* TweetTableViewController.h */,
-				EE6FB5DC1D0D1050006A11A4 /* TweetTableViewController.m */,
-			);
-			name = NewTweet;
-			sourceTree = "<group>";
-		};
 		EE7A55561AEDD77000DF10D3 /* 语音动弹 */ = {
 			isa = PBXGroup;
 			children = (
@@ -2919,7 +2909,6 @@
 				0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */,
 				044195441D6C2B5600BBDF26 /* OSCCommentsCell.m in Sources */,
 				0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */,
-				EE6FB5DD1D0D1050006A11A4 /* NewTweetCell.m in Sources */,
 				382F5EB61A036EE500A8EF11 /* OSCNewsDetails.m in Sources */,
 				EE7AC7F11AD38E5C00E850CB /* TweetLikeUserCell.m in Sources */,
 				31BC910B1CFD34D0004E7D66 /* OSCNewHotBlogDetails.m in Sources */,
@@ -3009,7 +2998,6 @@
 				EE82D0431C43B1E30066FDC9 /* FeedBackViewController.m in Sources */,
 				C52BF4EC1AF9C03700E53508 /* WeeklyReportDetailViewController.m in Sources */,
 				38BDC5401A4D5F84006080F7 /* PersonSearchViewController.m in Sources */,
-				042D8C3E1D389328001A6494 /* NewMultipleTweetCell.m in Sources */,
 				C5E4B17C1B5794FB008E7463 /* DiscoverViewController.m in Sources */,
 				C5FB958E1AEA2C8D006918CD /* DiscussionDetailsViewController.m in Sources */,
 				31F14FF01D422A4400AD0763 /* OSCCommentItem.m in Sources */,
