@@ -155,8 +155,15 @@
     NSArray *resultsArray = [re matchesInString:attrString.string options:0 range:NSMakeRange(0, attrString.string.length)];
     
     NSMutableArray *emojiArray = [NSMutableArray arrayWithCapacity:resultsArray.count];
-    
+	
+	int maxCount = 0;
+	
     for (NSTextCheckingResult *match in resultsArray) {
+		
+		if (maxCount >= 5) {
+			break; //最多只允许五个emoji表情（和web保持一致）
+		}
+		
         NSRange range = [match range];
         NSString *emojiName = [attrString.string substringWithRange:range];
         
@@ -164,9 +171,7 @@
             NSTextAttachment *textAttachment = [NSTextAttachment new];
             textAttachment.image = [UIImage imageNamed:emoji[emojiName]];
             [textAttachment adjustY:-3];
-            
             NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-            
             [emojiArray addObject: @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]}];
         } else if ([emojiName hasPrefix:@":"]) {
             if (emoji[emojiName]) {
@@ -176,12 +181,12 @@
                 NSTextAttachment *textAttachment = [NSTextAttachment new];
                 textAttachment.image = emojiImage;
                 [textAttachment adjustY:-3];
-                
                 NSAttributedString *emojiAttributedString = [NSAttributedString attributedStringWithAttachment:textAttachment];
-                
                 [emojiArray addObject: @{@"image": emojiAttributedString, @"range": [NSValue valueWithRange:range]}];
             }
         }
+		
+		maxCount += 1;
     }
     
     for (NSInteger i = emojiArray.count -1; i >= 0; i--) {
