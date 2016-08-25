@@ -39,8 +39,8 @@
                  andControllers:@[
                                   [[EventsViewController alloc] initWithCatalog:2],
                                   [[EventsViewController alloc] initWithCatalog:3],
-                                  [OSCMessageController new],
-                                  [[FriendsViewController alloc] initWithUserID:[Config getOwnID] andFriendsRelation:0],
+                                  [MessagesViewController new],
+                                  [[FriendsViewController alloc] initUserId:[Config getOwnID] andRelation:OSCAPI_USER_FANS],
                                   [MyTweetLikeListViewController new]
                                   ]];
     

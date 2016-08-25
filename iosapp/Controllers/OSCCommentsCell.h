@@ -11,6 +11,7 @@
 @class CommentItem;
 @interface OSCCommentsCell : UITableViewCell
 + (instancetype)returnReuseCommentsCellWithTableView:(UITableView* )tableView
+                                           indexPath:(NSIndexPath* )indexPath
                                           identifier:(NSString* )reuseIdentifier;
 
 @property (nonatomic,strong) CommentItem* commentItem;

@@ -9,13 +9,19 @@
 #import "OSCMessageCell.h"
 #import "OSCMessageCenter.h"
 #import "ImageDownloadHandle.h"
+#import "UIColor+Util.h"
 
 #import "UIImageView+CornerRadius.h"
 #import "NSDate+Util.h"
+#import <YYKit.h>
 
-#define OPERATION_BUTTON_W 200
+#define OPERATION_BUTTON_W 70
+#define OFFEST_MAX_LEFT 8
+#define OFFEST_MAX_RIGHT OPERATION_BUTTON_W * 2
 
 @interface OSCMessageCell ()
+
+@property (weak, nonatomic) IBOutlet UIView *bgView;
 
 @property (weak, nonatomic) IBOutlet UIImageView *userPortraitImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
@@ -25,66 +31,80 @@
 @end
 
 @implementation OSCMessageCell{
-    __weak UIButton* _deleteButton;
-    __weak UIButton* _settingTopButton;
+    __weak IBOutlet UIButton *_setTopButton;
+    __weak IBOutlet UIButton *_deleteButton;
 }
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     
     [_userPortraitImageView zy_cornerRadiusRoundingRect];
+    
+    _openSlidingOperation = NO;
+    
+    [_setTopButton setTitle:@"置顶" forState:UIControlStateNormal];
+    [_setTopButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+    [_setTopButton setBackgroundColor:[UIColor orangeColor]];
+    
+    [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
+    [_deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_deleteButton setBackgroundColor:[UIColor redColor]];
+    
+//    暂时性操作
+    _setTopButton.hidden = YES;
+    _deleteButton.hidden = YES;
+    
+//    UIPanGestureRecognizer* pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePanGestures:)];
+//    [_bgView addGestureRecognizer:pan];
 }
 
 + (instancetype)returnReuseMessageCellWithTableView:(UITableView *)tableView
-                                        identifier:(NSString *)reuseIdentifier
+                                          indexPath:(NSIndexPath *)indexPath
+                                         identifier:(NSString *)reuseIdentifier
 {
-    OSCMessageCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    if (!cell) {
-        cell = [[OSCMessageCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    }
+    OSCMessageCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     return cell;
 }
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
-    if (self) {
-        _openSlidingOperation = YES;
-        
-        [self addSubview:({//添加删除按钮到cell底部
-            UIButton* deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _deleteButton = deleteButton;
-            [_deleteButton addTarget:self action:@selector(deleteOperation:) forControlEvents:UIControlEventTouchUpInside];
-            [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
-            [_deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [_deleteButton setBackgroundColor:[UIColor redColor]];
-            _deleteButton;
-        })];
-        [self addSubview:({//添加置顶按钮到cell底部
-            UIButton* settingTopButton = [UIButton buttonWithType:UIButtonTypeCustom];
-            _settingTopButton = settingTopButton;
-            [_settingTopButton addTarget:self action:@selector(setTopOperation:) forControlEvents:UIControlEventTouchUpInside];
-            [_settingTopButton setTitle:@"置顶" forState:UIControlStateNormal];
-            [_settingTopButton setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            [_settingTopButton setBackgroundColor:[UIColor orangeColor]];
-            _settingTopButton;
-        })];
-        [self sendSubviewToBack:_deleteButton];
-        [self sendSubviewToBack:_settingTopButton];
-        
-        UISwipeGestureRecognizer* swipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(slidingDelete:)];
-        swipe.direction = UISwipeGestureRecognizerDirectionLeft;
-        [self.contentView addGestureRecognizer:swipe];
+#pragma mark --- Pan Operation
+- (void)handlePanGestures:(UIPanGestureRecognizer* )pan{
+    if (!_openSlidingOperation) { return ; }
+    CGPoint point = [pan translationInView:pan.view];
+    CGFloat x_offest = point.x;
+    if (pan.state == UIGestureRecognizerStateCancelled || pan.state == UIGestureRecognizerStateFailed) {
+        [self _resetTranslation];
     }
-    return self;
+    if (pan.state == UIGestureRecognizerStateBegan) {
+        if (x_offest > 0) {
+            CGFloat reselt_x = x_offest < OFFEST_MAX_LEFT ? x_offest : OFFEST_MAX_LEFT;
+            [_bgView setTransform:CGAffineTransformMakeTranslation(reselt_x, 0)];
+//            _bgView.centerX += reselt_x;
+        }else{
+            CGFloat reselt_x = x_offest > -OFFEST_MAX_RIGHT ? x_offest : -OFFEST_MAX_RIGHT;
+            [_bgView setTransform:CGAffineTransformMakeTranslation(reselt_x, 0)];
+//            _bgView.centerX += reselt_x;
+        }
+    }
+    if (pan.state == UIGestureRecognizerStateEnded) {
+        if (x_offest > 0) {
+            [self _resetTranslation];
+        }else{
+            CGFloat reselt_x = x_offest > -OFFEST_MAX_RIGHT ? 0 : -OFFEST_MAX_RIGHT;
+            [_bgView setTransform:CGAffineTransformMakeTranslation(reselt_x, 0)];
+//            if (x_offest > - (OFFEST_MAX_RIGHT * 0.5)) {
+//                [self _resetTranslation];
+//            }else{
+//                _bgView.centerX += -OFFEST_MAX_RIGHT;
+//            }
+        }
+    }
+    [pan setTranslation:point inView:_bgView];
 }
-#pragma mark --- Sliding Operation
-- (void)slidingDelete:(UISwipeGestureRecognizer* )swipe{
-    if (_openSlidingOperation) {
-        [self.contentView setTransform:CGAffineTransformMakeTranslation(-(OPERATION_BUTTON_W * 2), 0)];
-    }
+#pragma mark --- reset the location
+- (void)resetTheLocation{
+    [self _resetTranslation];
 }
 - (void)_resetTranslation{
-    [self.contentView setTransform:CGAffineTransformMakeTranslation(0, 0)];
+    [_bgView setTransform:CGAffineTransformMakeTranslation(0, 0)];
 }
 
 #pragma mark --- set Model
@@ -107,23 +127,20 @@
     _descLabel.text = messageItem.content;
 }
 
-
-#pragma mark --- layout
--(void)layoutSubviews{
-    [super layoutSubviews];
-    
-    _settingTopButton.frame = (CGRect){{self.bounds.size.width - OPERATION_BUTTON_W * 2,0},{OPERATION_BUTTON_W,self.bounds.size.height}};
-    _deleteButton.frame = (CGRect){{self.bounds.size.width - OPERATION_BUTTON_W,0},{OPERATION_BUTTON_W,self.bounds.size.height}};
+#pragma mark --- touch
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self _resetTranslation];
+    [super touchesBegan:touches withEvent:event];
 }
 
 #pragma mark --- operation Button Method
-- (void)deleteOperation:(UIButton* )deleteBtn{
+- (IBAction)deleteOperation:(UIButton *)sender {
     [self _resetTranslation];
     if ([_delegate respondsToSelector:@selector(messageCellDidClickDelete:)]) {
         [_delegate messageCellDidClickDelete:self];
     }
 }
-- (void)setTopOperation:(UIButton* )setTopBtn{
+- (IBAction)setTopOperation:(UIButton *)sender {
     [self _resetTranslation];
     if ([_delegate respondsToSelector:@selector(messageCellDidClickSetTop:)]) {
         [_delegate messageCellDidClickSetTop:self];

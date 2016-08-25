@@ -30,12 +30,11 @@
     [_userPortraitImageView zy_cornerRadiusRoundingRect];
 }
 + (instancetype)returnReuseCommentsCellWithTableView:(UITableView *)tableView
+                                           indexPath:(NSIndexPath *)indexPath
                                           identifier:(NSString *)reuseIdentifier
 {
-    OSCCommentsCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    if (!cell) {
-        cell = [[OSCCommentsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    }
+    OSCCommentsCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+
     return cell;
 }
 

@@ -89,10 +89,11 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
 	if(_tableView == nil) {
-		_tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,0},{self.view.bounds.size.width,self.view.bounds.size.height - 100}} style:UITableViewStylePlain];
         _tableView.separatorColor = [UIColor separatorColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        _tableView.scrollsToTop = NO;
 	}
 	return _tableView;
 }

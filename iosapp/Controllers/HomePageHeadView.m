@@ -10,7 +10,7 @@
 #import "Utils.h"
 #import "OSCUser.h"
 #import "AppDelegate.h"
-#import "QuartzCanvasView.h"
+
 
 #import <Masonry.h>
 
@@ -43,6 +43,8 @@
     _drawView = drawView;
     _drawView.minimumRoundRadius = userPortrait_width * 0.5 + 30;
     _drawView.openRandomness = YES;
+    _drawView.duration = 25;
+    _drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
     _drawView.gradientColor = (GradientColor){
         [UIColor colorWithHex:0x24CF5F].CGColor,
@@ -60,6 +62,7 @@
     [self addSubview:_codeButton];
     
     _userPortrait = [UIImageView new];
+    _userPortrait.backgroundColor = [UIColor redColor];
     _userPortrait.contentMode = UIViewContentModeScaleAspectFit;
     [_userPortrait setCornerRadius:userPortrait_width * 0.5];
     _userPortrait.userInteractionEnabled = YES;

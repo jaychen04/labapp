@@ -15,7 +15,10 @@
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "UIColor+Util.h"
 #import <AFNetworking.h>
+#import <MJExtension.h>
 #import <MJRefresh.h>
+
+#define MESSAGE_CELL_ROW 76
 
 static NSString* const messageCellIdentifier = @"OSCMessageCell";
 
@@ -38,6 +41,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
     [super viewDidLoad];
 
     [self.view addSubview:self.tableView];
+    [self.tableView registerNib:[UINib nibWithNibName:@"OSCMessageCell" bundle:nil] forCellReuseIdentifier:messageCellIdentifier];
     
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getDataThroughDropdown:YES];
@@ -70,7 +74,23 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
       parameters:paraMutableDic.copy
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
              if([responseObject[@"code"]integerValue] == 1) {
+                 NSDictionary* resultDic = responseObject[@"result"];
+                 NSArray* items = resultDic[@"items"];
+                 if (dropDown) {
+                     [self.dataSource removeAllObjects];
+                 }
+                 NSArray* models = [MessageItem mj_objectArrayWithKeyValuesArray:items];
+                 [self.dataSource addObjectsFromArray:models];
+                 self.nextToken = resultDic[@"nextPageToken"];
                  
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     if (dropDown) {
+                         [self.tableView.mj_header endRefreshing];
+                     }else{
+                         [self.tableView.mj_footer endRefreshing];
+                     }
+                     [self.tableView reloadData];
+                 });
              }
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -87,7 +107,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
     return self.dataSource.count;
 }
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OSCMessageCell* cell = [OSCMessageCell returnReuseMessageCellWithTableView:tableView identifier:messageCellIdentifier];
+    OSCMessageCell* cell = [OSCMessageCell returnReuseMessageCellWithTableView:tableView indexPath:indexPath identifier:messageCellIdentifier];
     cell.messageItem = self.dataSource[indexPath.row];
     return cell;
 }
@@ -103,13 +123,16 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 
 
 
+
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
 	if(_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-        _tableView.separatorColor = [UIColor separatorColor];
+        _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,0},{self.view.bounds.size.width,self.view.bounds.size.height - 100}} style:UITableViewStylePlain];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
+        _tableView.rowHeight = MESSAGE_CELL_ROW;
+        _tableView.scrollsToTop = YES;
 	}
 	return _tableView;
 }
