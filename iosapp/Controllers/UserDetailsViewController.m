@@ -113,7 +113,6 @@
     
     self.navigationItem.title = @"用户中心";
     self.tableView.bounces = NO;
-    self.tableView.tableHeaderView = self.headerCanvasView;
 }
 
 -(void)viewWillAppear:(BOOL)animated{

@@ -76,10 +76,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     [super viewDidLoad];
     [self getBannerData];
     [self layoutUI];
-    
-    
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
+
     self.tableView.separatorColor = [UIColor separatorColor];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getJsonDataforNews:YES];
@@ -93,17 +90,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 #pragma mark - method
 #pragma mark --- 维护用作tableView数据源的数组
--(void)handleData:(id)responseJSON isRefresh:(BOOL)isRefresh{
-    if (responseJSON) {
-        NSDictionary* result = responseJSON[@"result"];
-        NSArray* items = result[@"items"];
-        NSArray* modelArray = [OSCInformation mj_objectArrayWithKeyValuesArray:items];
-        if (isRefresh) {//上拉得到的数据
-            [self.dataModels removeAllObjects];
-        }
-        [self.dataModels addObjectsFromArray:modelArray];
-    }
-}
 
 -(void)getBannerData{
     NSString* urlStr = [NSString stringWithFormat:@"%@banner", OSCAPI_V2_PREFIX];
@@ -143,8 +129,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 
 
 -(void)configurationCycleScrollView{
-    self.bannerScrollView.banners = self.bannerModels.mutableCopy;
-    
+    self.bannerScrollView.banners = self.bannerModels;
     [self.tableView reloadData];
 }
 
@@ -155,7 +140,6 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     return self.dataModels.count;
 }
 
-
 -(UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     InformationTableViewCell* cell = [InformationTableViewCell returnReuseCellFormTableView:tableView indexPath:indexPath identifier:informationReuseIdentifier];
     cell.contentView.backgroundColor = [UIColor newCellColor];
@@ -165,7 +149,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
         cell.viewModel = self.dataModels[indexPath.row];
     }
     
-    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+    cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     
     return cell;
@@ -195,7 +179,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
             [self.navigationController handleURL:[NSURL URLWithString:model.href]];
             break;
         }
-            
+
         case InformationTypeSoftWare:{
             SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:model.id];
             [detailsViewController setHidesBottomBarWhenPushed:YES];
