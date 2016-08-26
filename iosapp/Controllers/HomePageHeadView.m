@@ -23,7 +23,7 @@
 #define bottom_subButton_height 30
 #define setupButton_width 24
 
-#define view_userPortrait 68
+#define view_userPortrait 63
 
 @implementation HomePageHeadView
 //{
@@ -52,7 +52,7 @@
         [UIColor colorWithHex:0x24CF5F].CGColor,
         [UIColor colorWithHex:0x20B955].CGColor,
     };
-    _drawView.offestCenter = (OffestCenter){0, (view_userPortrait + userPortrait_width * 0.5) - viewHeight * 0.5};
+    _drawView.offestCenter = (OffestCenter){0, (view_userPortrait + userPortrait_width * 0.5) - viewHeight * 0.5 + 20};
     [self addSubview:_drawView];
     
     _setUpButton = [UIButton new];
