@@ -63,6 +63,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 @property (nonatomic, strong) UIImage *image;
 
 @property (nonatomic, strong) HomePageHeadView *homePageHeadView;
+@property (nonatomic, strong) UIView *statusBarView;//状态栏
 
 
 @end
@@ -103,17 +104,17 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 //        [UIColor colorWithHex:0x20B955].CGColor,
 //    };
     
-    [self hideStatusBar:YES];
     [self refreshHeaderView];
+    
+    _statusBarView.hidden = YES;
+    [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     
-    self.homePageHeadView = nil;
-
-    [self hideStatusBar:NO];
+    [self.navigationController setNavigationBarHidden:NO animated:animated];
     
     self.homePageHeadView = nil;
     self.tableView.tableHeaderView = nil;
@@ -126,7 +127,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
-    self.tableView.bounces = NO;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
     [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
@@ -141,21 +141,12 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-#pragma mark - 状态栏、导航栏处理
-- (void)hideStatusBar:(BOOL)hidden
+#pragma mark - 状态栏
+- (void)statusBarViewState
 {
-    if (hidden) {
-        UIView *statusBarView=[[UIView alloc] initWithFrame:CGRectMake(0, -20, [UIScreen mainScreen].bounds.size.width, 20)];
-        statusBarView.backgroundColor=[UIColor colorWithHex:0x24CF5F];
-        [self.view addSubview:statusBarView];
-        
-        self.navigationController.navigationBarHidden = YES;
-    } else {
-        
-        self.navigationController.navigationBarHidden = NO;
-    }
-    
+    _statusBarView = [[UIView alloc] initWithFrame:CGRectMake(-[UIScreen mainScreen].bounds.size.width, -20, [UIScreen mainScreen].bounds.size.width*3, 20)];
+    _statusBarView.backgroundColor = [UIColor colorWithHex:0x24CF5F];
+    [self.view addSubview:_statusBarView];
 }
 
 #pragma mark - 处理导航栏下1px横线
@@ -297,6 +288,28 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     self.refreshControl.tintColor = [UIColor refreshControlColor];
 }
 
+#pragma ,ark - 弹性HeaderView 刷新
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    //获取偏移量
+    CGPoint offset = scrollView.contentOffset;
+    
+    //判断是否改变
+    if (offset.y < 0) {
+        CGRect rect = self.homePageHeadView.drawView.frame;
+        //我们只需要改变图片的y值和高度即可
+        rect.origin.y = offset.y;
+        if ([UIScreen mainScreen].bounds.size.height < 500) {
+            rect.size.height = 250 - offset.y;
+        } else {
+            rect.size.height = screen_height - 202 - offset.y;
+        }
+        
+        self.homePageHeadView.drawView.frame = rect;
+    }
+    
+}
+
+#pragma mark - change Portrait
 - (void)changePortraitAction
 {
     if (![Utils isNetworkExist]) {
@@ -307,6 +320,8 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         [HUD hideAnimated:YES afterDelay:1];
     } else {
         if ([Config getOwnID] == 0) {
+            [self statusBarViewState];
+            
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
             LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
             [self.navigationController pushViewController:loginVC animated:YES];
@@ -462,6 +477,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
         [HUD hideAnimated:YES afterDelay:1];
     } else {
+        [self statusBarViewState];
+        
         if ([Config getOwnID] == 0) {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
             LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
@@ -633,10 +650,14 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self statusBarViewState];
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     if (!_isLogin) {
         if ([Config getOwnID] == 0) {
+            [self statusBarViewState];
+            
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
             LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
             [self.navigationController pushViewController:loginVC animated:YES];
@@ -776,6 +797,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 #pragma mark - 动弹
 - (void)pushTweetList
 {
+    [self statusBarViewState];
+    
     TweetTableViewController *myFriendTweetViewCtl = [[TweetTableViewController alloc] initTweetListWithType:NewTweetsTypeOwnTweets];
     myFriendTweetViewCtl.title = @"动弹";
     myFriendTweetViewCtl.hidesBottomBarWhenPushed = YES;
@@ -785,6 +808,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 #pragma mark - 收藏
 - (void)pushFavoriteSVC
 {
+    [self statusBarViewState];
+    
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
                                                                             andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
                                                                           andControllers:@[
@@ -802,6 +827,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 #pragma mark - 关注/粉丝
 - (void)pushFriendsSVC:(UIButton *)button
 {
+    [self statusBarViewState];
+    
     if (button.tag == 1) {
         FriendsViewController *friendVC = [[FriendsViewController alloc] initUserId:_myID andRelation:OSCAPI_USER_FOLLOWS];
         friendVC.title = @"关注";
@@ -818,6 +845,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 #pragma mark - setup
 - (void)setUpAction {
+    
+    [self statusBarViewState];
+    
     SettingsPage *settingPage = [SettingsPage new];
     settingPage.hidesBottomBarWhenPushed = YES;
     [self.navigationController pushViewController:settingPage animated:YES];
@@ -827,6 +857,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 - (void)showCodeAction {
     
     if ([Config getOwnID] == 0) {
+        [self statusBarViewState];
+        
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
         LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [self.navigationController pushViewController:loginVC animated:YES];
