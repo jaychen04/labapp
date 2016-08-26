@@ -30,12 +30,11 @@
 }
 
 + (instancetype)returnReuseAtMeCellWithTableView:(UITableView *)tableView
+                                       indexPath:(NSIndexPath *)indexPath
                                       identifier:(NSString *)reuseIdentifier
 {
-    OSCAtMeCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
-    if (!cell) {
-        cell = [[OSCAtMeCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    }
+    OSCAtMeCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+
     return cell;
 }
 

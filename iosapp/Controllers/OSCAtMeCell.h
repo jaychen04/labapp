@@ -11,6 +11,7 @@
 @class AtMeItem;
 @interface OSCAtMeCell : UITableViewCell
 + (instancetype)returnReuseAtMeCellWithTableView:(UITableView* )tableView
+                                       indexPath:(NSIndexPath* )indexPath
                                       identifier:(NSString* )reuseIdentifier;
 
 @property (nonatomic,strong) AtMeItem* atMeItem;

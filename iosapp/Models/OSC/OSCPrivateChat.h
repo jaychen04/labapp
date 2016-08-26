@@ -37,6 +37,8 @@ typedef NS_ENUM(NSInteger,OSCPrivateChatType){
 
 @property (nonatomic,assign) CGRect popFrame;///< 气泡大小 全部消息类型都用到
 
+@property (nonatomic,assign) CGRect timeTipFrame;///< 时间提示 全部消息类型都用到
+
 @property (nonatomic,assign) CGRect textFrame;///< 文本消息类型
 
 @property (nonatomic,assign) CGRect imageFrame;///< 图片消息类型

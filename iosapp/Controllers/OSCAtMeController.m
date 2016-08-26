@@ -10,10 +10,14 @@
 #import "OSCAPI.h"
 #import "Config.h"
 #import "OSCAtMeCell.h"
+#import "OSCMessageCenter.h"
 #import "UIColor+Util.h"
 #import "AFHTTPRequestOperationManager+Util.h"
 
 #import <MJRefresh.h>
+#import <MJExtension.h>
+
+#define ATME_HEIGHT 150
 
 static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 @interface OSCAtMeController ()<UITableViewDelegate,UITableViewDataSource>
@@ -31,6 +35,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
     [super viewDidLoad];
 
     [self.view addSubview:self.tableView];
+    [self.tableView registerNib:[UINib nibWithNibName:@"OSCAtMeCell" bundle:nil] forCellReuseIdentifier:OSCAtMeCellReuseIdentifier];
     self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
         [self getDataThroughDropdown:YES];
     }];
@@ -60,7 +65,23 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
       parameters:paraMutableDic.copy
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
              if([responseObject[@"code"]integerValue] == 1) {
-                 NSLog(@"success ");
+                 NSDictionary* resultDic = responseObject[@"result"];
+                 NSArray* items = resultDic[@"items"];
+                 if (dropDown) {
+                     [self.dataSource removeAllObjects];
+                 }
+                 NSArray* models = [AtMeItem mj_objectArrayWithKeyValuesArray:items];
+                 [self.dataSource addObjectsFromArray:models];
+                 self.nextToken = resultDic[@"nextPageToken"];
+                 
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     if (dropDown) {
+                         [self.tableView.mj_header endRefreshing];
+                     }else{
+                         [self.tableView.mj_footer endRefreshing];
+                     }
+                     [self.tableView reloadData];
+                 });
              }
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -78,7 +99,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
     return self.dataSource.count;
 }
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    OSCAtMeCell* cell = [OSCAtMeCell returnReuseAtMeCellWithTableView:tableView identifier:OSCAtMeCellReuseIdentifier];
+    OSCAtMeCell* cell = [OSCAtMeCell returnReuseAtMeCellWithTableView:tableView indexPath:indexPath identifier:OSCAtMeCellReuseIdentifier];
     cell.atMeItem = self.dataSource[indexPath.row];
     return cell;
 }
@@ -90,11 +111,12 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 - (UITableView *)tableView {
 	if(_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,0},{self.view.bounds.size.width,self.view.bounds.size.height - 100}} style:UITableViewStylePlain];
-        _tableView.separatorColor = [UIColor separatorColor];
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.scrollsToTop = NO;
-	}
+        _tableView.estimatedRowHeight = ATME_HEIGHT;
+        _tableView.rowHeight = UITableViewAutomaticDimension;
+    }
 	return _tableView;
 }
 - (NSMutableArray *)dataSource {
