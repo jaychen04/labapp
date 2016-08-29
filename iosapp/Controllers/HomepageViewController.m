@@ -582,10 +582,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             HomeButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
             buttonCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.tweetCount)] forState:UIControlStateNormal];//动弹数
-            [buttonCell.collectionButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
-            [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
-            [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
+            [buttonCell.creditButton setTitle:[Utils numberLimitString:_myProfile.tweetCount] forState:UIControlStateNormal];//动弹数
+            [buttonCell.collectionButton setTitle:[Utils numberLimitString:_myProfile.favoriteCount] forState:UIControlStateNormal];
+            [buttonCell.followingButton setTitle:[Utils numberLimitString:_myProfile.followersCount] forState:UIControlStateNormal];
+            [buttonCell.fanButton setTitle:[Utils numberLimitString:_myProfile.fansCount] forState:UIControlStateNormal];
             
             [buttonCell.creditButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
             [buttonCell.creditTitleButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];

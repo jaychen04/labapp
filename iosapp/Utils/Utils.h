@@ -61,5 +61,6 @@ typedef NS_ENUM(NSUInteger, hudType) {
 + (NSString *)HTMLWithData:(NSDictionary *)data usingTemplate:(NSString *)templateName;
 
 
++ (NSString *)numberLimitString:(int)number;
 
 @end
