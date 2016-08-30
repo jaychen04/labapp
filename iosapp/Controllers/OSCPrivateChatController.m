@@ -14,21 +14,24 @@
 
 #import "OSCAPI.h"
 #import "Config.h"
-#import <MJRefresh.h>
+#import "Utils.h"
 
+#import <MJRefresh.h>
+#import <MJExtension.h>
+#import <MBProgressHUD.h>
 
 static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell";
 @interface OSCPrivateChatController ()<UITableViewDelegate,UITableViewDataSource,OSCPrivateChatCellDelegate>
 
 @property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) NSMutableArray* dataSource;
+@property (nonatomic,strong) NSString* nextPageToken;
+@property (nonatomic,strong) NSString* prevPageToken;
 
 @end
 
 @implementation OSCPrivateChatController{
     NSInteger _authorId;
-    NSString* _prevPageToken;
-    NSString* _nextPageToken;
 }
 #pragma mark --- initialize method
 - (instancetype)initWithAuthorId:(NSInteger)authorId{
@@ -63,20 +66,71 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
 
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
-    if (isUpgradeReq && [_prevPageToken length] > 0) {
-        [paraMutableDic setObject:_prevPageToken forKey:@"prevPageToken"];
+    if (isUpgradeReq && [self.prevPageToken length] > 0) {
+        [paraMutableDic setObject:self.prevPageToken forKey:@"prevPageToken"];
     }
-    if (!isUpgradeReq && [_nextPageToken length] > 0) {
-        [paraMutableDic setObject:_nextPageToken forKey:@"nextPageToken"];
+    if (!isUpgradeReq && [self.nextPageToken length] > 0) {
+        [paraMutableDic setObject:self.nextPageToken forKey:@"nextPageToken"];
     }
     
+    MBProgressHUD* HUD = [Utils createHUD];
     [manager GET:strUrl
       parameters:paraMutableDic.copy
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-        
+             if ([responseObject[@"code"]integerValue] == 1) {
+                 NSDictionary* resultDic = responseObject[@"result"];
+                 NSArray* items = resultDic[@"items"];
+                 self.nextPageToken = resultDic[@"nextPageToken"];
+                 self.prevPageToken = resultDic[@"prevPageToken"];
+                 NSArray* models = [OSCPrivateChat mj_objectArrayWithKeyValuesArray:items];
+                 NSArray* reversedArray = [[models reverseObjectEnumerator]allObjects];
+                 
+                 if (isUpgradeReq) {//往上请求数据 添加到数组前面
+                     OSCPrivateChat* newData_last = nil;
+                     OSCPrivateChat* nowData_first = nil;
+                     if (reversedArray.count) { newData_last = [reversedArray lastObject]; }
+                     if (self.dataSource.count) { nowData_first = [self.dataSource firstObject]; }
+                     
+                     if (newData_last.id != nowData_first.id) {
+                         NSRange range = NSMakeRange(0, reversedArray.count);
+                         NSIndexSet* indexSet = [NSIndexSet indexSetWithIndexesInRange:range];
+                         [self.dataSource insertObjects:reversedArray atIndexes:indexSet];
+                     }
+                 }else{//往下请求数据  添加到数组后面
+                     OSCPrivateChat* newData_first = nil;
+                     OSCPrivateChat* nowData_last = nil;
+                     if (reversedArray.count) { newData_first = [reversedArray firstObject]; }
+                     if (self.dataSource.count) { nowData_last = [self.dataSource lastObject]; }
+
+                     if (newData_first.id != nowData_last.id) {
+                         [self.dataSource addObjectsFromArray:reversedArray];
+                     }
+                 }
+
+             }else{
+                 HUD.label.text = @"未知错误";
+             }
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (isUpgradeReq) {
+                     [self.tableView.mj_header endRefreshing];
+                 }else{
+                     [self.tableView.mj_footer endRefreshing];
+                 }
+                 [self.tableView reloadData];
+                 [HUD hideAnimated:YES afterDelay:1];
+             });
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (isUpgradeReq) {
+                     [self.tableView.mj_header endRefreshing];
+                 }else{
+                     [self.tableView.mj_footer endRefreshing];
+                 }
+                 HUD.label.text = @"网络异常，操作失败";
+                 [HUD hideAnimated:YES afterDelay:1];
+             });
     }];
 }
 

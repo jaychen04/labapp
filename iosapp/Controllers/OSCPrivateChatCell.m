@@ -90,6 +90,17 @@ static UIImage* _fileTipImage;
         [self addSubview:({
             UITextView* textView = [UITextView new];
             _textView = textView;
+            _textView.backgroundColor = [UIColor clearColor];
+            _textView.font = [UIFont systemFontOfSize:CHAT_TEXT_FONT_SIZE];
+            _textView.textColor = [UIColor newTitleColor];
+            _textView.editable = NO;
+            _textView.scrollEnabled = NO;
+            [_textView setTextContainerInset:UIEdgeInsetsZero];
+            _textView.textContainer.lineFragmentPadding = 0;
+            [_textView setContentInset:UIEdgeInsetsMake(0, -1, 0, 1)];
+            _textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+            [_textView setTextAlignment:NSTextAlignmentLeft];
+            _textView.text = @" ";
             _textView;
         })];
         [self addSubview:({
@@ -113,14 +124,14 @@ static UIImage* _fileTipImage;
         _popFrame = popFrame;
         CGRect textFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - textSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,textSize};
         _textFrame = textFrame;
-        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
         _timeTipFrame = timeTipFrame;
     }else{
         CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
         _popFrame = popFrame;
         CGRect textFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},textSize};
         _textFrame = textFrame;
-        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
         _timeTipFrame = timeTipFrame;
     }
     
@@ -140,7 +151,7 @@ static UIImage* _fileTipImage;
         [_popImageView setImage:[self otherPopImage]];
     }
     _textView.attributedText = [Utils contentStringFromRawString:privateChatItem.content];
-    _timeLabel.text = privateChatItem.pubDate;
+    _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(5, 11)];
     
     _popFrame = privateChatItem.popFrame;
     _textFrame = privateChatItem.textFrame;
@@ -226,14 +237,14 @@ static UIImage* _fileTipImage;
         _popFrame = popFrame;
         CGRect imageFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - imageSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,imageSize};
         _imageFrame = imageFrame;
-        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
         _timeTipFrame = timeTipFrame;
     }else{
         CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
         _popFrame = popFrame;
         CGRect imageFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},imageSize};
         _imageFrame = imageFrame;
-        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
         _timeTipFrame = timeTipFrame;
     }
     
@@ -271,6 +282,8 @@ static UIImage* _fileTipImage;
         _photoView.image = image;
         [self maskView:_photoView image:_popImageView.image];
     }
+    
+    _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(5, 11)];
     
     _popFrame = privateChatItem.popFrame;
     _imageFrame = privateChatItem.imageFrame;
@@ -390,14 +403,14 @@ static UIImage* _fileTipImage;
         _popFrame = popFrame;
         CGRect fileFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - fileSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,fileSize};
         _fileFrame = fileFrame;
-        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
         _timeTipFrame = timeTipFrame;
     }else{
         CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
         _popFrame = popFrame;
         CGRect fileFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},fileSize};
         _fileFrame = fileFrame;
-        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
         _timeTipFrame = timeTipFrame;
     }
     
@@ -415,6 +428,8 @@ static UIImage* _fileTipImage;
     }else{
         [_popImageView setImage:[self otherPopImage]];
     }
+    
+    _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(5, 11)];
     
     _popFrame = privateChatItem.popFrame;
     _fileFrame = privateChatItem.fileFrame;
@@ -463,6 +478,7 @@ static UIImage* _fileTipImage;
     OSCPrivateChatCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     if (!cell) {
         cell = [[OSCPrivateChatCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     return cell;
 }
@@ -476,21 +492,36 @@ static UIImage* _fileTipImage;
     
     switch (_privateChat.privateChatType) {
         case OSCPrivateChatTypeText:{
-            [self.contentView addSubview:self.textChatView];
-            self.textChatView.privateChatCell = self;
-            self.textChatView.privateChatItem = _privateChat;
+            PrivateChatNodeTextView* textNodeView = [[PrivateChatNodeTextView alloc]initWithFrame:self.contentView.bounds];
+            textNodeView.privateChatCell = self;
+            [self.contentView addSubview:textNodeView];
+            textNodeView.privateChatItem = _privateChat;
+            
+//            [self.contentView addSubview:self.textChatView];
+//            self.textChatView.privateChatCell = self;
+//            self.textChatView.privateChatItem = _privateChat;
             break;
         }
         case OSCPrivateChatTypeImage:{
-            [self.contentView addSubview:self.imageChatView];
-            self.imageChatView.privateChatCell = self;
-            self.imageChatView.privateChatItem = _privateChat;
+            PrivateChatNodeImageView* imageNodeView = [[PrivateChatNodeImageView alloc]initWithFrame:self.contentView.bounds];
+            imageNodeView.privateChatCell = self;
+            [self.contentView addSubview:imageNodeView];
+            imageNodeView.privateChatItem = _privateChat;
+            
+//            [self.contentView addSubview:self.imageChatView];
+//            self.imageChatView.privateChatCell = self;
+//            self.imageChatView.privateChatItem = _privateChat;
             break;
         }
         case OSCPrivateChatTypeFile:{
-            [self.contentView addSubview:self.fileChatView];
-            self.fileChatView.privateChatCell = self;
-            self.fileChatView.privateChatItem = _privateChat;
+            PrivateChatNodeFileView* fileNodeView = [[PrivateChatNodeFileView alloc]initWithFrame:self.contentView.bounds];
+            fileNodeView.privateChatCell = self;
+            [self.contentView addSubview:fileNodeView];
+            fileNodeView.privateChatItem = _privateChat;
+            
+//            [self.contentView addSubview:self.fileChatView];
+//            self.fileChatView.privateChatCell = self;
+//            self.fileChatView.privateChatItem = _privateChat;
             break;
         }
         default:

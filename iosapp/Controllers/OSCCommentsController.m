@@ -91,8 +91,15 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
              }
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-            HUD.label.text = @"网络异常，操作失败";
-             [HUD hideAnimated:YES afterDelay:1];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (dropDown) {
+                     [self.tableView.mj_header endRefreshing];
+                 }else{
+                     [self.tableView.mj_footer endRefreshing];
+                 }
+                 HUD.label.text = @"网络异常，操作失败";
+                 [HUD hideAnimated:YES afterDelay:1];
+             });
     }];
 }
 

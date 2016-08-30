@@ -73,23 +73,30 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
                  [self.dataSource addObjectsFromArray:models];
                  self.nextToken = resultDic[@"nextPageToken"];
                  
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     if (dropDown) {
-                         [self.tableView.mj_header endRefreshing];
-                     }else{
-                         [self.tableView.mj_footer endRefreshing];
-                     }
-                     [self.tableView reloadData];
-                     [HUD hideAnimated:YES afterDelay:1];
-                 });
              }else{
                  HUD.label.text = @"未知错误";
-                 [HUD hideAnimated:YES afterDelay:1];
              }
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (dropDown) {
+                     [self.tableView.mj_header endRefreshing];
+                 }else{
+                     [self.tableView.mj_footer endRefreshing];
+                 }
+                 [self.tableView reloadData];
+                 [HUD hideAnimated:YES afterDelay:1];
+             });
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-             HUD.label.text = @"网络异常，操作失败";
-             [HUD hideAnimated:YES afterDelay:1];
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (dropDown) {
+                     [self.tableView.mj_header endRefreshing];
+                 }else{
+                     [self.tableView.mj_footer endRefreshing];
+                 }
+                 HUD.label.text = @"网络异常，操作失败";
+                 [HUD hideAnimated:YES afterDelay:1];
+             });
          }];
 
 }
