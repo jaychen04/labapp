@@ -55,40 +55,15 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     return self;
 }
 
-//- (NSArray *)parseXML:(ONOXMLDocument *)xml
-//{
-//    return [[xml.rootElement firstChildWithTag:@"favorites"] childrenWithTag:@"favorite"];
-//}
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kFavoriteCellID];
 }
 
-#pragma mark --- 维护用作tableView数据源的数组
-//-(void)handleData:(id)responseJSON isRefresh:(BOOL)isRefresh{
-//    if (responseJSON) {
-//        NSDictionary *result = responseJSON[@"result"];
-//        NSArray* items = result[@"items"];
-//        NSArray* modelArray = [OSCFavorites mj_objectArrayWithKeyValuesArray:items];
-//        
-//        if (isRefresh) {//上拉得到的数据
-//            self.items = modelArray;
-//        } else {
-//            [self.items[self.type] addObjectsFromArray:modelArray];
-//        }
-//    }
-//}
-
-#pragma mark - 获取具体用户博客
--(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh {
-//    NSMutableDictionary* paraMutableDic = self.parametersDic.mutableCopy;
-//    if (!isRefresh && [self.pageToken length] > 0) {
-//        [paraMutableDic setObject:self.pageToken forKey:@"pageToken"];
-//    }
-    
+#pragma mark - 获取数据
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh
+{
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
     if (!isRefresh && [self.pageToken length] > 0) {//下拉刷新请求
         [paraMutableDic setObject:self.pageToken forKey:@"pageToken"];
@@ -97,37 +72,6 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     [self.manager GET:self.generateUrl()
            parameters:paraMutableDic
               success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                  /*
-                  if ([responseObject[@"code"] integerValue] == 1) {
-                      
-                      [self handleData:responseObject isRefresh:isRefresh];
-                      
-                      NSDictionary *resultDic = responseObject[@"result"];
-                      self.pageToken = resultDic[@"nextPageToken"];
-                      NSArray* items = resultDic[@"items"];
-                      
-                      self.lastCell.status = items.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
-                      
-                      if (self.tableView.mj_header.isRefreshing) {
-                          [self.tableView.mj_header endRefreshing];
-                      }
-                      if (!isRefresh) {
-                          if (items.count > 0) {
-                              [self.tableView.mj_footer endRefreshing];
-                          } else {
-                              [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                          }
-                      }
-                      
-                      dispatch_async(dispatch_get_main_queue(), ^{
-                          [self.tableView reloadData];
-                      });
-                  } else {
-                      self.lastCell.status = LastCellStatusFinished;
-                      [self.tableView.mj_header endRefreshing];
-                      [self.tableView.mj_footer endRefreshing];
-                  }
-                  */
                   
                   if([responseObject[@"code"] integerValue] == 1) {
                       NSDictionary *resultDic = responseObject[@"result"];
@@ -147,6 +91,13 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
                           }
                           [self.tableView reloadData];
                       });
+                  } else {
+                    
+                      MBProgressHUD *HUD = [Utils createHUD];
+                      HUD.mode = MBProgressHUDModeCustomView;
+                      HUD.label.text = responseObject[@"message"];
+                      
+                      [HUD hideAnimated:YES afterDelay:1];
                   }
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];

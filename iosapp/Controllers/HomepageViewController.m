@@ -555,20 +555,20 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             if (_badgeValue == 0) {
                 cell.accessoryView = nil;
             } else {
-                UIView *accessoryBadge = [UIView new];
-                accessoryBadge.backgroundColor = [UIColor redColor];
-                accessoryBadge.clipsToBounds = YES;
-                accessoryBadge.layer.cornerRadius = 3;
-//                UILabel *accessoryBadge = [UILabel new];
+//                UIView *accessoryBadge = [UIView new];
 //                accessoryBadge.backgroundColor = [UIColor redColor];
-//                accessoryBadge.text = [@(_badgeValue) stringValue];
-//                accessoryBadge.textColor = [UIColor whiteColor];
-//                accessoryBadge.textAlignment = NSTextAlignmentCenter;
-//                accessoryBadge.layer.cornerRadius = 11;
 //                accessoryBadge.clipsToBounds = YES;
+//                accessoryBadge.layer.cornerRadius = 3;
+                UILabel *accessoryBadge = [UILabel new];
+                accessoryBadge.backgroundColor = [UIColor redColor];
+                accessoryBadge.text = [@(_badgeValue) stringValue];
+                accessoryBadge.textColor = [UIColor whiteColor];
+                accessoryBadge.textAlignment = NSTextAlignmentCenter;
+                accessoryBadge.layer.cornerRadius = 11;
+                accessoryBadge.clipsToBounds = YES;
                 
-//                CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
-//                width = width > 26? width: 22;
+                CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
+                width = width > 26? width: 22;
                 accessoryBadge.frame = CGRectMake(0, 0, 6, 6);
                 cell.accessoryView = accessoryBadge;
             }
