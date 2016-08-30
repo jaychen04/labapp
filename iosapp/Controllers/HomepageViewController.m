@@ -10,7 +10,7 @@
 #import "Utils.h"
 #import "Config.h"
 #import "OSCAPI.h"
-
+#import "OSCNotice.h"
 #import "OSCUser.h"
 #import "OSCUserItem.h"
 #import "SwipableViewController.h"
@@ -61,7 +61,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 @property (nonatomic, strong) HomePageHeadView *homePageHeadView;
 @property (nonatomic, strong) UIView *statusBarView;//状态栏
-
+@property (nonatomic, assign) BOOL isNewFans;
 
 @end
 
@@ -88,6 +88,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                                                  name:@"userRefresh"
                                                object:nil];
     
+//    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
     _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
 }
 
@@ -97,10 +98,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView.hidden = YES;
     
     self.tableView.tableHeaderView = self.homePageHeadView;
-    self.homePageHeadView.drawView.gradientColor = (GradientColor){
-        [UIColor colorWithHex:0x24CF5F].CGColor,
-        [UIColor colorWithHex:0x20B955].CGColor,
-    };
     
     [self refreshHeaderView];
     
@@ -586,6 +583,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             [buttonCell.collectionButton setTitle:[Utils numberLimitString:_myProfile.favoriteCount] forState:UIControlStateNormal];
             [buttonCell.followingButton setTitle:[Utils numberLimitString:_myProfile.followersCount] forState:UIControlStateNormal];
             [buttonCell.fanButton setTitle:[Utils numberLimitString:_myProfile.fansCount] forState:UIControlStateNormal];
+            buttonCell.redPointView.hidden = !self.isNewFans;
             
             [buttonCell.creditButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
             [buttonCell.creditTitleButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
@@ -756,26 +754,100 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 - (void)noticeUpdateHandler:(NSNotification *)notification
 {
+//    NSArray *noticeCounts = [notification object];
+//    
+//    __block int sumOfCount = 0;
+//    [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *count, NSUInteger idx, BOOL *stop) {
+//        if (idx < 5) {
+//            _noticeCounts[idx] = count;
+//            sumOfCount += [count intValue];
+//        } else {
+//            if ([count intValue] == 1) {
+//                self.isNewFans = YES;
+//            } else {
+//                self.isNewFans = NO;
+//            }
+//        }
+//    }];
+//    
+//    _badgeValue = sumOfCount;
+//    if (_badgeValue) {
+//        self.navigationController.tabBarItem.badgeValue = [@(sumOfCount) stringValue];
+//    } else {
+//        self.navigationController.tabBarItem.badgeValue = nil;
+//    }
+//    
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+//        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
+//    });
+//    
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
+    
+    
+    
+    
+    
     NSArray *noticeCounts = [notification object];
+    
+    OSCNotice *oldNotice = [Config getNotice];
+    int oldNumber = oldNotice.mention + oldNotice.letter + oldNotice.review + oldNotice.fans + oldNotice.like;
+    
+    OSCNotice *newNotice = [OSCNotice new];
     
     __block int sumOfCount = 0;
     [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *count, NSUInteger idx, BOOL *stop) {
         _noticeCounts[idx] = count;
         sumOfCount += [count intValue];
+        
+        switch (idx) {
+            case 0:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.mention);
+                newNotice.mention = [_noticeCounts[idx] intValue];
+                break;
+            case 1:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.letter);
+                newNotice.letter = [_noticeCounts[idx] intValue];
+                break;
+            case 2:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.review);
+                newNotice.review = [_noticeCounts[idx] intValue];
+                break;
+            case 3:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.fans);
+                newNotice.fans = [_noticeCounts[idx] intValue];
+                break;
+            case 4:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.like);
+                newNotice.like = [_noticeCounts[idx] intValue];
+                break;
+                
+            default:
+                break;
+        }
     }];
     
-    _badgeValue = sumOfCount;
+    if (newNotice.fans > 0) {
+        self.isNewFans = YES;
+    } else {
+        self.isNewFans = NO;
+    }
+    
+    [Config saveNotice:newNotice];
+    
+    _badgeValue = sumOfCount + oldNumber;
     if (_badgeValue) {
-        self.navigationController.tabBarItem.badgeValue = [@(sumOfCount) stringValue];
+        self.navigationController.tabBarItem.badgeValue = [@(_badgeValue) stringValue];
     } else {
         self.navigationController.tabBarItem.badgeValue = nil;
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
     });
     
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:_badgeValue];
 }
 
 
@@ -897,12 +969,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
             _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 202}}];
         }
-        _homePageHeadView.drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
-        _homePageHeadView.drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
-        _homePageHeadView.drawView.gradientColor = (GradientColor){
-            [UIColor colorWithHex:0x24CF5F].CGColor,
-            [UIColor colorWithHex:0x20B955].CGColor,
-        };
     }
     return _homePageHeadView;
 }

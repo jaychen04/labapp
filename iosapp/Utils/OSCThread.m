@@ -10,11 +10,13 @@
 #import "OSCAPI.h"
 #import "Config.h"
 #import "Utils.h"
+#import "OSCNotice.h"
 
 #import <AFNetworking.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <Reachability.h>
+#import <MJExtension.h>
 
 static BOOL isPollingStarted;
 static NSTimer *timer;
@@ -41,21 +43,44 @@ static Reachability *reachability;
 {
     if (reachability.currentReachabilityStatus == 0) {return;}
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
     
-    [manager GET:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_USER_NOTICE]
-      parameters:@{@"uid":@([Config getOwnID])}
-         success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-             ONOXMLElement *notice = [responseObject.rootElement firstChildWithTag:@"notice"];
-             int atCount = [[[notice firstChildWithTag:@"atmeCount"] numberValue] intValue];
-             int msgCount = [[[notice firstChildWithTag:@"msgCount"] numberValue] intValue];
-             int reviewCount = [[[notice firstChildWithTag:@"reviewCount"] numberValue] intValue];
-             int newFansCount = [[[notice firstChildWithTag:@"newFansCount"] numberValue] intValue];
+    NSString *strUrl = [NSString stringWithFormat:@"%@notice", OSCAPI_V2_PREFIX];
+    
+    [manager GET:strUrl
+      parameters:nil
+         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+             NSInteger code = [responseObject[@"code"] integerValue];
+             if (code == 1) {
+                 NSDictionary *result = responseObject[@"result"];
+                 OSCNotice *newNotice = [OSCNotice mj_objectWithKeyValues:result];
+//                 OSCNotice *oldNotice = [Config getNotice];
+//                 
+//                 int mention = newNotice.mention + oldNotice.mention;
+//                 int letter = newNotice.letter + oldNotice.letter;
+//                 int review = newNotice.review + oldNotice.review;
+//                 int fans = newNotice.fans + oldNotice.fans;
+//                 int like = newNotice.like + oldNotice.like;
+//                 
+//                 OSCNotice *notice = [OSCNotice new];
+//                 notice.mention = mention;
+//                 notice.letter = letter;
+//                 notice.review = review;
+//                 notice.fans = fans;
+//                 notice.like = like;
+//                 [Config saveNotice:notice];
+//                 
+//                 int newFans = newNotice.fans > 0 ? 1 : 0;
+//
+//                 [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
+//                                                                     object:@[@(mention), @(letter), @(review), @(fans), @(like), @(newFans)]];
+                 
+                 [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
+                                                                     object:@[@(newNotice.mention), @(newNotice.letter), @(newNotice.review), @(newNotice.fans), @(newNotice.like)]];
+             }
              
-             [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
-                                                                 object:@[@(atCount), @(reviewCount), @(msgCount), @(newFansCount)]];
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-             NSLog(@"%@", error);
+             
          }];
 }
 

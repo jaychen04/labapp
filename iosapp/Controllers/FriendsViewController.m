@@ -10,6 +10,8 @@
 #import "OSCUserItem.h"
 #import "PersonCell.h"
 #import "UserDetailsViewController.h"
+#import "OSCNotice.h"
+#import "Config.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <MJExtension.h>
@@ -58,11 +60,25 @@ static NSString * const kPersonCellID = @"PersonCell";
 
 #pragma mark - life cycle
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    OSCNotice *oldNotice = [Config getNotice];
+    
+    OSCNotice *notice = [OSCNotice new];
+    notice.mention = oldNotice.mention;
+    notice.letter = oldNotice.letter;
+    notice.review = oldNotice.review;
+    notice.fans = 0;
+    notice.like = oldNotice.like;
+    
+    [Config saveNotice:notice];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self.tableView registerClass:[PersonCell class] forCellReuseIdentifier:kPersonCellID];
-    self.view.backgroundColor = [UIColor colorWithHex:0xfcfcfc];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -155,7 +171,6 @@ static NSString * const kPersonCellID = @"PersonCell";
         [cell.portrait loadPortrait:[NSURL URLWithString:friend.portrait]];
         cell.nameLabel.text = friend.name;
         cell.infoLabel.text = friend.expertise;
-        cell.infoLabel.textColor = [UIColor titleColor];
     }
     
     

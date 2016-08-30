@@ -19,5 +19,6 @@
 @property (nonatomic, weak) IBOutlet UIButton *collectionTitleButton;
 @property (nonatomic, weak) IBOutlet UIButton *followingTitleButton;
 @property (nonatomic, weak) IBOutlet UIButton *fanTitleButton;
+@property (weak, nonatomic) IBOutlet UIView *redPointView;
 
 @end

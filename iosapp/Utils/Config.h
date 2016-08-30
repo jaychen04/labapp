@@ -11,6 +11,7 @@
 
 @class OSCUser;
 @class OSCUserItem;
+@class OSCNotice;
 
 @interface Config : NSObject
 
@@ -43,5 +44,8 @@
 + (void)removeTeamInfo;
 + (void)saveWhetherNightMode:(BOOL)isNight;
 + (BOOL)getMode;
+
++ (void)saveNotice:(OSCNotice *)notice;
++ (OSCNotice *)getNotice;
 
 @end
