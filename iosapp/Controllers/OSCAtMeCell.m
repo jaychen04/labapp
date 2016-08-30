@@ -22,7 +22,9 @@
 
 @end
 
-@implementation OSCAtMeCell
+@implementation OSCAtMeCell{
+    BOOL _trackingTouch_userPortrait;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -37,7 +39,6 @@
 
     return cell;
 }
-
 
 - (void)setAtMeItem:(AtMeItem *)atMeItem{
     _atMeItem = atMeItem;
@@ -63,4 +64,29 @@
     _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)atMeItem.commentCount];
 }
 
+#pragma mark --- 触摸分发
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    _trackingTouch_userPortrait = NO;
+    UITouch* touch = [touches anyObject];
+    CGPoint p = [touch locationInView:_userPortraitImageView];
+    if (CGRectContainsPoint(_userPortraitImageView.bounds, p)) {
+        _trackingTouch_userPortrait = YES;
+    }else{
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (_trackingTouch_userPortrait) {
+        if ([_delegate respondsToSelector:@selector(atMeCellDidClickUserPortrait:)]) {
+            [_delegate atMeCellDidClickUserPortrait:self];
+        }
+    }else{
+        [super touchesEnded:touches withEvent:event];
+    }
+}
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (!_trackingTouch_userPortrait) {
+        [super touchesCancelled:touches withEvent:event];
+    }
+}
 @end

@@ -9,10 +9,10 @@
 #ifndef iosapp_OSCAPI_h
 #define iosapp_OSCAPI_h
 
-//#define OSCAPI_HTTPS_PREFIX                 @"https://www.oschina.net/action/api/"
-//#define OSCAPI_PREFIX                       @"http://www.oschina.net/action/api/"
-//#define OSCAPI_V2_HTTPS_PREFIX              @"https://www.oschina.net/action/apiv2/"
-//#define OSCAPI_V2_PREFIX                    @"http://www.oschina.net/action/apiv2/"
+#define OSCAPI_HTTPS_PREFIX                 @"https://www.oschina.net/action/api/"
+#define OSCAPI_PREFIX                       @"http://www.oschina.net/action/api/"
+#define OSCAPI_V2_HTTPS_PREFIX              @"https://www.oschina.net/action/apiv2/"
+#define OSCAPI_V2_PREFIX                    @"http://www.oschina.net/action/apiv2/"
 
 // 15机器
 //#define OSCAPI_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/api/"
@@ -21,10 +21,10 @@
 //#define OSCAPI_V2_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/apiv2/"
 
 // 10机器
-#define OSCAPI_HTTPS_PREFIX                 @"http://192.168.1.10:8000/action/api/"
-#define OSCAPI_PREFIX                       @"http://192.168.1.10:8000/action/api/"
-#define OSCAPI_V2_PREFIX                    @"http://192.168.1.10:8000/action/apiv2/"
-#define OSCAPI_V2_HTTPS_PREFIX              @"http://192.168.1.10:8000/action/apiv2/"
+//#define OSCAPI_HTTPS_PREFIX                 @"http://192.168.1.10:8000/action/api/"
+//#define OSCAPI_PREFIX                       @"http://192.168.1.10:8000/action/api/"
+//#define OSCAPI_V2_PREFIX                    @"http://192.168.1.10:8000/action/apiv2/"
+//#define OSCAPI_V2_HTTPS_PREFIX              @"http://192.168.1.10:8000/action/apiv2/"
 
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
@@ -61,8 +61,9 @@
 #define OSCAPI_MESSAGES_LIST            @"user_msg_letters"//消息中心_私信我的列表
 #define OSCAPI_MESSAGES_ATME_LIST       @"user_msg_mentions"//消息中心_@我的列表
 #define OSCAPI_MESSAGES_COMMENTS_LIST   @"user_msg_comments"//消息中心_评论列表
+#define OSCAPI_MESSAGE_CHAT_LIST        @"messages"//获取与某人的私信列表
 #define OSCAPI_MESSAGE_DELETE           @"message_delete"
-#define OSCAPI_MESSAGE_PUB              @"message_pub"
+#define OSCAPI_MESSAGE_PUB              @"message_pub"//给某人发送私信
 
 #define OSCAPI_COMMENTS_LIST            @"comment_list"
 #define OSCAPI_COMMENT_PUB              @"comment_pub"

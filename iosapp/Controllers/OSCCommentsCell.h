@@ -7,6 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@class OSCCommentsCell;
+@protocol OSCCommentsCellDelegate <NSObject>
+
+- (void)commentsCellDidClickUserPortrait:(OSCCommentsCell* )cell;
+
+@end
 
 @class CommentItem;
 @interface OSCCommentsCell : UITableViewCell
@@ -15,5 +21,7 @@
                                           identifier:(NSString* )reuseIdentifier;
 
 @property (nonatomic,strong) CommentItem* commentItem;
+
+@property (nonatomic,weak) id<OSCCommentsCellDelegate> delegate;
 
 @end

@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger,OSCOriginType){
+    OSCOriginTypeLinkNews = 0,      //链接新闻
+    OSCOriginTypeSoftWare = 1,      //软件推荐
+    OSCOriginTypeForum = 2,         //讨论区帖子
+    OSCOriginTypeBlog = 3,          //博客
+    OSCOriginTypeTranslation = 4,   //翻译文章
+    OSCOriginTypeActivity = 5,      //活动类型
+    OSCOriginTypeInfo = 6,          //资讯
+    OSCOriginTypeTweet = 100        //动弹
+};
+
 @interface OSCMessageCenter : NSObject
  /**
   * MessageItem ---> 私信列表Item
@@ -76,6 +87,8 @@
 @property (nonatomic, copy) NSString *desc;
 
 @property (nonatomic, assign) NSInteger type;
+
+@property (nonatomic,assign) OSCOriginType originType;
 
 @end
 

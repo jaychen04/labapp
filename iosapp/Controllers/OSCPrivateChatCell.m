@@ -9,6 +9,7 @@
 #import "OSCPrivateChatCell.h"
 #import "OSCPrivateChat.h"
 #import "ImageDownloadHandle.h"
+#import "OSCPhotoGroupView.h"
 #import "Utils.h"
 
 #import <YYKit.h>
@@ -68,6 +69,8 @@ static UIImage* _fileTipImage;
 
 @property (nonatomic,strong) OSCPrivateChat* privateChatItem;
 
+@property (nonatomic,weak) OSCPrivateChatCell* privateChatCell;
+
 @end
 
 @implementation PrivateChatNodeTextView{
@@ -104,13 +107,21 @@ static UIImage* _fileTipImage;
     
     CGSize popSize = _popFrame.size;
     CGSize textSize = _textFrame.size;
+    CGSize timeSize = _timeTipFrame.size;
     if (_isSelf) {
         CGRect popFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width,SCREEN_PADDING_TOP},popSize};
         _popFrame = popFrame;
         CGRect textFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - textSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,textSize};
         _textFrame = textFrame;
+        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        _timeTipFrame = timeTipFrame;
     }else{
-    
+        CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
+        _popFrame = popFrame;
+        CGRect textFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},textSize};
+        _textFrame = textFrame;
+        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        _timeTipFrame = timeTipFrame;
     }
     
     _popImageView.frame = _popFrame;
@@ -158,6 +169,9 @@ static UIImage* _fileTipImage;
 
 
 #pragma mark --- 图片类型
+
+#define MAX_IMAGE_SIZE_W PRIVATE_MAX_WIDTH
+
 @interface PrivateChatNodeImageView : PrivateChatNodeView{
     __weak UIImageView* _popImageView;
     __weak UIImageView* _photoView;
@@ -166,11 +180,15 @@ static UIImage* _fileTipImage;
 
 @property (nonatomic,strong) OSCPrivateChat* privateChatItem;
 
+@property (nonatomic,weak) OSCPrivateChatCell* privateChatCell;
+
 @end
 
 @implementation PrivateChatNodeImageView{
     CGRect _popFrame,_imageFrame,_timeTipFrame;
     CGFloat _rowHeight;
+    BOOL _isSelf;
+    BOOL _trackingTouch_PhotoImageView;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -199,6 +217,26 @@ static UIImage* _fileTipImage;
 - (void)layoutSubviews{
     [super layoutSubviews];
     
+    CGSize popSize = _popFrame.size;
+    CGSize imageSize = _imageFrame.size;
+    CGSize timeSize = _timeTipFrame.size;
+    
+    if (_isSelf){
+        CGRect popFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width,SCREEN_PADDING_TOP},popSize};
+        _popFrame = popFrame;
+        CGRect imageFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - imageSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,imageSize};
+        _imageFrame = imageFrame;
+        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        _timeTipFrame = timeTipFrame;
+    }else{
+        CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
+        _popFrame = popFrame;
+        CGRect imageFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},imageSize};
+        _imageFrame = imageFrame;
+        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        _timeTipFrame = timeTipFrame;
+    }
+    
     _popImageView.frame = _popFrame;
     _photoView.frame = _imageFrame;
     _timeLabel.frame = _timeTipFrame;
@@ -207,7 +245,9 @@ static UIImage* _fileTipImage;
 - (void)setPrivateChatItem:(OSCPrivateChat *)privateChatItem{
     _privateChatItem = privateChatItem;
     
-    if (privateChatItem.sender.isBySelf) {
+    _isSelf = privateChatItem.sender.isBySelf;;
+    
+    if (_isSelf) {
         [_popImageView setImage:[self selfPopImage]];
     }else{
         [_popImageView setImage:[self otherPopImage]];
@@ -215,21 +255,82 @@ static UIImage* _fileTipImage;
 
     UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:privateChatItem.resource];
     if (!image) {
+        _photoView.backgroundColor = [UIColor grayColor];
         [ImageDownloadHandle downloadImageWithUrlString:privateChatItem.resource SaveToDisk:YES completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+            CGSize resultSize = [self adjustImage:image];
+            privateChatItem.imageFrame = (CGRect){{0,0},resultSize};
+            privateChatItem.popFrame = privateChatItem.imageFrame;
+            privateChatItem.rowHeight = resultSize.height + SCREEN_PADDING_TOP + SCREEN_PADDING_BOTTOM;
             dispatch_async(dispatch_get_main_queue(), ^{
-                _photoView.image = image;
+                if ([_privateChatCell.delegate respondsToSelector:@selector(privateChatNodeImageViewloadThumbImageDidFinsh:)]) {
+                    [_privateChatCell.delegate privateChatNodeImageViewloadThumbImageDidFinsh:_privateChatCell];
+                }
             });
         }];
     }else{
         _photoView.image = image;
+        [self maskView:_photoView image:_popImageView.image];
     }
     
     _popFrame = privateChatItem.popFrame;
     _imageFrame = privateChatItem.imageFrame;
     _timeTipFrame = privateChatItem.timeTipFrame;
     _rowHeight = privateChatItem.rowHeight;
+    self.height = _rowHeight;
 }
 
+#pragma mark --- 图片大小 & 遮罩处理
+- (CGSize)adjustImage:(UIImage* )image{
+    if (!image) {return CGSizeZero;}
+    CGSize resultSize ;
+    if (image.size.width > MAX_IMAGE_SIZE_W) {
+        resultSize = (CGSize){MAX_IMAGE_SIZE_W,(MAX_IMAGE_SIZE_W * image.size.height) / image.size.width};
+    }else{
+        resultSize = image.size;
+    }
+    return resultSize;
+}
+- (void)maskView:(UIView *)view image:(UIImage *)image {
+    NSParameterAssert(view != nil);
+    NSParameterAssert(image != nil);
+    
+    UIImageView *imageViewMask = [[UIImageView alloc] initWithImage:image];
+    imageViewMask.frame = CGRectInset(view.frame, 0, 0);
+    
+    view.layer.mask = imageViewMask.layer;
+}
+#pragma mark --- 触摸分发
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    _trackingTouch_PhotoImageView = NO;
+    UITouch* t = [touches anyObject];
+    CGPoint p = [t locationInView:_photoView];
+    if (CGRectContainsPoint(_photoView.bounds, p)) {
+        _trackingTouch_PhotoImageView = YES;
+    }else{
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (_trackingTouch_PhotoImageView) {
+        UIImageView* fromView = _photoView;
+        
+        OSCPhotoGroupItem* currentPhotoItem = [OSCPhotoGroupItem new];
+        currentPhotoItem.largeImageURL = [NSURL URLWithString:_privateChatItem.resource];
+        currentPhotoItem.thumbView = fromView;
+        
+        OSCPhotoGroupView* photoGroup = [[OSCPhotoGroupView alloc] initWithGroupItems:@[currentPhotoItem]];
+        if ([_privateChatCell.delegate respondsToSelector:@selector(privateChatNodeImageViewloadLargerImageDidFinsh:photoGroupView:fromView:)]) {
+            [_privateChatCell.delegate privateChatNodeImageViewloadLargerImageDidFinsh:_privateChatCell photoGroupView:photoGroup fromView:fromView];
+        }
+    }else{
+        [super touchesEnded:touches withEvent:event];
+    }
+}
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (!_trackingTouch_PhotoImageView) {
+        [super touchesCancelled:touches withEvent:event];
+    }
+}
 @end
 
 
@@ -243,11 +344,14 @@ static UIImage* _fileTipImage;
 
 @property (nonatomic,strong) OSCPrivateChat* privateChatItem;
 
+@property (nonatomic,weak) OSCPrivateChatCell* privateChatCell;
+
 @end
 
 @implementation PrivateChatNodeFileView{
     CGRect _popFrame,_fileFrame,_timeTipFrame;
     CGFloat _rowHeight;
+    BOOL _isSelf;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -277,6 +381,26 @@ static UIImage* _fileTipImage;
 - (void)layoutSubviews{
     [super layoutSubviews];
     
+    CGSize popSize = _popFrame.size;
+    CGSize fileSize = _fileFrame.size;
+    CGSize timeSize = _timeTipFrame.size;
+    
+    if (_isSelf) {
+        CGRect popFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width,SCREEN_PADDING_TOP},popSize};
+        _popFrame = popFrame;
+        CGRect fileFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - fileSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,fileSize};
+        _fileFrame = fileFrame;
+        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        _timeTipFrame = timeTipFrame;
+    }else{
+        CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
+        _popFrame = popFrame;
+        CGRect fileFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},fileSize};
+        _fileFrame = fileFrame;
+        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height},timeSize};
+        _timeTipFrame = timeTipFrame;
+    }
+    
     _popImageView.frame = _popFrame;
     _fileTipView.frame = _fileFrame;
     _timeLabel.frame = _timeTipFrame;
@@ -285,15 +409,18 @@ static UIImage* _fileTipImage;
 - (void)setPrivateChatItem:(OSCPrivateChat *)privateChatItem{
     _privateChatItem = privateChatItem;
     
-    if (privateChatItem.sender.isBySelf) {
+    _isSelf = privateChatItem.sender.isBySelf;
+    if (_isSelf) {
         [_popImageView setImage:[self selfPopImage]];
     }else{
         [_popImageView setImage:[self otherPopImage]];
     }
+    
     _popFrame = privateChatItem.popFrame;
     _fileFrame = privateChatItem.fileFrame;
     _timeTipFrame = privateChatItem.timeTipFrame;
     _rowHeight = privateChatItem.rowHeight;
+    self.height = _rowHeight;
 }
 
 @end
@@ -350,27 +477,26 @@ static UIImage* _fileTipImage;
     switch (_privateChat.privateChatType) {
         case OSCPrivateChatTypeText:{
             [self.contentView addSubview:self.textChatView];
+            self.textChatView.privateChatCell = self;
             self.textChatView.privateChatItem = _privateChat;
             break;
         }
-            
         case OSCPrivateChatTypeImage:{
             [self.contentView addSubview:self.imageChatView];
+            self.imageChatView.privateChatCell = self;
             self.imageChatView.privateChatItem = _privateChat;
             break;
         }
-            
         case OSCPrivateChatTypeFile:{
             [self.contentView addSubview:self.fileChatView];
+            self.fileChatView.privateChatCell = self;
             self.fileChatView.privateChatItem = _privateChat;
             break;
         }
-            
         default:
             NSLog(@"privateChatType is NSNotFound");
             break;
     }
-    
 }
 
 - (void)_removeContentView{

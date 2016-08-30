@@ -12,6 +12,7 @@
 #import "MessageCenter.h"
 #import "OSCMessageCenter.h"
 #import "OSCCommentsCell.h"
+#import "UserDetailsViewController.h"
 
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "UIColor+Util.h"
@@ -19,11 +20,12 @@
 #import <YYKit.h>
 #import <MJRefresh.h>
 #import <MJExtension.h>
+#import <MBProgressHUD.h>
 
 #define COMMENT_HEIGHT 150
 
 static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
-@interface OSCCommentsController ()<UITableViewDelegate,UITableViewDataSource>
+@interface OSCCommentsController ()<UITableViewDelegate,UITableViewDataSource,OSCCommentsCellDelegate>
 
 @property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) NSMutableArray* dataSource;
@@ -48,13 +50,6 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
     }];
     [self.tableView.mj_header beginRefreshing];
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-}
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
-}
-
 
 #pragma mark --- Networking 
 - (void)getDataThroughDropdown:(BOOL)dropDown{
@@ -65,6 +60,8 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
     if (!dropDown && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
     }
+    
+    MBProgressHUD *HUD = [Utils createHUD];
     
     [manager GET:strUrl
       parameters:paraMutableDic.copy
@@ -86,11 +83,16 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
                          [self.tableView.mj_footer endRefreshing];
                      }
                      [self.tableView reloadData];
+                     [HUD hideAnimated:YES afterDelay:1];
                  });
+             }else{
+                 HUD.label.text = @"未知错误";
+                 [HUD hideAnimated:YES afterDelay:1];
              }
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        
+            HUD.label.text = @"网络异常，操作失败";
+             [HUD hideAnimated:YES afterDelay:1];
     }];
 }
 
@@ -104,6 +106,7 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OSCCommentsCell* cell = [OSCCommentsCell returnReuseCommentsCellWithTableView:tableView indexPath:indexPath identifier:OSCCommentsCellReuseIdentifier];
     cell.commentItem = self.dataSource[indexPath.row];
+    cell.delegate = self;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -111,6 +114,13 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
     //push new ViewController...
 }
 
+#pragma mark --- OSCCommentsCellDelegate
+- (void)commentsCellDidClickUserPortrait:(OSCCommentsCell *)cell{
+    CommentItem* commentItem = cell.commentItem;
+    OSCReceiver* receiver = commentItem.author;
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:receiver.id];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
 
 
 #pragma mark --- lazy loading

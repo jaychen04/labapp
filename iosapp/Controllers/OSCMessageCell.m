@@ -33,6 +33,8 @@
 @implementation OSCMessageCell{
     __weak IBOutlet UIButton *_setTopButton;
     __weak IBOutlet UIButton *_deleteButton;
+    
+    BOOL _trackingTouch_userPortrait;
 }
 
 - (void)awakeFromNib {
@@ -128,9 +130,34 @@
 }
 
 #pragma mark --- touch
+//- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+//    [self _resetTranslation];
+//    [super touchesBegan:touches withEvent:event];
+//}
+#pragma mark --- 触摸分发
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [self _resetTranslation];
-    [super touchesBegan:touches withEvent:event];
+    _trackingTouch_userPortrait = NO;
+    UITouch* touch = [touches anyObject];
+    CGPoint p = [touch locationInView:_userPortraitImageView];
+    if (CGRectContainsPoint(_userPortraitImageView.bounds, p)) {
+        _trackingTouch_userPortrait = YES;
+    }else{
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (_trackingTouch_userPortrait) {
+        if ([_delegate respondsToSelector:@selector(messageCellDidClickUserPortrait:)]) {
+            [_delegate messageCellDidClickUserPortrait:self];
+        }
+    }else{
+        [super touchesEnded:touches withEvent:event];
+    }
+}
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (!_trackingTouch_userPortrait) {
+        [super touchesCancelled:touches withEvent:event];
+    }
 }
 
 #pragma mark --- operation Button Method

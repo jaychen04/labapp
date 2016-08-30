@@ -9,9 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class OSCMessageCell;
-
 @protocol OSCMessageCellDelegate <NSObject>
 
+- (void)messageCellDidClickUserPortrait:(OSCMessageCell* )cell;
+
+@optional
 - (void)messageCellDidClickDelete:(OSCMessageCell* )cell;
 
 - (void)messageCellDidClickSetTop:(OSCMessageCell* )cell;

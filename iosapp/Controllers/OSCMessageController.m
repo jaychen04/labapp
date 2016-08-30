@@ -9,6 +9,7 @@
 #import "OSCMessageController.h"
 #import "OSCMessageCell.h"
 #import "OSCMessageCenter.h"
+#import "UserDetailsViewController.h"
 #import "OSCAPI.h"
 #import "Config.h"
 
@@ -17,12 +18,13 @@
 #import <AFNetworking.h>
 #import <MJExtension.h>
 #import <MJRefresh.h>
+#import <MBProgressHUD.h>
 
 #define MESSAGE_CELL_ROW 76
 
 static NSString* const messageCellIdentifier = @"OSCMessageCell";
 
-@interface OSCMessageController ()<UITableViewDelegate,UITableViewDataSource>
+@interface OSCMessageController ()<UITableViewDelegate,UITableViewDataSource,OSCMessageCellDelegate>
 
 @property (nonatomic,strong) UITableView* tableView;
 
@@ -70,6 +72,8 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
     }
     
+    MBProgressHUD* HUD = [Utils createHUD];
+    
     [manager GET:strUrl
       parameters:paraMutableDic.copy
          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
@@ -90,11 +94,16 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
                          [self.tableView.mj_footer endRefreshing];
                      }
                      [self.tableView reloadData];
+                     [HUD hideAnimated:YES afterDelay:1];
                  });
+             }else{
+                 HUD.label.text = @"未知错误";
+                 [HUD hideAnimated:YES afterDelay:1];
              }
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-
+             HUD.label.text = @"网络异常，操作失败";
+             [HUD hideAnimated:YES afterDelay:1];
     }];
 }
 
@@ -109,6 +118,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OSCMessageCell* cell = [OSCMessageCell returnReuseMessageCellWithTableView:tableView indexPath:indexPath identifier:messageCellIdentifier];
     cell.messageItem = self.dataSource[indexPath.row];
+    cell.delegate = self;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -117,11 +127,12 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
     //push 到私信界面
 }
 
-
-
-
-
-
+#pragma mark --- OSCMessageCellDelegate
+- (void)messageCellDidClickUserPortrait:(OSCMessageCell *)cell{
+    MessageItem* messageItem = cell.messageItem;
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:messageItem.sender.id];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
 
 
 #pragma mark --- lazy loading

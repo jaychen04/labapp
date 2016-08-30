@@ -20,7 +20,44 @@
 #pragma mark --- @我列表Item
 @implementation AtMeItem @end
 
-@implementation OSCOrigin @end
+@implementation OSCOrigin
+
+- (void)setType:(NSInteger)type{
+    _type = type;
+    
+    switch (type) {
+        case 0:
+            _originType = OSCOriginTypeLinkNews;
+            break;
+        case 1:
+            _originType = OSCOriginTypeSoftWare;
+            break;
+        case 2:
+            _originType = OSCOriginTypeForum;
+            break;
+        case 3:
+            _originType = OSCOriginTypeBlog;
+            break;
+        case 4:
+            _originType = OSCOriginTypeTranslation;
+            break;
+        case 5:
+            _originType = OSCOriginTypeActivity;
+            break;
+        case 6:
+            _originType = OSCOriginTypeInfo;
+            break;
+        case 100:
+            _originType = OSCOriginTypeTweet;
+            break;
+            
+        default:
+            _originType = NSNotFound;
+            break;
+    }
+}
+
+@end
 
 @implementation OSCReceiver @end
 

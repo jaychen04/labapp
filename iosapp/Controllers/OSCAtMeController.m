@@ -11,16 +11,18 @@
 #import "Config.h"
 #import "OSCAtMeCell.h"
 #import "OSCMessageCenter.h"
+#import "UserDetailsViewController.h"
 #import "UIColor+Util.h"
 #import "AFHTTPRequestOperationManager+Util.h"
 
 #import <MJRefresh.h>
 #import <MJExtension.h>
+#import <MBProgressHUD.h>
 
 #define ATME_HEIGHT 150
 
 static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
-@interface OSCAtMeController ()<UITableViewDelegate,UITableViewDataSource>
+@interface OSCAtMeController ()<UITableViewDelegate,UITableViewDataSource,OSCAtMeCellDelegate>
 
 @property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) NSMutableArray* dataSource;
@@ -44,12 +46,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
     }];
     [self.tableView.mj_header beginRefreshing];
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-}
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
-}
+
 
 #pragma mark --- Networking
 - (void)getDataThroughDropdown:(BOOL)dropDown{//YES:下拉  NO:上拉
@@ -60,6 +57,8 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
     if (!dropDown && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
     }
+    
+    MBProgressHUD* HUD = [Utils createHUD];
     
     [manager GET:strUrl
       parameters:paraMutableDic.copy
@@ -81,12 +80,17 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
                          [self.tableView.mj_footer endRefreshing];
                      }
                      [self.tableView reloadData];
+                     [HUD hideAnimated:YES afterDelay:1];
                  });
+             }else{
+                 HUD.label.text = @"未知错误";
+                 [HUD hideAnimated:YES afterDelay:1];
              }
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-             NSLog(@"success ");
-    }];
+             HUD.label.text = @"网络异常，操作失败";
+             [HUD hideAnimated:YES afterDelay:1];
+         }];
 
 }
 
@@ -101,9 +105,21 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OSCAtMeCell* cell = [OSCAtMeCell returnReuseAtMeCellWithTableView:tableView indexPath:indexPath identifier:OSCAtMeCellReuseIdentifier];
     cell.atMeItem = self.dataSource[indexPath.row];
+    cell.delegate = self;
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    AtMeItem* atMeItem = self.dataSource[indexPath.row];
+    
+}
 
+#pragma mark --- OSCAtMeCellDelegate
+- (void)atMeCellDidClickUserPortrait:(OSCAtMeCell *)cell{
+    AtMeItem* atMeItem = cell.atMeItem;
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:atMeItem.author.id];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
 
 
 
