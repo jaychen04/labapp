@@ -54,26 +54,6 @@ static Reachability *reachability;
              if (code == 1) {
                  NSDictionary *result = responseObject[@"result"];
                  OSCNotice *newNotice = [OSCNotice mj_objectWithKeyValues:result];
-//                 OSCNotice *oldNotice = [Config getNotice];
-//                 
-//                 int mention = newNotice.mention + oldNotice.mention;
-//                 int letter = newNotice.letter + oldNotice.letter;
-//                 int review = newNotice.review + oldNotice.review;
-//                 int fans = newNotice.fans + oldNotice.fans;
-//                 int like = newNotice.like + oldNotice.like;
-//                 
-//                 OSCNotice *notice = [OSCNotice new];
-//                 notice.mention = mention;
-//                 notice.letter = letter;
-//                 notice.review = review;
-//                 notice.fans = fans;
-//                 notice.like = like;
-//                 [Config saveNotice:notice];
-//                 
-//                 int newFans = newNotice.fans > 0 ? 1 : 0;
-//
-//                 [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
-//                                                                     object:@[@(mention), @(letter), @(review), @(fans), @(like), @(newFans)]];
                  
                  [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
                                                                      object:@[@(newNotice.mention), @(newNotice.letter), @(newNotice.review), @(newNotice.fans), @(newNotice.like)]];

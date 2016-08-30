@@ -754,40 +754,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 
 - (void)noticeUpdateHandler:(NSNotification *)notification
 {
-//    NSArray *noticeCounts = [notification object];
-//    
-//    __block int sumOfCount = 0;
-//    [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *count, NSUInteger idx, BOOL *stop) {
-//        if (idx < 5) {
-//            _noticeCounts[idx] = count;
-//            sumOfCount += [count intValue];
-//        } else {
-//            if ([count intValue] == 1) {
-//                self.isNewFans = YES;
-//            } else {
-//                self.isNewFans = NO;
-//            }
-//        }
-//    }];
-//    
-//    _badgeValue = sumOfCount;
-//    if (_badgeValue) {
-//        self.navigationController.tabBarItem.badgeValue = [@(sumOfCount) stringValue];
-//    } else {
-//        self.navigationController.tabBarItem.badgeValue = nil;
-//    }
-//    
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
-//        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
-//    });
-//    
-//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
-    
-    
-    
-    
-    
     NSArray *noticeCounts = [notification object];
     
     OSCNotice *oldNotice = [Config getNotice];
