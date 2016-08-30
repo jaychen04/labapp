@@ -34,6 +34,7 @@
 #import "HomePageHeadView.h"
 #import "ImageViewerController.h"
 #import "TweetTableViewController.h"
+#import "OSCFavorites.h"
 
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -554,17 +555,21 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             if (_badgeValue == 0) {
                 cell.accessoryView = nil;
             } else {
-                UILabel *accessoryBadge = [UILabel new];
+                UIView *accessoryBadge = [UIView new];
                 accessoryBadge.backgroundColor = [UIColor redColor];
-                accessoryBadge.text = [@(_badgeValue) stringValue];
-                accessoryBadge.textColor = [UIColor whiteColor];
-                accessoryBadge.textAlignment = NSTextAlignmentCenter;
-                accessoryBadge.layer.cornerRadius = 11;
                 accessoryBadge.clipsToBounds = YES;
+                accessoryBadge.layer.cornerRadius = 3;
+//                UILabel *accessoryBadge = [UILabel new];
+//                accessoryBadge.backgroundColor = [UIColor redColor];
+//                accessoryBadge.text = [@(_badgeValue) stringValue];
+//                accessoryBadge.textColor = [UIColor whiteColor];
+//                accessoryBadge.textAlignment = NSTextAlignmentCenter;
+//                accessoryBadge.layer.cornerRadius = 11;
+//                accessoryBadge.clipsToBounds = YES;
                 
-                CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
-                width = width > 26? width: 22;
-                accessoryBadge.frame = CGRectMake(0, 0, width, 22);
+//                CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
+//                width = width > 26? width: 22;
+                accessoryBadge.frame = CGRectMake(0, 0, 6, 6);
                 cell.accessoryView = accessoryBadge;
             }
         }
@@ -843,14 +848,25 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 - (void)pushFavoriteSVC
 {
     [self statusBarViewState];
-    
+    /*
+     
+     全部收藏
+     1 软件
+     2 问答
+     3 博客
+     4 翻译
+     5 活动
+     6 新闻
+     */
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
-                                                                            andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
+                                                                            andSubTitles:@[@"全部", @"软件", @"问答", @"博客", @"翻译", @"活动", @"新闻"]
                                                                           andControllers:@[
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeAll],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeQuestion],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTranslate],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeActivity],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
                                                                                            ]];
     favoritesSVC.hidesBottomBarWhenPushed = YES;

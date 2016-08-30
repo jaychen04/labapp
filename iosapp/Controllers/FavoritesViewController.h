@@ -7,7 +7,7 @@
 //
 
 #import "OSCObjsViewController.h"
-#import "OSCFavorite.h"
+#import "OSCFavorites.h"
 
 @interface FavoritesViewController : OSCObjsViewController
 

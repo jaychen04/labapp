@@ -17,8 +17,20 @@
 #import "SoftWareViewController.h"
 #import "NewsBlogDetailTableViewController.h"
 #import "QuesAnsDetailViewController.h"
+#import "ActivityDetailViewController.h"
+#import "TranslationViewController.h"
+
+#import <MJExtension.h>
+#import <MBProgressHUD.h>
 
 static NSString * const kFavoriteCellID = @"FavoriteCell";
+
+@interface FavoritesViewController () <networkingJsonDataDelegate>
+
+@property (nonatomic, strong) NSMutableArray *dataModels;
+@property (nonatomic, copy) NSString *pageToken;
+
+@end
 
 
 @implementation FavoritesViewController
@@ -26,21 +38,27 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
 - (instancetype)initWithFavoritesType:(FavoritesType)favoritesType
 {
     self = [super init];
-    if (!self) {return nil;}
-    
-    self.generateURL = ^NSString * (NSUInteger page) {
-        return [NSString stringWithFormat:@"%@%@?uid=%llu&type=%d&pageIndex=%lu&%@", OSCAPI_PREFIX, OSCAPI_FAVORITE_LIST, [Config getOwnID], favoritesType, (unsigned long)page, OSCAPI_SUFFIX];
-    };
-    
-    self.objClass = [OSCFavorite class];
-    
+    if (self) {
+        __weak FavoritesViewController *weakSelf = self;
+        self.generateUrl = ^NSString * () {
+            return [NSString stringWithFormat:@"%@favorites?catalog=%d", OSCAPI_V2_PREFIX, favoritesType];
+        };
+        self.tableWillReload = ^(NSUInteger responseObjectsCount) {
+            responseObjectsCount < 1? (weakSelf.lastCell.status = LastCellStatusFinished) :
+            (weakSelf.lastCell.status = LastCellStatusMore);
+        };
+        
+        self.netWorkingDelegate = self;
+        self.isJsonDataVc = YES;
+        self.kLastRefreshTime = @"NewsRefreshInterval";
+    }
     return self;
 }
 
-- (NSArray *)parseXML:(ONOXMLDocument *)xml
-{
-    return [[xml.rootElement firstChildWithTag:@"favorites"] childrenWithTag:@"favorite"];
-}
+//- (NSArray *)parseXML:(ONOXMLDocument *)xml
+//{
+//    return [[xml.rootElement firstChildWithTag:@"favorites"] childrenWithTag:@"favorite"];
+//}
 
 
 - (void)viewDidLoad {
@@ -49,15 +67,115 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kFavoriteCellID];
 }
 
+#pragma mark --- 维护用作tableView数据源的数组
+//-(void)handleData:(id)responseJSON isRefresh:(BOOL)isRefresh{
+//    if (responseJSON) {
+//        NSDictionary *result = responseJSON[@"result"];
+//        NSArray* items = result[@"items"];
+//        NSArray* modelArray = [OSCFavorites mj_objectArrayWithKeyValuesArray:items];
+//        
+//        if (isRefresh) {//上拉得到的数据
+//            self.items = modelArray;
+//        } else {
+//            [self.items[self.type] addObjectsFromArray:modelArray];
+//        }
+//    }
+//}
 
+#pragma mark - 获取具体用户博客
+-(void)getJsonDataWithParametersDic:(NSDictionary*)paraDic isRefresh:(BOOL)isRefresh {
+//    NSMutableDictionary* paraMutableDic = self.parametersDic.mutableCopy;
+//    if (!isRefresh && [self.pageToken length] > 0) {
+//        [paraMutableDic setObject:self.pageToken forKey:@"pageToken"];
+//    }
+    
+    NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
+    if (!isRefresh && [self.pageToken length] > 0) {//下拉刷新请求
+        [paraMutableDic setObject:self.pageToken forKey:@"pageToken"];
+    }
+    
+    [self.manager GET:self.generateUrl()
+           parameters:paraMutableDic
+              success:^(AFHTTPRequestOperation *operation, id responseObject) {
+                  /*
+                  if ([responseObject[@"code"] integerValue] == 1) {
+                      
+                      [self handleData:responseObject isRefresh:isRefresh];
+                      
+                      NSDictionary *resultDic = responseObject[@"result"];
+                      self.pageToken = resultDic[@"nextPageToken"];
+                      NSArray* items = resultDic[@"items"];
+                      
+                      self.lastCell.status = items.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
+                      
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      if (!isRefresh) {
+                          if (items.count > 0) {
+                              [self.tableView.mj_footer endRefreshing];
+                          } else {
+                              [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                          }
+                      }
+                      
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          [self.tableView reloadData];
+                      });
+                  } else {
+                      self.lastCell.status = LastCellStatusFinished;
+                      [self.tableView.mj_header endRefreshing];
+                      [self.tableView.mj_footer endRefreshing];
+                  }
+                  */
+                  
+                  if([responseObject[@"code"] integerValue] == 1) {
+                      NSDictionary *resultDic = responseObject[@"result"];
+                      
+                      NSArray *modelArray = [OSCFavorites mj_objectArrayWithKeyValuesArray:resultDic[@"items"]];
+                      if (isRefresh) {//下拉得到的数据
+                          [self.dataModels removeAllObjects];
+                      }
+                      [self.dataModels addObjectsFromArray:modelArray];
+                      self.objects = self.dataModels;
+                      self.pageToken = resultDic[@"nextPageToken"];
+                      
+                      dispatch_async(dispatch_get_main_queue(), ^{
+                          self.lastCell.status = modelArray.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
+                          if (self.tableView.mj_header.isRefreshing) {
+                              [self.tableView.mj_header endRefreshing];
+                          }
+                          [self.tableView reloadData];
+                      });
+                  }
+              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                  MBProgressHUD *HUD = [Utils createHUD];
+                  HUD.mode = MBProgressHUDModeCustomView;
+                  HUD.label.text = @"网络异常!";
+                  
+                  [HUD hideAnimated:YES afterDelay:1];
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      self.lastCell.status = LastCellStatusError;
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      [self.tableView reloadData];
+                  });
+              }
+     ];
+}
+
+
+#pragma mark - UITableViewDataSource
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:kFavoriteCellID forIndexPath:indexPath];
-    OSCFavorite *favorite = self.objects[indexPath.row];
+    cell.textLabel.textColor = [UIColor newTitleColor];
     
-    cell.backgroundColor = [UIColor themeColor];
-    cell.textLabel.text = favorite.title;
-    cell.textLabel.textColor = [UIColor titleColor];
+    if (self.dataModels.count > 0) {
+        OSCFavorites *favorite = self.dataModels[indexPath.row];
+        cell.textLabel.text = favorite.title;
+    }
     
     cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
     cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
@@ -76,40 +194,61 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 
-    OSCFavorite *favorite = self.objects[indexPath.row];
-    switch (favorite.type) {
-        case FavoritesTypeSoftware: {        //软件详情
-            SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:favorite.objectID];
-            [detailsViewController setHidesBottomBarWhenPushed:YES];
-            [self.navigationController pushViewController:detailsViewController animated:YES];
+    if (self.dataModels.count > 0) {
+        
+        OSCFavorites *favorite = self.dataModels[indexPath.row];
+        switch (favorite.type) {
+            case FavoritesTypeSoftware: {        //软件详情
+                SoftWareViewController* detailsViewController = [[SoftWareViewController alloc]initWithSoftWareID:favorite.id];
+                [detailsViewController setHidesBottomBarWhenPushed:YES];
+                [self.navigationController pushViewController:detailsViewController animated:YES];
+            }
+                break;
+            case FavoritesTypeQuestion: {           //问答详情
+                QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
+                detailVC.hidesBottomBarWhenPushed = YES;
+                detailVC.questionID = favorite.id;
+                [self.navigationController pushViewController:detailVC animated:YES];
+            }
+                break;
+            case FavoritesTypeBlog: {            //博客详情
+                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:favorite.id
+                                                                                                                    isBlogDetail:YES];
+                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            }
+                break;
+            case FavoritesTypeTranslate: {
+                //翻译
+                TranslationViewController *translationVc = [TranslationViewController new];
+                translationVc.translationId = favorite.id;
+                [self.navigationController pushViewController:translationVc animated:YES];
+            }
+                break;
+            case FavoritesTypeActivity: {
+                //活动
+                ActivityDetailViewController *activityDetailCtl = [[ActivityDetailViewController alloc] initWithActivityID:favorite.id];
+                [self.navigationController pushViewController:activityDetailCtl animated:YES];
+            }
+                break;
+            case FavoritesTypeNews: {            //资讯详情
+                NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:favorite.id
+                                                                                                                    isBlogDetail:NO];
+                [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
+            }
+                break;
+            default:
+                [self.navigationController handleURL:[NSURL URLWithString:favorite.href]];
+                break;
         }
-            break;
-        case FavoritesTypeTopic: {           //问答详情
-            QuesAnsDetailViewController *detailVC = [QuesAnsDetailViewController new];
-            detailVC.hidesBottomBarWhenPushed = YES;
-            detailVC.questionID = favorite.objectID;
-            [self.navigationController pushViewController:detailVC animated:YES];
-        }
-            break;
-        case FavoritesTypeBlog: {            //博客详情
-            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:favorite.objectID
-                                                                                                                isBlogDetail:YES];
-            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
-        }
-            break;
-        case FavoritesTypeNews: {            //资讯详情
-            NewsBlogDetailTableViewController *newsBlogDetailVc = [[NewsBlogDetailTableViewController alloc]initWithObjectId:favorite.objectID
-                                                                                                                isBlogDetail:NO];
-            [self.navigationController pushViewController:newsBlogDetailVc animated:YES];
-        }
-            break;
-        default:
-            [self.navigationController handleURL:favorite.url];
-            break;
     }
 }
 
-
-
+#pragma mark --- lazy loading
+- (NSMutableArray *)dataModels {
+    if(_dataModels == nil) {
+        _dataModels = [[NSMutableArray alloc] init];
+    }
+    return _dataModels;
+}
 
 @end
