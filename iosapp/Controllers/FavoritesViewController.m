@@ -86,10 +86,6 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
                       
                       dispatch_async(dispatch_get_main_queue(), ^{
                           self.lastCell.status = modelArray.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
-                          if (self.tableView.mj_header.isRefreshing) {
-                              [self.tableView.mj_header endRefreshing];
-                          }
-                          [self.tableView reloadData];
                       });
                   } else {
                     
@@ -98,7 +94,17 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
                       HUD.label.text = responseObject[@"message"];
                       
                       [HUD hideAnimated:YES afterDelay:1];
+                      self.lastCell.status = LastCellStatusError;
+                      
                   }
+                  
+                  dispatch_async(dispatch_get_main_queue(), ^{
+                      if (self.tableView.mj_header.isRefreshing) {
+                          [self.tableView.mj_header endRefreshing];
+                      }
+                      [self.tableView reloadData];
+                  });
+                  
               } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
                   MBProgressHUD *HUD = [Utils createHUD];
                   HUD.mode = MBProgressHUDModeCustomView;

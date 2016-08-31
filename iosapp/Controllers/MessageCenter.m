@@ -12,6 +12,7 @@
 #import "EventsViewController.h"
 #import "FriendsViewController.h"
 #import "MessagesViewController.h"
+#import "OSCMessageController.h"
 #import "MyTweetLikeListViewController.h"
 
 #import "UIButton+Badge.h"

@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "QuartzCanvasView.h"
 
+@class QuartzCanvasView;
 @interface HomePageHeadView : UIView
 
-@property (nonatomic, strong) QuartzCanvasView *drawView;;
+@property (nonatomic, weak) QuartzCanvasView *drawView;;
 
 @property (nonatomic, strong) UIButton *setUpButton;
 @property (nonatomic, strong) UIButton *codeButton;
