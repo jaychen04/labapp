@@ -138,13 +138,16 @@
 //        }
 //    }];
     [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *number, NSUInteger idx, BOOL *stop) {
-        [self setBadgeValue:[number stringValue] forButton:self.titleBar.titleButtons[idx]];
-        sumOfCount += [number intValue];
-        
-        if (needAutoScroll && [number intValue] && !scrolled) {
-            [self scrollToViewAtIndex:idx];
-            scrolled = YES;
+        if (idx < 5) {
+            [self setBadgeValue:[number stringValue] forButton:self.titleBar.titleButtons[idx]];
+            sumOfCount += [number intValue];
+            
+            if (needAutoScroll && [number intValue] && !scrolled) {
+                [self scrollToViewAtIndex:idx];
+                scrolled = YES;
+            }
         }
+        
     }];
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];

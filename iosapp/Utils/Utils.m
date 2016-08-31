@@ -397,6 +397,26 @@
     return [GRMustacheTemplate renderObject:mutableData fromString:template error:nil];
 }
 
+/*
+ 数字限制字符串
+ */
++ (NSString *)numberLimitString:(int)number
+{
+    NSString *numberStr = @"";
+    if (number >= 0 && number < 1000) {
+        numberStr = [NSString stringWithFormat:@"%d", number];
+    } else if (number >= 1000 && number < 10000) {
+        int integer = number / 1000;
+        int decimal = number % 1000 / 100;
+        
+        numberStr = [NSString stringWithFormat:@"%d.%dk", integer, decimal];
+    } else {
+        int inte = number / 1000;
+        numberStr = [NSString stringWithFormat:@"%dk", inte];
+    }
+    
+    return numberStr;
+}
 
 
 @end
