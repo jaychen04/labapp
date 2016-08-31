@@ -10,6 +10,7 @@
 #import "OSCMessageCenter.h"
 #import "ImageDownloadHandle.h"
 #import "Utils.h"
+#import "Config.h"
 #import "UIImageView+CornerRadius.h"
 
 @interface OSCAtMeCell ()
@@ -19,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *originDescLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeAndSourceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
-
 @end
 
 @implementation OSCAtMeCell{
@@ -55,8 +55,16 @@
     }
     
     _nameLabel.text = atMeItem.author.name;
-    _descLabel.attributedText = [Utils contentStringFromRawString:atMeItem.content];
-    _originDescLabel.attributedText = [Utils contentStringFromRawString:atMeItem.origin.desc];
+    NSString* atUserName = [NSString stringWithFormat:@"@%@",[Config getOwnUserName]];
+    NSRange range = [atMeItem.content localizedStandardRangeOfString:atUserName];
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc]initWithString:atMeItem.content];
+    [attString addAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHex:0x24cf5f]} range:range];
+    _descLabel.attributedText = attString;
+    if (atMeItem.origin.desc.length > 0) {
+        _originDescLabel.attributedText = [Utils contentStringFromRawString:atMeItem.origin.desc];
+    }else{
+        _originDescLabel.text = @"相关动态";
+    }
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:atMeItem.pubDate] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     [att appendAttributedString:[Utils getAppclientName:(int)atMeItem.appClient]];

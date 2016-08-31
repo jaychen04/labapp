@@ -9,6 +9,7 @@
 #import "OSCAtMeController.h"
 #import "OSCAPI.h"
 #import "Config.h"
+#import "OSCPushTypeControllerHelper.h"
 #import "OSCAtMeCell.h"
 #import "OSCMessageCenter.h"
 #import "UserDetailsViewController.h"
@@ -84,7 +85,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
                      [self.tableView.mj_footer endRefreshing];
                  }
                  [self.tableView reloadData];
-                 [HUD hideAnimated:YES afterDelay:1];
+                 [HUD hideAnimated:YES afterDelay:0.3];
              });
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -95,7 +96,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
                      [self.tableView.mj_footer endRefreshing];
                  }
                  HUD.label.text = @"网络异常，操作失败";
-                 [HUD hideAnimated:YES afterDelay:1];
+                 [HUD hideAnimated:YES afterDelay:0.3];
              });
          }];
 
@@ -118,7 +119,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     AtMeItem* atMeItem = self.dataSource[indexPath.row];
-    
+    [self pushController:atMeItem];
 }
 
 #pragma mark --- OSCAtMeCellDelegate
@@ -128,7 +129,18 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 
-
+#pragma mark --- push type controller
+- (void)pushController:(AtMeItem* )atMeItem{
+    if (atMeItem.origin.originType == OSCOriginTypeLinkNews) {
+        [self.navigationController handleURL:[NSURL URLWithString:atMeItem.origin.href]];
+    }
+    UIViewController* pushVC = [OSCPushTypeControllerHelper pushControllerWithOriginType:atMeItem.origin];
+    if (pushVC == nil) {
+        [self.navigationController handleURL:[NSURL URLWithString:atMeItem.origin.href]];
+    }else{
+        [self.navigationController pushViewController:pushVC animated:YES];
+    }
+}
 
 #pragma mark --- lazy loading
 - (UITableView *)tableView {

@@ -100,6 +100,7 @@
 		04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EC969C1CF436FB0004B54E /* OSCActivityTableViewCell.xib */; };
 		04EC96A11CF469FF0004B54E /* OSCActivities.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96A01CF469FF0004B54E /* OSCActivities.m */; };
 		04EC96A71CF48E8C0004B54E /* OSCBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96A61CF48E8C0004B54E /* OSCBanner.m */; };
+		04F1D4D81D76B957007B4311 /* OSCPushTypeControllerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F1D4D71D76B957007B4311 /* OSCPushTypeControllerHelper.m */; };
 		04F62F5B1D45E54700EDC480 /* NewMultipleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F62F5A1D45E54700EDC480 /* NewMultipleDetailCell.m */; };
 		3118F8D31AFB4803001684BC /* TeamMemberDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3118F8D21AFB4803001684BC /* TeamMemberDetailViewController.m */; };
 		3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3118F8D51AFB49CD001684BC /* MemberDetailCell.m */; };
@@ -532,6 +533,8 @@
 		04EC96A01CF469FF0004B54E /* OSCActivities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCActivities.m; sourceTree = "<group>"; };
 		04EC96A51CF48E8C0004B54E /* OSCBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBanner.h; sourceTree = "<group>"; };
 		04EC96A61CF48E8C0004B54E /* OSCBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBanner.m; sourceTree = "<group>"; };
+		04F1D4D61D76B957007B4311 /* OSCPushTypeControllerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPushTypeControllerHelper.h; sourceTree = "<group>"; };
+		04F1D4D71D76B957007B4311 /* OSCPushTypeControllerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPushTypeControllerHelper.m; sourceTree = "<group>"; };
 		04F62F591D45E54700EDC480 /* NewMultipleDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMultipleDetailCell.h; sourceTree = "<group>"; };
 		04F62F5A1D45E54700EDC480 /* NewMultipleDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMultipleDetailCell.m; sourceTree = "<group>"; };
 		064EB8ABEA12C19E6D94D0C0 /* libPods-iosapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1205,6 +1208,8 @@
 				044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */,
 				04EC1B5B1D38F6DF006DBD5D /* IMYWebView.h */,
 				04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */,
+				04F1D4D61D76B957007B4311 /* OSCPushTypeControllerHelper.h */,
+				04F1D4D71D76B957007B4311 /* OSCPushTypeControllerHelper.m */,
 				04EC1B611D393049006DBD5D /* IMY_NJKWebViewProgress.h */,
 				04EC1B621D393049006DBD5D /* IMY_NJKWebViewProgress.m */,
 				042E8D131CF6A3F000364BD7 /* TokenManager.h */,
@@ -2904,6 +2909,7 @@
 				C5EF892A1BE3197C00B5FA46 /* PostCell.m in Sources */,
 				EE7AC7F21AD38E5C00E850CB /* TweetsLikeListViewController.m in Sources */,
 				04F62F5B1D45E54700EDC480 /* NewMultipleDetailCell.m in Sources */,
+				04F1D4D81D76B957007B4311 /* OSCPushTypeControllerHelper.m in Sources */,
 				C5EF892B1BE3197C00B5FA46 /* PostsViewController.m in Sources */,
 				C5344E8F1B1DA2970024F110 /* TeamMemberListViewController.m in Sources */,
 				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,

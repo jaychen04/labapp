@@ -12,6 +12,7 @@
 #import "Utils.h"
 
 #import <MBProgressHUD.h>
+#import <Masonry.h>
 
 @interface OSCMsgChatController ()
 
@@ -24,7 +25,7 @@
 }
 #pragma mark --- initialize method
 - (instancetype)initWithAuthorId:(NSInteger)authorId userName:(NSString *)name{
-    self = [super init];
+    self = [super initWithModeSwitchButton:NO];
     if (self) {
         self.navigationItem.title = name;
         
@@ -43,13 +44,25 @@
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setLayout];
+
 }
 
 - (void)setLayout{
     [self.view addSubview:_privateChatVC.view];
     
+//    [self.editingBar mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.left.and.bottom.and.right.equalTo(self.view).with.offset(0);
+//        make.height.equalTo(@45);
+//    }];
+//    
+//    [_privateChatVC.view mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.top.and.left.and.right.equalTo(self.view).with.offset(0);
+//        make.bottom.equalTo(self.editingBar.mas_top).with.offset(0);
+//    }];
+    
     for (UIView *view in self.view.subviews) {view.translatesAutoresizingMaskIntoConstraints = NO;}
     NSDictionary *views = @{@"messageBubbleTableView": _privateChatVC.view, @"editingBar": self.editingBar};
+    
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[messageBubbleTableView]|" options:0 metrics:nil views:views]];
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[messageBubbleTableView][editingBar]"
                                                                       options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight

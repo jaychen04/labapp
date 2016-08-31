@@ -90,7 +90,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
                  self.nextToken = resultDic[@"nextPageToken"];
                  
              }else{
-                 HUD.label.text = @"未知错误";
+                 HUD.label.text = @"Waiting";
              }
              
              dispatch_async(dispatch_get_main_queue(), ^{
@@ -100,7 +100,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
                      [self.tableView.mj_footer endRefreshing];
                  }
                  [self.tableView reloadData];
-                 [HUD hideAnimated:YES afterDelay:1];
+                 [HUD hideAnimated:YES afterDelay:0.3];
              });
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -111,7 +111,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
                      [self.tableView.mj_footer endRefreshing];
                  }
                  HUD.label.text = @"网络异常，操作失败";
-                 [HUD hideAnimated:YES afterDelay:1];
+                 [HUD hideAnimated:YES afterDelay:0.3];
              });
     }];
 }
@@ -133,12 +133,12 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     MessageItem* msgItem = self.dataSource[indexPath.row];
-//    OSCMsgChatController* msgController = [[OSCMsgChatController alloc]initWithAuthorId:msgItem.sender.id userName:msgItem.sender.name];
-//    [self.navigationController pushViewController:msgController animated:YES];
+    OSCMsgChatController* msgController = [[OSCMsgChatController alloc]initWithAuthorId:msgItem.sender.id userName:msgItem.sender.name];
+    [self.navigationController pushViewController:msgController animated:YES];
     
 //    test push ...
-    OSCPrivateChatController* privateChatVC = [[OSCPrivateChatController alloc]initWithAuthorId:msgItem.sender.id];
-    [self.navigationController pushViewController:privateChatVC animated:YES];
+//    OSCPrivateChatController* privateChatVC = [[OSCPrivateChatController alloc]initWithAuthorId:msgItem.sender.id];
+//    [self.navigationController pushViewController:privateChatVC animated:YES];
 }
 
 #pragma mark --- OSCMessageCellDelegate

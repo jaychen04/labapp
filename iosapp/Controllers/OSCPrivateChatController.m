@@ -49,7 +49,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     [super viewDidLoad];
 
     [self.view addSubview:self.tableView];
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+    self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
         [self getDataUpgradeRequest:YES];
     }];
     self.tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
@@ -83,26 +83,27 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
                  self.nextPageToken = resultDic[@"nextPageToken"];
                  self.prevPageToken = resultDic[@"prevPageToken"];
                  NSArray* models = [OSCPrivateChat mj_objectArrayWithKeyValuesArray:items];
-                 NSArray* reversedArray = [[models reverseObjectEnumerator]allObjects];
+//                 NSArray* reversedArray = [[models reverseObjectEnumerator]allObjects];
+                 NSArray* reversedArray = models;
                  
                  if (isUpgradeReq) {//往上请求数据 添加到数组前面
                      OSCPrivateChat* newData_last = nil;
-                     OSCPrivateChat* nowData_first = nil;
+                     OSCPrivateChat* nowData_last = nil;
                      if (reversedArray.count) { newData_last = [reversedArray lastObject]; }
-                     if (self.dataSource.count) { nowData_first = [self.dataSource firstObject]; }
+                     if (self.dataSource.count) { nowData_last = [self.dataSource lastObject]; }
                      
-                     if (newData_last.id != nowData_first.id) {
+                     if (newData_last.id != nowData_last.id) {
                          NSRange range = NSMakeRange(0, reversedArray.count);
                          NSIndexSet* indexSet = [NSIndexSet indexSetWithIndexesInRange:range];
                          [self.dataSource insertObjects:reversedArray atIndexes:indexSet];
                      }
                  }else{//往下请求数据  添加到数组后面
                      OSCPrivateChat* newData_first = nil;
-                     OSCPrivateChat* nowData_last = nil;
+                     OSCPrivateChat* nowData_first = nil;
                      if (reversedArray.count) { newData_first = [reversedArray firstObject]; }
-                     if (self.dataSource.count) { nowData_last = [self.dataSource lastObject]; }
+                     if (self.dataSource.count) { nowData_first = [self.dataSource firstObject]; }
 
-                     if (newData_first.id != nowData_last.id) {
+                     if (newData_first.id != nowData_first.id) {
                          [self.dataSource addObjectsFromArray:reversedArray];
                      }
                  }
@@ -112,13 +113,14 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
              }
              
              dispatch_async(dispatch_get_main_queue(), ^{
+                 [TimeTipHelper resetTimeTipHelper];
                  if (isUpgradeReq) {
                      [self.tableView.mj_header endRefreshing];
                  }else{
                      [self.tableView.mj_footer endRefreshing];
                  }
                  [self.tableView reloadData];
-                 [HUD hideAnimated:YES afterDelay:1];
+                 [HUD hideAnimated:YES afterDelay:0.3];
              });
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
@@ -151,6 +153,9 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     OSCPrivateChat* dataSource = self.dataSource[indexPath.row];
     if (dataSource.rowHeight == 0) {
         dataSource.rowHeight = dataSource.popFrame.size.height + SCREEN_PADDING_TOP + SCREEN_PADDING_BOTTOM;
+        if (dataSource.isDisplayTimeTip) {
+            dataSource.rowHeight += PRIVATE_TIME_TIP_ADDITIONAL;
+        }
     }
     return dataSource.rowHeight;
 }
@@ -191,7 +196,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
 	if(_tableView == nil) {
-		_tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,0},self.view.bounds.size.width,self.view.bounds.size.height - 110} style:UITableViewStylePlain];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;

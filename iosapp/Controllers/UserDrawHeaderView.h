@@ -22,9 +22,10 @@
 @property (nonatomic, strong) UIButton* followsBtn;
 @property (nonatomic, strong) UIButton* fansBtn;
 
-@property (nonatomic, strong) UIButton* creditsButton;
-@property (nonatomic, strong) UIButton* followsButton;
-@property (nonatomic, strong) UIButton* fansButton;
+@property (nonatomic, strong) UIButton* tweetsButton;
+@property (nonatomic, strong) UIButton* blogsButton;
+@property (nonatomic, strong) UIButton* questsButton;
+@property (nonatomic, strong) UIButton* discussButton;
 
 - (void)setContentWithUser:(OSCUser *)user;
 

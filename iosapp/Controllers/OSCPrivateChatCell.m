@@ -16,6 +16,8 @@
 
 @interface PrivateChatNodeView : UIView
 
+@property (nonatomic,strong) NSDate* lastUpdateTime;
+
 - (void)handleTimeLabel:(UILabel* )timeLabel;
 
 - (UIImage* )selfPopImage;
@@ -106,6 +108,7 @@ static UIImage* _fileTipImage;
         [self addSubview:({
             UILabel* timeLabel = [UILabel new];
             _timeLabel = timeLabel;
+            _timeLabel.textAlignment = NSTextAlignmentCenter;
             [self handleTimeLabel:_timeLabel];
             _timeLabel;
         })];
@@ -121,23 +124,30 @@ static UIImage* _fileTipImage;
     CGSize timeSize = _timeTipFrame.size;
     if (_isSelf) {
         CGRect popFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width,SCREEN_PADDING_TOP},popSize};
+        if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
         CGRect textFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - textSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,textSize};
+        if (_privateChatItem.isDisplayTimeTip) { textFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _textFrame = textFrame;
-        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
-        _timeTipFrame = timeTipFrame;
+        
+        if (_privateChatItem.isDisplayTimeTip) {
+            _timeLabel.frame = (CGRect){{0,5},timeSize};
+        }
     }else{
         CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
+        if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
         CGRect textFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},textSize};
+        if (_privateChatItem.isDisplayTimeTip) { textFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _textFrame = textFrame;
-        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
-        _timeTipFrame = timeTipFrame;
+
+        if (_privateChatItem.isDisplayTimeTip) {
+            _timeLabel.frame = (CGRect){{0,5},timeSize};
+        }
     }
     
     _popImageView.frame = _popFrame;
     _textView.frame = _textFrame;
-    _timeLabel.frame = _timeTipFrame;
 }
 
 - (void)setPrivateChatItem:(OSCPrivateChat *)privateChatItem{
@@ -151,7 +161,13 @@ static UIImage* _fileTipImage;
         [_popImageView setImage:[self otherPopImage]];
     }
     _textView.attributedText = [Utils contentStringFromRawString:privateChatItem.content];
-    _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(5, 11)];
+    
+    if (privateChatItem.isDisplayTimeTip) {
+        _timeLabel.hidden = NO;
+        _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(0, 16)];
+    }else{
+        _timeLabel.hidden = YES;
+    }
     
     _popFrame = privateChatItem.popFrame;
     _textFrame = privateChatItem.textFrame;
@@ -218,6 +234,7 @@ static UIImage* _fileTipImage;
         [self addSubview:({
             UILabel* timeLabel = [UILabel new];
             _timeLabel = timeLabel;
+            _timeLabel.textAlignment = NSTextAlignmentCenter;
             [self handleTimeLabel:_timeLabel];
             _timeLabel;
         })];
@@ -234,23 +251,30 @@ static UIImage* _fileTipImage;
     
     if (_isSelf){
         CGRect popFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width,SCREEN_PADDING_TOP},popSize};
+        if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
         CGRect imageFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - imageSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,imageSize};
+        if (_privateChatItem.isDisplayTimeTip) { imageFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _imageFrame = imageFrame;
-        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
-        _timeTipFrame = timeTipFrame;
+        
+        if (_privateChatItem.isDisplayTimeTip) {
+            _timeLabel.frame = (CGRect){{0,5},timeSize};
+        }
     }else{
         CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
+        if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
         CGRect imageFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},imageSize};
+        if (_privateChatItem.isDisplayTimeTip) { imageFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _imageFrame = imageFrame;
-        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
-        _timeTipFrame = timeTipFrame;
+
+        if (_privateChatItem.isDisplayTimeTip) {
+            _timeLabel.frame = (CGRect){{0,5},timeSize};
+        }
     }
     
     _popImageView.frame = _popFrame;
     _photoView.frame = _imageFrame;
-    _timeLabel.frame = _timeTipFrame;
 }
 
 - (void)setPrivateChatItem:(OSCPrivateChat *)privateChatItem{
@@ -283,7 +307,12 @@ static UIImage* _fileTipImage;
         [self maskView:_photoView image:_popImageView.image];
     }
     
-    _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(5, 11)];
+    if (privateChatItem.isDisplayTimeTip) {
+        _timeLabel.hidden = NO;
+        _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(0, 16)];
+    }else{
+        _timeLabel.hidden = YES;
+    }
     
     _popFrame = privateChatItem.popFrame;
     _imageFrame = privateChatItem.imageFrame;
@@ -384,6 +413,7 @@ static UIImage* _fileTipImage;
         [self addSubview:({
             UILabel* timeLabel = [UILabel new];
             _timeLabel = timeLabel;
+            _timeLabel.textAlignment = NSTextAlignmentCenter;
             [self handleTimeLabel:_timeLabel];
             _timeLabel;
         })];
@@ -400,23 +430,30 @@ static UIImage* _fileTipImage;
     
     if (_isSelf) {
         CGRect popFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width,SCREEN_PADDING_TOP},popSize};
+        if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
         CGRect fileFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - fileSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,fileSize};
+        if (_privateChatItem.isDisplayTimeTip) { fileFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _fileFrame = fileFrame;
-        CGRect timeTipFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width - PRIVATE_TIME_TIP_PADDING - timeSize.width,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
-        _timeTipFrame = timeTipFrame;
+        
+        if (_privateChatItem.isDisplayTimeTip) {
+            _timeLabel.frame = (CGRect){{0,5},timeSize};
+        }
     }else{
         CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
+        if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
         CGRect fileFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},fileSize};
+        if (_privateChatItem.isDisplayTimeTip) { fileFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _fileFrame = fileFrame;
-        CGRect timeTipFrame = (CGRect){{SCREEN_PADDING_LEFT + popSize.width + PRIVATE_TIME_TIP_PADDING,_rowHeight - SCREEN_PADDING_BOTTOM - timeSize.height - PRIVATE_TIME_TIP_PADDING},timeSize};
-        _timeTipFrame = timeTipFrame;
+
+        if (_privateChatItem.isDisplayTimeTip) {
+            _timeLabel.frame = (CGRect){{0,5},timeSize};
+        }
     }
     
     _popImageView.frame = _popFrame;
     _fileTipView.frame = _fileFrame;
-    _timeLabel.frame = _timeTipFrame;
 }
 
 - (void)setPrivateChatItem:(OSCPrivateChat *)privateChatItem{
@@ -429,7 +466,12 @@ static UIImage* _fileTipImage;
         [_popImageView setImage:[self otherPopImage]];
     }
     
-    _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(5, 11)];
+    if (privateChatItem.isDisplayTimeTip) {
+        _timeLabel.hidden = NO;
+        _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(0, 16)];
+    }else{
+        _timeLabel.hidden = YES;
+    }
     
     _popFrame = privateChatItem.popFrame;
     _fileFrame = privateChatItem.fileFrame;
