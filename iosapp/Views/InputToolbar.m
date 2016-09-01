@@ -23,7 +23,6 @@
     [self addSubview:contentView];
     
     [self.imageButton addTarget:self action:@selector(showActionSheet) forControlEvents:UIControlEventTouchUpInside];
-    [self.emjioButton addTarget:self action:@selector() forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (InputToolbarContentView *)loadContentView {
