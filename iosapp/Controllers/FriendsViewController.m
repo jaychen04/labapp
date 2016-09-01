@@ -170,7 +170,7 @@ static NSString * const kPersonCellID = @"PersonCell";
         
         [cell.portrait loadPortrait:[NSURL URLWithString:friend.portrait]];
         cell.nameLabel.text = friend.name;
-        cell.infoLabel.text = friend.expertise;
+        cell.infoLabel.text = friend.more.expertise;
     }
     
     
@@ -187,7 +187,7 @@ static NSString * const kPersonCellID = @"PersonCell";
     self.label.font = [UIFont systemFontOfSize:16];
     CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
     
-    self.label.text = friend.expertise;
+    self.label.text = friend.more.expertise;
     self.label.font = [UIFont systemFontOfSize:12];
     CGSize infoLabelSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
     

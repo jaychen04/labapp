@@ -11,3 +11,13 @@
 @implementation OSCUserItem
 
 @end
+
+
+@implementation UserInfoMore
+
+@end
+
+
+@implementation UserInfoStatistics
+
+@end
