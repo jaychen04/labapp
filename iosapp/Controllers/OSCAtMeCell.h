@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class OSCAtMeCell;
+@protocol OSCAtMeCellDelegate <NSObject>
+
+- (void)atMeCellDidClickUserPortrait:(OSCAtMeCell* )cell;
+
+@end
+
 @class AtMeItem;
 @interface OSCAtMeCell : UITableViewCell
 + (instancetype)returnReuseAtMeCellWithTableView:(UITableView* )tableView
@@ -15,5 +22,7 @@
                                       identifier:(NSString* )reuseIdentifier;
 
 @property (nonatomic,strong) AtMeItem* atMeItem;
+
+@property (nonatomic,weak) id<OSCAtMeCellDelegate> delegate;
 
 @end

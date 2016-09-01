@@ -31,6 +31,9 @@
 		0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC551CEDA390007DB140 /* UIView+SDExtension.m */; };
 		0422BC601CEDAAD3007DB140 /* InformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC5E1CEDAAD3007DB140 /* InformationTableViewCell.m */; };
 		0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */; };
+		04270A171D77CC8700E21ECC /* InputToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 04270A131D77CC8700E21ECC /* InputToolbar.m */; };
+		04270A1D1D77CD5200E21ECC /* InputToolbarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04270A1B1D77CD5200E21ECC /* InputToolbarContentView.m */; };
+		04270A1E1D77CD5200E21ECC /* InputToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04270A1C1D77CD5200E21ECC /* InputToolbarContentView.xib */; };
 		042B4C511D6D7AF500DB5DD4 /* OSCMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B4C501D6D7AF500DB5DD4 /* OSCMessageCenter.m */; };
 		042B4C5A1D6D7B6A00DB5DD4 /* OSCAtMeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B4C561D6D7B6A00DB5DD4 /* OSCAtMeCell.m */; };
 		042B4C5B1D6D7B6A00DB5DD4 /* OSCAtMeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B4C571D6D7B6A00DB5DD4 /* OSCAtMeCell.xib */; };
@@ -85,6 +88,8 @@
 		045126601D6173D400E4DD93 /* OSCMultipleTweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0451265F1D6173D400E4DD93 /* OSCMultipleTweetCell.m */; };
 		0473259D1CF821A700460658 /* QuesAnsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */; };
 		0473259E1CF821A700460658 /* QuesAnsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */; };
+		048C00571D740E2C00CC6378 /* OSCPrivateChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048C00561D740E2C00CC6378 /* OSCPrivateChatController.m */; };
+		048C005D1D741D1700CC6378 /* OSCMsgChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 048C005C1D741D1700CC6378 /* OSCMsgChatController.m */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
 		04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */; };
 		04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */; };
@@ -98,6 +103,7 @@
 		04EC969E1CF436FB0004B54E /* OSCActivityTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04EC969C1CF436FB0004B54E /* OSCActivityTableViewCell.xib */; };
 		04EC96A11CF469FF0004B54E /* OSCActivities.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96A01CF469FF0004B54E /* OSCActivities.m */; };
 		04EC96A71CF48E8C0004B54E /* OSCBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 04EC96A61CF48E8C0004B54E /* OSCBanner.m */; };
+		04F1D4D81D76B957007B4311 /* OSCPushTypeControllerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F1D4D71D76B957007B4311 /* OSCPushTypeControllerHelper.m */; };
 		04F62F5B1D45E54700EDC480 /* NewMultipleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F62F5A1D45E54700EDC480 /* NewMultipleDetailCell.m */; };
 		3118F8D31AFB4803001684BC /* TeamMemberDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3118F8D21AFB4803001684BC /* TeamMemberDetailViewController.m */; };
 		3118F8D61AFB49CD001684BC /* MemberDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3118F8D51AFB49CD001684BC /* MemberDetailCell.m */; };
@@ -425,6 +431,11 @@
 		0422BC5D1CEDAAD3007DB140 /* InformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTableViewCell.h; sourceTree = "<group>"; };
 		0422BC5E1CEDAAD3007DB140 /* InformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTableViewCell.m; sourceTree = "<group>"; };
 		0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTableViewCell.xib; sourceTree = "<group>"; };
+		04270A121D77CC8700E21ECC /* InputToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputToolbar.h; sourceTree = "<group>"; };
+		04270A131D77CC8700E21ECC /* InputToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputToolbar.m; sourceTree = "<group>"; };
+		04270A1A1D77CD5200E21ECC /* InputToolbarContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputToolbarContentView.h; sourceTree = "<group>"; };
+		04270A1B1D77CD5200E21ECC /* InputToolbarContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputToolbarContentView.m; sourceTree = "<group>"; };
+		04270A1C1D77CD5200E21ECC /* InputToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputToolbarContentView.xib; sourceTree = "<group>"; };
 		042B4C4F1D6D7AF500DB5DD4 /* OSCMessageCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMessageCenter.h; sourceTree = "<group>"; };
 		042B4C501D6D7AF500DB5DD4 /* OSCMessageCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMessageCenter.m; sourceTree = "<group>"; };
 		042B4C551D6D7B6A00DB5DD4 /* OSCAtMeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCAtMeCell.h; sourceTree = "<group>"; };
@@ -506,6 +517,10 @@
 		0473259B1CF821A700460658 /* QuesAnsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuesAnsTableViewCell.m; sourceTree = "<group>"; };
 		0473259C1CF821A700460658 /* QuesAnsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = QuesAnsTableViewCell.xib; sourceTree = "<group>"; };
 		047325A21CF8612B00460658 /* enumList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enumList.h; path = OSC/enumList.h; sourceTree = "<group>"; };
+		048C00551D740E2C00CC6378 /* OSCPrivateChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPrivateChatController.h; sourceTree = "<group>"; };
+		048C00561D740E2C00CC6378 /* OSCPrivateChatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPrivateChatController.m; sourceTree = "<group>"; };
+		048C005B1D741D1700CC6378 /* OSCMsgChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMsgChatController.h; sourceTree = "<group>"; };
+		048C005C1D741D1700CC6378 /* OSCMsgChatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMsgChatController.m; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
 		04E5BAC81D406DAD0046EA65 /* OSCPhotoGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPhotoGroupView.h; sourceTree = "<group>"; };
@@ -529,6 +544,8 @@
 		04EC96A01CF469FF0004B54E /* OSCActivities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCActivities.m; sourceTree = "<group>"; };
 		04EC96A51CF48E8C0004B54E /* OSCBanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBanner.h; sourceTree = "<group>"; };
 		04EC96A61CF48E8C0004B54E /* OSCBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBanner.m; sourceTree = "<group>"; };
+		04F1D4D61D76B957007B4311 /* OSCPushTypeControllerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPushTypeControllerHelper.h; sourceTree = "<group>"; };
+		04F1D4D71D76B957007B4311 /* OSCPushTypeControllerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPushTypeControllerHelper.m; sourceTree = "<group>"; };
 		04F62F591D45E54700EDC480 /* NewMultipleDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMultipleDetailCell.h; sourceTree = "<group>"; };
 		04F62F5A1D45E54700EDC480 /* NewMultipleDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewMultipleDetailCell.m; sourceTree = "<group>"; };
 		064EB8ABEA12C19E6D94D0C0 /* libPods-iosapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1208,6 +1225,8 @@
 				044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */,
 				04EC1B5B1D38F6DF006DBD5D /* IMYWebView.h */,
 				04EC1B5C1D38F6DF006DBD5D /* IMYWebView.m */,
+				04F1D4D61D76B957007B4311 /* OSCPushTypeControllerHelper.h */,
+				04F1D4D71D76B957007B4311 /* OSCPushTypeControllerHelper.m */,
 				04EC1B611D393049006DBD5D /* IMY_NJKWebViewProgress.h */,
 				04EC1B621D393049006DBD5D /* IMY_NJKWebViewProgress.m */,
 				042E8D131CF6A3F000364BD7 /* TokenManager.h */,
@@ -1841,6 +1860,10 @@
 		38A93FAA1AA31DE100A515E8 /* 消息中心 */ = {
 			isa = PBXGroup;
 			children = (
+				048C005B1D741D1700CC6378 /* OSCMsgChatController.h */,
+				048C005C1D741D1700CC6378 /* OSCMsgChatController.m */,
+				048C00551D740E2C00CC6378 /* OSCPrivateChatController.h */,
+				048C00561D740E2C00CC6378 /* OSCPrivateChatController.m */,
 				04394F311D6ECEE4002309CB /* OSCPrivateChatCell.h */,
 				04394F321D6ECEE4002309CB /* OSCPrivateChatCell.m */,
 				38A93FA71AA31DB400A515E8 /* MessageCenter.h */,
@@ -2124,6 +2147,11 @@
 		C54689FC1BD1EFC400D49223 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04270A121D77CC8700E21ECC /* InputToolbar.h */,
+				04270A131D77CC8700E21ECC /* InputToolbar.m */,
+				04270A1A1D77CD5200E21ECC /* InputToolbarContentView.h */,
+				04270A1B1D77CD5200E21ECC /* InputToolbarContentView.m */,
+				04270A1C1D77CD5200E21ECC /* InputToolbarContentView.xib */,
 				044266981D4A036000D87091 /* BannerScrollView.h */,
 				044266991D4A036000D87091 /* BannerScrollView.m */,
 				042F0A9F1D52DDB900D3DC76 /* QuartzCanvasView.h */,
@@ -2692,6 +2720,7 @@
 				EE82D0441C43B1E30066FDC9 /* FeedBackViewController.xib in Resources */,
 				317AD9C91C96AD68008356DE /* recommend_tag.png in Resources */,
 				C5E92FDE1B59FAC300EFE47E /* Homepage.storyboard in Resources */,
+				04270A1E1D77CD5200E21ECC /* InputToolbarContentView.xib in Resources */,
 				EE7B0AE41D348DDF0070F196 /* NewBlogsViewController.xib in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
 				31F14FE81D41F80300AD0763 /* Overlay@2x.png in Resources */,
@@ -2909,6 +2938,7 @@
 				C5EF892A1BE3197C00B5FA46 /* PostCell.m in Sources */,
 				EE7AC7F21AD38E5C00E850CB /* TweetsLikeListViewController.m in Sources */,
 				04F62F5B1D45E54700EDC480 /* NewMultipleDetailCell.m in Sources */,
+				04F1D4D81D76B957007B4311 /* OSCPushTypeControllerHelper.m in Sources */,
 				C5EF892B1BE3197C00B5FA46 /* PostsViewController.m in Sources */,
 				C5344E8F1B1DA2970024F110 /* TeamMemberListViewController.m in Sources */,
 				386825AC1A70D721008F5706 /* SearchResultsViewController.m in Sources */,
@@ -2953,6 +2983,7 @@
 				C5FB95941AEE129F006918CD /* TeamCenter.m in Sources */,
 				C5B2F1AB1BCF451F004B4785 /* NSDate+Util.m in Sources */,
 				C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */,
+				048C00571D740E2C00CC6378 /* OSCPrivateChatController.m in Sources */,
 				EE6DB94E1AD68140004FCF3C /* OSCMyTweetLikeList.m in Sources */,
 				042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */,
 				04323DA91D643802008FD302 /* ThumbnailHadle.m in Sources */,
@@ -2976,6 +3007,8 @@
 				31F14FE11D41F80300AD0763 /* ELCAssetCell.m in Sources */,
 				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
+				04270A1D1D77CD5200E21ECC /* InputToolbarContentView.m in Sources */,
+				048C005D1D741D1700CC6378 /* OSCMsgChatController.m in Sources */,
 				C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
 				EE7D33021AA986AB00ABFE58 /* OSCEventPersonInfo.m in Sources */,

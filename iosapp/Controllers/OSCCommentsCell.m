@@ -11,6 +11,8 @@
 #import "UIImageView+CornerRadius.h"
 #import "ImageDownloadHandle.h"
 #import "Utils.h"
+#import "Config.h"
+#import "UIColor+Util.h"
 
 @interface OSCCommentsCell ()
 
@@ -23,7 +25,9 @@
 
 @end
 
-@implementation OSCCommentsCell
+@implementation OSCCommentsCell{
+    BOOL _trackingTouch_userPortrait;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -45,7 +49,7 @@
     if (!portraitImage) {
         [ImageDownloadHandle downloadImageWithUrlString:commentItem.author.portrait SaveToDisk:YES completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_userPortraitImageView setImage:portraitImage];
+                [_userPortraitImageView setImage:image];
             });
         }];
     }else{
@@ -54,13 +58,41 @@
     
     _nameLabel.text = commentItem.author.name;
     _descLabel.attributedText = [Utils contentStringFromRawString:commentItem.content];
-    _originDescLabel.attributedText = [Utils contentStringFromRawString:commentItem.origin.desc];
+    NSMutableAttributedString* descAtt = [[NSMutableAttributedString alloc]initWithString:[Config getOwnUserName]];
+    [descAtt appendAttributedString:[[NSAttributedString alloc] initWithString:@"："]];
+    [descAtt appendAttributedString:[Utils contentStringFromRawString:commentItem.origin.desc]];
+    [descAtt addAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithHex:0x24cf5f]} range:NSMakeRange(0, [Config getOwnUserName].length)];
+    _originDescLabel.attributedText = descAtt;
     NSMutableAttributedString *att = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:commentItem.pubDate] timeAgoSinceNow]]];
     [att appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
     [att appendAttributedString:[Utils getAppclientName:(int)commentItem.appClient]];
     _timeAndSourceLabel.attributedText = att;
     _commentCountLabel.text = [NSString stringWithFormat:@"%ld", (long)commentItem.commentCount];
 }
-
+#pragma mark --- 触摸分发
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    _trackingTouch_userPortrait = NO;
+    UITouch* touch = [touches anyObject];
+    CGPoint p = [touch locationInView:_userPortraitImageView];
+    if (CGRectContainsPoint(_userPortraitImageView.bounds, p)) {
+        _trackingTouch_userPortrait = YES;
+    }else{
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (_trackingTouch_userPortrait) {
+        if ([_delegate respondsToSelector:@selector(commentsCellDidClickUserPortrait:)]) {
+            [_delegate commentsCellDidClickUserPortrait:self];
+        }
+    }else{
+        [super touchesEnded:touches withEvent:event];
+    }
+}
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (!_trackingTouch_userPortrait) {
+        [super touchesCancelled:touches withEvent:event];
+    }
+}
 
 @end

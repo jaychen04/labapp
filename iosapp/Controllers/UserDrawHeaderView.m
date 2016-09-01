@@ -34,6 +34,7 @@
 @implementation UserDrawHeaderView{
     __weak UIView* _followsBtnAndFansBtn_colorLine;
     __weak QuartzCanvasView* _drawView;
+    __weak UIView* _countView;
 }
 
 
@@ -124,18 +125,19 @@
         _fansBtn;
     })];
     
-    
     /** 底部横排按钮 */
     UIView *line = [UIView new];
     line.backgroundColor = [UIColor lineColor];
     [self addSubview:line];
     
     UIView *countView = [UIView new];
+    _countView = countView;
     [self addSubview:countView];
     
-    _creditsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _followsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _fansButton    = [UIButton buttonWithType:UIButtonTypeCustom];
+    _tweetsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _blogsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _questsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _discussButton = [UIButton buttonWithType:UIButtonTypeCustom];
     
     void (^setButtonStyle)(UIButton *, NSString *) = ^(UIButton *button, NSString *title) {
         [button setTitleColor:[UIColor colorWithHex:0xEEEEEE] forState:UIControlStateNormal];
@@ -145,18 +147,12 @@
         [countView addSubview:button];
     };
     
-    setButtonStyle(_creditsButton, @"积分\n");
-    setButtonStyle(_followsButton, @"关注\n");
-    setButtonStyle(_fansButton,    @"粉丝\n");
+    setButtonStyle(_tweetsButton,  @"\n动弹");
+    setButtonStyle(_blogsButton,   @"\n博客");
+    setButtonStyle(_questsButton,  @"\n问答");
+    setButtonStyle(_discussButton, @"\n讨论");
     
     [self settingLayout];
-#pragma mark --- 暂时性隐藏
-    line.hidden = YES;
-    countView.hidden = YES;
-    _creditsButton.hidden = YES;
-    _followsButton.hidden = YES;
-    _fansButton.hidden = YES;
-    
 }
 #pragma mark ---
 -(void)settingLayout{
@@ -217,6 +213,13 @@
         make.height.equalTo(@20);
     }];
     
+    /** 底部横排按钮 */
+    [_countView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.and.right.and.bottom.equalTo(self).with.offset(0);
+        make.height.equalTo(@60);
+    }];
+    
+    
 }
 
 - (void)setContentWithUser:(OSCUser *)user
@@ -241,10 +244,10 @@
     
     
     /** 底部横排按钮 */
-    
-    //    [_creditsButton setTitle:[NSString stringWithFormat:@"积分\n%d", user.score]          forState:UIControlStateNormal];
-    //    [_followsButton setTitle:[NSString stringWithFormat:@"关注\n%d", user.followersCount] forState:UIControlStateNormal];
-    //    [_fansButton    setTitle:[NSString stringWithFormat:@"粉丝\n%d", user.fansCount]      forState:UIControlStateNormal];
+//    
+//    [_tweetsButton setTitle:[NSString stringWithFormat:@"积分\n%d", user.score] forState:UIControlStateNormal];
+//    [_followsButton setTitle:[NSString stringWithFormat:@"关注\n%d", user.followersCount] forState:UIControlStateNormal];
+//    [_fansButton    setTitle:[NSString stringWithFormat:@"粉丝\n%d", user.fansCount]      forState:UIControlStateNormal];
 }
 
 

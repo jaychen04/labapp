@@ -10,8 +10,10 @@
 #import "OSCAPI.h"
 #import "Config.h"
 #import "MessageCenter.h"
+#import "OSCPushTypeControllerHelper.h"
 #import "OSCMessageCenter.h"
 #import "OSCCommentsCell.h"
+#import "UserDetailsViewController.h"
 
 #import "AFHTTPRequestOperationManager+Util.h"
 #import "UIColor+Util.h"
@@ -19,11 +21,12 @@
 #import <YYKit.h>
 #import <MJRefresh.h>
 #import <MJExtension.h>
+#import <MBProgressHUD.h>
 
 #define COMMENT_HEIGHT 150
 
 static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
-@interface OSCCommentsController ()<UITableViewDelegate,UITableViewDataSource>
+@interface OSCCommentsController ()<UITableViewDelegate,UITableViewDataSource,OSCCommentsCellDelegate>
 
 @property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) NSMutableArray* dataSource;
@@ -48,13 +51,6 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
     }];
     [self.tableView.mj_header beginRefreshing];
 }
-- (void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
-}
-- (void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:YES];
-}
-
 
 #pragma mark --- Networking 
 - (void)getDataThroughDropdown:(BOOL)dropDown{
@@ -65,6 +61,8 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
     if (!dropDown && [self.nextToken length] > 0) {
         [paraMutableDic setObject:self.nextToken forKey:@"pageToken"];
     }
+    
+    MBProgressHUD *HUD = [Utils createHUD];
     
     [manager GET:strUrl
       parameters:paraMutableDic.copy
@@ -78,19 +76,30 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
                  NSArray* models = [CommentItem mj_objectArrayWithKeyValuesArray:items];
                  [self.dataSource addObjectsFromArray:models];
                  self.nextToken = resultDic[@"nextPageToken"];
-                 
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     if (dropDown) {
-                         [self.tableView.mj_header endRefreshing];
-                     }else{
-                         [self.tableView.mj_footer endRefreshing];
-                     }
-                     [self.tableView reloadData];
-                 });
+
+             }else{
+                 HUD.label.text = @"未知错误";
              }
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (dropDown) {
+                     [self.tableView.mj_header endRefreshing];
+                 }else{
+                     [self.tableView.mj_footer endRefreshing];
+                 }
+                 [self.tableView reloadData];
+                 [HUD hideAnimated:YES afterDelay:0.3];
+             });
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-        
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 if (dropDown) {
+                     [self.tableView.mj_header endRefreshing];
+                 }else{
+                     [self.tableView.mj_footer endRefreshing];
+                 }
+                 HUD.label.text = @"网络异常，操作失败";
+                 [HUD hideAnimated:YES afterDelay:0.3];
+             });
     }];
 }
 
@@ -104,14 +113,35 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
 - (UITableViewCell* )tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     OSCCommentsCell* cell = [OSCCommentsCell returnReuseCommentsCellWithTableView:tableView indexPath:indexPath identifier:OSCCommentsCellReuseIdentifier];
     cell.commentItem = self.dataSource[indexPath.row];
+    cell.delegate = self;
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    //push new ViewController...
+    CommentItem* commentItem = self.dataSource[indexPath.row];
+    [self pushController:commentItem];
 }
 
+#pragma mark --- OSCCommentsCellDelegate
+- (void)commentsCellDidClickUserPortrait:(OSCCommentsCell *)cell{
+    CommentItem* commentItem = cell.commentItem;
+    OSCReceiver* receiver = commentItem.author;
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:receiver.id];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
 
+#pragma mark --- push type controller
+- (void)pushController:(CommentItem* )commentItem{
+    if (commentItem.origin.originType == OSCOriginTypeLinkNews) {
+        [self.navigationController handleURL:[NSURL URLWithString:commentItem.origin.href]];
+    }
+    UIViewController* pushVC = [OSCPushTypeControllerHelper pushControllerWithOriginType:commentItem.origin];
+    if (pushVC == nil) {
+        [self.navigationController handleURL:[NSURL URLWithString:commentItem.origin.href]];
+    }else{
+        [self.navigationController pushViewController:pushVC animated:YES];
+    }
+}
 
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
