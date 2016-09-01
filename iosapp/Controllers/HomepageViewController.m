@@ -871,14 +871,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
      6 新闻
      */
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
-                                                                            andSubTitles:@[@"全部", @"软件", @"问答", @"博客", @"翻译", @"活动", @"新闻"]
+                                                                            andSubTitles:@[@"全部", @"软件", @"问答", @"博客", @"翻译", @"新闻"]
                                                                           andControllers:@[
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeAll],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeQuestion],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTranslate],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeActivity],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
                                                                                            ]];
     favoritesSVC.hidesBottomBarWhenPushed = YES;
