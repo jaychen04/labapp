@@ -10,6 +10,8 @@
 #import "TeamTeam.h"
 #import "OSCUser.h"
 #import "OSCUserItem.h"
+#import "OSCNotice.h"
+
 #import <SSKeychain.h>
 
 NSString * const kService = @"OSChina";
@@ -312,6 +314,37 @@ NSString * const kGender = @"gender";
 //    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 //    
 //    return [[userDefaults objectForKey:@"mode"] boolValue];
+}
+
+/*
+ 缓存消息推送条数
+ */
++ (void)saveNotice:(OSCNotice *)notice
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults setObject:@(notice.mention) forKey:@"noticeMention"];
+    [userDefaults setObject:@(notice.letter) forKey:@"noticeLetter"];
+    [userDefaults setObject:@(notice.review) forKey:@"noticeReview"];
+    [userDefaults setObject:@(notice.fans) forKey:@"noticeFans"];
+    [userDefaults setObject:@(notice.like) forKey:@"noticeLike"];
+    
+    [userDefaults synchronize];
+}
+
++ (OSCNotice *)getNotice
+{
+    OSCNotice *notice = [OSCNotice new];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    notice.mention = [[userDefaults objectForKey:@"noticeMention"] intValue];
+    notice.letter = [[userDefaults objectForKey:@"noticeLetter"] intValue];
+    notice.review = [[userDefaults objectForKey:@"noticeReview"] intValue];
+    notice.fans = [[userDefaults objectForKey:@"noticeFans"] intValue];
+    notice.like = [[userDefaults objectForKey:@"noticeLike"] intValue];
+    
+    return notice;
 }
 
 @end

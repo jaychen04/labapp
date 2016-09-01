@@ -320,6 +320,8 @@
 		EE53F74F1D0048C800083D9D /* NewHotBlogTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE53F74E1D0048C800083D9D /* NewHotBlogTableViewCell.xib */; };
 		EE603E061D3C75A700DA7F31 /* NewsDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */; };
 		EE603E071D3C75A700DA7F31 /* NewsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */; };
+		EE665FD01D759F6D0066F6B6 /* OSCNotice.m in Sources */ = {isa = PBXBuildFile; fileRef = EE665FCF1D759F6D0066F6B6 /* OSCNotice.m */; };
+		EE665FD31D759F7C0066F6B6 /* OSCFavorites.m in Sources */ = {isa = PBXBuildFile; fileRef = EE665FD21D759F7C0066F6B6 /* OSCFavorites.m */; };
 		EE6D24AC1AA5934D0079F515 /* ActivitySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */; };
 		EE6DB9481AD6633E004FCF3C /* MyTweetLikeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB9471AD6633E004FCF3C /* MyTweetLikeListViewController.m */; };
 		EE6DB94B1AD676A3004FCF3C /* MyTweetLikeListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE6DB94A1AD676A3004FCF3C /* MyTweetLikeListCell.m */; };
@@ -964,6 +966,10 @@
 		EE603E031D3C75A700DA7F31 /* NewsDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NewsDetailViewController.h; path = iosapp/Controllers/News/NewsDetailViewController.h; sourceTree = SOURCE_ROOT; };
 		EE603E041D3C75A700DA7F31 /* NewsDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NewsDetailViewController.m; path = iosapp/Controllers/News/NewsDetailViewController.m; sourceTree = SOURCE_ROOT; };
 		EE603E051D3C75A700DA7F31 /* NewsDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = NewsDetailViewController.xib; path = iosapp/Controllers/News/NewsDetailViewController.xib; sourceTree = SOURCE_ROOT; };
+		EE665FCE1D759F6D0066F6B6 /* OSCNotice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNotice.h; sourceTree = "<group>"; };
+		EE665FCF1D759F6D0066F6B6 /* OSCNotice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNotice.m; sourceTree = "<group>"; };
+		EE665FD11D759F7C0066F6B6 /* OSCFavorites.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCFavorites.h; sourceTree = "<group>"; };
+		EE665FD21D759F7C0066F6B6 /* OSCFavorites.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCFavorites.m; sourceTree = "<group>"; };
 		EE6D24AA1AA5934D0079F515 /* ActivitySignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivitySignUpViewController.h; sourceTree = "<group>"; };
 		EE6D24AB1AA5934D0079F515 /* ActivitySignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivitySignUpViewController.m; sourceTree = "<group>"; };
 		EE6DB9461AD6633E004FCF3C /* MyTweetLikeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyTweetLikeListViewController.h; sourceTree = "<group>"; };
@@ -1612,6 +1618,10 @@
 				04EC96A61CF48E8C0004B54E /* OSCBanner.m */,
 				00C9A73B19EE863B000EA878 /* OSCBaseObject.h */,
 				00C9A73C19EE863B000EA878 /* OSCBaseObject.m */,
+				EE665FD11D759F7C0066F6B6 /* OSCFavorites.h */,
+				EE665FD21D759F7C0066F6B6 /* OSCFavorites.m */,
+				EE665FCE1D759F6D0066F6B6 /* OSCNotice.h */,
+				EE665FCF1D759F6D0066F6B6 /* OSCNotice.m */,
 				C54689FE1BD1F41600D49223 /* Tweet */,
 				EE6DB94C1AD68140004FCF3C /* OSCMyTweetLikeList.h */,
 				EE6DB94D1AD68140004FCF3C /* OSCMyTweetLikeList.m */,
@@ -2973,6 +2983,7 @@
 				042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */,
 				04323DA91D643802008FD302 /* ThumbnailHadle.m in Sources */,
 				38BC59931A5D21AD00F3C4D2 /* PersonCell.m in Sources */,
+				EE665FD01D759F6D0066F6B6 /* OSCNotice.m in Sources */,
 				38A93FA31A9F912B00A515E8 /* OSCReference.m in Sources */,
 				04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */,
 				384A112C1ADE565200856A7C /* TeamMember.m in Sources */,
@@ -3033,10 +3044,10 @@
 				EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */,
 				0447EF2B1D59779C00F0954D /* ImageDownloadHandle.m in Sources */,
 				C5A89C3A1B09C34B00798B1C /* UIImage+FontAwesome.m in Sources */,
-				04270A171D77CC8700E21ECC /* InputToolbar.m in Sources */,
 				C5F3D7761AF0C2A50032F775 /* WeeklyReportViewController.m in Sources */,
 				EEB3D7AE1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,
+				EE665FD31D759F7C0066F6B6 /* OSCFavorites.m in Sources */,
 				EEE241A91CFD65710088FFB3 /* ActivityDetailViewController.m in Sources */,
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,

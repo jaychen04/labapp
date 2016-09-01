@@ -10,7 +10,7 @@
 #import "Utils.h"
 #import "Config.h"
 #import "OSCAPI.h"
-
+#import "OSCNotice.h"
 #import "OSCUser.h"
 #import "OSCUserItem.h"
 #import "SwipableViewController.h"
@@ -37,6 +37,7 @@
 #import "OSCMessageCenterController.h"
 
 #import "TweetTableViewController.h"
+#import "OSCFavorites.h"
 
 #import <MBProgressHUD.h>
 #import <SDWebImage/UIImageView+WebCache.h>
@@ -64,7 +65,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 @property (nonatomic, strong) HomePageHeadView *homePageHeadView;
 @property (nonatomic, strong) UIView *statusBarView;//状态栏
-
+@property (nonatomic, assign) BOOL isNewFans;
 
 @end
 
@@ -91,6 +92,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                                                  name:@"userRefresh"
                                                object:nil];
     
+//    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
     _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
 }
 
@@ -99,10 +101,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [super viewWillAppear:animated];
     
     self.tableView.tableHeaderView = self.homePageHeadView;
-//    self.homePageHeadView.drawView.gradientColor = (GradientColor){
-//        [UIColor colorWithHex:0x24CF5F].CGColor,
-//        [UIColor colorWithHex:0x20B955].CGColor,
-//    };
     
     [self refreshHeaderView];
     
@@ -558,6 +556,10 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             if (_badgeValue == 0) {
                 cell.accessoryView = nil;
             } else {
+//                UIView *accessoryBadge = [UIView new];
+//                accessoryBadge.backgroundColor = [UIColor redColor];
+//                accessoryBadge.clipsToBounds = YES;
+//                accessoryBadge.layer.cornerRadius = 3;
                 UILabel *accessoryBadge = [UILabel new];
                 accessoryBadge.backgroundColor = [UIColor redColor];
                 accessoryBadge.text = [@(_badgeValue) stringValue];
@@ -568,7 +570,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                 
                 CGFloat width = [accessoryBadge sizeThatFits:CGSizeMake(MAXFLOAT, 26)].width + 8;
                 width = width > 26? width: 22;
-                accessoryBadge.frame = CGRectMake(0, 0, width, 22);
+                accessoryBadge.frame = CGRectMake(0, 0, 6, 6);
                 cell.accessoryView = accessoryBadge;
             }
         }
@@ -583,10 +585,11 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             HomeButtonCell *buttonCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
             buttonCell.selectionStyle = UITableViewCellSelectionStyleNone;
             
-            [buttonCell.creditButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.tweetCount)] forState:UIControlStateNormal];//动弹数
-            [buttonCell.collectionButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.favoriteCount)] forState:UIControlStateNormal];
-            [buttonCell.followingButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.followersCount)] forState:UIControlStateNormal];
-            [buttonCell.fanButton setTitle:[NSString stringWithFormat:@"%@", @(_myProfile.fansCount)] forState:UIControlStateNormal];
+            [buttonCell.creditButton setTitle:[Utils numberLimitString:_myProfile.tweetCount] forState:UIControlStateNormal];//动弹数
+            [buttonCell.collectionButton setTitle:[Utils numberLimitString:_myProfile.favoriteCount] forState:UIControlStateNormal];
+            [buttonCell.followingButton setTitle:[Utils numberLimitString:_myProfile.followersCount] forState:UIControlStateNormal];
+            [buttonCell.fanButton setTitle:[Utils numberLimitString:_myProfile.fansCount] forState:UIControlStateNormal];
+            buttonCell.redPointView.hidden = !self.isNewFans;
             
             [buttonCell.creditButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
             [buttonCell.creditTitleButton addTarget:self action:@selector(pushTweetList) forControlEvents:UIControlEventTouchUpInside];
@@ -762,24 +765,64 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 {
     NSArray *noticeCounts = [notification object];
     
+    OSCNotice *oldNotice = [Config getNotice];
+    int oldNumber = oldNotice.mention + oldNotice.letter + oldNotice.review + oldNotice.fans + oldNotice.like;
+    
+    OSCNotice *newNotice = [OSCNotice new];
+    
     __block int sumOfCount = 0;
     [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *count, NSUInteger idx, BOOL *stop) {
         _noticeCounts[idx] = count;
         sumOfCount += [count intValue];
+        
+        switch (idx) {
+            case 0:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.mention);
+                newNotice.mention = [_noticeCounts[idx] intValue];
+                break;
+            case 1:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.letter);
+                newNotice.letter = [_noticeCounts[idx] intValue];
+                break;
+            case 2:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.review);
+                newNotice.review = [_noticeCounts[idx] intValue];
+                break;
+            case 3:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.fans);
+                newNotice.fans = [_noticeCounts[idx] intValue];
+                break;
+            case 4:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.like);
+                newNotice.like = [_noticeCounts[idx] intValue];
+                break;
+                
+            default:
+                break;
+        }
     }];
     
-    _badgeValue = sumOfCount;
+    if (newNotice.fans > 0) {
+        self.isNewFans = YES;
+    } else {
+        self.isNewFans = NO;
+    }
+    
+    [Config saveNotice:newNotice];
+    
+    _badgeValue = sumOfCount + oldNumber;
     if (_badgeValue) {
-        self.navigationController.tabBarItem.badgeValue = [@(sumOfCount) stringValue];
+        self.navigationController.tabBarItem.badgeValue = [@(_badgeValue) stringValue];
     } else {
         self.navigationController.tabBarItem.badgeValue = nil;
     }
     
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:UITableViewRowAnimationNone];
     });
     
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:sumOfCount];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:_badgeValue];
 }
 
 
@@ -809,14 +852,25 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
 - (void)pushFavoriteSVC
 {
     [self statusBarViewState];
-    
+    /*
+     
+     全部收藏
+     1 软件
+     2 问答
+     3 博客
+     4 翻译
+     5 活动
+     6 新闻
+     */
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
-                                                                            andSubTitles:@[@"软件", @"话题", @"代码", @"博客", @"资讯"]
+                                                                            andSubTitles:@[@"全部", @"软件", @"问答", @"博客", @"翻译", @"活动", @"新闻"]
                                                                           andControllers:@[
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeAll],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTopic],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeCode],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeQuestion],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTranslate],
+                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeActivity],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
                                                                                            ]];
     favoritesSVC.hidesBottomBarWhenPushed = YES;
@@ -899,12 +953,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         } else {
             _homePageHeadView = [[HomePageHeadView alloc] initWithFrame:(CGRect){{0,0},{[UIScreen mainScreen].bounds.size.width, screen_height - 202}}];
         }
-        _homePageHeadView.drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
-        _homePageHeadView.drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
-        _homePageHeadView.drawView.gradientColor = (GradientColor){
-            [UIColor colorWithHex:0x24CF5F].CGColor,
-            [UIColor colorWithHex:0x20B955].CGColor,
-        };
     }
     return _homePageHeadView;
 }

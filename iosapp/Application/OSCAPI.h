@@ -26,6 +26,7 @@
 //#define OSCAPI_V2_PREFIX                    @"http://192.168.1.10:8000/action/apiv2/"
 //#define OSCAPI_V2_HTTPS_PREFIX              @"http://192.168.1.10:8000/action/apiv2/"
 
+
 #define OSCAPI_SUFFIX                   @"pageSize=20"
 
 #define OSCAPI_NEWS_LIST                @"news_list"
