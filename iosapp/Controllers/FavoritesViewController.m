@@ -87,6 +87,9 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
                       dispatch_async(dispatch_get_main_queue(), ^{
                           self.lastCell.status = modelArray.count < 1 ? LastCellStatusFinished : LastCellStatusMore;
                       });
+                  } else if ([responseObject[@"code"] integerValue] == 404) {
+                      self.lastCell.status = LastCellStatusFinished;
+                      
                   } else {
                     
                       MBProgressHUD *HUD = [Utils createHUD];
