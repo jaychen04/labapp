@@ -45,6 +45,8 @@ typedef NS_ENUM(NSInteger,OSCPrivateChatType){
 
 @property (nonatomic,assign) CGRect fileFrame;///< 文件消息类型
 
+@property (nonatomic,assign,getter=isDisplayTimeTip) BOOL displayTimeTip;
+
 @end
 
 @interface OSCSender : NSObject
@@ -56,6 +58,17 @@ typedef NS_ENUM(NSInteger,OSCPrivateChatType){
 @property (nonatomic, copy) NSString *portrait;
 
 @property (nonatomic,assign,getter=isBySelf) BOOL bySelf;
+
+@end
+
+
+
+/** 处理timeTip的小工具类 与model绑定*/
+@interface TimeTipHelper : NSObject
+
++ (void)resetTimeTipHelper;//每次私信对话model解析完之后调用
+
++ (BOOL)shouldDisplayTimeTip:(NSDate* )date;
 
 @end
 

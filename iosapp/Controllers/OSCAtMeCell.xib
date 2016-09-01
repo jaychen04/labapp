@@ -125,7 +125,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="commentCountLabel" destination="2Rg-U0-ANg" id="TWF-m9-ts5"/>
-                <outlet property="descLabel" destination="qjZ-Lr-eTx" id="SA2-Jt-62P"/>
+                <outlet property="descLabel" destination="qjZ-Lr-eTx" id="sia-nE-u6F"/>
                 <outlet property="nameLabel" destination="dSC-Zg-3zt" id="ELP-3C-QSp"/>
                 <outlet property="originDescLabel" destination="Uab-NC-Yku" id="Yur-OK-1zg"/>
                 <outlet property="timeAndSourceLabel" destination="ERs-VW-9tz" id="sGJ-CY-rmk"/>
