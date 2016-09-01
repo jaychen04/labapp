@@ -52,6 +52,7 @@
     _commentCountLabel.hidden = YES;
     
     _TitleLabel.text = newsDetail.title;
+    _authorLabel.text = [NSString stringWithFormat:@"@%@  ", newsDetail.author];
     _timeLabel.text = [self timeComponentsSep:newsDetail.pubDate];
 }
 
