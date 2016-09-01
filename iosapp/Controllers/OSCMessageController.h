@@ -10,4 +10,6 @@
 
 @interface OSCMessageController : UIViewController
 
+@property (nonatomic, copy) void (^didRefreshSucceed)();
+
 @end

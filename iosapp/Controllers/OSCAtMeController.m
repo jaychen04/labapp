@@ -69,6 +69,8 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
                  NSArray* items = resultDic[@"items"];
                  if (dropDown) {
                      [self.dataSource removeAllObjects];
+                     
+                     if (_didRefreshSucceed) {_didRefreshSucceed();}
                  }
                  NSArray* models = [AtMeItem mj_objectArrayWithKeyValuesArray:items];
                  [self.dataSource addObjectsFromArray:models];

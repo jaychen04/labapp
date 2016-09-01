@@ -10,4 +10,6 @@
 
 @interface OSCAtMeController : UIViewController
 
+@property (nonatomic, copy) void (^didRefreshSucceed)();
+
 @end
