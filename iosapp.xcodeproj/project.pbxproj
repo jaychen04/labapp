@@ -31,6 +31,9 @@
 		0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC551CEDA390007DB140 /* UIView+SDExtension.m */; };
 		0422BC601CEDAAD3007DB140 /* InformationTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC5E1CEDAAD3007DB140 /* InformationTableViewCell.m */; };
 		0422BC611CEDAAD3007DB140 /* InformationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */; };
+		04270A171D77CC8700E21ECC /* InputToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 04270A131D77CC8700E21ECC /* InputToolbar.m */; };
+		04270A1D1D77CD5200E21ECC /* InputToolbarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04270A1B1D77CD5200E21ECC /* InputToolbarContentView.m */; };
+		04270A1E1D77CD5200E21ECC /* InputToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04270A1C1D77CD5200E21ECC /* InputToolbarContentView.xib */; };
 		042B4C511D6D7AF500DB5DD4 /* OSCMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B4C501D6D7AF500DB5DD4 /* OSCMessageCenter.m */; };
 		042B4C5A1D6D7B6A00DB5DD4 /* OSCAtMeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B4C561D6D7B6A00DB5DD4 /* OSCAtMeCell.m */; };
 		042B4C5B1D6D7B6A00DB5DD4 /* OSCAtMeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 042B4C571D6D7B6A00DB5DD4 /* OSCAtMeCell.xib */; };
@@ -425,6 +428,11 @@
 		0422BC5D1CEDAAD3007DB140 /* InformationTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTableViewCell.h; sourceTree = "<group>"; };
 		0422BC5E1CEDAAD3007DB140 /* InformationTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTableViewCell.m; sourceTree = "<group>"; };
 		0422BC5F1CEDAAD3007DB140 /* InformationTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InformationTableViewCell.xib; sourceTree = "<group>"; };
+		04270A121D77CC8700E21ECC /* InputToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputToolbar.h; sourceTree = "<group>"; };
+		04270A131D77CC8700E21ECC /* InputToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputToolbar.m; sourceTree = "<group>"; };
+		04270A1A1D77CD5200E21ECC /* InputToolbarContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputToolbarContentView.h; sourceTree = "<group>"; };
+		04270A1B1D77CD5200E21ECC /* InputToolbarContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputToolbarContentView.m; sourceTree = "<group>"; };
+		04270A1C1D77CD5200E21ECC /* InputToolbarContentView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputToolbarContentView.xib; sourceTree = "<group>"; };
 		042B4C4F1D6D7AF500DB5DD4 /* OSCMessageCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCMessageCenter.h; sourceTree = "<group>"; };
 		042B4C501D6D7AF500DB5DD4 /* OSCMessageCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCMessageCenter.m; sourceTree = "<group>"; };
 		042B4C551D6D7B6A00DB5DD4 /* OSCAtMeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCAtMeCell.h; sourceTree = "<group>"; };
@@ -2124,6 +2132,11 @@
 		C54689FC1BD1EFC400D49223 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				04270A121D77CC8700E21ECC /* InputToolbar.h */,
+				04270A131D77CC8700E21ECC /* InputToolbar.m */,
+				04270A1A1D77CD5200E21ECC /* InputToolbarContentView.h */,
+				04270A1B1D77CD5200E21ECC /* InputToolbarContentView.m */,
+				04270A1C1D77CD5200E21ECC /* InputToolbarContentView.xib */,
 				044266981D4A036000D87091 /* BannerScrollView.h */,
 				044266991D4A036000D87091 /* BannerScrollView.m */,
 				042F0A9F1D52DDB900D3DC76 /* QuartzCanvasView.h */,
@@ -2692,6 +2705,7 @@
 				EE82D0441C43B1E30066FDC9 /* FeedBackViewController.xib in Resources */,
 				317AD9C91C96AD68008356DE /* recommend_tag.png in Resources */,
 				C5E92FDE1B59FAC300EFE47E /* Homepage.storyboard in Resources */,
+				04270A1E1D77CD5200E21ECC /* InputToolbarContentView.xib in Resources */,
 				EE7B0AE41D348DDF0070F196 /* NewBlogsViewController.xib in Resources */,
 				00D6BCEE19EB673200E8754E /* Images.xcassets in Resources */,
 				31F14FE81D41F80300AD0763 /* Overlay@2x.png in Resources */,
@@ -2977,6 +2991,7 @@
 				31F14FE11D41F80300AD0763 /* ELCAssetCell.m in Sources */,
 				C5FB958B1AEA24F5006918CD /* TeamDiscussionCell.m in Sources */,
 				EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */,
+				04270A1D1D77CD5200E21ECC /* InputToolbarContentView.m in Sources */,
 				048C005D1D741D1700CC6378 /* OSCMsgChatController.m in Sources */,
 				C5E73E001AF8A15400974EDC /* WeeklyReportContentViewController.m in Sources */,
 				38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */,
@@ -3018,6 +3033,7 @@
 				EE7D32FF1AA95BF400ABFE58 /* PresentMembersViewController.m in Sources */,
 				0447EF2B1D59779C00F0954D /* ImageDownloadHandle.m in Sources */,
 				C5A89C3A1B09C34B00798B1C /* UIImage+FontAwesome.m in Sources */,
+				04270A171D77CC8700E21ECC /* InputToolbar.m in Sources */,
 				C5F3D7761AF0C2A50032F775 /* WeeklyReportViewController.m in Sources */,
 				EEB3D7AE1D13CE2300164EF5 /* QuestCommentHeadDetailCell.m in Sources */,
 				00D6BD3519ECFD8E00E8754E /* TweetCell.m in Sources */,

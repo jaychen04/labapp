@@ -11,6 +11,8 @@
 #import "ImageDownloadHandle.h"
 #import "OSCPhotoGroupView.h"
 #import "Utils.h"
+#import "UIImageView+CornerRadius.h"
+#import <UIImageView+WebCache.h>
 
 #import <YYKit.h>
 
@@ -23,6 +25,8 @@
 - (UIImage* )selfPopImage;
 
 - (UIImage* )otherPopImage;
+
+- (UIImage* )imageTip;
 
 - (UIImage* )fileTipImage;
 
@@ -51,6 +55,14 @@ static UIImage* _otherPopImage;
         _otherPopImage = [UIImage imageNamed:@"bg_balloon_left"];
     });
     return _otherPopImage;
+}
+static UIImage* _imageTip;
+- (UIImage *)imageTip{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _imageTip = [UIImage imageNamed:@""];
+    });
+    return _imageTip;
 }
 static UIImage* _fileTipImage;
 - (UIImage *)fileTipImage{
@@ -229,6 +241,7 @@ static UIImage* _fileTipImage;
         [self addSubview:({
             UIImageView* photoView = [UIImageView new];
             _photoView = photoView;
+            [_photoView zy_cornerRadiusAdvance:10 rectCornerType:UIRectCornerAllCorners];
             _photoView;
         })];
         [self addSubview:({
@@ -253,7 +266,7 @@ static UIImage* _fileTipImage;
         CGRect popFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width,SCREEN_PADDING_TOP},popSize};
         if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
-        CGRect imageFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_PADDING_RIGHT - imageSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP,imageSize};
+        CGRect imageFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_IMAGE_FILE_PADDING_RIGHT - imageSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_IMAGE_FILE_PADDING_TOP,imageSize};
         if (_privateChatItem.isDisplayTimeTip) { imageFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _imageFrame = imageFrame;
         
@@ -264,7 +277,7 @@ static UIImage* _fileTipImage;
         CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
         if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
-        CGRect imageFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_PADDING_TOP},imageSize};
+        CGRect imageFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_IMAGE_FILE_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_IMAGE_FILE_PADDING_TOP},imageSize};
         if (_privateChatItem.isDisplayTimeTip) { imageFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _imageFrame = imageFrame;
 
@@ -287,15 +300,25 @@ static UIImage* _fileTipImage;
     }else{
         [_popImageView setImage:[self otherPopImage]];
     }
+    
+    if (privateChatItem.isDisplayTimeTip) {
+        _timeLabel.hidden = NO;
+        _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(0, 16)];
+    }else{
+        _timeLabel.hidden = YES;
+    }
 
     UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:privateChatItem.resource];
     if (!image) {
-        _photoView.backgroundColor = [UIColor grayColor];
-        [ImageDownloadHandle downloadImageWithUrlString:privateChatItem.resource SaveToDisk:YES completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-            CGSize resultSize = [self adjustImage:image];
+        _photoView.image = [self imageTip];
+        
+        __weak typeof(self) weakSelf = self;
+        [_photoView sd_setImageWithURL:[NSURL URLWithString:privateChatItem.resource]
+                      placeholderImage:nil options:SDWebImageContinueInBackground | SDWebImageHandleCookies
+                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            CGSize resultSize = [weakSelf adjustImage:image];
             privateChatItem.imageFrame = (CGRect){{0,0},resultSize};
-            privateChatItem.popFrame = privateChatItem.imageFrame;
-            privateChatItem.rowHeight = resultSize.height + SCREEN_PADDING_TOP + SCREEN_PADDING_BOTTOM;
+            privateChatItem.popFrame = (CGRect){{0,0},{resultSize.width + PRIVATE_POP_IMAGE_FILE_PADDING_LEFT + PRIVATE_POP_IMAGE_FILE_PADDING_RIGHT , resultSize.height + PRIVATE_POP_IMAGE_FILE_PADDING_TOP + PRIVATE_POP_IMAGE_FILE_PADDING_BOTTOM}};
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([_privateChatCell.delegate respondsToSelector:@selector(privateChatNodeImageViewloadThumbImageDidFinsh:)]) {
                     [_privateChatCell.delegate privateChatNodeImageViewloadThumbImageDidFinsh:_privateChatCell];
@@ -304,14 +327,9 @@ static UIImage* _fileTipImage;
         }];
     }else{
         _photoView.image = image;
-        [self maskView:_photoView image:_popImageView.image];
-    }
-    
-    if (privateChatItem.isDisplayTimeTip) {
-        _timeLabel.hidden = NO;
-        _timeLabel.text = [privateChatItem.pubDate substringWithRange:NSMakeRange(0, 16)];
-    }else{
-        _timeLabel.hidden = YES;
+        CGSize resultSize = [self adjustImage:image];
+        privateChatItem.imageFrame = (CGRect){{0,0},resultSize};
+        privateChatItem.popFrame = (CGRect){{0,0},{resultSize.width + PRIVATE_POP_IMAGE_FILE_PADDING_LEFT + PRIVATE_POP_IMAGE_FILE_PADDING_RIGHT , resultSize.height + PRIVATE_POP_IMAGE_FILE_PADDING_TOP + PRIVATE_POP_IMAGE_FILE_PADDING_BOTTOM}};
     }
     
     _popFrame = privateChatItem.popFrame;

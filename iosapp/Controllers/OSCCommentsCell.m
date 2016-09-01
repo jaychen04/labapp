@@ -49,7 +49,7 @@
     if (!portraitImage) {
         [ImageDownloadHandle downloadImageWithUrlString:commentItem.author.portrait SaveToDisk:YES completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_userPortraitImageView setImage:portraitImage];
+                [_userPortraitImageView setImage:image];
             });
         }];
     }else{

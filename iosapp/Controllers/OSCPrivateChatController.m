@@ -151,10 +151,15 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     OSCPrivateChat* dataSource = self.dataSource[indexPath.row];
-    if (dataSource.rowHeight == 0) {
+    if (dataSource.privateChatType == OSCPrivateChatTypeImage) {
         dataSource.rowHeight = dataSource.popFrame.size.height + SCREEN_PADDING_TOP + SCREEN_PADDING_BOTTOM;
-        if (dataSource.isDisplayTimeTip) {
-            dataSource.rowHeight += PRIVATE_TIME_TIP_ADDITIONAL;
+        return dataSource.rowHeight;
+    }else{
+        if (dataSource.rowHeight == 0) {
+            dataSource.rowHeight = dataSource.popFrame.size.height + SCREEN_PADDING_TOP + SCREEN_PADDING_BOTTOM;
+            if (dataSource.isDisplayTimeTip) {
+                dataSource.rowHeight += PRIVATE_TIME_TIP_ADDITIONAL;
+            }
         }
     }
     return dataSource.rowHeight;

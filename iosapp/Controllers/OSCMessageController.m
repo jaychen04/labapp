@@ -11,7 +11,6 @@
 #import "OSCMessageCenter.h"
 #import "UserDetailsViewController.h"
 #import "OSCMsgChatController.h"
-#import "OSCPrivateChatController.h"//test push
 #import "OSCAPI.h"
 #import "Config.h"
 
@@ -135,10 +134,6 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
     MessageItem* msgItem = self.dataSource[indexPath.row];
     OSCMsgChatController* msgController = [[OSCMsgChatController alloc]initWithAuthorId:msgItem.sender.id userName:msgItem.sender.name];
     [self.navigationController pushViewController:msgController animated:YES];
-    
-//    test push ...
-//    OSCPrivateChatController* privateChatVC = [[OSCPrivateChatController alloc]initWithAuthorId:msgItem.sender.id];
-//    [self.navigationController pushViewController:privateChatVC animated:YES];
 }
 
 #pragma mark --- OSCMessageCellDelegate
