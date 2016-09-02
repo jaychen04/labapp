@@ -72,6 +72,7 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
                  NSArray* items = resultDic[@"items"];
                  if (dropDown) {
                      [self.dataSource removeAllObjects];
+                     if (_didRefreshSucceed) {_didRefreshSucceed();}
                  }
                  NSArray* models = [CommentItem mj_objectArrayWithKeyValuesArray:items];
                  [self.dataSource addObjectsFromArray:models];

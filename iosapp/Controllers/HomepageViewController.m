@@ -93,7 +93,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                                                object:nil];
     
 //    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
-    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
+    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -684,7 +684,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                     });
                     self.navigationController.tabBarItem.badgeValue = nil;
                     
-                    OSCMessageCenterController* messageCenter = [OSCMessageCenterController new];
+                    OSCMessageCenterController* messageCenter = [[OSCMessageCenterController alloc] initWithNoticeCounts:_noticeCounts];
                     messageCenter.hidesBottomBarWhenPushed = YES;
 //                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
 //                    messageCenterVC.hidesBottomBarWhenPushed = YES;
@@ -733,7 +733,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                     });
                     self.navigationController.tabBarItem.badgeValue = nil;
                     
-                    OSCMessageCenterController* messageCenter = [OSCMessageCenterController new];
+                    OSCMessageCenterController* messageCenter = [[OSCMessageCenterController alloc] initWithNoticeCounts:_noticeCounts];
                     messageCenter.hidesBottomBarWhenPushed = YES;
 //                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
 //                    messageCenterVC.hidesBottomBarWhenPushed = YES;
@@ -780,7 +780,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     
     __block int sumOfCount = 0;
     [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *count, NSUInteger idx, BOOL *stop) {
-        _noticeCounts[idx] = count;
+//        _noticeCounts[idx] = count;
         sumOfCount += [count intValue];
         
         switch (idx) {
@@ -789,20 +789,18 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                 newNotice.mention = [_noticeCounts[idx] intValue];
                 break;
             case 1:
-                _noticeCounts[idx] =  @([count intValue] + oldNotice.letter);
-                newNotice.letter = [_noticeCounts[idx] intValue];
-                break;
-            case 2:
                 _noticeCounts[idx] =  @([count intValue] + oldNotice.review);
                 newNotice.review = [_noticeCounts[idx] intValue];
                 break;
+            case 2:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.letter);
+                newNotice.letter = [_noticeCounts[idx] intValue];
+                break;
             case 3:
-                _noticeCounts[idx] =  @([count intValue] + oldNotice.fans);
-                newNotice.fans = [_noticeCounts[idx] intValue];
+                newNotice.fans = [count intValue] + oldNotice.fans;
                 break;
             case 4:
-                _noticeCounts[idx] =  @([count intValue] + oldNotice.like);
-                newNotice.like = [_noticeCounts[idx] intValue];
+                newNotice.like = [count intValue] + oldNotice.like;
                 break;
                 
             default:

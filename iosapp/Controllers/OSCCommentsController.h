@@ -10,4 +10,6 @@
 
 @interface OSCCommentsController : UIViewController
 
+@property (nonatomic, copy) void (^didRefreshSucceed)();
+
 @end

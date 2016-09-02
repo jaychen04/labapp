@@ -63,7 +63,7 @@
     string = [string stringByReplacingCharactersInRange:NSMakeRange(7, 1) withString:@"月"];
     string = [string stringByReplacingCharactersInRange:NSMakeRange(4, 1) withString:@"年"];
     
-    return [NSString stringWithFormat:@"发布于%@日", string];
+    return [NSString stringWithFormat:@"发布于 %@日", string];
 }
 
 @end

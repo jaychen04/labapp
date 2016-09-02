@@ -182,16 +182,18 @@ static NSString * const kPersonCellID = @"PersonCell";
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    OSCUserItem *friend = self.items[indexPath.row];
-    self.label.text = friend.name;
-    self.label.font = [UIFont systemFontOfSize:16];
-    CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+//    OSCUserItem *friend = self.items[indexPath.row];
+//    self.label.text = friend.name;
+//    self.label.font = [UIFont systemFontOfSize:15];
+//    CGSize nameSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+//    
+//    self.label.text = friend.more.expertise;
+//    self.label.font = [UIFont systemFontOfSize:12];
+//    CGSize infoLabelSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
+//    
+//    return nameSize.height + infoLabelSize.height + 50;
     
-    self.label.text = friend.more.expertise;
-    self.label.font = [UIFont systemFontOfSize:12];
-    CGSize infoLabelSize = [self.label sizeThatFits:CGSizeMake(tableView.frame.size.width - 60, MAXFLOAT)];
-    
-    return nameSize.height + infoLabelSize.height + 21;
+    return 68;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

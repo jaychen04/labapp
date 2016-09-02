@@ -10,4 +10,6 @@
 
 @interface OSCMessageCenterController : SwipableViewController
 
+- (instancetype)initWithNoticeCounts:(NSArray *)noticeCounts;
+
 @end
