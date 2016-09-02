@@ -15,7 +15,8 @@
 #import "TweetEditingVC.h"
 #import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
+#import "UserDetailsViewController.h"//delete
 #import "TweetDetailNewTableViewController.h"
 
 #import <UITableView+FDTemplateLayoutCell.h>
@@ -339,8 +340,12 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
 #pragma mark --- AsyncDisplayTableViewCellDelegate
 - (void)userPortraitDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
     OSCTweetItem* tweetItem = [cell valueForKey:@"tweetItem"];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweetItem.author.id];
-    [self.navigationController pushViewController:userDetailsVC animated:YES];
+    OSCUserHomePageController* otherUserHomePage = [[OSCUserHomePageController alloc]initWithUserID:tweetItem.author.id];
+    [self.navigationController pushViewController:otherUserHomePage animated:YES];
+
+//    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweetItem.author.id];
+//    [self.navigationController pushViewController:userDetailsVC animated:YES];
+    
 }
 - (void)loadLargeImageDidFinsh:(__kindof AsyncDisplayTableViewCell *)cell
                 photoGroupView:(OSCPhotoGroupView *)groupView

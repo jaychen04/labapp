@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class OSCUser;
+@class OSCUser,OSCUserHomePageItem;
 @interface UserDrawHeaderView : UIView
 
 @property (nonatomic, strong) UIView* imageBackView;
@@ -28,5 +28,7 @@
 @property (nonatomic, strong) UIButton* discussButton;
 
 - (void)setContentWithUser:(OSCUser *)user;
+
+- (void)setContentWithUserItem:(OSCUserHomePageItem* )userItem;
 
 @end

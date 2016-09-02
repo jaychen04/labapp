@@ -11,3 +11,17 @@
 @implementation OSCUserItem
 
 @end
+
+@implementation OSCUserHomePageItem
+
+@end
+
+@implementation OSCUserStatistics
+
+@end
+
+@implementation OSCUserMoreInfo
+
+@end
+
+

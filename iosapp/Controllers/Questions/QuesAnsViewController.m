@@ -134,23 +134,25 @@ static NSString* const QuesAnsCellIdentifier = @"QuesAnsTableViewCell";
     [manger GET:url
      parameters:paraMutableDic.copy
         success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            NSDictionary* result = responseObject[@"result"];
-            NSArray *JsonItems = result[@"items"];
-            NSArray *models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
-            self.tokens[index] = result[@"nextPageToken"];
-            if (isRefresh) {
-                self.dataModels[index] = models;
-            }else {
-                [self.dataModels[index] addObjectsFromArray:models];
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
+            if([responseObject[@"code"]integerValue] == 1) {
+                NSDictionary* result = responseObject[@"result"];
+                NSArray *JsonItems = result[@"items"];
+                NSArray *models = [OSCQuestion mj_objectArrayWithKeyValuesArray:JsonItems];
+                self.tokens[index] = result[@"nextPageToken"];
                 if (isRefresh) {
-                    [self.tableView.mj_header endRefreshing];
-                } else {
-					[self.tableView.mj_footer endRefreshing];
+                    self.dataModels[index] = models;
+                }else {
+                    [self.dataModels[index] addObjectsFromArray:models];
                 }
-                [self.tableView reloadData];
-            });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (isRefresh) {
+                        [self.tableView.mj_header endRefreshing];
+                    } else {
+                        [self.tableView.mj_footer endRefreshing];
+                    }
+                    [self.tableView reloadData];
+                });
+            }
         }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             if (isRefresh) {
