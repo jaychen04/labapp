@@ -10,7 +10,6 @@
 #import "OSCMessageCell.h"
 #import "OSCMessageCenter.h"
 #import "UserDetailsViewController.h"
-#import "OSCMsgChatController.h"
 #import "BubbleChatViewController.h"//test
 #import "OSCAPI.h"
 #import "Config.h"
@@ -134,8 +133,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     MessageItem* msgItem = self.dataSource[indexPath.row];
-//    OSCMsgChatController* msgController = [[OSCMsgChatController alloc]initWithAuthorId:msgItem.sender.id userName:msgItem.sender.name];
-//    [self.navigationController pushViewController:msgController animated:YES];
+
     BubbleChatViewController* vc = [[BubbleChatViewController alloc]initWithUserID:msgItem.sender.id andUserName:msgItem.sender.name];
     [self.navigationController pushViewController:vc animated:YES];
 }

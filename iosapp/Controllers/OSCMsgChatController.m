@@ -6,6 +6,7 @@
 //  Copyright © 2016年 oschina. All rights reserved.
 //
 
+//可删除文件
 #import "OSCMsgChatController.h"
 #import "OSCPrivateChatController.h"
 #import "OSCAPI.h"

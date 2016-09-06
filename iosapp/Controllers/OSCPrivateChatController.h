@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OSCPrivateChatController : UIViewController
+@interface OSCPrivateChatController : UITableViewController
 
 @property (nonatomic, copy) void (^didScroll)();
 
 - (instancetype)initWithAuthorId:(NSInteger)authorId;
+
+- (void)refresh;
 
 @end
