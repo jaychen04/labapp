@@ -549,6 +549,11 @@ static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTable
             break;
         }
             
+        case 4:{    //discuss
+            return nil;
+            break;
+        }
+            
         default:
             return nil;
             break;
