@@ -12,6 +12,26 @@
 
 @implementation NewHotBlogTableViewCell
 
++ (instancetype)returnReuseNewHotBlogCellWithTableView:(UITableView *)tableView
+                                             indexPath:(NSIndexPath *)indexPath
+                                            identifier:(NSString *)reuseIdentifier
+{
+    NewHotBlogTableViewCell* blogCell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
+    
+    return blogCell;
+}
+- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
+    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    if (self) {
+        self.contentView.backgroundColor = [UIColor newCellColor];
+        self.backgroundColor = [UIColor themeColor];
+        self.titleLabel.textColor = [UIColor newTitleColor];
+        self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+        self.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    }
+    return self;
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     

@@ -55,7 +55,7 @@
     _drawView.openRandomness = YES;
     _drawView.minimumRoundRadius = portrait_width * 0.5 + 30;
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
-    _drawView.offestCenter = (OffestCenter){0,-52};
+    _drawView.offestCenter = (OffestCenter){0,-38};
     [self addSubview:_drawView];
     
     _imageBackView = [UIView new];
@@ -77,7 +77,7 @@
     _nameLabel = [UILabel new];
     _nameLabel.font = [UIFont systemFontOfSize:20];
     _nameLabel.textAlignment = NSTextAlignmentCenter;
-    _nameLabel.numberOfLines = 1;
+    _nameLabel.numberOfLines = 2;
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     [self addSubview:_nameLabel];
     
@@ -123,33 +123,6 @@
         _fansBtn;
     })];
     
-    /** 底部横排按钮 */
-    UIView *line = [UIView new];
-    line.backgroundColor = [UIColor lineColor];
-    [self addSubview:line];
-    
-    UIView *countView = [UIView new];
-    _countView = countView;
-    [self addSubview:countView];
-    
-    _tweetsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _blogsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _questsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _discussButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    void (^setButtonStyle)(UIButton *, NSString *) = ^(UIButton *button, NSString *title) {
-        [button setTitleColor:[UIColor colorWithHex:0xEEEEEE] forState:UIControlStateNormal];
-        button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        button.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [button setTitle:title forState:UIControlStateNormal];
-        [countView addSubview:button];
-    };
-    
-    setButtonStyle(_tweetsButton,  @"\n动弹");
-    setButtonStyle(_blogsButton,   @"\n博客");
-    setButtonStyle(_questsButton,  @"\n问答");
-    setButtonStyle(_discussButton, @"\n讨论");
-    
     [self settingLayout];
 }
 #pragma mark ---
@@ -179,8 +152,8 @@
     }];
     
     [_signatureLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).with.offset(32);
-        make.right.equalTo(self).with.offset(-32);
+        make.left.equalTo(self).with.offset(20);
+        make.right.equalTo(self).with.offset(-20);
         make.top.equalTo(_nameLabel.mas_bottom).with.offset(name_space_signature);
     }];
     
@@ -210,14 +183,7 @@
         make.width.equalTo(@1);
         make.height.equalTo(@20);
     }];
-    
-    /** 底部横排按钮 */
-    [_countView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.and.bottom.equalTo(self).with.offset(0);
-        make.height.equalTo(@60);
-    }];
-    
-    
+
 }
 
 - (void)setContentWithUser:(OSCUser *)user
@@ -239,13 +205,6 @@
     [_followsBtn setTitle:[NSString stringWithFormat:@"关注 %d", user.followersCount] forState:UIControlStateNormal
      ];
     [_fansBtn setTitle:[NSString stringWithFormat:@"粉丝 %d", user.fansCount] forState:UIControlStateNormal];
-    
-    
-    /** 底部横排按钮 */
-//    
-//    [_tweetsButton setTitle:[NSString stringWithFormat:@"积分\n%d", user.score] forState:UIControlStateNormal];
-//    [_followsButton setTitle:[NSString stringWithFormat:@"关注\n%d", user.followersCount] forState:UIControlStateNormal];
-//    [_fansButton    setTitle:[NSString stringWithFormat:@"粉丝\n%d", user.fansCount]      forState:UIControlStateNormal];
 }
 
 
