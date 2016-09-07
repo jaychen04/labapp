@@ -25,7 +25,7 @@
 
 - (instancetype)initWithUserID:(int64_t)userID andUserName:(NSString *)userName
 {
-    self = [super initWithModeSwitchButton:NO];
+    self = [super initWithPhotoButton:YES];
     if (self) {
         self.navigationItem.title = userName;
         
@@ -87,9 +87,16 @@
     [manager POST:[NSString stringWithFormat:@"%@messages_pub", OSCAPI_V2_PREFIX]
        parameters:@{
                     @"authorId": @(_userID),
-                    @"content": [Utils convertRichTextToRawText:self.editingBar.editView],
-                    @"resource": @(0)
+                    @"content": [Utils convertRichTextToRawText:self.editingBar.editView]
                     }
+    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                    if (self.image) {
+                        [formData appendPartWithFileData:[Utils compressImage:self.image]
+                                                    name:@"file"
+                                                fileName:@"img.jpg"
+                                                mimeType:@"image/jpeg"];
+                    }
+                }
           success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
               NSInteger errorCode = [responseObject[@"code"] integerValue];
               
@@ -104,6 +111,7 @@
               }
               [HUD hideAnimated:YES afterDelay:1];
               
+              //CGPointMake(0, CGFLOAT_MAX)最底部
               [_messageBubbleVC.tableView setContentOffset:CGPointZero animated:NO];
               [_messageBubbleVC refresh];
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

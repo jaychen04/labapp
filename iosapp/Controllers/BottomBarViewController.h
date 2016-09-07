@@ -19,8 +19,12 @@
 @property (nonatomic, strong) NSLayoutConstraint *editingBarYConstraint;
 @property (nonatomic, strong) NSLayoutConstraint *editingBarHeightConstraint;
 
+@property (nonatomic, strong) UIImage *image;//
+
 - (instancetype)initWithModeSwitchButton:(BOOL)hasAModeSwitchButton;
-- (void)sendContent;
+- (instancetype)initWithPhotoButton:(BOOL)hasPhotoButton;
+
+- (void)sendContent;//发送信息
 - (void)updateInputBarHeight;
 - (void)hideEmojiPageView;
 
