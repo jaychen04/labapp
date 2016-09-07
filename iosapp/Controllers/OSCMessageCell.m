@@ -138,7 +138,20 @@
     
     _userNameLabel.text = messageItem.sender.name;
     _timeLabel.text = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:messageItem.pubDate] timeAgoSinceNow]]].string;
-    _descLabel.text = messageItem.content;
+    switch (messageItem.type) {
+        case OSCPrivateTypeText:
+            _descLabel.text = messageItem.content;
+            break;
+        case OSCPrivateTypeImage:
+            _descLabel.text = @"[图片]";
+            break;
+        case OSCPrivateTypeFile:
+            _descLabel.text = @"[文件]";
+            break;
+            
+        default:
+            break;
+    }
 }
 
 #pragma mark --- touch
