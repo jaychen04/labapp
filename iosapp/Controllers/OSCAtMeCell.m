@@ -29,6 +29,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [_userPortraitImageView zy_cornerRadiusRoundingRect];
+    [_originDescLabel drawTextInRect:UIEdgeInsetsInsetRect(_originDescLabel.bounds, UIEdgeInsetsMake(8, 8, 8, 8))];
 }
 
 + (instancetype)returnReuseAtMeCellWithTableView:(UITableView *)tableView
@@ -36,8 +37,21 @@
                                       identifier:(NSString *)reuseIdentifier
 {
     OSCAtMeCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
-
+    
     return cell;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundView.backgroundColor = [UIColor newCellColor];;
+        self.contentView.backgroundColor = [UIColor newCellColor];;
+        self.backgroundColor = [UIColor newCellColor];
+        self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+        self.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    }
+    return self;
 }
 
 - (void)setAtMeItem:(AtMeItem *)atMeItem{

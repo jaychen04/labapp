@@ -101,6 +101,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"动弹详情";
+    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setLayout];
 }

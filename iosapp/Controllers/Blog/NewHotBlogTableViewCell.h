@@ -20,6 +20,10 @@
 
 @property (nonatomic, strong) OSCNewHotBlog *blog;
 
++ (instancetype)returnReuseNewHotBlogCellWithTableView:(UITableView* )tableView
+                                             indexPath:(NSIndexPath* )indexPath
+                                            identifier:(NSString* )reuseIdentifier;
+
 //- (void)setNewHotBlogContent:(OSCNewHotBlog *)blog;
 
 @end

@@ -12,12 +12,17 @@
 
 @end
 
+@implementation OSCUserHomePageItem
 
-@implementation UserInfoMore
+@end
+
+@implementation OSCUserStatistics
+
+@end
+
+@implementation OSCUserMoreInfo
 
 @end
 
 
-@implementation UserInfoStatistics
 
-@end

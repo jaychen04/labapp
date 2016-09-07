@@ -19,6 +19,12 @@ typedef NS_ENUM(NSInteger,OSCOriginType){
     OSCOriginTypeTweet = 100        //动弹
 };
 
+typedef NS_ENUM(NSInteger,OSCPrivateType){
+    OSCPrivateTypeText = 1,     //文本
+    OSCPrivateTypeImage = 3,    //图片
+    OSCPrivateTypeFile = 5      //文件
+};
+
 @interface OSCMessageCenter : NSObject
  /**
   * MessageItem ---> 私信列表Item
@@ -39,7 +45,7 @@ typedef NS_ENUM(NSInteger,OSCOriginType){
 
 @property (nonatomic, copy) NSString *pubDate;
 
-@property (nonatomic, assign) NSInteger type;
+@property (nonatomic, assign) OSCPrivateType type;
 
 @property (nonatomic, strong) MessageSender *sender;
 

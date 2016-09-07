@@ -9,6 +9,7 @@
 #import "UserDrawHeaderView.h"
 #import "Utils.h"
 #import "OSCUser.h"
+#import "OSCUserItem.h"
 #import "AppDelegate.h"
 #import "QuartzCanvasView.h"
 
@@ -50,14 +51,11 @@
 {
     QuartzCanvasView* drawView = [[QuartzCanvasView alloc]initWithFrame:(CGRect){{0,0},self.bounds.size}];
     _drawView = drawView;
+    _drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
     _drawView.openRandomness = YES;
     _drawView.minimumRoundRadius = portrait_width * 0.5 + 30;
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
-    _drawView.gradientColor = (GradientColor){
-        [UIColor colorWithHex:0x24CF5F].CGColor,
-        [UIColor colorWithHex:0x20B955].CGColor,
-    };
-    _drawView.offestCenter = (OffestCenter){0,-52};
+    _drawView.offestCenter = (OffestCenter){0,-38};
     [self addSubview:_drawView];
     
     _imageBackView = [UIView new];
@@ -79,14 +77,14 @@
     _nameLabel = [UILabel new];
     _nameLabel.font = [UIFont systemFontOfSize:20];
     _nameLabel.textAlignment = NSTextAlignmentCenter;
-    _nameLabel.numberOfLines = 1;
+    _nameLabel.numberOfLines = 2;
     _nameLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     [self addSubview:_nameLabel];
     
     _signatureLabel = [[UILabel alloc]init];
     _signatureLabel.font = [UIFont systemFontOfSize:13];
     _signatureLabel.textAlignment = NSTextAlignmentCenter;
-    _signatureLabel.numberOfLines = 1;
+    _signatureLabel.numberOfLines = 2;
     _signatureLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     [self addSubview:_signatureLabel];
     
@@ -125,33 +123,6 @@
         _fansBtn;
     })];
     
-    /** 底部横排按钮 */
-    UIView *line = [UIView new];
-    line.backgroundColor = [UIColor lineColor];
-    [self addSubview:line];
-    
-    UIView *countView = [UIView new];
-    _countView = countView;
-    [self addSubview:countView];
-    
-    _tweetsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _blogsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _questsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    _discussButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    void (^setButtonStyle)(UIButton *, NSString *) = ^(UIButton *button, NSString *title) {
-        [button setTitleColor:[UIColor colorWithHex:0xEEEEEE] forState:UIControlStateNormal];
-        button.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
-        button.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [button setTitle:title forState:UIControlStateNormal];
-        [countView addSubview:button];
-    };
-    
-    setButtonStyle(_tweetsButton,  @"\n动弹");
-    setButtonStyle(_blogsButton,   @"\n博客");
-    setButtonStyle(_questsButton,  @"\n问答");
-    setButtonStyle(_discussButton, @"\n讨论");
-    
     [self settingLayout];
 }
 #pragma mark ---
@@ -181,8 +152,8 @@
     }];
     
     [_signatureLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(self).with.offset(32);
-        make.right.equalTo(self).with.offset(-32);
+        make.left.equalTo(self).with.offset(20);
+        make.right.equalTo(self).with.offset(-20);
         make.top.equalTo(_nameLabel.mas_bottom).with.offset(name_space_signature);
     }];
     
@@ -212,14 +183,7 @@
         make.width.equalTo(@1);
         make.height.equalTo(@20);
     }];
-    
-    /** 底部横排按钮 */
-    [_countView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.and.right.and.bottom.equalTo(self).with.offset(0);
-        make.height.equalTo(@60);
-    }];
-    
-    
+
 }
 
 - (void)setContentWithUser:(OSCUser *)user
@@ -241,13 +205,28 @@
     [_followsBtn setTitle:[NSString stringWithFormat:@"关注 %d", user.followersCount] forState:UIControlStateNormal
      ];
     [_fansBtn setTitle:[NSString stringWithFormat:@"粉丝 %d", user.fansCount] forState:UIControlStateNormal];
+}
+
+
+- (void)setContentWithUserItem:(OSCUserHomePageItem *)userItem{
+    [_portrait loadPortrait:[NSURL URLWithString:userItem.portrait]];
     
+    if (userItem.gender == 1) {//男
+        [_genderImageView setImage:[UIImage imageNamed:@"ic_male"]];
+        _genderImageView.hidden = NO;
+    } else if (userItem.gender == 2) {//女
+        [_genderImageView setImage:[UIImage imageNamed:@"ic_female"]];
+        _genderImageView.hidden = NO;
+    }else{//未知
+        _genderImageView.hidden = YES;
+    }
     
-    /** 底部横排按钮 */
-//    
-//    [_tweetsButton setTitle:[NSString stringWithFormat:@"积分\n%d", user.score] forState:UIControlStateNormal];
-//    [_followsButton setTitle:[NSString stringWithFormat:@"关注\n%d", user.followersCount] forState:UIControlStateNormal];
-//    [_fansButton    setTitle:[NSString stringWithFormat:@"粉丝\n%d", user.fansCount]      forState:UIControlStateNormal];
+    _nameLabel.text = userItem.name;
+    _signatureLabel.text = [NSString stringWithFormat:@"%@",userItem.desc];
+    _integralLabel.text = [NSString stringWithFormat:@"积分 %ld",userItem.statistics.score];
+    
+    [_followsBtn setTitle:[NSString stringWithFormat:@"关注 %ld", userItem.statistics.follow] forState:UIControlStateNormal];
+    [_fansBtn setTitle:[NSString stringWithFormat:@"粉丝 %ld", userItem.statistics.fans] forState:UIControlStateNormal];
 }
 
 

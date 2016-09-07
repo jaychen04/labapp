@@ -9,18 +9,22 @@
 #import "TweetDetailNewTableViewController.h"
 #import "UIColor+Util.h"
 #import <UITableView+FDTemplateLayoutCell.h>
-#import "UserDetailsViewController.h"
 #import "ImageViewerController.h"
-#import "UserDetailsViewController.h"
 #import "Config.h"
 #import "OSCUserItem.h"
 #import "OSCCommentItem.h"
 #import "OSCTweet.h"
 #import "OSCTweetItem.h"
 #import "OSCPhotoGroupView.h"
+#import "OSCUserHomePageController.h"
+#import "UserDetailsViewController.h"
 #import "NSString+FontAwesome.h"
+#import "UIImage+Util.h"
+#import "AFHTTPRequestOperationManager+Util.h"
+#import "UINavigationController+Router.h"
 
 #import <AFNetworking.h>
+#import <MJRefresh.h>
 #import <AFOnoResponseSerializer.h>
 #import <Ono.h>
 #import <MBProgressHUD.h>
@@ -451,7 +455,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 - (void) userPortraitDidClick:(NewMultipleDetailCell* )multipleTweetCell
                   tapGestures:(UITapGestureRecognizer* )tap
 {
-    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:_tweetDetail.author.id] animated:YES];
+    [self.navigationController pushViewController:[[OSCUserHomePageController alloc] initWithUserID:_tweetDetail.author.id] animated:YES];
 }
 - (void) commentButtonDidClick:(NewMultipleDetailCell *)multipleTweetCell
                    tapGestures:(UITapGestureRecognizer *)tap
@@ -564,14 +568,14 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 }
 #pragma  mark -- 用户详情界面
 -(void)pushUserDetails:(UITapGestureRecognizer*)tap {
-    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:tap.view.tag] animated:YES];
+    [self.navigationController pushViewController:[[OSCUserHomePageController alloc] initWithUserID:tap.view.tag] animated:YES];
 }
 -(void)commentItemPushUserDetails:(UITapGestureRecognizer*)tap {
     NSInteger userId = tap.view.tag;
-    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:userId] animated:YES];
+    [self.navigationController pushViewController:[[OSCUserHomePageController alloc] initWithUserID:userId] animated:YES];
 }
 - (void)likedUserDetails:(UIButton*)btn {
-    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:btn.tag] animated:YES];
+    [self.navigationController pushViewController:[[OSCUserHomePageController alloc] initWithUserID:btn.tag] animated:YES];
 }
 
 -(void)likeThisTweet:(UITapGestureRecognizer*)tap {

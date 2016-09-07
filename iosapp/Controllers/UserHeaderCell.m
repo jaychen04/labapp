@@ -88,7 +88,7 @@
     _signatureLabel = [[UILabel alloc]init];
     _signatureLabel.font = [UIFont systemFontOfSize:13];
     _signatureLabel.textAlignment = NSTextAlignmentCenter;
-    _signatureLabel.numberOfLines = 1;
+    _signatureLabel.numberOfLines = 2;
     _signatureLabel.textColor = [UIColor colorWithHex:0xEEEEEE];
     [self.contentView addSubview:_signatureLabel];
     

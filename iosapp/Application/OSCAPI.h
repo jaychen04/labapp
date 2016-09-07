@@ -32,13 +32,15 @@
 #define OSCAPI_NEWS_LIST                @"news_list"
 #define OSCAPI_NEWS_DETAIL              @"news_detail"
 
-#define OSCAPI_BLOGS_LIST               @"blog_list"
+//#define OSCAPI_BLOGS_LIST               @"blog_list"
+#define OSCAPI_BLOGS_LIST               @"blog"
 
 #define OSCAPI_POSTS_LIST               @"post_list"
 #define OSCAPI_POST_DETAIL              @"post_detail"
 #define OSCAPI_POST_PUB                 @"post_pub"
 
-#define OSCAPI_TWEETS_LIST              @"tweet_list"
+//#define OSCAPI_TWEETS_LIST              @"tweet_list"
+#define OSCAPI_TWEETS_LIST              @"tweets"
 #define OSCAPI_TWEET_DETAIL             @"tweet_detail"
 #define OSCAPI_TWEET_DELETE             @"tweet_delete"
 #define OSCAPI_TWEET_PUB                @"tweet_pub"
@@ -57,7 +59,7 @@
 
 #define OSCAPI_ACTIVE_LIST              @"active_list"
 
-
+#define OSCAPI_GET_USER_INFO            @"user_info"//获取自己/某人的信息
 //#define OSCAPI_MESSAGES_LIST            @"message_list"
 #define OSCAPI_MESSAGES_LIST            @"user_msg_letters"//消息中心_私信我的列表
 #define OSCAPI_MESSAGES_ATME_LIST       @"user_msg_mentions"//消息中心_@我的列表
@@ -114,7 +116,8 @@
 #define OSCAPI_OPENID_BINDING           @"openid_bind"
 #define OSCAPI_OPENID_REGISTER          @"openid_reg"
 
-#define OSCAPI_QUESTION                 @"question" //问答
+#define OSCAPI_QUESTION                 @"question" //问答列表
+#define OSCAPI_ACTIVITY                 @"user_activity"    //动态（讨论）列表
 
 #define OSCAPI_USER_FOLLOWS             @"user_follows"
 #define OSCAPI_USER_FANS                @"user_fans"
