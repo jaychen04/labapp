@@ -56,7 +56,7 @@ static Reachability *reachability;
                  OSCNotice *newNotice = [OSCNotice mj_objectWithKeyValues:result];
                  
                  [[NSNotificationCenter defaultCenter] postNotificationName:OSCAPI_USER_NOTICE
-                                                                     object:@[@(newNotice.mention), @(newNotice.letter), @(newNotice.review), @(newNotice.fans), @(newNotice.like)]];
+                                                                     object:@[@(newNotice.mention), @(newNotice.review), @(newNotice.letter), @(newNotice.fans), @(newNotice.like)]];
              }
              
          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

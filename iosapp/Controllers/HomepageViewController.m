@@ -93,7 +93,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                                                object:nil];
     
 //    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
-    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
+    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0)]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -179,7 +179,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         //*
         AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
         
-        NSString *strUrl = [NSString stringWithFormat:@"%@user_me", OSCAPI_V2_PREFIX];
+        NSString *strUrl = [NSString stringWithFormat:@"%@user_info", OSCAPI_V2_PREFIX];
         
         [manager GET:strUrl
           parameters:nil
@@ -214,16 +214,24 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 {
     OSCUser *user = [[OSCUser alloc] init];
     
+    user.userID = userItem.id;
     user.name = userItem.name;
     user.portraitURL = [NSURL URLWithString:userItem.portrait];
-    user.score = userItem.score;
-    user.favoriteCount = userItem.collectCount;
-    user.fansCount = userItem.fansCount;
     
-    user.desc = userItem.desc;
-    user.followersCount = userItem.followCount;
-    user.tweetCount = userItem.tweetCount;
     user.gender = [NSString stringWithFormat:@"%d", userItem.gender];
+    user.desc = userItem.desc;
+    user.relationship = userItem.relation;
+    
+    user.developPlatform = userItem.more.platform;
+    user.expertise = userItem.more.expertise;
+    user.location = userItem.more.city;
+    user.joinTime = [NSDate dateFromString:userItem.more.joinDate];
+    
+    user.score = userItem.statistics.score;
+    user.tweetCount = userItem.statistics.tweet;
+    user.favoriteCount = userItem.statistics.collect;
+    user.fansCount = userItem.statistics.fans;
+    user.followersCount = userItem.statistics.follow;
     
     return user;
 }
@@ -676,7 +684,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                     });
                     self.navigationController.tabBarItem.badgeValue = nil;
                     
-                    OSCMessageCenterController* messageCenter = [OSCMessageCenterController new];
+                    OSCMessageCenterController* messageCenter = [[OSCMessageCenterController alloc] initWithNoticeCounts:_noticeCounts];
                     messageCenter.hidesBottomBarWhenPushed = YES;
 //                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
 //                    messageCenterVC.hidesBottomBarWhenPushed = YES;
@@ -725,7 +733,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                     });
                     self.navigationController.tabBarItem.badgeValue = nil;
                     
-                    OSCMessageCenterController* messageCenter = [OSCMessageCenterController new];
+                    OSCMessageCenterController* messageCenter = [[OSCMessageCenterController alloc] initWithNoticeCounts:_noticeCounts];
                     messageCenter.hidesBottomBarWhenPushed = YES;
 //                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
 //                    messageCenterVC.hidesBottomBarWhenPushed = YES;
@@ -772,7 +780,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     
     __block int sumOfCount = 0;
     [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *count, NSUInteger idx, BOOL *stop) {
-        _noticeCounts[idx] = count;
+//        _noticeCounts[idx] = count;
         sumOfCount += [count intValue];
         
         switch (idx) {
@@ -781,20 +789,18 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                 newNotice.mention = [_noticeCounts[idx] intValue];
                 break;
             case 1:
-                _noticeCounts[idx] =  @([count intValue] + oldNotice.letter);
-                newNotice.letter = [_noticeCounts[idx] intValue];
-                break;
-            case 2:
                 _noticeCounts[idx] =  @([count intValue] + oldNotice.review);
                 newNotice.review = [_noticeCounts[idx] intValue];
                 break;
+            case 2:
+                _noticeCounts[idx] =  @([count intValue] + oldNotice.letter);
+                newNotice.letter = [_noticeCounts[idx] intValue];
+                break;
             case 3:
-                _noticeCounts[idx] =  @([count intValue] + oldNotice.fans);
-                newNotice.fans = [_noticeCounts[idx] intValue];
+                newNotice.fans = [count intValue] + oldNotice.fans;
                 break;
             case 4:
-                _noticeCounts[idx] =  @([count intValue] + oldNotice.like);
-                newNotice.like = [_noticeCounts[idx] intValue];
+                newNotice.like = [count intValue] + oldNotice.like;
                 break;
                 
             default:
@@ -863,14 +869,13 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
      6 新闻
      */
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
-                                                                            andSubTitles:@[@"全部", @"软件", @"问答", @"博客", @"翻译", @"活动", @"新闻"]
+                                                                            andSubTitles:@[@"综合", @"软件", @"问答", @"博客", @"翻译", @"资讯"]
                                                                           andControllers:@[
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeAll],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeQuestion],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeBlog],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeTranslate],
-                                                                                           [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeActivity],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeNews]
                                                                                            ]];
     favoritesSVC.hidesBottomBarWhenPushed = YES;

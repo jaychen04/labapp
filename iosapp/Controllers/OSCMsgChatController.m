@@ -6,17 +6,20 @@
 //  Copyright © 2016年 oschina. All rights reserved.
 //
 
+//可删除文件
 #import "OSCMsgChatController.h"
 #import "OSCPrivateChatController.h"
 #import "OSCAPI.h"
 #import "Utils.h"
+#import "OSCEditingBar.h"
 
 #import <MBProgressHUD.h>
 #import <Masonry.h>
 
 @interface OSCMsgChatController ()
 
-@property (nonatomic,strong) OSCPrivateChatController* privateChatVC;
+@property (nonatomic, strong) OSCPrivateChatController* privateChatVC;
+@property (nonatomic, strong) OSCEditingBar *oscEditingBar;
 
 @end
 
@@ -31,6 +34,9 @@
         
         _authorId = authorId;
         _privateChatVC = [[OSCPrivateChatController alloc]initWithAuthorId:_authorId];
+        _oscEditingBar = [[OSCEditingBar alloc] initWithModeSwitchButton:YES];
+        
+        [self.view addSubview:_oscEditingBar];
         [self addChildViewController:_privateChatVC];
         
         [self setUpBlock];

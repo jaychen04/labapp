@@ -34,6 +34,7 @@
 #import "AppDelegate.h"
 #import "NewCommentListViewController.h"//新评论列表
 #import "SoftWareViewController.h"      //软件详情
+#import "UserDetailsViewController.h"
 
 #import "IMYWebView.h"
 #import <MJExtension.h>
@@ -819,6 +820,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                 if (indexPath.row==0) {
                     TitleInfoTableViewCell *titleInfoCell = [tableView dequeueReusableCellWithIdentifier:titleInfoReuseIdentifier forIndexPath:indexPath];
                     titleInfoCell.newsDetail = _newsDetails;
+                    [titleInfoCell.authorLabel addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(authorInfo)]];
+                    titleInfoCell.authorLabel.userInteractionEnabled = YES;
                     
                     titleInfoCell.selectionStyle = UITableViewCellSelectionStyleNone;
                     
@@ -1107,6 +1110,14 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     }
     
 }
+
+#pragma mark - 资讯作者信息
+- (void)authorInfo
+{
+    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:_newsDetails.authorId];
+    [self.navigationController pushViewController:userDetailsVC animated:YES];
+}
+
 #pragma  mark -- 相关推荐跳转
 -(void)pushDetailsVcWithDetailModel:(OSCBlogDetailRecommend*)detailModel {
 

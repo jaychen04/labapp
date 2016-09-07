@@ -6,7 +6,9 @@
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-#import "DetailsViewController.h"
+//#import "DetailsViewController.h"
+#import <UIKit/UIKit.h>
+#import "BottomBarViewController.h"
 
 @interface BubbleChatViewController : BottomBarViewController
 

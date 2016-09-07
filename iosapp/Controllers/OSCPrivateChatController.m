@@ -21,9 +21,8 @@
 #import <MBProgressHUD.h>
 
 static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell";
-@interface OSCPrivateChatController ()<UITableViewDelegate,UITableViewDataSource,OSCPrivateChatCellDelegate>
+@interface OSCPrivateChatController ()<UITableViewDelegate,UITableViewDataSource,OSCPrivateChatCellDelegate, UITextViewDelegate>
 
-@property (nonatomic,strong) UITableView* tableView;
 @property (nonatomic,strong) NSMutableArray* dataSource;
 @property (nonatomic,strong) NSString* nextPageToken;
 @property (nonatomic,strong) NSString* prevPageToken;
@@ -48,7 +47,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self.view addSubview:self.tableView];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
         [self getDataUpgradeRequest:YES];
     }];
@@ -56,6 +55,12 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
         [self getDataUpgradeRequest:NO];
     }];
     [self getDataUpgradeRequest:NO];
+}
+
+#pragma mark - refresh
+- (void)refresh
+{
+    [self.tableView reloadData];
 }
 
 
@@ -199,15 +204,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
 
 #pragma mark --- lazy loading
-- (UITableView *)tableView {
-	if(_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,0},self.view.bounds.size.width,self.view.bounds.size.height - 110} style:UITableViewStylePlain];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _tableView.delegate = self;
-        _tableView.dataSource = self;
-	}
-	return _tableView;
-}
+
 - (NSMutableArray *)dataSource {
 	if(_dataSource == nil) {
 		_dataSource = [[NSMutableArray alloc] init];

@@ -345,6 +345,7 @@
 		EE88C4071D127CE6000FE427 /* QuesAnsDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C4051D127CE6000FE427 /* QuesAnsDetailViewController.xib */; };
 		EE88C40B1D128138000FE427 /* QuesAnsDetailHeadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */; };
 		EE88C40C1D128138000FE427 /* QuesAnsDetailHeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */; };
+		EEA4E5DC1D77D30600EB98DA /* OSCEditingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA4E5DB1D77D30600EB98DA /* OSCEditingBar.m */; };
 		EEB2A56B1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */; };
 		EEB3D7A91D13A86200164EF5 /* CommentDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */; };
 		EEB3D7AA1D13A86200164EF5 /* CommentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = EEB3D7A81D13A86200164EF5 /* CommentDetailViewController.xib */; };
@@ -1017,6 +1018,8 @@
 		EE88C4081D128138000FE427 /* QuesAnsDetailHeadCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuesAnsDetailHeadCell.h; path = Questions/QuesAnsDetailHeadCell.h; sourceTree = "<group>"; };
 		EE88C4091D128138000FE427 /* QuesAnsDetailHeadCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuesAnsDetailHeadCell.m; path = Questions/QuesAnsDetailHeadCell.m; sourceTree = "<group>"; };
 		EE88C40A1D128138000FE427 /* QuesAnsDetailHeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = QuesAnsDetailHeadCell.xib; path = Questions/QuesAnsDetailHeadCell.xib; sourceTree = "<group>"; };
+		EEA4E5DA1D77D30600EB98DA /* OSCEditingBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCEditingBar.h; sourceTree = "<group>"; };
+		EEA4E5DB1D77D30600EB98DA /* OSCEditingBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCEditingBar.m; sourceTree = "<group>"; };
 		EEB2A56A1CFFD67A006DB3B9 /* NewsBlogDetailTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsBlogDetailTableViewController.xib; sourceTree = "<group>"; };
 		EEB3D7A61D13A86200164EF5 /* CommentDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommentDetailViewController.h; path = Questions/CommentDetailViewController.h; sourceTree = "<group>"; };
 		EEB3D7A71D13A86200164EF5 /* CommentDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CommentDetailViewController.m; path = Questions/CommentDetailViewController.m; sourceTree = "<group>"; };
@@ -1577,6 +1580,8 @@
 		3838D1591A6C9C9500CC7913 /* EditingBar */ = {
 			isa = PBXGroup;
 			children = (
+				EEA4E5DA1D77D30600EB98DA /* OSCEditingBar.h */,
+				EEA4E5DB1D77D30600EB98DA /* OSCEditingBar.m */,
 				3874EC1A1A08DB8E000D2894 /* EditingBar.h */,
 				3874EC1B1A08DB8E000D2894 /* EditingBar.m */,
 				38E067421A19AC4900D41976 /* GrowingTextView.h */,
@@ -3073,6 +3078,7 @@
 				38B0BF951A3AE79700A2FDB0 /* OSCMessage.m in Sources */,
 				38AB264B1A1C4D2100D761CB /* BottomBarViewController.m in Sources */,
 				C5E73DFA1AF755A900974EDC /* WeeklyReportTitleBar.m in Sources */,
+				EEA4E5DC1D77D30600EB98DA /* OSCEditingBar.m in Sources */,
 				384A11331ADFA6BB00856A7C /* TeamUserMainCell.m in Sources */,
 				386BEA421A6643DE00C078A8 /* TweetDetailsWithBottomBarViewController.m in Sources */,
 				EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */,

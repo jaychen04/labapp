@@ -15,7 +15,7 @@
 @property (nonatomic, copy) NSString *originalTitle;
 @property (nonatomic, copy) NSString *body;
 @property (nonatomic, copy) NSString *author;
-@property (nonatomic, assign) ino64_t authorId;
+@property (nonatomic, assign) int64_t authorId;
 @property (nonatomic, copy) NSString *authorPortrait;
 @property (nonatomic) NSInteger authorRelation;
 @property (nonatomic, strong) NSString *pubDate;

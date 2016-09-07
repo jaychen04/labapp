@@ -25,7 +25,7 @@
 
 @interface TweetDetailsWithBottomBarViewController () <UIWebViewDelegate>
 
-@property (nonatomic, strong) TweetDetailsViewController *tweetDetailsVC;
+//@property (nonatomic, strong) TweetDetailsViewController *tweetDetailsVC;
 @property (nonatomic, strong) TweetDetailNewTableViewController *tweetDetailsNewVC;
 @property (nonatomic, assign) int64_t tweetID;
 @property (nonatomic, assign) BOOL isReply;

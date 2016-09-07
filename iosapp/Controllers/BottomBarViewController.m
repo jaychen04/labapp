@@ -17,11 +17,14 @@
 #import "AppDelegate.h"
 
 
-@interface BottomBarViewController () <UITextViewDelegate>
+@interface BottomBarViewController () <UITextViewDelegate, UIActionSheetDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, assign) BOOL hasAModeSwitchButton;
+@property (nonatomic, assign) BOOL hasPhotoButton;
 @property (nonatomic, strong) EmojiPageVC *emojiPageVC;
 @property (nonatomic, assign) BOOL isEmojiPageOnScreen;
+
+
 
 @end
 
@@ -35,6 +38,22 @@
         _editingBar.editView.delegate = self;
         if (hasAModeSwitchButton) {
             _hasAModeSwitchButton = hasAModeSwitchButton;
+            _operationBar = [OperationBar new];
+            _operationBar.hidden = YES;
+        }
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithPhotoButton:(BOOL)hasPhotoButton
+{
+    self = [super init];
+    if (self) {
+        _editingBar = [[EditingBar alloc] initWithPhotoButton:hasPhotoButton];
+        _editingBar.editView.delegate = self;
+        if (hasPhotoButton) {
+            _hasPhotoButton = hasPhotoButton;
             _operationBar = [OperationBar new];
             _operationBar.hidden = YES;
         }
@@ -80,6 +99,8 @@
     _editingBar.translatesAutoresizingMaskIntoConstraints = NO;
     [_editingBar.inputViewButton addTarget:self action:@selector(switchInputView) forControlEvents:UIControlEventTouchUpInside];
     [_editingBar.modeSwitchButton addTarget:self action:@selector(switchMode) forControlEvents:UIControlEventTouchUpInside];
+    [_editingBar.photoButton addTarget:self action:@selector(sendFile) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:_editingBar];
     
     if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode) {
@@ -111,6 +132,24 @@
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_operationBar(height)]|" options:0 metrics:metrics views:views]];
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[_operationBar]|" options:0 metrics:nil views:views]];
     }
+    
+    if (_hasPhotoButton) {
+        [_editingBar.photoButton addTarget:self action:@selector(sendFile) forControlEvents:UIControlEventTouchUpInside];
+    }
+}
+
+#pragma mark - sendFile
+- (void)sendFile
+{
+    [self.editingBar.editView resignFirstResponder]; //键盘遮盖了actionsheet
+    
+    [[[UIActionSheet alloc] initWithTitle:@"发送图片"
+                                 delegate:self
+                        cancelButtonTitle:@"取消"
+                   destructiveButtonTitle:nil
+                        otherButtonTitles:@"相册", @"相机", nil]
+     
+     showInView:self.view];
 }
 
 
@@ -306,7 +345,54 @@
 }
 
 
+#pragma mark - UIActionSheetDelegate
 
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == actionSheet.cancelButtonIndex) {
+        return;
+    } else if (buttonIndex == 0) {
+        UIImagePickerController *imagePickerController = [UIImagePickerController new];
+        imagePickerController.delegate = self;
+        imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        imagePickerController.allowsEditing = YES;
+        imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+        
+        [self presentViewController:imagePickerController animated:YES completion:nil];
+        
+    } else {
+        if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                                message:@"Device has no camera"
+                                                               delegate:nil
+                                                      cancelButtonTitle:@"OK"
+                                                      otherButtonTitles: nil];
+            
+            [alertView show];
+        } else {
+            UIImagePickerController *imagePickerController = [UIImagePickerController new];
+            imagePickerController.delegate = self;
+            imagePickerController.sourceType = UIImagePickerControllerSourceTypeCamera;
+            imagePickerController.allowsEditing = NO;
+            imagePickerController.showsCameraControls = YES;
+            imagePickerController.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+            imagePickerController.mediaTypes = @[(NSString *)kUTTypeImage];
+            
+            [self presentViewController:imagePickerController animated:YES completion:nil];
+        }
+    }
+}
+
+#pragma mark - UIImagePickerController
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    _image = info[UIImagePickerControllerEditedImage];
+    
+    [picker dismissViewControllerAnimated:YES completion:^ {
+        NSLog(@"选择图片的Action");
+        [self sendContent];
+    }];
+}
 
 
 @end
