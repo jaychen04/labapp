@@ -7,17 +7,16 @@
 //
 
 #import "BubbleChatViewController.h"
-//#import "MessageBubbleViewController.h"
 #import "Config.h"
 #import "Utils.h"
+#import "OSCAPI.h"
 #import "OSCPrivateChatController.h"
 
 #import <MBProgressHUD.h>
 
-@interface BubbleChatViewController ()
+@interface BubbleChatViewController () <UIWebViewDelegate>
 
 @property (nonatomic, assign) int64_t userID;
-//@property (nonatomic, strong) MessageBubbleViewController *messageBubbleVC;
 @property (nonatomic, strong) OSCPrivateChatController *messageBubbleVC;
 
 @end
@@ -26,12 +25,11 @@
 
 - (instancetype)initWithUserID:(int64_t)userID andUserName:(NSString *)userName
 {
-    self = [super initWithModeSwitchButton:NO];
+    self = [super initWithPhotoButton:YES];
     if (self) {
         self.navigationItem.title = userName;
         
         _userID = userID;
-//        _messageBubbleVC = [[MessageBubbleViewController alloc] initWithUserID:userID andUserName:userName];
         _messageBubbleVC = [[OSCPrivateChatController alloc] initWithAuthorId:userID];
         [self addChildViewController:_messageBubbleVC];
         
@@ -81,48 +79,48 @@
 
 - (void)sendContent
 {
-//    [self.editingBar.editView resignFirstResponder];
-//    
-//    MBProgressHUD *HUD = [Utils createHUD];
-//    HUD.label.text = @"私信发送中";
-//    
-//    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-//    
-//    [manager POST:[NSString stringWithFormat:@"%@%@", OSCAPI_PREFIX, OSCAPI_MESSAGE_PUB]
-//       parameters:@{
-//                    @"uid":      @([Config getOwnID]),
-//                    @"receiver": @(_userID),
-//                    @"content":  [Utils convertRichTextToRawText:self.editingBar.editView]
-//                    }
-//     
-//          success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseDocument) {
-//              ONOXMLElement *result = [responseDocument.rootElement firstChildWithTag:@"result"];
-//              int errorCode = [[[result firstChildWithTag:@"errorCode"] numberValue] intValue];
-//              NSString *errorMessage = [[result firstChildWithTag:@"errorMessage"] stringValue];
-//              
-//              HUD.mode = MBProgressHUDModeCustomView;
-//              
-//              if (errorCode == 1) {
-//                  self.editingBar.editView.text = @"";
-//                  [self updateInputBarHeight];
-//                  
-//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-//                  HUD.label.text = @"发送私信成功";
-//              } else {
-////                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", errorMessage];
-//              }
-//              [HUD hideAnimated:YES afterDelay:1];
-//              
-//              [_messageBubbleVC.tableView setContentOffset:CGPointZero animated:NO];
-//              [_messageBubbleVC refresh];
-//          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//              HUD.mode = MBProgressHUDModeCustomView;
-////              HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//              HUD.label.text = @"网络异常，私信发送失败";
-//              
-//              [HUD hideAnimated:YES afterDelay:1];
-//          }];
+    MBProgressHUD *HUD = [Utils createHUD];
+    HUD.label.text = @"评论发送中";
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
+    
+    [manager POST:[NSString stringWithFormat:@"%@messages_pub", OSCAPI_V2_PREFIX]
+       parameters:@{
+                    @"authorId": @(_userID),
+                    @"content": [Utils convertRichTextToRawText:self.editingBar.editView]
+                    }
+    constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+                    if (self.image) {
+                        [formData appendPartWithFileData:[Utils compressImage:self.image]
+                                                    name:@"file"
+                                                fileName:@"img.jpg"
+                                                mimeType:@"image/jpeg"];
+                    }
+                }
+          success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+              NSInteger errorCode = [responseObject[@"code"] integerValue];
+              
+              if (errorCode == 1) {
+                  self.editingBar.editView.text = @"";
+                  [self updateInputBarHeight];
+
+                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+                  HUD.label.text = @"发送私信成功";
+              } else {
+                  HUD.label.text = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
+              }
+              [HUD hideAnimated:YES afterDelay:1];
+              
+              //CGPointMake(0, CGFLOAT_MAX)最底部
+              [_messageBubbleVC.tableView setContentOffset:CGPointZero animated:NO];
+              [_messageBubbleVC refresh];
+          } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+              HUD.mode = MBProgressHUDModeCustomView;
+              HUD.label.text = @"网络异常，私信发送失败";
+
+              [HUD hideAnimated:YES afterDelay:1];
+          }];
+    
 }
 
 
