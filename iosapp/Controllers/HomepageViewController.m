@@ -869,7 +869,7 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
      6 新闻
      */
     SwipableViewController *favoritesSVC = [[SwipableViewController alloc] initWithTitle:@"收藏"
-                                                                            andSubTitles:@[@"全部", @"软件", @"问答", @"博客", @"翻译", @"新闻"]
+                                                                            andSubTitles:@[@"综合", @"软件", @"问答", @"博客", @"翻译", @"资讯"]
                                                                           andControllers:@[
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeAll],
                                                                                            [[FavoritesViewController alloc] initWithFavoritesType:FavoritesTypeSoftware],
