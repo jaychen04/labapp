@@ -38,6 +38,18 @@
     self.contentView.backgroundColor = [UIColor newCellColor];
 }
 
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.contentView.backgroundColor = [UIColor newCellColor];
+        self.backgroundColor = [UIColor themeColor];
+        self.titleLabel.textColor = [UIColor newTitleColor];
+        self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+        self.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    }
+    return self;
+}
+
 #pragma mark - setting VM
 -(void)setViewModel:(OSCQuestion *)viewModel{
     _viewModel = viewModel;

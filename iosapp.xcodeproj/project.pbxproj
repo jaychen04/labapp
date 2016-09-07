@@ -83,7 +83,6 @@
 		0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */; };
 		0447EF281D59733700F0954D /* UIImageView+RadiusHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0447EF271D59733700F0954D /* UIImageView+RadiusHandle.m */; };
 		0447EF2B1D59779C00F0954D /* ImageDownloadHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */; };
-		044FB0141D7D562C00D5F6DC /* UserHomePageController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044FB0131D7D562C00D5F6DC /* UserHomePageController.m */; };
 		044FB0181D7EA24D00D5F6DC /* OSCDiscussCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 044FB0161D7EA24D00D5F6DC /* OSCDiscussCell.m */; };
 		044FB0191D7EA24D00D5F6DC /* OSCDiscussCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 044FB0171D7EA24D00D5F6DC /* OSCDiscussCell.xib */; };
 		045126541D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 045126531D6172FF00E4DD93 /* AsyncDisplayTableViewCell.m */; };
@@ -512,8 +511,6 @@
 		0447EF271D59733700F0954D /* UIImageView+RadiusHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+RadiusHandle.m"; sourceTree = "<group>"; };
 		0447EF291D59779C00F0954D /* ImageDownloadHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDownloadHandle.h; path = ELCImagePickerController/ImageDownloadHandle.h; sourceTree = "<group>"; };
 		0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageDownloadHandle.m; path = ELCImagePickerController/ImageDownloadHandle.m; sourceTree = "<group>"; };
-		044FB0121D7D562C00D5F6DC /* UserHomePageController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserHomePageController.h; sourceTree = "<group>"; };
-		044FB0131D7D562C00D5F6DC /* UserHomePageController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserHomePageController.m; sourceTree = "<group>"; };
 		044FB0151D7EA24D00D5F6DC /* OSCDiscussCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCDiscussCell.h; sourceTree = "<group>"; };
 		044FB0161D7EA24D00D5F6DC /* OSCDiscussCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCDiscussCell.m; sourceTree = "<group>"; };
 		044FB0171D7EA24D00D5F6DC /* OSCDiscussCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSCDiscussCell.xib; sourceTree = "<group>"; };
@@ -1794,8 +1791,6 @@
 		38763A041A85E494008E6805 /* 用户详情页 */ = {
 			isa = PBXGroup;
 			children = (
-				044FB0121D7D562C00D5F6DC /* UserHomePageController.h */,
-				044FB0131D7D562C00D5F6DC /* UserHomePageController.m */,
 				04270A1F1D78031E00E21ECC /* OSCUserHomePageController.h */,
 				04270A201D78031E00E21ECC /* OSCUserHomePageController.m */,
 				386039621A0A179A007C9B88 /* UserDetailsViewController.h */,
@@ -2915,7 +2910,6 @@
 				04EC1B631D393049006DBD5D /* IMY_NJKWebViewProgress.m in Sources */,
 				31697BC21B16E496001FE346 /* TeamCalendarView.m in Sources */,
 				00EDF60F19EFF4B300A5C842 /* Utils.m in Sources */,
-				044FB0141D7D562C00D5F6DC /* UserHomePageController.m in Sources */,
 				EE7A55591AEDD82C00DF10D3 /* VoiceTweetEditingVC.m in Sources */,
 				042F0AA71D531B8700D3DC76 /* UIDevice+SystemInfo.m in Sources */,
 				38BD7D7919FFCB79003ABB80 /* TweetDetailsViewController.m in Sources */,

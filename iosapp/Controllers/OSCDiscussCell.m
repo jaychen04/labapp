@@ -42,11 +42,14 @@
     
     return discussCell;
 }
-
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
     if (self) {
-        
+        self.contentView.backgroundColor = [UIColor newCellColor];
+        self.backgroundColor = [UIColor themeColor];
+        self.titleLabel.textColor = [UIColor newTitleColor];
+        self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+        self.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
     }
     return self;
 }

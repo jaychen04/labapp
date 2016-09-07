@@ -20,8 +20,8 @@
     
     return blogCell;
 }
-- (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
     if (self) {
         self.contentView.backgroundColor = [UIColor newCellColor];
         self.backgroundColor = [UIColor themeColor];
