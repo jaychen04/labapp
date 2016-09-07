@@ -17,6 +17,7 @@
 #import "OSCQuestion.h"
 #import "OSCDiscuss.h"
 #import "OSCPhotoGroupView.h"
+#import "OSCPushTypeControllerHelper.h"
 
 #import "AsyncDisplayTableViewCell.h"
 #import "OSCTextTweetCell.h"
@@ -674,7 +675,20 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
             [self.navigationController pushViewController:detailVC animated:YES];
             break;
         }
-            
+        case 4:{
+            NSMutableArray* currentDataSource = self.dataSources[currentIndex];
+            OSCDiscuss* discuss = currentDataSource[indexPath.row];
+            if (discuss.origin.type == OSCDiscusOriginTypeLineNews) {
+                [self.navigationController handleURL:[NSURL URLWithString:discuss.origin.href]];
+            }
+            UIViewController* pushVC = [OSCPushTypeControllerHelper pushControllerWithDiscussOriginType:discuss.origin];
+            if (pushVC == nil) {
+                [self.navigationController handleURL:[NSURL URLWithString:discuss.origin.href]];
+            }else{
+                [self.navigationController pushViewController:pushVC animated:YES];
+            }
+            break;
+        }
             
         default:
             break;

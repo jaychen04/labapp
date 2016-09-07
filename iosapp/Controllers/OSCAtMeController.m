@@ -9,12 +9,14 @@
 #import "OSCAtMeController.h"
 #import "OSCAPI.h"
 #import "Config.h"
+#import "Utils.h"
 #import "OSCPushTypeControllerHelper.h"
 #import "OSCAtMeCell.h"
 #import "OSCMessageCenter.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "UIColor+Util.h"
 #import "AFHTTPRequestOperationManager+Util.h"
+#import "UINavigationController+Router.h"
 
 #import <MJRefresh.h>
 #import <MJExtension.h>
@@ -125,7 +127,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
 #pragma mark --- OSCAtMeCellDelegate
 - (void)atMeCellDidClickUserPortrait:(OSCAtMeCell *)cell{
     AtMeItem* atMeItem = cell.atMeItem;
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:atMeItem.author.id];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:atMeItem.author.id];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

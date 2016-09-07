@@ -9,13 +9,15 @@
 #import "OSCCommentsController.h"
 #import "OSCAPI.h"
 #import "Config.h"
+#import "Utils.h"
 #import "MessageCenter.h"
 #import "OSCPushTypeControllerHelper.h"
 #import "OSCMessageCenter.h"
 #import "OSCCommentsCell.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 
 #import "AFHTTPRequestOperationManager+Util.h"
+#import "UINavigationController+Router.h"
 #import "UIColor+Util.h"
 
 #import <YYKit.h>
@@ -23,7 +25,7 @@
 #import <MJExtension.h>
 #import <MBProgressHUD.h>
 
-#define COMMENT_HEIGHT 150
+#define COMMENT_HEIGHT 180
 
 static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
 @interface OSCCommentsController ()<UITableViewDelegate,UITableViewDataSource,OSCCommentsCellDelegate>
@@ -126,7 +128,7 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
 - (void)commentsCellDidClickUserPortrait:(OSCCommentsCell *)cell{
     CommentItem* commentItem = cell.commentItem;
     OSCReceiver* receiver = commentItem.author;
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:receiver.id];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:receiver.id];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

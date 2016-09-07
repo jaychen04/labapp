@@ -67,6 +67,18 @@
     OSCMessageCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseIdentifier forIndexPath:indexPath];
     return cell;
 }
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        self.backgroundView.backgroundColor = [UIColor newCellColor];;
+        self.contentView.backgroundColor = [UIColor newCellColor];;
+        self.backgroundColor = [UIColor newCellColor];
+        self.selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+        self.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
+    }
+    return self;
+}
 #pragma mark --- Pan Operation
 - (void)handlePanGestures:(UIPanGestureRecognizer* )pan{
     if (!_openSlidingOperation) { return ; }

@@ -9,13 +9,16 @@
 #import "OSCMessageController.h"
 #import "OSCMessageCell.h"
 #import "OSCMessageCenter.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "OSCMsgChatController.h"
 #import "OSCAPI.h"
 #import "Config.h"
+#import "Utils.h"
 
 #import "AFHTTPRequestOperationManager+Util.h"
+#import "UINavigationController+Router.h"
 #import "UIColor+Util.h"
+
 #import <AFNetworking.h>
 #import <MJExtension.h>
 #import <MJRefresh.h>
@@ -139,7 +142,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 #pragma mark --- OSCMessageCellDelegate
 - (void)messageCellDidClickUserPortrait:(OSCMessageCell *)cell{
     MessageItem* messageItem = cell.messageItem;
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:messageItem.sender.id];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:messageItem.sender.id];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@class OSCOrigin;
+@class OSCOrigin,OSCDiscussOrigin;
 @interface OSCPushTypeControllerHelper : NSObject
 
 + (UIViewController* )pushControllerWithOriginType:(OSCOrigin* )origin;
+
++ (UIViewController* )pushControllerWithDiscussOriginType:(OSCDiscussOrigin* )discussOrigin;
 
 @end

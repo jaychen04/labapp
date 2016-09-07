@@ -67,4 +67,6 @@ typedef NS_ENUM(NSInteger,OSCDiscusOriginType){
 
 @property (nonatomic,assign) OSCDiscusOriginType type;
 
+@property (nonatomic,strong) NSString* href;
+
 @end
