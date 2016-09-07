@@ -27,14 +27,14 @@
                             <constraint firstAttribute="height" constant="18" id="UdI-0H-MHV"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjZ-Lr-eTx">
                         <rect key="frame" x="69" y="40" width="458" height="34"/>
                         <string key="text">@空格邓犹豫毁一生踌躇穷三代。投身互联网，成就好未来。巴林的狗尾草Java毁一生C#穷三代，若要好前程，置身IT外。 到底谁说的有道理@空格邓犹豫毁一生踌躇穷三代。投身互联网，成就好未来。巴林的狗尾草Java毁一生C#穷三代，若要好前程，置身IT外。 到底谁说的有道理</string>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vTT-Oh-3ew">

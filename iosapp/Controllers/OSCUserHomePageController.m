@@ -24,6 +24,7 @@
 #import "OSCMultipleTweetCell.h"
 #import "NewHotBlogTableViewCell.h"
 #import "QuesAnsTableViewCell.h"
+#import "OSCDiscussCell.h"
 
 #import "LoginViewController.h"
 #import "FriendsViewController.h"
@@ -31,12 +32,14 @@
 #import "NewsBlogDetailTableViewController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "AFHTTPRequestOperationManager+Util.h"
+#import "UINavigationBar+BackgroundColor.h"
 
 #import <MBProgressHUD.h>
 #import <AFNetworking.h>
 #import <MJRefresh.h>
 #import <MJExtension.h>
 
+#define NAVI_BAR_HEIGHT 64
 #define HEADER_VIEW_HEIGHT 330
 #define SECTION_HEADER_VIEW_HEIGHT 64
 
@@ -49,6 +52,7 @@ static NSString* const reuseImageTweetCellReuseIdentifier = @"OSCImageTweetCell"
 static NSString* const reuseMultipleTweetCellReuseIdentifier = @"OSCMultipleTweetCell";
 static NSString* const reuseNewHotBlogTableViewCellReuseIdentifier = @"NewHotBlogTableViewCell";
 static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTableViewCell";
+static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 
 
 @interface OSCUserHomePageController ()<UITableViewDelegate,UITableViewDataSource,AsyncDisplayTableViewCellDelegate>
@@ -104,25 +108,45 @@ static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTable
     [self layoutUI];
     [self getCurrentUserInfo];//获取用户info
 }
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:YES];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     self.tableView.tableHeaderView = self.headerCanvasView;
     if (_user) { [self assemblyHeaderView]; }
+    
+    [self scrollViewDidScroll:self.tableView];//test
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    
+    [self scrollViewDidScroll:self.tableView];//test
+    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController.navigationBar lt_reset];//test
 }
 - (void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:YES];
+    [super viewDidDisappear:animated];
     self.headerCanvasView = nil;
     self.tableView.tableHeaderView = nil;
+    
+    [self.navigationController.navigationBar lt_reset];//test
 }
 
 #pragma mark --- Setting default value
 - (void)settingSomthing{
     self.navigationItem.title = @"用户中心";
+    
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];//test
 
+    self.buttons[1].selected = YES;
     _currentIndex = 1;
 
     [self.tableView registerNib:[UINib nibWithNibName:@"NewHotBlogTableViewCell" bundle:nil] forCellReuseIdentifier:reuseNewHotBlogTableViewCellReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"QuesAnsTableViewCell" bundle:nil] forCellReuseIdentifier:reuseQuesAnsTableViewCellReuseIdentifier];
+    [self.tableView registerNib:[UINib nibWithNibName:@"OSCDiscussCell" bundle:nil] forCellReuseIdentifier:reuseDiscussCellReuseIdentifier];
 }
 
 #pragma mark --- layout
@@ -188,7 +212,7 @@ static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTable
 
     [parameterDic setValue:@(_user.id) forKey:parameterStr];
     if (!dropDown && self.nextTokens[_currentIndex].length > 0) {
-        [parameterDic setValue:self.nextTokens[_currentIndex] forKey:@"nextPageToken"];
+        [parameterDic setValue:self.nextTokens[_currentIndex] forKey:@"pageToken"];
     }
     
     AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
@@ -258,8 +282,22 @@ static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTable
         return 150;
     }else if (_currentIndex == 3){
         return 105;
+    }else if(_currentIndex == 4){
+        return 155;
     }else{
         return 0;
+    }
+}
+
+#pragma mark -  scrollView delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    UIColor * color = [UIColor navigationbarColor];
+    CGFloat offsetY = scrollView.contentOffset.y;
+    if (offsetY > NAVI_BAR_HEIGHT) {
+        CGFloat alpha = MIN(1, 1 - ((NAVI_BAR_HEIGHT + 64 - offsetY) / 64));
+        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
+    } else {
+        [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
     }
 }
 
@@ -550,7 +588,10 @@ static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTable
         }
             
         case 4:{    //discuss
-            return nil;
+            OSCDiscuss* discuss = (OSCDiscuss* )model;
+            OSCDiscussCell* discussCell = [OSCDiscussCell returnReuseDiscussCellWithTableView:tableView indexPath:indexPath identifier:reuseDiscussCellReuseIdentifier];
+            discussCell.discuss = discuss;
+            return discussCell;
             break;
         }
             
@@ -589,6 +630,11 @@ static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTable
         }
         
         case 3:{
+            return UITableViewAutomaticDimension;
+            break;
+        }
+            
+        case 4:{
             return UITableViewAutomaticDimension;
             break;
         }
@@ -666,7 +712,8 @@ static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTable
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
 	if(_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,-NAVI_BAR_HEIGHT},{kScreen_W,self.view.bounds.size.height + NAVI_BAR_HEIGHT}} style:UITableViewStylePlain];
+//        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -696,7 +743,7 @@ static NSString* const reuseQuesAnsTableViewCellReuseIdentifier = @"QuesAnsTable
             UIButton* btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.tag = i + 1;
             btn.frame = (CGRect){{(kScreen_W * 0.25) * i,0},{kScreen_W * 0.25,SECTION_HEADER_VIEW_HEIGHT}};
-            [btn setTitleColor:[UIColor colorWithHex:0xEEEEEE] forState:UIControlStateNormal];
+            [btn setTitleColor:[[UIColor colorWithHex:0xEEEEEE] colorWithAlphaComponent:0.66] forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor colorWithHex:0xEEEEEE] forState:UIControlStateSelected];
             btn.titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
             btn.titleLabel.textAlignment = NSTextAlignmentCenter;
