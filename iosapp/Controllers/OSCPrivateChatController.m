@@ -54,20 +54,24 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
         [self getDataUpgradeRequest:YES];
     }];
-    self.tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
-        [self getDataUpgradeRequest:NO];
-    }];
+//    self.tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
+//        [self getDataUpgradeRequest:NO];
+//    }];
     [self getDataUpgradeRequest:NO];
 }
 
 #pragma mark - refresh
 - (void)refresh
 {
-    [self.tableView reloadData];
+    [self.dataSource removeAllObjects];
+    _isFirstOpenPage = YES;
+    [self getDataUpgradeRequest:NO];
 }
 - (void)refreshToBottom{
     [self.tableView reloadData];
-    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(self.dataSource.count - 1) inSection:0]  atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    if (self.dataSource.count != 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(self.dataSource.count - 1) inSection:0]  atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
 }
 
 
@@ -210,7 +214,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 }
 //文件cell回调
 - (void)privateChatNodeFileViewDidClickFile:(OSCPrivateChatCell *)privateChatCell{
-
+    
 }
 
 
