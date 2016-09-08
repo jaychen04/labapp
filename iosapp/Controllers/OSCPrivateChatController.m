@@ -31,6 +31,8 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
 @implementation OSCPrivateChatController{
     NSInteger _authorId;
+    
+    BOOL _isFirstOpenPage;
 }
 #pragma mark --- initialize method
 - (instancetype)initWithAuthorId:(NSInteger)authorId{
@@ -39,6 +41,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
         _authorId = authorId;
         _prevPageToken = nil;
         _nextPageToken = nil;
+        _isFirstOpenPage = YES;
     }
     return self;
 }
@@ -61,6 +64,10 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 - (void)refresh
 {
     [self.tableView reloadData];
+}
+- (void)refreshToBottom{
+    [self.tableView reloadData];
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(self.dataSource.count - 1) inSection:0]  atScrollPosition:UITableViewScrollPositionBottom animated:NO];
 }
 
 
@@ -124,7 +131,12 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
                  }else{
                      [self.tableView.mj_footer endRefreshing];
                  }
-                 [self.tableView reloadData];
+                 if (_isFirstOpenPage) {
+                     [self refreshToBottom];
+                     _isFirstOpenPage = NO;
+                 }else{
+                     [self.tableView reloadData];
+                 }
                  [HUD hideAnimated:YES afterDelay:0.3];
              });
     }
@@ -158,6 +170,9 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     OSCPrivateChat* dataSource = self.dataSource[indexPath.row];
     if (dataSource.privateChatType == OSCPrivateChatTypeImage) {
         dataSource.rowHeight = dataSource.popFrame.size.height + SCREEN_PADDING_TOP + SCREEN_PADDING_BOTTOM;
+        if (dataSource.isDisplayTimeTip) {
+            dataSource.rowHeight += PRIVATE_TIME_TIP_ADDITIONAL;
+        }
         return dataSource.rowHeight;
     }else{
         if (dataSource.rowHeight == 0) {
