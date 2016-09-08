@@ -101,6 +101,9 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
         };
         self.isJsonDataVc = YES;
         self.kLastRefreshTime = @"NewsRefreshInterval";
+        
+        _topic = topicTag;
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(topicEditing)];
     }
     return self;
 }
@@ -177,9 +180,6 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
         };
         
         self.objClass = [OSCTweetItem class];
-        
-        self.navigationItem.title = topic;
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(topicEditing)];
     }
     return self;
 }
