@@ -12,9 +12,9 @@
 #import "DetailsViewController.h"
 #import "ImageViewerController.h"
 #import "PostsViewController.h"
-#import "TweetsViewController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "NewsBlogDetailTableViewController.h"
+#import "TweetTableViewController.h"
 
 #import "OSCNews.h"
 #import "OSCPost.h"
@@ -155,7 +155,9 @@
                     //话题
                     urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
                     urlComponents = [urlString componentsSeparatedByString:@"/"];
-                    viewController = [[TweetsViewController alloc] initWithTopic:urlComponents[2]];
+                    viewController = [[TweetTableViewController alloc] initTweetListWithTopic:urlComponents[2]];
+                    viewController.title = [NSString stringWithFormat:@"#%@#", urlComponents[2]];
+                    viewController.hidesBottomBarWhenPushed = YES;
                 }
             }
         } else if ([prefix isEqualToString:@"static"]) {

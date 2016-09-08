@@ -87,6 +87,24 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
     return self;
 }
 
+-(instancetype)initTweetListWithTopic:(NSString *)topicTag
+{
+    self = [super init];
+    if (self) {
+        self.parametersDic = @{
+                               @"tag"       : topicTag,
+                               @"pageToken" : @""
+                               };
+        self.netWorkingDelegate = self;
+        self.generateUrl = ^NSString * () {
+            return [NSString stringWithFormat:@"%@tweets",OSCAPI_V2_PREFIX];
+        };
+        self.isJsonDataVc = YES;
+        self.kLastRefreshTime = @"NewsRefreshInterval";
+    }
+    return self;
+}
+
 - (instancetype)initWithTweetsType:(NewTweetsType)type
 {
     self = [super init];

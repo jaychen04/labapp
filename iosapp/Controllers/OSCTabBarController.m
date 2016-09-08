@@ -8,7 +8,6 @@
 
 #import "OSCTabBarController.h"
 #import "SwipableViewController.h"
-#import "TweetsViewController.h"
 #import "PostsViewController.h"
 #import "NewsViewController.h"
 #import "LoginViewController.h"
