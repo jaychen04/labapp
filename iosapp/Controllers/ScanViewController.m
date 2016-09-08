@@ -101,16 +101,22 @@
     
     CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
     CGFloat screenWidth  = [UIScreen mainScreen].bounds.size.width;
-    
-    _output.rectOfInterest = CGRectMake((screenHeight - 200) / 2 / screenHeight,
-                                        (screenWidth  - 260) / 2 / screenWidth,
-                                        200 / screenHeight,
-                                        260 / screenWidth);
+
+//	_output.rectOfInterest = CGRectMake((screenHeight - 200) / 2 / screenHeight,
+//										(screenWidth  - 260) / 2 / screenWidth,
+//										200 / screenHeight,
+//										260 / screenWidth);
+	
+    _output.rectOfInterest = CGRectMake((screenHeight - 400) / 2 / screenHeight,
+                                        (screenWidth  - 460) / 2 / screenWidth,
+                                        400 / screenHeight,
+                                        460 / screenWidth);
 }
 
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
 {
+	
     NSString *message;
     
     if (metadataObjects.count > 0) {
