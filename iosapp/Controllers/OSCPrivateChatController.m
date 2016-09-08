@@ -206,7 +206,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
 }
 - (void)privateChatNodeImageViewloadThumbImageDidFinsh:(OSCPrivateChatCell *)privateChatCell{
-    [self.tableView reloadData];
+    [self refresh];
 }
 - (void)privateChatNodeImageViewloadLargerImageDidFinsh:(OSCPrivateChatCell *)privateChatCell photoGroupView:(OSCPhotoGroupView *)groupView fromView:(UIImageView *)fromView{
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;

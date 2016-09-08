@@ -26,7 +26,9 @@
 
 - (UIImage* )otherPopImage;
 
-- (UIImage* )imageTip;
+- (UIImage* )imageTip;//单帧图片占位
+
+- (NSArray<UIImage* >* )images;//动画帧图片占位
 
 - (UIImage* )fileTipImage;
 
@@ -60,9 +62,21 @@ static UIImage* _imageTip;
 - (UIImage *)imageTip{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _imageTip = [UIImage imageNamed:@""];
+        _imageTip = [UIImage imageNamed:@"loading_1"];
     });
     return _imageTip;
+}
+static NSArray<UIImage* >* _images;
+- (NSArray<UIImage *> *)images{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _images = @[
+                    [UIImage imageNamed:@"loading_1"],
+                    [UIImage imageNamed:@"loading_2"],
+                    [UIImage imageNamed:@"loading_3"]
+                    ];
+    });
+    return _images;
 }
 static UIImage* _fileTipImage;
 - (UIImage *)fileTipImage{
@@ -310,7 +324,11 @@ static UIImage* _fileTipImage;
 
     UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:privateChatItem.resource];
     if (!image) {
-        _photoView.image = [self imageTip];
+//        _photoView.image = [self imageTip];
+        _photoView.animationImages = [self images];
+        _photoView.animationRepeatCount = 0;
+        _photoView.animationDuration = 1.0;
+        [_photoView startAnimating];
         
         __weak typeof(self) weakSelf = self;
         [_photoView sd_setImageWithURL:[NSURL URLWithString:privateChatItem.resource]
@@ -326,6 +344,8 @@ static UIImage* _fileTipImage;
             });
         }];
     }else{
+        _photoView.animationImages = nil;
+        
         _photoView.image = image;
         CGSize resultSize = [self adjustImage:image];
         privateChatItem.imageFrame = (CGRect){{0,0},resultSize};

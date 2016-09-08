@@ -37,8 +37,8 @@
 #define PRIVATE_MAX_WIDTH ([UIScreen mainScreen].bounds.size.width * (0.6))
 #define PRIVATE_FILE_TIP_W 25
 #define PRIVATE_FILE_TIP_H 30
-#define PRIVATE_IMAGE_DEFAULT_W 200
-#define PRIVATE_IMAGE_DEFAULT_H 80
+#define PRIVATE_IMAGE_DEFAULT_W 30
+#define PRIVATE_IMAGE_DEFAULT_H 8
 
 #define SELF_TEXT_COLOR [UIColor whiteColor]
 #define OTHER_TEXT_COLOR [UIColor blackColor]
