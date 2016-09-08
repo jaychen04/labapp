@@ -18,6 +18,7 @@
 #import "OSCDiscuss.h"
 #import "OSCPhotoGroupView.h"
 #import "OSCPushTypeControllerHelper.h"
+#import "BubbleChatViewController.h"
 
 #import "AsyncDisplayTableViewCell.h"
 #import "OSCTextTweetCell.h"
@@ -295,9 +296,11 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     UIColor * color = [UIColor navigationbarColor];
     CGFloat offsetY = scrollView.contentOffset.y;
     if (offsetY > NAVI_BAR_HEIGHT) {
+        self.navigationItem.title = _user.name;
         CGFloat alpha = MIN(1, 1 - ((NAVI_BAR_HEIGHT + 64 - offsetY) / 64));
         [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:alpha]];
     } else {
+        self.navigationItem.title = @"用户中心";
         [self.navigationController.navigationBar lt_setBackgroundColor:[color colorWithAlphaComponent:0]];
     }
 }
@@ -367,7 +370,8 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
         HUD.label.text = @"请先登录";
         [HUD hideAnimated:YES afterDelay:0.5];
     } else {
-//        [self.navigationController pushViewController:[[BubbleChatViewController alloc] initWithUserID:_user.userID andUserName:_user.name] animated:YES];
+        BubbleChatViewController* chatVC = [[BubbleChatViewController alloc]initWithUserID:_user.id andUserName:_user.name];
+        [self.navigationController pushViewController:chatVC animated:YES];
     }
 }
 #pragma mark --点赞（新接口)

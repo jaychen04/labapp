@@ -132,6 +132,16 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
     OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:atMeItem.author.id];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
+- (void) shouldInteractTextView:(UITextView* )textView
+                            URL:(NSURL *)URL
+                        inRange:(NSRange)characterRange
+{
+    [self.navigationController handleURL:URL];
+}
+- (void)textViewTouchPointProcessing:(UITapGestureRecognizer *)tap{
+    CGPoint point = [tap locationInView:self.tableView];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForRowAtPoint:point]];
+}
 
 #pragma mark --- push type controller
 - (void)pushController:(AtMeItem* )atMeItem{

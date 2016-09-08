@@ -12,6 +12,12 @@
 
 - (void)commentsCellDidClickUserPortrait:(OSCCommentsCell* )cell;
 
+- (void)shouldInteractTextView:(UITextView* )textView
+                           URL:(NSURL *)URL
+                       inRange:(NSRange)characterRange;
+
+- (void)textViewTouchPointProcessing:(UITapGestureRecognizer* )tap;
+
 @end
 
 @class CommentItem;

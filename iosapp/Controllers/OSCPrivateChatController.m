@@ -31,6 +31,8 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
 @implementation OSCPrivateChatController{
     NSInteger _authorId;
+    
+    BOOL _isFirstOpenPage;
 }
 #pragma mark --- initialize method
 - (instancetype)initWithAuthorId:(NSInteger)authorId{
@@ -39,6 +41,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
         _authorId = authorId;
         _prevPageToken = nil;
         _nextPageToken = nil;
+        _isFirstOpenPage = YES;
     }
     return self;
 }
@@ -51,16 +54,24 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
         [self getDataUpgradeRequest:YES];
     }];
-    self.tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
-        [self getDataUpgradeRequest:NO];
-    }];
+//    self.tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
+//        [self getDataUpgradeRequest:NO];
+//    }];
     [self getDataUpgradeRequest:NO];
 }
 
 #pragma mark - refresh
 - (void)refresh
 {
+    [self.dataSource removeAllObjects];
+    _isFirstOpenPage = YES;
+    [self getDataUpgradeRequest:NO];
+}
+- (void)refreshToBottom{
     [self.tableView reloadData];
+    if (self.dataSource.count != 0) {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:(self.dataSource.count - 1) inSection:0]  atScrollPosition:UITableViewScrollPositionBottom animated:NO];
+    }
 }
 
 
@@ -124,7 +135,12 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
                  }else{
                      [self.tableView.mj_footer endRefreshing];
                  }
-                 [self.tableView reloadData];
+                 if (_isFirstOpenPage) {
+                     [self refreshToBottom];
+                     _isFirstOpenPage = NO;
+                 }else{
+                     [self.tableView reloadData];
+                 }
                  [HUD hideAnimated:YES afterDelay:0.3];
              });
     }
@@ -158,6 +174,9 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     OSCPrivateChat* dataSource = self.dataSource[indexPath.row];
     if (dataSource.privateChatType == OSCPrivateChatTypeImage) {
         dataSource.rowHeight = dataSource.popFrame.size.height + SCREEN_PADDING_TOP + SCREEN_PADDING_BOTTOM;
+        if (dataSource.isDisplayTimeTip) {
+            dataSource.rowHeight += PRIVATE_TIME_TIP_ADDITIONAL;
+        }
         return dataSource.rowHeight;
     }else{
         if (dataSource.rowHeight == 0) {
@@ -187,7 +206,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
 }
 - (void)privateChatNodeImageViewloadThumbImageDidFinsh:(OSCPrivateChatCell *)privateChatCell{
-    [self.tableView reloadData];
+    [self refresh];
 }
 - (void)privateChatNodeImageViewloadLargerImageDidFinsh:(OSCPrivateChatCell *)privateChatCell photoGroupView:(OSCPhotoGroupView *)groupView fromView:(UIImageView *)fromView{
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
@@ -195,7 +214,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 }
 //文件cell回调
 - (void)privateChatNodeFileViewDidClickFile:(OSCPrivateChatCell *)privateChatCell{
-
+    
 }
 
 

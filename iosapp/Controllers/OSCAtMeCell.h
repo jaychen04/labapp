@@ -13,6 +13,12 @@
 
 - (void)atMeCellDidClickUserPortrait:(OSCAtMeCell* )cell;
 
+- (void)shouldInteractTextView:(UITextView* )textView
+                           URL:(NSURL *)URL
+                       inRange:(NSRange)characterRange;
+
+- (void)textViewTouchPointProcessing:(UITapGestureRecognizer* )tap;
+
 @end
 
 @class AtMeItem;

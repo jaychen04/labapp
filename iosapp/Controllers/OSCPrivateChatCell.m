@@ -26,7 +26,9 @@
 
 - (UIImage* )otherPopImage;
 
-- (UIImage* )imageTip;
+- (UIImage* )imageTip;//单帧图片占位
+
+- (NSArray<UIImage* >* )images;//动画帧图片占位
 
 - (UIImage* )fileTipImage;
 
@@ -60,15 +62,27 @@ static UIImage* _imageTip;
 - (UIImage *)imageTip{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _imageTip = [UIImage imageNamed:@""];
+        _imageTip = [UIImage imageNamed:@"loading_1"];
     });
     return _imageTip;
+}
+static NSArray<UIImage* >* _images;
+- (NSArray<UIImage *> *)images{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _images = @[
+                    [UIImage imageNamed:@"loading_1"],
+                    [UIImage imageNamed:@"loading_2"],
+                    [UIImage imageNamed:@"loading_3"]
+                    ];
+    });
+    return _images;
 }
 static UIImage* _fileTipImage;
 - (UIImage *)fileTipImage{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _fileTipImage = [UIImage imageNamed:@""];
+        _fileTipImage = [UIImage imageNamed:@"ic_pm_file"];
     });
     return _fileTipImage;
 }
@@ -266,7 +280,7 @@ static UIImage* _fileTipImage;
         CGRect popFrame = (CGRect){{kScreen_Width - SCREEN_PADDING_RIGHT - popSize.width,SCREEN_PADDING_TOP},popSize};
         if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
-        CGRect imageFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_IMAGE_FILE_PADDING_RIGHT - imageSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_IMAGE_FILE_PADDING_TOP,imageSize};
+        CGRect imageFrame = (CGRect){kScreen_Width - SCREEN_PADDING_RIGHT - PRIVATE_POP_IMAGE_PADDING_RIGHT - imageSize.width,SCREEN_PADDING_TOP + PRIVATE_POP_IMAGE_PADDING_TOP,imageSize};
         if (_privateChatItem.isDisplayTimeTip) { imageFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _imageFrame = imageFrame;
         
@@ -277,7 +291,7 @@ static UIImage* _fileTipImage;
         CGRect popFrame = (CGRect){{SCREEN_PADDING_LEFT,SCREEN_PADDING_TOP},popSize};
         if (_privateChatItem.isDisplayTimeTip) { popFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _popFrame = popFrame;
-        CGRect imageFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_IMAGE_FILE_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_IMAGE_FILE_PADDING_TOP},imageSize};
+        CGRect imageFrame = (CGRect){{SCREEN_PADDING_LEFT + PRIVATE_POP_IMAGE_PADDING_LEFT,SCREEN_PADDING_TOP + PRIVATE_POP_IMAGE_PADDING_TOP},imageSize};
         if (_privateChatItem.isDisplayTimeTip) { imageFrame.origin.y += PRIVATE_TIME_TIP_ADDITIONAL; }
         _imageFrame = imageFrame;
 
@@ -310,7 +324,11 @@ static UIImage* _fileTipImage;
 
     UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:privateChatItem.resource];
     if (!image) {
-        _photoView.image = [self imageTip];
+//        _photoView.image = [self imageTip];
+        _photoView.animationImages = [self images];
+        _photoView.animationRepeatCount = 0;
+        _photoView.animationDuration = 1.0;
+        [_photoView startAnimating];
         
         __weak typeof(self) weakSelf = self;
         [_photoView sd_setImageWithURL:[NSURL URLWithString:privateChatItem.resource]
@@ -318,7 +336,7 @@ static UIImage* _fileTipImage;
                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
             CGSize resultSize = [weakSelf adjustImage:image];
             privateChatItem.imageFrame = (CGRect){{0,0},resultSize};
-            privateChatItem.popFrame = (CGRect){{0,0},{resultSize.width + PRIVATE_POP_IMAGE_FILE_PADDING_LEFT + PRIVATE_POP_IMAGE_FILE_PADDING_RIGHT , resultSize.height + PRIVATE_POP_IMAGE_FILE_PADDING_TOP + PRIVATE_POP_IMAGE_FILE_PADDING_BOTTOM}};
+            privateChatItem.popFrame = (CGRect){{0,0},{resultSize.width + PRIVATE_POP_IMAGE_PADDING_LEFT + PRIVATE_POP_IMAGE_PADDING_RIGHT , resultSize.height + PRIVATE_POP_IMAGE_PADDING_TOP + PRIVATE_POP_IMAGE_PADDING_BOTTOM}};
             dispatch_async(dispatch_get_main_queue(), ^{
                 if ([_privateChatCell.delegate respondsToSelector:@selector(privateChatNodeImageViewloadThumbImageDidFinsh:)]) {
                     [_privateChatCell.delegate privateChatNodeImageViewloadThumbImageDidFinsh:_privateChatCell];
@@ -326,10 +344,12 @@ static UIImage* _fileTipImage;
             });
         }];
     }else{
+        _photoView.animationImages = nil;
+        
         _photoView.image = image;
         CGSize resultSize = [self adjustImage:image];
         privateChatItem.imageFrame = (CGRect){{0,0},resultSize};
-        privateChatItem.popFrame = (CGRect){{0,0},{resultSize.width + PRIVATE_POP_IMAGE_FILE_PADDING_LEFT + PRIVATE_POP_IMAGE_FILE_PADDING_RIGHT , resultSize.height + PRIVATE_POP_IMAGE_FILE_PADDING_TOP + PRIVATE_POP_IMAGE_FILE_PADDING_BOTTOM}};
+        privateChatItem.popFrame = (CGRect){{0,0},{resultSize.width + PRIVATE_POP_IMAGE_PADDING_LEFT + PRIVATE_POP_IMAGE_PADDING_RIGHT , resultSize.height + PRIVATE_POP_IMAGE_PADDING_TOP + PRIVATE_POP_IMAGE_PADDING_BOTTOM}};
     }
     
     _popFrame = privateChatItem.popFrame;
@@ -412,6 +432,7 @@ static UIImage* _fileTipImage;
     CGRect _popFrame,_fileFrame,_timeTipFrame;
     CGFloat _rowHeight;
     BOOL _isSelf;
+    BOOL _trackingTouch_FileView;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame{
@@ -498,6 +519,32 @@ static UIImage* _fileTipImage;
     self.height = _rowHeight;
 }
 
+#pragma mark --- 触摸分发
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    _trackingTouch_FileView = NO;
+    UITouch* t = [touches anyObject];
+    CGPoint p_1 = [t locationInView:_popImageView];
+    CGPoint p_2 = [t locationInView:_fileTipView];
+    if (CGRectContainsPoint(_popImageView.bounds,p_1) || CGRectContainsPoint(_fileTipView.bounds, p_2)) {
+        _trackingTouch_FileView = YES;
+    }else{
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+- (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (_trackingTouch_FileView) {
+        if ([self.privateChatCell.delegate respondsToSelector:@selector(privateChatNodeFileViewDidClickFile:)]) {
+            [self.privateChatCell.delegate privateChatNodeFileViewDidClickFile:self.privateChatCell];
+        }
+    }else{
+        [super touchesEnded:touches withEvent:event];
+    }
+}
+- (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    if (!_trackingTouch_FileView) {
+        [super touchesCancelled:touches withEvent:event];
+    }
+}
 @end
 
 

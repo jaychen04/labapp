@@ -13,13 +13,13 @@
 #import "Config.h"
 #import "UIImageView+CornerRadius.h"
 
-@interface OSCAtMeCell ()
+@interface OSCAtMeCell ()<UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *userPortraitImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UILabel *originDescLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeAndSourceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
+@property (weak, nonatomic) IBOutlet UITextView *descTextView;
 @end
 
 @implementation OSCAtMeCell{
@@ -29,7 +29,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [_userPortraitImageView zy_cornerRadiusRoundingRect];
-    [_originDescLabel drawTextInRect:UIEdgeInsetsInsetRect(_originDescLabel.bounds, UIEdgeInsetsMake(8, 8, 8, 8))];
+    [self handleTextView:_descTextView];
+    [_descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(forwardingEvent:)]];
 }
 
 + (instancetype)returnReuseAtMeCellWithTableView:(UITableView *)tableView
@@ -69,11 +70,7 @@
     }
     
     _nameLabel.text = atMeItem.author.name;
-    NSString* atUserName = [NSString stringWithFormat:@"@%@",[Config getOwnUserName]];
-    NSRange range = [atMeItem.content localizedStandardRangeOfString:atUserName];
-    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc]initWithString:atMeItem.content];
-    [attString addAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithHex:0x24cf5f]} range:range];
-    _descLabel.attributedText = attString;
+    _descTextView.attributedText = [Utils contentStringFromRawString:atMeItem.content];
     if (atMeItem.origin.desc.length > 0) {
         _originDescLabel.attributedText = [Utils contentStringFromRawString:atMeItem.origin.desc];
     }else{
@@ -110,5 +107,34 @@
     if (!_trackingTouch_userPortrait) {
         [super touchesCancelled:touches withEvent:event];
     }
+}
+- (void)forwardingEvent:(UITapGestureRecognizer* )tap{
+    if ([_delegate respondsToSelector:@selector(textViewTouchPointProcessing:)]) {
+        [_delegate textViewTouchPointProcessing:tap];
+    }
+}
+#pragma mark --- hanleTextView
+- (void)handleTextView:(UITextView *)textView{
+    textView.backgroundColor = [UIColor clearColor];
+    textView.font = [UIFont systemFontOfSize:14];
+    textView.textColor = [UIColor newTitleColor];
+    textView.editable = NO;
+    textView.scrollEnabled = NO;
+    textView.delegate = self;
+    [textView setTextContainerInset:UIEdgeInsetsZero];
+    textView.textContainer.lineFragmentPadding = 0;
+    [textView setContentInset:UIEdgeInsetsMake(0, -1, 0, 1)];
+    textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+    [textView setTextAlignment:NSTextAlignmentLeft];
+    textView.text = @" ";
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:textView.text];
+}
+#pragma mark --- UITextView delegate
+-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    if ([_delegate respondsToSelector:@selector(shouldInteractTextView:URL:inRange:)]) {
+        [_delegate shouldInteractTextView:textView URL:URL inRange:characterRange];
+    }
+    return NO;
 }
 @end
