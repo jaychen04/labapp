@@ -26,4 +26,5 @@ typedef NS_ENUM(NSUInteger, NewTweetsType)
 
 //新接口
 -(instancetype)initTweetListWithType:(NewTweetsType)type;
+-(instancetype)initTweetListWithTopic:(NSString *)topicTag;
 @end

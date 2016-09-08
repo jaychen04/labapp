@@ -9,7 +9,6 @@
 #import "SwipableViewController.h"
 #import "Utils.h"
 #import "OSCAPI.h"
-#import "TweetsViewController.h"
 #import "PostsViewController.h"
 
 @interface SwipableViewController ()  <UIScrollViewDelegate>
