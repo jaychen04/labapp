@@ -10,6 +10,7 @@
 
 @interface UINavigationController (Router)
 
-- (void)handleURL:(NSURL *)url;
+- (void)handleURL:(NSURL *)url
+             name:(NSString* )name;
 
 @end

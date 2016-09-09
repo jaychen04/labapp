@@ -605,7 +605,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (BOOL)webView:(IMYWebView*)webView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType{
     if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
     
-    [self.navigationController handleURL:request.URL];
+    [self.navigationController handleURL:request.URL name:nil];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }
 -(void)webViewDidFinishLoad:(IMYWebView*)webView{
@@ -834,7 +834,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #pragma mark - UITextViewDelegate
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
-    [self.navigationController handleURL:URL];
+    [self.navigationController handleURL:URL name:nil];
     return NO;
 }
 

@@ -136,7 +136,13 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
                             URL:(NSURL *)URL
                         inRange:(NSRange)characterRange
 {
-    [self.navigationController handleURL:URL];
+    NSString* nameStr = [textView.text substringWithRange:characterRange];
+    if ([[nameStr substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"@"]) {
+        nameStr = [nameStr substringFromIndex:1];
+        [self.navigationController handleURL:URL name:nameStr];
+    }else{
+        [self.navigationController handleURL:URL name:nil];
+    }
 }
 - (void)textViewTouchPointProcessing:(UITapGestureRecognizer *)tap{
     CGPoint point = [tap locationInView:self.tableView];
@@ -146,11 +152,11 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
 #pragma mark --- push type controller
 - (void)pushController:(CommentItem* )commentItem{
     if (commentItem.origin.originType == OSCOriginTypeLinkNews) {
-        [self.navigationController handleURL:[NSURL URLWithString:commentItem.origin.href]];
+        [self.navigationController handleURL:[NSURL URLWithString:commentItem.origin.href] name:nil];
     }
     UIViewController* pushVC = [OSCPushTypeControllerHelper pushControllerWithOriginType:commentItem.origin];
     if (pushVC == nil) {
-        [self.navigationController handleURL:[NSURL URLWithString:commentItem.origin.href]];
+        [self.navigationController handleURL:[NSURL URLWithString:commentItem.origin.href] name:nil];
     }else{
         [self.navigationController pushViewController:pushVC animated:YES];
     }

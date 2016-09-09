@@ -340,7 +340,7 @@ static NSString * const EventCellID = @"EventCell";
     if (!URL.host) {
         URL = [[NSURL URLWithString:@"http://my.oschina.net"] URLByAppendingPathComponent:[URL absoluteString]];;
     }
-    [self.navigationController handleURL:URL];
+    [self.navigationController handleURL:URL name:nil];
     return NO;
 }
 
