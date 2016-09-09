@@ -131,7 +131,7 @@
         } else if ([message hasPrefix:@"{"]) {
             [self signInWithJson:message];
         } else if ([Utils isURL:message]) {
-            [self.navigationController handleURL:[NSURL URLWithString:message]];
+            [self.navigationController handleURL:[NSURL URLWithString:message] name:nil];
         } else {
             MBProgressHUD *HUD = [Utils createHUD];
             HUD.mode = MBProgressHUDModeText;

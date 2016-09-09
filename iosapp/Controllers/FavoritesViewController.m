@@ -197,7 +197,7 @@ static NSString * const kFavoriteCellID = @"FavoriteCell";
             }
                 break;
             default:
-                [self.navigationController handleURL:[NSURL URLWithString:favorite.href]];
+                [self.navigationController handleURL:[NSURL URLWithString:favorite.href] name:nil];
                 break;
         }
     }

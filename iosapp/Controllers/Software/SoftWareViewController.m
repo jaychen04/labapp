@@ -321,10 +321,10 @@ static NSString * const recommandBlogTableViewCellReuseIdentifier = @"RecommandB
 }
 
 -(void)softWareDetailHeaderViewClickLeft:(SoftWareDetailHeaderView *)headerView{
-    [self.navigationController handleURL:[NSURL URLWithString:self.model.homePage]];
+    [self.navigationController handleURL:[NSURL URLWithString:self.model.homePage] name:nil];
 }
 -(void)softWareDetailHeaderViewClickRight:(SoftWareDetailHeaderView *)headerView{
-    [self.navigationController handleURL:[NSURL URLWithString:self.model.document]];
+    [self.navigationController handleURL:[NSURL URLWithString:self.model.document] name:nil];
 }
 
 #pragma mark --- share method 

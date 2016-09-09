@@ -30,6 +30,7 @@
 @implementation UINavigationController (Router)
 
 - (void)handleURL:(NSURL *)url
+             name:(NSString* )name
 {
     NSString *urlString = url.absoluteString;
     
@@ -165,6 +166,11 @@
             [self presentViewController:imageViewerVC animated:YES completion:nil];
             return;
 		}
+        
+        if (name != nil) {
+            viewController = [[OSCUserHomePageController alloc] initWithUserName:name];
+            viewController.navigationItem.title = @"用户详情";
+        }
 		
         if (viewController) {
             [self pushViewController:viewController animated:YES];
