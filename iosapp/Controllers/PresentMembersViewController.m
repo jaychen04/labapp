@@ -10,7 +10,7 @@
 #import "OSCEventPersonInfo.h"
 #import "OSCAPI.h"
 #import "PersonCell.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const kPersonCellID = @"PersonCell";
@@ -89,7 +89,7 @@ static NSString * const kPersonCellID = @"PersonCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCEventPersonInfo *person = self.objects[indexPath.row];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:person.userID];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:person.userID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 @end

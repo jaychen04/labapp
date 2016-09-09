@@ -9,7 +9,7 @@
 #import "TweetsViewController.h"
 #import "TweetDetailsViewController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "ImageViewerController.h"
 #import "TweetCell.h"
 #import "OSCTweet.h"
@@ -381,7 +381,7 @@ static NSString * const kTweetCellID = @"TweetCell";
 - (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
 {
     OSCTweet *tweet = self.objects[recognizer.view.tag];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.authorID];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:tweet.authorID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

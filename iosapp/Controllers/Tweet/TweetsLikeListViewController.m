@@ -9,7 +9,7 @@
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
 #import "TweetLikeUserCell.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const kTweetLikeUserCellID = @"TweetLikeUserCell";
@@ -90,7 +90,7 @@ static NSString * const kTweetLikeUserCellID = @"TweetLikeUserCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCUser *likesUser = self.objects[indexPath.row];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:likesUser.userID];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:likesUser.userID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

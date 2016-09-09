@@ -8,7 +8,7 @@
 
 #import "UINavigationController+Router.h"
 
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "DetailsViewController.h"
 #import "ImageViewerController.h"
 #import "PostsViewController.h"
@@ -54,12 +54,12 @@
         if ([prefix isEqualToString:@"my"]) {
             if (pathComponents.count == 2) {
                 // 个人专页 my.oschina.net/dong706
-                viewController = [[UserDetailsViewController alloc] initWithUserName:pathComponents[1]];
+                viewController = [[OSCUserHomePageController alloc] initWithUserName:pathComponents[1]];
                 viewController.navigationItem.title = @"用户详情";
             } else if (pathComponents.count == 3) {
                 // 个人专页 my.oschina.net/u/12
                 if ([pathComponents[1] isEqualToString:@"u"]) {
-                    viewController= [[UserDetailsViewController alloc] initWithUserID:[pathComponents[2] longLongValue]];
+                    viewController= [[OSCUserHomePageController alloc] initWithUserID:[pathComponents[2] longLongValue]];
                     viewController.navigationItem.title = @"用户详情";
                 }
             } else if (pathComponents.count == 4) {

@@ -10,7 +10,7 @@
 #import "MessageBubbleCell.h"
 #import "OSCComment.h"
 #import "Config.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 
 #import <MBProgressHUD.h>
 
@@ -102,7 +102,7 @@
 
 - (void)pushUserDetails:(UITapGestureRecognizer *)recognizer
 {
-    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID: recognizer.view.tag] animated:YES];
+    [self.navigationController pushViewController:[[OSCUserHomePageController alloc] initWithUserID: recognizer.view.tag] animated:YES];
 }
 
 #pragma mark - 删除私信

@@ -9,7 +9,7 @@
 #import "CommentsViewController.h"
 #import "CommentCell.h"
 #import "OSCComment.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "Config.h"
 #import <MBProgressHUD.h>
 
@@ -239,7 +239,7 @@ static NSString *kCommentCellID = @"CommentCell";
 - (void)pushDetailsView:(UITapGestureRecognizer *)tapGesture
 {
     OSCComment *comment = self.objects[tapGesture.view.tag];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:comment.authorID];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:comment.authorID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

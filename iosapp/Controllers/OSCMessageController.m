@@ -11,7 +11,6 @@
 #import "OSCMessageCenter.h"
 #import "OSCUserHomePageController.h"
 #import "OSCMsgChatController.h"
-#import "UserDetailsViewController.h"
 #import "BubbleChatViewController.h"//test
 #import "OSCAPI.h"
 #import "Config.h"
