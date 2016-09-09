@@ -9,7 +9,7 @@
 #import "FriendsViewController.h"
 #import "OSCUserItem.h"
 #import "PersonCell.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "OSCNotice.h"
 #import "Config.h"
 
@@ -201,7 +201,7 @@ static NSString * const kPersonCellID = @"PersonCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCUserItem *friend = self.items[indexPath.row];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:friend.id];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:friend.id];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

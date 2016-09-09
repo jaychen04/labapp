@@ -16,7 +16,7 @@
 #import "Config.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "DetailsViewController.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "ImageViewerController.h"
 #import "OSCTweetItem.h"
 
@@ -312,7 +312,7 @@ static NSString * const EventCellID = @"EventCell";
 - (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
 {
     OSCEvent *event = self.objects[recognizer.view.tag];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:event.authorID];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc]initWithUserID:event.authorID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

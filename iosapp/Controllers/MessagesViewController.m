@@ -12,7 +12,7 @@
 #import "OSCMessage.h"
 #import "MessageCell.h"
 #import "BubbleChatViewController.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 
 #import <SDWebImage/UIImageView+WebCache.h>
 
@@ -102,7 +102,7 @@ static NSString * const kMessageCellID = @"MessageCell";
 
 - (void)pushUserDetails:(UIGestureRecognizer *)recognizer
 {
-    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:recognizer.view.tag] animated:YES];
+    [self.navigationController pushViewController:[[OSCUserHomePageController alloc] initWithUserID:recognizer.view.tag] animated:YES];
 }
 #pragma mark - 删除回复
 

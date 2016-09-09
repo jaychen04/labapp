@@ -9,7 +9,7 @@
 #import "PeopleTableViewController.h"
 #import "PersonCell.h"
 #import "OSCUser.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 static NSString * const kPersonCellID = @"PersonCell";
@@ -99,7 +99,7 @@ static NSString * const kPersonCellID = @"PersonCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCUser *user = self.objects[indexPath.row];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:user.userID];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:user.userID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

@@ -10,7 +10,7 @@
 #import "OSCMyTweetLikeList.h"
 #import "MyTweetLikeListCell.h"
 
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 
 static NSString * const MyTweetLikeListCellID = @"MyTweetLikeListCell";
@@ -107,7 +107,7 @@ static NSString * const MyTweetLikeListCellID = @"MyTweetLikeListCell";
 - (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer 
 {
     OSCMyTweetLikeList *myTweetLikeList = self.objects[recognizer.view.tag];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:myTweetLikeList.userID];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:myTweetLikeList.userID];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

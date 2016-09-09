@@ -10,9 +10,11 @@
 #import "OSCMessageCenter.h"
 #import "ImageDownloadHandle.h"
 #import "UIColor+Util.h"
+#import "Utils.h"
 
 #import "UIImageView+CornerRadius.h"
 #import "NSDate+Util.h"
+#import "NSString+Util.h"
 #import <YYKit.h>
 
 #define OPERATION_BUTTON_W 70
@@ -140,7 +142,7 @@
     _timeLabel.text = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@", [[NSDate dateFromString:messageItem.pubDate] timeAgoSinceNow]]].string;
     switch (messageItem.type) {
         case OSCPrivateTypeText:
-            _descLabel.text = messageItem.content;
+            _descLabel.text = [messageItem.content deleteHTMLTag];
             break;
         case OSCPrivateTypeImage:
             _descLabel.text = @"[图片]";

@@ -103,7 +103,10 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     self.tableView.tableHeaderView = self.homePageHeadView;
     
     [self refreshHeaderView];
-    
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
     _statusBarView.hidden = YES;
     [self.navigationController setNavigationBarHidden:YES animated:animated];
 }
@@ -117,6 +120,11 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     self.homePageHeadView = nil;
     self.tableView.tableHeaderView = nil;
 }
+
+//- (void)viewDidDisappear:(BOOL)animated{
+//    [super viewDidDisappear:animated];
+//    [self.navigationController setNavigationBarHidden:NO animated:animated];
+//}
 
 - (void)viewDidLoad
 {

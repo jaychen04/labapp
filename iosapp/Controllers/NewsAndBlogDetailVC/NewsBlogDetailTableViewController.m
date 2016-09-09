@@ -34,7 +34,7 @@
 #import "AppDelegate.h"
 #import "NewCommentListViewController.h"//新评论列表
 #import "SoftWareViewController.h"      //软件详情
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 
 #import "IMYWebView.h"
 #import <MJExtension.h>
@@ -1114,7 +1114,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 #pragma mark - 资讯作者信息
 - (void)authorInfo
 {
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:_newsDetails.authorId];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:_newsDetails.authorId];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

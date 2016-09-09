@@ -7,7 +7,7 @@
 //
 
 #import "LoginViewController.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "OSCAPI.h"
 #import "OSCUser.h"
 #import "Utils.h"

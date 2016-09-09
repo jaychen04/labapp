@@ -16,7 +16,6 @@
 #import "ImageViewerController.h"
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "OSCUserHomePageController.h"
-#import "UserDetailsViewController.h"//delete
 #import "TweetDetailNewTableViewController.h"
 
 #import <UITableView+FDTemplateLayoutCell.h>
@@ -375,7 +374,7 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
 - (void)pushUserDetailsView:(UITapGestureRecognizer *)recognizer
 {
     OSCTweetItem *tweet = self.objects[recognizer.view.tag];
-    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweet.author.id];
+    OSCUserHomePageController *userDetailsVC = [[OSCUserHomePageController alloc] initWithUserID:tweet.author.id];
     [self.navigationController pushViewController:userDetailsVC animated:YES];
 }
 

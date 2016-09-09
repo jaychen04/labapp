@@ -9,7 +9,7 @@
 #import "TweetDetailsWithBottomBarViewController.h"
 #import "TweetDetailsViewController.h"
 #import "CommentsViewController.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "ImageViewerController.h"
 #import "OSCTweet.h"
 #import "OSCCommentItem.h"

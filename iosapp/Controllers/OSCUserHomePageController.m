@@ -240,12 +240,18 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                if (!dropDown) {
+                    [self.tableView.mj_footer endRefreshing];
+                }
                 [self.tableView reloadData];
                 [HUD hideAnimated:YES afterDelay:0.3];
             });
     }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                if (!dropDown) {
+                    [self.tableView.mj_footer endRefreshing];
+                }
                 HUD.label.text = @"网络异常，操作失败";
                 [HUD hideAnimated:YES afterDelay:0.3];
             });
@@ -709,10 +715,10 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     [self.headerCanvasView.followsBtn addTarget:self action:@selector(pushFriendsVC:) forControlEvents:UIControlEventTouchUpInside];
     [self.headerCanvasView.fansBtn addTarget:self action:@selector(pushFriendsVC:) forControlEvents:UIControlEventTouchUpInside];
     
-    [self.buttons[1] setTitle:[NSString stringWithFormat:@"%ld\n动弹",_user.statistics.tweet] forState:UIControlStateNormal];
-    [self.buttons[2] setTitle:[NSString stringWithFormat:@"%ld\n博客",_user.statistics.blog] forState:UIControlStateNormal];
-    [self.buttons[3] setTitle:[NSString stringWithFormat:@"%ld\n问答",_user.statistics.answer] forState:UIControlStateNormal];
-    [self.buttons[4] setTitle:[NSString stringWithFormat:@"%ld\n讨论",_user.statistics.discuss] forState:UIControlStateNormal];
+    [self.buttons[1] setTitle:[NSString stringWithFormat:@"%@\n动弹",[Utils numberLimitString:(int)_user.statistics.tweet]] forState:UIControlStateNormal];
+    [self.buttons[2] setTitle:[NSString stringWithFormat:@"%@\n博客",[Utils numberLimitString:(int)_user.statistics.blog]] forState:UIControlStateNormal];
+    [self.buttons[3] setTitle:[NSString stringWithFormat:@"%@\n问答",[Utils numberLimitString:(int)_user.statistics.answer]] forState:UIControlStateNormal];
+    [self.buttons[4] setTitle:[NSString stringWithFormat:@"%@\n讨论",[Utils numberLimitString:(int)_user.statistics.discuss]] forState:UIControlStateNormal];
 }
 #pragma mark - 处理页面跳转
 - (void)pushFriendsVC:(UIButton *)button{

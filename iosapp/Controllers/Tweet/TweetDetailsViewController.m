@@ -9,10 +9,10 @@
 #import "TweetDetailsViewController.h"
 #import "OSCTweet.h"
 #import "TweetCell.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "ImageViewerController.h"
 #import "TweetDetailsCell.h"
-#import "UserDetailsViewController.h"
+#import "OSCUserHomePageController.h"
 #import "Config.h"
 #import "TweetsLikeListViewController.h"
 #import "OSCUser.h"
@@ -216,7 +216,7 @@
 
 - (void)pushUserDetails
 {
-    [self.navigationController pushViewController:[[UserDetailsViewController alloc] initWithUserID:_tweet.authorID] animated:YES];
+    [self.navigationController pushViewController:[[OSCUserHomePageController alloc] initWithUserID:_tweet.authorID] animated:YES];
 }
 
 
