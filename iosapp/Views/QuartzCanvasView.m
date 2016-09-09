@@ -112,7 +112,7 @@
         CALayer* layer = [[CALayer alloc]init];
         layer.backgroundColor = self.strokeColor.CGColor;
         int layerSize = (arc4random() % 4) + 8;
-        NSLog(@"%lu",(unsigned long)layerSize);
+//        NSLog(@"%lu",(unsigned long)layerSize);
         layer.frame = (CGRect){{0,0},{layerSize,layerSize}};
         layer.cornerRadius = 5;
         [self.layer addSublayer:layer];
@@ -146,7 +146,7 @@
 /** CFAutorelease添加圆形路径 */
 //        keyFrameAnimation.path = CFAutorelease(CGPathCreateWithEllipseInRect(CGRectMake(_center.x - changeRadius, _center.y - changeRadius, changeRadius * 2, changeRadius * 2), NULL));
 
-        NSLog(@"%@",keyFrameAnimation.values);
+//        NSLog(@"%@",keyFrameAnimation.values);
         
         keyFrameAnimation.duration = _duration - i * 4;
         [layer addAnimation:keyFrameAnimation forKey:@"PostionKeyframeValueAni"];

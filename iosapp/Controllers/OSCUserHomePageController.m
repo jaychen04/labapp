@@ -240,12 +240,18 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                if (!dropDown) {
+                    [self.tableView.mj_footer endRefreshing];
+                }
                 [self.tableView reloadData];
                 [HUD hideAnimated:YES afterDelay:0.3];
             });
     }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             dispatch_async(dispatch_get_main_queue(), ^{
+                if (!dropDown) {
+                    [self.tableView.mj_footer endRefreshing];
+                }
                 HUD.label.text = @"网络异常，操作失败";
                 [HUD hideAnimated:YES afterDelay:0.3];
             });
