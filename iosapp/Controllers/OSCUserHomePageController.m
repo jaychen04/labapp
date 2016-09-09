@@ -184,24 +184,29 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
             if ([responseObject[@"code"] integerValue] == 1) {
                 NSDictionary* userResult = responseObject[@"result"];
                 _user = [OSCUserHomePageItem mj_objectWithKeyValues:userResult];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self assemblyHeaderView];
+                    if (_user.id != [Config getOwnID]) {
+                        [self settingNaviBarItem];
+                    }
+                    [self updateRelationshipImage];
+                    [self getDataThroughDropdown:YES];//获取默认的数据源
+                    [HUD hideAnimated:YES afterDelay:0.3];
+                });
             }else{
                 HUD.label.text = @"未知错误";
-            }
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self assemblyHeaderView];
-                if (_user.id != [Config getOwnID]) {
-                    [self settingNaviBarItem];
-                }
-                [self updateRelationshipImage];
-                [self getDataThroughDropdown:YES];//获取默认的数据源
                 [HUD hideAnimated:YES afterDelay:0.3];
-            });
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.navigationController popViewControllerAnimated:YES];
+                });
+            }
     }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 HUD.label.text = @"网络异常，操作失败";
                 [HUD hideAnimated:YES afterDelay:0.3];
+                [self.navigationController popViewControllerAnimated:YES];
             });
     }];
 }
@@ -331,7 +336,7 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
                             URL:(NSURL *)URL
                         inRange:(NSRange)characterRange
 {
-    [self.navigationController handleURL:URL];
+    [self.navigationController handleURL:URL name:nil];
 }
 - (void)textViewTouchPointProcessing:(UITapGestureRecognizer *)tap{
     CGPoint point = [tap locationInView:self.tableView];
@@ -689,11 +694,11 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
             NSMutableArray* currentDataSource = self.dataSources[currentIndex];
             OSCDiscuss* discuss = currentDataSource[indexPath.row];
             if (discuss.origin.type == OSCDiscusOriginTypeLineNews) {
-                [self.navigationController handleURL:[NSURL URLWithString:discuss.origin.href]];
+                [self.navigationController handleURL:[NSURL URLWithString:discuss.origin.href] name:nil];
             }
             UIViewController* pushVC = [OSCPushTypeControllerHelper pushControllerWithDiscussOriginType:discuss.origin];
             if (pushVC == nil) {
-                [self.navigationController handleURL:[NSURL URLWithString:discuss.origin.href]];
+                [self.navigationController handleURL:[NSURL URLWithString:discuss.origin.href] name:nil];
             }else{
                 [self.navigationController pushViewController:pushVC animated:YES];
             }

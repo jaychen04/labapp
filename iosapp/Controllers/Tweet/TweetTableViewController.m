@@ -284,10 +284,6 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
     OSCTweetItem* tweetItem = [cell valueForKey:@"tweetItem"];
     OSCUserHomePageController* otherUserHomePage = [[OSCUserHomePageController alloc]initWithUserID:tweetItem.author.id];
     [self.navigationController pushViewController:otherUserHomePage animated:YES];
-
-//    UserDetailsViewController *userDetailsVC = [[UserDetailsViewController alloc] initWithUserID:tweetItem.author.id];
-//    [self.navigationController pushViewController:userDetailsVC animated:YES];
-    
 }
 - (void)loadLargeImageDidFinsh:(__kindof AsyncDisplayTableViewCell *)cell
                 photoGroupView:(OSCPhotoGroupView *)groupView
@@ -303,7 +299,13 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
                             URL:(NSURL *)URL
                         inRange:(NSRange)characterRange
 {
-    [self.navigationController handleURL:URL];
+    NSString* nameStr = [textView.text substringWithRange:characterRange];
+    if ([[nameStr substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"@"]) {
+        nameStr = [nameStr substringFromIndex:1];
+        [self.navigationController handleURL:URL name:nameStr];
+    }else{
+        [self.navigationController handleURL:URL name:nil];
+    }
 }
 - (void)textViewTouchPointProcessing:(UITapGestureRecognizer *)tap{
     CGPoint point = [tap locationInView:self.tableView];
@@ -422,11 +424,11 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
      ];
 }
 
-#pragma mark --- UITextView Delegate
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
-    [self.navigationController handleURL:URL];
-    return NO;
-}
+//#pragma mark --- UITextView Delegate
+//- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+//    [self.navigationController handleURL:URL];
+//    return NO;
+//}
 
 #pragma mark --- lazy loading
 - (NSMutableArray *)dataModels {

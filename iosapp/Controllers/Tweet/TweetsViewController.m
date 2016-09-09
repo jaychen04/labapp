@@ -509,7 +509,7 @@ static NSString * const kTweetCellID = @"TweetCell";
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange
 {
-    [self.navigationController handleURL:URL];
+    [self.navigationController handleURL:URL name:nil];
     return NO;
 }
 

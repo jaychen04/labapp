@@ -176,7 +176,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
 -(void)pushDetailInformationVC:(OSCInformation* )model{
     switch (model.type) {
         case InformationTypeLinkNews:{
-            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            [self.navigationController handleURL:[NSURL URLWithString:model.href] name:nil];
             break;
         }
 
@@ -313,7 +313,7 @@ static NSString * const informationReuseIdentifier = @"InformationTableViewCell"
     
     switch (model.type) {
         case InformationTypeLinkNews:{
-            [self.navigationController handleURL:[NSURL URLWithString:model.href]];
+            [self.navigationController handleURL:[NSURL URLWithString:model.href] name:nil];
             break;
         }
             

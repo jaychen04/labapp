@@ -483,7 +483,7 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
                           URL:(NSURL *)URL
                       inRange:(NSRange)characterRange
 {
-    [self.navigationController handleURL:URL];
+    [self.navigationController handleURL:URL name:nil];
 }
 #pragma mark -- Copy/Paste.  All three methods must be implemented by the delegate.
 
@@ -548,9 +548,15 @@ static NSString * const tMultipleDetailReuseIdentifier = @"NewMultipleDetailCell
 }
 
 #pragma mark  给UITextView添加监听
--(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {	
-	[self.navigationController handleURL:URL];
-	return NO;
+-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    NSString* nameStr = [textView.text substringWithRange:characterRange];
+    if ([[nameStr substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"@"]) {
+        nameStr = [nameStr substringFromIndex:1];
+        [self.navigationController handleURL:URL name:nameStr];
+    }else{
+        [self.navigationController handleURL:URL name:nil];
+    }
+    return NO;
 }
 
 #pragma mark 加载大图

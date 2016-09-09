@@ -89,7 +89,7 @@ static NSString * const kSoftware       = @"software";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     OSCSearchResult *result = self.objects[indexPath.row];
-    [self.navigationController handleURL:result.url];
+    [self.navigationController handleURL:result.url name:nil];
 }
 
 
