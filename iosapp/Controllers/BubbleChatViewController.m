@@ -112,8 +112,9 @@
               [HUD hideAnimated:YES afterDelay:1];
               
               //CGPointMake(0, CGFLOAT_MAX)最底部
-              [_messageBubbleVC.tableView setContentOffset:CGPointZero animated:NO];
-              [_messageBubbleVC refresh];
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  [_messageBubbleVC refresh];
+              });
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.label.text = @"网络异常，私信发送失败";

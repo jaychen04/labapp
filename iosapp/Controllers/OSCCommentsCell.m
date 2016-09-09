@@ -14,14 +14,14 @@
 #import "Config.h"
 #import "UIColor+Util.h"
 
-@interface OSCCommentsCell ()
+@interface OSCCommentsCell ()<UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *userPortraitImageView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UILabel *originDescLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeAndSourceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *commentCountLabel;
+@property (weak, nonatomic) IBOutlet UITextView *descTextView;
 
 @end
 
@@ -32,6 +32,8 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [_userPortraitImageView zy_cornerRadiusRoundingRect];
+    [self handleTextView:_descTextView];
+    [_descTextView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(forwardingEvent:)]];
 }
 + (instancetype)returnReuseCommentsCellWithTableView:(UITableView *)tableView
                                            indexPath:(NSIndexPath *)indexPath
@@ -70,7 +72,7 @@
     }
     
     _nameLabel.text = commentItem.author.name;
-    _descLabel.attributedText = [Utils contentStringFromRawString:commentItem.content];
+    _descTextView.attributedText = [Utils contentStringFromRawString:commentItem.content];
     NSMutableAttributedString* descAtt = [[NSMutableAttributedString alloc]initWithString:[Config getOwnUserName]];
     [descAtt appendAttributedString:[[NSAttributedString alloc] initWithString:@"："]];
     [descAtt appendAttributedString:[Utils contentStringFromRawString:commentItem.origin.desc]];
@@ -106,6 +108,35 @@
     if (!_trackingTouch_userPortrait) {
         [super touchesCancelled:touches withEvent:event];
     }
+}
+- (void)forwardingEvent:(UITapGestureRecognizer* )tap{
+    if ([_delegate respondsToSelector:@selector(textViewTouchPointProcessing:)]) {
+        [_delegate textViewTouchPointProcessing:tap];
+    }
+}
+#pragma mark --- hanleTextView
+- (void)handleTextView:(UITextView *)textView{
+    textView.backgroundColor = [UIColor clearColor];
+    textView.font = [UIFont systemFontOfSize:14];
+    textView.textColor = [UIColor newTitleColor];
+    textView.editable = NO;
+    textView.scrollEnabled = NO;
+    textView.delegate = self;
+    [textView setTextContainerInset:UIEdgeInsetsZero];
+    textView.textContainer.lineFragmentPadding = 0;
+    [textView setContentInset:UIEdgeInsetsMake(0, -1, 0, 1)];
+    textView.textContainer.lineBreakMode = NSLineBreakByWordWrapping;
+    [textView setTextAlignment:NSTextAlignmentLeft];
+    textView.text = @" ";
+    UIPasteboard *pasteBoard = [UIPasteboard generalPasteboard];
+    [pasteBoard setString:textView.text];
+}
+#pragma mark --- UITextView delegate
+-(BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    if ([_delegate respondsToSelector:@selector(shouldInteractTextView:URL:inRange:)]) {
+        [_delegate shouldInteractTextView:textView URL:URL inRange:characterRange];
+    }
+    return NO;
 }
 
 @end
