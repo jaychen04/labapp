@@ -14,4 +14,6 @@
 
 - (instancetype)initWithUserName:(NSString *)userName;
 
+- (instancetype)initWithUserHisName:(NSString *)hisName;
+
 @end

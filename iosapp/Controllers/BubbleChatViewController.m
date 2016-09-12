@@ -84,7 +84,7 @@
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCJsonManager];
     
-    [manager POST:[NSString stringWithFormat:@"%@messages_pub", OSCAPI_V2_PREFIX]
+    [manager POST:[NSString stringWithFormat:@"%@messages_pub", OSCAPI_V2_HTTPS_PREFIX]
        parameters:@{
                     @"authorId": @(_userID),
                     @"content": [Utils convertRichTextToRawText:self.editingBar.editView]

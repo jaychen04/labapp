@@ -54,14 +54,24 @@
         
         if ([prefix isEqualToString:@"my"]) {
             if (pathComponents.count == 2) {
-                // 个人专页 my.oschina.net/dong706
-                viewController = [[OSCUserHomePageController alloc] initWithUserName:pathComponents[1]];
-                viewController.navigationItem.title = @"用户详情";
-            } else if (pathComponents.count == 3) {
-                // 个人专页 my.oschina.net/u/12
-                if ([pathComponents[1] isEqualToString:@"u"]) {
-                    viewController= [[OSCUserHomePageController alloc] initWithUserID:[pathComponents[2] longLongValue]];
+                if (name != nil) {
+                    viewController = [[OSCUserHomePageController alloc] initWithUserName:name];
                     viewController.navigationItem.title = @"用户详情";
+                }else{
+                    // 个人专页 my.oschina.net/dong706
+                    viewController = [[OSCUserHomePageController alloc] initWithUserName:pathComponents[1]];
+                    viewController.navigationItem.title = @"用户详情";
+                }
+            } else if (pathComponents.count == 3) {
+                if (name != nil) {
+                    viewController = [[OSCUserHomePageController alloc] initWithUserName:name];
+                    viewController.navigationItem.title = @"用户详情";
+                }else{
+                    // 个人专页 my.oschina.net/u/12
+                    if ([pathComponents[1] isEqualToString:@"u"]) {
+                        viewController= [[OSCUserHomePageController alloc] initWithUserID:[pathComponents[2] longLongValue]];
+                        viewController.navigationItem.title = @"用户详情";
+                    }
                 }
             } else if (pathComponents.count == 4) {
                 NSString *type = pathComponents[2];
@@ -166,11 +176,6 @@
             [self presentViewController:imageViewerVC animated:YES completion:nil];
             return;
 		}
-        
-        if (name != nil) {
-            viewController = [[OSCUserHomePageController alloc] initWithUserName:name];
-            viewController.navigationItem.title = @"用户详情";
-        }
 		
         if (viewController) {
             [self pushViewController:viewController animated:YES];

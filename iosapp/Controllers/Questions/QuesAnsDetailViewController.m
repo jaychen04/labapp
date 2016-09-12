@@ -325,6 +325,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     
     if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
     
+    NSString *title = [webView  stringByEvaluatingJavaScriptFromString:@"document.selection.innerHTML"];
     [self.navigationController handleURL:request.URL name:nil];
     return [request.URL.absoluteString isEqualToString:@"about:blank"];
 }

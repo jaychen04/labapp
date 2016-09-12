@@ -79,6 +79,7 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 //请求参数
     NSInteger _userID;
     NSString* _userName;
+    NSString* _hisName;
 }
 
 #pragma mark --- Initialization method
@@ -88,6 +89,7 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     if (self) {
         _userID = userID;
         _userName = nil;
+        _hisName = nil;
     }
     return self;
 }
@@ -96,6 +98,17 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     self.hidesBottomBarWhenPushed = YES;
     if (self) {
         _userName = userName;
+        _userID = NSNotFound;
+        _hisName = nil;
+    }
+    return self;
+}
+- (instancetype)initWithUserHisName:(NSString *)hisName{
+    self = [super init];
+    self.hidesBottomBarWhenPushed = YES;
+    if (self) {
+        _hisName = hisName;
+        _userName = nil;
         _userID = NSNotFound;
     }
     return self;
@@ -163,13 +176,20 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 
 #pragma mark --- networking 
 - (void)getCurrentUserInfo{
-    NSString* urlStr = [NSString stringWithFormat:@"%@%@",OSCAPI_V2_PREFIX,OSCAPI_GET_USER_INFO];
+    NSString* urlStr ;
+    if (_hisName != nil) {
+        urlStr = [NSString stringWithFormat:@"%@%@",OSCAPI_V2_PREFIX,OSCAPI_USER_INFORMATION];
+    }else{
+        urlStr = [NSString stringWithFormat:@"%@%@",OSCAPI_V2_PREFIX,OSCAPI_GET_USER_INFO];
+    }
     
     NSMutableDictionary* mutableDic = [NSMutableDictionary dictionaryWithCapacity:1];
     if (_userID != NSNotFound) {
         [mutableDic setObject:@(_userID) forKey:@"id"];
     }else if (_userName != nil){
         [mutableDic setObject:_userName forKey:@"name"];
+    }else if (_hisName != nil){
+    
     }else{
         mutableDic = nil;
     }
@@ -253,6 +273,7 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
             });
     }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+            NSLog(@"%@",error);
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (!dropDown) {
                     [self.tableView.mj_footer endRefreshing];
