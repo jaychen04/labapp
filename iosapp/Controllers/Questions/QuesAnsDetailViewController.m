@@ -369,18 +369,26 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 #pragma mark - 右导航栏按钮
 - (void)rightBarButtonClicked
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
+	
+	if ([Config getOwnID] == 0) {
+		UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
+		LoginViewController *loginVC = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+		[self.navigationController pushViewController:loginVC animated:YES];
+		return;
+	} else {
+		UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"举报"
                                                         message:[NSString stringWithFormat:@"链接地址：%@", _questionDetail.href]
                                                        delegate:self
                                               cancelButtonTitle:@"取消"
                                               otherButtonTitles:@"确定", nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alertView textFieldAtIndex:0].placeholder = @"举报原因";
-    if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
-    {
-        [alertView textFieldAtIndex:0].keyboardAppearance = UIKeyboardAppearanceDark;
-    }
-    [alertView show];
+		alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+		[alertView textFieldAtIndex:0].placeholder = @"举报原因";
+		if (((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode)
+		{
+			[alertView textFieldAtIndex:0].keyboardAppearance = UIKeyboardAppearanceDark;
+		}
+		[alertView show];
+	}//end of if
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -388,64 +396,36 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [alertView cancelButtonIndex]) {
-        /*
-        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-        
-        [manager POST:@"http://www.oschina.net/action/communityManage/report"
-           parameters:@{
-                        @"memo":        [alertView textFieldAtIndex:0].text.length == 0? @"其他原因": [alertView textFieldAtIndex:0].text,
-                        @"obj_id":      @(self.questionID),
-                        @"obj_type":    @"2",
-                        @"reason":      @"4",
-                        @"url":         _questionDetail.href
-                        }
-              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-                  MBProgressHUD *HUD = [Utils createHUD];
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                  HUD.label.text = @"举报成功";
-                  
-                  [HUD hideAnimated:YES afterDelay:1];
-              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                  MBProgressHUD *HUD = [Utils createHUD];
-                  HUD.mode = MBProgressHUDModeCustomView;
-                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-                  HUD.label.text = @"网络异常，操作失败";
-                  
-                  [HUD hideAnimated:YES afterDelay:1];
-              }];
-         */
-        //新举报接口
-        
         /* 新举报接口 */
         AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
-
         [manger POST:[NSString stringWithFormat:@"%@report", OSCAPI_V2_PREFIX]
           parameters:@{
                        @"sourceId"   : @(self.questionID),
                        @"type"       : @(2),
                        @"href"       : _questionDetail.href,//举报的文章地址
-                       @"reason"     : @(0), //0 其他原因 1 广告 2 色情 3 翻墙 4 非IT话题
-                      // @"memo"       : @(authorID),//当reason为其他原因时，该字段不能为空
+                       @"reason"     : @(1), //0 其他原因 1 广告 2 色情 3 翻墙 4 非IT话题
+					   @"memo"		 : ([alertView textFieldAtIndex:0].text)
                        }
              success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
                  if ([responseObject[@"code"]integerValue] == 1) {
                      MBProgressHUD *HUD = [Utils createHUD];
                      HUD.mode = MBProgressHUDModeCustomView;
-                     HUD.label.text = @"评论成功";
-
+                     HUD.label.text = @"举报完成，感谢亲~";
                      [HUD hideAnimated:YES afterDelay:1];
-                 }
-                 dispatch_async(dispatch_get_main_queue(), ^{
-
-                     [self.tableView reloadData];
-                 });
+				 } else {
+					 MBProgressHUD *HUD = [Utils createHUD];
+					 HUD.mode = MBProgressHUDModeCustomView;
+					 HUD.label.text = @"其他未知错误，请稍后再试~";
+					 [HUD hideAnimated:YES afterDelay:1];
+				 }
              }
              failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-                 NSLog(@"%@",error);
+				 MBProgressHUD *HUD = [Utils createHUD];
+				 HUD.mode = MBProgressHUDModeCustomView;
+				 HUD.label.text = @"网络请求失败，请稍后再试~~";
+				 [HUD hideAnimated:YES afterDelay:1];
              }];
-
-    }
+    }//end of if
 }
 
 #pragma mark - UITextFieldDelegate
