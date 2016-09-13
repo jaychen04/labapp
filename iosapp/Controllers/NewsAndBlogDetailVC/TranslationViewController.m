@@ -250,7 +250,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         refer = refer.refer;
     }
     
-    return height + 71;
+    return height + 76;
 }
 
 #pragma mark - Table view data source
