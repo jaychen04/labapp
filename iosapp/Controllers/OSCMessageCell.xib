@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
@@ -67,13 +66,6 @@
                                 <color key="textColor" red="0.41568627450980389" green="0.41568627450980389" blue="0.41568627450980389" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lyr-Lq-d5I" userLabel="color_View">
-                                <rect key="frame" x="16" y="80" width="394" height="1"/>
-                                <color key="backgroundColor" red="0.7843137255" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="RMS-ma-0vB"/>
-                                </constraints>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Graphic_One" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WrV-ch-azG">
                                 <rect key="frame" x="69" y="16" width="272" height="18"/>
                                 <constraints>
@@ -86,7 +78,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="lyr-Lq-d5I" firstAttribute="leading" secondItem="nYY-m7-Su8" secondAttribute="leading" constant="16" id="4Ju-v5-2bD"/>
                             <constraint firstAttribute="trailing" secondItem="xRg-M6-YYc" secondAttribute="trailing" constant="16" id="4sP-e2-5Sf"/>
                             <constraint firstItem="WrV-ch-azG" firstAttribute="leading" secondItem="Gtl-rR-x6B" secondAttribute="trailing" constant="8" id="7ki-GY-Zm1"/>
                             <constraint firstAttribute="trailing" secondItem="WrV-ch-azG" secondAttribute="trailing" constant="16" id="R1d-Qu-Dlf"/>
@@ -96,9 +87,7 @@
                             <constraint firstItem="Gtl-rR-x6B" firstAttribute="top" secondItem="nYY-m7-Su8" secondAttribute="top" constant="16" id="ZyL-Tq-p2z"/>
                             <constraint firstItem="xRg-M6-YYc" firstAttribute="leading" secondItem="WrV-ch-azG" secondAttribute="leading" id="gLh-dH-Mf7"/>
                             <constraint firstItem="WrV-ch-azG" firstAttribute="top" secondItem="nYY-m7-Su8" secondAttribute="top" constant="16" id="gyN-0X-dxG"/>
-                            <constraint firstAttribute="trailing" secondItem="lyr-Lq-d5I" secondAttribute="trailing" id="iKn-dR-KrG"/>
                             <constraint firstItem="LCS-Kq-Ndp" firstAttribute="top" secondItem="nYY-m7-Su8" secondAttribute="top" constant="16" id="jnF-oo-Qc3"/>
-                            <constraint firstAttribute="bottom" secondItem="lyr-Lq-d5I" secondAttribute="bottom" id="mW4-Il-zdR"/>
                             <constraint firstAttribute="trailing" secondItem="WrV-ch-azG" secondAttribute="trailing" constant="69" id="tCa-CG-mCl"/>
                         </constraints>
                         <variation key="default">

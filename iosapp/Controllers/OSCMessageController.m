@@ -159,6 +159,7 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
         _tableView.delegate = self;
         _tableView.rowHeight = MESSAGE_CELL_ROW;
         _tableView.scrollsToTop = YES;
+        _tableView.tableFooterView = [UIView new];
 	}
 	return _tableView;
 }

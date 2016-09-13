@@ -172,6 +172,7 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
         _tableView.estimatedRowHeight = COMMENT_HEIGHT;
         _tableView.rowHeight = UITableViewAutomaticDimension;
         _tableView.scrollsToTop = NO;
+        _tableView.tableFooterView = [UIView new];
     }
     return _tableView;
 }

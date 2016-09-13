@@ -171,6 +171,7 @@ static NSString* const OSCAtMeCellReuseIdentifier = @"OSCAtMeCell";
         _tableView.dataSource = self;
         _tableView.estimatedRowHeight = ATME_HEIGHT;
         _tableView.rowHeight = UITableViewAutomaticDimension;
+        _tableView.tableFooterView = [UIView new];
     }
 	return _tableView;
 }
