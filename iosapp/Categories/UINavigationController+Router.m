@@ -47,7 +47,11 @@
 		
     } else {
         //站内链接
-        urlString = [urlString substringFromIndex:7];
+        if ([url.absoluteString hasPrefix:@"https"]) {
+            urlString = [urlString substringFromIndex:8];
+        }else{
+            urlString = [urlString substringFromIndex:7];
+        }
         NSArray *pathComponents = [urlString pathComponents];
         NSString *prefix = [pathComponents[0] componentsSeparatedByString:@"."][0];
         UIViewController *viewController;
@@ -59,7 +63,7 @@
                     viewController.navigationItem.title = @"用户详情";
                 }else{
                     // 个人专页 my.oschina.net/dong706
-                    viewController = [[OSCUserHomePageController alloc] initWithUserName:pathComponents[1]];
+                    viewController = [[OSCUserHomePageController alloc] initWithUserHisName:pathComponents[1]];
                     viewController.navigationItem.title = @"用户详情";
                 }
             } else if (pathComponents.count == 3) {

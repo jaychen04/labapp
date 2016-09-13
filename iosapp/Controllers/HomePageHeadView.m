@@ -42,14 +42,10 @@
     QuartzCanvasView* drawView = [[QuartzCanvasView alloc]initWithFrame:(CGRect){{0,0},self.bounds.size}];
     _drawView = drawView;
     _drawView.minimumRoundRadius = userPortrait_width * 0.5 + 30;
-    _drawView.openRandomness = YES;
+    _drawView.openRandomness = NO;
     _drawView.duration = 25;
     _drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
-//    _drawView.gradientColor = (GradientColor){
-//        [UIColor colorWithHex:0x24CF5F].CGColor,
-//        [UIColor colorWithHex:0x20B955].CGColor,
-//    };
     _drawView.offestCenter = (OffestCenter){0, (view_userPortrait + userPortrait_width * 0.5) - viewHeight * 0.5 + 20};
     [self addSubview:_drawView];
     

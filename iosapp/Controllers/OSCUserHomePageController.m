@@ -176,20 +176,15 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 
 #pragma mark --- networking 
 - (void)getCurrentUserInfo{
-    NSString* urlStr ;
-    if (_hisName != nil) {
-        urlStr = [NSString stringWithFormat:@"%@%@",OSCAPI_V2_PREFIX,OSCAPI_USER_INFORMATION];
-    }else{
-        urlStr = [NSString stringWithFormat:@"%@%@",OSCAPI_V2_PREFIX,OSCAPI_GET_USER_INFO];
-    }
+    NSString* urlStr = [NSString stringWithFormat:@"%@%@",OSCAPI_V2_PREFIX,OSCAPI_GET_USER_INFO];;
     
     NSMutableDictionary* mutableDic = [NSMutableDictionary dictionaryWithCapacity:1];
     if (_userID != NSNotFound) {
         [mutableDic setObject:@(_userID) forKey:@"id"];
     }else if (_userName != nil){
-        [mutableDic setObject:_userName forKey:@"name"];
+        [mutableDic setObject:_userName forKey:@"nickname"];
     }else if (_hisName != nil){
-    
+        [mutableDic setObject:_hisName forKey:@"suffix"];
     }else{
         mutableDic = nil;
     }
