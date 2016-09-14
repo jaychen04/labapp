@@ -10,9 +10,14 @@
 #define iosapp_OSCAPI_h
 
 #define OSCAPI_HTTPS_PREFIX                 @"https://www.oschina.net/action/api/"
-#define OSCAPI_PREFIX                       @"http://www.oschina.net/action/api/"
+//#define OSCAPI_PREFIX                       @"http://www.oschina.net/action/api/"
+#define OSCAPI_PREFIX                       OSCAPI_HTTPS_PREFIX
 #define OSCAPI_V2_HTTPS_PREFIX              @"https://www.oschina.net/action/apiv2/"
-#define OSCAPI_V2_PREFIX                    @"http://www.oschina.net/action/apiv2/"
+//#define OSCAPI_V2_PREFIX                    @"http://www.oschina.net/action/apiv2/"
+#define OSCAPI_V2_PREFIX                    OSCAPI_V2_HTTPS_PREFIX
+
+//#define OSCAPI_HTTPS_PREFIX                 @"www.oschina.master"
+//#define OSCAPI_V2_HTTPS_PREFIX              OSCAPI_HTTPS_PREFIX
 
 // 15机器
 //#define OSCAPI_HTTPS_PREFIX             @"http://192.168.1.15:8000/action/api/"
@@ -116,7 +121,7 @@
 #define OSCAPI_OPENID_BINDING           @"openid_bind"
 #define OSCAPI_OPENID_REGISTER          @"openid_reg"
 
-#define OSCAPI_QUESTION                 @"question" //问答列表
+#define OSCAPI_QUESTION                 @"question"         //问答列表
 #define OSCAPI_ACTIVITY                 @"user_activity"    //动态（讨论）列表
 
 #define OSCAPI_USER_FOLLOWS             @"user_follows"
