@@ -342,9 +342,6 @@
     [_itemImageArr removeLastObject];
     
     if (!isRepeat) {
-//        _textViewHeightConstraint = [NSLayoutConstraint constraintWithItem:_edittingArea attribute:NSLayoutAttributeHeight         relatedBy:NSLayoutRelationEqual
-//                                                                    toItem:nil           attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:48];
-//        [_contentView addConstraint:_textViewHeightConstraint];
 
         /*** toolBar ***/
         [_toolBar mas_makeConstraints:^(MASConstraintMaker *make) {
