@@ -128,33 +128,34 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     self.tableView.tableHeaderView = self.headerCanvasView;
     if (_user) { [self assemblyHeaderView]; }
     
-    [self scrollViewDidScroll:self.tableView];//test
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self.navigationController.navigationBar lt_reset];
+    [self.navigationController.navigationBar setBackgroundImage:[Utils createImageWithColor:[UIColor navigationbarColor]] forBarMetrics:UIBarMetricsDefault];
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    [self scrollViewDidScroll:self.tableView];//test
+    [self.navigationController.navigationBar setBackgroundImage:[Utils createImageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
+    [self scrollViewDidScroll:self.tableView];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [self.navigationController.navigationBar lt_reset];//test
+    [self.navigationController.navigationBar lt_reset];
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     self.headerCanvasView = nil;
     self.tableView.tableHeaderView = nil;
     
-    [self.navigationController.navigationBar lt_reset];//test
+    [self.navigationController.navigationBar lt_reset];
 }
 
 #pragma mark --- Setting default value
 - (void)settingSomthing{
     self.navigationItem.title = @"用户中心";
     
-    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];//test
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
 
     self.buttons[1].selected = YES;
     _currentIndex = 1;
