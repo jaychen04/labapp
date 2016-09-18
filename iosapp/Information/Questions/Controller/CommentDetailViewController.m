@@ -66,12 +66,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"QuestCommentHeadDetailCell" bundle:nil] forCellReuseIdentifier:CommentHeadDetailCellIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
-    
-//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"ic_more_normal"]
-//                                                                              style:UIBarButtonItemStylePlain
-//                                                                             target:self
-//                                                                             action:@selector(rightBarButtonClicked)];
-    
+	
     //软键盘
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardDidShow:)
@@ -120,7 +115,6 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
             
         }
         failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-
             NSLog(@"error = %@",error);
         }];
 }
@@ -145,33 +139,6 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex != [alertView cancelButtonIndex]) {
-        //旧 举报接口
-//        AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager OSCManager];
-//        
-//        [manager POST:@"http://www.oschina.net/action/communityManage/report"
-//           parameters:@{
-//                        @"memo":        [alertView textFieldAtIndex:0].text.length == 0? @"其他原因": [alertView textFieldAtIndex:0].text,
-//                        @"obj_id":      @(_blogDetails.id),
-//                        @"obj_type":    @"2",
-//                        @"reason":      @"4",
-//                        @"url":         _blogDetails.href
-//                        }
-//              success:^(AFHTTPRequestOperation *operation, ONOXMLDocument *responseObject) {
-//                  MBProgressHUD *HUD = [Utils createHUD];
-//                  HUD.mode = MBProgressHUDModeCustomView;
-//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-//                  HUD.label.text = @"举报成功";
-//                  
-//                  [HUD hideAnimated:YES afterDelay:1];
-//              } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//                  MBProgressHUD *HUD = [Utils createHUD];
-//                  HUD.mode = MBProgressHUDModeCustomView;
-//                  HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-error"]];
-//                  HUD.label.text = @"网络异常，操作失败";
-//                  
-//                  [HUD hideAnimated:YES afterDelay:1];
-//              }];
-        
         /* 新举报接口 */
 //        AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
 //        
