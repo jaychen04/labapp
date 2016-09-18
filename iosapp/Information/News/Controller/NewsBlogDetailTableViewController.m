@@ -11,7 +11,6 @@
 #import "TitleInfoTableViewCell.h"
 #import "webAndAbsTableViewCell.h"
 #import "RecommandBlogTableViewCell.h"
-//#import "ContentWebViewCell.h"
 #import "ContentWKWebViewCell.h"
 #import "NewCommentCell.h"
 #import "RelatedSoftWareCell.h"
@@ -147,7 +146,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     [self.tableView registerNib:[UINib nibWithNibName:@"TitleInfoTableViewCell" bundle:nil] forCellReuseIdentifier:titleInfoReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RecommandBlogTableViewCell" bundle:nil] forCellReuseIdentifier:recommandBlogReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"webAndAbsTableViewCell" bundle:nil] forCellReuseIdentifier:abstractReuseIdentifier];
-//    [self.tableView registerNib:[UINib nibWithNibName:@"ContentWebViewCell" bundle:nil] forCellReuseIdentifier:contentWebReuseIdentifier];
     [self.tableView registerClass:[ContentWKWebViewCell class] forCellReuseIdentifier:contentWKWebReuseIdentifier];
     [self.tableView registerClass:[NewCommentCell class] forCellReuseIdentifier:newCommentReuseIdentifier];
     [self.tableView registerNib:[UINib nibWithNibName:@"RelatedSoftWareCell" bundle:nil] forCellReuseIdentifier:relatedSoftWareReuseIdentifier];
@@ -1192,26 +1190,6 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         });
     }];
 }
-
-//- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-//{
-//    
-//    if ([request.URL.absoluteString hasPrefix:@"file"]) {return YES;}
-//    
-//    [self.navigationController handleURL:request.URL];
-//    return [request.URL.absoluteString isEqualToString:@"about:blank"];
-//}
-
-//- (void)webViewDidFinishLoad:(UIWebView *)webView
-//{
-//    CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-//    if (_webViewHeight == webViewHeight) {return;}
-//    _webViewHeight = webViewHeight;
-//    dispatch_async(dispatch_get_main_queue(), ^{
-//        [self.tableView reloadData];
-//        [self hideHubView];
-//    });
-//}
 
 #pragma mark - fav关注
 - (void)favSelected
