@@ -285,6 +285,7 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
     OSCUserHomePageController* otherUserHomePage = [[OSCUserHomePageController alloc]initWithUserID:tweetItem.author.id];
     [self.navigationController pushViewController:otherUserHomePage animated:YES];
 }
+
 - (void)loadLargeImageDidFinsh:(__kindof AsyncDisplayTableViewCell *)cell
                 photoGroupView:(OSCPhotoGroupView *)groupView
                       fromView:(UIImageView *)fromView
@@ -292,9 +293,11 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
     [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
 }
+
 - (void)changeTweetStausButtonDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
     [self toPraise:cell];
 }
+
 - (void) shouldInteractTextView:(UITextView* )textView
                             URL:(NSURL *)URL
                         inRange:(NSRange)characterRange
@@ -307,6 +310,7 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
         [self.navigationController handleURL:URL name:nil];
     }
 }
+
 - (void)textViewTouchPointProcessing:(UITapGestureRecognizer *)tap{
     CGPoint point = [tap locationInView:self.tableView];
     [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForRowAtPoint:point]];

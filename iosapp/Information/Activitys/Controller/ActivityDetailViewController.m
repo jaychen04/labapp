@@ -89,13 +89,46 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
     // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - right BarButton
+- (void)shareForActivity:(UIBarButtonItem *)barButton
+{
+	NSLog(@"share");
+	
+	NSString *trimmedHTML = [_activityDetail.body deleteHTMLTag];
+	NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
+	NSString *digest = [trimmedHTML substringToIndex:length];
+	
+	// 微信相关设置
+	[UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
+	[UMSocialData defaultData].extConfig.wechatSessionData.url = _activityDetail.href;
+	[UMSocialData defaultData].extConfig.wechatTimelineData.url = _activityDetail.href;
+	[UMSocialData defaultData].extConfig.title = _activityDetail.title;
+	
+	// 手机QQ相关设置
+	[UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
+	[UMSocialData defaultData].extConfig.qqData.title = _activityDetail.title;
+	//[UMSocialData defaultData].extConfig.qqData.shareText = weakSelf.objectTitle;
+	[UMSocialData defaultData].extConfig.qqData.url = _activityDetail.href;
+	
+	// 新浪微博相关设置
+	[[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:_activityDetail.href];
+	
+	[UMSocialSnsService presentSnsIconSheetView:self
+										 appKey:@"54c9a412fd98c5779c000752"
+									  shareText:[NSString stringWithFormat:@"%@...分享来自 %@", digest, _activityDetail.href]
+									 shareImage:[UIImage imageNamed:@"logo"]
+								shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
+									   delegate:nil];
+}
+
 #pragma mark - 获取数据
 - (void)fetchForActivityDetailDate
 {
-    
+	
     _HUD = [Utils createHUD];
     _HUD.userInteractionEnabled = NO;
-    
+	
     AFHTTPRequestOperationManager* manager = [AFHTTPRequestOperationManager OSCJsonManager];
     NSString *activityDetailUrlStr= [NSString stringWithFormat:@"%@event?id=%lld", OSCAPI_V2_PREFIX, _activityID];
     
@@ -243,37 +276,6 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
     });
 }
 
-#pragma mark - right BarButton
-- (void)shareForActivity:(UIBarButtonItem *)barButton
-{
-    NSLog(@"share");
-    
-    NSString *trimmedHTML = [_activityDetail.body deleteHTMLTag];
-    NSInteger length = trimmedHTML.length < 60 ? trimmedHTML.length : 60;
-    NSString *digest = [trimmedHTML substringToIndex:length];
-    
-    // 微信相关设置
-    [UMSocialData defaultData].extConfig.wxMessageType = UMSocialWXMessageTypeWeb;
-    [UMSocialData defaultData].extConfig.wechatSessionData.url = _activityDetail.href;
-    [UMSocialData defaultData].extConfig.wechatTimelineData.url = _activityDetail.href;
-    [UMSocialData defaultData].extConfig.title = _activityDetail.title;
-    
-    // 手机QQ相关设置
-    [UMSocialData defaultData].extConfig.qqData.qqMessageType = UMSocialQQMessageTypeDefault;
-    [UMSocialData defaultData].extConfig.qqData.title = _activityDetail.title;
-    //[UMSocialData defaultData].extConfig.qqData.shareText = weakSelf.objectTitle;
-    [UMSocialData defaultData].extConfig.qqData.url = _activityDetail.href;
-    
-    // 新浪微博相关设置
-    [[UMSocialData defaultData].extConfig.sinaData.urlResource setResourceType:UMSocialUrlResourceTypeDefault url:_activityDetail.href];
-    
-    [UMSocialSnsService presentSnsIconSheetView:self
-                                         appKey:@"54c9a412fd98c5779c000752"
-                                      shareText:[NSString stringWithFormat:@"%@...分享来自 %@", digest, _activityDetail.href]
-                                     shareImage:[UIImage imageNamed:@"logo"]
-                                shareToSnsNames:@[UMShareToWechatTimeline, UMShareToWechatSession, UMShareToQQ, UMShareToSina]
-                                       delegate:nil];
-}
 
 #pragma mark - button clicked
 - (IBAction)settingTouchDownColor:(UIButton *)sender {

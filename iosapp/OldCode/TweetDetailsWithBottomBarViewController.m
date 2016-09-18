@@ -25,7 +25,6 @@
 
 @interface TweetDetailsWithBottomBarViewController () <UIWebViewDelegate>
 
-//@property (nonatomic, strong) TweetDetailsViewController *tweetDetailsVC;
 @property (nonatomic, strong) TweetDetailNewTableViewController *tweetDetailsNewVC;
 @property (nonatomic, assign) int64_t tweetID;
 @property (nonatomic, assign) BOOL isReply;
@@ -38,12 +37,7 @@
 {
     self = [super initWithModeSwitchButton:NO];
     if (self) {
-//        self.hidesBottomBarWhenPushed = YES;
-//        _tweetID = tweetID;
-//        _tweetDetailsVC = [[TweetDetailsViewController alloc] initWithTweetID:tweetID];
-//        [self addChildViewController:_tweetDetailsVC];
-//        [self setUpBlock];
-        
+		
         self.hidesBottomBarWhenPushed = YES;
         _tweetID = tweetID;
         _tweetDetailsNewVC = [[TweetDetailNewTableViewController alloc]init];
@@ -61,21 +55,7 @@
 - (void)setUpBlock
 {
     __weak TweetDetailsWithBottomBarViewController *weakSelf = self;
-    
-//    _tweetDetailsVC.didCommentSelected = ^(OSCComment *comment) {
-//        NSString *authorString = [NSString stringWithFormat:@"@%@ ", comment.author];
-//        
-//        if ([weakSelf.editingBar.editView.text rangeOfString:authorString].location == NSNotFound) {
-//            [weakSelf.editingBar.editView replaceRange:weakSelf.editingBar.editView.selectedTextRange withText:authorString];
-//            [weakSelf.editingBar.editView becomeFirstResponder];
-//        }
-//    };
-//    
-//    _tweetDetailsVC.didScroll = ^ {
-//        [weakSelf.editingBar.editView resignFirstResponder];
-//        [weakSelf hideEmojiPageView];
-    
-    
+
     _tweetDetailsNewVC.didTweetCommentSelected = ^(OSCCommentItem *comment) {
         NSString *authorString = [NSString stringWithFormat:@"@%@ ", comment.author.name];
         
@@ -89,12 +69,11 @@
         [weakSelf.editingBar.editView resignFirstResponder];
         [weakSelf hideEmojiPageView];
     };
-    _tweetDetailsNewVC.didActivatedInputBar = ^ {
+
+	_tweetDetailsNewVC.didActivatedInputBar = ^ {
         [weakSelf.editingBar.editView becomeFirstResponder];
     };
-//    _tweetDetailsNewVC.didRegisterInputBar = ^ {
-//        [weakSelf.editingBar.editView resignFirstResponder];
-//    };
+
 }
 
 
@@ -102,9 +81,11 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"动弹详情";
-    
     self.edgesForExtendedLayout = UIRectEdgeNone;
     [self setLayout];
+	
+	
+	
 }
 
 - (void)didReceiveMemoryWarning {
@@ -153,9 +134,6 @@
                   
                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
                   HUD.label.text = @"评论发表成功";
-                  
-//                  [_tweetDetailsVC.tableView setContentOffset:CGPointZero animated:NO];
-//                  [_tweetDetailsVC refresh];
                   
                   [_tweetDetailsNewVC.tableView setContentOffset:CGPointZero animated:NO];
                   [_tweetDetailsNewVC reloadCommentList];
