@@ -90,13 +90,13 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     [self getDetailForQuestion];
     [self getCommentsForQuestion:NO];/* 待调试 */
     [self.tableView.mj_footer beginRefreshing];
-    
-    [self showHubView];
-    
+	
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:nil];
+	
+	[self showHubView];
 }
 #pragma mark --- 
 -(void)initialized{
