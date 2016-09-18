@@ -54,9 +54,9 @@ PODS:
   - ReactiveCocoa/UI (2.5):
     - ReactiveCocoa/Core
   - RESideMenu (4.0.7)
-  - SDWebImage (3.8.1):
-    - SDWebImage/Core (= 3.8.1)
-  - SDWebImage/Core (3.8.1)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
   - SSKeychain (1.4.1)
   - TBXML (1.5)
   - TTTAttributedLabel (1.13.4)
@@ -108,7 +108,7 @@ SPEC CHECKSUMS:
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   ReactiveCocoa: e2db045570aa97c695e7aa97c2bcab222ae51f4a
   RESideMenu: f24c508404b49c667344c54aba7e590883533958
-  SDWebImage: 35f9627a3e44b4f292a8a8ce6a531fa488239b91
+  SDWebImage: '098e97e6176540799c27e804c96653ee0833d13c'
   SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
   TBXML: 9f9dadb239f2f2af1dadb87fe43a0ce6e479379a
   TTTAttributedLabel: 0a2ac7b2dd726d32a070dafb01446026b11e624f

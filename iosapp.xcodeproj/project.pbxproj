@@ -375,6 +375,7 @@
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 		EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED81D5C1CF54F88000ACFBC /* OSCQuestion.m */; };
+		FCA92AF9A8AF62C2E445FBE0 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ACD1A547FD50E3559BA852B /* libPods-iosapp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -997,6 +998,9 @@
 		6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+pinyin.m"; sourceTree = "<group>"; };
 		74FCF9B11D6D985C0085B2EB /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		74FCF9B21D6D985C0085B2EB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		8ACD1A547FD50E3559BA852B /* libPods-iosapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B04D98EED93ED32EE5552D33 /* Pods-iosapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.debug.xcconfig"; sourceTree = "<group>"; };
+		B67F6D0570D841EBD70A6FFC /* Pods-iosapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.release.xcconfig"; sourceTree = "<group>"; };
 		C52BF4E51AF9AAA000E53508 /* TeamWeeklyReportDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamWeeklyReportDetail.h; sourceTree = "<group>"; };
 		C52BF4E61AF9AAA000E53508 /* TeamWeeklyReportDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamWeeklyReportDetail.m; sourceTree = "<group>"; };
 		C52BF4FC1AFCB6EE00E53508 /* TeamReply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamReply.h; sourceTree = "<group>"; };
@@ -2293,6 +2297,15 @@
 			path = PrivateChat;
 			sourceTree = "<group>";
 		};
+		0F9A2E10BDF23C7D6A2578C9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B04D98EED93ED32EE5552D33 /* Pods-iosapp.debug.xcconfig */,
+				B67F6D0570D841EBD70A6FFC /* Pods-iosapp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -2789,7 +2802,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00D6BD0019EB673200E8754E /* Build configuration list for PBXNativeTarget "iosapp" */;
 			buildPhases = (
-				F87169EF104A0A13C333FE09 /* [CP] Check Pods Manifest.lock */,
+				29DD1540F4A6DDD742246AFB /* [CP] Check Pods Manifest.lock */,
 				00D6BCD619EB673200E8754E /* Sources */,
 				00D6BCD719EB673200E8754E /* Frameworks */,
 				00D6BCD819EB673200E8754E /* Resources */,
@@ -2955,7 +2968,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C8C815620688FAE2D386D6B8 /* [CP] Copy Pods Resources */ = {
+		17723400B30100A9FAE70AB6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2970,7 +2983,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F87169EF104A0A13C333FE09 /* [CP] Check Pods Manifest.lock */ = {
+		29DD1540F4A6DDD742246AFB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (

@@ -39,7 +39,7 @@
 
 
 #define OSC_SCREEN_WIDTH  [UIScreen mainScreen].bounds.size.width
-#define OSC_BANNER_HEIGHT 117
+#define OSC_BANNER_HEIGHT [UIScreen mainScreen].bounds.size.width * 39 / 125
 
 static NSString * const informationReuseIdentifier = @"InformationTableViewCell";
 
