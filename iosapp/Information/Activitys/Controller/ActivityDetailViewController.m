@@ -194,12 +194,14 @@ static NSString * const activityDetailReuseIdentifier = @"ActivityDetailCell";
             cell.activity = _activityDetail;
         }
         
-        cell.backgroundColor = [UIColor newCellColor];
         cell.contentView.backgroundColor = [UIColor newCellColor];
         cell.backgroundColor = [UIColor themeColor];
+        cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+        cell.selectedBackgroundView.backgroundColor = [UIColor selectCellSColor];
         
         return cell;
     }
+    
     
     return [UITableViewCell new];
 }

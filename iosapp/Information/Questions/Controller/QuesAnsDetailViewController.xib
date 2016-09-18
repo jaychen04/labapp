@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="QuesAnsDetailViewController">
@@ -17,30 +17,25 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BSJ-eH-5pp">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="555"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </tableView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EHd-xg-ypR">
-                    <rect key="frame" x="0.0" y="555" width="600" height="45"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jXo-0w-pXu">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
-                            <color key="backgroundColor" red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" red="0.78431372549019607" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="6gs-KV-jx7"/>
                             </constraints>
                         </view>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="我要回答" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7U8-T0-ujV">
-                            <rect key="frame" x="8" y="9" width="504" height="30"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <textInputTraits key="textInputTraits" returnKeyType="send"/>
                         </textField>
                         <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SaN-AZ-EB8">
-                            <rect key="frame" x="528" y="14" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="2np-PH-e14"/>
                                 <constraint firstAttribute="width" constant="20" id="Fjc-IR-g8P"/>
@@ -51,7 +46,6 @@
                             </connections>
                         </button>
                         <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cpn-Zo-eXx">
-                            <rect key="frame" x="564" y="14" width="20" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="7SG-tr-Tm0"/>
                                 <constraint firstAttribute="width" constant="20" id="BAZ-c9-C7E"/>
@@ -62,7 +56,7 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="cpn-Zo-eXx" firstAttribute="leading" secondItem="SaN-AZ-EB8" secondAttribute="trailing" constant="16" id="1FT-nz-7YE"/>
                         <constraint firstItem="cpn-Zo-eXx" firstAttribute="centerY" secondItem="7U8-T0-ujV" secondAttribute="centerY" id="7bA-f3-9hb"/>
@@ -78,7 +72,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="EHd-xg-ypR" secondAttribute="bottom" id="LHo-dn-2ou"/>
                 <constraint firstItem="EHd-xg-ypR" firstAttribute="top" secondItem="BSJ-eH-5pp" secondAttribute="bottom" id="LiI-Wx-bTs"/>
@@ -88,6 +82,7 @@
                 <constraint firstAttribute="trailing" secondItem="BSJ-eH-5pp" secondAttribute="trailing" id="rgy-4A-XVN"/>
                 <constraint firstItem="EHd-xg-ypR" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="urk-ng-rtB"/>
             </constraints>
+            <point key="canvasLocation" x="32.5" y="54.5"/>
         </view>
     </objects>
     <resources>

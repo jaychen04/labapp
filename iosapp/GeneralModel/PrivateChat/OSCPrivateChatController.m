@@ -63,6 +63,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 #pragma mark - refresh
 - (void)refresh
 {
+    [self.tableView reloadData];
     [self.dataSource removeAllObjects];
     _isFirstOpenPage = YES;
     [self getDataUpgradeRequest:NO];
