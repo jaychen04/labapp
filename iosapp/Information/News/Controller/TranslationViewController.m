@@ -233,19 +233,19 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
     label.font = [UIFont systemFontOfSize:14];
     label.numberOfLines = 0;
     label.lineBreakMode = NSLineBreakByWordWrapping;
-    
+
     label.attributedText = [NewCommentCell contentStringFromRawString:comment.content];
     
-    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 64, MAXFLOAT)].height;
+    CGFloat height = [label sizeThatFits:CGSizeMake(self.tableView.frame.size.width - 32, MAXFLOAT)].height;
     
-    //    height += 7;
+    height += 7;
     OSCNewCommentRefer *refer = comment.refer;
     int i = 0;
     while (refer.author.length > 0) {
         NSMutableAttributedString *replyContent = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@:\n", refer.author]];
         [replyContent appendAttributedString:[Utils emojiStringFromRawString:[refer.content deleteHTMLTag]]];
         label.attributedText = replyContent;
-        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 12;
+        height += [label sizeThatFits:CGSizeMake( self.tableView.frame.size.width - 60 - (i+1)*8, MAXFLOAT)].height + 6;
         i++;
         refer = refer.refer;
     }

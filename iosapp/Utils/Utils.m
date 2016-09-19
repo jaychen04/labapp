@@ -160,8 +160,8 @@
 	
     for (NSTextCheckingResult *match in resultsArray) {
 		
-		if (maxCount >= 5) {
-			break; //最多只允许五个emoji表情（和web保持一致）
+		if (maxCount >= 6) {
+			break; //最多只允许六个emoji表情（和web保持一致）
 		}
 		
         NSRange range = [match range];
