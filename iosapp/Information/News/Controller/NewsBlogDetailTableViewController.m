@@ -34,6 +34,7 @@
 #import "NewCommentListViewController.h"//新评论列表
 #import "SoftWareViewController.h"      //软件详情
 #import "OSCUserHomePageController.h"
+#import "UIDevice+SystemInfo.h"
 
 #import "IMYWebView.h"
 #import <MJExtension.h>
@@ -98,6 +99,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 @implementation NewsBlogDetailTableViewController{
     BOOL _isFinshDisplayH5;
+    ContentWKWebViewCell* _WKWebViewCell;
 }
 
 -(instancetype) initWithObjectId:(NSInteger)objectId
@@ -692,18 +694,18 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                         
                     } else {
                         ContentWKWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWKWebReuseIdentifier forIndexPath:indexPath];
+                        _WKWebViewCell = webViewCell;
                         webViewCell.contentWebView.delegate = self;
-//                        if (_blogDetails.body.length > 0 && _webViewHeight == 0) {
                             if (_blogDetails.body.length > 0 ) {
                                 [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
                             }
-//                        }
                         webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
                         return webViewCell;
                     }
                 } else if (indexPath.row == 3) {
                     ContentWKWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWKWebReuseIdentifier forIndexPath:indexPath];
+                    _WKWebViewCell = webViewCell;
                     webViewCell.contentWebView.delegate = self;
                     [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
                     webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -832,8 +834,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     return titleInfoCell;
                 } else if (indexPath.row==1) {
                     ContentWKWebViewCell* webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWKWebReuseIdentifier forIndexPath:indexPath];
+                    _WKWebViewCell = webViewCell;
                     webViewCell.contentWebView.delegate = self;
-                    if (_newsDetails.body.length > 0 && _webViewHeight == 0) {
+                    if (_newsDetails.body.length > 0 ) {
                         [webViewCell.contentWebView loadHTMLString:_newsDetails.body baseURL:[NSBundle mainBundle].resourceURL];
                     }
                     webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -1113,6 +1116,21 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
         }
     }
     
+}
+
+#pragma mark --- scrollView
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if ([UIDevice currentSystemVersion] == Version_iOS10) {
+        if (_isBlogDetail) {
+            if (_blogDetails.body.length > 0 ) {
+                [_WKWebViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+            }
+        }else{
+            if (_newsDetails.body.length > 0 ) {
+                [_WKWebViewCell.contentWebView loadHTMLString:_newsDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+            }
+        }
+    }
 }
 
 #pragma mark - 资讯作者信息
