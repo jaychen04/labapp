@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="NO">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <development version="7000" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -10,11 +11,11 @@
             <rect key="frame" x="0.0" y="0.0" width="410" height="82"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="410" height="81"/>
+                <rect key="frame" x="0.0" y="0.0" width="410" height="81.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="htW-X9-Ocn" userLabel="setTop_Button">
-                        <rect key="frame" x="270" y="0.0" width="70" height="81"/>
+                        <rect key="frame" x="270" y="0.0" width="70" height="81.5"/>
                         <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="fJM-FW-uCn"/>
@@ -27,7 +28,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E78-rr-dpq" userLabel="delete_Button">
-                        <rect key="frame" x="340" y="0.0" width="70" height="81"/>
+                        <rect key="frame" x="340" y="0.0" width="70" height="81.5"/>
                         <color key="backgroundColor" red="0.900390625" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="70" id="LhH-5b-R5a"/>
@@ -40,7 +41,7 @@
                         </connections>
                     </button>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nYY-m7-Su8" userLabel="BG_View">
-                        <rect key="frame" x="0.0" y="0.0" width="410" height="81"/>
+                        <rect key="frame" x="0.0" y="0.0" width="410" height="81.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loading" translatesAutoresizingMaskIntoConstraints="NO" id="Gtl-rR-x6B">
                                 <rect key="frame" x="16" y="16" width="45" height="45"/>
@@ -50,7 +51,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9天前" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LCS-Kq-Ndp">
-                                <rect key="frame" x="362" y="16" width="32" height="15"/>
+                                <rect key="frame" x="361.5" y="16" width="32.5" height="15"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="15" id="4Hd-My-odz"/>
                                 </constraints>
@@ -76,7 +77,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="xRg-M6-YYc" secondAttribute="trailing" constant="16" id="4sP-e2-5Sf"/>
                             <constraint firstItem="WrV-ch-azG" firstAttribute="leading" secondItem="Gtl-rR-x6B" secondAttribute="trailing" constant="8" id="7ki-GY-Zm1"/>

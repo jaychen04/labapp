@@ -17,7 +17,7 @@
 #define userPortrait_W 44
 #define userPortrait_H 44
 #define userPortrait_SPACE_nameLabel 10
-#define descTextView_SPACE_userPortrait 8
+#define descTextView_SPACE_userPortrait 10
 #define nameLabel_H 16
 #define nameLabel_space_descTextView 4
 #define descTextView_space_imageView 10
