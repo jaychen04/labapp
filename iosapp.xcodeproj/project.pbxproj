@@ -56,6 +56,8 @@
 		0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */; };
 		0447EF281D59733700F0954D /* UIImageView+RadiusHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0447EF271D59733700F0954D /* UIImageView+RadiusHandle.m */; };
 		0447EF2B1D59779C00F0954D /* ImageDownloadHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */; };
+		04AE158C1D8FB86800C6567E /* OSCInformationDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AE158B1D8FB86800C6567E /* OSCInformationDetailController.m */; };
+		04AE158F1D8FB8CE00C6567E /* OSCBlogDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AE158E1D8FB8CE00C6567E /* OSCBlogDetailController.m */; };
 		04B05B561D892DC300D525F2 /* TweetDetailNewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B05B241D892DC300D525F2 /* TweetDetailNewTableViewController.m */; };
 		04B05B571D892DC300D525F2 /* NewMultipleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B05B281D892DC300D525F2 /* NewMultipleDetailCell.m */; };
 		04B05B581D892DC300D525F2 /* TweetCommentNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B05B2A1D892DC300D525F2 /* TweetCommentNewCell.m */; };
@@ -269,7 +271,6 @@
 		04BB22D01D8931C90099B347 /* OSCMsgChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB22C81D8931C90099B347 /* OSCMsgChatController.m */; };
 		04BB22D11D8931C90099B347 /* OSCPrivateChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB22CA1D8931C90099B347 /* OSCPrivateChatCell.m */; };
 		04BB22D21D8931C90099B347 /* OSCPrivateChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB22CC1D8931C90099B347 /* OSCPrivateChatController.m */; };
-		04BB22D31D8931C90099B347 /* OSCPrivateChatController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04BB22CD1D8931C90099B347 /* OSCPrivateChatController.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
 		04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */; };
 		04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */; };
@@ -471,6 +472,10 @@
 		0447EF291D59779C00F0954D /* ImageDownloadHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDownloadHandle.h; path = ELCImagePickerController/ImageDownloadHandle.h; sourceTree = "<group>"; };
 		0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageDownloadHandle.m; path = ELCImagePickerController/ImageDownloadHandle.m; sourceTree = "<group>"; };
 		047325A21CF8612B00460658 /* enumList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enumList.h; path = OSC/enumList.h; sourceTree = "<group>"; };
+		04AE158A1D8FB86800C6567E /* OSCInformationDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformationDetailController.h; sourceTree = "<group>"; };
+		04AE158B1D8FB86800C6567E /* OSCInformationDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformationDetailController.m; sourceTree = "<group>"; };
+		04AE158D1D8FB8CE00C6567E /* OSCBlogDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetailController.h; sourceTree = "<group>"; };
+		04AE158E1D8FB8CE00C6567E /* OSCBlogDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetailController.m; sourceTree = "<group>"; };
 		04B05B231D892DC300D525F2 /* TweetDetailNewTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailNewTableViewController.h; sourceTree = "<group>"; };
 		04B05B241D892DC300D525F2 /* TweetDetailNewTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailNewTableViewController.m; sourceTree = "<group>"; };
 		04B05B271D892DC300D525F2 /* NewMultipleDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMultipleDetailCell.h; sourceTree = "<group>"; };
@@ -852,7 +857,6 @@
 		04BB22CA1D8931C90099B347 /* OSCPrivateChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPrivateChatCell.m; sourceTree = "<group>"; };
 		04BB22CB1D8931C90099B347 /* OSCPrivateChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPrivateChatController.h; sourceTree = "<group>"; };
 		04BB22CC1D8931C90099B347 /* OSCPrivateChatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPrivateChatController.m; sourceTree = "<group>"; };
-		04BB22CD1D8931C90099B347 /* OSCPrivateChatController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSCPrivateChatController.xib; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
 		04E5BAC81D406DAD0046EA65 /* OSCPhotoGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPhotoGroupView.h; sourceTree = "<group>"; };
@@ -1461,6 +1465,8 @@
 		04B05B811D892DCD00D525F2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04AE158D1D8FB8CE00C6567E /* OSCBlogDetailController.h */,
+				04AE158E1D8FB8CE00C6567E /* OSCBlogDetailController.m */,
 				04B05B821D892DCD00D525F2 /* BlogsViewController.h */,
 				04B05B831D892DCD00D525F2 /* BlogsViewController.m */,
 				04B05B841D892DCD00D525F2 /* MyBlogsViewController.h */,
@@ -1506,6 +1512,8 @@
 			children = (
 				04B05B921D892DCD00D525F2 /* InformationViewController.h */,
 				04B05B931D892DCD00D525F2 /* InformationViewController.m */,
+				04AE158A1D8FB86800C6567E /* OSCInformationDetailController.h */,
+				04AE158B1D8FB86800C6567E /* OSCInformationDetailController.m */,
 				04B05B941D892DCD00D525F2 /* NewsBlogDetailTableViewController.h */,
 				04B05B951D892DCD00D525F2 /* NewsBlogDetailTableViewController.m */,
 				04B05B961D892DCD00D525F2 /* NewsBlogDetailTableViewController.xib */,
@@ -1792,8 +1800,8 @@
 		04B05C6C1D892DE100D525F2 /* AboutMe */ = {
 			isa = PBXGroup;
 			children = (
-				04B05C6D1D892DE100D525F2 /* Controller */,
 				04B05C721D892DE100D525F2 /* Homepage.storyboard */,
+				04B05C6D1D892DE100D525F2 /* Controller */,
 				04B05C731D892DE100D525F2 /* Model */,
 				04B05C741D892DE100D525F2 /* View */,
 			);
@@ -1912,11 +1920,11 @@
 			children = (
 				04B05C9F1D892DEF00D525F2 /* MessageCenter.h */,
 				04B05CA01D892DEF00D525F2 /* MessageCenter.m */,
+				04B05CB31D892DEF00D525F2 /* OSCMessageCenterController.h */,
+				04B05CB41D892DEF00D525F2 /* OSCMessageCenterController.m */,
 				04B05CA11D892DEF00D525F2 /* MsgCenter_AtMe */,
 				04B05CA71D892DEF00D525F2 /* MsgCenter_Comments */,
 				04B05CAD1D892DEF00D525F2 /* MsgCenter_PrivateChat */,
-				04B05CB31D892DEF00D525F2 /* OSCMessageCenterController.h */,
-				04B05CB41D892DEF00D525F2 /* OSCMessageCenterController.m */,
 			);
 			path = MessageCenter;
 			sourceTree = "<group>";
@@ -2288,7 +2296,6 @@
 				04BB22CA1D8931C90099B347 /* OSCPrivateChatCell.m */,
 				04BB22CB1D8931C90099B347 /* OSCPrivateChatController.h */,
 				04BB22CC1D8931C90099B347 /* OSCPrivateChatController.m */,
-				04BB22CD1D8931C90099B347 /* OSCPrivateChatController.xib */,
 			);
 			path = PrivateChat;
 			sourceTree = "<group>";
@@ -2914,7 +2921,6 @@
 				C5B1231C1B316830000B29D2 /* css in Resources */,
 				04B05BF01D892DCD00D525F2 /* ActivityHeadCell.xib in Resources */,
 				317AD9C91C96AD68008356DE /* recommend_tag.png in Resources */,
-				04BB22D31D8931C90099B347 /* OSCPrivateChatController.xib in Resources */,
 				04B05BFE1D892DCD00D525F2 /* NewsDetailViewController.xib in Resources */,
 				04270A1E1D77CD5200E21ECC /* InputToolbarContentView.xib in Resources */,
 				04B05C031D892DCD00D525F2 /* ContentWebViewCell.xib in Resources */,
@@ -3008,6 +3014,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04AE158F1D8FB8CE00C6567E /* OSCBlogDetailController.m in Sources */,
 				04B05DC91D892FB500D525F2 /* InputToolbar.m in Sources */,
 				0422BC561CEDA390007DB140 /* TAAbstractDotView.m in Sources */,
 				C52BF4FE1AFCB6EE00E53508 /* TeamReply.m in Sources */,
@@ -3026,6 +3033,7 @@
 				04B05B641D892DC300D525F2 /* OSCTextTweetCell.m in Sources */,
 				042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */,
 				04B05DAC1D892E0F00D525F2 /* OptionButton.m in Sources */,
+				04AE158C1D8FB86800C6567E /* OSCInformationDetailController.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */,
 				3838D15C1A6C9D0900CC7913 /* OperationBar.m in Sources */,

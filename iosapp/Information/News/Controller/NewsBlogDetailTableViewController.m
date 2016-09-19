@@ -96,7 +96,9 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 
 
-@implementation NewsBlogDetailTableViewController
+@implementation NewsBlogDetailTableViewController{
+    BOOL _isFinshDisplayH5;
+}
 
 -(instancetype) initWithObjectId:(NSInteger)objectId
                     isBlogDetail:(BOOL)isBlogDetail {
@@ -135,6 +137,8 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 - (void)viewDidLoad {
     
     [super viewDidLoad];
+    
+    _isFinshDisplayH5 = NO;
     
     self.title = _isBlogDetail?@"博文":@"资讯";
     self.tableView.delegate = self;
@@ -689,9 +693,11 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
                     } else {
                         ContentWKWebViewCell *webViewCell = [tableView dequeueReusableCellWithIdentifier:contentWKWebReuseIdentifier forIndexPath:indexPath];
                         webViewCell.contentWebView.delegate = self;
-                        if (_blogDetails.body.length > 0 && _webViewHeight == 0) {
-                            [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
-                        }
+//                        if (_blogDetails.body.length > 0 && _webViewHeight == 0) {
+                            if (_blogDetails.body.length > 0 ) {
+                                [webViewCell.contentWebView loadHTMLString:_blogDetails.body baseURL:[NSBundle mainBundle].resourceURL];
+                            }
+//                        }
                         webViewCell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
                         return webViewCell;
@@ -1180,15 +1186,21 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 }
 
 -(void)webViewDidFinishLoad:(IMYWebView*)webView{
+    if (_isFinshDisplayH5) { return; }
+    
     [webView evaluateJavaScript:@"document.body.offsetHeight" completionHandler:^(NSNumber* result, NSError *err) {
         CGFloat webViewHeight = [result floatValue];
-        if (_webViewHeight == webViewHeight) return ;
+//        if (_webViewHeight == webViewHeight) return ;
         _webViewHeight = webViewHeight;
         dispatch_async(dispatch_get_main_queue(), ^{
+            _isFinshDisplayH5 = YES;
             [self.tableView reloadData];
             [self hideHubView];
         });
     }];
+}
+- (void)webView:(IMYWebView*)webView didFailLoadWithError:(NSError*)error{
+    NSLog(@"%@",error);
 }
 
 #pragma mark - fav关注

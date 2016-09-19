@@ -16,14 +16,14 @@
 
 @interface BubbleChatViewController () <UIWebViewDelegate>
 
-@property (nonatomic, assign) int64_t userID;
+@property (nonatomic, assign) NSInteger userID;
 @property (nonatomic, strong) OSCPrivateChatController *messageBubbleVC;
 
 @end
 
 @implementation BubbleChatViewController
 
-- (instancetype)initWithUserID:(int64_t)userID andUserName:(NSString *)userName
+- (instancetype)initWithUserID:(NSInteger)userID andUserName:(NSString *)userName
 {
     self = [super initWithPhotoButton:YES];
     if (self) {

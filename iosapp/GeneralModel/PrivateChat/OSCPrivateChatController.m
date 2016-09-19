@@ -54,9 +54,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
         [self getDataUpgradeRequest:YES];
     }];
-//    self.tableView.mj_footer = [MJRefreshBackFooter footerWithRefreshingBlock:^{
-//        [self getDataUpgradeRequest:NO];
-//    }];
     [self getDataUpgradeRequest:NO];
 }
 
@@ -83,10 +80,10 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
     NSMutableDictionary* paraMutableDic = @{}.mutableCopy;
     if (isUpgradeReq && [self.prevPageToken length] > 0) {
-        [paraMutableDic setObject:self.prevPageToken forKey:@"prevPageToken"];
+        [paraMutableDic setObject:self.prevPageToken forKey:@"pageToken"];
     }
     if (!isUpgradeReq && [self.nextPageToken length] > 0) {
-        [paraMutableDic setObject:self.nextPageToken forKey:@"nextPageToken"];
+        [paraMutableDic setObject:self.nextPageToken forKey:@"pageToken"];
     }
     
     MBProgressHUD* HUD = [Utils createHUD];

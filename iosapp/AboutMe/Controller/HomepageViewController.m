@@ -83,6 +83,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(noticeUpdateHandler:)
                                                  name:OSCAPI_USER_NOTICE
@@ -92,7 +93,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
                                                  name:@"userRefresh"
                                                object:nil];
     
-//    _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0), @(0), @(0)]];
     _noticeCounts = [NSMutableArray arrayWithArray:@[@(0), @(0), @(0)]];
 }
 
