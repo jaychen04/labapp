@@ -160,8 +160,8 @@
 	
     for (NSTextCheckingResult *match in resultsArray) {
 		
-		if (maxCount >= 5) {
-			break; //最多只允许五个emoji表情（和web保持一致）
+		if (maxCount >= 6) {
+			break; //最多只允许六个emoji表情（和web保持一致）
 		}
 		
         NSRange range = [match range];
@@ -417,6 +417,19 @@
     
     return numberStr;
 }
+
++ (UIImage*)createImageWithColor:(UIColor*) color
+{
+    CGRect rect=CGRectMake(0,0, 1, 1);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
+
 
 
 @end

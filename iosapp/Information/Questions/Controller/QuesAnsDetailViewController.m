@@ -90,13 +90,13 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
     [self getDetailForQuestion];
     [self getCommentsForQuestion:NO];/* 待调试 */
     [self.tableView.mj_footer beginRefreshing];
-    
-    [self showHubView];
-    
+	
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
                                                                              style:UIBarButtonItemStylePlain
                                                                             target:self
                                                                             action:nil];
+	
+	[self showHubView];
 }
 #pragma mark --- 
 -(void)initialized{
@@ -333,12 +333,14 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     CGFloat webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.offsetHeight"] floatValue];
-    if (_webViewHeight == webViewHeight + 5) {return;}
-    _webViewHeight = webViewHeight + 5;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.tableView reloadData];
-        [self hideHubView];
-    });
+	
+	if(_webViewHeight != webViewHeight + 5) {
+		_webViewHeight = webViewHeight + 5;
+		dispatch_async(dispatch_get_main_queue(), ^{
+			[self.tableView reloadData];
+			[self hideHubView];
+		});
+	}
 }
 
 #pragma mark -- DIY_headerView

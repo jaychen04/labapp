@@ -128,33 +128,34 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     self.tableView.tableHeaderView = self.headerCanvasView;
     if (_user) { [self assemblyHeaderView]; }
     
-    [self scrollViewDidScroll:self.tableView];//test
-    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+    [self.navigationController.navigationBar lt_reset];
+    [self.navigationController.navigationBar setBackgroundImage:[Utils createImageWithColor:[UIColor navigationbarColor]] forBarMetrics:UIBarMetricsDefault];
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     
-    [self scrollViewDidScroll:self.tableView];//test
+    [self.navigationController.navigationBar setBackgroundImage:[Utils createImageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
+    [self scrollViewDidScroll:self.tableView];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    [self.navigationController.navigationBar lt_reset];//test
+    [self.navigationController.navigationBar lt_reset];
 }
 - (void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
     self.headerCanvasView = nil;
     self.tableView.tableHeaderView = nil;
     
-    [self.navigationController.navigationBar lt_reset];//test
+    [self.navigationController.navigationBar lt_reset];
 }
 
 #pragma mark --- Setting default value
 - (void)settingSomthing{
     self.navigationItem.title = @"用户中心";
     
-    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];//test
+    [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
 
     self.buttons[1].selected = YES;
     _currentIndex = 1;
@@ -199,6 +200,8 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
             if ([responseObject[@"code"] integerValue] == 1) {
                 NSDictionary* userResult = responseObject[@"result"];
                 _user = [OSCUserHomePageItem mj_objectWithKeyValues:userResult];
+                
+                if (!_user) { [self.navigationController popViewControllerAnimated:YES];}
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self assemblyHeaderView];
@@ -260,10 +263,10 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
             }
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
                 if (!dropDown) {
                     [self.tableView.mj_footer endRefreshing];
                 }
-                [self.tableView reloadData];
                 [HUD hideAnimated:YES afterDelay:0.3];
             });
     }
@@ -496,6 +499,9 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 }
 #pragma mark - 切换tableView数据源 & 选择性发送请求
 - (void)changeTableViewDataSourceWithButton:(UIButton* )button{
+    if (button.tag == _currentIndex) {return;}
+    
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     _currentIndex = button.tag;
     [self updateButtonStyle];
     
@@ -758,10 +764,10 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 - (UITableView *)tableView {
 	if(_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,-NAVI_BAR_HEIGHT},{kScreen_W,self.view.bounds.size.height + NAVI_BAR_HEIGHT}} style:UITableViewStylePlain];
-//        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        _tableView.tableFooterView = [UIView new];
 	}
 	return _tableView;
 }

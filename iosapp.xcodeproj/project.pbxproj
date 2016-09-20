@@ -32,7 +32,7 @@
 		042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */; };
 		042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */; };
 		042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D95A1B65D7FE00116D6E /* Foundation.framework */; };
-		042E8CFE1CF5944E00364BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9581B65D7F200116D6E /* UIKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		042E8CFE1CF5944E00364BD7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9581B65D7F200116D6E /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		042E8CFF1CF5945700364BD7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9561B65D7E800116D6E /* CoreText.framework */; };
 		042E8D001CF5945F00364BD7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9541B65D7C000116D6E /* QuartzCore.framework */; };
 		042E8D011CF5946900364BD7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9521B65D7B500116D6E /* ImageIO.framework */; };
@@ -51,11 +51,13 @@
 		04394F361D6ED64E002309CB /* OSCPrivateChat.m in Sources */ = {isa = PBXBuildFile; fileRef = 04394F351D6ED64E002309CB /* OSCPrivateChat.m */; };
 		044050B91D5C83F800C6DF2F /* UIImageView+CornerRadius.m in Sources */ = {isa = PBXBuildFile; fileRef = 044050B81D5C83F800C6DF2F /* UIImageView+CornerRadius.m */; };
 		044266941D49C98C00D87091 /* OSCPhotoAlbumManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 044266931D49C98C00D87091 /* OSCPhotoAlbumManger.m */; };
-		044266961D49E7BB00D87091 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044266951D49E7BB00D87091 /* Photos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		044266961D49E7BB00D87091 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 044266951D49E7BB00D87091 /* Photos.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		0442669A1D4A036000D87091 /* BannerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 044266991D4A036000D87091 /* BannerScrollView.m */; };
 		0446D3901D37337900169B2B /* UINavigationBar+BackgroundColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0446D38F1D37337900169B2B /* UINavigationBar+BackgroundColor.m */; };
 		0447EF281D59733700F0954D /* UIImageView+RadiusHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0447EF271D59733700F0954D /* UIImageView+RadiusHandle.m */; };
 		0447EF2B1D59779C00F0954D /* ImageDownloadHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = 0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */; };
+		04AE158C1D8FB86800C6567E /* OSCInformationDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AE158B1D8FB86800C6567E /* OSCInformationDetailController.m */; };
+		04AE158F1D8FB8CE00C6567E /* OSCBlogDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04AE158E1D8FB8CE00C6567E /* OSCBlogDetailController.m */; };
 		04B05B561D892DC300D525F2 /* TweetDetailNewTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B05B241D892DC300D525F2 /* TweetDetailNewTableViewController.m */; };
 		04B05B571D892DC300D525F2 /* NewMultipleDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B05B281D892DC300D525F2 /* NewMultipleDetailCell.m */; };
 		04B05B581D892DC300D525F2 /* TweetCommentNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04B05B2A1D892DC300D525F2 /* TweetCommentNewCell.m */; };
@@ -269,7 +271,6 @@
 		04BB22D01D8931C90099B347 /* OSCMsgChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB22C81D8931C90099B347 /* OSCMsgChatController.m */; };
 		04BB22D11D8931C90099B347 /* OSCPrivateChatCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB22CA1D8931C90099B347 /* OSCPrivateChatCell.m */; };
 		04BB22D21D8931C90099B347 /* OSCPrivateChatController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BB22CC1D8931C90099B347 /* OSCPrivateChatController.m */; };
-		04BB22D31D8931C90099B347 /* OSCPrivateChatController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04BB22CD1D8931C90099B347 /* OSCPrivateChatController.xib */; };
 		04D47F401CF312D200F14EF2 /* OSCInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 04D47F3F1CF312D200F14EF2 /* OSCInformation.m */; };
 		04E5BACA1D406DAD0046EA65 /* OSCPhotoGroupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E5BAC91D406DAD0046EA65 /* OSCPhotoGroupView.m */; };
 		04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04EC1B571D38F6BF006DBD5D /* JavaScriptCore.framework */; };
@@ -340,8 +341,8 @@
 		38EAF1C11AE0E6B100397E2A /* TeamIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EAF1C01AE0E6B100397E2A /* TeamIssue.m */; };
 		38EAF1C41AE0EA6D00397E2A /* TeamProject.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EAF1C31AE0EA6D00397E2A /* TeamProject.m */; };
 		38EAF1C71AE0FCE400397E2A /* TeamProjectAuthority.m in Sources */ = {isa = PBXBuildFile; fileRef = 38EAF1C61AE0FCE400397E2A /* TeamProjectAuthority.m */; };
-		48DB971153E819303C867857 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EC1A1036C602D33E181FD0 /* libPods-iosapp.a */; };
 		6662BAD01B8C5EBD00D6A9BC /* NSString+pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */; };
+		C52126272C8984831F0DDFAB /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B360AA26020F58453D82DD76 /* libPods-iosapp.a */; };
 		C52BF4E71AF9AAA000E53508 /* TeamWeeklyReportDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4E61AF9AAA000E53508 /* TeamWeeklyReportDetail.m */; };
 		C52BF4FE1AFCB6EE00E53508 /* TeamReply.m in Sources */ = {isa = PBXBuildFile; fileRef = C52BF4FD1AFCB6EE00E53508 /* TeamReply.m */; };
 		C57E7B571B56734300F39B5C /* PlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C57E7B561B56734300F39B5C /* PlaceholderTextView.m */; };
@@ -375,7 +376,6 @@
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
 		EED55F721A80AB13004E6371 /* UIButton+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F701A80AB13004E6371 /* UIButton+Badge.m */; };
 		EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = EED81D5C1CF54F88000ACFBC /* OSCQuestion.m */; };
-		FCA92AF9A8AF62C2E445FBE0 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ACD1A547FD50E3559BA852B /* libPods-iosapp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -471,6 +471,10 @@
 		0447EF291D59779C00F0954D /* ImageDownloadHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageDownloadHandle.h; path = ELCImagePickerController/ImageDownloadHandle.h; sourceTree = "<group>"; };
 		0447EF2A1D59779C00F0954D /* ImageDownloadHandle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageDownloadHandle.m; path = ELCImagePickerController/ImageDownloadHandle.m; sourceTree = "<group>"; };
 		047325A21CF8612B00460658 /* enumList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = enumList.h; path = OSC/enumList.h; sourceTree = "<group>"; };
+		04AE158A1D8FB86800C6567E /* OSCInformationDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformationDetailController.h; sourceTree = "<group>"; };
+		04AE158B1D8FB86800C6567E /* OSCInformationDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformationDetailController.m; sourceTree = "<group>"; };
+		04AE158D1D8FB8CE00C6567E /* OSCBlogDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCBlogDetailController.h; sourceTree = "<group>"; };
+		04AE158E1D8FB8CE00C6567E /* OSCBlogDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBlogDetailController.m; sourceTree = "<group>"; };
 		04B05B231D892DC300D525F2 /* TweetDetailNewTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailNewTableViewController.h; sourceTree = "<group>"; };
 		04B05B241D892DC300D525F2 /* TweetDetailNewTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailNewTableViewController.m; sourceTree = "<group>"; };
 		04B05B271D892DC300D525F2 /* NewMultipleDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewMultipleDetailCell.h; sourceTree = "<group>"; };
@@ -852,7 +856,6 @@
 		04BB22CA1D8931C90099B347 /* OSCPrivateChatCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPrivateChatCell.m; sourceTree = "<group>"; };
 		04BB22CB1D8931C90099B347 /* OSCPrivateChatController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPrivateChatController.h; sourceTree = "<group>"; };
 		04BB22CC1D8931C90099B347 /* OSCPrivateChatController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPrivateChatController.m; sourceTree = "<group>"; };
-		04BB22CD1D8931C90099B347 /* OSCPrivateChatController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OSCPrivateChatController.xib; sourceTree = "<group>"; };
 		04D47F3E1CF312D200F14EF2 /* OSCInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCInformation.h; sourceTree = "<group>"; };
 		04D47F3F1CF312D200F14EF2 /* OSCInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCInformation.m; sourceTree = "<group>"; };
 		04E5BAC81D406DAD0046EA65 /* OSCPhotoGroupView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPhotoGroupView.h; sourceTree = "<group>"; };
@@ -869,7 +872,8 @@
 		04EC96A61CF48E8C0004B54E /* OSCBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCBanner.m; sourceTree = "<group>"; };
 		04F1D4D61D76B957007B4311 /* OSCPushTypeControllerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCPushTypeControllerHelper.h; sourceTree = "<group>"; };
 		04F1D4D71D76B957007B4311 /* OSCPushTypeControllerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCPushTypeControllerHelper.m; sourceTree = "<group>"; };
-		0B5CD6C61331A408AD7076FA /* Pods-iosapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.debug.xcconfig"; sourceTree = "<group>"; };
+		14EE577A34714F03E770E4EF /* Pods-iosapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.debug.xcconfig"; sourceTree = "<group>"; };
+		2B3663C79B2577756A212CC4 /* Pods-iosapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.release.xcconfig"; sourceTree = "<group>"; };
 		31697BC41B16FB0E001FE346 /* MZDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZDay.h; sourceTree = "<group>"; };
 		31697BC51B16FB0E001FE346 /* MZDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MZDay.m; sourceTree = "<group>"; };
 		31697BC61B16FB0E001FE346 /* MZDayPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MZDayPicker.h; sourceTree = "<group>"; };
@@ -993,14 +997,11 @@
 		38EAF1C31AE0EA6D00397E2A /* TeamProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamProject.m; sourceTree = "<group>"; };
 		38EAF1C51AE0FCE400397E2A /* TeamProjectAuthority.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamProjectAuthority.h; sourceTree = "<group>"; };
 		38EAF1C61AE0FCE400397E2A /* TeamProjectAuthority.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamProjectAuthority.m; sourceTree = "<group>"; };
-		55EC1A1036C602D33E181FD0 /* libPods-iosapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6662BACE1B8C5EBD00D6A9BC /* NSString+pinyin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+pinyin.h"; sourceTree = "<group>"; };
 		6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+pinyin.m"; sourceTree = "<group>"; };
 		74FCF9B11D6D985C0085B2EB /* libc++.1.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.1.tbd"; path = "usr/lib/libc++.1.tbd"; sourceTree = SDKROOT; };
 		74FCF9B21D6D985C0085B2EB /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
-		8ACD1A547FD50E3559BA852B /* libPods-iosapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B04D98EED93ED32EE5552D33 /* Pods-iosapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.debug.xcconfig"; sourceTree = "<group>"; };
-		B67F6D0570D841EBD70A6FFC /* Pods-iosapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.release.xcconfig"; sourceTree = "<group>"; };
+		B360AA26020F58453D82DD76 /* libPods-iosapp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-iosapp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52BF4E51AF9AAA000E53508 /* TeamWeeklyReportDetail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamWeeklyReportDetail.h; sourceTree = "<group>"; };
 		C52BF4E61AF9AAA000E53508 /* TeamWeeklyReportDetail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamWeeklyReportDetail.m; sourceTree = "<group>"; };
 		C52BF4FC1AFCB6EE00E53508 /* TeamReply.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamReply.h; sourceTree = "<group>"; };
@@ -1046,7 +1047,6 @@
 		C5FB95901AEA305D006918CD /* TeamDiscussionDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamDiscussionDetails.m; sourceTree = "<group>"; };
 		C5FB95951AEE14FC006918CD /* TeamTeam.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeamTeam.h; sourceTree = "<group>"; };
 		C5FB95961AEE14FC006918CD /* TeamTeam.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeamTeam.m; sourceTree = "<group>"; };
-		E9342611FD128AF9513D1FAF /* Pods-iosapp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosapp.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosapp/Pods-iosapp.release.xcconfig"; sourceTree = "<group>"; };
 		EE01F8F31D1AAAD700F7DA2F /* OSCNewComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewComment.h; sourceTree = "<group>"; };
 		EE01F8F41D1AAAD700F7DA2F /* OSCNewComment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSCNewComment.m; sourceTree = "<group>"; };
 		EE01F8F51D1AAAD700F7DA2F /* OSCNewSoftWare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSCNewSoftWare.h; sourceTree = "<group>"; };
@@ -1094,7 +1094,7 @@
 				042E8CFF1CF5945700364BD7 /* CoreText.framework in Frameworks */,
 				042E8CFE1CF5944E00364BD7 /* UIKit.framework in Frameworks */,
 				042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */,
-				48DB971153E819303C867857 /* libPods-iosapp.a in Frameworks */,
+				C52126272C8984831F0DDFAB /* libPods-iosapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1126,7 +1126,7 @@
 				00D6BCF919EB673200E8754E /* iosappTests */,
 				00D6BCDB19EB673200E8754E /* Products */,
 				1BB5019F31BE469F592E0B67 /* Frameworks */,
-				2399BC2F993B564B544E2904 /* Pods */,
+				3853CD73217AACA785F7FE1B /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1467,6 +1467,8 @@
 		04B05B811D892DCD00D525F2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				04AE158D1D8FB8CE00C6567E /* OSCBlogDetailController.h */,
+				04AE158E1D8FB8CE00C6567E /* OSCBlogDetailController.m */,
 				04B05B821D892DCD00D525F2 /* BlogsViewController.h */,
 				04B05B831D892DCD00D525F2 /* BlogsViewController.m */,
 				04B05B841D892DCD00D525F2 /* MyBlogsViewController.h */,
@@ -1512,6 +1514,8 @@
 			children = (
 				04B05B921D892DCD00D525F2 /* InformationViewController.h */,
 				04B05B931D892DCD00D525F2 /* InformationViewController.m */,
+				04AE158A1D8FB86800C6567E /* OSCInformationDetailController.h */,
+				04AE158B1D8FB86800C6567E /* OSCInformationDetailController.m */,
 				04B05B941D892DCD00D525F2 /* NewsBlogDetailTableViewController.h */,
 				04B05B951D892DCD00D525F2 /* NewsBlogDetailTableViewController.m */,
 				04B05B961D892DCD00D525F2 /* NewsBlogDetailTableViewController.xib */,
@@ -1798,8 +1802,8 @@
 		04B05C6C1D892DE100D525F2 /* AboutMe */ = {
 			isa = PBXGroup;
 			children = (
-				04B05C6D1D892DE100D525F2 /* Controller */,
 				04B05C721D892DE100D525F2 /* Homepage.storyboard */,
+				04B05C6D1D892DE100D525F2 /* Controller */,
 				04B05C731D892DE100D525F2 /* Model */,
 				04B05C741D892DE100D525F2 /* View */,
 			);
@@ -1918,11 +1922,11 @@
 			children = (
 				04B05C9F1D892DEF00D525F2 /* MessageCenter.h */,
 				04B05CA01D892DEF00D525F2 /* MessageCenter.m */,
+				04B05CB31D892DEF00D525F2 /* OSCMessageCenterController.h */,
+				04B05CB41D892DEF00D525F2 /* OSCMessageCenterController.m */,
 				04B05CA11D892DEF00D525F2 /* MsgCenter_AtMe */,
 				04B05CA71D892DEF00D525F2 /* MsgCenter_Comments */,
 				04B05CAD1D892DEF00D525F2 /* MsgCenter_PrivateChat */,
-				04B05CB31D892DEF00D525F2 /* OSCMessageCenterController.h */,
-				04B05CB41D892DEF00D525F2 /* OSCMessageCenterController.m */,
 			);
 			path = MessageCenter;
 			sourceTree = "<group>";
@@ -2292,18 +2296,8 @@
 				04BB22CA1D8931C90099B347 /* OSCPrivateChatCell.m */,
 				04BB22CB1D8931C90099B347 /* OSCPrivateChatController.h */,
 				04BB22CC1D8931C90099B347 /* OSCPrivateChatController.m */,
-				04BB22CD1D8931C90099B347 /* OSCPrivateChatController.xib */,
 			);
 			path = PrivateChat;
-			sourceTree = "<group>";
-		};
-		0F9A2E10BDF23C7D6A2578C9 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				B04D98EED93ED32EE5552D33 /* Pods-iosapp.debug.xcconfig */,
-				B67F6D0570D841EBD70A6FFC /* Pods-iosapp.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
@@ -2335,18 +2329,9 @@
 				386F1E5B1A7A2A6500B773EE /* SystemConfiguration.framework */,
 				386F1E591A7A2A5800B773EE /* libiconv.dylib */,
 				386F1E571A7A2A4900B773EE /* Security.framework */,
-				55EC1A1036C602D33E181FD0 /* libPods-iosapp.a */,
+				B360AA26020F58453D82DD76 /* libPods-iosapp.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		2399BC2F993B564B544E2904 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0B5CD6C61331A408AD7076FA /* Pods-iosapp.debug.xcconfig */,
-				E9342611FD128AF9513D1FAF /* Pods-iosapp.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		31697BC31B16FB0E001FE346 /* MZDayPicker */ = {
@@ -2516,6 +2501,15 @@
 				C52BF4E81AF9AAA900E53508 /* 周报 */,
 			);
 			path = Team;
+			sourceTree = "<group>";
+		};
+		3853CD73217AACA785F7FE1B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				14EE577A34714F03E770E4EF /* Pods-iosapp.debug.xcconfig */,
+				2B3663C79B2577756A212CC4 /* Pods-iosapp.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		386039661A0A34F5007C9B88 /* Resources */ = {
@@ -2802,12 +2796,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00D6BD0019EB673200E8754E /* Build configuration list for PBXNativeTarget "iosapp" */;
 			buildPhases = (
-				29DD1540F4A6DDD742246AFB /* [CP] Check Pods Manifest.lock */,
+				C57D6432202BA15A367AFFE0 /* [CP] Check Pods Manifest.lock */,
 				00D6BCD619EB673200E8754E /* Sources */,
 				00D6BCD719EB673200E8754E /* Frameworks */,
 				00D6BCD819EB673200E8754E /* Resources */,
-				C8C815620688FAE2D386D6B8 /* [CP] Copy Pods Resources */,
-				65FB3FE0826CA3EDEA75FB1B /* [CP] Embed Pods Frameworks */,
+				E3B08DBBDDC0EC908750D5C9 /* [CP] Embed Pods Frameworks */,
+				06074165DFEEC913C9836145 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -2926,7 +2920,6 @@
 				C5B1231C1B316830000B29D2 /* css in Resources */,
 				04B05BF01D892DCD00D525F2 /* ActivityHeadCell.xib in Resources */,
 				317AD9C91C96AD68008356DE /* recommend_tag.png in Resources */,
-				04BB22D31D8931C90099B347 /* OSCPrivateChatController.xib in Resources */,
 				04B05BFE1D892DCD00D525F2 /* NewsDetailViewController.xib in Resources */,
 				04270A1E1D77CD5200E21ECC /* InputToolbarContentView.xib in Resources */,
 				04B05C031D892DCD00D525F2 /* ContentWebViewCell.xib in Resources */,
@@ -2953,22 +2946,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		65FB3FE0826CA3EDEA75FB1B /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		17723400B30100A9FAE70AB6 /* [CP] Copy Pods Resources */ = {
+		06074165DFEEC913C9836145 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2983,7 +2961,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		29DD1540F4A6DDD742246AFB /* [CP] Check Pods Manifest.lock */ = {
+		C57D6432202BA15A367AFFE0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2998,6 +2976,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		E3B08DBBDDC0EC908750D5C9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-iosapp/Pods-iosapp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -3005,6 +2998,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04AE158F1D8FB8CE00C6567E /* OSCBlogDetailController.m in Sources */,
 				04B05DC91D892FB500D525F2 /* InputToolbar.m in Sources */,
 				0422BC561CEDA390007DB140 /* TAAbstractDotView.m in Sources */,
 				C52BF4FE1AFCB6EE00E53508 /* TeamReply.m in Sources */,
@@ -3023,6 +3017,7 @@
 				04B05B641D892DC300D525F2 /* OSCTextTweetCell.m in Sources */,
 				042E8D1E1CF7038600364BD7 /* OSCBlogDetail.m in Sources */,
 				04B05DAC1D892E0F00D525F2 /* OptionButton.m in Sources */,
+				04AE158C1D8FB86800C6567E /* OSCInformationDetailController.m in Sources */,
 				00C9A73D19EE863B000EA878 /* OSCBaseObject.m in Sources */,
 				EED81D5D1CF54F88000ACFBC /* OSCQuestion.m in Sources */,
 				3838D15C1A6C9D0900CC7913 /* OperationBar.m in Sources */,
@@ -3401,7 +3396,7 @@
 		};
 		00D6BD0119EB673200E8754E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0B5CD6C61331A408AD7076FA /* Pods-iosapp.debug.xcconfig */;
+			baseConfigurationReference = 14EE577A34714F03E770E4EF /* Pods-iosapp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -3470,7 +3465,7 @@
 		};
 		00D6BD0219EB673200E8754E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E9342611FD128AF9513D1FAF /* Pods-iosapp.release.xcconfig */;
+			baseConfigurationReference = 2B3663C79B2577756A212CC4 /* Pods-iosapp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

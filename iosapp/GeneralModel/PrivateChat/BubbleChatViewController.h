@@ -6,12 +6,11 @@
 //  Copyright (c) 2015 oschina. All rights reserved.
 //
 
-//#import "DetailsViewController.h"
 #import <UIKit/UIKit.h>
 #import "BottomBarViewController.h"
 
 @interface BubbleChatViewController : BottomBarViewController
 
-- (instancetype)initWithUserID:(int64_t)userID andUserName:(NSString *)userName;
+- (instancetype)initWithUserID:(NSInteger)userID andUserName:(NSString *)userName;
 
 @end
