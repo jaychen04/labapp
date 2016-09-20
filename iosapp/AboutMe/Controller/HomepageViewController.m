@@ -855,27 +855,27 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     NSArray *noticeCounts = [notification object];
     
     OSCNotice *oldNotice = [Config getNotice];
-    int oldNumber = oldNotice.mention + oldNotice.letter + oldNotice.review + oldNotice.fans + oldNotice.like;
+    int oldNumber = oldNotice.mention + oldNotice.letter + oldNotice.review;
     
     OSCNotice *newNotice = [OSCNotice new];
     
     __block int sumOfCount = 0;
     [noticeCounts enumerateObjectsUsingBlock:^(NSNumber *count, NSUInteger idx, BOOL *stop) {
-//        _noticeCounts[idx] = count;
-        sumOfCount += [count intValue];
-        
         switch (idx) {
             case 0:
                 _noticeCounts[idx] =  @([count intValue] + oldNotice.mention);
                 newNotice.mention = [_noticeCounts[idx] intValue];
+                sumOfCount += [count intValue];
                 break;
             case 1:
                 _noticeCounts[idx] =  @([count intValue] + oldNotice.review);
                 newNotice.review = [_noticeCounts[idx] intValue];
+                sumOfCount += [count intValue];
                 break;
             case 2:
                 _noticeCounts[idx] =  @([count intValue] + oldNotice.letter);
                 newNotice.letter = [_noticeCounts[idx] intValue];
+                sumOfCount += [count intValue];
                 break;
             case 3:
                 newNotice.fans = [count intValue] + oldNotice.fans;
