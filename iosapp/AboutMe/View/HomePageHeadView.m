@@ -46,7 +46,7 @@
     _drawView.duration = 25;
     _drawView.bgColor = [UIColor colorWithHex:0x24CF5F];
     _drawView.strokeColor = [UIColor colorWithHex:0x6FDB94];
-    _drawView.offestCenter = (OffestCenter){0, (view_userPortrait + userPortrait_width * 0.5) - viewHeight * 0.5 + 20};
+    _drawView.offestCenter = (OffestCenter){0, view_userPortrait + userPortrait_width * 0.5 - viewHeight * 0.5};
     [self addSubview:_drawView];
     
     _setUpButton = [UIButton new];
