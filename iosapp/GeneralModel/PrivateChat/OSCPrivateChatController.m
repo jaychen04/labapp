@@ -151,6 +151,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
                  }
                  [HUD hideAnimated:YES afterDelay:0.3];
              });
+             [self refreshToBottom];
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
              dispatch_async(dispatch_get_main_queue(), ^{
@@ -241,6 +242,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
 
 
+
 #pragma mark --- lazy loading
 
 - (NSMutableArray *)dataSource {
@@ -252,7 +254,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
 
 #pragma 监听
-
 -(void)keyboardWillShow:(NSNotification *)notification{
     NSDictionary *info = [notification userInfo];
     float keyBoardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
