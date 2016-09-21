@@ -150,6 +150,7 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     self.tableView.tableHeaderView = nil;
     
     [self.navigationController.navigationBar lt_reset];
+    [self.navigationController.navigationBar setBackgroundImage:[Utils createImageWithColor:[UIColor navigationbarColor]] forBarMetrics:UIBarMetricsDefault];
 }
 
 #pragma mark --- Setting default value
