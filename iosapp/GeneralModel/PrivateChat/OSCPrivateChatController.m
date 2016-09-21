@@ -27,6 +27,8 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 @property (nonatomic,strong) NSString* nextPageToken;
 @property (nonatomic,strong) NSString* prevPageToken;
 
+@property (nonatomic,assign) CGRect tableRect;
+
 @end
 
 @implementation OSCPrivateChatController{
@@ -39,30 +41,41 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     self = [super init];
     if (self) {
         _authorId = authorId;
-        _prevPageToken = nil;
-        _nextPageToken = nil;
+        _prevPageToken = @"";
+        _nextPageToken = @"";
         _isFirstOpenPage = YES;
     }
     return self;
 }
 
+-(void)loadView{
+    [super loadView];
+}
+
 #pragma mark --- life cycle
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.mj_header = [MJRefreshHeader headerWithRefreshingBlock:^{
         [self getDataUpgradeRequest:YES];
     }];
     [self getDataUpgradeRequest:NO];
+    
+    _tableRect = self.tableView.frame;
+}
+
+-(void)viewWillAppear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
 }
 
 #pragma mark - refresh
 - (void)refresh
 {
-    [self.tableView reloadData];
     [self.dataSource removeAllObjects];
     _isFirstOpenPage = YES;
+    _nextPageToken = @"";
+    _prevPageToken = @"";
     [self getDataUpgradeRequest:NO];
 }
 - (void)refreshToBottom{
@@ -187,11 +200,22 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     return dataSource.rowHeight;
 }
 
-#pragma mark --- scrollView delegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if (scrollView == self.tableView && _didScroll) {_didScroll();}
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (_didScroll) {
+        _didScroll();
+    }
 }
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if (_didScroll) {
+        _didScroll();
+    }
+}
+
+#pragma mark --- scrollView delegate
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if (scrollView == self.tableView && _didScroll) {_didScroll();}
+//}
 
 
 #pragma mark --- OSCPrivateChatCellDelegate
@@ -228,4 +252,33 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 	}
 	return _dataSource;
 }
+
+
+#pragma 监听
+
+-(void)keyboardWillShow:(NSNotification *)notification{
+    NSDictionary *info = [notification userInfo];
+    float keyBoardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
+    
+    CGPoint point = self.tableView.contentOffset;
+    [self.tableView setContentOffset:CGPointMake(point.x, point.y + keyBoardHeight) animated:YES];
+    
+    
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_dataSource.count - 1 inSection:0];
+//    OSCPrivateChatCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+//    CGFloat differenceY = [UIScreen mainScreen].bounds.size.height - CGRectGetMaxY(cell.frame);
+//    CGRect newRect;
+//    if(0 < differenceY && differenceY < keyBoardHeight){
+//        NSLog(@"%@",NSStringFromCGRect(self.tableView.frame));
+//        NSLog(@"---------------------------------------- %f",differenceY);
+////        newRect = CGRectMake(_tableRect.origin.x, _tableRect.origin.y +  differenceY - keyBoardHeight, _tableRect.size.width , _tableRect.size.height);
+//        self.tableView.frame = newRect;
+//    }else if (differenceY < 0){
+//        NSLog(@"++++++++++++++++++++++++++++");
+////        newRect = CGRectMake(_tableRect.origin.x, _tableRect.origin.y - keyBoardHeight, _tableRect.size.width , _tableRect.size.height);
+//        newRect = CGRectMake(_tableRect.origin.x, _tableRect.origin.y - keyBoardHeight, _tableRect.size.width , 590);
+//        self.tableView.frame = newRect;
+//    }
+}
+
 @end
