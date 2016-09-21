@@ -139,11 +139,8 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     MessageItem* msgItem = self.dataSource[indexPath.row];
 
-//    BubbleChatViewController* vc = [[BubbleChatViewController alloc]initWithUserID:msgItem.sender.id andUserName:msgItem.sender.name];
-//    [self.navigationController pushViewController:vc animated:YES];
-
-    OSCPrivateChatController* privateChatVC = [[OSCPrivateChatController alloc]initWithAuthorId:msgItem.sender.id];
-    [self.navigationController pushViewController:privateChatVC animated:YES];
+    BubbleChatViewController* vc = [[BubbleChatViewController alloc]initWithUserID:msgItem.sender.id andUserName:msgItem.sender.name];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark --- OSCMessageCellDelegate

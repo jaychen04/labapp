@@ -45,6 +45,9 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     }
     return self;
 }
+- (void)loadView{
+    [super loadView];
+}
 
 #pragma mark --- life cycle
 - (void)viewDidLoad {
@@ -60,8 +63,9 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 #pragma mark - refresh
 - (void)refresh
 {
-    [self.tableView reloadData];
     [self.dataSource removeAllObjects];
+    _prevPageToken = @"";
+    _nextPageToken = @"";
     _isFirstOpenPage = YES;
     [self getDataUpgradeRequest:NO];
 }
