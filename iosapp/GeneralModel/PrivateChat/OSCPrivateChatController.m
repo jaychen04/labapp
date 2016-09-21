@@ -27,8 +27,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 @property (nonatomic,strong) NSString* nextPageToken;
 @property (nonatomic,strong) NSString* prevPageToken;
 
-@property (nonatomic,assign) CGRect tableRect;
-
 @end
 
 @implementation OSCPrivateChatController{
@@ -51,9 +49,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     [super loadView];
 }
 
--(void)loadView{
-    [super loadView];
-}
 
 #pragma mark --- life cycle
 - (void)viewDidLoad {
@@ -65,7 +60,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     }];
     [self getDataUpgradeRequest:NO];
     
-    _tableRect = self.tableView.frame;
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -76,8 +70,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 - (void)refresh
 {
     [self.dataSource removeAllObjects];
-    _prevPageToken = @"";
-    _nextPageToken = @"";
     _isFirstOpenPage = YES;
     _nextPageToken = @"";
     _prevPageToken = @"";
@@ -265,25 +257,15 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     NSDictionary *info = [notification userInfo];
     float keyBoardHeight = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
     
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_dataSource.count - 1 inSection:0];
+    OSCPrivateChatCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    CGFloat differenceY = [UIScreen mainScreen].bounds.size.height - CGRectGetMaxY(cell.frame) - 109;
     CGPoint point = self.tableView.contentOffset;
-    [self.tableView setContentOffset:CGPointMake(point.x, point.y + keyBoardHeight) animated:YES];
-    
-    
-//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:_dataSource.count - 1 inSection:0];
-//    OSCPrivateChatCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-//    CGFloat differenceY = [UIScreen mainScreen].bounds.size.height - CGRectGetMaxY(cell.frame);
-//    CGRect newRect;
-//    if(0 < differenceY && differenceY < keyBoardHeight){
-//        NSLog(@"%@",NSStringFromCGRect(self.tableView.frame));
-//        NSLog(@"---------------------------------------- %f",differenceY);
-////        newRect = CGRectMake(_tableRect.origin.x, _tableRect.origin.y +  differenceY - keyBoardHeight, _tableRect.size.width , _tableRect.size.height);
-//        self.tableView.frame = newRect;
-//    }else if (differenceY < 0){
-//        NSLog(@"++++++++++++++++++++++++++++");
-////        newRect = CGRectMake(_tableRect.origin.x, _tableRect.origin.y - keyBoardHeight, _tableRect.size.width , _tableRect.size.height);
-//        newRect = CGRectMake(_tableRect.origin.x, _tableRect.origin.y - keyBoardHeight, _tableRect.size.width , 590);
-//        self.tableView.frame = newRect;
-//    }
-}
+    if (0 < differenceY && differenceY < keyBoardHeight) {
+        [self.tableView setContentOffset:CGPointMake(point.x, point.y + keyBoardHeight - differenceY) animated:YES];
+    }else if (differenceY < 0 || differenceY >= [UIScreen mainScreen].bounds.size.height - 109){
+        [self.tableView setContentOffset:CGPointMake(point.x, point.y + keyBoardHeight) animated:YES];
+    }
+    }
 
 @end

@@ -113,7 +113,7 @@
                 <outlet property="userNameLabel" destination="WrV-ch-azG" id="S5w-wX-RQu"/>
                 <outlet property="userPortraitImageView" destination="Gtl-rR-x6B" id="jET-4d-X6E"/>
             </connections>
-            <point key="canvasLocation" x="177" y="263"/>
+            <point key="canvasLocation" x="14" y="90"/>
         </tableViewCell>
     </objects>
     <resources>
