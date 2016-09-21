@@ -47,6 +47,9 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
     }
     return self;
 }
+- (void)loadView{
+    [super loadView];
+}
 
 -(void)loadView{
     [super loadView];
@@ -73,6 +76,8 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 - (void)refresh
 {
     [self.dataSource removeAllObjects];
+    _prevPageToken = @"";
+    _nextPageToken = @"";
     _isFirstOpenPage = YES;
     _nextPageToken = @"";
     _prevPageToken = @"";
