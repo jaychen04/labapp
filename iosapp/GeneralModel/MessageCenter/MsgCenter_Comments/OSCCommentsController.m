@@ -166,7 +166,6 @@ static NSString* const OSCCommentsCellReuseIdentifier = @"OSCCommentsCell";
 - (UITableView *)tableView {
     if(_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,0},{self.view.bounds.size.width,self.view.bounds.size.height - 100}} style:UITableViewStylePlain];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.estimatedRowHeight = COMMENT_HEIGHT;
