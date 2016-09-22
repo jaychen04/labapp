@@ -268,6 +268,7 @@ static UIImage* _fileTipImage;
         [self addSubview:({
             UIImageView* photoView = [UIImageView new];
             _photoView = photoView;
+//            _photoView.contentMode = UIViewContentModeCenter;
             [_photoView zy_cornerRadiusAdvance:10 rectCornerType:UIRectCornerAllCorners];
             _photoView;
         })];
