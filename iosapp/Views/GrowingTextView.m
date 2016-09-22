@@ -40,7 +40,6 @@
     //NSLog(@"contentSize:(height): %f, (width):%f", self.contentSize.height, self.contentSize.width);
     //NSLog(@"Height: %f", [self sizeThatFits:self.frame.size].height + 15);
     
-    
     return ceilf([self sizeThatFits:self.frame.size].height + 10);
 }
 

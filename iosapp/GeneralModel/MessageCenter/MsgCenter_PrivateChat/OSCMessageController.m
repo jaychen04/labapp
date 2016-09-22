@@ -155,7 +155,6 @@ static NSString* const messageCellIdentifier = @"OSCMessageCell";
 - (UITableView *)tableView {
 	if(_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,0},{self.view.bounds.size.width,self.view.bounds.size.height - 100}} style:UITableViewStylePlain];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.rowHeight = MESSAGE_CELL_ROW;

@@ -31,6 +31,8 @@
 
 @property (nonatomic,strong) NSString* pubDate;
 
+@property (nonatomic,strong) NSMutableAttributedString* attributedBody;
+
 @end
 
 

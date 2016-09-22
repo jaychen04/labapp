@@ -135,7 +135,9 @@
            });
         }];
     }else{
-        [_userPortraitImageView setImage:portraitImage];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_userPortraitImageView setImage:portraitImage];
+        });
     }
     
     _userNameLabel.text = messageItem.sender.name;
