@@ -56,9 +56,6 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
 
     _titleLabel.textColor = [UIColor newTitleColor];
     
-//    NSString *pubDateString = [viewModel.pubDate componentsSeparatedByString:@" "][0];
-//    NSString *systemDateString = [_systemTimeDate componentsSeparatedByString:@" "][0];
-    
     NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MM-dd HH:mm:ss";
     NSDate* date = [formatter dateFromString:viewModel.pubDate];
@@ -79,7 +76,6 @@ NSString* InformationTableViewCell_IdentifierString = @"InformationTableViewCell
     _descLabel.text = viewModel.body;
     _commentLabel.text = [NSString stringWithFormat:@"%ld",(long)viewModel.commentCount];
     _viewCountLabel.text = [NSString stringWithFormat:@"%ld",(long)viewModel.viewCount];
-    
     
     [_timeDistanceLabel setAttributedText:[Utils attributedTimeString:date]];
 }
