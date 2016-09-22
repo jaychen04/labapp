@@ -49,7 +49,6 @@ static NSString *titleInfoReuseIdentifier = @"TitleInfoTableViewCell";
 static NSString *recommandBlogReuseIdentifier = @"RecommandBlogTableViewCell";
 static NSString *abstractReuseIdentifier = @"abstractTableViewCell";
 static NSString *contentWKWebReuseIdentifier = @"ContentWKWebViewCell";
-//static NSString *contentWebReuseIdentifier = @"contentWebTableViewCell";
 static NSString *newCommentReuseIdentifier = @"NewCommentCell";
 static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 

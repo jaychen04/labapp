@@ -151,7 +151,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
                  }
                  [HUD hideAnimated:YES afterDelay:0.3];
              });
-             [self refreshToBottom];
     }
          failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
              dispatch_async(dispatch_get_main_queue(), ^{
