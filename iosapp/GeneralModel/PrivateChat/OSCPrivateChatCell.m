@@ -120,7 +120,6 @@ static UIImage* _fileTipImage;
             _textView = textView;
             _textView.backgroundColor = [UIColor clearColor];
             _textView.font = [UIFont systemFontOfSize:CHAT_TEXT_FONT_SIZE];
-            _textView.textColor = [UIColor newTitleColor];
             _textView.editable = NO;
             _textView.scrollEnabled = NO;
             [_textView setTextContainerInset:UIEdgeInsetsZero];
@@ -183,10 +182,24 @@ static UIImage* _fileTipImage;
 
     if (_isSelf) {
         [_popImageView setImage:[self selfPopImage]];
+        NSAttributedString* attStr = [Utils contentStringFromRawString:privateChatItem.content];
+        NSMutableAttributedString* mutableAttStr = [[NSMutableAttributedString alloc]initWithAttributedString:attStr];
+        [mutableAttStr setAttributes:@{
+                                      NSForegroundColorAttributeName:SELF_TEXT_COLOR,
+                                      NSFontAttributeName:[UIFont systemFontOfSize:CHAT_TEXT_FONT_SIZE]
+                                      }range:NSMakeRange(0, attStr.length)];
+        _textView.attributedText = mutableAttStr;
     }else{
         [_popImageView setImage:[self otherPopImage]];
+        NSAttributedString* attStr = [Utils contentStringFromRawString:privateChatItem.content];
+        NSMutableAttributedString* mutableAttStr = [[NSMutableAttributedString alloc]initWithAttributedString:attStr];
+        [mutableAttStr setAttributes:@{
+                                       NSForegroundColorAttributeName:OTHER_TEXT_COLOR,
+                                       NSFontAttributeName:[UIFont systemFontOfSize:CHAT_TEXT_FONT_SIZE]
+                                       } range:NSMakeRange(0, attStr.length)];
+        _textView.attributedText = mutableAttStr;
     }
-    _textView.attributedText = [Utils contentStringFromRawString:privateChatItem.content];
+
     
     if (privateChatItem.isDisplayTimeTip) {
         _timeLabel.hidden = NO;
