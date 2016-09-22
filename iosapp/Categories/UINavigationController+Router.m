@@ -39,8 +39,12 @@
     if (range.length <= 0) {
 		//TODO: 替换合适的webviewcontroller
 		if([[[UIDevice currentDevice] systemVersion] hasPrefix:@"9"]) {
-			SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
-			[self pushViewController:webviewController animated:YES];
+            if ( [url.absoluteString hasPrefix:@"http"] || [url.absoluteString hasPrefix:@"www"]) {
+                SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
+                [self pushViewController:webviewController animated:YES];
+            }else{
+                [[UIApplication sharedApplication] openURL:url];
+            }
 		} else {
 			[[UIApplication sharedApplication] openURL:url];
 		}
