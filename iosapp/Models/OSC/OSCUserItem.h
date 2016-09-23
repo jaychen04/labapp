@@ -51,21 +51,21 @@
 
 @interface OSCUserStatistics : NSObject
 
-@property (nonatomic, assign) NSInteger follow;
+@property (nonatomic, assign) int follow;
 
-@property (nonatomic, assign) NSInteger score;
+@property (nonatomic, assign) int score;
 
-@property (nonatomic, assign) NSInteger answer;
+@property (nonatomic, assign) int answer;
 
-@property (nonatomic, assign) NSInteger collect;
+@property (nonatomic, assign) int collect;
 
-@property (nonatomic, assign) NSInteger tweet;
+@property (nonatomic, assign) int tweet;
 
-@property (nonatomic, assign) NSInteger discuss;
+@property (nonatomic, assign) int discuss;
 
-@property (nonatomic, assign) NSInteger fans;
+@property (nonatomic, assign) int fans;
 
-@property (nonatomic, assign) NSInteger blog;
+@property (nonatomic, assign) int blog;
 
 @end
 
