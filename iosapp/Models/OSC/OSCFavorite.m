@@ -31,6 +31,7 @@ static NSString * const kURL = @"url";
     if ([self class] == [object class]) {
         return _objectID == ((OSCFavorite *)object).objectID;
     }
+    
     return NO;
 }
 

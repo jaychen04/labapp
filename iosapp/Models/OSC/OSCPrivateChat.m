@@ -27,8 +27,6 @@
     if (type == 1) {
         _privateChatType = OSCPrivateChatTypeText;
     }else if (type == 3){
-        [ScrollToBottomHelper addReference];
-
         _privateChatType = OSCPrivateChatTypeImage;
         _imageFrame = (CGRect){{0,0},{PRIVATE_IMAGE_DEFAULT_W,PRIVATE_IMAGE_DEFAULT_H}};
         _popFrame = (CGRect){{0,0},{PRIVATE_IMAGE_DEFAULT_W + PRIVATE_POP_IMAGE_PADDING_LEFT + PRIVATE_POP_IMAGE_PADDING_RIGHT,PRIVATE_IMAGE_DEFAULT_H + PRIVATE_POP_IMAGE_PADDING_TOP + PRIVATE_POP_IMAGE_PADDING_BOTTOM}};
@@ -83,7 +81,7 @@
 
 
 
-/** 处理timeTip的小工具类 与model绑定*/
+
 @interface TimeTipHelper()
 @property (nonatomic,strong) NSDate* updateTime;
 @end
@@ -123,37 +121,6 @@ static TimeTipHelper* _timeHelper;
 }
 @end
 
-
-
-/** 处理滚动底部的小工具类 与单次解析绑定*/
-@interface ScrollToBottomHelper ()
-@property (nonatomic,assign) NSInteger count;
-@end
-
-@implementation ScrollToBottomHelper
-
-static ScrollToBottomHelper* _shareScrollToBottomHelper;
-+ (instancetype)shareScrollToBottomHelper{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _shareScrollToBottomHelper = [ScrollToBottomHelper new];
-    });
-    return _shareScrollToBottomHelper;
-}
-
-+ (void)addReference{
-    _shareScrollToBottomHelper.count += 1;
-}
-
-+ (NSInteger)imagesCount{
-    return _shareScrollToBottomHelper.count;
-}
-
-+ (void)resetScrollToBottomHelper{
-    _shareScrollToBottomHelper.count = 0 ;
-}
-
-@end
 
 
 

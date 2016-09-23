@@ -109,7 +109,6 @@
               } else {
                   HUD.label.text = [NSString stringWithFormat:@"错误：%@", responseObject[@"message"]];
               }
-              self.image = nil;
               [HUD hideAnimated:YES afterDelay:1];
               
               //CGPointMake(0, CGFLOAT_MAX)最底部
@@ -119,8 +118,7 @@
           } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
               HUD.mode = MBProgressHUDModeCustomView;
               HUD.label.text = @"网络异常，私信发送失败";
-              
-              self.image = nil;
+
               [HUD hideAnimated:YES afterDelay:1];
           }];
     
