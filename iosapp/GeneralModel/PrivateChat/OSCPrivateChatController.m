@@ -22,10 +22,6 @@
 
 static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell";
 @interface OSCPrivateChatController ()<UITableViewDelegate,UITableViewDataSource,OSCPrivateChatCellDelegate, UITextViewDelegate>
-{
-    BOOL _isFirstOpenPage;
-    NSInteger _requestCount;
-}
 
 @property (nonatomic,strong) NSMutableArray* dataSource;
 @property (nonatomic,strong) NSString* nextPageToken;
@@ -35,6 +31,8 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
 
 @implementation OSCPrivateChatController{
     NSInteger _authorId;
+    
+    BOOL _isFirstOpenPage;
 }
 #pragma mark --- initialize method
 - (instancetype)initWithAuthorId:(NSInteger)authorId{
@@ -44,7 +42,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
         _prevPageToken = @"";
         _nextPageToken = @"";
         _isFirstOpenPage = YES;
-        _requestCount = 0;
     }
     return self;
 }
@@ -100,8 +97,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
         [paraMutableDic setObject:self.nextPageToken forKey:@"pageToken"];
     }
     
-//    if (_isFirstOpenPage || isUpgradeReq) { [ScrollToBottomHelper resetScrollToBottomHelper];}
-    
     MBProgressHUD* HUD = [Utils createHUD];
     [manager GET:strUrl
       parameters:paraMutableDic.copy
@@ -141,8 +136,6 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
                  HUD.label.text = @"未知错误";
              }
              
-//             _requestCount += 1;
-             
              dispatch_async(dispatch_get_main_queue(), ^{
                  [TimeTipHelper resetTimeTipHelper];
                  if (isUpgradeReq) {
@@ -150,8 +143,7 @@ static NSString* const OSCPrivateChatCellReuseIdentifier = @"OSCPrivateChatCell"
                  }else{
                      [self.tableView.mj_footer endRefreshing];
                  }
-//                 if (_isFirstOpenPage && _requestCount == [ScrollToBottomHelper imagesCount] + 1) {
-                 if (_isFirstOpenPage){
+                 if (_isFirstOpenPage) {
                      [self refreshToBottom];
                      _isFirstOpenPage = NO;
                  }else{
