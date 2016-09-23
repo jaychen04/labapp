@@ -72,3 +72,14 @@ typedef NS_ENUM(NSInteger,OSCPrivateChatType){
 
 @end
 
+/** 处理滚动底部的小工具类 与单次解析绑定*/
+@interface ScrollToBottomHelper : NSObject
+
++ (void)addReference;//引用计数加一
+
++ (NSInteger)imagesCount;//获取单次解析包含的图片数目
+
++ (void)resetScrollToBottomHelper;//归零重置
+
+@end
+

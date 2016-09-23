@@ -11,18 +11,26 @@
 #import <SDWebImageDownloader.h>
 #import <UIImageView+WebCache.h>
 #import <UIImage+GIF.h>
+#import <YYKit.h>
 
 @implementation ImageDownloadHandle
 
 #pragma mark --- retrieve && download image
 + (UIImage *)retrieveMemoryAndDiskCache:(NSString* )imageKey{
+/** 检索SDWebImage维护的buffer*/
     UIImage *image = [[SDImageCache sharedImageCache] imageFromMemoryCacheForKey:imageKey];
     if (!image) {
-        image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKey];
-        if (!image) {
-            return nil;
-        }else{
+/** 检索YYWebImage维护的buffer*/
+        image = [[YYWebImageManager sharedManager].cache getImageForKey:imageKey];
+        if (image) {
             return image;
+        }else{
+            image = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:imageKey];
+            if (!image) {
+                return nil;
+            }else{
+                return image;
+            }
         }
     }else{
         return image;

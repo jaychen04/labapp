@@ -209,29 +209,41 @@
         _imageTypeLogo.image = [self gifImage];
         _imageTypeLogo.hidden = NO;
     }
-    UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:imageData.thumb];
-    if (!image) {
-        _imageView.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.6];
-        _imageView.userInteractionEnabled = NO;
-        [ImageDownloadHandle downloadImageWithUrlString:imageData.thumb SaveToDisk:NO completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (isGif) {
-                    NSData *dataImage = UIImagePNGRepresentation(image);
-                    UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
-                    [_imageView setImage:gifImage];
-                }else{
-                    [_imageView setImage:image];
-                }
-                _imageView.userInteractionEnabled = YES;
-            });
-        }];
-    }else{
+    
+    UIImage* largerImage = [ImageDownloadHandle retrieveMemoryAndDiskCache:imageData.href];
+    
+    if (largerImage) {
         if (isGif) {
-            NSData *dataImage = UIImagePNGRepresentation(image);
-            image = [UIImage sd_animatedGIFWithData:dataImage];
+            NSData *dataImage = UIImagePNGRepresentation(largerImage);
+            largerImage = [UIImage sd_animatedGIFWithData:dataImage];
         }
-        [_imageView setImage:image];
+        [_imageView setImage:largerImage];
         _imageView.userInteractionEnabled = YES;
+    }else{
+        UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:imageData.thumb];
+        if (!image) {
+            _imageView.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.6];
+            _imageView.userInteractionEnabled = NO;
+            [ImageDownloadHandle downloadImageWithUrlString:imageData.thumb SaveToDisk:NO completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (isGif) {
+                        NSData *dataImage = UIImagePNGRepresentation(image);
+                        UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
+                        [_imageView setImage:gifImage];
+                    }else{
+                        [_imageView setImage:image];
+                    }
+                    _imageView.userInteractionEnabled = YES;
+                });
+            }];
+        }else{
+            if (isGif) {
+                NSData *dataImage = UIImagePNGRepresentation(image);
+                image = [UIImage sd_animatedGIFWithData:dataImage];
+            }
+            [_imageView setImage:image];
+            _imageView.userInteractionEnabled = YES;
+        }
     }
     
     if (tweetItem.liked) {
