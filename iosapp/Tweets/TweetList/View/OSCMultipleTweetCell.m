@@ -248,7 +248,7 @@
             imageView.backgroundColor = [[UIColor grayColor]colorWithAlphaComponent:0.6];
             imageView.hidden = NO;
             [_visibleImageViews addObject:imageView];
-            UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:imageData.thumb];
+            
             BOOL isGif = [imageData.thumb hasSuffix:@".gif"];
             if (isGif){
                 UIImageView* imageTypeLogo = (UIImageView* )[[imageView subviews] lastObject];
@@ -256,27 +256,42 @@
                 imageTypeLogo.image = [self gifImage];
                 imageTypeLogo.hidden = NO;
             }
-            if (!image) {
-                [ImageDownloadHandle downloadImageWithUrlString:imageData.thumb SaveToDisk:YES completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        if (isGif) {
-                            NSData *dataImage = UIImagePNGRepresentation(image);
-                            UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
-                            [imageView setImage:gifImage];
-                        }else{
-                            [imageView setImage:image];
-                        }
-                        imageView.userInteractionEnabled = YES;
-                    });
-                }];
-            }else{
+
+            UIImage* largerImage = [ImageDownloadHandle retrieveMemoryAndDiskCache:imageData.href];
+            
+            if (largerImage) {
                 if (isGif) {
-                    NSData *dataImage = UIImagePNGRepresentation(image);
-                    image = [UIImage sd_animatedGIFWithData:dataImage];
+                    NSData *dataImage = UIImagePNGRepresentation(largerImage);
+                    largerImage = [UIImage sd_animatedGIFWithData:dataImage];
                 }
-                [imageView setImage:image];
+                [imageView setImage:largerImage];
                 imageView.userInteractionEnabled = YES;
+            }else{
+                UIImage* image = [ImageDownloadHandle retrieveMemoryAndDiskCache:imageData.thumb];
+                if (!image) {
+                    [ImageDownloadHandle downloadImageWithUrlString:imageData.thumb SaveToDisk:YES completeBlock:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            if (isGif) {
+                                NSData *dataImage = UIImagePNGRepresentation(image);
+                                UIImage* gifImage = [UIImage sd_animatedGIFWithData:dataImage];
+                                [imageView setImage:gifImage];
+                            }else{
+                                [imageView setImage:image];
+                            }
+                            imageView.userInteractionEnabled = YES;
+                        });
+                    }];
+                }else{
+                    if (isGif) {
+                        NSData *dataImage = UIImagePNGRepresentation(image);
+                        image = [UIImage sd_animatedGIFWithData:dataImage];
+                    }
+                    [imageView setImage:image];
+                    imageView.userInteractionEnabled = YES;
+                }
+
             }
+            
             dataIndex++;
         }
     }

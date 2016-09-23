@@ -23,6 +23,7 @@
 #import <UIImage+GIF.h>
 #import <MBProgressHUD.h>
 #import <MJExtension.h>
+#import <YYKit.h>
 
 #import "AsyncDisplayTableViewCell.h"
 #import "OSCTextTweetCell.h"
@@ -291,7 +292,14 @@ static NSString* const reuseMultipleTweetCell = @"OSCMultipleTweetCell";
                       fromView:(UIImageView *)fromView
 {
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
-    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
+//    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
+/** 点开拿到大图之后 用大图更新update缩略图 提高清晰度 */
+    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:^{
+        OSCTweetItem* tweetItem = [cell valueForKey:@"tweetItem"];
+        OSCTweetImages* currentImageItem = tweetItem.images[groupView.currentPage];
+        UIImage* image = [[YYWebImageManager sharedManager].cache getImageForKey:currentImageItem.href withType:YYImageCacheTypeMemory];
+        if (image) { fromView.image = image; }
+    }];
 }
 
 - (void)changeTweetStausButtonDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
