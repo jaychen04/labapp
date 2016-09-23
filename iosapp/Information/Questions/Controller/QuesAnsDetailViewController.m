@@ -89,7 +89,7 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
                                                                              action:@selector(rightBarButtonClicked)];
     [self getDetailForQuestion];
     [self getCommentsForQuestion:NO];/* 待调试 */
-//    [self.tableView.mj_footer beginRefreshing]; 
+    [self.tableView.mj_footer beginRefreshing];
 	
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回"
                                                                              style:UIBarButtonItemStylePlain

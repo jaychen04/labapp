@@ -38,14 +38,14 @@
     [self.contentView addSubview:_portrait];
     
     _nameLabel = [UILabel new];
-    _nameLabel.numberOfLines = 1;
+    _nameLabel.numberOfLines = 0;
     _nameLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _nameLabel.font = [UIFont systemFontOfSize:15];
     _nameLabel.textColor = [UIColor newTitleColor];
     [self.contentView addSubview:_nameLabel];
     
     _infoLabel = [UILabel new];
-    _infoLabel.numberOfLines = 1;
+    _infoLabel.numberOfLines = 0;
     _infoLabel.lineBreakMode = NSLineBreakByWordWrapping;
     _infoLabel.font = [UIFont systemFontOfSize:12];
     _infoLabel.textColor = [UIColor newSecondTextColor];
@@ -60,7 +60,7 @@
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-16-[_portrait(36)]-8-[_nameLabel]-16-|" options:0 metrics:nil views:views]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_portrait(36)]" options:0 metrics:nil views:views]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-6-[_infoLabel]-14-|"
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-16-[_nameLabel]-2-[_infoLabel]-16-|"
                                                                              options:NSLayoutFormatAlignAllLeft | NSLayoutFormatAlignAllRight metrics:nil views:views]];
 }
 

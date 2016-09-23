@@ -4,8 +4,6 @@
 
 .DS_Store
 
-Podfile.lock
-
 ## Build generated
 build/
 DerivedData

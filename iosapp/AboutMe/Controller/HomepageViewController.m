@@ -107,8 +107,6 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [self statusBarViewState];
     self.tableView.backgroundView.backgroundColor = [UIColor redColor];
 //    [self navigationBarClearColor:YES];//test1
-    
-    [self refresh];
 
 }
 
@@ -116,6 +114,8 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [super viewDidAppear:animated];
     
     [self.navigationController setNavigationBarHidden:YES animated:animated];
+    
+//    [self navigationBarClearColor:YES];//test1
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -123,6 +123,8 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     [super viewWillDisappear:animated];
     
     [self.navigationController setNavigationBarHidden:NO animated:animated];
+    
+//    [self navigationBarClearColor:NO];//test1
     
     self.homePageHeadView = nil;
     self.tableView.tableHeaderView = nil;
@@ -137,14 +139,64 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     self.tableView.separatorColor = [UIColor separatorColor];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
-//    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     
     _myID = [Config getOwnID];
     [self refreshHeaderView];
     
     [self refresh];
     
-    self.tableView.tableFooterView = [UIView new];
+    
+    
+    /////test 1
+//    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"nidd" style:UIBarButtonItemStylePlain target:self action:@selector(code)];
+    
+    //test 2
+//    self.navigationController.delegate = self;
+}
+
+//test1
+- (void)code
+{
+    NSLog(@"ddddd");
+}
+
+- (void)navigationBarClearColor:(BOOL)isClear
+{
+    UIView *navBarView = [[UIView alloc] initWithFrame:CGRectMake(0, -64, CGRectGetWidth(self.view.frame), 64)];
+    navBarView.backgroundColor = [UIColor navigationbarColor];
+    [self.view insertSubview:navBarView belowSubview:self.navigationController.navigationBar];
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.layer.masksToBounds = YES;
+    
+    if (isClear) {
+        [UIView animateWithDuration:0.5 animations:^{
+            navBarView.alpha = 0.0;
+        } completion:^(BOOL finished) { }];
+    } else {
+        [UIView animateWithDuration:0.5 animations:^{
+            navBarView.alpha = 1.0;
+        } completion:^(BOOL finished) { }];
+    }
+}
+
+//test 2
+- (void) navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    // 如果进入的是当前视图控制器
+    if (viewController == self) {
+        // 背景设置为黑色
+        self.navigationController.navigationBar.tintColor = [UIColor navigationbarColor];
+        // 透明度设置为0.3
+        self.navigationController.navigationBar. alpha = 0.000;
+        // 设置为半透明
+        self.navigationController.navigationBar. translucent = YES ;
+    } else {
+        // 进入其他视图控制器
+        self.navigationController.navigationBar.alpha = 1;
+        // 背景颜色设置为系统 默认颜色
+        self.navigationController.navigationBar.tintColor = nil;
+        self.navigationController.navigationBar.translucent = NO; 
+    } 
 }
 
 #pragma mark - dealloc
@@ -309,41 +361,40 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     self.refreshControl.tintColor = [UIColor refreshControlColor];
 }
 
-/*
 #pragma mark - 弹性HeaderView 刷新
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     //获取偏移量
-    CGPoint offset = scrollView.contentOffset;
-    
-    //判断是否改变
-    if (offset.y < 0) {
-        CGRect rect = self.homePageHeadView.drawView.frame;
-        //我们只需要改变图片的y值和高度即可
-        rect.origin.y = offset.y;
-        //
-        CGFloat homeViewHeight = 0;
-        if ([UIScreen mainScreen].bounds.size.height < 500) {
-            homeViewHeight = 250;
-        } else {
-            homeViewHeight = screen_height - 202;//45*4+48
-        }
-        
-        if (_isLogin) {
-            homeViewHeight = homeViewHeight - 61;
-        }
-        rect.size.height = homeViewHeight - offset.y;
-        
-        //
+//    CGPoint offset = scrollView.contentOffset;
+//    
+//    //判断是否改变
+//    if (offset.y < 0) {
+//        CGRect rect = self.homePageHeadView.drawView.frame;
+//        //我们只需要改变图片的y值和高度即可
+//        rect.origin.y = offset.y;
+//        //
+//        CGFloat homeViewHeight = 0;
 //        if ([UIScreen mainScreen].bounds.size.height < 500) {
-//            rect.size.height = 250 - offset.y;
+//            homeViewHeight = 250;
 //        } else {
-//            rect.size.height = screen_height - 202 - offset.y;
+//            homeViewHeight = screen_height - 202;//45*4+48
 //        }
-        
-        self.homePageHeadView.drawView.frame = rect;
-    }
+//        
+//        if (_isLogin) {
+//            homeViewHeight = homeViewHeight - 61;
+//        }
+//        rect.size.height = homeViewHeight - offset.y;
+//        
+//        //
+////        if ([UIScreen mainScreen].bounds.size.height < 500) {
+////            rect.size.height = 250 - offset.y;
+////        } else {
+////            rect.size.height = screen_height - 202 - offset.y;
+////        }
+//        
+//        self.homePageHeadView.drawView.frame = rect;
+//    }
+    
 }
- */
 
 #pragma mark - change Portrait
 - (void)changePortraitAction
@@ -716,6 +767,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                     
                     OSCMessageCenterController* messageCenter = [[OSCMessageCenterController alloc] initWithNoticeCounts:_noticeCounts];
                     messageCenter.hidesBottomBarWhenPushed = YES;
+//                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+//                    messageCenterVC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:messageCenter animated:YES];
                     
                     break;
@@ -763,6 +816,8 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
                     
                     OSCMessageCenterController* messageCenter = [[OSCMessageCenterController alloc] initWithNoticeCounts:_noticeCounts];
                     messageCenter.hidesBottomBarWhenPushed = YES;
+//                    MessageCenter *messageCenterVC = [[MessageCenter alloc] initWithNoticeCounts:_noticeCounts];
+//                    messageCenterVC.hidesBottomBarWhenPushed = YES;
                     [self.navigationController pushViewController:messageCenter animated:YES];
                     
                     break;
@@ -984,7 +1039,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             homeViewHeight = 250;
         } else {
             homeViewHeight = screen_height - 202;//45*4+48
-            self.tableView.bounces = NO;
         }
         
         if (_isLogin) {
