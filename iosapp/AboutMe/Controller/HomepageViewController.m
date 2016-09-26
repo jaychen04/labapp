@@ -135,6 +135,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
+    self.tableView.bounces = NO;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
 //    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
@@ -981,10 +982,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     if(_homePageHeadView == nil) {
         CGFloat homeViewHeight = 0;
         if ([UIScreen mainScreen].bounds.size.height < 500) {
-            homeViewHeight = 250;
+            homeViewHeight = 330;
         } else {
             homeViewHeight = screen_height - 202;//45*4+48
-            self.tableView.bounces = NO;
         }
         
         if (_isLogin) {
