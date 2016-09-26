@@ -161,6 +161,8 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     
     [self.navigationController.navigationBar lt_setBackgroundColor:[UIColor clearColor]];
 
+    self.navigationController.navigationBar.translucent = YES;
+    
     self.buttons[1].selected = YES;
     _currentIndex = 1;
 
@@ -785,7 +787,8 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 #pragma mark --- lazy loading
 - (UITableView *)tableView {
 	if(_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,-NAVI_BAR_HEIGHT},{kScreen_W,self.view.bounds.size.height + NAVI_BAR_HEIGHT}} style:UITableViewStylePlain];
+//        _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,-NAVI_BAR_HEIGHT},{kScreen_W,self.view.bounds.size.height}} style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,0},{kScreen_W,self.view.bounds.size.height}} style:UITableViewStylePlain];
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
