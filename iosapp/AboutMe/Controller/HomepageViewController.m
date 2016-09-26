@@ -272,8 +272,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         self.homePageHeadView.creditLabel.hidden = NO;
         self.homePageHeadView.creditLabel.text = [NSString stringWithFormat:@"积分:%d", _myProfile.score];
         self.homePageHeadView.descLable.text = _myProfile.desc.length ? _myProfile.desc : @"这个人很懒，啥也没写";
-        
-        [self.homePageHeadView.setUpButton addTarget:self action:@selector(setUpAction) forControlEvents:UIControlEventTouchUpInside];
+    
         [self.homePageHeadView.codeButton addTarget:self action:@selector(showCodeAction) forControlEvents:UIControlEventTouchUpInside];
         
     } else {
@@ -293,6 +292,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         self.homePageHeadView.genderImageView.hidden = NO;
     }
     
+    [self.homePageHeadView.setUpButton addTarget:self action:@selector(setUpAction) forControlEvents:UIControlEventTouchUpInside];
     [self.homePageHeadView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
     self.homePageHeadView.userInteractionEnabled = YES;
     
