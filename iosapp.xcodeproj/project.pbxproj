@@ -254,7 +254,6 @@
 		0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC551CEDA390007DB140 /* UIView+SDExtension.m */; };
 		04270A1D1D77CD5200E21ECC /* InputToolbarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04270A1B1D77CD5200E21ECC /* InputToolbarContentView.m */; };
 		04270A1E1D77CD5200E21ECC /* InputToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04270A1C1D77CD5200E21ECC /* InputToolbarContentView.xib */; };
-		042B4C731D6DD38800DB5DD4 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8CFB1CF5933F00364BD7 /* libc++abi.tbd */; };
 		042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */; };
 		042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */; };
 		042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D95A1B65D7FE00116D6E /* Foundation.framework */; };
@@ -262,13 +261,11 @@
 		042E8CFF1CF5945700364BD7 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9561B65D7E800116D6E /* CoreText.framework */; };
 		042E8D001CF5945F00364BD7 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9541B65D7C000116D6E /* QuartzCore.framework */; };
 		042E8D011CF5946900364BD7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D9521B65D7B500116D6E /* ImageIO.framework */; };
-		042E8D031CF5947400364BD7 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8D021CF5947400364BD7 /* libz.tbd */; };
 		042E8D041CF5947D00364BD7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E5B1A7A2A6500B773EE /* SystemConfiguration.framework */; };
 		042E8D051CF5948600364BD7 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E571A7A2A4900B773EE /* Security.framework */; };
 		042E8D061CF5948F00364BD7 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E611A7A2A8A00B773EE /* CoreTelephony.framework */; };
 		042E8D071CF594C400364BD7 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 386F1E5D1A7A2A7100B773EE /* CoreGraphics.framework */; };
 		042E8D0D1CF594F700364BD7 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8D0C1CF594F700364BD7 /* libsqlite3.tbd */; };
-		042E8D0F1CF5950900364BD7 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 042E8D0E1CF5950900364BD7 /* libiconv.tbd */; };
 		042E8D151CF6A3F000364BD7 /* TokenManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E8D141CF6A3F000364BD7 /* TokenManager.m */; };
 		042F0AA11D52DDB900D3DC76 /* QuartzCanvasView.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F0AA01D52DDB900D3DC76 /* QuartzCanvasView.m */; };
 		042F0AA71D531B8700D3DC76 /* UIDevice+SystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 042F0AA61D531B8700D3DC76 /* UIDevice+SystemInfo.m */; };
@@ -354,7 +351,6 @@
 		38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */; };
 		38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38DB5E8E1A496FFD0092C966 /* emoji.plist */; };
 		38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E067431A19AC4900D41976 /* GrowingTextView.m */; };
-		6284804761C76F476A238D18 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5BC048EACA3C378644BCFCF /* libPods-iosapp.a */; };
 		6662BAD01B8C5EBD00D6A9BC /* NSString+pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */; };
 		C57E7B571B56734300F39B5C /* PlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C57E7B561B56734300F39B5C /* PlaceholderTextView.m */; };
 		C5A89C371B09C34B00798B1C /* FAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A89C301B09C34B00798B1C /* FAImageView.m */; };
@@ -372,6 +368,7 @@
 		C5B2F1B91BD0DFF2004B4785 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B2F1B81BD0DFF2004B4785 /* NSString+Util.m */; };
 		C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4B1781B578F55008E7463 /* UIViewController+Segue.m */; };
 		C5E5E6B41B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E5E6B31B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m */; };
+		D85B3B8EAB4B5F9DBDD85201 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5BC048EACA3C378644BCFCF /* libPods-iosapp.a */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
 		EEA4E5DC1D77D30600EB98DA /* OSCEditingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA4E5DB1D77D30600EB98DA /* OSCEditingBar.m */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
@@ -1077,24 +1074,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				042B4C731D6DD38800DB5DD4 /* libc++abi.tbd in Frameworks */,
 				31FA28E81D36147F008F1EDD /* AssetsLibrary.framework in Frameworks */,
 				044266961D49E7BB00D87091 /* Photos.framework in Frameworks */,
 				04EC1B5A1D38F6C8006DBD5D /* WebKit.framework in Frameworks */,
 				04EC1B581D38F6BF006DBD5D /* JavaScriptCore.framework in Frameworks */,
-				042E8D0F1CF5950900364BD7 /* libiconv.tbd in Frameworks */,
 				042E8D0D1CF594F700364BD7 /* libsqlite3.tbd in Frameworks */,
 				042E8D071CF594C400364BD7 /* CoreGraphics.framework in Frameworks */,
 				042E8D061CF5948F00364BD7 /* CoreTelephony.framework in Frameworks */,
 				042E8D051CF5948600364BD7 /* Security.framework in Frameworks */,
 				042E8D041CF5947D00364BD7 /* SystemConfiguration.framework in Frameworks */,
-				042E8D031CF5947400364BD7 /* libz.tbd in Frameworks */,
 				042E8D011CF5946900364BD7 /* ImageIO.framework in Frameworks */,
 				042E8D001CF5945F00364BD7 /* QuartzCore.framework in Frameworks */,
 				042E8CFF1CF5945700364BD7 /* CoreText.framework in Frameworks */,
 				042E8CFE1CF5944E00364BD7 /* UIKit.framework in Frameworks */,
 				042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */,
-				6284804761C76F476A238D18 /* libPods-iosapp.a in Frameworks */,
+				D85B3B8EAB4B5F9DBDD85201 /* libPods-iosapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3256,6 +3250,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 			};
@@ -3292,6 +3288,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

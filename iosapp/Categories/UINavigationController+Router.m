@@ -80,12 +80,6 @@
             } else if (pathComponents.count == 4) {
                 NSString *type = pathComponents[2];
                 if ([type isEqualToString:@"blog"]) {
-//                    OSCNews *news = [OSCNews new];
-//                    news.type = NewsTypeBlog;
-//                    news.attachment = pathComponents[3];
-//                    viewController = [[DetailsViewController alloc] initWithNews:news];
-//                    viewController.navigationItem.title = @"博客详情";
-                    
                     NSInteger blogId = [pathComponents[3] integerValue];
                     if(blogId > 0) {
                         viewController = [[NewsBlogDetailTableViewController alloc]initWithObjectId:blogId isBlogDetail:YES];
@@ -101,18 +95,17 @@
             } else if(pathComponents.count == 5) {
                 NSString *type = pathComponents[3];
                 if ([type isEqualToString:@"blog"]) {
-//                    OSCNews *news = [OSCNews new];
-//                    news.type = NewsTypeBlog;
-//                    news.attachment = pathComponents[4];
-//                    viewController = [[DetailsViewController alloc] initWithNews:news];
-//                    viewController.navigationItem.title = @"博客详情";
-                    
                     NSInteger blogId = [pathComponents[4] integerValue];
                     if(blogId > 0) {
                         viewController = [[NewsBlogDetailTableViewController alloc]initWithObjectId:blogId isBlogDetail:YES];
                         viewController.hidesBottomBarWhenPushed = YES;
                     }
-                }
+				}else if ([type isEqualToString:@"tweet"]){
+					OSCTweet *tweet = [OSCTweet new];
+					tweet.tweetID = [pathComponents[4] longLongValue];
+					viewController = [[TweetDetailsWithBottomBarViewController alloc] initWithTweetID:tweet.tweetID];
+					viewController.navigationItem.title = @"动弹详情";
+				}
             }
         } else if ([prefix isEqualToString:@"www"] || [prefix isEqualToString:@"m"]) {
             //新闻,软件,问答
@@ -184,13 +177,8 @@
         if (viewController) {
             [self pushViewController:viewController animated:YES];
         } else {
-			
-			if([[[UIDevice currentDevice] systemVersion] hasPrefix:@"9"]) {
-				SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
-				[self pushViewController:webviewController animated:YES];
-			} else {
-				[[UIApplication sharedApplication] openURL:url];
-			}
+			SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
+			[self pushViewController:webviewController animated:YES];
         }
     }
 }

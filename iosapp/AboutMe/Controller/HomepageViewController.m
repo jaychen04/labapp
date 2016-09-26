@@ -135,6 +135,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
     _imageView = [self findHairlineImageViewUnder:self.navigationController.navigationBar];
     self.tableView.backgroundColor = [UIColor themeColor];
     self.tableView.separatorColor = [UIColor separatorColor];
+    self.tableView.bounces = NO;
     
     [self.tableView registerNib:[UINib nibWithNibName:@"HomeButtonCell" bundle:nil] forCellReuseIdentifier:reuseIdentifier];
 //    [self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
@@ -271,8 +272,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         self.homePageHeadView.creditLabel.hidden = NO;
         self.homePageHeadView.creditLabel.text = [NSString stringWithFormat:@"积分:%d", _myProfile.score];
         self.homePageHeadView.descLable.text = _myProfile.desc.length ? _myProfile.desc : @"这个人很懒，啥也没写";
-        
-        [self.homePageHeadView.setUpButton addTarget:self action:@selector(setUpAction) forControlEvents:UIControlEventTouchUpInside];
+    
         [self.homePageHeadView.codeButton addTarget:self action:@selector(showCodeAction) forControlEvents:UIControlEventTouchUpInside];
         
     } else {
@@ -292,6 +292,7 @@ static NSString *reuseIdentifier = @"HomeButtonCell";
         self.homePageHeadView.genderImageView.hidden = NO;
     }
     
+    [self.homePageHeadView.setUpButton addTarget:self action:@selector(setUpAction) forControlEvents:UIControlEventTouchUpInside];
     [self.homePageHeadView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapPortraitAction)]];
     self.homePageHeadView.userInteractionEnabled = YES;
     
@@ -981,10 +982,9 @@ constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     if(_homePageHeadView == nil) {
         CGFloat homeViewHeight = 0;
         if ([UIScreen mainScreen].bounds.size.height < 500) {
-            homeViewHeight = 250;
+            homeViewHeight = 330;
         } else {
             homeViewHeight = screen_height - 202;//45*4+48
-            self.tableView.bounces = NO;
         }
         
         if (_isLogin) {
