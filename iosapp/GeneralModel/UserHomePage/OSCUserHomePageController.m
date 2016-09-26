@@ -325,6 +325,11 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 
 #pragma mark -  scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (scrollView.contentOffset.y < -NAVI_BAR_HEIGHT) {
+        self.tableView.backgroundColor = [UIColor navigationbarColor];
+    }else{
+        self.tableView.backgroundColor = [UIColor whiteColor];
+    }
     UIColor * color = [UIColor navigationbarColor];
     CGFloat offsetY = scrollView.contentOffset.y;
     if (offsetY > NAVI_BAR_HEIGHT) {
