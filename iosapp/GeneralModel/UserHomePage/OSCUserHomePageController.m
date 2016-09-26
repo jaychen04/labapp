@@ -169,6 +169,12 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 
 #pragma mark --- layout
 - (void)layoutUI{
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:({
+        UIView* bgView = [[UIView alloc]initWithFrame:(CGRect){{0,-NAVI_BAR_HEIGHT},{self.view.bounds.size.width,HEADER_VIEW_HEIGHT}}];
+        bgView.backgroundColor = [UIColor navigationbarColor];
+        bgView;
+    })];
     [self.view addSubview:self.tableView];
 
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
@@ -268,7 +274,7 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
                 [self.tableView reloadData];
                 if (!dropDown) {
                     [self.tableView.mj_footer endRefreshing];
-                }
+                } 
                 [HUD hideAnimated:YES afterDelay:0.3];
             });
     }
@@ -325,11 +331,11 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 
 #pragma mark -  scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.y < -NAVI_BAR_HEIGHT) {
-        self.tableView.backgroundColor = [UIColor navigationbarColor];
-    }else{
-        self.tableView.backgroundColor = [UIColor whiteColor];
-    }
+//    if (scrollView.contentOffset.y < -NAVI_BAR_HEIGHT) {
+//        self.tableView.backgroundColor = [UIColor navigationbarColor];
+//    }else{
+//        self.tableView.backgroundColor = [UIColor whiteColor];
+//    }
     UIColor * color = [UIColor navigationbarColor];
     CGFloat offsetY = scrollView.contentOffset.y;
     if (offsetY > NAVI_BAR_HEIGHT) {
@@ -771,6 +777,7 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 - (UITableView *)tableView {
 	if(_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,-NAVI_BAR_HEIGHT},{kScreen_W,self.view.bounds.size.height + NAVI_BAR_HEIGHT}} style:UITableViewStylePlain];
+        _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
