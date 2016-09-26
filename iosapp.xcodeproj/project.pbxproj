@@ -1693,10 +1693,10 @@
 		0404C41B1D98C7330043E44A /* Information */ = {
 			isa = PBXGroup;
 			children = (
+				0404C4811D98C7330043E44A /* News.storyboard */,
 				0404C41C1D98C7330043E44A /* Activitys */,
 				0404C4311D98C7330043E44A /* Blogs */,
 				0404C44D1D98C7330043E44A /* News */,
-				0404C4811D98C7330043E44A /* News.storyboard */,
 				0404C4821D98C7330043E44A /* Questions */,
 				0404C49A1D98C7330043E44A /* Software */,
 			);
