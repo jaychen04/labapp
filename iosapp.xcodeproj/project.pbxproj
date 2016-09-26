@@ -254,9 +254,6 @@
 		0422BC5C1CEDA390007DB140 /* UIView+SDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 0422BC551CEDA390007DB140 /* UIView+SDExtension.m */; };
 		04270A1D1D77CD5200E21ECC /* InputToolbarContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04270A1B1D77CD5200E21ECC /* InputToolbarContentView.m */; };
 		04270A1E1D77CD5200E21ECC /* InputToolbarContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04270A1C1D77CD5200E21ECC /* InputToolbarContentView.xib */; };
-		04270A241D7963BF00E21ECC /* OSCDiscuss.m in Sources */ = {isa = PBXBuildFile; fileRef = 04270A231D7963BF00E21ECC /* OSCDiscuss.m */; };
-		042B4C511D6D7AF500DB5DD4 /* OSCMessageCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = 042B4C501D6D7AF500DB5DD4 /* OSCMessageCenter.m */; };
-
 		042E545E1D193FD400DC7E1D /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545B1D193FD400DC7E1D /* UIImage+ImageEffects.m */; };
 		042E545F1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 042E545D1D193FD400DC7E1D /* UIImageView+LBBlurredImage.m */; };
 		042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5E4D95A1B65D7FE00116D6E /* Foundation.framework */; };
@@ -354,7 +351,6 @@
 		38DB5E8D1A46E0B60092C966 /* EmojiPanelVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 38DB5E8C1A46E0B60092C966 /* EmojiPanelVC.m */; };
 		38DB5E8F1A496FFD0092C966 /* emoji.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38DB5E8E1A496FFD0092C966 /* emoji.plist */; };
 		38E067441A19AC4900D41976 /* GrowingTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 38E067431A19AC4900D41976 /* GrowingTextView.m */; };
-		6284804761C76F476A238D18 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5BC048EACA3C378644BCFCF /* libPods-iosapp.a */; };
 		6662BAD01B8C5EBD00D6A9BC /* NSString+pinyin.m in Sources */ = {isa = PBXBuildFile; fileRef = 6662BACF1B8C5EBD00D6A9BC /* NSString+pinyin.m */; };
 		C57E7B571B56734300F39B5C /* PlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = C57E7B561B56734300F39B5C /* PlaceholderTextView.m */; };
 		C5A89C371B09C34B00798B1C /* FAImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A89C301B09C34B00798B1C /* FAImageView.m */; };
@@ -372,6 +368,7 @@
 		C5B2F1B91BD0DFF2004B4785 /* NSString+Util.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B2F1B81BD0DFF2004B4785 /* NSString+Util.m */; };
 		C5E4B1791B578F55008E7463 /* UIViewController+Segue.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E4B1781B578F55008E7463 /* UIViewController+Segue.m */; };
 		C5E5E6B41B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E5E6B31B5CCBCE009EBD8E /* UIScrollView+ScalableCover.m */; };
+		D85B3B8EAB4B5F9DBDD85201 /* libPods-iosapp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A5BC048EACA3C378644BCFCF /* libPods-iosapp.a */; };
 		EE20232B1CFBE675002756E4 /* ActivityHeadView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE20232A1CFBE675002756E4 /* ActivityHeadView.m */; };
 		EEA4E5DC1D77D30600EB98DA /* OSCEditingBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EEA4E5DB1D77D30600EB98DA /* OSCEditingBar.m */; };
 		EED55F711A80AB13004E6371 /* UIBarButtonItem+Badge.m in Sources */ = {isa = PBXBuildFile; fileRef = EED55F6E1A80AB13004E6371 /* UIBarButtonItem+Badge.m */; };
@@ -1088,14 +1085,10 @@
 				042E8D041CF5947D00364BD7 /* SystemConfiguration.framework in Frameworks */,
 				042E8D011CF5946900364BD7 /* ImageIO.framework in Frameworks */,
 				042E8D001CF5945F00364BD7 /* QuartzCore.framework in Frameworks */,
-				EEFA5D1C1D950B880086D3A8 /* libPods-iosapp.a in Frameworks */,
-				EEFA5D191D950B740086D3A8 /* libiconv.2.tbd in Frameworks */,
 				042E8CFF1CF5945700364BD7 /* CoreText.framework in Frameworks */,
-				EEFA5D1B1D950B780086D3A8 /* libz.1.tbd in Frameworks */,
 				042E8CFE1CF5944E00364BD7 /* UIKit.framework in Frameworks */,
 				042E8CFD1CF5944600364BD7 /* Foundation.framework in Frameworks */,
-				EEFA5D171D950B6A0086D3A8 /* libc++abi.tbd in Frameworks */,
-				D3D2CE32CBE00F392BCF078A /* libPods-iosapp.a in Frameworks */,
+				D85B3B8EAB4B5F9DBDD85201 /* libPods-iosapp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2416,13 +2409,6 @@
 		1BB5019F31BE469F592E0B67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EEFA5D1A1D950B780086D3A8 /* libz.1.tbd */,
-				EEFA5D181D950B740086D3A8 /* libiconv.2.tbd */,
-				EEFA5D161D950B6A0086D3A8 /* libc++abi.tbd */,
-				EEFA5D141D9509AF0086D3A8 /* libPods-iosapp.a */,
-				EEFA5D121D9509980086D3A8 /* libPods-iosapp.a */,
-				EEFA5D101D95097E0086D3A8 /* MapKit.framework */,
-				EEFA5D0E1D94D1450086D3A8 /* libAFNetworking.a */,
 				74FCF9B11D6D985C0085B2EB /* libc++.1.tbd */,
 				74FCF9B21D6D985C0085B2EB /* libc++.tbd */,
 				044266951D49E7BB00D87091 /* Photos.framework */,
