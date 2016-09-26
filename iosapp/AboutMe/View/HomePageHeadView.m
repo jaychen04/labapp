@@ -79,7 +79,7 @@
     _descLable = [UILabel new];
     _descLable.font = [UIFont systemFontOfSize:13];
     _descLable.textAlignment = NSTextAlignmentCenter;
-    _descLable.numberOfLines = 2;
+    _descLable.numberOfLines = 3;
     _descLable.lineBreakMode = NSLineBreakByWordWrapping;
     _descLable.textColor = [UIColor colorWithHex:0xFFFFFF];
     [self addSubview:_descLable];
