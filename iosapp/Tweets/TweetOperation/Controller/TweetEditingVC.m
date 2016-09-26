@@ -519,7 +519,7 @@
 
 - (void)referSoftware
 {
-    [self insertString:@"#请输入软件名或话题#" andSelect:YES];
+    [self insertString:@"#请输入软件名#" andSelect:YES];
 }
 
 - (void)insertString:(NSString *)string andSelect:(BOOL)shouldSelect
@@ -614,56 +614,62 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         [self.navigationController pushViewController:loginVC animated:YES];
         return;
     }
-    MBProgressHUD *HUD;
-    if (!isImgTweet) {
-        HUD = [Utils createHUD];
-        HUD.label.text = @"动弹发送中";
-        HUD.removeFromSuperViewOnHide = NO;
-    }
-    NSString *urlStr = [NSString stringWithFormat:@"%@tweet", OSCAPI_V2_PREFIX];
-    NSDictionary *paramDic = @{
-                               @"content":[Utils convertRichTextToRawText:_edittingArea],
-                               @"images":_imageToken
-                               };
-    AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
-    [manger POST:urlStr
-     parameters:paramDic
-        success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
-            NSLog(@"tweetMessage:%@",responseObject[@"message"]);
-            
-            if ([responseObject[@"code"]integerValue] == 1) {
-                //提示上传图片失败信息
-                if (isImgTweet) {       //图片动弹
-                    _uploadImgHub.mode = MBProgressHUDModeCustomView;
-                    if (_failCount > 0) {
-                        _uploadImgHub.label.text = [NSString stringWithFormat:@"%ld张图片上传失败", (long)_failCount];
-                    }else {
-                        _uploadImgHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                        _uploadImgHub.label.text = @"动弹发送成功";
-                    }
-                }else {     //文字动弹
-                    HUD.mode = MBProgressHUDModeCustomView;
-                    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
-                    HUD.label.text = @"动弹发送成功";
-                }
-            }else {
-                if (isImgTweet) {
-                    _uploadImgHub.label.text = responseObject[@"message"];
-                }else {
-                    HUD.label.text = responseObject[@"message"];
-                }
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
-                [MBProgressHUD hideAllHUDsForView:window animated:YES];
-                [_uploadImgHub hideAnimated:YES afterDelay:1];
-                [HUD hideAnimated:YES afterDelay:1];
-                [self dismissViewControllerAnimated:YES completion:nil];
-            });
-        }
-        failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
-            NSLog(@"%@",error);
-        }];
+	
+	MBProgressHUD *HUD;
+	NSString *txtContent = [_edittingArea.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+	if([txtContent isEqualToString:@"#请输入软件名#"]) {
+		
+	} else {
+		if (!isImgTweet) {
+			HUD = [Utils createHUD];
+			HUD.label.text = @"动弹发送中";
+			HUD.removeFromSuperViewOnHide = NO;
+		}
+		NSString *urlStr = [NSString stringWithFormat:@"%@tweet", OSCAPI_V2_PREFIX];
+		NSDictionary *paramDic = @{
+								   @"content":[Utils convertRichTextToRawText:_edittingArea],
+								   @"images":_imageToken
+								   };
+		AFHTTPRequestOperationManager* manger = [AFHTTPRequestOperationManager OSCJsonManager];
+		[manger POST:urlStr
+		  parameters:paramDic
+			 success:^(AFHTTPRequestOperation * _Nonnull operation, id  _Nonnull responseObject) {
+				 NSLog(@"tweetMessage:%@",responseObject[@"message"]);
+				 
+				 if ([responseObject[@"code"]integerValue] == 1) {
+					 //提示上传图片失败信息
+					 if (isImgTweet) {       //图片动弹
+						 _uploadImgHub.mode = MBProgressHUDModeCustomView;
+						 if (_failCount > 0) {
+							 _uploadImgHub.label.text = [NSString stringWithFormat:@"%ld张图片上传失败", (long)_failCount];
+						 }else {
+							 _uploadImgHub.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+							 _uploadImgHub.label.text = @"动弹发送成功";
+						 }
+					 }else {     //文字动弹
+						 HUD.mode = MBProgressHUDModeCustomView;
+						 HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"HUD-done"]];
+						 HUD.label.text = @"动弹发送成功";
+					 }
+				 }else {
+					 if (isImgTweet) {
+						 _uploadImgHub.label.text = responseObject[@"message"];
+					 }else {
+						 HUD.label.text = responseObject[@"message"];
+					 }
+				 }
+				 dispatch_async(dispatch_get_main_queue(), ^{
+					 UIWindow *window = [[UIApplication sharedApplication].windows lastObject];
+					 [MBProgressHUD hideAllHUDsForView:window animated:YES];
+					 [_uploadImgHub hideAnimated:YES afterDelay:1];
+					 [HUD hideAnimated:YES afterDelay:1];
+					 [self dismissViewControllerAnimated:YES completion:nil];
+				 });
+			 }
+			 failure:^(AFHTTPRequestOperation * _Nullable operation, NSError * _Nonnull error) {
+				 NSLog(@"%@",error);
+			 }];
+	}
 }
 
 #pragma mark 发表动弹
@@ -678,11 +684,11 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
         }else {    //发布文字动弹
             [self pubTweetIsWithImages:NO];
         }
-        
+		
     }else {     //团队动弹
         [self pubTeamTweet];
     }
-    
+	
 }
 
 
@@ -913,12 +919,6 @@ constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
 
 - (void)textViewDidChange:(PlaceholderTextView *)textView {
     self.navigationItem.rightBarButtonItem.enabled = [textView hasText];
-    
-//    CGFloat height = ceilf([textView sizeThatFits:textView.frame.size].height + 100);
-//    if (height != _textViewHeightConstraint.constant) {
-//        _textViewHeightConstraint.constant = height;
-//        [self.view layoutIfNeeded];
-//    }
 }
 
 
