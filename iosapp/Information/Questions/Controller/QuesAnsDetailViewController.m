@@ -98,6 +98,12 @@ static NSString *quesAnsCommentHeadReuseIdentifier = @"NewCommentCell";
 	
 	[self showHubView];
 }
+
+- (void)didReceiveMemoryWarning{
+    [self.navigationController popViewControllerAnimated:YES];
+
+    [super didReceiveMemoryWarning];
+}
 #pragma mark --- 
 -(void)initialized{
     self.title = [NSString stringWithFormat:@"%ld个回答",(long)self.commentCount];
