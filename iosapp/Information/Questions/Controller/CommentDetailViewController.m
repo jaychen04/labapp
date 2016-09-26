@@ -85,6 +85,7 @@ static NSString * const newCommentReuseIdentifier = @"NewCommentCell";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 获取数据

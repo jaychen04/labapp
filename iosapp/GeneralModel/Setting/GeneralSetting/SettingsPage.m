@@ -25,7 +25,6 @@
 @end
 
 @implementation SettingsPage
-static BOOL isNightMode;
 
 - (instancetype)init
 {
@@ -81,10 +80,9 @@ static BOOL isNightMode;
 {
     UITableViewCell *cell = [UITableViewCell new];
 
-//    NSString *nightModeStr = [Config getMode]?@"日间模式":@"夜间模式";
     NSArray *titles = @[
                         @[@"清除缓存", @"消息通知"],
-                        @[@"给应用评分", @"关于", @"开源许可", @"反馈"],
+                        @[@"应用评分", @"关于我们", @"开源许可", @"问题反馈"],
                         @[@"注销登录"],
                         ];
     cell.textLabel.text = titles[indexPath.section][indexPath.row];
@@ -153,26 +151,6 @@ static BOOL isNightMode;
             [self.tableView reloadData];
         });
     }
-
-    //夜间模式
-//    else if (section == 2) {
-//        isNightMode = [Config getMode];
-//        if (isNightMode) {
-//            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = NO;
-//        } else {
-//            ((AppDelegate *)[UIApplication sharedApplication].delegate).inNightMode = YES;
-//        }
-//        
-//        self.tableView.backgroundColor = [UIColor themeColor];
-//        self.tableView.separatorColor = [UIColor separatorColor];
-//        
-//        [Config saveWhetherNightMode:!isNightMode];
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"dawnAndNight" object:nil];
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [self.tableView reloadData];
-//        });
-//        
-//    }
 }
 
 -(void)viewDidLayoutSubviews

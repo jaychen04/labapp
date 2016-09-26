@@ -22,6 +22,7 @@
 #import "SoftWareViewController.h"
 #import "QuesAnsDetailViewController.h"
 #import "OSCPhotoGroupView.h"
+#import "UIDevice+SystemInfo.h"
 
 @import SafariServices ;
 
@@ -38,17 +39,12 @@
     NSRange range = [urlString rangeOfString:@"oschina.net"];
     if (range.length <= 0) {
 		//TODO: 替换合适的webviewcontroller
-		if([[[UIDevice currentDevice] systemVersion] hasPrefix:@"9"]) {
-            if ( [url.absoluteString hasPrefix:@"http"] || [url.absoluteString hasPrefix:@"www"]) {
-                SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
-                [self pushViewController:webviewController animated:YES];
-            }else{
-                [[UIApplication sharedApplication] openURL:url];
-            }
-		} else {
-			[[UIApplication sharedApplication] openURL:url];
-		}
-		
+        if ( [url.absoluteString hasPrefix:@"http"]) {
+            SFSafariViewController *webviewController = [[SFSafariViewController alloc] initWithURL:url];
+            [self pushViewController:webviewController animated:YES];
+        }else{
+            [[UIApplication sharedApplication] openURL:url];
+        }
     } else {
         //站内链接
         if ([url.absoluteString hasPrefix:@"https"]) {

@@ -204,6 +204,7 @@ static NSString *relatedSoftWareReuseIdentifier = @"RelatedSoftWareCell";
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - 右导航栏按钮

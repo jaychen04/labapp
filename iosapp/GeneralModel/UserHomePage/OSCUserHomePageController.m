@@ -40,6 +40,7 @@
 #import <AFNetworking.h>
 #import <MJRefresh.h>
 #import <MJExtension.h>
+#import <YYKit.h>
 
 #define NAVI_BAR_HEIGHT 64
 #define HEADER_VIEW_HEIGHT 330
@@ -130,14 +131,15 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
     
     [self.navigationController.navigationBar lt_reset];
     [self.navigationController.navigationBar setBackgroundImage:[Utils createImageWithColor:[UIColor navigationbarColor]] forBarMetrics:UIBarMetricsDefault];
-}
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
-    [self.navigationController.navigationBar setBackgroundImage:[Utils createImageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
-    [self scrollViewDidScroll:self.tableView];
     [self.navigationController.navigationBar setShadowImage:[UIImage new]];
 }
+//- (void)viewDidAppear:(BOOL)animated{
+//    [super viewDidAppear:animated];
+//    
+//    [self.navigationController.navigationBar setBackgroundImage:[Utils createImageWithColor:[UIColor clearColor]] forBarMetrics:UIBarMetricsDefault];
+//    [self scrollViewDidScroll:self.tableView];
+//    [self.navigationController.navigationBar setShadowImage:[UIImage new]];
+//}
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
@@ -169,6 +171,12 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 
 #pragma mark --- layout
 - (void)layoutUI{
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:({
+        UIView* bgView = [[UIView alloc]initWithFrame:(CGRect){{0,-NAVI_BAR_HEIGHT},{self.view.bounds.size.width,HEADER_VIEW_HEIGHT}}];
+        bgView.backgroundColor = [UIColor navigationbarColor];
+        bgView;
+    })];
     [self.view addSubview:self.tableView];
 
     self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
@@ -325,11 +333,11 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 
 #pragma mark -  scrollView delegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.y < -NAVI_BAR_HEIGHT) {
-        self.tableView.backgroundColor = [UIColor navigationbarColor];
-    }else{
-        self.tableView.backgroundColor = [UIColor whiteColor];
+    
+    if (scrollView.contentOffset.y < -HEADER_VIEW_HEIGHT) {
+        [self.tableView setContentOffset:CGPointMake(0, -NAVI_BAR_HEIGHT) animated:NO];
     }
+    
     UIColor * color = [UIColor navigationbarColor];
     CGFloat offsetY = scrollView.contentOffset.y;
     if (offsetY > NAVI_BAR_HEIGHT) {
@@ -353,7 +361,14 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
                       fromView:(UIImageView *)fromView
 {
     UIWindow* currentWindow = [UIApplication sharedApplication].keyWindow;
-    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
+//    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:nil];
+    /** 点开拿到大图之后 用大图更新update缩略图 提高清晰度 */
+    [groupView presentFromImageView:fromView toContainer:currentWindow animated:YES completion:^{
+        OSCTweetItem* tweetItem = [cell valueForKey:@"tweetItem"];
+        OSCTweetImages* currentImageItem = tweetItem.images[groupView.currentPage];
+        UIImage* image = [[YYWebImageManager sharedManager].cache getImageForKey:currentImageItem.href withType:YYImageCacheTypeMemory];
+        if (image) { fromView.image = image; }
+    }];
 }
 - (void)changeTweetStausButtonDidClick:(__kindof AsyncDisplayTableViewCell *)cell{
     [self toPraise:cell];
@@ -771,6 +786,7 @@ static NSString* const reuseDiscussCellReuseIdentifier = @"OSCDiscussCell";
 - (UITableView *)tableView {
 	if(_tableView == nil) {
         _tableView = [[UITableView alloc] initWithFrame:(CGRect){{0,-NAVI_BAR_HEIGHT},{kScreen_W,self.view.bounds.size.height + NAVI_BAR_HEIGHT}} style:UITableViewStylePlain];
+        _tableView.backgroundColor = [UIColor clearColor];
         _tableView.delegate = self;
         _tableView.dataSource = self;
         _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
