@@ -7,9 +7,11 @@
 
 编号 | 标签名 | 发布版本 |  备注
 ------- | ------- | ------- | ------- | -------
-1 | [v3.7.2](http://git.oschina.net/oschina/iphone-app/tree/v3.7.2/) | v3.7.2 (1608101524) |  当前最新版
-1 | [v3.7.1](http://git.oschina.net/oschina/iphone-app/tree/v3.7.1/) | v3.7.1 (1607111810) |
-2 | [v3.7.0](http://git.oschina.net/oschina/iphone-app/tree/v3.7.0/) | v3.7.0 (1606131024) |  
+1 | [v3.7.4](http://git.oschina.net/oschina/iphone-app/tree/v3.7.4/) | v3.7.4 (1609261855) |  当前最新版
+2 | [v3.7.3](http://git.oschina.net/oschina/iphone-app/tree/v3.7.3/) | v3.7.3 (1608191845) |  
+3 | [v3.7.2](http://git.oschina.net/oschina/iphone-app/tree/v3.7.2/) | v3.7.2 (1608101524) |  
+4 | [v3.7.1](http://git.oschina.net/oschina/iphone-app/tree/v3.7.1/) | v3.7.1 (1607111810) |
+5 | [v3.7.0](http://git.oschina.net/oschina/iphone-app/tree/v3.7.0/) | v3.7.0 (1606131024) |  
 
 
 
